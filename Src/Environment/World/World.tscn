@@ -16133,19 +16133,6 @@ visibility_layer = 2
 z_index = -2
 position = Vector2(-4, -19)
 collision_layer = 2
-speed = null
-air_control_mult = null
-gravity = null
-max_fall_speed = null
-coyote_time = null
-look_offset = null
-look_speed = null
-hold_duration = null
-idle_glow_width = null
-idle_glow_intensity = null
-charge_glow_max_width = null
-charge_glow_max_intensity = null
-jump_force = null
 
 [node name="Camera Master" type="Node2D" parent="."]
 position = Vector2(-6, -28)
@@ -16191,7 +16178,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-92345.46, 215168.39)
+position = Vector2(-94775.46, 220877.39)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
