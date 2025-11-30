@@ -37,29 +37,29 @@ enum ActionState {
 ## Primary action (typically jump) - called when primary input state changes
 ## state: ActionState (PRESSED, RELEASED, or HOLDING)
 ## delta: Time since last frame
-func handle_primary_action(state: ActionState, delta: float) -> void:
+func handle_primary_action(_state: ActionState, _delta: float) -> void:
 	pass
 
 ## Secondary action (typically dash) - called when secondary input state changes
 ## state: ActionState (PRESSED, RELEASED, or HOLDING)
 ## delta: Time since last frame
-func handle_secondary_action(state: ActionState, delta: float) -> void:
+func handle_secondary_action(_state: ActionState, _delta: float) -> void:
 	pass
 
 # Legacy methods for backward compatibility (deprecated)
-func primary_action(delta: float) -> void:
+func primary_action(_delta: float) -> void:
 	pass
 
-func secondary_action(delta: float) -> void:
+func secondary_action(_delta: float) -> void:
 	pass
 
 ## Thread mechanic - called every frame to handle thread-based abilities
 ## Examples: reverse grapple, thread swing, double-jump
-func thread_mechanic(delta: float) -> void:
+func thread_mechanic(_delta: float) -> void:
 	pass
 
 ## Process archetype-specific mechanics - called every frame
-func process_mechanics(delta: float, _p: CharacterBody2D) -> void:
+func process_mechanics(_delta: float, _p: CharacterBody2D) -> void:
 	pass
 
 ## Called when ability cooldown timer reaches zero
