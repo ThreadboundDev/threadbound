@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 ThreadType="*res://Src/Global/ThreadType.gd"
 DebugUI="*res://Src/Global/DebugUI.gd"
-PlayerThreadState="*res://player_thread_state.gd"
+PlayerThreadState="*res://Src/Characters/Player/player_thread_state.gd"
 
 [display]
 
