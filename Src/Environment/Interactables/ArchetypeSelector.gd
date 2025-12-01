@@ -25,7 +25,7 @@ func _setup_visuals():
 	add_child(popup)
 
 func _get_color_for_archetype(color: String) -> Color:
-	return ThreadType.get_color(color)
+	return ThreadType.get_color(archetype_color)
 
 func _connect_signals():
 	body_entered.connect(_on_body_entered)

@@ -4,6 +4,12 @@ extends Node
 var starting_archetype: String = "" # Red/ BLUE / YELLOW / Null
 var absorbed: Dictionary = { "Red": false, "Blue": false, "Yellow": false }
 var spared: Dictionary = { "Red": false, "Blue": false, "Yellow": false }
+var true_color_unlocked: bool = false
+
+signal palette_changed(new_color: Color)
+signal boss_absorbed(Color: string)
+signal boss_spared(Color:String)
+
 
 func _ready():
 	starting_archetype = ThreadType.RED
@@ -44,6 +50,22 @@ func get_current_palette() -> Color:
 	base.b = clamp(base.b, 0.0,1.0)
 	
 	return base
+	
+func absorb(color: String) -> void
+	ThreadType.is_valid(color):
+		push_error("Invalid color: " + color)
+		return
+			
+	if absorbed[color]:
+		 return
+		
+	aborbered[color]== true
+		
+	if color == starting_archetype and starting_archetype != "":
+	
+func spare(color: String) -> void:
+	
+	
 #func is_colorless_run() -> bool:
 pass
 #func has_any_color() -> bool:
