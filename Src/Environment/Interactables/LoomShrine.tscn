@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnnpwu2fthma7"]
+
+[ext_resource type="Script" uid="uid://cj5r8724e7wei" path="res://Src/Environment/Interactables/Loom Shrine.gd" id="1_vcu5d"]
+[ext_resource type="Texture2D" uid="uid://bpko10scx5u8t" path="res://Assets/Loom Shrine Concept.png" id="2_cdssc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcu5d"]
+size = Vector2(289, 180.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdssc"]
+size = Vector2(345, 26)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vcu5d"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_vcu5d"]
+offsets = PackedFloat32Array(0, 0.5247525, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cdssc"]
+gradient = SubResource("Gradient_vcu5d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_40kr4"]
+lifetime_randomness = 0.18
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector3(0, 0, 0)
+spread = 72.558
+initial_velocity_min = 93.979996
+initial_velocity_max = 210.51999
+orbit_velocity_min = 0.90000015
+orbit_velocity_max = 1.0080001
+gravity = Vector3(0, 50, 0)
+color_ramp = SubResource("GradientTexture1D_cdssc")
+anim_offset_max = 0.2744
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.2
+
+[node name="LoomShrine" type="Node2D"]
+light_mask = 3
+visibility_layer = 3
+z_index = -5
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_vcu5d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(1, 1)
+texture = ExtResource("2_cdssc")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 3
+collision_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+visible = false
+top_level = true
+light_mask = 3
+visibility_layer = 3
+position = Vector2(-2, 65)
+shape = SubResource("RectangleShape2D_vcu5d")
+
+[node name="PlatformBase" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(0, 191)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBase"]
+visible = false
+position = Vector2(6.5, 9)
+shape = SubResource("RectangleShape2D_cdssc")
+one_way_collision = true
+
+[node name="EnergyBurst" type="GPUParticles2D" parent="."]
+z_index = -695
+material = SubResource("CanvasItemMaterial_vcu5d")
+position = Vector2(0, 1.3333333)
+emitting = false
+amount = 128
+lifetime = 2.99
+trail_enabled = true
+trail_lifetime = 0.54
+process_material = SubResource("ParticleProcessMaterial_40kr4")
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+offset_left = -113.333336
+offset_top = -133.33333
+offset_right = 59.59899
+offset_bottom = 108.02005
+scale = Vector2(1.33, 1.33)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+max_lines_visible = 1
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_player_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_player_exited"]
