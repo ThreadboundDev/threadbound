@@ -360,7 +360,7 @@ shader_parameter/glow_color = Color(1, 0, 0, 1)
 shader_parameter/glow_width = 2.0
 shader_parameter/glow_intensity = 0.5
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

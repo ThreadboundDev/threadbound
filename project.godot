@@ -36,6 +36,7 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
 [global_group]
 
 red_grapple="Group for Red Grapple Platforms"
+player=""
 
 [input]
 
