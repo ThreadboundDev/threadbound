@@ -1,7 +1,7 @@
 extends Area2D
 
 # Archetype color - set this in the editor (Red, Blue, or Yellow)
-@export var archetype_color: String = ArchetypeConstants.RED
+@export var archetype_color: String = ThreadType.RED
 
 # Compatibility property - returns archetype_color for backward compatibility
 var color: String:
@@ -25,7 +25,7 @@ func _setup_visuals():
 	add_child(popup)
 
 func _get_color_for_archetype(color: String) -> Color:
-	return ArchetypeConstants.get_color(color)
+	return ThreadType.get_color(archetype_color)
 
 func _connect_signals():
 	body_entered.connect(_on_body_entered)
@@ -40,4 +40,3 @@ func _on_body_exited(body):
 	if body.name == "Player":
 		body._on_interactable_exited(self)
 		popup.visible = false
-

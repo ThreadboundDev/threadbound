@@ -54,7 +54,7 @@ var dash_speed: float = 0.0
 # INITIALIZATION
 # ===================================================================
 func _initialize_archetype() -> void:
-	charge_glow_color = ArchetypeConstants.RED_COLOR
+	charge_glow_color = ThreadType.RED_COLOR
 
 	anim_sprite = player.get_node_or_null("Player Animation") as AnimatedSprite2D
 	if not anim_sprite:
@@ -74,7 +74,7 @@ func _initialize_archetype() -> void:
 	# Thread line visual
 	thread_line = Line2D.new()
 	thread_line.width = 3.0
-	thread_line.default_color = ArchetypeConstants.RED_COLOR
+	thread_line.default_color = ThreadType.RED_COLOR
 	thread_line.default_color.a = 0.8
 	thread_line.visible = false
 	player.add_child(thread_line)
@@ -254,7 +254,7 @@ func _handle_reverse_grapple(delta: float) -> void:
 # ===================================================================
 # PROCESS MECHANICS
 # ===================================================================
-func process_mechanics(delta: float, _p: CharacterBody2D) -> void:
+func process_mechanics(_delta: float, _p: CharacterBody2D) -> void:
 	if not player:
 		return
 

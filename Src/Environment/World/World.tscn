@@ -1,4 +1,4 @@
-[gd_scene load_steps=345 format=4 uid="uid://ckrabols3a34g"]
+[gd_scene load_steps=346 format=4 uid="uid://ckrabols3a34g"]
 
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="1_j0p05"]
 [ext_resource type="Shader" uid="uid://b6bvbereuor76" path="res://Src/Environment/World/Fog.gdshader" id="1_q2d71"]
@@ -317,6 +317,7 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/Interactables/ArchetypeSelector.tscn" id="315_selector"]
 [ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/RedPlatform.tscn" id="318_w6lba"]
 [ext_resource type="Shader" uid="uid://bff108ep4rfu5" path="res://Src/Environment/World/RedBreakablePlat.gdshader" id="319_b5eaq"]
+[ext_resource type="PackedScene" uid="uid://bnnpwu2fthma7" path="res://Src/Environment/Interactables/LoomShrine.tscn" id="319_xhywj"]
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="320_m2p3j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uo7di"]
@@ -16133,18 +16134,9 @@ visibility_layer = 2
 z_index = -2
 position = Vector2(-4, -19)
 collision_layer = 2
-speed = null
-air_control_mult = null
-gravity = null
-max_fall_speed = null
-coyote_time = null
-look_offset = null
-look_speed = null
-hold_duration = null
-idle_glow_width = null
-idle_glow_intensity = null
-charge_glow_max_width = null
-charge_glow_max_intensity = null
+
+[node name="LoomShrine" parent="." instance=ExtResource("319_xhywj")]
+position = Vector2(-438, -203)
 
 [node name="Camera Master" type="Node2D" parent="."]
 position = Vector2(-6, -28)
@@ -16190,7 +16182,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-91535.46, 213265.39)
+position = Vector2(-109355.46, 255131.39)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
