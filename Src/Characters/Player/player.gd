@@ -40,13 +40,13 @@ var hold_timer: float = 0.0
 # Charge ratios for glow effects (set by archetypes)
 var jump_charge_ratio: float = 0.0
 var dash_charge_ratio: float = 0.0
-var base_glow_color: Color = ArchetypeConstants.RED_COLOR
+var base_glow_color: Color = ThreadType.RED_COLOR
 var base_glow_width: float = 1.2
 var base_glow_intensity: float = 0.35
-var default_glow_color: Color = ArchetypeConstants.RED_COLOR
+var default_glow_color: Color = ThreadType.RED_COLOR
 var default_glow_width: float = 1.2
 var default_glow_intensity: float = 0.35
-var current_charge_glow_color: Color = ArchetypeConstants.RED_COLOR
+var current_charge_glow_color: Color = ThreadType.RED_COLOR
 
 # Archetype - typed as BaseArchetype
 var archetype: BaseArchetype = null
@@ -217,7 +217,7 @@ func _ready():
 	if ability_cooldown_timer:
 		ability_cooldown_timer.timeout.connect(_on_ability_cooldown_timeout)
 	# Set default archetype to Red
-	set_archetype(ArchetypeConstants.RED)
+	set_archetype(ThreadType.RED)
 	# Selectors now connect their own signals in their _ready() functions
 	# No need to connect here - they call _on_interactable_entered(self) directly
 
@@ -232,11 +232,11 @@ func set_archetype(color: String):
 		archetype.queue_free()
 	
 	match color:
-		ArchetypeConstants.RED:
+		ThreadType.RED:
 			archetype = RedArchetype.new()
-		ArchetypeConstants.BLUE:
+		ThreadType.BLUE:
 			archetype = BlueArchetype.new()
-		ArchetypeConstants.YELLOW:
+		ThreadType.YELLOW:
 			archetype = YellowArchetype.new()
 		_:
 			push_error("Unknown archetype color: %s" % color)
@@ -245,5 +245,5 @@ func set_archetype(color: String):
 	if archetype:
 		add_child(archetype)  # _enter_tree() runs, which calls _initialize_archetype()
 		# Set glow from archetype's color and player's glow configuration
-		var archetype_color = ArchetypeConstants.get_color(color)
+		var archetype_color = ThreadType.get_color(color)
 		_set_base_glow(archetype_color, idle_glow_width, idle_glow_intensity)

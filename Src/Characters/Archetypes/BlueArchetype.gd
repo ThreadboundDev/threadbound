@@ -32,7 +32,7 @@ var swing_velocity: float = 0.0
 # INITIALIZATION
 # ===================================================================
 func _initialize_archetype() -> void:
-	charge_glow_color = ArchetypeConstants.BLUE_COLOR
+	charge_glow_color = ThreadType.BLUE_COLOR
 	# UI Component
 	ui = ArchetypeUI.new()
 	ui.parent_node = player
@@ -48,7 +48,7 @@ func _initialize_archetype() -> void:
 # ===================================================================
 # PRIMARY ACTION: PEAK SUSPEND JUMP
 # ===================================================================
-func handle_primary_action(state: ActionState, delta: float) -> void:
+func handle_primary_action(state: ActionState, _delta: float) -> void:
 	match state:
 		ActionState.PRESSED:
 			# Blue archetype: instant jump on press
@@ -64,7 +64,7 @@ func handle_primary_action(state: ActionState, delta: float) -> void:
 # ===================================================================
 # SECONDARY ACTION: None
 # ===================================================================
-func handle_secondary_action(state: ActionState, delta: float) -> void:
+func handle_secondary_action(_state: ActionState, _delta: float) -> void:
 	pass
 
 
@@ -116,7 +116,7 @@ func _update_swing_physics(delta: float) -> void:
 		return
 
 	var to_target = thread_swing_target.global_position - player.global_position
-	var distance = to_target.length()
+	var _distance = to_target.length()
 	var angle = atan2(to_target.y, to_target.x)
 
 	# Apply swing gravity
