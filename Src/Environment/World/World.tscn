@@ -1,4 +1,4 @@
-[gd_scene load_steps=346 format=4 uid="uid://ckrabols3a34g"]
+[gd_scene load_steps=349 format=4 uid="uid://ckrabols3a34g"]
 
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="1_j0p05"]
 [ext_resource type="Shader" uid="uid://b6bvbereuor76" path="res://Src/Environment/World/Fog.gdshader" id="1_q2d71"]
@@ -318,7 +318,9 @@
 [ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/RedPlatform.tscn" id="318_w6lba"]
 [ext_resource type="Shader" uid="uid://bff108ep4rfu5" path="res://Src/Environment/World/RedBreakablePlat.gdshader" id="319_b5eaq"]
 [ext_resource type="PackedScene" uid="uid://bnnpwu2fthma7" path="res://Src/Environment/Interactables/LoomShrine.tscn" id="319_xhywj"]
+[ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/RadialMenu.tscn" id="320_5nt33"]
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="320_m2p3j"]
+[ext_resource type="Shader" uid="uid://byxdrvwx0jif5" path="res://Src/Environment/World/menu_blur.gdshader" id="321_wfyk8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uo7di"]
 shader = ExtResource("1_q2d71")
@@ -15775,6 +15777,9 @@ custom_data_layer_1/name = "platform_id"
 custom_data_layer_1/type = 2
 sources/1 = SubResource("TileSetAtlasSource_2v1vc")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_imjvn"]
+shader = ExtResource("321_wfyk8")
+
 [node name="World" type="Node2D"]
 
 [node name="Background Color Layer" type="CanvasLayer" parent="."]
@@ -16182,7 +16187,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-110165.46, 257034.39)
+position = Vector2(-115025.46, 268452.37)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
@@ -16231,6 +16236,24 @@ scale = Vector2(0.25, 0.25)
 tile_set = SubResource("TileSet_u1bmr")
 format = 2
 layer_0/tile_data = PackedInt32Array(131071, 65537, 7, 196607, 65537, 8, 65536, 131073, 7, 131072, 131073, 8, 65537, 196609, 7, 131073, 196609, 8, 131074, 262145, 8, 65539, 327681, 7, 131075, 327681, 8, 65540, 393217, 7, 131076, 393217, 8, 65541, 458753, 7, 131077, 458753, 8, 65542, 524289, 7, 131078, 524289, 8, 65538, 262145, 7)
+
+[node name="RadialMenu" parent="." instance=ExtResource("320_5nt33")]
+offset = Vector2(0, 100)
+transform = Transform2D(1, 0, 0, 1, 0, 100)
+
+[node name="MenuBlurCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="BlurLayer" type="CanvasLayer" parent="MenuBlurCopy"]
+layer = 50
+
+[node name="ColorRect" type="ColorRect" parent="MenuBlurCopy/BlurLayer"]
+material = SubResource("ShaderMaterial_imjvn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="body_entered" from="Camera Master/Camera2D/PhantomCameraHost2D/ZoomCam/ZoomCam Instructions" to="Camera Master/Camera2D/PhantomCameraHost2D/ZoomCam/ZoomCam Instructions" method="_on_body_entered"]
 [connection signal="body_exited" from="Camera Master/Camera2D/PhantomCameraHost2D/ZoomCam/ZoomCam Instructions" to="Camera Master/Camera2D/PhantomCameraHost2D/ZoomCam/ZoomCam Instructions" method="_on_body_exited"]
