@@ -6,13 +6,15 @@
 [node name="RadialMenu" type="CanvasLayer"]
 script = ExtResource("1_1o4se")
 
-[node name="MenuFadeContainer" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Background" type="TextureRect" parent="MenuFadeContainer"]
+[node name="Background" type="TextureRect" parent="Control"]
 top_level = true
 visibility_layer = 3
 z_index = 100

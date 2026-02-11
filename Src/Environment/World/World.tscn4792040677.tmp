@@ -16155,6 +16155,10 @@ position = Vector2(-6, -28)
 physics_interpolation_mode = 1
 position = Vector2(2, 9)
 process_callback = 0
+limit_left = -5010
+limit_top = -2453
+limit_right = 4876
+limit_bottom = 1167
 position_smoothing_speed = 1.0
 
 [node name="PhantomCameraHost2D" type="Node" parent="Camera Master/Camera2D"]
@@ -16188,7 +16192,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-119885.46, 279870.38)
+position = Vector2(-116645.46, 272258.38)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
