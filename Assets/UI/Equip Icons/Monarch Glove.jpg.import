@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpko10scx5u8t"
-path="res://.godot/imported/Loom Shrine Concept.png-53171964ef276d32c807cb5d44e39d75.ctex"
+uid="uid://drhk416xdveua"
+path="res://.godot/imported/Monarch Glove.jpg-cfeafd6537ea1067026ff62e2b846705.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Loom Shrine Concept.png"
-dest_files=["res://.godot/imported/Loom Shrine Concept.png-53171964ef276d32c807cb5d44e39d75.ctex"]
+source_file="res://Assets/UI/Equip Icons/Monarch Glove.jpg"
+dest_files=["res://.godot/imported/Monarch Glove.jpg-cfeafd6537ea1067026ff62e2b846705.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpko10scx5u8t"
-path="res://.godot/imported/Loom Shrine Concept.png-53171964ef276d32c807cb5d44e39d75.ctex"
+uid="uid://3yv38lmv57pj"
+path="res://.godot/imported/Monarch Boots.jpg-f2c69e29f4051cf78aec40c420dc14ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Loom Shrine Concept.png"
-dest_files=["res://.godot/imported/Loom Shrine Concept.png-53171964ef276d32c807cb5d44e39d75.ctex"]
+source_file="res://Assets/UI/Equip Icons/Monarch Boots.jpg"
+dest_files=["res://.godot/imported/Monarch Boots.jpg-f2c69e29f4051cf78aec40c420dc14ff.ctex"]
 
 [params]
 

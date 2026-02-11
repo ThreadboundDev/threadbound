@@ -152,6 +152,11 @@ func _process(_delta: float) -> void:
 		glow_sprite.scale = player_animation.scale
 	_apply_charge_glow()
 
+# Radial menu hold check (polling for hold/release)
+	var menu = get_tree().get_first_node_in_group("radial_menu")
+	if menu:
+		menu.update_hold_state(Input.is_action_pressed("open_menu"))
+		
 # Jump charge logic is now handled by archetypes
 
 func _apply_charge_glow() -> void:
