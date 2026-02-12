@@ -21,6 +21,7 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 ThreadType="*res://Src/Global/ThreadType.gd"
 DebugUI="*res://Src/Global/DebugUI.gd"
 PlayerThreadState="*res://Src/Characters/Player/player_thread_state.gd"
+EquipManager="*res://equip_manager.gd"
 
 [display]
 
