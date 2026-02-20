@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brj1mvgk52wqe"
-path="res://.godot/imported/Hermit Glove.jpg-b48f65a8de59ee415b86f3352b4f17c1.ctex"
+uid="uid://bfmmviee4xjnb"
+path="res://.godot/imported/Outline.png-d34ace779643855bd4750ae76cf7744a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Equip Icons/Hermit Glove.jpg"
-dest_files=["res://.godot/imported/Hermit Glove.jpg-b48f65a8de59ee415b86f3352b4f17c1.ctex"]
+source_file="res://Assets/UI/Outline.png"
+dest_files=["res://.godot/imported/Outline.png-d34ace779643855bd4750ae76cf7744a.ctex"]
 
 [params]
 

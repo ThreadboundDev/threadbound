@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu2mygvpfro6m"
-path="res://.godot/imported/Hermit Chest.jpg-c4454bcebdb86b09ecdd410097c299b0.ctex"
+uid="uid://blgc44pqeq118"
+path="res://.godot/imported/Monarch Chest.png-4762ef4028b9603d09b3eded973b2093.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Equip Icons/Hermit Chest.jpg"
-dest_files=["res://.godot/imported/Hermit Chest.jpg-c4454bcebdb86b09ecdd410097c299b0.ctex"]
+source_file="res://Assets/UI/Equip Icons/Monarch Chest.png"
+dest_files=["res://.godot/imported/Monarch Chest.png-4762ef4028b9603d09b3eded973b2093.ctex"]
 
 [params]
 
