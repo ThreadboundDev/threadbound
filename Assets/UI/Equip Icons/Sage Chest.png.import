@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2yb7qvomrtux"
-path="res://.godot/imported/Hermit Boots.jpg-91a4c586df9975836adef394db9c0028.ctex"
+uid="uid://dlafko5th3awq"
+path="res://.godot/imported/Sage Chest.png-dfee145898378759cb6ca994ace58561.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Equip Icons/Hermit Boots.jpg"
-dest_files=["res://.godot/imported/Hermit Boots.jpg-91a4c586df9975836adef394db9c0028.ctex"]
+source_file="res://Assets/UI/Equip Icons/Sage Chest.png"
+dest_files=["res://.godot/imported/Sage Chest.png-dfee145898378759cb6ca994ace58561.ctex"]
 
 [params]
 

@@ -15811,8 +15811,8 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -3.0
-offset_top = 4.0
-offset_right = -3.0
+offset_top = -17.0
+offset_right = 8.0
 offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -16192,7 +16192,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-121505.46, 283676.37)
+position = Vector2(-125555.46, 293191.38)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
@@ -16256,6 +16256,8 @@ material = SubResource("ShaderMaterial_imjvn")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -12.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 

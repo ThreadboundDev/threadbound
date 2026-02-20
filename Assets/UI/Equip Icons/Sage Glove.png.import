@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3yv38lmv57pj"
-path="res://.godot/imported/Monarch Boots.jpg-f2c69e29f4051cf78aec40c420dc14ff.ctex"
+uid="uid://doo2rntyuuupm"
+path="res://.godot/imported/Sage Glove.png-2f9d6b6f438cc0fa30d87412b1083d83.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Equip Icons/Monarch Boots.jpg"
-dest_files=["res://.godot/imported/Monarch Boots.jpg-f2c69e29f4051cf78aec40c420dc14ff.ctex"]
+source_file="res://Assets/UI/Equip Icons/Sage Glove.png"
+dest_files=["res://.godot/imported/Sage Glove.png-2f9d6b6f438cc0fa30d87412b1083d83.ctex"]
 
 [params]
 
