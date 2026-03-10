@@ -10,57 +10,57 @@ Threadbound levels are hand-crafted, painterly spaces that breathe with the play
 
 
 
-1\. \*\*One Path, Many Expressions\*\*  
+1\. \*\*One Path, Many Expressions\*\*
 
-&nbsp;  Every critical progression path must be traversable using \*\*only the base abilities of any single starting archetype\*\* (pure Red, pure Blue, or pure Yellow).  
+   Every critical progression path must be traversable using \*\*only the base abilities of any single starting archetype\*\* (pure Red, pure Blue, or pure Yellow).
 
-&nbsp;  No section may require an absorbed tool or hybrid ability to pass.
-
-
-
-2\. \*\*The World Reacts\*\*  
-
-&nbsp;  Use \*\*thread-responsive elements\*\* (platforms, walls, hazards, decorations) that appear, disappear, modify, or change behavior based on:
-
-&nbsp;  - Current archetype
-
-&nbsp;  - Absorbed colors
-
-&nbsp;  - Equipped tools (Gloves/Boots/Chest-Head)
-
-&nbsp;  - Spare/Absorb choices (global flags)
+   No section may require an absorbed tool or hybrid ability to pass.
 
 
 
-3\. \*\*Equip Value Through Transformation, Not Gating\*\*  
+2\. \*\*The World Reacts\*\*
 
-&nbsp;  Unlocked tools should \*\*transform\*\* how a section feels to traverse:
+   Use \*\*thread-responsive elements\*\* (platforms, walls, hazards, decorations) that appear, disappear, modify, or change behavior based on:
 
-&nbsp;  - Faster / Safer / More expressive
+   - Current archetype
 
-&nbsp;  - Reveal secrets or alternate storytelling
+   - Absorbed colors
 
-&nbsp;  But never create a hard gate.
+   - Equipped tools (Gloves/Boots/Chest-Head)
 
-
-
-4\. \*\*Favor Subtlety and Theme\*\*  
-
-&nbsp;  Changes should feel woven:
-
-&nbsp;  - Platforms manifest as glowing threads in palette color
-
-&nbsp;  - Destructible elements fray/unravel
-
-&nbsp;  - Illusion walls shimmer if Yellow-equipped
-
-&nbsp;  - Swing points appear as hanging silk
+   - Spare/Absorb choices (global flags)
 
 
 
-5\. \*\*Backtracking Encouraged\*\*  
+3\. \*\*Equip Value Through Transformation, Not Gating\*\*
 
-&nbsp;  Design for return visits—neutral first pass, rich shortcuts/secrets later.
+   Unlocked tools should \*\*transform\*\* how a section feels to traverse:
+
+   - Faster / Safer / More expressive
+
+   - Reveal secrets or alternate storytelling
+
+   But never create a hard gate.
+
+
+
+4\. \*\*Favor Subtlety and Theme\*\*
+
+   Changes should feel woven:
+
+   - Platforms manifest as glowing threads in palette color
+
+   - Destructible elements fray/unravel
+
+   - Illusion walls shimmer if Yellow-equipped
+
+   - Swing points appear as hanging silk
+
+
+
+5\. \*\*Backtracking Encouraged\*\*
+
+   Design for return visits—neutral first pass, rich shortcuts/secrets later.
 
 
 
@@ -72,7 +72,7 @@ Threadbound levels are hand-crafted, painterly spaces that breathe with the play
 
 |----------------------|----------------------------------------------------------------------------------|-----------------------------|-------------------------------------------|
 
-| Helper Platform      | Appears if lacking mobility tool                                                | 0-equip / pure base         | Soft neutral/white glow                   |
+| Helper Platform      | Appears if lacking mobility tool                                                 | 0-equip / pure base         | Soft neutral/white glow                   |
 
 | Crumbling Block      | Stable if no Red; breaks if absorbed                                             | Red archetype/equip         | Pulsing red cracks                        |
 
