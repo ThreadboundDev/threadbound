@@ -97,6 +97,7 @@ func _process(_delta: float) -> void:
 		var viewport_size = get_viewport().get_visible_rect().size
 		background.position = player_screen_pos - (viewport_size / 2)
 		background.position.y -= 80
+		
 
 func update_hold_state(held: bool) -> void:
 	if held and not is_held:
