@@ -1,0 +1,39 @@
+# Visual Style & Palette System
+
+Threadbound uses a **painterly 2.5D parallax** art direction: muted, fraying backgrounds (soft brushes, desaturated earth tones) contrasted by vibrant, glowing threads that reflect the player's current palette. The world feels melancholic and lived-in, like Hollow Knight's decaying Hallownest but with silk/cloth motifs, stained-glass memory sequences, and dynamic color shifts from choices.
+
+## Palette Calculation (RGB Channels)
+Player cloth and world accents tint based on accumulated channel values (0.0–1.0+ overflow).
+
+- **Base (Colorless / No Starting Choice)**: R=0.2, G=0.2, B=0.2 (near-black silhouette, faint cloth wraps)
+- **Starting Choice** (Chamber of the First Weave): +0.4 to chosen channel → one at 0.6, others at 0.2
+- **Per Thread Master Choice**:
+  | Choice   | Effect on Channel |
+  |----------|-------------------|
+  | Absorb   | +0.4              |
+  | Spare    | -0.2              |
+
+- **Natural Outcomes & Examples** (starting Red example):
+  | Ending/Path                  | Final Channels (R/G/B) | Visual Result                  |
+  |------------------------------|------------------------|--------------------------------|
+  | True Red                     | 1.0 / 0.0 / 0.0       | Pure saturated crimson         |
+  | Pure Mercy (spare all)       | 0.0 / 0.0 / 0.0       | Pure white (post-Reclaimer)    |
+  | Pure Corruption (absorb all) | 1.0 / 0.6 / 0.6+      | Overflow → black with cracks   |
+  | Hybrid (e.g., Red + Blue)    | ~0.8 / 0.4 / 0.0      | Unique muted purple/indigo     |
+  | Colorless Run (secret)       | ~0.2 across           | Near-grayscale, fades further  |
+
+- **Reclaimer Secret Zone** (unlocks on Pure Mercy/Corruption only):
+  - Mercy + Spare Reclaimer → White Transcendence (pure radiant white)
+  - Corruption + Absorb Reclaimer → Black Devourer (pure black with glowing cracks)
+  - Inconsistent → Instant Shattered/Hollow (game over)
+
+## Implementation Notes (Godot 4.5xx)
+- Use a **CanvasItem Shader** on the player sprite (or global Material override):
+  - Uniform vec3 player_rgb (set via script from accumulated values).
+  - Tint base texture: `COLOR.rgb *= player_rgb;` (or more advanced: channel mixing for hybrids).
+  - Overflow handling: clamp or add crack shader (noise + black tint).
+- World reactivity: Environment shaders modulate saturation/desaturation based on global palette flags (e.g., mercy paths fade to white, corruption adds black cracks).
+- Runes/accents: Glowing overlays in starting color on absorbed gear.
+- Visual evolution: Sprite sheets or modulate layers for cloth changes (e.g., cape grows ornate on True paths).
+
+This system makes choices visible: the Threadborne literally becomes their fate.
