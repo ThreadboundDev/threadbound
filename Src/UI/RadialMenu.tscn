@@ -26,85 +26,96 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Background" type="TextureRect" parent="MenuFadeContainer"]
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
+mouse_filter = 2
 texture = ExtResource("2_5q6ol")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MonarchGloves" type="TextureButton" parent="MenuFadeContainer"]
+[node name="SageBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+action_mode = 0
+texture_normal = ExtResource("11_mkc8p")
+stretch_mode = 5
+
+[node name="MonarchGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("3_xbj7m")
 stretch_mode = 5
 
-[node name="MonarchChest" type="TextureButton" parent="MenuFadeContainer"]
+[node name="MonarchChest" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("4_8o5ol")
 stretch_mode = 5
 
-[node name="MonarchBoots" type="TextureButton" parent="MenuFadeContainer"]
+[node name="MonarchBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("5_ump05")
 stretch_mode = 5
 
-[node name="HermitGloves" type="TextureButton" parent="MenuFadeContainer"]
+[node name="HermitGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("6_jv3iq")
 stretch_mode = 5
 
-[node name="HermitChest" type="TextureButton" parent="MenuFadeContainer"]
+[node name="HermitChest" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("7_6bnbe")
 stretch_mode = 5
 
-[node name="HermitBoots" type="TextureButton" parent="MenuFadeContainer"]
+[node name="HermitBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("8_yup82")
 stretch_mode = 5
 
-[node name="SageGloves" type="TextureButton" parent="MenuFadeContainer"]
+[node name="SageGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("9_ptgr4")
 stretch_mode = 5
 
-[node name="SageChest" type="TextureButton" parent="MenuFadeContainer"]
+[node name="SageChest" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("10_ov6ig")
-stretch_mode = 5
-
-[node name="SageBoots" type="TextureButton" parent="MenuFadeContainer"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-action_mode = 0
-texture_normal = ExtResource("11_mkc8p")
 stretch_mode = 5
