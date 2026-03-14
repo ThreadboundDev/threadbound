@@ -24,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Background" type="TextureRect" parent="MenuFadeContainer"]
 z_as_relative = false
@@ -102,15 +103,6 @@ action_mode = 0
 texture_normal = ExtResource("8_yup82")
 stretch_mode = 5
 
-[node name="SageGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("9_ptgr4")
-stretch_mode = 5
-
 [node name="SageChest" type="TextureButton" parent="MenuFadeContainer/Background"]
 z_as_relative = false
 layout_mode = 0
@@ -118,4 +110,13 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 action_mode = 0
 texture_normal = ExtResource("10_ov6ig")
+stretch_mode = 5
+
+[node name="SageGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
+z_as_relative = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+action_mode = 0
+texture_normal = ExtResource("9_ptgr4")
 stretch_mode = 5
