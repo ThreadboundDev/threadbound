@@ -51,7 +51,7 @@ func _ready() -> void:
 	slow_bank = max_slow_bank
 	last_real_time = Time.get_ticks_msec() / 1000.0
 	
-	# Debug
+	# Debug: confirm every button
 	print("=== Button Load Debug ===")
 	print("MonarchGloves: ", monarch_gloves != null)
 	print("MonarchBoots: ", monarch_boots != null)
@@ -64,7 +64,7 @@ func _ready() -> void:
 	print("SageChest: ", sage_chest != null)
 	print("=======================")
 	
-	# Connect all 9
+	# Connect hover/pressed for all 9
 	_connect_slot(monarch_gloves, EquipManager.ThreadColor.RED)
 	_connect_slot(monarch_boots, EquipManager.ThreadColor.RED)
 	_connect_slot(monarch_chest, EquipManager.ThreadColor.RED)
@@ -79,7 +79,9 @@ func _connect_slot(button: TextureButton, color: EquipManager.ThreadColor) -> vo
 	if button == null:
 		print("Warning: button is null for color ", color)
 		return
+	
 	print("Connected hover/pressed for: ", button.name)
+	
 	button.mouse_entered.connect(_on_slot_hover.bind(button, color))
 	button.mouse_exited.connect(_on_slot_unhover.bind(button))
 	button.pressed.connect(_on_slot_pressed.bind(button))
@@ -107,6 +109,7 @@ func _process(_delta: float) -> void:
 	if player and is_held:
 		var player_screen_pos = player.get_global_transform_with_canvas().origin
 		var viewport_size = get_viewport().get_visible_rect().size
+		
 		background.position = player_screen_pos - (viewport_size / 2)
 		background.position.y -= 80
 
@@ -114,6 +117,7 @@ func update_hold_state(held: bool) -> void:
 	if held and not is_held:
 		is_held = true
 		_fade_in_menu()
+		
 		if slow_bank > 0.1:
 			is_slowing = true
 			Engine.time_scale = slow_scale
@@ -121,6 +125,7 @@ func update_hold_state(held: bool) -> void:
 		else:
 			is_slowing = false
 			Engine.time_scale = 1.0
+	
 	elif not held and is_held:
 		is_held = false
 		_close_menu()
@@ -129,6 +134,7 @@ func _close_menu() -> void:
 	is_slowing = false
 	_fade_out_menu()
 	_fade_out_blur()
+	
 	if time_tween:
 		time_tween.kill()
 	time_tween = create_tween()
@@ -139,6 +145,7 @@ func _close_menu() -> void:
 func _fade_in_menu() -> void:
 	menu_fade_container.visible = true
 	menu_fade_container.modulate.a = 0.0
+	
 	if menu_tween:
 		menu_tween.kill()
 	menu_tween = create_tween()
@@ -176,14 +183,14 @@ func _fade_out_blur() -> void:
 	if blur_rect:
 		blur_tween = create_tween()
 		blur_tween.tween_property(blur_rect.material, "shader_parameter/blur_amount", 0.0, close_fade_time)\
-			.set_ease(Tween.EASE_IN)\
-			.set_trans(Tween.TRANS_SINE)
-		blur_tween.tween_callback(func():
-			if blur_layer:
-				blur_layer.visible = false
-			if blur_rect:
-				blur_rect.visible = false
-		)
+		.set_ease(Tween.EASE_IN)\
+		.set_trans(Tween.TRANS_SINE)
+	blur_tween.tween_callback(func():
+		if blur_layer:
+			blur_layer.visible = false
+		if blur_rect:
+			blur_rect.visible = false
+	)
 
 func select_equip(slot_idx: int) -> void:
 	var slot_type = slot_idx / 3
@@ -195,11 +202,11 @@ func select_equip(slot_idx: int) -> void:
 	slow_bank = max_slow_bank
 	_close_menu()
 
-# HOVER - runs at real time even during slow time
+# HOVER ANIMATION - real-time even during slow time
 func _on_slot_hover(button: TextureButton, color: EquipManager.ThreadColor) -> void:
 	var glow_color = EquipManager.THREAD_COLORS[color].lightened(0.6)
 	var tween = create_tween()
-	tween.set_process_mode(Tween.TWEEN_PROCESS_IDLE)  # Real-time (ignores time_scale)
+	tween.set_process_mode(Tween.TWEEN_PROCESS_IDLE)  # Runs at real time
 	tween.set_parallel()
 	tween.tween_property(button, "modulate", glow_color, 0.15)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -227,15 +234,24 @@ func _on_slot_unhover(button: TextureButton) -> void:
 func _on_slot_pressed(button: TextureButton) -> void:
 	var slot_idx = -1
 	match button.name:
-		"MonarchGloves": slot_idx = 0
-		"MonarchBoots": slot_idx = 3
-		"MonarchChest": slot_idx = 6
-		"HermitGloves": slot_idx = 1
-		"HermitBoots": slot_idx = 4
-		"HermitChest": slot_idx = 7
-		"SageGloves": slot_idx = 2
-		"SageBoots": slot_idx = 5
-		"SageChest": slot_idx = 8
+		"MonarchGloves":
+			slot_idx = 0
+		"MonarchBoots":
+			slot_idx = 3
+		"MonarchChest":
+			slot_idx = 6
+		"HermitGloves":
+			slot_idx = 1
+		"HermitBoots":
+			slot_idx = 4
+		"HermitChest":
+			slot_idx = 7
+		"SageGloves":
+			slot_idx = 2
+		"SageBoots":
+			slot_idx = 5
+		"SageChest":
+			slot_idx = 8
 	if slot_idx >= 0:
 		select_equip(slot_idx)
 	else:
