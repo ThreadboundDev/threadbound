@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://36xw6ldj7qvd"]
+[gd_resource type="TileSet" format=3 uid="uid://36xw6ldj7qvd"]
 
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="1_oa22t"]
 
