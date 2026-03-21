@@ -12,7 +12,7 @@ public enum InactiveUpdateMode
 }
 
 public abstract class PhantomCamera
-{
+{ 
     protected readonly GodotObject Node;
 
     public delegate void BecameActiveEventHandler();

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://archetype_selector"]
 
-[ext_resource type="Script" path="res://Src/Environment/Interactables/ArchetypeSelector.gd" id="1_selector"]
+[ext_resource type="Script" uid="uid://dpw7ywtyyu5e0" path="res://Src/Environment/Interactables/ArchetypeSelector.cs" id="1_selector"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_selector"]
 size = Vector2(73, 157)

@@ -4,7 +4,7 @@
 # Rider ignored files
 /projectSettingsUpdater.xml
 /contentModel.xml
-/.idea.Threadbound.iml
+/.idea.threadbound-feat-equipment-system.iml
 /modules.xml
 # Ignored default folder with query files
 /queries/

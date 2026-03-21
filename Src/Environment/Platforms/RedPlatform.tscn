@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dt5d4u1e8y241"]
+[gd_scene format=3 uid="uid://dt5d4u1e8y241"]
 
-[ext_resource type="Script" uid="uid://dj60280cqb2q8" path="res://Src/Environment/Platforms/RedPlatform.gd" id="1_45ero"]
+[ext_resource type="Script" uid="uid://dy3ieit7cen5e" path="res://Src/Environment/Platforms/RedPlatform.cs" id="1_l6l5a"]
 [ext_resource type="TileSet" uid="uid://36xw6ldj7qvd" path="res://Assets/Tiles/RedPlatformTiles.tres" id="2_q1i3s"]
-[ext_resource type="Script" uid="uid://c5cs4x3uxacw7" path="res://Src/Environment/Platforms/PlatformTiles.gd" id="3_q56us"]
+[ext_resource type="Script" uid="uid://3xphh32h1mel" path="res://Src/Environment/Platforms/PlatformTiles.cs" id="3_l6l5a"]
 [ext_resource type="Shader" uid="uid://bm0k680jtnyp" path="res://Src/Environment/Platforms/GlowRect.gdshader" id="4_86is1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ml7em"]
@@ -21,7 +21,7 @@ viewport_path = NodePath("PlatformTiles/GlowLayer/GlowViewport")
 [sub_resource type="CircleShape2D" id="CircleShape2D_ur3u2"]
 radius = 650.0
 
-[node name="RedPlatform" type="RigidBody2D" groups=["red_grapple"]]
+[node name="RedPlatform" type="RigidBody2D" unique_id=96693484 groups=["red_grapple"]]
 collision_layer = 8
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_ml7em")
@@ -29,42 +29,40 @@ gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 5
 linear_damp = 10.0
-script = ExtResource("1_45ero")
-return_speed = 60000.0
-auto_return_delay = 5.0
+script = ExtResource("1_l6l5a")
 
-[node name="PlatformTiles" type="TileMapLayer" parent="."]
+[node name="PlatformTiles" type="TileMapLayer" parent="." unique_id=242970390]
 scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 1, 0, 1, 0, 3, 0, 0, 0, 255, 255, 0, 0, 1, 0, 1, 0, 4, 0, 0, 0, 0, 0, 255, 255, 1, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 4, 0, 0, 0)
 tile_set = ExtResource("2_q1i3s")
 use_kinematic_bodies = true
-script = ExtResource("3_q56us")
+script = ExtResource("3_l6l5a")
 
-[node name="GlowLayer" type="CanvasLayer" parent="PlatformTiles"]
+[node name="GlowLayer" type="CanvasLayer" parent="PlatformTiles" unique_id=1443077743]
 
-[node name="GlowViewport" type="SubViewport" parent="PlatformTiles/GlowLayer"]
+[node name="GlowViewport" type="SubViewport" parent="PlatformTiles/GlowLayer" unique_id=1814940306]
 transparent_bg = true
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="PlatformTiles2" type="TileMapLayer" parent="PlatformTiles/GlowLayer/GlowViewport"]
+[node name="PlatformTiles2" type="TileMapLayer" parent="PlatformTiles/GlowLayer/GlowViewport" unique_id=1094981976]
 scale = Vector2(0.25, 0.25)
 tile_set = ExtResource("2_q1i3s")
 use_kinematic_bodies = true
 
-[node name="GlowRect" type="TextureRect" parent="PlatformTiles/GlowLayer"]
+[node name="GlowRect" type="TextureRect" parent="PlatformTiles/GlowLayer" unique_id=230940973]
 material = SubResource("ShaderMaterial_3ehvh")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("ViewportTexture_uc5qd")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1511091833]
 position = Vector2(0, -1)
 collision_layer = 0
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=323358288]
 shape = SubResource("CircleShape2D_ur3u2")
 
-[node name="AnchorVisual" type="ColorRect" parent="."]
+[node name="AnchorVisual" type="ColorRect" parent="." unique_id=734200219]
 color = Color(1, 0, 0, 1)

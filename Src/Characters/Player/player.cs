@@ -1,264 +1,376 @@
 using Godot;
 using System;
-using PhantomCamera;
 
-public partial class player : CharacterBody2D
+public partial class Player : CharacterBody2D
 {
-    // ===============================
-    // NODES
-    // ===============================
-    [Export] private AnimatedSprite2D playerAnimation;
-    [Export] private NodePath cameraPath; // e.g. "../Camera Master/PhantomCameraHost2D/MainFollowCam"
-    private PhantomCameraHost2D cameraHost;
+	// ===============================
+	// NODES
+	// ===============================
+	private AnimatedSprite2D _playerAnimation;
+	private Node _camera;
+	private Sprite2D _glowSprite;
+	private Timer _abilityCooldownTimer;
 
-    [Export] private Sprite2D glowSprite;
-    [Export] private Timer abilityCooldownTimer;
+	// ===============================
+	// TUNABLES
+	// ===============================
+	[Export] public float Speed { get; set; } = 500.0f;
+	[Export] public float AirControlMult { get; set; } = 0.75f;
+	[Export] public float Gravity { get; set; } = 1600.0f;
+	[Export] public float MaxFallSpeed { get; set; } = 1000.0f;
+	[Export] public float CoyoteTime { get; set; } = 0.12f;
+	[Export] public float LookOffset { get; set; } = 60.0f;
+	[Export] public float LookSpeed { get; set; } = 10.0f;
+	[Export] public float HoldDuration { get; set; } = 1.0f;
 
-    // ===============================
-    // TUNABLES – Base movement & shared glow
-    // ===============================
-    [Export] public float Speed { get; set; } = 500.0f;
-    [Export] public float AirControlMult { get; set; } = 0.75f;
-    [Export] public float Gravity { get; set; } = 1600.0f;
-    [Export] public float MaxFallSpeed { get; set; } = 1000.0f;
-    [Export] public float CoyoteTime { get; set; } = 0.12f;
-    [Export] public float LookOffset { get; set; } = 60.0f;
-    [Export] public float LookSpeed { get; set; } = 10.0f;
-    [Export] public float HoldDuration { get; set; } = 1.0f;
+	// Glow configuration (shared across all archetypes)
+	[Export] public float IdleGlowWidth { get; set; } = 1.2f;
+	[Export] public float IdleGlowIntensity { get; set; } = 0.35f;
+	[Export] public float ChargeGlowMaxWidth { get; set; } = 4.0f;
+	[Export] public float ChargeGlowMaxIntensity { get; set; } = 1.2f;
+	[Export] public float JumpForce { get; set; } = 700.0f;
 
-    // Shared glow config (used by all charge-based tools later)
-    [Export] public float IdleGlowWidth { get; set; } = 1.2f;
-    [Export] public float IdleGlowIntensity { get; set; } = 0.35f;
-    [Export] public float ChargeGlowMaxWidth { get; set; } = 4.0f;
-    [Export] public float ChargeGlowMaxIntensity { get; set; } = 1.2f;
+	// ===============================
+	// STATE
+	// ===============================
+	public float CoyoteTimer { get; set; } = 0.0f;
+	private int _lastDirection = 1;
 
-    // Base jump force – Boots equip will override/augment this
-    [Export] public float BaseJumpForce { get; set; } = 700.0f;
+	// Exposed for GDScript compatibility (camera scripts)
+	public int last_direction => _lastDirection;
+	private bool _isNearInteractable = false;
+	private Node _currentSelector = null;
+	private float _currentLookOffsetY = 0.0f;
+	private float _holdTimer = 0.0f;
 
-    // ===============================
-    // STATE
-    // ===============================
-    private float coyoteTimer = 0.0f;
-    public int LastDirection { get; private set; } = 1; // Public for bias_controller
+	// Charge ratios for glow effects (set by archetypes)
+	private float _jumpChargeRatio = 0.0f;
+	private float _dashChargeRatio = 0.0f;
+	private Color _baseGlowColor = ThreadType.RED_COLOR;
+	private float _baseGlowWidth = 1.2f;
+	private float _baseGlowIntensity = 0.35f;
+	private Color _defaultGlowColor = ThreadType.RED_COLOR;
+	private float _defaultGlowWidth = 1.2f;
+	private float _defaultGlowIntensity = 0.35f;
+	private Color _currentChargeGlowColor = ThreadType.RED_COLOR;
 
-    private bool isNearInteractable = false;
-    private Area2D currentSelector = null;
+	// Archetype - typed as BaseArchetype
+	private BaseArchetype _archetype = null;
 
-    private float currentLookOffsetY = 0.0f;
-    private float holdTimer = 0.0f;
+	// ===============================
+	// INITIALIZATION
+	// ===============================
+	public override void _Ready()
+	{
+		// Get node references
+		_playerAnimation = GetNode<AnimatedSprite2D>("Player Animation");
+		_camera = GetNodeOrNull("../Camera Master/Camera2D/PhantomCameraHost2D/MainFollowCam");
+		_glowSprite = GetNode<Sprite2D>("GlowSprite");
+		_abilityCooldownTimer = GetNode<Timer>("AbilityCooldownTimer");
 
-    // Charge levels (filled/used by equipped tools later)
-    public float JumpChargeRatio { get; private set; } = 0.0f;
-    public float MomentumChargeRatio { get; private set; } = 0.0f;
+		// Connect ability cooldown timer timeout signal
+		if (_abilityCooldownTimer != null)
+		{
+			_abilityCooldownTimer.Timeout += OnAbilityCooldownTimeout;
+		}
 
-    private Color currentGlowColor = new Color(0.8f, 0.8f, 1.0f); // Default faint blueish
+		// Set default archetype to Red
+		SetArchetype(ThreadType.RED);
+	}
 
-    public override void _Ready()
-    {
-        playerAnimation ??= GetNodeOrNull<AnimatedSprite2D>("Player Animation");
-        glowSprite ??= GetNodeOrNull<Sprite2D>("GlowSprite");
-        abilityCooldownTimer ??= GetNodeOrNull<Timer>("AbilityCooldownTimer");
+	// --------------------------------------------------------------
+	// MAIN LOOP
+	// --------------------------------------------------------------
+	public override void _PhysicsProcess(double delta)
+	{
+		float dt = (float)delta;
 
-        var camNode = GetNodeOrNull(cameraPath);
-        cameraHost = camNode as PhantomCameraHost2D;
+		// ---- GRAVITY + COYOTE ----
+		if (!IsOnFloor())
+		{
+			var vel = Velocity;
+			vel.Y += Gravity * dt;
+			if (vel.Y > MaxFallSpeed)
+				vel.Y = MaxFallSpeed;
+			Velocity = vel;
+			CoyoteTimer -= dt;
+		}
+		else
+		{
+			CoyoteTimer = CoyoteTime;
+		}
 
-        if (abilityCooldownTimer != null)
-        {
-            abilityCooldownTimer.Timeout += OnAbilityCooldownTimeout;
-        }
+		// ---- ARCHETYPE ACTIONS ----
+		if (_archetype != null)
+		{
+			// Primary action (Jump) - handle PRESSED and RELEASED independently
+			if (Input.IsActionJustPressed("Jump"))
+				_archetype.HandlePrimaryAction(BaseArchetype.ActionState.PRESSED, dt);
+			if (Input.IsActionJustReleased("Jump"))
+				_archetype.HandlePrimaryAction(BaseArchetype.ActionState.RELEASED, dt);
+			// HOLDING is called every frame while button is held (but not on press/release frames)
+			if (Input.IsActionPressed("Jump") && !Input.IsActionJustPressed("Jump") && !Input.IsActionJustReleased("Jump"))
+				_archetype.HandlePrimaryAction(BaseArchetype.ActionState.HOLDING, dt);
 
-        // Initial glow setup
-        UpdateBaseGlow(currentGlowColor, IdleGlowWidth, IdleGlowIntensity);
-    }
+			// Secondary action (Dash) - handle PRESSED and RELEASED independently
+			if (Input.IsActionJustPressed("Dash"))
+				_archetype.HandleSecondaryAction(BaseArchetype.ActionState.PRESSED, dt);
+			if (Input.IsActionJustReleased("Dash"))
+				_archetype.HandleSecondaryAction(BaseArchetype.ActionState.RELEASED, dt);
+			// HOLDING is called every frame while button is held (but not on press/release frames)
+			if (Input.IsActionPressed("Dash") && !Input.IsActionJustPressed("Dash") && !Input.IsActionJustReleased("Dash"))
+				_archetype.HandleSecondaryAction(BaseArchetype.ActionState.HOLDING, dt);
 
-    public override void _PhysicsProcess(double delta)
-    {
-        float fDelta = (float)delta;
+			// Thread mechanic (called every frame)
+			_archetype.ThreadMechanic(dt);
 
-        // Gravity & Coyote time
-        if (!IsOnFloor())
-        {
-            Velocity = Velocity with { Y = Velocity.Y + Gravity * fDelta };
-            if (Velocity.Y > MaxFallSpeed)
-                Velocity = Velocity with { Y = MaxFallSpeed };
+			// Process archetype mechanics (called every frame)
+			_archetype.ProcessMechanics(dt, this);
+		}
 
-            coyoteTimer -= fDelta;
-        }
-        else
-        {
-            coyoteTimer = CoyoteTime;
-        }
+		// ---- HORIZONTAL INPUT ----
+		float horizontalInput = Input.GetAxis("move_left", "move_right");
+		if (horizontalInput != 0)
+			_lastDirection = (int)Mathf.Sign(horizontalInput);
 
-        // Horizontal input & direction tracking
-        float horizontalInput = Input.GetAxis("move_left", "move_right");
-        if (horizontalInput != 0)
-        {
-            LastDirection = Mathf.Sign(horizontalInput);
-        }
+		// ---- BASE MOVEMENT — ALWAYS RUNS ----
+		float control = IsOnFloor() ? 1.0f : AirControlMult;
+		// Only apply base movement if archetype isn't controlling velocity (e.g., during dash)
+		bool archetypeControlling = _archetype is RedArchetype redArch && redArch.IsDashing;
+		if (!archetypeControlling)
+		{
+			var vel = Velocity;
+			vel.X = Speed * horizontalInput * control;
+			Velocity = vel;
+		}
 
-        float control = IsOnFloor() ? 1.0f : AirControlMult;
-        Velocity = Velocity with { X = Speed * horizontalInput * control };
+		// ---- ARCHETYPE SELECTION ----
+		if (_isNearInteractable && _currentSelector != null && Input.IsActionJustPressed("move_up"))
+		{
+			// Try to get the ArchetypeColor from the selector
+			if (_currentSelector is ArchetypeSelector selector)
+			{
+				SetArchetype(selector.ArchetypeColor);
+			}
+			else
+			{
+				// Fallback for GDScript selectors
+				string color = (string)_currentSelector.Get("Color");
+				SetArchetype(color);
+			}
+		}
 
-        // Base jump (instant, with coyote forgiveness)
-        if (Input.IsActionJustPressed("jump") && (IsOnFloor() || coyoteTimer > 0))
-        {
-            Velocity = Velocity with { Y = -BaseJumpForce };
-            coyoteTimer = 0f; // Consume coyote window
+		// ---- LOOK / INTERACT ----
+		if (_camera != null)
+		{
+			Vector2 cur = _camera.Get("follow_offset").AsVector2();
+			float targetY = 0.0f;
 
-            // Optional: Add jump sound, particle, or animation transition here later
-            // e.g. playerAnimation.Play("JumpStart");
-        }
+			bool isDashing = _archetype is RedArchetype redArchDash && redArchDash.IsDashing;
 
-        // Vertical camera offset (hold up/down – using PhantomCam FollowOffset)
-        if (cameraHost != null)
-        {
-            Vector2 curOffset = cameraHost.FollowOffset;
-            float targetY = 0.0f;
+			if (Input.IsActionPressed("move_up") && !isDashing)
+			{
+				_holdTimer += dt;
+				if (_holdTimer >= HoldDuration && !_isNearInteractable)
+					targetY = -LookOffset;
+			}
+			else if (Input.IsActionPressed("move_down") && !isDashing)
+			{
+				_holdTimer += dt;
+				if (_holdTimer >= HoldDuration)
+					targetY = LookOffset;
+			}
+			else
+			{
+				_holdTimer = 0.0f;
+			}
 
-            if (Input.IsActionPressed("move_up"))
-            {
-                holdTimer += fDelta;
-                if (holdTimer >= HoldDuration && !isNearInteractable)
-                    targetY = -LookOffset;
-            }
-            else if (Input.IsActionPressed("move_down"))
-            {
-                holdTimer += fDelta;
-                if (holdTimer >= HoldDuration)
-                    targetY = LookOffset;
-            }
-            else
-            {
-                holdTimer = 0.0f;
-            }
+			_currentLookOffsetY = Mathf.Lerp(_currentLookOffsetY, targetY, dt * LookSpeed);
+			_camera.Call("set_follow_offset", new Vector2(cur.X, _currentLookOffsetY));
+		}
 
-            currentLookOffsetY = Mathf.Lerp(currentLookOffsetY, targetY, fDelta * LookSpeed);
-            cameraHost.FollowOffset = new Vector2(curOffset.X, currentLookOffsetY);
-        }
+		// ---- FINAL PHYSICS MOVE ----
+		MoveAndSlide();
 
-        // Interact / pickup stub (can repurpose later for equip pickups)
-        if (isNearInteractable && currentSelector != null && Input.IsActionJustPressed("move_up"))
-        {
-            GD.Print($"Interacting with: {currentSelector.Name}");
-        }
+		// ---- ANIMATIONS ----
+		UpdateAnimations(horizontalInput);
+	}
 
-        MoveAndSlide();
+	public override void _Process(double delta)
+	{
+		if (Input.IsActionJustPressed("ui_cancel"))
+		{
+			GetTree().Quit();
+		}
 
-        UpdateAnimations(horizontalInput);
-    }
+		if (_glowSprite != null && _playerAnimation != null && _playerAnimation.SpriteFrames != null)
+		{
+			var tex = _playerAnimation.SpriteFrames.GetFrameTexture(_playerAnimation.Animation, _playerAnimation.Frame);
+			_glowSprite.Texture = tex;
+			_glowSprite.FlipH = _playerAnimation.FlipH;
+			_glowSprite.Position = _playerAnimation.Position;
+			_glowSprite.Scale = _playerAnimation.Scale;
+		}
+		ApplyChargeGlow();
 
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("ui_cancel"))
-        {
-            GetTree().Quit();
-        }
+		// Radial menu hold check (polling for hold/release)
+		var menu = GetTree().GetFirstNodeInGroup("radial_menu") as RadialMenu;
+		if (menu != null)
+		{
+			menu.UpdateHoldState(Input.IsActionPressed("open_menu"));
+		}
+	}
 
-        // Sync glow sprite to current animation frame
-        if (glowSprite != null && playerAnimation != null && playerAnimation.SpriteFrames != null)
-        {
-            var tex = playerAnimation.SpriteFrames.GetFrameTexture(playerAnimation.Animation, playerAnimation.Frame);
-            glowSprite.Texture = tex;
-            glowSprite.FlipH = playerAnimation.FlipH;
-            glowSprite.Position = playerAnimation.Position;
-            glowSprite.Scale = playerAnimation.Scale;
+	// --------------------------------------------------------------
+	// GLOW EFFECTS
+	// --------------------------------------------------------------
+	private void ApplyChargeGlow()
+	{
+		if (_glowSprite == null || _glowSprite.Material == null || _archetype == null)
+			return;
 
-            ApplyChargeGlow();
-        }
+		float level = Mathf.Clamp(Mathf.Max(_jumpChargeRatio, _dashChargeRatio), 0.0f, 1.0f);
+		var mat = _glowSprite.Material as ShaderMaterial;
+		if (mat == null)
+			return;
 
-        // Radial menu hold polling (implement later)
-        var menu = GetTree().GetFirstNodeInGroup("radial_menu");
-        if (menu != null)
-        {
-            menu.CallDeferred("update_hold_state", Input.IsActionPressed("open_menu"));
-        }
-    }
+		float targetWidth = Mathf.Lerp(_baseGlowWidth, ChargeGlowMaxWidth, level);
+		float targetIntensity = Mathf.Lerp(_baseGlowIntensity, ChargeGlowMaxIntensity, level);
+		mat.SetShaderParameter("glow_width", targetWidth);
+		mat.SetShaderParameter("glow_intensity", targetIntensity);
 
-    private void ApplyChargeGlow()
-    {
-        if (glowSprite?.Material == null) return;
+		if (level > 0.01f)
+			mat.SetShaderParameter("glow_color", _archetype.ChargeGlowColor);
+		else
+			mat.SetShaderParameter("glow_color", _baseGlowColor);
+	}
 
-        float level = Mathf.Clamp(Mathf.Max(JumpChargeRatio, MomentumChargeRatio), 0f, 1f);
-        var mat = (ShaderMaterial)glowSprite.Material;
+	public void SetDashChargeLevel(float level)
+	{
+		_dashChargeRatio = Mathf.Clamp(level, 0.0f, 1.0f);
+	}
 
-        float targetWidth = Mathf.Lerp(IdleGlowWidth, ChargeGlowMaxWidth, level);
-        float targetIntensity = Mathf.Lerp(IdleGlowIntensity, ChargeGlowMaxIntensity, level);
+	public void SetJumpChargeLevel(float level)
+	{
+		_jumpChargeRatio = Mathf.Clamp(level, 0.0f, 1.0f);
+	}
 
-        mat.SetShaderParameter("glow_width", targetWidth);
-        mat.SetShaderParameter("glow_intensity", targetIntensity);
-        mat.SetShaderParameter("glow_color", level > 0.01f ? currentGlowColor : currentGlowColor);
-    }
+	/// <summary>
+	/// Start ability cooldown timer - called by archetypes
+	/// </summary>
+	public void StartAbilityCooldown(float duration)
+	{
+		if (_abilityCooldownTimer != null)
+		{
+			_abilityCooldownTimer.WaitTime = duration;
+			_abilityCooldownTimer.Start();
+		}
+	}
 
-    public void SetJumpChargeLevel(float level)
-    {
-        JumpChargeRatio = Mathf.Clamp(level, 0f, 1f);
-    }
+	private void SetBaseGlow(Color color, float width, float intensity)
+	{
+		_baseGlowColor = color;
+		_baseGlowWidth = width;
+		_baseGlowIntensity = intensity;
 
-    public void SetMomentumChargeLevel(float level)
-    {
-        MomentumChargeRatio = Mathf.Clamp(level, 0f, 1f);
-    }
+		if (_glowSprite != null && _glowSprite.Material != null && Mathf.Max(_jumpChargeRatio, _dashChargeRatio) <= 0.01f)
+		{
+			var mat = _glowSprite.Material as ShaderMaterial;
+			if (mat != null)
+			{
+				mat.SetShaderParameter("glow_color", color);
+				mat.SetShaderParameter("glow_width", width);
+				mat.SetShaderParameter("glow_intensity", intensity);
+			}
+		}
+	}
 
-    public void StartAbilityCooldown(float duration)
-    {
-        if (abilityCooldownTimer != null)
-        {
-            abilityCooldownTimer.WaitTime = duration;
-            abilityCooldownTimer.Start();
-        }
-    }
+	// --------------------------------------------------------------
+	// ANIMATIONS
+	// --------------------------------------------------------------
+	private void UpdateAnimations(float dir)
+	{
+		bool isDashing = _archetype is RedArchetype redArchAnim && redArchAnim.IsDashing;
 
-    private void UpdateBaseGlow(Color color, float width, float intensity)
-    {
-        currentGlowColor = color;
-        if (glowSprite?.Material != null && Mathf.Max(JumpChargeRatio, MomentumChargeRatio) <= 0.01f)
-        {
-            var mat = (ShaderMaterial)glowSprite.Material;
-            mat.SetShaderParameter("glow_color", color);
-            mat.SetShaderParameter("glow_width", width);
-            mat.SetShaderParameter("glow_intensity", intensity);
-        }
-    }
+		if (isDashing && _playerAnimation.SpriteFrames.HasAnimation("Dash"))
+		{
+			_playerAnimation.Play("Dash");
+		}
+		else if (!IsOnFloor() && _playerAnimation.SpriteFrames.HasAnimation("Jump"))
+		{
+			_playerAnimation.Play("Jump");
+		}
+		else if (dir != 0 && _playerAnimation.SpriteFrames.HasAnimation("Walk"))
+		{
+			_playerAnimation.Play("Walk");
+		}
+		else if (_playerAnimation.SpriteFrames.HasAnimation("Idle"))
+		{
+			_playerAnimation.Play("Idle");
+		}
 
-    private void UpdateAnimations(float horizontalInput)
-    {
-        if (playerAnimation == null || playerAnimation.SpriteFrames == null) return;
+		if (Velocity.X != 0)
+		{
+			_playerAnimation.FlipH = Velocity.X < 0;
+		}
+	}
 
-        if (!IsOnFloor() && playerAnimation.SpriteFrames.HasAnimation("Jump"))
-        {
-            playerAnimation.Play("Jump");
-        }
-        else if (Mathf.Abs(horizontalInput) > 0.01f && playerAnimation.SpriteFrames.HasAnimation("Walk"))
-        {
-            playerAnimation.Play("Walk");
-        }
-        else if (playerAnimation.SpriteFrames.HasAnimation("Idle"))
-        {
-            playerAnimation.Play("Idle");
-        }
+	// --------------------------------------------------------------
+	// INTERACTABLES
+	// --------------------------------------------------------------
+	public void OnInteractableEntered(Area2D area)
+	{
+		_isNearInteractable = true;
+		_currentSelector = area;
+	}
 
-        if (Velocity.X != 0)
-        {
-            playerAnimation.FlipH = Velocity.X < 0;
-        }
-    }
+	public void OnInteractableExited(Area2D area)
+	{
+		_isNearInteractable = false;
+		if (_currentSelector == area)
+			_currentSelector = null;
+	}
 
-    // Signal callbacks – connect in editor (Area2D body_entered / body_exited)
-    private void OnInteractableEntered(Area2D area)
-    {
-        isNearInteractable = true;
-        currentSelector = area;
-    }
+	private void OnAbilityCooldownTimeout()
+	{
+		// Call archetype callback when cooldown completes
+		if (_archetype != null)
+			_archetype.OnAbilityCooldownComplete();
+	}
 
-    private void OnInteractableExited(Area2D area)
-    {
-        isNearInteractable = false;
-        if (currentSelector == area)
-            currentSelector = null;
-    }
+	// --------------------------------------------------------------
+	// ARCHETYPE MANAGEMENT
+	// --------------------------------------------------------------
+	public void SetArchetype(string color)
+	{
+		if (_archetype != null)
+		{
+			RemoveChild(_archetype);
+			_archetype.QueueFree();
+		}
 
-    private void OnAbilityCooldownTimeout()
-    {
-        GD.Print("Ability cooldown finished");
-    }
+		switch (color)
+		{
+			case ThreadType.RED:
+				_archetype = new RedArchetype();
+				break;
+			case ThreadType.BLUE:
+				_archetype = new BlueArchetype();
+				break;
+			case ThreadType.YELLOW:
+				_archetype = new YellowArchetype();
+				break;
+			default:
+				GD.PushError($"Unknown archetype color: {color}");
+				return;
+		}
+
+		if (_archetype != null)
+		{
+			AddChild(_archetype);  // _EnterTree() runs, which calls InitializeArchetype()
+			// Set glow from archetype's color and player's glow configuration
+			Color archetypeColor = ThreadType.GetColor(color);
+			SetBaseGlow(archetypeColor, IdleGlowWidth, IdleGlowIntensity);
+		}
+	}
 }

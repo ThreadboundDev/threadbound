@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://i5nchltxvo31"]
+[gd_scene load_steps=86 format=3 uid="uid://i5nchltxvo31"]
 
-[ext_resource type="Script" uid="uid://rw8rhi7ev0wh" path="res://Src/Characters/Player/player.cs" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://m5npqrjqhqbi" path="res://Src/Characters/Player/Player.cs" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://rycymae3ljr0" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00000.png" id="2_h5cax"]
 [ext_resource type="Texture2D" uid="uid://sij82a5ym2l" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00001.png" id="3_dj0x0"]
 [ext_resource type="Texture2D" uid="uid://bik1bp46dxlfv" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00002.png" id="4_f1uaf"]
@@ -360,35 +360,22 @@ shader_parameter/glow_color = Color(1, 0, 0, 1)
 shader_parameter/glow_width = 2.0
 shader_parameter/glow_intensity = 0.5
 
-[node name="Player" type="CharacterBody2D" unique_id=823488302 groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_cvnsp")
-speed = null
-air_control_mult = null
-gravity = null
-max_fall_speed = null
-coyote_time = null
-look_offset = null
-look_speed = null
-hold_duration = null
-idle_glow_width = null
-idle_glow_intensity = null
-charge_glow_max_width = null
-charge_glow_max_intensity = null
-jump_force = null
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2111685075]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 22.62)
 shape = SubResource("RectangleShape2D_cvnsp")
 
-[node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=349284154]
+[node name="Player Animation" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.478516, 0.515625)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
 animation = &"Walk"
 
-[node name="GlowSprite" type="Sprite2D" parent="." unique_id=17653644]
+[node name="GlowSprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_f1uaf")
 scale = Vector2(0.479, 0.516)
 
-[node name="AbilityCooldownTimer" type="Timer" parent="." unique_id=873830742]
+[node name="AbilityCooldownTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
