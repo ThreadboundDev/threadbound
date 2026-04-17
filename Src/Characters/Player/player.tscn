@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://i5nchltxvo31"]
+[gd_scene format=3 uid="uid://i5nchltxvo31"]
 
 [ext_resource type="Script" uid="uid://rw8rhi7ev0wh" path="res://Src/Characters/Player/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://rycymae3ljr0" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00000.png" id="2_h5cax"]
@@ -360,22 +360,22 @@ shader_parameter/glow_color = Color(1, 0, 0, 1)
 shader_parameter/glow_width = 2.0
 shader_parameter/glow_intensity = 0.5
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=994170439 groups=["player"]]
 script = ExtResource("1_cvnsp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
 position = Vector2(0, 22.62)
 shape = SubResource("RectangleShape2D_cvnsp")
 
-[node name="Player Animation" type="AnimatedSprite2D" parent="."]
+[node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=609748328]
 scale = Vector2(0.478516, 0.515625)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
 animation = &"Walk"
 
-[node name="GlowSprite" type="Sprite2D" parent="."]
+[node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
 scale = Vector2(0.479, 0.516)
 
-[node name="AbilityCooldownTimer" type="Timer" parent="."]
+[node name="AbilityCooldownTimer" type="Timer" parent="." unique_id=1037249341]
 wait_time = 0.2
 one_shot = true
