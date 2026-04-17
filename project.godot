@@ -8,16 +8,20 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Threadbound"
 run/main_scene="res://Src/Environment/World/World.tscn"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+PhantomCameraManager="*uid://duq6jhf6unyis"
 ThreadType="*res://Src/Global/ThreadType.gd"
 DebugUI="*res://Src/Global/DebugUI.gd"
 PlayerThreadState="*res://Src/Characters/Player/player_thread_state.gd"
@@ -29,6 +33,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+
+[dotnet]
+
+project/assembly_name="Threadbound"
 
 [editor_plugins]
 
