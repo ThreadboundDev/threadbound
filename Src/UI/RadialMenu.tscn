@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://drraly7lxsapf"]
+[gd_scene format=3 uid="uid://drraly7lxsapf"]
 
 [ext_resource type="Script" uid="uid://bakc7wmje4ewq" path="res://Src/UI/radial_menu.gd" id="1_1o4se"]
 [ext_resource type="Texture2D" uid="uid://bfmmviee4xjnb" path="res://Assets/UI/Outline.png" id="2_5q6ol"]
@@ -12,10 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://dlafko5th3awq" path="res://Assets/UI/Equip Icons/Sage Chest.png" id="10_ov6ig"]
 [ext_resource type="Texture2D" uid="uid://bphm3evyp8p3u" path="res://Assets/UI/Equip Icons/Sage Boots.png" id="11_mkc8p"]
 
-[node name="RadialMenu" type="CanvasLayer"]
+[node name="RadialMenu" type="CanvasLayer" unique_id=1856064506]
 script = ExtResource("1_1o4se")
 
-[node name="MenuFadeContainer" type="Control" parent="."]
+[node name="MenuFadeContainer" type="Control" parent="." unique_id=1544961797]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +26,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Background" type="TextureRect" parent="MenuFadeContainer"]
+[node name="Background" type="TextureRect" parent="MenuFadeContainer" unique_id=344855998]
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
@@ -39,84 +39,155 @@ texture = ExtResource("2_5q6ol")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SageBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("11_mkc8p")
-stretch_mode = 5
+[node name="MonarchGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=2126023387]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="MonarchGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 1
-anchors_preset = -1
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("3_xbj7m")
-stretch_mode = 5
-
-[node name="MonarchChest" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=1439107317]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("4_8o5ol")
-stretch_mode = 5
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("3_xbj7m")
 
-[node name="MonarchBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("5_ump05")
-stretch_mode = 5
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=730982912]
 
-[node name="HermitGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("6_jv3iq")
-stretch_mode = 5
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/MonarchGlovesButton/HitArea" unique_id=72562624]
+polygon = PackedVector2Array(460, 431, 647, 466, 647, 532, 653, 589, 678, 653, 505, 743, 458, 605, 452, 522)
 
-[node name="HermitChest" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("7_6bnbe")
-stretch_mode = 5
+[node name="MonarchBootsButton" type="Control" parent="MenuFadeContainer/Background" unique_id=599886094]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="HermitBoots" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchBootsButton" unique_id=1630179729]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("8_yup82")
-stretch_mode = 5
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("5_ump05")
 
-[node name="SageChest" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("10_ov6ig")
-stretch_mode = 5
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/MonarchBootsButton" unique_id=2056859528]
 
-[node name="SageGloves" type="TextureButton" parent="MenuFadeContainer/Background"]
-z_as_relative = false
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/MonarchBootsButton/HitArea" unique_id=905570323]
+polygon = PackedVector2Array(770, 270, 650, 118, 751, 58, 855, 25, 950, 18, 950, 216, 884, 224, 839, 242)
+
+[node name="MonarchChestButton" type="Control" parent="MenuFadeContainer/Background" unique_id=1784899203]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchChestButton" unique_id=366656813]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-action_mode = 0
-texture_normal = ExtResource("9_ptgr4")
-stretch_mode = 5
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("4_8o5ol")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/MonarchChestButton" unique_id=571580499]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/MonarchChestButton/HitArea" unique_id=1245529449]
+polygon = PackedVector2Array(648, 463, 462, 428, 498, 304, 556, 210, 650, 121, 768, 274, 723, 324, 678, 390)
+
+[node name="SageGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=132697487]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/SageGlovesButton" unique_id=1384219139]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("9_ptgr4")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/SageGlovesButton" unique_id=1906063279]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/SageGlovesButton/HitArea" unique_id=1824738782]
+polygon = PackedVector2Array(951, 217, 951, 15, 1066, 30, 1161, 62, 1250, 118, 1130, 276, 1060, 236)
+
+[node name="SageBootsButton" type="Control" parent="MenuFadeContainer/Background" unique_id=1239291967]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/SageBootsButton" unique_id=634827318]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("11_mkc8p")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/SageBootsButton" unique_id=1736761501]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/SageBootsButton/HitArea" unique_id=1186828426]
+polygon = PackedVector2Array(1218, 646, 1250, 563, 1249, 463, 1443, 432, 1451, 525, 1440, 624, 1398, 744)
+
+[node name="SageChestButton" type="Control" parent="MenuFadeContainer/Background" unique_id=1204517242]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/SageChestButton" unique_id=629848532]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("10_ov6ig")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/SageChestButton" unique_id=1995545567]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/SageChestButton/HitArea" unique_id=394265049]
+polygon = PackedVector2Array(1132, 277, 1253, 119, 1337, 197, 1398, 296, 1443, 425, 1247, 462, 1221, 386, 1187, 333)
+
+[node name="HermitGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=792028815]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/HermitGlovesButton" unique_id=1179384808]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("6_jv3iq")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/HermitGlovesButton" unique_id=269374013]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/HermitGlovesButton/HitArea" unique_id=1817646800]
+polygon = PackedVector2Array(749, 978, 833, 791, 755, 746, 723, 711, 685, 652, 506, 746, 574, 855, 653, 924)
+
+[node name="HermitBootsButton" type="Control" parent="MenuFadeContainer/Background" unique_id=1011310002]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/HermitBootsButton" unique_id=1079139831]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("8_yup82")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/HermitBootsButton" unique_id=536029808]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/HermitBootsButton/HitArea" unique_id=1045659597]
+polygon = PackedVector2Array(1073, 787, 1156, 737, 1219, 651, 1397, 746, 1335, 848, 1260, 916, 1149, 980)
+
+[node name="HermitChestButton" type="Control" parent="MenuFadeContainer/Background" unique_id=750944594]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/HermitChestButton" unique_id=1091417962]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("7_6bnbe")
+
+[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/HermitChestButton" unique_id=1985010126]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/HermitChestButton/HitArea" unique_id=1761705097]
+polygon = PackedVector2Array(757, 971, 834, 790, 913, 810, 992, 814, 1072, 793, 1146, 980, 1029, 1014, 921, 1019, 833, 1008)
