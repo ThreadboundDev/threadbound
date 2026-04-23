@@ -22,9 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PhantomCameraManager="*uid://duq6jhf6unyis"
-ThreadType="*res://Src/Global/ThreadType.gd"
 DebugUI="*res://Src/Global/DebugUI.gd"
-PlayerThreadState="*res://Src/Characters/Player/player_thread_state.gd"
 EquipManager="*res://Src/Equipment/equip_manager.gd"
 
 [display]

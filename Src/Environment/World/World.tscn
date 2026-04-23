@@ -314,7 +314,6 @@
 [ext_resource type="Texture2D" uid="uid://r7pc21rdo51r" path="res://Assets/Plants/Green Plant 2/Plant2_00088.png" id="304_etm2p"]
 [ext_resource type="Texture2D" uid="uid://bes5cynugpjmj" path="res://Assets/Plants/Green Plant 2/Plant2_00089.png" id="305_o2qrs"]
 [ext_resource type="Texture2D" uid="uid://cwms1pnlp7gb1" path="res://Assets/Tiles/Mossy - Decorations&Hazards.png" id="306_cpjl2"]
-[ext_resource type="PackedScene" path="res://Src/Environment/Interactables/ArchetypeSelector.tscn" id="315_selector"]
 [ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/RedPlatform.tscn" id="318_w6lba"]
 [ext_resource type="Shader" uid="uid://bff108ep4rfu5" path="res://Src/Environment/World/RedBreakablePlat.gdshader" id="319_b5eaq"]
 [ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/RadialMenu.tscn" id="320_5nt33"]
@@ -16188,7 +16187,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" unique_id=2049787621 node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-136895.47, 319833.37)
+position = Vector2(-138515.47, 323639.38)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
@@ -16206,17 +16205,6 @@ script = ExtResource("7_y7y61")
 [node name="ZoomCam Limit" type="CollisionShape2D" parent="Camera Master/Camera2D/PhantomCameraHost2D/ZoomCam/ZoomCam Instructions" unique_id=1893763563]
 position = Vector2(-2515, 1923.62)
 shape = SubResource("RectangleShape2D_q2d71")
-
-[node name="RedSelector" parent="." unique_id=1570757903 instance=ExtResource("315_selector")]
-position = Vector2(-1005, 0)
-
-[node name="BlueSelector" parent="." unique_id=799546054 instance=ExtResource("315_selector")]
-position = Vector2(-1449, 2)
-archetype_color = "Blue"
-
-[node name="YellowSelector" parent="." unique_id=2099114305 instance=ExtResource("315_selector")]
-position = Vector2(-1903, 1)
-archetype_color = "Yellow"
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=808696143]
 follow_viewport_enabled = true
