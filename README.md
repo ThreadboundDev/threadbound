@@ -39,7 +39,7 @@ To reach the shattered Loom and confront what remains, you must face them—and 
 ## 👁️ Known Figures of the Tapestry
 
 ### 🧵 The Threadborne (You)
-![Threadborne](docs/art/concept_art/threadborne_concept.png)
+![Threadborne](docs/art/concept_art/threadborne-concept.png)
 
 The last unbound thread.  
 A silent form shaped entirely by your choices.
@@ -47,7 +47,7 @@ A silent form shaped entirely by your choices.
 ---
 
 ### 🟥 The Monarch — Power
-![The Monarch](docs/art/concept_art/the monarch.png)
+![The Monarch](docs/art/concept_art/the-monarch.png)
 
 A tyrant of strength and domination.  
 Power demands to be taken.
@@ -55,7 +55,7 @@ Power demands to be taken.
 ---
 
 ### 🟦 The Hermit — Balance
-![The Hermit](docs/art/concept_art/the hermit.png)
+![The Hermit](docs/art/concept_art/the-hermit.png)
 
 A guardian of stillness and restraint.  
 Balance demands to be understood.
@@ -63,7 +63,7 @@ Balance demands to be understood.
 ---
 
 ### 🟨 The Sage — Essence
-![The Sage](docs/art/concept_art/the sage.png)
+![The Sage](docs/art/concept_art/the-sage.png)
 
 A seeker of truth and illusion.  
 Essence demands to be questioned.
