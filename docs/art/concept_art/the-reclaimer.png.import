@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7q3jqqu16uju"
-path="res://.godot/imported/Threadborn_Jump.png-57b3c620d0b4198be7df416de7a67952.ctex"
+uid="uid://mj2i1kjaneoy"
+path="res://.godot/imported/the-reclaimer.png-df89bcdf5bf0e643a23ac4afaae9340e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Threadborn/Threadborn_Jump.png"
-dest_files=["res://.godot/imported/Threadborn_Jump.png-57b3c620d0b4198be7df416de7a67952.ctex"]
+source_file="res://docs/art/concept_art/the-reclaimer.png"
+dest_files=["res://.godot/imported/the-reclaimer.png-df89bcdf5bf0e643a23ac4afaae9340e.ctex"]
 
 [params]
 
