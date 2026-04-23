@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://yjsfrm1kqted" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00014.png" id="16_mpfyg"]
 [ext_resource type="Texture2D" uid="uid://vmg63msbaadv" path="res://Assets/Wizard/BlueWizard/2BlueWizardJump/Dash3/Dash3_00015.png" id="17_un823"]
 [ext_resource type="Texture2D" uid="uid://cfrv27y3vs2vd" path="res://Assets/Wizard/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00000.png" id="18_aclic"]
+[ext_resource type="Texture2D" uid="uid://dr2txsj1fktba" path="res://Assets/Threadborn/Threadborn_Idle.png" id="18_ours7"]
 [ext_resource type="Texture2D" uid="uid://i5jll332mi41" path="res://Assets/Wizard/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00001.png" id="19_0y64g"]
 [ext_resource type="Texture2D" uid="uid://b6fk4xi43u1f2" path="res://Assets/Wizard/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00002.png" id="20_ramv3"]
 [ext_resource type="Texture2D" uid="uid://cx07rdvy4lian" path="res://Assets/Wizard/BlueWizard/2BlueWizardIdle/Chara - BlueIdle00003.png" id="21_hseb1"]
@@ -86,6 +87,38 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(45.25, 93.25)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1df38"]
+atlas = ExtResource("18_ours7")
+region = Rect2(0, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mrg4"]
+atlas = ExtResource("18_ours7")
+region = Rect2(221, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxtg7"]
+atlas = ExtResource("18_ours7")
+region = Rect2(442, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mj8yb"]
+atlas = ExtResource("18_ours7")
+region = Rect2(663, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mld3g"]
+atlas = ExtResource("18_ours7")
+region = Rect2(884, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxnpw"]
+atlas = ExtResource("18_ours7")
+region = Rect2(1105, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrwbr"]
+atlas = ExtResource("18_ours7")
+region = Rect2(1326, 154, 221, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ay5t"]
+atlas = ExtResource("18_ours7")
+region = Rect2(1547, 154, 221, 512)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_wf5ty"]
 animations = [{
 "frames": [{
@@ -139,6 +172,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"Dash",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1df38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mrg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxtg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mj8yb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mld3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxnpw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrwbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ay5t")
+}],
+"loop": true,
+"name": &"Idle",
 "speed": 30.0
 }, {
 "frames": [{
@@ -203,7 +265,7 @@ animations = [{
 "texture": ExtResource("37_vlr8u")
 }],
 "loop": true,
-"name": &"Idle",
+"name": &"Idle old",
 "speed": 30.0
 }, {
 "frames": [{
@@ -370,7 +432,8 @@ shape = SubResource("RectangleShape2D_cvnsp")
 [node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=609748328]
 scale = Vector2(0.478516, 0.515625)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Walk"
+animation = &"Idle"
+frame_progress = 0.9533798
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
