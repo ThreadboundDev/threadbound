@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5wyblfitir5y"
-path="res://.godot/imported/Wall_Cling.png-bb6f60d680db20f54edd9e4c60cd696d.ctex"
+path="res://.godot/imported/Wall_Cling.png-0c7d5ce607d32b443e39a9ef37505034.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Threadborn/Wall_Cling.png"
-dest_files=["res://.godot/imported/Wall_Cling.png-bb6f60d680db20f54edd9e4c60cd696d.ctex"]
+source_file="res://Assets/Threadborn/Jump/Wall_Cling.png"
+dest_files=["res://.godot/imported/Wall_Cling.png-0c7d5ce607d32b443e39a9ef37505034.ctex"]
 
 [params]
 

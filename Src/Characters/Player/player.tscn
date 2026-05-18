@@ -4,11 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://buxb8jonbu5wu" path="res://Src/Equipment/base_gloves.tscn" id="2_8cvsi"]
 [ext_resource type="Texture2D" uid="uid://mowqqj460qam" path="res://Assets/Threadborn/Idle/Idleright.png" id="2_jr15c"]
 [ext_resource type="Texture2D" uid="uid://ccx6nda63h3w0" path="res://Assets/Threadborn/Jump/Jump_Apex.png" id="3_5pixu"]
+[ext_resource type="Texture2D" uid="uid://cxalhojcen5nv" path="res://Assets/Threadborn/Grapple/Grapple_Toss_Diag_Right.png" id="3_puhm8"]
 [ext_resource type="Texture2D" uid="uid://dpynodtr03t8i" path="res://Assets/Threadborn/Jump/Jump_Ascent.png" id="4_4x0hb"]
+[ext_resource type="Texture2D" uid="uid://bp3w78wspb5nm" path="res://Assets/Threadborn/Grapple/Grapple_Toss_Right.png" id="4_87wcq"]
 [ext_resource type="Texture2D" uid="uid://bt7ejlugf5kbh" path="res://Assets/Threadborn/Jump/Jump_Descent.png" id="6_84may"]
 [ext_resource type="Texture2D" uid="uid://cq8gylccpfc7j" path="res://Assets/Threadborn/Jump/Jump_Land.png" id="7_vrurm"]
 [ext_resource type="Texture2D" uid="uid://2kwd5b6ppfjl" path="res://Assets/Threadborn/Run/ezgif-frame-001.png" id="8_vi5rm"]
-[ext_resource type="Texture2D" uid="uid://5wyblfitir5y" path="res://Assets/Threadborn/Wall_Cling.png" id="9_4x0hb"]
+[ext_resource type="Texture2D" uid="uid://5wyblfitir5y" path="res://Assets/Threadborn/Jump/Wall_Cling.png" id="9_4x0hb"]
 [ext_resource type="Texture2D" uid="uid://caky88nd11yu" path="res://Assets/Threadborn/Run/ezgif-frame-012.png" id="14_5csg4"]
 [ext_resource type="Texture2D" uid="uid://dbteh0airk8k1" path="res://Assets/Threadborn/Run/ezgif-frame-007.png" id="14_puhm8"]
 [ext_resource type="Texture2D" uid="uid://bwi416umwqgnl" path="res://Assets/Threadborn/Run/ezgif-frame-008.png" id="15_87wcq"]
@@ -158,6 +160,22 @@ region = Rect2(2560, 2560, 512, 512)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wf5ty"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_puhm8")
+}],
+"loop": true,
+"name": &"Grapple_Diagonal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_87wcq")
+}],
+"loop": true,
+"name": &"Grapple_Horizontal",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_r6acp")
@@ -361,7 +379,7 @@ shape = SubResource("RectangleShape2D_cvnsp")
 position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Jump_Ascent"
+animation = &"Grapple_Horizontal"
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
