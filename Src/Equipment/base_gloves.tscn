@@ -5,23 +5,6 @@
 [ext_resource type="Script" uid="uid://di2x2e1vafd58" path="res://Src/Characters/Player/RopeHangAnchor.gd" id="3_ap6kl"]
 [ext_resource type="Texture2D" uid="uid://dlowqaeka0s" path="res://Assets/Threadborn/Equipment/Base_Grapple_Needle.png" id="4_bvg2p"]
 [ext_resource type="Texture2D" uid="uid://bhi4pj6poxjlq" path="res://Assets/Threadborn/Equipment/Base_Grapple_Rope_Horizontal.png" id="5_pl50a"]
-[ext_resource type="Texture2D" uid="uid://mowqqj460qam" path="res://Assets/Threadborn/Idle/Idleright.png" id="6_mdc5b"]
-[ext_resource type="Texture2D" uid="uid://ccx6nda63h3w0" path="res://Assets/Threadborn/Jump/Jump_Apex.png" id="7_dv5dm"]
-[ext_resource type="Texture2D" uid="uid://dpynodtr03t8i" path="res://Assets/Threadborn/Jump/Jump_Ascent.png" id="8_n7ij2"]
-[ext_resource type="Texture2D" uid="uid://bt7ejlugf5kbh" path="res://Assets/Threadborn/Jump/Jump_Descent.png" id="10_6hr5c"]
-[ext_resource type="Texture2D" uid="uid://cq8gylccpfc7j" path="res://Assets/Threadborn/Jump/Jump_Land.png" id="11_io2oc"]
-[ext_resource type="Texture2D" uid="uid://2kwd5b6ppfjl" path="res://Assets/Threadborn/Run/ezgif-frame-001.png" id="12_q0don"]
-[ext_resource type="Texture2D" uid="uid://dq8uw648ikhhe" path="res://Assets/Threadborn/Run/ezgif-frame-002.png" id="13_qokj4"]
-[ext_resource type="Texture2D" uid="uid://bequypbedq63e" path="res://Assets/Threadborn/Run/ezgif-frame-003.png" id="14_gg6l0"]
-[ext_resource type="Texture2D" uid="uid://bq1wbntu2nf7m" path="res://Assets/Threadborn/Run/ezgif-frame-004.png" id="15_dg66j"]
-[ext_resource type="Texture2D" uid="uid://b1jcuu18tfomp" path="res://Assets/Threadborn/Run/ezgif-frame-005.png" id="16_1dd1g"]
-[ext_resource type="Texture2D" uid="uid://dy71g0b6smw3n" path="res://Assets/Threadborn/Run/ezgif-frame-006.png" id="17_0qahu"]
-[ext_resource type="Texture2D" uid="uid://caky88nd11yu" path="res://Assets/Threadborn/Run/ezgif-frame-012.png" id="18_4aykc"]
-[ext_resource type="Texture2D" uid="uid://dgrfrty6618ar" path="res://Assets/Threadborn/Run/ezgif-frame-020.png" id="19_8xn5v"]
-[ext_resource type="Texture2D" uid="uid://dbteh0airk8k1" path="res://Assets/Threadborn/Run/ezgif-frame-007.png" id="20_g3k44"]
-[ext_resource type="Texture2D" uid="uid://dbnjhsbugpme8" path="res://Assets/Threadborn/Run/ezgif-frame-018.png" id="21_vlncs"]
-[ext_resource type="Texture2D" uid="uid://bwi416umwqgnl" path="res://Assets/Threadborn/Run/ezgif-frame-008.png" id="22_plhgu"]
-[ext_resource type="Texture2D" uid="uid://5wyblfitir5y" path="res://Assets/Threadborn/Wall_Cling.png" id="23_llwx5"]
 
 [sub_resource type="Animation" id="Animation_tve83"]
 length = 0.001
@@ -48,6 +31,62 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-18, -15)]
+}
+
+[sub_resource type="Animation" id="Animation_ijk80"]
+resource_name = "equip_grapple_fire_diagonal"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(20.315, -60.925)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-2.2183135]
+}
+
+[sub_resource type="Animation" id="Animation_f1fjg"]
+resource_name = "equip_grapple_fire_straight"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(39.005, -45.775)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4.7525315]
 }
 
 [sub_resource type="Animation" id="Animation_gwn7h"]
@@ -227,6 +266,8 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gtq23"]
 _data = {
 &"RESET": SubResource("Animation_tve83"),
+&"equip_grapple_fire_diagonal": SubResource("Animation_ijk80"),
+&"equip_grapple_fire_straight": SubResource("Animation_f1fjg"),
 &"equip_idle": SubResource("Animation_gwn7h"),
 &"equip_jump_apex": SubResource("Animation_ptc5w"),
 &"equip_jump_ascent": SubResource("Animation_myam6"),
@@ -234,323 +275,6 @@ _data = {
 &"equip_run": SubResource("Animation_gny4t"),
 &"equip_wall_cling": SubResource("Animation_mdc5b")
 }
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r6acp"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5pixu"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4x0hb"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_84may"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(0, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vrurm"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(512, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_er835"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1024, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u7vc8"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kfugg"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tve83"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gwn7h"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(0, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2x48a"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(512, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r75v1"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1024, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vi5rm"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8cvsi"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_puhm8"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 1024, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_87wcq"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(0, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_atrh3"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(512, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5csg4"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1024, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ptc5w"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_myam6"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3lmiq"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 1536, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gny4t"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(0, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5cfqj"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(512, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ndina"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1024, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_farm2"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x0e30"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tf72v"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 2048, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_soka2"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(0, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5qgfs"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(512, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jd3hb"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1024, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mjkny"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(1536, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8bway"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2048, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_amnk0"]
-atlas = ExtResource("6_mdc5b")
-region = Rect2(2560, 2560, 512, 512)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_fv1db"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r6acp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5pixu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4x0hb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_84may")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vrurm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_er835")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u7vc8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kfugg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tve83")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gwn7h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2x48a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r75v1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vi5rm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8cvsi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_puhm8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_87wcq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_atrh3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5csg4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ptc5w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_myam6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3lmiq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gny4t")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5cfqj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ndina")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_farm2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x0e30")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tf72v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_soka2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5qgfs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jd3hb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mjkny")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8bway")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_amnk0")
-}],
-"loop": true,
-"name": &"Idle",
-"speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_dv5dm")
-}],
-"loop": true,
-"name": &"Jump_Apex",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_n7ij2")
-}],
-"loop": true,
-"name": &"Jump_Ascent",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_6hr5c")
-}],
-"loop": true,
-"name": &"Jump_Descent",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("11_io2oc")
-}],
-"loop": true,
-"name": &"Jump_Land",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("12_q0don")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_qokj4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_gg6l0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_dg66j")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_1dd1g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_0qahu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_4aykc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_8xn5v")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_g3k44")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_vlncs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_plhgu")
-}],
-"loop": true,
-"name": &"Run",
-"speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("23_llwx5")
-}],
-"loop": true,
-"name": &"Wall_Cling",
-"speed": 5.0
-}]
 
 [node name="BaseGloves" type="Node2D" unique_id=126146949]
 script = ExtResource("1_ijk80")
@@ -581,6 +305,7 @@ scale = Vector2(0.026040832, 0.025686283)
 texture = ExtResource("4_bvg2p")
 
 [node name="NeedleAttachPoint" type="Marker2D" parent="Equipment/RightHandAnchor/RopeHangAnchor/DanglingNeedleSprite" unique_id=1185569862]
+visible = false
 z_index = 1
 position = Vector2(-64.06, -262.665)
 scale = Vector2(38.40123, 38.931286)
@@ -595,15 +320,25 @@ texture_mode = 2
 antialiased = true
 
 [node name="GrappleOrigin" type="Marker2D" parent="Equipment/RightHandAnchor" unique_id=615522391]
-position = Vector2(-19, 15.999999)
+position = Vector2(0.0107040405, -0.22479916)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Equipment" unique_id=697489828]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_gtq23")
 
-[node name="Player Animation" type="AnimatedSprite2D" parent="Equipment/AnimationPlayer" unique_id=1739639148]
-visible = false
-position = Vector2(4, -2)
-scale = Vector2(0.31398362, 0.3485)
-sprite_frames = SubResource("SpriteFrames_fv1db")
-animation = &"Jump_Descent"
+[node name="ActiveGrappleRoot" type="Node2D" parent="Equipment" unique_id=1410459337]
+
+[node name="ActiveRopeLine" type="Line2D" parent="Equipment/ActiveGrappleRoot" unique_id=775964206]
+width = 6.5
+texture = ExtResource("5_pl50a")
+texture_mode = 2
+
+[node name="ActiveNeedleSprite" type="Sprite2D" parent="Equipment/ActiveGrappleRoot" unique_id=722727145]
+z_index = 1
+position = Vector2(4.665, 12.065)
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("4_bvg2p")
+
+[node name="ActiveNeedleAttachPoint" type="Marker2D" parent="Equipment/ActiveGrappleRoot/ActiveNeedleSprite" unique_id=1639464373]
+position = Vector2(-990.7999, -417.46667)
+scale = Vector2(13.333333, 13.333333)
