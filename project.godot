@@ -36,9 +36,13 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Threadbound"
 
+[editor]
+
+movie_writer/movie_file="ThreadboundMovement.avi"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addons/soupik/plugin.cfg")
 
 [global_group]
 

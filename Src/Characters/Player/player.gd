@@ -15,25 +15,29 @@ extends CharacterBody2D
 @export var base_gloves_scene: PackedScene
 
 # ===============================
-# TUNABLES
+# MOVEMENT TUNABLES
 # ===============================
 @export var speed: float = 500.0
 @export var air_control_mult: float = 0.75
 @export var gravity: float = 1600.0
 @export var max_fall_speed: float = 1000.0
 @export var coyote_time: float = 0.12
-@export var look_offset: float = 60.0
-@export var look_speed: float = 10.0
-@export var hold_duration: float = 1.0
 
+# Base grapple movement while rope is taut.
+@export var base_grapple_steer_speed: float = 120.0
+@export var base_grapple_steer_accel: float = 500.0
+
+# Equipment flip offsets
 @export var equipment_right_offset := Vector2.ZERO
 @export var equipment_left_offset := Vector2.ZERO
 
+# Wall Jump / Wall Cling
 @export var wall_jump_force: float = 620.0
 @export var wall_jump_up_force: float = 680.0
 @export var wall_cling_stall_time: float = 0.32
 @export var wall_slide_max_speed: float = 620.0
 
+# Glow configuration
 @export var idle_glow_width: float = 1.2
 @export var idle_glow_intensity: float = 0.35
 @export var charge_glow_max_width: float = 4.0
@@ -46,8 +50,6 @@ var coyote_timer: float = 0.0
 var last_direction: int = 1
 var is_near_interactable: bool = false
 var current_selector = null
-var current_look_offset_y: float = 0.0
-var hold_timer: float = 0.0
 
 var is_wall_clinging: bool = false
 var wall_cling_timer: float = 0.0
@@ -59,6 +61,7 @@ var dash_charge_ratio: float = 0.0
 var current_body_anim := ""
 var current_equip_anim := ""
 
+# Equipment slots
 var current_gloves: Node = null
 var current_boots: BaseEquipment = null
 var current_chest: BaseEquipment = null
@@ -112,22 +115,34 @@ func unequip_gloves() -> void:
 # PHYSICS PROCESS
 # ===============================
 func _physics_process(delta: float) -> void:
+	# Gravity + coyote time
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		if velocity.y > max_fall_speed:
-			velocity.y = max_fall_speed
+		velocity.y = min(velocity.y, max_fall_speed)
 		coyote_timer -= delta
 	else:
 		coyote_timer = coyote_time
 		has_wall_jumped = false
 
-	var horizontal_input = Input.get_axis("move_left", "move_right")
+	# Horizontal movement
+	var horizontal_input := Input.get_axis("move_left", "move_right")
 	if horizontal_input != 0:
 		last_direction = sign(horizontal_input)
 
-	var control = 1.0 if is_on_floor() else air_control_mult
-	velocity.x = speed * horizontal_input * control
+	var grapple_restricting := false
+	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
+		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
+	if grapple_restricting:
+		# Only applies when airborne + grapple attached + rope is taut.
+		# This prevents the base grapple from becoming a momentum-building swing.
+		var target_x := horizontal_input * base_grapple_steer_speed
+		velocity.x = move_toward(velocity.x, target_x, base_grapple_steer_accel * delta)
+	else:
+		var control = 1.0 if is_on_floor() else air_control_mult
+		velocity.x = speed * horizontal_input * control
+
+	# Jump
 	if Input.is_action_just_pressed("Jump"):
 		if is_wall_clinging:
 			is_wall_clinging = false
@@ -135,19 +150,26 @@ func _physics_process(delta: float) -> void:
 		elif current_boots:
 			current_boots.handle_primary(delta, BaseEquipment.ActionState.PRESSED)
 
+	# Dash / Dodge
 	if Input.is_action_just_pressed("Dash"):
 		if current_chest:
 			current_chest.handle_secondary(delta, BaseEquipment.ActionState.PRESSED)
 
+	# Gloves active mechanic
 	if current_gloves and current_gloves.has_method("thread_mechanic"):
 		current_gloves.thread_mechanic(delta)
 
+	# Passive effects
 	if current_gloves and current_gloves.has_method("process_passive"):
 		current_gloves.process_passive(delta)
 	if current_boots:
 		current_boots.process_passive(delta)
 	if current_chest:
 		current_chest.process_passive(delta)
+
+	# Apply base grapple rope limit before movement.
+	if current_gloves and current_gloves.has_method("apply_grapple_velocity"):
+		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
 
@@ -197,7 +219,7 @@ func handle_wall_cling(delta: float) -> void:
 		wall_cling_timer = 0.0
 
 # ===============================
-# ANIMATION HELPERS
+# ANIMATION
 # ===============================
 func play_character_anim(body_anim: String, equip_anim: String) -> void:
 	var body_changed := current_body_anim != body_anim
@@ -230,13 +252,10 @@ func update_animations(dir: float) -> void:
 	elif not is_on_floor():
 		if velocity.y < -120.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent", "equip_jump_ascent")
-
 		elif abs(velocity.y) <= 120.0 and player_animation.sprite_frames.has_animation("Jump_Apex"):
 			play_character_anim("Jump_Apex", "equip_jump_apex")
-
 		elif velocity.y > 120.0 and player_animation.sprite_frames.has_animation("Jump_Descent"):
 			play_character_anim("Jump_Descent", "equip_jump_descent")
-
 		else:
 			play_character_anim("Jump_Apex", "equip_jump_apex")
 
