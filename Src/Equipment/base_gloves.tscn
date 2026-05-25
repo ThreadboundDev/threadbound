@@ -329,6 +329,7 @@ libraries/ = SubResource("AnimationLibrary_gtq23")
 [node name="ActiveGrappleRoot" type="Node2D" parent="Equipment" unique_id=1410459337]
 
 [node name="ActiveRopeLine" type="Line2D" parent="Equipment/ActiveGrappleRoot" unique_id=775964206]
+z_index = -1
 width = 6.5
 texture = ExtResource("5_pl50a")
 texture_mode = 2
@@ -340,5 +341,8 @@ scale = Vector2(0.075, 0.075)
 texture = ExtResource("4_bvg2p")
 
 [node name="ActiveNeedleAttachPoint" type="Marker2D" parent="Equipment/ActiveGrappleRoot/ActiveNeedleSprite" unique_id=1639464373]
-position = Vector2(-990.7999, -417.46667)
+position = Vector2(-62.200012, -280.86664)
 scale = Vector2(13.333333, 13.333333)
+
+[node name="GrappleRayCast" type="RayCast2D" parent="Equipment/ActiveGrappleRoot" unique_id=286184563]
+target_position = Vector2(0, 0)

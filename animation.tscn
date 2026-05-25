@@ -1,0 +1,373 @@
+[gd_scene format=3 uid="uid://3spjtm0rn5xg"]
+
+[ext_resource type="Texture2D" uid="uid://n74jclkxssxj" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Head.PNG" id="1_k31mc"]
+[ext_resource type="Texture2D" uid="uid://o34ywhn3htbn" path="res://Assets/Threadborne/RigBase/RigBase_Cut/LeftLeg.PNG" id="1_s4k54"]
+[ext_resource type="Texture2D" uid="uid://c51ug3835utti" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Right Hand.PNG" id="2_s4k54"]
+[ext_resource type="Texture2D" uid="uid://hppc3skwiu35" path="res://Assets/Threadborne/RigBase/RigBase_Cut/LeftShin.PNG" id="2_s282m"]
+[ext_resource type="Texture2D" uid="uid://h6cnlo4iv02t" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Scarf Back.PNG" id="4_wwtm0"]
+[ext_resource type="Texture2D" uid="uid://cqg6cxstntn24" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Torso.PNG" id="5_wwtm0"]
+[ext_resource type="Texture2D" uid="uid://k8dunjmdya6k" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Belt.PNG" id="6_orxcs"]
+[ext_resource type="Texture2D" uid="uid://dj6m3684mb6n6" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Left Hand.PNG" id="7_dcgk3"]
+[ext_resource type="Texture2D" uid="uid://2vt2oqjgaiq1" path="res://Assets/Threadborne/RigBase/RigBase_Cut/RightLeg.PNG" id="7_ndmrp"]
+[ext_resource type="Texture2D" uid="uid://dlb48g528iaxe" path="res://Assets/Threadborne/RigBase/RigBase_Cut/RightShin.PNG" id="8_wwtm0"]
+[ext_resource type="Texture2D" uid="uid://4k8ob6mmdyeq" path="res://Assets/Threadborne/RigBase/RigBase_Cut/LeftArm.PNG" id="10_orxcs"]
+[ext_resource type="Texture2D" uid="uid://b3cnlthvm5krw" path="res://Assets/Threadborne/RigBase/RigBase_Cut/LeftForearm.PNG" id="11_dcgk3"]
+[ext_resource type="Texture2D" uid="uid://cqd1fsphg4g7l" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Right Foot.PNG" id="12_o7cke"]
+[ext_resource type="Texture2D" uid="uid://dfb8swlxyqf8r" path="res://Assets/Threadborne/RigBase/RigBase_Cut/RightArm.PNG" id="13_c3a64"]
+[ext_resource type="Texture2D" uid="uid://bj0h8uqnphrli" path="res://Assets/Threadborne/RigBase/RigBase_Cut/RightForearm.PNG" id="14_0svij"]
+[ext_resource type="Texture2D" uid="uid://b8f81hmd0p1pj" path="res://Assets/Threadborne/RigBase/RigBase_Cut/Left Foot.PNG" id="15_u0u5i"]
+[ext_resource type="Script" uid="uid://clgwtw4irp0fp" path="res://addons/soupik/modifications/soup_modification.gd" id="16_ndmrp"]
+[ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="17_wwtm0"]
+[ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="18_orxcs"]
+
+[sub_resource type="SkeletonModification2DCCDIK" id="SkeletonModification2DCCDIK_k31mc"]
+
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_s4k54"]
+modification_count = 3
+modifications/0 = SubResource("SkeletonModification2DCCDIK_k31mc")
+
+[node name="Animation" type="Node2D" unique_id=1194727088]
+
+[node name="CharacterContainer" type="Node2D" parent="." unique_id=672736573]
+
+[node name="Body" type="Node2D" parent="CharacterContainer" unique_id=286767943]
+
+[node name="LeftLeg" type="Sprite2D" parent="CharacterContainer/Body" unique_id=2142773233]
+position = Vector2(73, -51)
+rotation = 0.0013346672
+scale = Vector2(0.99995214, 0.99995214)
+texture = ExtResource("1_s4k54")
+offset = Vector2(-74.701515, 49.07821)
+
+[node name="LeftShin" type="Sprite2D" parent="CharacterContainer/Body" unique_id=1250515988]
+position = Vector2(94.63837, 253.37863)
+rotation = -0.06388677
+scale = Vector2(0.9999181, 0.9999181)
+texture = ExtResource("2_s282m")
+offset = Vector2(-93.30466, -257.36023)
+
+[node name="LeftFoot" type="Sprite2D" parent="CharacterContainer/Body" unique_id=2108089626]
+position = Vector2(111.74561, 494.33417)
+rotation = 0.025426557
+scale = Vector2(0.99985343, 0.99985343)
+texture = ExtResource("15_u0u5i")
+offset = Vector2(-95.01965, -493.52008)
+
+[node name="Scarf Back" type="Sprite2D" parent="CharacterContainer/Body" unique_id=707565163]
+position = Vector2(0, 1)
+texture = ExtResource("4_wwtm0")
+
+[node name="Head" type="Sprite2D" parent="CharacterContainer/Body" unique_id=1106785562]
+position = Vector2(1, -498)
+rotation = -0.017339302
+scale = Vector2(0.9999298, 0.9999298)
+texture = ExtResource("1_k31mc")
+offset = Vector2(1, 500)
+
+[node name="RightLeg" type="Sprite2D" parent="CharacterContainer/Body" unique_id=931766256]
+position = Vector2(-65.999565, -51.944252)
+rotation = -0.049242623
+scale = Vector2(0.9998963, 0.9998963)
+texture = ExtResource("7_ndmrp")
+offset = Vector2(62.881893, 53.043674)
+
+[node name="RightShin" type="Sprite2D" parent="CharacterContainer/Body" unique_id=637805711]
+position = Vector2(-121.75341, 259.6234)
+rotation = 0.11892916
+scale = Vector2(0.9998398, 0.9998398)
+texture = ExtResource("8_wwtm0")
+offset = Vector2(131.72527, -246.54791)
+
+[node name="RightFoot" type="Sprite2D" parent="CharacterContainer/Body" unique_id=277200661]
+position = Vector2(-210, 541)
+rotation = -0.025709394
+scale = Vector2(0.9996881, 0.9996881)
+texture = ExtResource("12_o7cke")
+offset = Vector2(193.71227, -541.51013)
+
+[node name="LeftArm" type="Sprite2D" parent="CharacterContainer/Body" unique_id=287242605]
+position = Vector2(82.00001, -427.00003)
+rotation = -0.6339418
+scale = Vector2(0.99985486, 0.99985486)
+texture = ExtResource("10_orxcs")
+offset = Vector2(-81.66006, 424.04398)
+
+[node name="LeftForearm" type="Sprite2D" parent="CharacterContainer/Body" unique_id=1786926822]
+position = Vector2(252.94392, -277.7522)
+rotation = -0.53354
+scale = Vector2(0.9997182, 0.9997182)
+texture = ExtResource("11_dcgk3")
+offset = Vector2(-125.99522, 218.23534)
+
+[node name="LeftHand" type="Sprite2D" parent="CharacterContainer/Body" unique_id=2113716141]
+position = Vector2(363.85498, -181.98116)
+rotation = -0.53354
+scale = Vector2(0.9997182, 0.9997182)
+texture = ExtResource("7_dcgk3")
+offset = Vector2(-175, 71)
+
+[node name="Belt" type="Sprite2D" parent="CharacterContainer/Body" unique_id=1723762882]
+position = Vector2(14, -105)
+texture = ExtResource("6_orxcs")
+offset = Vector2(-14, 105)
+
+[node name="Torso" type="Sprite2D" parent="CharacterContainer/Body/Belt" unique_id=483517840]
+position = Vector2(-14, 105)
+texture = ExtResource("5_wwtm0")
+
+[node name="RightArm" type="Sprite2D" parent="CharacterContainer/Body" unique_id=1765397994]
+position = Vector2(-115, -438.00006)
+rotation = 0.083994
+scale = Vector2(0.99985534, 0.99985534)
+texture = ExtResource("13_c3a64")
+offset = Vector2(118.00195, 440.25412)
+
+[node name="RightForearm" type="Sprite2D" parent="CharacterContainer/Body" unique_id=552800106]
+position = Vector2(-198.55211, -237.358)
+rotation = -0.14287949
+scale = Vector2(0.99979204, 0.99979204)
+texture = ExtResource("14_0svij")
+offset = Vector2(183.57045, 232.3925)
+
+[node name="RightHand" type="Sprite2D" parent="CharacterContainer/Body" unique_id=133855733]
+position = Vector2(-201.52007, -61.41855)
+rotation = -0.14287949
+scale = Vector2(0.99979204, 0.99979204)
+texture = ExtResource("2_s4k54")
+offset = Vector2(211.22827, 57.477707)
+
+[node name="Bones" type="Node2D" parent="CharacterContainer" unique_id=972754038]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="CharacterContainer/Bones" unique_id=459708517]
+modification_stack = SubResource("SkeletonModificationStack2D_s4k54")
+
+[node name="Hip" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D" unique_id=1178681077]
+position = Vector2(14, -105)
+rest = Transform2D(1, 0, 0, 1, 14, -105)
+
+[node name="RightLeg" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=796502255]
+position = Vector2(-77, 53)
+rotation = -0.049242623
+scale = Vector2(0.9998963, 0.9998963)
+rest = Transform2D(0.99980956, -0.016055943, 0.016055943, 0.99980956, -77, 53)
+
+[node name="RightShin" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightLeg" unique_id=624366500]
+position = Vector2(-69.845116, 300.93588)
+rotation = 0.1681718
+scale = Vector2(0.9999435, 0.9999435)
+rest = Transform2D(0.9995004, 0.031295724, -0.031295724, 0.9995004, -69.845116, 300.93588)
+
+[node name="RightFoot" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightLeg/RightShin" unique_id=1707449403]
+position = Vector2(-35.51646, 294.5966)
+rotation = -0.14463855
+scale = Vector2(0.99984825, 0.99984825)
+rest = Transform2D(0.9998258, -0.006099544, 0.006099544, 0.9998258, -59.545895, 292.96246)
+auto_calculate_length_and_angle = false
+length = 112.178
+bone_angle = -324.58597
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightLeg/RightShin/RightFoot" unique_id=385637473]
+position = Vector2(-21.869543, 0.20506167)
+remote_path = NodePath("../../../../../../../Body/RightFoot")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightLeg/RightShin" unique_id=1879981843]
+position = Vector2(-2.8779106, 8.045376)
+remote_path = NodePath("../../../../../../Body/RightShin")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightLeg" unique_id=305477018]
+position = Vector2(-2.9989812, -0.09197662)
+remote_path = NodePath("../../../../../Body/RightLeg")
+
+[node name="RightArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=568778390]
+position = Vector2(-129, -333.00006)
+rotation = 0.083994
+scale = Vector2(0.99985534, 0.99985534)
+rest = Transform2D(0.99901533, 0.041701626, -0.041701626, 0.99901533, -129, -333.00006)
+
+[node name="RightForeArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightArm" unique_id=839763902]
+position = Vector2(-66.43424, 206.97427)
+rotation = -0.22687349
+scale = Vector2(0.9999367, 0.9999367)
+rest = Transform2D(0.9973172, -0.072720304, 0.072720304, 0.9973172, -66.43424, 206.97427)
+
+[node name="RightHand" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightArm/RightForeArm" unique_id=121272016]
+position = Vector2(-27.398548, 173.25858)
+rest = Transform2D(1, 0, 0, 1, -27.398548, 173.25858)
+auto_calculate_length_and_angle = false
+length = 72.624
+bone_angle = 84.85299
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightArm/RightForeArm/RightHand" unique_id=586199439]
+position = Vector2(-0.5976901, 0.5015898)
+remote_path = NodePath("../../../../../../../Body/RightHand")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightArm/RightForeArm" unique_id=194411076]
+remote_path = NodePath("../../../../../../Body/RightForearm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/RightArm" unique_id=110982132]
+remote_path = NodePath("../../../../../Body/RightArm")
+
+[node name="Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=2026138277]
+position = Vector2(-13, -393)
+rotation = -0.017339302
+scale = Vector2(0.9999298, 0.9999298)
+rest = Transform2D(0.9998159, -0.017337848, 0.017337848, 0.9998159, -13, -393)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Head" unique_id=763627859]
+remote_path = NodePath("../../../../../Body/Head")
+
+[node name="LeftArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=271980702]
+position = Vector2(68.00001, -322.00003)
+rotation = -0.6339418
+scale = Vector2(0.99985486, 0.99985486)
+rest = Transform2D(0.99974906, 0.017604157, -0.017604157, 0.99974906, 68.00001, -322.00003)
+
+[node name="LeftForeArm" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftArm" unique_id=1985339350]
+position = Vector2(50.27494, 224.5547)
+rotation = 0.10040183
+scale = Vector2(0.9998633, 0.9998633)
+rest = Transform2D(0.9988244, -0.0467096, 0.0467096, 0.9988244, 40.448887, 195.33698)
+
+[node name="LeftHand" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftArm/LeftForeArm" unique_id=2109054592]
+position = Vector2(46.887375, 137.49477)
+rest = Transform2D(1, 0, 0, 1, 53.354973, 160.65042)
+auto_calculate_length_and_angle = false
+length = 72.624
+bone_angle = 69.07699
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftArm/LeftForeArm/LeftHand" unique_id=851668598]
+position = Vector2(-1.325882, -1.4980669)
+remote_path = NodePath("../../../../../../../Body/LeftHand")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftArm/LeftForeArm" unique_id=1281069936]
+position = Vector2(-1.2397976, -2.9101105)
+remote_path = NodePath("../../../../../../Body/LeftForearm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftArm" unique_id=402974058]
+remote_path = NodePath("../../../../../Body/LeftArm")
+
+[node name="LeftLeg" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=938507111]
+position = Vector2(59, 54)
+rotation = 0.0013346672
+scale = Vector2(0.99995214, 0.99995214)
+rest = Transform2D(0.9987806, 0.048999533, -0.048999533, 0.9987806, 59, 54)
+
+[node name="LeftShin" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftLeg" unique_id=1283760713]
+position = Vector2(21.085302, 307.34155)
+rotation = -0.06522143
+scale = Vector2(0.99996597, 0.99996597)
+rest = Transform2D(0.99576783, -0.09179865, 0.09179865, 0.99576783, 21.085302, 307.34155)
+
+[node name="LeftFoot" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftLeg/LeftShin" unique_id=991283062]
+position = Vector2(0.7807082, 238.2595)
+rotation = 0.08931333
+scale = Vector2(0.9999353, 0.9999353)
+rest = Transform2D(0.99871254, 0.05051853, -0.05051853, 0.99871254, 0.7807082, 238.2595)
+auto_calculate_length_and_angle = false
+length = 97.75
+bone_angle = 39.85299
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftLeg/LeftShin/LeftFoot" unique_id=1644778151]
+position = Vector2(2.08907, 0.22232743)
+remote_path = NodePath("../../../../../../../Body/LeftFoot")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftLeg/LeftShin" unique_id=1109526140]
+position = Vector2(1.1524036, -2.908679)
+remote_path = NodePath("../../../../../../Body/LeftShin")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LeftLeg" unique_id=1033942051]
+remote_path = NodePath("../../../../../Body/LeftLeg")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=2003271013]
+position = Vector2(-4.7683716e-07, 0)
+remote_path = NodePath("../../../../Body/Belt")
+
+[node name="IK Nodes" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D" unique_id=1535358713]
+script = ExtResource("16_ndmrp")
+metadata/_custom_type_script = "uid://clgwtw4irp0fp"
+
+[node name="Lower Body" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes" unique_id=416912172]
+script = ExtResource("16_ndmrp")
+metadata/_custom_type_script = "uid://clgwtw4irp0fp"
+
+[node name="RightLegIK" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Lower Body" unique_id=474866390 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("17_wwtm0")
+flip_bend_direction = true
+target_node = NodePath("../../../../../IK Targets/RightFoot Target")
+joint_one_bone_node = NodePath("../../../Hip/RightLeg")
+joint_two_bone_node = NodePath("../../../Hip/RightLeg/RightShin")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="RightLeg Lookat" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Lower Body" unique_id=37622614 node_paths=PackedStringArray("bone_node", "target_node")]
+position = Vector2(2, -2)
+script = ExtResource("18_orxcs")
+bone_node = NodePath("../../../Hip/RightLeg/RightShin/RightFoot")
+target_node = NodePath("../../../../../IK Targets/RightFoot Target/RightFoot Lookat")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="LeftLegIK" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Lower Body" unique_id=2092883091 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("17_wwtm0")
+flip_bend_direction = true
+target_node = NodePath("../../../../../IK Targets/LeftFoot Target")
+joint_one_bone_node = NodePath("../../../Hip/LeftLeg")
+joint_two_bone_node = NodePath("../../../Hip/LeftLeg/LeftShin")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="SoupLookAt" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Lower Body" unique_id=81915476 node_paths=PackedStringArray("bone_node", "target_node")]
+script = ExtResource("18_orxcs")
+bone_node = NodePath("../../../Hip/LeftLeg/LeftShin/LeftFoot")
+target_node = NodePath("../../../../../IK Targets/LeftFoot Target/LeftFoot Lookat")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="Upper Body" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes" unique_id=1338701593]
+script = ExtResource("16_ndmrp")
+metadata/_custom_type_script = "uid://clgwtw4irp0fp"
+
+[node name="RightArm IK" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Upper Body" unique_id=1594003857 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+position = Vector2(1, 0)
+script = ExtResource("17_wwtm0")
+target_node = NodePath("../../../../../IK Targets/RightHand Target")
+joint_one_bone_node = NodePath("../../../Hip/RightArm")
+joint_two_bone_node = NodePath("../../../Hip/RightArm/RightForeArm")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="LeftArm IK" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Upper Body" unique_id=130465289 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+position = Vector2(-2, 2)
+script = ExtResource("17_wwtm0")
+target_node = NodePath("../../../../../IK Targets/LeftHand Target")
+joint_one_bone_node = NodePath("../../../Hip/LeftArm")
+joint_two_bone_node = NodePath("../../../Hip/LeftArm/LeftForeArm")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="Head Look At" type="Node2D" parent="CharacterContainer/Bones/Skeleton2D/IK Nodes/Upper Body" unique_id=835039651 node_paths=PackedStringArray("bone_node", "target_node")]
+position = Vector2(2, 0)
+script = ExtResource("18_orxcs")
+bone_node = NodePath("../../../Hip/Head")
+target_node = NodePath("../../../../../IK Targets/Head Target/Head Lookat")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="IK Targets" type="Node2D" parent="CharacterContainer" unique_id=944409353]
+
+[node name="RightFoot Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=1209617818]
+position = Vector2(-170, 540)
+
+[node name="RightFoot Lookat" type="Node2D" parent="CharacterContainer/IK Targets/RightFoot Target" unique_id=275639816]
+position = Vector2(87, 71)
+
+[node name="LeftFoot Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=1428509825]
+position = Vector2(118, 618)
+
+[node name="LeftFoot Lookat" type="Node2D" parent="CharacterContainer/IK Targets/LeftFoot Target" unique_id=1652602331]
+position = Vector2(226, 82)
+
+[node name="RightHand Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=1014609579]
+position = Vector2(-201, -62)
+
+[node name="LeftHand Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=616438043]
+position = Vector2(400, -150)
+
+[node name="Head Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=1487477648]
+position = Vector2(0, -497)
+
+[node name="Head Lookat" type="Node2D" parent="CharacterContainer/IK Targets/Head Target" unique_id=1701509613]
+position = Vector2(174, -4)
