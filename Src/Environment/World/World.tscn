@@ -16189,7 +16189,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" unique_id=2049787621 node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-141755.47, 331251.37)
+position = Vector2(-142565.47, 333154.37)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")

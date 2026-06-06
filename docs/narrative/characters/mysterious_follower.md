@@ -310,3 +310,35 @@ They are here to ask:
 
 \*\*“What are you becoming?”\*\*
 
+
+## Hidden Truth (Development Reference)
+
+The Mysterious Follower is Thought.
+
+The First Weaver.
+
+A fragment of Eryndor who became self-aware during the world's earliest age.
+
+After helping weave creation, Thought willingly entered the world to experience it directly.
+
+He does not guide the Threadborne toward a specific outcome.
+
+Instead, he observes.
+
+Questions.
+
+Challenges.
+
+Over ages he has matured beyond his youthful belief that freedom alone is enough.
+
+Yet he still refuses to rule.
+
+He believes wisdom should guide choice.
+
+Not replace it.
+
+The player should never learn his identity through normal play.
+
+The revelation that the Follower is Thought should be reserved for secret-path content and hidden endings.
+
+

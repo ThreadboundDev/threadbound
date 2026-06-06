@@ -14,109 +14,47 @@ The narrative is structured to support nonlinear exploration while maintaining a
 
 
 
-\## 🧵 Act I — Fracture
+# Story Outline
 
+## Act I — Awakening
 
+### Opening Cinematic
 
-\### 1. Opening Cinematic
+The player is introduced to Eryndor through narration from the world itself.
 
+Eryndor recounts her earliest memories:
 
+* becoming aware
+* the emergence of Thought
+* the weaving of creation
+* Thought entering the world
+* the discovery of the Threads by a King, a Monk, and a Scholar
+* the creation of the Weaver
+* the continued wound caused by the separation of the Threads
 
-A living tapestry scrolls across the screen, depicting a world once governed by perfect order.
+The cinematic ends in the present.
 
+The Weaver gathers loose threads in the Grand Loom.
 
+One thread escapes.
 
-\- Threads weave together seamlessly
+The Loom Blade cuts it free.
 
-\- Figures move as if guided by unseen hands
+As Eryndor wonders what a loose thread could become, the thread falls into the world and forms the Threadborne.
 
-\- At the center: \*\*The Weaver\*\*, maintaining the Loom
+Gameplay begins.
 
+### Awakening
 
+The Threadborne awakens within the Chamber of the First Weave.
 
-Then—
+They possess no defined identity.
 
+No allegiance.
 
+No predetermined purpose.
 
-The Loom is \*\*shattered\*\*.
-
-
-
-Threads snap. Patterns collapse. The world fractures.
-
-
-
-One thread falls… unbound.
-
-
-
-\---
-
-
-
-\### 2. Awakening
-
-
-
-The fallen thread awakens as the \*\*Threadborne\*\* in the \*\*Chamber of the First Weave\*\*.
-
-
-
-\- No identity
-
-\- No color
-
-\- No defined purpose
-
-
-
-The player learns basic movement and traversal.
-
-
-
-The world feels quiet. Unfinished.
-
-
-
-\---
-
-
-
-\### 3. First Choice — Identity Begins
-
-
-
-The player selects an initial affinity:
-
-
-
-\- 🔴 Red (Power)
-
-\- 🔵 Blue (Balance)
-
-\- 🟡 Yellow (Essence)
-
-
-
-This choice determines:
-
-
-
-\- Starting weapon
-
-\- Initial visual tone
-
-\- Early gameplay feel
-
-
-
-> This is not a class choice.  
-
-> It is the first thread of identity.
-
-
-
-\---
+They are possibility.
 
 
 

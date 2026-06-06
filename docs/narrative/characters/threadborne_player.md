@@ -36,7 +36,33 @@ They are:
 
 
 
-Born from the destruction of the Grand Tapestry, the Threadborne exists outside the rules that once governed the world.
+The Threadborne emerged from the wound created when the primordial Threads were separated.
+
+The world could not heal.
+
+The Weaver could not repair the damage.
+
+The Thread Masters could not relinquish what they had taken.
+
+In response, one loose thread emerged.
+
+Untuned.
+
+Unclaimed.
+
+Untainted.
+
+Unbound.
+
+This loose thread became the Threadborne.
+
+Not a chosen hero.
+
+Not a prophecy.
+
+A possibility.
+
+
 
 
 
