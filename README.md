@@ -63,10 +63,10 @@ Important runtime files:
 - `Src/Environment/World/World.tscn`
 - `Src/Characters/Player/player.tscn`
 - `Src/Characters/Player/player.gd`
-- `Src/Equipment/BaseGloves.gd`
+- `Src/Equipment/base_gloves.gd`
 - `Src/Equipment/base_gloves.tscn`
 - `Src/Equipment/equip_manager.gd`
-- `Src/UI/RadialMenu.tscn`
+- `Src/UI/radial_menu.tscn`
 - `Src/UI/radial_menu.gd`
 
 ## Tech

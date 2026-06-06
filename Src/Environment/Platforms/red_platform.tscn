@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://dt5d4u1e8y241"]
 
-[ext_resource type="Script" uid="uid://dj60280cqb2q8" path="res://Src/Environment/Platforms/RedPlatform.gd" id="1_45ero"]
+[ext_resource type="Script" uid="uid://dj60280cqb2q8" path="res://Src/Environment/Platforms/red_platform.gd" id="1_45ero"]
 [ext_resource type="TileSet" uid="uid://36xw6ldj7qvd" path="res://Assets/Tiles/RedPlatformTiles.tres" id="2_q1i3s"]
-[ext_resource type="Script" uid="uid://c5cs4x3uxacw7" path="res://Src/Environment/Platforms/PlatformTiles.gd" id="3_q56us"]
+[ext_resource type="Script" uid="uid://c5cs4x3uxacw7" path="res://Src/Environment/Platforms/platform_tiles.gd" id="3_q56us"]
 [ext_resource type="Shader" uid="uid://bm0k680jtnyp" path="res://Src/Environment/Platforms/GlowRect.gdshader" id="4_86is1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ml7em"]
