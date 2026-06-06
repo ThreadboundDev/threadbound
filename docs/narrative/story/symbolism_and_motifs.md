@@ -160,7 +160,7 @@ They may be:
 
 
 
-\### 👁️ The Mysterious Follower
+\### 👁️ The Mysterious Follower (Thought)
 
 
 
@@ -200,19 +200,39 @@ They may be:
 
 
 
-\### 🕸️ The Weaver
+### Thought
 
+Represents:
 
+* curiosity
+* creation
+* companionship
+* freedom
 
-\*\*Represents:\*\* Control, authorship, unintended consequence
+Thought is the world's first question made manifest.
 
+He creates not from authority, but from longing.
 
+His tragedy is that he trusted freedom without fully understanding the consequences of power.
 
-\- The act of shaping reality
+---
 
-\- The burden of responsibility
+### The Weaver
 
-\- The cost of freedom
+Represents:
+
+* stewardship
+* protection
+* control
+* unintended consequence
+
+The Weaver begins as an act of wisdom.
+
+Created to stabilize a wounded world, it gradually concludes that freedom itself is dangerous.
+
+Its tragedy is not malice.
+
+It is protection without trust.
 
 
 

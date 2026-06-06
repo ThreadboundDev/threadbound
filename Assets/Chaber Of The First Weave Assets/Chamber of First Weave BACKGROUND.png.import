@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2ieuh3ocdbp6"
-path="res://.godot/imported/RigBase(Pre_Cut).png-9c5f534683918647df291050ca6360e1.ctex"
+uid="uid://bun44pkv6aj0"
+path="res://.godot/imported/Chamber of First Weave BACKGROUND.png-6c5fb7266d4c06d8c1952ed315357a18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Threadborne/RigBase/RigBase(Pre_Cut).png"
-dest_files=["res://.godot/imported/RigBase(Pre_Cut).png-9c5f534683918647df291050ca6360e1.ctex"]
+source_file="res://Assets/Chaber Of The First Weave Assets/Chamber of First Weave BACKGROUND.png"
+dest_files=["res://.godot/imported/Chamber of First Weave BACKGROUND.png-6c5fb7266d4c06d8c1952ed315357a18.ctex"]
 
 [params]
 
