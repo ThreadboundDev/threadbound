@@ -1,5 +1,7 @@
 # Threadbound
 
+![Threadbound Banner](docs/art/concept_art/banner.png)
+
 Threadbound is a painterly 2D action metroidvania built in Godot.
 
 The game is about movement, identity, and choice: the player weaves traversal, equipment, and eventually combat together in real time while deciding what kind of being the Threadborne becomes.
@@ -39,7 +41,7 @@ The current cosmology is stable. Before making lore, dialogue, quest, or worldbu
 Key guardrails:
 
 - Eryndor is the living world-consciousness and primary narrator.
-- Thought is the First Weaver and is secretly the Follower.
+- Thought is the First Weaver.
 - The Threads were originally unified within Eryndor and were never meant to be possessed.
 - The Monarch, Hermit, and Sage were once the King, Monk, and Scholar.
 - The Weaver is not the creator of the world and did not shatter the Loom.
