@@ -1,87 +1,66 @@
 # Contributing to Threadbound
 
-First off — thank you for taking interest in Threadbound 🧵
+Thanks for taking interest in Threadbound.
 
-This project is built with a strong focus on **clarity, consistency, and intentional design**.
+This project is early, personal, and still finding its final shape. Clarity matters more than volume: every change should make the project easier to understand, easier to playtest, or easier to build on.
 
----
+## Development Priorities
 
-## 🧠 Core Philosophy
+Current priorities:
 
-Before contributing, understand:
+- Polish base movement.
+- Polish the base grapple.
+- Stabilize the base equipment kit.
+- Keep animation and equipment behavior readable.
+- Keep documentation aligned with current canon and implementation.
 
-- Every system ties back to **identity and choice**
-- Mechanics must support **flow-state gameplay**
-- Visuals must reinforce **thread-based theming**
+Later priorities:
 
----
+- Expanded equipment variants.
+- Combat and weapons.
+- Enemy implementation.
+- Boss encounters.
+- Larger world and progression systems.
 
-## 📂 Project Structure
+## Project Structure
 
-- `docs/` → Design, narrative, systems
-- `assets/` → Visuals, concept art
-- `game/` → (future) Godot implementation
+```text
+docs/   Design, gameplay, narrative, art direction, and archives
+Assets/ Game art, animation exports, UI art, and source art files
+Src/    Godot scenes, scripts, shaders, and gameplay systems
+addons/ Godot plugins
+```
 
----
+## Documentation Guidelines
 
-## ✍️ Writing Guidelines
+- Use current canon from `docs/narrative/CANON.md`.
+- Archive obsolete drafts instead of deleting them when they may be useful history.
+- Prefer dated archive folders, such as `docs/archive/2026-06-06_lore_cleanup/`.
+- Keep docs clear and direct.
+- Avoid introducing new cosmological forces, creator figures, or retcons without explicit approval.
 
-- Be **clear and intentional**
-- Avoid vague descriptions
-- Use consistent terminology:
-  - Threadborne (player)
-  - Thread Masters
-  - Absorb vs Spare (never mix wording)
+## Code Guidelines
 
----
+- Keep changes focused.
+- Follow existing Godot and GDScript patterns in the project.
+- Avoid large scene tree restructures without approval.
+- Preserve base-kit gameplay while polishing feel.
+- Do not treat obsolete archetype scripts as active runtime code.
 
-## 🎨 Design Contributions
+## Change Approval
 
-When proposing new ideas:
+Before making architectural changes, explain:
 
-Include:
-- Purpose (why it exists)
-- Player impact
-- Visual identity
-- Mechanical interaction
+- What will change.
+- Why it is needed.
+- Which files will be modified.
 
----
+Wait for approval before changing:
 
-## ⚙️ System Changes
+- Scene tree structure
+- Combat systems
+- Equipment systems
+- Lore canon
+- Asset replacements
 
-If modifying gameplay systems:
-
-- Ensure it aligns with:
-  - Movement flow
-  - Choice consequences
-  - Non-gating design
-
-Reference:
-- gameplay_philosophy.md
-- core_mechanics.md
-
----
-
-## 🧪 Iteration Philosophy
-
-We value:
-- Strong ideas early
-- Refinement over time
-- Consistency across systems
-
----
-
-## 🚫 What to Avoid
-
-- Mechanics that gate progression unfairly
-- Features that don’t tie into identity/threads
-- Overcomplication without purpose
-
----
-
-## 💬 Communication
-
-When in doubt:
-- Ask questions
-- Propose ideas clearly
-- Keep discussions focused on design goals
+Documentation cleanup, comments, and small bug fixes are fine when they stay within the current direction.

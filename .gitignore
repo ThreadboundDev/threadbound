@@ -1,3 +1,16 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Editor and art-tool backups
+*~
+*.tmp
+*.autosave
+*.autosave.*
+*.kra-autosave.kra
+
+# Godot editor temporary scene saves
+*.tscn*.tmp
+
+# Local IDE/editor folders
+.idea/

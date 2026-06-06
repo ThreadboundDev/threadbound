@@ -1,80 +1,76 @@
-# Threadbound – Overview
+# Threadbound Overview
 
 ## What is Threadbound?
 
-Threadbound is a 2.5D metroidvania where:
+Threadbound is a 2D action metroidvania where:
 
-- Movement is fluid and expressive
-- Combat is fast and momentum-driven
-- The world reacts to your choices
+- Movement is fluid and expressive.
+- Combat is fast and momentum-driven.
+- The world reacts to the player's choices.
 
-At its core, Threadbound is about **identity**.
-
----
+At its core, Threadbound is about identity.
 
 ## The Player
 
 You are the **Threadborne**:
 
-- The final fragment of the shattered Grand Tapestry
-- A being without fixed identity
-- Defined only by the choices you make
+- A being emerged from the wound caused by the separated Threads.
+- Untuned, unclaimed, and undefined.
+- Defined by the choices the player makes.
 
-> You do not find your path — you become it.
-
----
+> You do not find your path. You become it.
 
 ## The World
 
-The world was once governed by the **Grand Tapestry**, maintained by the Weaver.
+Eryndor is a living world-consciousness.
 
-When it was destroyed:
+The primordial Threads were once unified within her:
 
-- Reality fractured
-- Power scattered
-- Three beings claimed the primordial threads
+- Power
+- Balance
+- Essence
+
+They were never meant to be possessed.
+
+When the Threads were discovered and taken:
+
+- Reality fractured.
+- Power scattered.
+- Three mortals became the Monarch, Hermit, and Sage.
 
 Now the world exists in imbalance.
 
----
-
 ## The Goal
 
-To return to the Grand Loom, you must:
+To answer the wound, the Threadborne must:
 
-- Confront the Thread Masters
-- Reclaim their threads
-- Decide what kind of being you will become
-
----
+- Confront the Thread Masters.
+- Decide whether to absorb or spare their Threads.
+- Decide what freedom should become.
 
 ## Core Design Philosophy
 
 Threadbound is built on three pillars:
 
-1. Identity through mechanics
-2. Meaningful player choice
-3. Joyful movement and flow
+1. Identity through mechanics.
+2. Meaningful player choice.
+3. Joyful movement and flow.
 
 Every system reinforces these.
-
----
 
 ## Player Experience
 
 The player journey is:
 
-- Curious → Exploring the unknown
-- Empowered → Gaining abilities and identity
-- Questioning → Facing moral decisions
-- Tested → Stripped of power (Reclaimer)
-- Resolved → Defining the fate of the world
-
----
+- Curious: exploring the unknown.
+- Empowered: gaining abilities and identity.
+- Questioning: facing moral decisions.
+- Tested: facing the consequences of accumulated choices.
+- Resolved: defining the fate of the world.
 
 ## What Makes It Unique?
 
-- Choices are not cosmetic — they **change mechanics**
-- The world reacts visually and narratively
-- Movement and combat are deeply intertwined
-- The player is judged by consistency, not perfection
+- Choices are not cosmetic; they change mechanics.
+- The world reacts visually and narratively.
+- Movement and combat are deeply intertwined.
+- The player is judged by consistency, not perfection.

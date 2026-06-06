@@ -1,291 +1,80 @@
 # Threadbound
 
-![Threadbound Banner](docs/art/concept_art/banner.png) 
+Threadbound is a painterly 2D action metroidvania built in Godot.
 
-> ⚠️ **License Notice**  
-> This project is currently **All Rights Reserved**.  
-> You may view the code and content, but **you may not reuse, redistribute, or create derivative works** without explicit permission.
+The game is about movement, identity, and choice: the player weaves traversal, equipment, and eventually combat together in real time while deciding what kind of being the Threadborne becomes.
 
----
+## License Notice
 
-**Threadbound** is a painterly 2D action metroidvania built in Godot, where you **weave abilities in real time during movement and combat**.
+This project is currently All Rights Reserved. You may view the code and content, but you may not reuse, redistribute, or create derivative works without explicit permission.
 
-Slow time, swap gear mid-movement, and chain traversal and combat into a seamless flow as you shape your identity through the threads you choose to claim—or reject.
+## Current Focus
 
----
+- Base player movement feel
+- Base grapple polish
+- Base equipment kit
+- Animation and equipment sync
+- Documentation and project organization
 
-## 🧵 Core Concept
+Combat, enemies, and expanded gear sets are planned, but the current priority is making the base kit clean, responsive, and durable.
 
-You are the **Threadborne** — the last unbound thread in a world once governed by a divine tapestry.
+## Core Pillars
 
-The Loom has been shattered. Fate is broken.
+- Flow-state traversal
+- Real-time equipment weaving
+- Choice as identity
+- No hard progression gates from optional gear
+- A world that reacts to what the player becomes
 
-Now, every power you take… or refuse… reshapes who you become.
+## Narrative Canon
 
----
+The current cosmology is stable. Before making lore, dialogue, quest, or worldbuilding decisions, start here:
 
-## 🌍 The World
+- [Narrative Canon](docs/narrative/CANON.md)
+- [Cosmology & Origins](docs/narrative/cosmology/cosmology_and_origins_revised.md)
+- [Cosmology Timeline](docs/narrative/story/threadbound_cosmology_timeline.md)
+- [Five Answers to Freedom](docs/narrative/story/five_answers_to_freedom.md)
+- [Narrative Voice & Lore Delivery](docs/narrative/narrative_voice_and_lore_delivery.md)
 
-Three beings now hold the primordial threads:
+Key guardrails:
 
-- 🟥 The Monarch — Power  
-- 🟦 The Hermit — Balance  
-- 🟨 The Sage — Essence  
+- Eryndor is the living world-consciousness and primary narrator.
+- Thought is the First Weaver and is secretly the Follower.
+- The Threads were originally unified within Eryndor and were never meant to be possessed.
+- The Monarch, Hermit, and Sage were once the King, Monk, and Scholar.
+- The Weaver is not the creator of the world and did not shatter the Loom.
+- The Threadborne represents possibility, not destiny or prophecy.
 
-To reach the shattered Loom and confront what remains, you must face them—and decide their fate.
+## Project Structure
 
----
-
-## 👁️ Known Figures of the Tapestry
-
-### 🧵 The Threadborne (You)
-![Threadborne](docs/art/concept_art/threadborne-concept.png)
-
-The last unbound thread.  
-A silent form shaped entirely by your choices.
-
----
-
-### 🟥 The Monarch — Power
-![The Monarch](docs/art/concept_art/the-monarch.png)
-
-A tyrant of strength and domination.  
-Power demands to be taken.
-
----
-
-### 🟦 The Hermit — Balance
-![The Hermit](docs/art/concept_art/the-hermit.png)
-
-A guardian of stillness and restraint.  
-Balance demands to be understood.
-
----
-
-### 🟨 The Sage — Essence
-![The Sage](docs/art/concept_art/the-sage.png)
-
-A seeker of truth and illusion.  
-Essence demands to be questioned.
-
----
-
-## ❓ And Others…
-
-Not all threads reveal themselves so clearly.
-
-Some follow.  
-Some guide.  
-Some wait.
-
----
-
-## ⚔️ Key Features
-
-### 🎮 Real-Time Weaving (Radial System)
-
-At any moment, you can:
-
-* Hold a button to **slow time**
-* Open a **radial menu around the player**
-* Instantly swap:
-
-  * Grapple (Gloves)
-  * Movement (Boots)
-  * Utility (Head/Chest)
-  * Weapon
-
-Release → continue seamlessly.
-
-No hard pauses. No menu friction.
-
-> Build-crafting happens **inside gameplay**, not outside it.
-
----
-
-### 🧰 Modular Equipment System
-
-Each of the three Thread Masters provides a full gear set:
-
-* **Gloves** → Grapple variants  
-* **Boots** → Movement augments  
-* **Head/Chest** → Utility abilities  
-
-Gear is discovered throughout the world as **Dormant Threads**:
-
-* Fully visible and styled  
-* Minor passive effects  
-* No full power yet  
-
----
-
-### 🔥 Awaken or Refuse Power
-
-After defeating a Thread Master, you must choose:
-
-#### Absorb
-
-* Awaken all collected gear of that type  
-* Unlock full abilities  
-* Add that color to your identity  
-
-#### Spare
-
-* Gear remains dormant  
-* No abilities gained  
-* Your form **desaturates toward white**  
-
----
-
-### 🎨 Living Color System
-
-Your appearance reflects your choices:
-
-* Absorb power → gain color  
-* Spare power → lose saturation  
-
-Examples:
-
-* Absorb Red → become red  
-* Absorb Red + Blue → become purple  
-* Spare → shift toward pale / white  
-* Absorb all → descend toward black  
-
-> You don’t pick a class.  
-> You **become your decisions**.
-
----
-
-## 🎨 Visual Identity
-
-Your character is not customized in menus.
-
-It evolves:
-
-- Color reflects your choices  
-- Equipment reflects your victories  
-- Your silhouette tells your story  
-
-No two players look the same.
-
----
-
-### ⚔️ Weapons & Combat Flow
-
-Each Thread Master unlocks a unique weapon style:
-
-* **Red (Monarch)** → Greatsword (heavy, momentum-driven)  
-* **Blue (Hermit)** → Ribbon Staff (flowing, precise)  
-* **Yellow (Sage)** → Talismans (ranged, methodical)  
-
-Weapons can be swapped mid-combat via the radial system, enabling:
-
-* combo chaining  
-* aerial transitions  
-* high-skill expression  
-
-Combat is fast, fluid, and always tied to movement.
-
----
-
-### 🌍 Exploration Without Hard Gating
-
-* The game is fully completable with the **base kit**  
-* Equipment enhances:
-
-  * speed  
-  * expression  
-  * access to secrets  
-
-* No required abilities block core progression  
-
-> Power transforms the experience—it doesn’t gate it.
-
----
-
-### 🧵 Flow-State Gameplay
-
-As you progress, you’ll:
-
-* chain grapples, jumps, and attacks  
-* swap gear mid-air  
-* maintain momentum across entire encounters  
-
-Endgame play becomes a **high-speed weaving of abilities**.
-
----
-
-## 🧠 Design Pillars
-
-* **Thread = Identity**  
-  Your form, abilities, and visuals are shaped by your choices.  
-
-* **Choice Matters**  
-  Every boss decision has permanent mechanical and narrative impact.  
-
-* **Flow-State Traversal**  
-  Movement and combat are one continuous, expressive system.  
-
----
-
-## 🕳️ Hidden Depths
-
-For those who fully commit to their path…
-
-There may be more waiting beyond the visible world.
-
-Not all threads wish to be claimed.  
-Some wish to be reclaimed.
-
----
-
-## 🛠️ Tech
-
-* Engine: **Godot 4**  
-* Language: **GDScript**  
-* Style: **Painterly 2D with 2.5D parallax**  
-
----
-
-## 📂 Project Structure
+```text
 threadbound/
-├── README.md
-├── CONTRIBUTING.md
-├── LICENSE.md
-│
-├── docs/ # Design, narrative, systems
-├── src/ # Game code (player, systems, etc.)
-├── assets/ # In-game assets
-├── addons/ # Plugins (e.g., Phantom Camera)
+  addons/      Godot plugins
+  Assets/      Game art, UI art, tiles, animation sources
+  docs/        Design, gameplay, narrative, art, and archive material
+  Src/         Godot scenes, scripts, shaders, and gameplay systems
+```
 
+Important runtime files:
 
----
+- `project.godot`
+- `Src/Environment/World/World.tscn`
+- `Src/Characters/Player/player.tscn`
+- `Src/Characters/Player/player.gd`
+- `Src/Equipment/BaseGloves.gd`
+- `Src/Equipment/base_gloves.tscn`
+- `Src/Equipment/equip_manager.gd`
+- `Src/UI/RadialMenu.tscn`
+- `Src/UI/radial_menu.gd`
 
-## 🚧 Current Focus
+## Tech
 
-* Equipment system (radial + swapping)  
-* Base player controller  
-* Combat flow integration  
-* Boss + gear interactions  
+- Engine: Godot 4
+- Language: GDScript
+- Repository owner: ThreadboundDev
 
----
+## Contribution Notes
 
-## 🤝 Contributing
+Threadbound is early and actively changing. Before changing architecture, scene trees, equipment systems, combat systems, lore, or assets, explain the intended change and get approval.
 
-See `CONTRIBUTING.md` for setup, structure, and guidelines.
-
----
-
-## 🧵 Vision
-
-Threadbound is about more than power.
-
-It’s about:
-
-* what you choose to take  
-* what you choose to leave behind  
-* and what that makes you  
-
----
-
-**Let’s weave something unforgettable.**
+Small documentation cleanup, comments, and focused bug fixes are welcome when they preserve the existing direction.
