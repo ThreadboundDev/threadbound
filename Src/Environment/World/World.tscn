@@ -314,9 +314,9 @@
 [ext_resource type="Texture2D" uid="uid://r7pc21rdo51r" path="res://Assets/Plants/Green Plant 2/Plant2_00088.png" id="304_etm2p"]
 [ext_resource type="Texture2D" uid="uid://bes5cynugpjmj" path="res://Assets/Plants/Green Plant 2/Plant2_00089.png" id="305_o2qrs"]
 [ext_resource type="Texture2D" uid="uid://cwms1pnlp7gb1" path="res://Assets/Tiles/Mossy - Decorations&Hazards.png" id="306_cpjl2"]
-[ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/RedPlatform.tscn" id="318_w6lba"]
+[ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/red_platform.tscn" id="318_w6lba"]
 [ext_resource type="Shader" uid="uid://bff108ep4rfu5" path="res://Src/Environment/World/RedBreakablePlat.gdshader" id="319_b5eaq"]
-[ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/RadialMenu.tscn" id="320_5nt33"]
+[ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/radial_menu.tscn" id="320_5nt33"]
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="320_m2p3j"]
 [ext_resource type="Shader" uid="uid://byxdrvwx0jif5" path="res://Src/Environment/World/menu_blur.gdshader" id="321_wfyk8"]
 
