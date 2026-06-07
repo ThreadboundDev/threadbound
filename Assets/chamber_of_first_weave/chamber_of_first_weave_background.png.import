@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c85ojtq4irtpn"
-path="res://.godot/imported/Chamber of First Weave MAP.png-c2b10bffd943f68e5623561e3c594186.ctex"
+uid="uid://bun44pkv6aj0"
+path="res://.godot/imported/chamber_of_first_weave_background.png-4df2416962da1998ede0eaa622721577.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Chaber Of The First Weave Assets/Chamber of First Weave MAP.png"
-dest_files=["res://.godot/imported/Chamber of First Weave MAP.png-c2b10bffd943f68e5623561e3c594186.ctex"]
+source_file="res://Assets/chamber_of_first_weave/chamber_of_first_weave_background.png"
+dest_files=["res://.godot/imported/chamber_of_first_weave_background.png-4df2416962da1998ede0eaa622721577.ctex"]
 
 [params]
 

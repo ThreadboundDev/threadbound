@@ -40,7 +40,7 @@ Avoid:
 
 - `Base Grapple Rope.png`
 - `Base_Grapple_Rope&Needle.png`
-- `RadialMenu.tscn11067775801.tmp`
+- `radial_menu.tscn11067775801.tmp`
 - `SomeSprite.png~`
 
 Existing paths do not need to be renamed immediately. Rename old paths only in focused cleanup commits where Godot import files, scene references, and scripts can be checked together.
@@ -75,4 +75,3 @@ Use short branch names that describe the work:
 - `equipment-ui-pass`
 
 Keep pull requests focused around one kind of change so review stays approachable.
-

@@ -16,13 +16,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Threadbound"
 run/main_scene="res://Src/Environment/World/World.tscn"
-config/features=PackedStringArray("4.6", "C#", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 PhantomCameraManager="*uid://duq6jhf6unyis"
-DebugUI="*res://Src/Global/DebugUI.gd"
+DebugUI="*res://Src/Global/debug_ui.gd"
 EquipManager="*res://Src/Equipment/equip_manager.gd"
 
 [display]
@@ -31,10 +31,6 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
-
-[dotnet]
-
-project/assembly_name="Threadbound"
 
 [editor]
 
