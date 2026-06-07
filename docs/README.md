@@ -7,9 +7,12 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `docs/narrative/CANON.md` - current narrative canon and guardrails
 - `docs/gameplay/core_mechanics.md` - traversal and real-time weaving philosophy
 - `docs/gameplay/equipment_slots.md` - equipment slot design
+- `docs/narrative/story/endings.md` - ending structure and secret-route development reference
 - `docs/design/project_structure_and_naming.md` - project naming and folder conventions
+- `docs/design/color_system.md` - color identity, acquisition, and gameplay framing
 - `docs/design/progression_and_choices.md` - absorb/spare progression framing
 - `docs/art/environment_art_style.md` - environment visual direction
+- `docs/art/asset_standards.md` - runtime art naming, palette, sprite, and rigging standards
 
 ## Folders
 
@@ -18,7 +21,6 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `design/` - broad design principles and systems direction
 - `gameplay/` - mechanics, combat, equipment, bosses, and endings
 - `narrative/` - canon, cosmology, story, character, and voice documents
-- `world/` - world-facing systems that are not purely narrative
 
 ## Archive Habit
 
