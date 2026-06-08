@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbuxvfd44htht"]
+
+[ext_resource type="PackedScene" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Src/Enemies/Threadling/threadling.gd" id="2_script"]
+[ext_resource type="Resource" path="res://Src/Enemies/Threadling/threadling_stats.tres" id="3_stats"]
+
+[node name="Threadling" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+stats = ExtResource("3_stats")
+patrol_distance = 140.0
+start_facing = -1
+
+[node name="Body" parent="Visuals" index="0"]
+color = Color(0.36, 0.18, 0.2, 1)
+polygon = PackedVector2Array(-16, -38, 16, -38, 20, -12, 10, 0, -10, 0, -20, -12)
