@@ -1,11 +1,11 @@
-[gd_scene format=4 uid="uid://ckrabols3a34g"]
+[gd_scene format=4 uid="uid://c6fj3o5ryv35r"]
 
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="1_j0p05"]
-[ext_resource type="Shader" uid="uid://b6bvbereuor76" path="res://Src/Environment/World/Fog.gdshader" id="1_q2d71"]
+[ext_resource type="Shader" uid="uid://b6bvbereuor76" path="res://Src/Environment/World/fog.gdshader" id="1_q2d71"]
 [ext_resource type="Texture2D" uid="uid://c5imxhdll8qhu" path="res://Assets/Tiles/Mossy - TileSet.png" id="2_5nsto"]
-[ext_resource type="Shader" uid="uid://b6bus80gymvqh" path="res://Src/Environment/World/Atmosphere.gdshader" id="4_7yo87"]
+[ext_resource type="Shader" uid="uid://b6bus80gymvqh" path="res://Src/Environment/World/atmosphere.gdshader" id="4_7yo87"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_45d1s"]
-[ext_resource type="Shader" uid="uid://cb1kthsvcq83w" path="res://Src/Environment/World/farbacktiles.gdshader" id="4_kn06e"]
+[ext_resource type="Shader" uid="uid://cb1kthsvcq83w" path="res://Src/Environment/World/far_back_tiles.gdshader" id="4_kn06e"]
 [ext_resource type="Texture2D" uid="uid://csmdv2s4ok3k5" path="res://Assets/Tiles/Mossy - Hanging Plants.png" id="4_ti1bm"]
 [ext_resource type="Texture2D" uid="uid://c10tbct1er641" path="res://Assets/Tiles/Mossy - BackgroundDecoration.png" id="4_uo7di"]
 [ext_resource type="Texture2D" uid="uid://cssmhupwmnx25" path="res://Assets/Tiles/Mossy - FloatingPlatforms.png" id="5_op4cu"]
@@ -314,8 +314,6 @@
 [ext_resource type="Texture2D" uid="uid://r7pc21rdo51r" path="res://Assets/Plants/Green Plant 2/Plant2_00088.png" id="304_etm2p"]
 [ext_resource type="Texture2D" uid="uid://bes5cynugpjmj" path="res://Assets/Plants/Green Plant 2/Plant2_00089.png" id="305_o2qrs"]
 [ext_resource type="Texture2D" uid="uid://cwms1pnlp7gb1" path="res://Assets/Tiles/Mossy - Decorations&Hazards.png" id="306_cpjl2"]
-[ext_resource type="PackedScene" uid="uid://dt5d4u1e8y241" path="res://Src/Environment/Platforms/red_platform.tscn" id="318_w6lba"]
-[ext_resource type="Shader" uid="uid://bff108ep4rfu5" path="res://Src/Environment/World/RedBreakablePlat.gdshader" id="319_b5eaq"]
 [ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/radial_menu.tscn" id="320_5nt33"]
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="320_m2p3j"]
 [ext_resource type="Shader" uid="uid://byxdrvwx0jif5" path="res://Src/Environment/World/menu_blur.gdshader" id="321_wfyk8"]
@@ -15533,248 +15531,6 @@ size = Vector2(9885.5, 3619.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q2d71"]
 size = Vector2(4886.5, 872.438)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5n85e"]
-shader = ExtResource("319_b5eaq")
-shader_parameter/glow_intensity = 0.0
-shader_parameter/crack_intensity = 0.0
-shader_parameter/pulse_speed = 18.0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2v1vc"]
-texture = ExtResource("320_m2p3j")
-margins = Vector2i(239, 214)
-texture_region_size = Vector2i(256, 256)
-1:1/0 = 0
-1:1/0/custom_data_0 = true
-2:1/0 = 0
-2:1/0/custom_data_0 = true
-3:1/0 = 0
-3:1/0/custom_data_0 = true
-3:1/0/custom_data_1 = 1
-4:1/0 = 0
-4:1/0/custom_data_0 = true
-4:1/0/custom_data_1 = 1
-1:2/0 = 0
-1:2/0/custom_data_0 = true
-2:2/0 = 0
-2:2/0/custom_data_0 = true
-3:2/0 = 0
-3:2/0/custom_data_0 = true
-3:2/0/custom_data_1 = 1
-4:2/0 = 0
-4:2/0/custom_data_0 = true
-4:2/0/custom_data_1 = 1
-1:3/0 = 0
-1:3/0/custom_data_0 = true
-1:3/0/custom_data_1 = 3
-2:3/0 = 0
-2:3/0/custom_data_0 = true
-2:3/0/custom_data_1 = 3
-3:3/0 = 0
-3:3/0/custom_data_0 = true
-3:3/0/custom_data_1 = 4
-4:3/0 = 0
-4:3/0/custom_data_0 = true
-4:3/0/custom_data_1 = 4
-1:4/0 = 0
-1:4/0/custom_data_0 = true
-1:4/0/custom_data_1 = 3
-2:4/0 = 0
-2:4/0/custom_data_0 = true
-2:4/0/custom_data_1 = 3
-3:4/0 = 0
-3:4/0/custom_data_0 = true
-3:4/0/custom_data_1 = 4
-4:4/0 = 0
-4:4/0/custom_data_0 = true
-4:4/0/custom_data_1 = 4
-5:2/0 = 0
-5:2/0/custom_data_0 = true
-5:2/0/custom_data_1 = 1
-6:2/0 = 0
-6:2/0/custom_data_0 = true
-6:2/0/custom_data_1 = 1
-7:2/0 = 0
-7:2/0/custom_data_0 = true
-7:2/0/custom_data_1 = 1
-8:2/0 = 0
-8:2/0/custom_data_0 = true
-8:2/0/custom_data_1 = 2
-9:2/0 = 0
-9:2/0/custom_data_0 = true
-9:2/0/custom_data_1 = 2
-5:3/0 = 0
-5:3/0/custom_data_0 = true
-5:3/0/custom_data_1 = 4
-6:3/0 = 0
-6:3/0/custom_data_0 = true
-6:3/0/custom_data_1 = 4
-7:3/0 = 0
-7:3/0/custom_data_0 = true
-7:3/0/custom_data_1 = 4
-8:3/0 = 0
-8:3/0/custom_data_0 = true
-8:3/0/custom_data_1 = 2
-9:3/0 = 0
-9:3/0/custom_data_0 = true
-9:3/0/custom_data_1 = 2
-5:4/0 = 0
-5:4/0/custom_data_0 = true
-5:4/0/custom_data_1 = 4
-6:4/0 = 0
-6:4/0/custom_data_0 = true
-6:4/0/custom_data_1 = 4
-7:4/0 = 0
-7:4/0/custom_data_0 = true
-7:4/0/custom_data_1 = 4
-8:4/0 = 0
-8:4/0/custom_data_0 = true
-8:4/0/custom_data_1 = 2
-9:4/0 = 0
-9:4/0/custom_data_0 = true
-9:4/0/custom_data_1 = 2
-1:5/0 = 0
-1:5/0/custom_data_0 = true
-1:5/0/custom_data_1 = 5
-2:5/0 = 0
-2:5/0/custom_data_0 = true
-2:5/0/custom_data_1 = 5
-3:5/0 = 0
-3:5/0/custom_data_0 = true
-3:5/0/custom_data_1 = 6
-4:5/0 = 0
-4:5/0/custom_data_0 = true
-4:5/0/custom_data_1 = 6
-5:5/0 = 0
-5:5/0/custom_data_0 = true
-5:5/0/custom_data_1 = 6
-6:5/0 = 0
-6:5/0/custom_data_0 = true
-6:5/0/custom_data_1 = 6
-7:5/0 = 0
-7:5/0/custom_data_0 = true
-7:5/0/custom_data_1 = 6
-8:5/0 = 0
-8:5/0/custom_data_0 = true
-8:5/0/custom_data_1 = 6
-9:5/0 = 0
-9:5/0/custom_data_0 = true
-9:5/0/custom_data_1 = 6
-1:6/0 = 0
-1:6/0/custom_data_0 = true
-1:6/0/custom_data_1 = 5
-2:6/0 = 0
-2:6/0/custom_data_0 = true
-2:6/0/custom_data_1 = 5
-3:6/0 = 0
-3:6/0/custom_data_0 = true
-3:6/0/custom_data_1 = 6
-4:6/0 = 0
-4:6/0/custom_data_0 = true
-4:6/0/custom_data_1 = 6
-5:6/0 = 0
-5:6/0/custom_data_0 = true
-5:6/0/custom_data_1 = 6
-6:6/0 = 0
-6:6/0/custom_data_0 = true
-6:6/0/custom_data_1 = 6
-7:6/0 = 0
-7:6/0/custom_data_0 = true
-7:6/0/custom_data_1 = 6
-8:6/0 = 0
-8:6/0/custom_data_0 = true
-8:6/0/custom_data_1 = 6
-9:6/0 = 0
-9:6/0/custom_data_0 = true
-9:6/0/custom_data_1 = 6
-1:7/0 = 0
-1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-25.599998, -25.599998, 128, -25.599998, 128, 128, -25.599998, 128)
-1:7/0/custom_data_0 = true
-1:7/0/custom_data_1 = 7
-2:7/0 = 0
-2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-2:7/0/custom_data_0 = true
-2:7/0/custom_data_1 = 7
-3:7/0 = 0
-3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-3:7/0/custom_data_0 = true
-3:7/0/custom_data_1 = 7
-4:7/0 = 0
-4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-4:7/0/custom_data_0 = true
-4:7/0/custom_data_1 = 7
-5:7/0 = 0
-5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-5:7/0/custom_data_0 = true
-5:7/0/custom_data_1 = 7
-6:7/0 = 0
-6:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-6:7/0/custom_data_0 = true
-6:7/0/custom_data_1 = 7
-7:7/0 = 0
-7:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 128, -128, -25.599998, 128, -25.599998, 128, 128)
-7:7/0/custom_data_0 = true
-7:7/0/custom_data_1 = 7
-8:7/0 = 0
-8:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(25.599998, -25.599998, 25.599998, 128, -128, 128, -128, -25.599998)
-8:7/0/custom_data_0 = true
-8:7/0/custom_data_1 = 7
-1:8/0 = 0
-1:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-25.599998, 25.599998, -25.599998, -128, 128, -128, 128, 25.599998)
-1:8/0/custom_data_0 = true
-1:8/0/custom_data_1 = 7
-2:8/0 = 0
-2:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-2:8/0/custom_data_0 = true
-2:8/0/custom_data_1 = 7
-3:8/0 = 0
-3:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-3:8/0/custom_data_0 = true
-3:8/0/custom_data_1 = 7
-4:8/0 = 0
-4:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-4:8/0/custom_data_0 = true
-4:8/0/custom_data_1 = 7
-5:8/0 = 0
-5:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-5:8/0/custom_data_0 = true
-5:8/0/custom_data_1 = 7
-6:8/0 = 0
-6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-6:8/0/custom_data_0 = true
-6:8/0/custom_data_1 = 7
-7:8/0 = 0
-7:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(128, -128, 128, 25.599998, -128, 25.599998, -128, -128)
-7:8/0/custom_data_0 = true
-7:8/0/custom_data_1 = 7
-8:8/0 = 0
-8:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(25.599998, 25.599998, -128, 25.599998, -128, -128, 25.599998, -128)
-8:8/0/custom_data_0 = true
-8:8/0/custom_data_1 = 7
-5:1/0 = 0
-5:1/0/custom_data_0 = true
-5:1/0/custom_data_1 = 1
-6:1/0 = 0
-6:1/0/custom_data_0 = true
-6:1/0/custom_data_1 = 1
-7:1/0 = 0
-7:1/0/custom_data_0 = true
-7:1/0/custom_data_1 = 1
-8:1/0 = 0
-8:1/0/custom_data_0 = true
-8:1/0/custom_data_1 = 2
-9:1/0 = 0
-9:1/0/custom_data_0 = true
-9:1/0/custom_data_1 = 2
-
-[sub_resource type="TileSet" id="TileSet_u1bmr"]
-tile_size = Vector2i(256, 256)
-physics_layer_0/collision_layer = 1
-custom_data_layer_0/name = "red_breakable"
-custom_data_layer_0/type = 1
-custom_data_layer_1/name = "platform_id"
-custom_data_layer_1/type = 2
-sources/1 = SubResource("TileSetAtlasSource_2v1vc")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_imjvn"]
 shader = ExtResource("321_wfyk8")
 shader_parameter/blur_amount = 2.5
@@ -16189,7 +15945,7 @@ script = ExtResource("7_q2d71")
 
 [node name="ZoomCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" unique_id=2049787621 node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(-142565.47, 333154.37)
+position = Vector2(-144185.47, 336960.37)
 script = ExtResource("5_y7y61")
 follow_mode = 2
 follow_target = NodePath("../../../../Player")
@@ -16211,23 +15967,6 @@ shape = SubResource("RectangleShape2D_q2d71")
 [node name="HUD" type="CanvasLayer" parent="." unique_id=808696143]
 follow_viewport_enabled = true
 
-[node name="RedPlatform" parent="." unique_id=1196759965 instance=ExtResource("318_w6lba")]
-position = Vector2(1902, -166)
-gravity_scale = -19.195
-
-[node name="RedPlatform2" parent="." unique_id=1749059658 instance=ExtResource("318_w6lba")]
-position = Vector2(193, 463)
-
-[node name="RedPlatform3" parent="." unique_id=1182045143 instance=ExtResource("318_w6lba")]
-position = Vector2(3529, -2116)
-
-[node name="RedBreakablePlat" type="TileMap" parent="." unique_id=440316845]
-material = SubResource("ShaderMaterial_5n85e")
-scale = Vector2(0.25, 0.25)
-tile_set = SubResource("TileSet_u1bmr")
-format = 2
-layer_0/tile_data = PackedInt32Array(131071, 65537, 7, 196607, 65537, 8, 65536, 131073, 7, 131072, 131073, 8, 65537, 196609, 7, 131073, 196609, 8, 131074, 262145, 8, 65539, 327681, 7, 131075, 327681, 8, 65540, 393217, 7, 131076, 393217, 8, 65541, 458753, 7, 131077, 458753, 8, 65542, 524289, 7, 131078, 524289, 8, 65538, 262145, 7)
-
 [node name="RadialMenu" parent="." unique_id=1881525942 instance=ExtResource("320_5nt33")]
 offset = Vector2(0, 100)
 transform = Transform2D(1, 0, 0, 1, 0, 100)
@@ -16236,6 +15975,7 @@ transform = Transform2D(1, 0, 0, 1, 0, 100)
 copy_mode = 2
 
 [node name="BlurLayer" type="CanvasLayer" parent="MenuBlurCopy" unique_id=164211254 groups=["blur_layer"]]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="MenuBlurCopy/BlurLayer" unique_id=1266295902 groups=["blur_rect"]]
 material = SubResource("ShaderMaterial_imjvn")

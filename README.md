@@ -60,7 +60,7 @@ threadbound/
 Important runtime files:
 
 - `project.godot`
-- `Src/Environment/World/World.tscn`
+- `Src/Environment/World/world.tscn`
 - `Src/Characters/Player/player.tscn`
 - `Src/Characters/Player/player.gd`
 - `Src/Equipment/base_gloves.gd`
@@ -68,6 +68,8 @@ Important runtime files:
 - `Src/Equipment/equip_manager.gd`
 - `Src/UI/radial_menu.tscn`
 - `Src/UI/radial_menu.gd`
+
+For deeper design, gameplay, narrative, and art references, start with [Threadbound Docs](docs/README.md).
 
 ## Tech
 

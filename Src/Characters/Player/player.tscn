@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bq1wbntu2nf7m" path="res://Assets/Threadborne/Run/ezgif-frame-004.png" id="23_tf72v"]
 [ext_resource type="Texture2D" uid="uid://b1jcuu18tfomp" path="res://Assets/Threadborne/Run/ezgif-frame-005.png" id="24_soka2"]
 [ext_resource type="Texture2D" uid="uid://dy71g0b6smw3n" path="res://Assets/Threadborne/Run/ezgif-frame-006.png" id="25_5qgfs"]
-[ext_resource type="Shader" uid="uid://bhtpk5ysdxkqy" path="res://Src/Characters/Player/playerglow.gdshader" id="82_dj0x0"]
+[ext_resource type="Shader" uid="uid://bhtpk5ysdxkqy" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
