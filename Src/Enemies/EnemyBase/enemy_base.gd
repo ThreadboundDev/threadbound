@@ -11,13 +11,13 @@ signal attack_finished()
 @export var start_facing: int = -1
 
 @onready var visuals: Node2D = $Visuals
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var hurtbox: HurtboxComponent = $Hurtbox
-@onready var attack_hitbox: HitboxComponent = $AttackHitbox
+@onready var health_component: HealthComponent = $HealthComponent as HealthComponent
+@onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
+@onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_area: Area2D = $AttackArea
-@onready var hit_flash: HitFlashComponent = $HitFlashComponent
-@onready var state_machine: EnemyStateMachine = $StateMachine
+@onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
+@onready var state_machine: EnemyStateMachine = $StateMachine as EnemyStateMachine
 
 var target: Node2D = null
 var facing: int = -1
@@ -88,7 +88,7 @@ func chase_target(_delta: float) -> void:
 		set_horizontal_target_speed(0.0)
 		return
 
-	var direction := sign(target.global_position.x - global_position.x)
+	var direction: int = int(sign(target.global_position.x - global_position.x))
 	if direction == 0:
 		direction = facing
 
