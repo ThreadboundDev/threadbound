@@ -22,9 +22,20 @@
 [ext_resource type="Texture2D" uid="uid://b1jcuu18tfomp" path="res://Assets/Threadborne/Run/ezgif-frame-005.png" id="24_soka2"]
 [ext_resource type="Texture2D" uid="uid://dy71g0b6smw3n" path="res://Assets/Threadborne/Run/ezgif-frame-006.png" id="25_5qgfs"]
 [ext_resource type="Shader" uid="uid://bhtpk5ysdxkqy" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
+[ext_resource type="Resource" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
+[ext_resource type="Script" path="res://Src/Components/health_component.gd" id="84_health"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
+[ext_resource type="Script" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
+[ext_resource type="Script" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(38, 124)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(72, 52)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6acp"]
 atlas = ExtResource("2_jr15c")
@@ -368,12 +379,41 @@ shader_parameter/glow_intensity = 0.5
 [node name="Player" type="CharacterBody2D" unique_id=994170439 groups=["player"]]
 script = ExtResource("1_cvnsp")
 base_gloves_scene = ExtResource("2_8cvsi")
+player_stats = ExtResource("83_stats")
 equipment_left_offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
 visible = false
 position = Vector2(0.5, 7.1224995)
 shape = SubResource("RectangleShape2D_cvnsp")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("84_health")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("85_hurtbox")
+health_component_path = NodePath("../HealthComponent")
+hurtbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_hurtbox")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+position = Vector2(48, -10)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("86_hitbox")
+hitbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("RectangleShape2D_attack")
+
+[node name="HitFlashComponent" type="Node" parent="."]
+script = ExtResource("87_flash")
+target_path = NodePath("../Player Animation")
 
 [node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=609748328]
 position = Vector2(4, -2)

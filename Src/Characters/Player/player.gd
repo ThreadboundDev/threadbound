@@ -8,11 +8,16 @@ extends CharacterBody2D
 @onready var camera = get_node_or_null("../Camera Master/Camera2D/PhantomCameraHost2D/MainFollowCam")
 @onready var glow_sprite: Sprite2D = $GlowSprite
 @onready var ability_cooldown_timer: Timer = $AbilityCooldownTimer
+@onready var health_component: HealthComponent = $HealthComponent as HealthComponent
+@onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
+@onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
+@onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
 
 # ===============================
 # EQUIPMENT SCENES
 # ===============================
 @export var base_gloves_scene: PackedScene
+@export var player_stats: PlayerStats
 
 # ===============================
 # MOVEMENT TUNABLES
@@ -61,6 +66,15 @@ var dash_charge_ratio: float = 0.0
 var current_body_anim := ""
 var current_equip_anim := ""
 
+var is_attacking := false
+var is_hurt := false
+var is_dead := false
+var attack_timer := 0.0
+var attack_cooldown_timer := 0.0
+var hurt_timer := 0.0
+var attack_active_started := false
+var attack_active_finished := false
+
 # Equipment slots
 var current_gloves: Node = null
 var current_boots: BaseEquipment = null
@@ -70,6 +84,20 @@ var current_chest: BaseEquipment = null
 # READY
 # ===============================
 func _ready() -> void:
+	if not player_stats:
+		player_stats = PlayerStats.new()
+
+	health_component.configure(player_stats.max_health)
+	health_component.damaged.connect(_on_damaged)
+	health_component.died.connect(_on_died)
+
+	hurtbox.health_component = health_component
+	hurtbox.hurtbox_owner = self
+
+	attack_hitbox.hitbox_owner = self
+	attack_hitbox.damage = _build_attack_damage()
+	attack_hitbox.hit_landed.connect(_on_attack_hit_landed)
+
 	if not current_boots:
 		current_boots = BaseBoots.new(self)
 	if not current_chest:
@@ -115,6 +143,15 @@ func unequip_gloves() -> void:
 # PHYSICS PROCESS
 # ===============================
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
+		velocity.y += gravity * delta
+		velocity.y = min(velocity.y, max_fall_speed)
+		move_and_slide()
+		return
+
+	update_combat_timers(delta)
+
 	# Gravity + coyote time
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -154,6 +191,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Dash"):
 		if current_chest:
 			current_chest.handle_secondary(delta, BaseEquipment.ActionState.PRESSED)
+
+	if Input.is_action_just_pressed("Attack"):
+		start_attack()
 
 	# Gloves active mechanic
 	if current_gloves and current_gloves.has_method("thread_mechanic"):
@@ -279,6 +319,102 @@ func update_equipment_facing() -> void:
 	else:
 		equipment_mount.scale.x = 1
 		equipment_mount.position = equipment_right_offset
+
+	update_attack_facing()
+
+# ===============================
+# COMBAT
+# ===============================
+func update_combat_timers(delta: float) -> void:
+	if attack_cooldown_timer > 0.0:
+		attack_cooldown_timer -= delta
+
+	if hurt_timer > 0.0:
+		hurt_timer -= delta
+		if hurt_timer <= 0.0:
+			is_hurt = false
+
+	if not is_attacking:
+		return
+
+	attack_timer += delta
+	var windup := player_stats.attack_windup
+	var active_time := player_stats.attack_active_time
+	var recovery := player_stats.attack_recovery
+
+	if not attack_active_started and attack_timer >= windup:
+		attack_active_started = true
+		attack_hitbox.damage = _build_attack_damage()
+		attack_hitbox.enable()
+
+	if attack_active_started and not attack_active_finished and attack_timer >= windup + active_time:
+		attack_active_finished = true
+		attack_hitbox.disable()
+
+	if attack_timer >= windup + active_time + recovery:
+		is_attacking = false
+		attack_hitbox.disable()
+
+func start_attack() -> void:
+	if is_dead or is_hurt or is_attacking or attack_cooldown_timer > 0.0:
+		return
+
+	is_attacking = true
+	attack_timer = 0.0
+	attack_cooldown_timer = player_stats.attack_cooldown
+	attack_active_started = false
+	attack_active_finished = false
+	update_attack_facing()
+
+	if player_animation and player_animation.sprite_frames.has_animation("Attack"):
+		play_character_anim("Attack", "equip_idle")
+
+func update_attack_facing() -> void:
+	if not attack_hitbox:
+		return
+
+	var direction := last_direction
+	if player_animation and player_animation.flip_h:
+		direction = -1
+	elif player_animation:
+		direction = 1
+
+	attack_hitbox.position.x = abs(attack_hitbox.position.x) * float(direction)
+
+func _build_attack_damage() -> DamageData:
+	var data := DamageData.new()
+	data.amount = player_stats.attack_damage
+	data.hitstun = player_stats.hurt_time
+	data.hit_pause = player_stats.hit_pause
+	data.knockback = Vector2(float(last_direction) * player_stats.knockback_strength, -90.0)
+	return data
+
+func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
+	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
+	CombatFeedback.hit_pause(self, damage.hit_pause)
+
+func _on_damaged(damage: DamageData) -> void:
+	is_hurt = true
+	hurt_timer = player_stats.hurt_time
+	is_attacking = false
+	attack_hitbox.disable()
+
+	if hit_flash:
+		hit_flash.flash(Color(1.0, 0.35, 0.35, 1.0), 0.08)
+
+	var knockback := damage.knockback
+	if knockback == Vector2.ZERO and damage.source is Node2D:
+		var source_node := damage.source as Node2D
+		knockback = Vector2(sign(global_position.x - source_node.global_position.x) * player_stats.knockback_strength, -90.0)
+
+	velocity = knockback
+	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
+	CombatFeedback.hit_pause(self, damage.hit_pause)
+
+func _on_died(_damage: DamageData) -> void:
+	is_dead = true
+	is_attacking = false
+	attack_hitbox.disable()
 
 # ===============================
 # CHARGE / COOLDOWN HELPERS
