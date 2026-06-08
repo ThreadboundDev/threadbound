@@ -1,0 +1,144 @@
+[gd_scene load_steps=14 format=4 uid="uid://bhwr05o46ojd4"]
+
+[ext_resource type="Texture2D" uid="uid://kqeorbqocdlp" path="res://Assets/chamber_of_first_weave/Layer 1.png" id="1_far"]
+[ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Layer 2.png" id="2_midfar"]
+[ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Layer 3.png" id="3_mid"]
+[ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Threadling/threadling.tscn" id="5_threadling"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="6_host"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="7_pcam"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="8_tween"]
+[ext_resource type="Script" uid="uid://c5fnbhwp6bfwd" path="res://Src/Camera/bias_controller.gd" id="9_bias"]
+
+[sub_resource type="Resource" id="Resource_camera_tween"]
+script = ExtResource("8_tween")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_camera_limit"]
+size = Vector2(7200, 2600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(3600, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left_wall"]
+size = Vector2(96, 1400)
+
+[node name="TestWorld" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -100
+
+[node name="Layer01_FarBackground" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -30
+motion_scale = Vector2(0.12, 0.08)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="Sprite" type="Sprite2D" parent="ParallaxBackground/Layer01_FarBackground"]
+z_index = -30
+position = Vector2(0, -420)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("1_far")
+
+[node name="Layer02_BackShapes" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -20
+motion_scale = Vector2(0.28, 0.16)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="Sprite" type="Sprite2D" parent="ParallaxBackground/Layer02_BackShapes"]
+z_index = -20
+position = Vector2(0, -360)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_midfar")
+
+[node name="Layer03_MidBackground" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -10
+motion_scale = Vector2(0.48, 0.28)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="Sprite" type="Sprite2D" parent="ParallaxBackground/Layer03_MidBackground"]
+z_index = -10
+position = Vector2(0, -300)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("3_mid")
+
+[node name="Layer04_NearDecor" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = -5
+motion_scale = Vector2(0.7, 0.45)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="AddNearDecorSpritesHere" type="Node2D" parent="ParallaxBackground/Layer04_NearDecor"]
+z_index = -5
+
+[node name="WorldGeometry" type="Node2D" parent="."]
+z_index = 0
+
+[node name="TestFloor" type="StaticBody2D" parent="WorldGeometry"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGeometry/TestFloor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="VisibleGuide" type="Polygon2D" parent="WorldGeometry/TestFloor"]
+z_index = -1
+color = Color(0.18, 0.16, 0.18, 1)
+polygon = PackedVector2Array(-1800, -48, 1800, -48, 1800, 48, -1800, 48)
+
+[node name="LeftWall" type="StaticBody2D" parent="WorldGeometry"]
+position = Vector2(-1780, -300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGeometry/LeftWall"]
+shape = SubResource("RectangleShape2D_left_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="WorldGeometry"]
+position = Vector2(1780, -300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGeometry/RightWall"]
+shape = SubResource("RectangleShape2D_left_wall")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Threadling" parent="Enemies" instance=ExtResource("5_threadling")]
+position = Vector2(560, 232)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+z_index = 10
+position = Vector2(-320, 180)
+
+[node name="Camera Master" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Camera Master"]
+physics_interpolation_mode = 1
+zoom = Vector2(1.3, 1.3)
+process_callback = 0
+limit_left = -1800
+limit_top = -1100
+limit_right = 1800
+limit_bottom = 500
+position_smoothing_speed = 1.0
+
+[node name="PhantomCameraHost2D" type="Node" parent="Camera Master/Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("6_host")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="MainFollowCam" type="Node2D" parent="Camera Master/Camera2D/PhantomCameraHost2D" node_paths=PackedStringArray("follow_target")]
+top_level = true
+position = Vector2(-320, 180)
+script = ExtResource("7_pcam")
+priority = 10
+follow_mode = 2
+follow_target = NodePath("../../../../Player")
+zoom = Vector2(1.3, 1.3)
+tween_resource = SubResource("Resource_camera_tween")
+follow_damping = true
+follow_damping_value = Vector2(0.2, 0.2)
+limit_target = NodePath("MainFollowCamLimit")
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="MainFollowCamLimit" type="CollisionShape2D" parent="Camera Master/Camera2D/PhantomCameraHost2D/MainFollowCam"]
+visible = false
+shape = SubResource("RectangleShape2D_camera_limit")
+
+[node name="BiasController" type="Node" parent="Camera Master/Camera2D/PhantomCameraHost2D/MainFollowCam"]
+script = ExtResource("9_bias")
