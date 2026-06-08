@@ -32,6 +32,10 @@ window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
+[dotnet]
+
+project/assembly_name="Threadbound"
+
 [editor]
 
 movie_writer/movie_file="ThreadboundMovement.avi"
