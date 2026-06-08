@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7nwlkhdmbfnr" path="res://Src/Equipment/base_gloves.gd" id="1_ijk80"]
 [ext_resource type="Texture2D" uid="uid://pc86g2jaexit" path="res://Assets/Threadborne/Equipment/RopeCoilTest.png" id="2_f1fjg"]
-[ext_resource type="Script" uid="uid://di2x2e1vafd58" path="res://Src/Characters/Player/RopeHangAnchor.gd" id="3_ap6kl"]
+[ext_resource type="Script" uid="uid://di2x2e1vafd58" path="res://Src/Characters/Player/rope_hang_anchor.gd" id="3_ap6kl"]
 [ext_resource type="Texture2D" uid="uid://dlowqaeka0s" path="res://Assets/Threadborne/Equipment/Base_Grapple_Needle.png" id="4_bvg2p"]
 [ext_resource type="Texture2D" uid="uid://bhi4pj6poxjlq" path="res://Assets/Threadborne/Equipment/Base_Grapple_Rope_Horizontal.png" id="5_pl50a"]
 

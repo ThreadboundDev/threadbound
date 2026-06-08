@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmanipocpkkqy"
-path="res://.godot/imported/Idle Right.png-ded38ed582c95cd3efbae8be589c3890.ctex"
+uid="uid://kqeorbqocdlp"
+path="res://.godot/imported/Layer 1.png-7726f13c6b4d75c3de8926ad30f63154.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/The Frayed/Idle Right.png"
-dest_files=["res://.godot/imported/Idle Right.png-ded38ed582c95cd3efbae8be589c3890.ctex"]
+source_file="res://Assets/chamber_of_first_weave/Layer 1.png"
+dest_files=["res://.godot/imported/Layer 1.png-7726f13c6b4d75c3de8926ad30f63154.ctex"]
 
 [params]
 
