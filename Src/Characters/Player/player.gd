@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal action_points_changed(current: int, maximum: int)
+signal momentum_changed(value: float)
+
 # ===============================
 # NODES
 # ===============================
@@ -12,12 +15,35 @@ extends CharacterBody2D
 @onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
 @onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
+@onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
 
 # ===============================
 # EQUIPMENT SCENES
 # ===============================
 @export var base_gloves_scene: PackedScene
 @export var player_stats: PlayerStats
+
+# Basic combat resource values for the HUD. Gameplay costs can build on these.
+@export_range(1, 20, 1) var max_health := 5
+
+@export_range(1, 6, 1) var max_action_points := 6:
+	set(value):
+		max_action_points = clampi(value, 1, 6)
+		current_action_points = clampi(current_action_points, 0, max_action_points)
+		_sync_hud()
+		action_points_changed.emit(current_action_points, max_action_points)
+
+@export_range(0, 6, 1) var current_action_points := 6:
+	set(value):
+		current_action_points = clampi(value, 0, max_action_points)
+		_sync_hud()
+		action_points_changed.emit(current_action_points, max_action_points)
+
+@export_range(0.0, 100.0, 1.0) var momentum := 0.0:
+	set(value):
+		momentum = clampf(value, 0.0, 100.0)
+		_sync_hud()
+		momentum_changed.emit(momentum)
 
 # ===============================
 # MOVEMENT TUNABLES
@@ -87,9 +113,11 @@ func _ready() -> void:
 	if not player_stats:
 		player_stats = PlayerStats.new()
 
+	player_stats.max_health = max_health
 	health_component.configure(player_stats.max_health)
 	health_component.damaged.connect(_on_damaged)
 	health_component.died.connect(_on_died)
+	health_component.health_changed.connect(_on_health_changed)
 
 	hurtbox.health_component = health_component
 	hurtbox.hurtbox_owner = self
@@ -113,6 +141,7 @@ func _ready() -> void:
 		equip_gloves(base_gloves_scene)
 
 	update_equipment_facing()
+	call_deferred("_sync_hud")
 
 # ===============================
 # EQUIP / UNEQUIP
@@ -170,12 +199,7 @@ func _physics_process(delta: float) -> void:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
-	if grapple_restricting:
-		# Only applies when airborne + grapple attached + rope is taut.
-		# This prevents the base grapple from becoming a momentum-building swing.
-		var target_x := horizontal_input * base_grapple_steer_speed
-		velocity.x = move_toward(velocity.x, target_x, base_grapple_steer_accel * delta)
-	else:
+	if not grapple_restricting:
 		var control = 1.0 if is_on_floor() else air_control_mult
 		velocity.x = speed * horizontal_input * control
 
@@ -184,6 +208,8 @@ func _physics_process(delta: float) -> void:
 		if is_wall_clinging:
 			is_wall_clinging = false
 			wall_cling_timer = 0.0
+		elif current_gloves and current_gloves.has_method("jump_off_grapple") and current_gloves.jump_off_grapple():
+			pass
 		elif current_boots:
 			current_boots.handle_primary(delta, BaseEquipment.ActionState.PRESSED)
 
@@ -292,12 +318,12 @@ func update_animations(dir: float) -> void:
 	elif not is_on_floor():
 		if velocity.y < -120.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent", "equip_jump_ascent")
-		elif abs(velocity.y) <= 120.0 and player_animation.sprite_frames.has_animation("Jump_Apex"):
-			play_character_anim("Jump_Apex", "equip_jump_apex")
 		elif velocity.y > 120.0 and player_animation.sprite_frames.has_animation("Jump_Descent"):
 			play_character_anim("Jump_Descent", "equip_jump_descent")
+		elif velocity.y <= 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
+			play_character_anim("Jump_Ascent", "equip_jump_ascent")
 		else:
-			play_character_anim("Jump_Apex", "equip_jump_apex")
+			play_character_anim("Jump_Descent", "equip_jump_descent")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
 		play_character_anim("Run", "equip_run")
@@ -354,6 +380,7 @@ func update_combat_timers(delta: float) -> void:
 	if attack_timer >= windup + active_time + recovery:
 		is_attacking = false
 		attack_hitbox.disable()
+		_reset_weapon_visuals()
 
 func start_attack() -> void:
 	if is_dead or is_hurt or is_attacking or attack_cooldown_timer > 0.0:
@@ -365,9 +392,30 @@ func start_attack() -> void:
 	attack_active_started = false
 	attack_active_finished = false
 	update_attack_facing()
+	_play_weapon_attack_anim()
 
 	if player_animation and player_animation.sprite_frames.has_animation("Attack"):
 		play_character_anim("Attack", "equip_idle")
+
+func _play_weapon_attack_anim() -> void:
+	if not weapon_animation_player:
+		return
+
+	if not weapon_animation_player.has_animation("quick_attack"):
+		return
+
+	weapon_animation_player.stop()
+	weapon_animation_player.play("quick_attack")
+
+func _reset_weapon_visuals() -> void:
+	if not weapon_animation_player:
+		return
+
+	if not weapon_animation_player.has_animation("RESET"):
+		return
+
+	weapon_animation_player.play("RESET")
+	weapon_animation_player.seek(0.0, true)
 
 func update_attack_facing() -> void:
 	if not attack_hitbox:
@@ -389,15 +437,56 @@ func _build_attack_damage() -> DamageData:
 	data.knockback = Vector2(float(last_direction) * player_stats.knockback_strength, -90.0)
 	return data
 
+func set_action_points(current: int, maximum: int = max_action_points) -> void:
+	max_action_points = maximum
+	current_action_points = current
+
+func spend_action_points(amount: int) -> bool:
+	if amount <= 0:
+		return true
+	if current_action_points < amount:
+		return false
+
+	current_action_points -= amount
+	return true
+
+func restore_action_points(amount: int) -> void:
+	current_action_points += max(0, amount)
+
+func refill_action_points() -> void:
+	current_action_points = max_action_points
+
+func set_momentum(value: float) -> void:
+	momentum = value
+
+func _sync_hud() -> void:
+	if not is_inside_tree():
+		return
+
+	var hud := get_tree().get_first_node_in_group("combat_hud")
+	if not hud:
+		return
+
+	if hud.has_method("set_health") and health_component:
+		hud.set_health(health_component.current_health, health_component.max_health)
+	if hud.has_method("set_action_points"):
+		hud.set_action_points(current_action_points, max_action_points)
+	if hud.has_method("set_momentum"):
+		hud.set_momentum(momentum)
+
 func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
 	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
+
+func _on_health_changed(_current: int, _maximum: int) -> void:
+	_sync_hud()
 
 func _on_damaged(damage: DamageData) -> void:
 	is_hurt = true
 	hurt_timer = player_stats.hurt_time
 	is_attacking = false
 	attack_hitbox.disable()
+	_reset_weapon_visuals()
 
 	if hit_flash:
 		hit_flash.flash(Color(1.0, 0.35, 0.35, 1.0), 0.08)
@@ -415,6 +504,7 @@ func _on_died(_damage: DamageData) -> void:
 	is_dead = true
 	is_attacking = false
 	attack_hitbox.disable()
+	_reset_weapon_visuals()
 
 # ===============================
 # CHARGE / COOLDOWN HELPERS

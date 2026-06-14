@@ -3,14 +3,14 @@
 [ext_resource type="Script" uid="uid://rw8rhi7ev0wh" path="res://Src/Characters/Player/player.gd" id="1_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://buxb8jonbu5wu" path="res://Src/Equipment/base_gloves.tscn" id="2_8cvsi"]
 [ext_resource type="Texture2D" uid="uid://mowqqj460qam" path="res://Assets/Threadborne/Idle/Idleright.png" id="2_jr15c"]
-[ext_resource type="Texture2D" uid="uid://ccx6nda63h3w0" path="res://Assets/Threadborne/Jump/Jump_Apex.png" id="3_5pixu"]
-[ext_resource type="Texture2D" uid="uid://cxalhojcen5nv" path="res://Assets/Threadborne/Grapple/Grapple_Toss_Diag_Right.png" id="3_puhm8"]
-[ext_resource type="Texture2D" uid="uid://dpynodtr03t8i" path="res://Assets/Threadborne/Jump/Jump_Ascent.png" id="4_4x0hb"]
-[ext_resource type="Texture2D" uid="uid://bp3w78wspb5nm" path="res://Assets/Threadborne/Grapple/Grapple_Toss_Right.png" id="4_87wcq"]
-[ext_resource type="Texture2D" uid="uid://bt7ejlugf5kbh" path="res://Assets/Threadborne/Jump/Jump_Descent.png" id="6_84may"]
-[ext_resource type="Texture2D" uid="uid://cq8gylccpfc7j" path="res://Assets/Threadborne/Jump/Jump_Land.png" id="7_vrurm"]
+[ext_resource type="Texture2D" uid="uid://bsulyuljh7e5u" path="res://Assets/Threadborne/Player_Normalized_V1/Jump_Apex.png" id="3_5pixu"]
+[ext_resource type="Texture2D" uid="uid://b36s8u0ig2mtg" path="res://Assets/Threadborne/Player_Normalized_V1/Grapple_Toss_Diag_Right.png" id="3_puhm8"]
+[ext_resource type="Texture2D" uid="uid://bi454ublwb4r7" path="res://Assets/Threadborne/Player_Normalized_V1/Jump_Ascent.png" id="4_4x0hb"]
+[ext_resource type="Texture2D" uid="uid://c61nys7k1624u" path="res://Assets/Threadborne/Player_Normalized_V1/Grapple_Toss_Right.png" id="4_87wcq"]
+[ext_resource type="Texture2D" uid="uid://cifn0o0252tjy" path="res://Assets/Threadborne/Player_Normalized_V1/Jump_Descent.png" id="6_84may"]
+[ext_resource type="Texture2D" uid="uid://cm600wts61wg0" path="res://Assets/Threadborne/Player_Normalized_V1/Jump_Land.png" id="7_vrurm"]
 [ext_resource type="Texture2D" uid="uid://2kwd5b6ppfjl" path="res://Assets/Threadborne/Run/ezgif-frame-001.png" id="8_vi5rm"]
-[ext_resource type="Texture2D" uid="uid://5wyblfitir5y" path="res://Assets/Threadborne/Jump/Wall_Cling.png" id="9_4x0hb"]
+[ext_resource type="Texture2D" uid="uid://bsfrg5pt0sls7" path="res://Assets/Threadborne/Player_Normalized_V1/Wall_Cling.png" id="9_4x0hb"]
 [ext_resource type="Texture2D" uid="uid://caky88nd11yu" path="res://Assets/Threadborne/Run/ezgif-frame-012.png" id="14_5csg4"]
 [ext_resource type="Texture2D" uid="uid://dbteh0airk8k1" path="res://Assets/Threadborne/Run/ezgif-frame-007.png" id="14_puhm8"]
 [ext_resource type="Texture2D" uid="uid://bwi416umwqgnl" path="res://Assets/Threadborne/Run/ezgif-frame-008.png" id="15_87wcq"]
@@ -21,12 +21,14 @@
 [ext_resource type="Texture2D" uid="uid://bq1wbntu2nf7m" path="res://Assets/Threadborne/Run/ezgif-frame-004.png" id="23_tf72v"]
 [ext_resource type="Texture2D" uid="uid://b1jcuu18tfomp" path="res://Assets/Threadborne/Run/ezgif-frame-005.png" id="24_soka2"]
 [ext_resource type="Texture2D" uid="uid://dy71g0b6smw3n" path="res://Assets/Threadborne/Run/ezgif-frame-006.png" id="25_5qgfs"]
-[ext_resource type="Shader" uid="uid://bhtpk5ysdxkqy" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
+[ext_resource type="Shader" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
 [ext_resource type="Resource" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
-[ext_resource type="Script" path="res://Src/Components/health_component.gd" id="84_health"]
-[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
-[ext_resource type="Script" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
-[ext_resource type="Script" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
+[ext_resource type="Script" uid="uid://6cp7uurvooma" path="res://Src/Components/health_component.gd" id="84_health"]
+[ext_resource type="Script" uid="uid://d1svuo20lfx4e" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
+[ext_resource type="Script" uid="uid://br8r048uv1yqv" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
+[ext_resource type="Script" uid="uid://dnsl0nd3gwkof" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Weavers_Shuttle_Club.png" id="88_shuttle"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Weavers_Shuttle_Club_Smear.png" id="89_shuttle_smear"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -376,6 +378,200 @@ shader_parameter/glow_color = Color(1, 0, 0, 1)
 shader_parameter/glow_width = 2.0
 shader_parameter/glow_intensity = 0.5
 
+[sub_resource type="Animation" id="Animation_player_reset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-12, -24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.62]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.28, 0.28)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_quick_attack"]
+resource_name = "quick_attack"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.035, 0.155),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.035, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.035, 0.075, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(18, -33), Vector2(52, -27), Vector2(68, -18)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.035, 0.075, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.9, 0.25, 0.85]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.34, 0.34)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.045, 0.12, 0.145),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(50, -27)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.48, 0.48)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_player_pose"]
+_data = {
+&"RESET": SubResource("Animation_player_reset"),
+&"quick_attack": SubResource("Animation_quick_attack")
+}
+
 [node name="Player" type="CharacterBody2D" unique_id=994170439 groups=["player"]]
 script = ExtResource("1_cvnsp")
 base_gloves_scene = ExtResource("2_8cvsi")
@@ -387,31 +583,31 @@ visible = false
 position = Vector2(0.5, 7.1224995)
 shape = SubResource("RectangleShape2D_cvnsp")
 
-[node name="HealthComponent" type="Node" parent="."]
+[node name="HealthComponent" type="Node" parent="." unique_id=2021687560]
 script = ExtResource("84_health")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=208376770]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("85_hurtbox")
 health_component_path = NodePath("../HealthComponent")
 hurtbox_owner_path = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=977993496]
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_hurtbox")
 
-[node name="AttackHitbox" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=2128718605]
 position = Vector2(48, -10)
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("86_hitbox")
 hitbox_owner_path = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=843783285]
 shape = SubResource("RectangleShape2D_attack")
 
-[node name="HitFlashComponent" type="Node" parent="."]
+[node name="HitFlashComponent" type="Node" parent="." unique_id=358513544]
 script = ExtResource("87_flash")
 target_path = NodePath("../Player Animation")
 
@@ -419,7 +615,7 @@ target_path = NodePath("../Player Animation")
 position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Grapple_Horizontal"
+animation = &"Grapple_Diagonal"
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
@@ -430,3 +626,30 @@ wait_time = 0.2
 one_shot = true
 
 [node name="EquipmentMount" type="Node2D" parent="." unique_id=1868714472]
+
+[node name="BackSheathedWeaverShuttle" type="Sprite2D" parent="EquipmentMount" unique_id=1756899710]
+z_index = -2
+position = Vector2(-12, -24)
+rotation = -0.62
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("88_shuttle")
+
+[node name="AttackSwingRoot" type="Node2D" parent="EquipmentMount" unique_id=1849983732]
+
+[node name="AttackSmearSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot" unique_id=788882607]
+visible = false
+z_index = 3
+position = Vector2(50, -27)
+scale = Vector2(0.48, 0.48)
+texture = ExtResource("89_shuttle_smear")
+
+[node name="AttackWeaponSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot" unique_id=690699467]
+visible = false
+z_index = 4
+position = Vector2(18, -33)
+rotation = -0.9
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("88_shuttle")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1040515148]
+libraries/ = SubResource("AnimationLibrary_player_pose")

@@ -1,15 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbuxvfd44htht"]
+[gd_scene load_steps=7 format=3 uid="uid://bbuxvfd44htht"]
 
-[ext_resource type="PackedScene" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://Src/Enemies/Threadling/threadling.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://b21ywt446las" path="res://Src/Enemies/Threadling/threadling.gd" id="2_script"]
 [ext_resource type="Resource" path="res://Src/Enemies/Threadling/threadling_stats.tres" id="3_stats"]
+[ext_resource type="Texture2D" uid="uid://c78upkrfm4hgm" path="res://Assets/Threadling/threadlin_idleright.png" id="4_idle"]
+[ext_resource type="Texture2D" uid="uid://fl517t0kjcfj" path="res://Assets/Threadling/threadling_attackright.png" id="5_attack"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_laser"]
+size = Vector2(176, 34)
 
 [node name="Threadling" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 stats = ExtResource("3_stats")
 patrol_distance = 140.0
 start_facing = -1
+idle_texture = ExtResource("4_idle")
+attack_texture = ExtResource("5_attack")
+idle_columns = 6
+idle_rows = 6
+idle_frame_count = 36
+idle_fps = 8.0
+attack_columns = 5
+attack_rows = 8
+attack_frame_count = 36
 
 [node name="Body" parent="Visuals" index="0"]
+visible = false
 color = Color(0.36, 0.18, 0.2, 1)
 polygon = PackedVector2Array(-16, -38, 16, -38, 20, -12, 10, 0, -10, 0, -20, -12)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1"]
+position = Vector2(0, -24)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_idle")
+hframes = 6
+vframes = 6
+
+[node name="AttackArea" parent="." index="5"]
+position = Vector2(-96, -24)
+
+[node name="CollisionShape2D" parent="AttackArea" index="0"]
+shape = SubResource("RectangleShape2D_laser")
+
+[node name="AttackHitbox" parent="." index="6"]
+position = Vector2(-96, -24)
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("RectangleShape2D_laser")
+
+[node name="HitFlashComponent" parent="." index="7"]
+target_path = NodePath("../Visuals/Sprite2D")

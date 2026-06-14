@@ -6,10 +6,10 @@
 script = ExtResource("1_stats")
 max_health = 5
 attack_damage = 1
-attack_windup = 0.08
-attack_active_time = 0.12
-attack_recovery = 0.18
-attack_cooldown = 0.25
+attack_windup = 0.045
+attack_active_time = 0.095
+attack_recovery = 0.12
+attack_cooldown = 0.2
 hurt_time = 0.18
 knockback_strength = 260.0
 hit_pause = 0.04
