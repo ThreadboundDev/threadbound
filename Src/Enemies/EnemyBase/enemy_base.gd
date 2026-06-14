@@ -67,6 +67,10 @@ func move_enemy(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
 	move_and_slide()
 
+func update_attack_motion(delta: float) -> void:
+	apply_gravity(delta)
+	move_enemy(delta)
+
 func set_horizontal_target_speed(speed: float) -> void:
 	_target_speed = speed
 
@@ -110,9 +114,12 @@ func activate_attack_hitbox() -> void:
 	attack_hitbox.damage = _build_attack_damage()
 	attack_hitbox.enable()
 
-func end_attack() -> void:
+func deactivate_attack_hitbox() -> void:
 	if attack_hitbox.active:
 		attack_hitbox.disable()
+
+func end_attack() -> void:
+	deactivate_attack_hitbox()
 	attack_finished.emit()
 
 func die() -> void:

@@ -21,8 +21,7 @@ func physics_update(delta: float) -> void:
 		return
 
 	_timer += delta
-	enemy.apply_gravity(delta)
-	enemy.move_enemy(delta)
+	enemy.update_attack_motion(delta)
 
 	var windup := enemy.stats.attack_windup if enemy.stats else 0.18
 	var active_time := enemy.stats.attack_active_time if enemy.stats else 0.14
@@ -34,7 +33,7 @@ func physics_update(delta: float) -> void:
 
 	if _active_started and not _attack_finished and _timer >= windup + active_time:
 		_attack_finished = true
-		enemy.end_attack()
+		enemy.deactivate_attack_hitbox()
 
 	if _timer >= windup + active_time + recovery:
 		if enemy.target and enemy.is_player_in_attack_range() and enemy.can_attack():

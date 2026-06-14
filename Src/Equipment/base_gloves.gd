@@ -39,8 +39,9 @@ var player: CharacterBody2D = null
 @export var enforce_player_rope_limit := true
 @export var rope_limit_slack := 6.0
 @export var rope_limit_pull_strength := 18.0
-@export var rope_tangent_max_speed := 220.0
-@export var rope_tangent_damping := 0.90
+@export var rope_tangent_max_speed := 380.0
+@export var rope_tangent_damping := 0.985
+@export var rope_jump_force := 760.0
 
 # Climbing Variables
 @export var rope_climb_speed := 220.0
@@ -170,6 +171,27 @@ func is_base_grapple_restricting() -> bool:
 	var distance := origin.distance_to(grapple_attach_position)
 
 	return distance > current_rope_length + rope_limit_slack
+
+func jump_off_grapple() -> bool:
+	if grapple_state != GrappleState.ATTACHED:
+		return false
+
+	if not player:
+		return false
+
+	var origin := get_grapple_origin_global_position()
+	var from_anchor := origin - grapple_attach_position
+
+	if from_anchor.length() > 0.001:
+		var rope_dir := from_anchor.normalized()
+		var tangent := Vector2(-rope_dir.y, rope_dir.x)
+		var tangent_speed := player.velocity.dot(tangent)
+		tangent_speed = clamp(tangent_speed, -rope_tangent_max_speed, rope_tangent_max_speed)
+		player.velocity = tangent * tangent_speed
+
+	player.velocity.y = min(player.velocity.y, -rope_jump_force)
+	_begin_grapple_retract()
+	return true
 
 # ===============================
 # STOWED / ACTIVE VISUALS
@@ -339,7 +361,11 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		grapple_tip_velocity = Vector2.ZERO
 		grapple_state = GrappleState.ATTACHED
 
-		current_rope_length = grapple_max_distance
+		current_rope_length = clamp(
+			get_grapple_origin_global_position().distance_to(grapple_attach_position),
+			rope_min_length,
+			grapple_max_distance
+		)
 
 		_update_active_grapple_visuals()
 
@@ -456,7 +482,7 @@ func apply_grapple_velocity(delta: float) -> void:
 	# Clamp sideways swing so base grapple cannot build big momentum.
 	var tangent_speed: float = player.velocity.dot(tangent)
 	tangent_speed = clamp(tangent_speed, -rope_tangent_max_speed, rope_tangent_max_speed)
-	tangent_speed *= rope_tangent_damping
+	tangent_speed *= pow(rope_tangent_damping, delta * 60.0)
 
 	var inward_speed: float = min(player.velocity.dot(rope_dir), 0.0)
 	player.velocity = tangent * tangent_speed + rope_dir * inward_speed

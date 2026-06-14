@@ -1,0 +1,15 @@
+cell=128
+cols=4
+top_left_corner.png: atlas=(0,0) pixels=(0,0,128,128)
+top_center.png: atlas=(1,0) pixels=(128,0,128,128)
+top_right_corner.png: atlas=(2,0) pixels=(256,0,128,128)
+center.png: atlas=(3,0) pixels=(384,0,128,128)
+left_side.png: atlas=(0,1) pixels=(0,128,128,128)
+right_side.png: atlas=(1,1) pixels=(128,128,128,128)
+bottum_left_corner.png: atlas=(2,1) pixels=(256,128,128,128)
+bottum_center.png: atlas=(3,1) pixels=(384,128,128,128)
+bottum_right_corner.png: atlas=(0,2) pixels=(0,256,128,128)
+inner_top_left.png: atlas=(1,2) pixels=(128,256,128,128)
+inner_top_right.png: atlas=(2,2) pixels=(256,256,128,128)
+inner_bottum_left.png: atlas=(3,2) pixels=(384,256,128,128)
+inner_bottum_right.png: atlas=(0,3) pixels=(0,384,128,128)
