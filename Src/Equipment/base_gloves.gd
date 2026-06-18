@@ -27,6 +27,7 @@ var player: CharacterBody2D = null
 @export var grapple_max_distance := 360.0
 @export var grapple_retract_speed := 1800.0
 @export var needle_rotation_offset := -PI / 2.0
+@export_flags_2d_physics var grapple_collision_mask := 1
 
 # Active rope visuals/physics
 @export var active_rope_segment_count := 12
@@ -89,11 +90,13 @@ func _ready() -> void:
 		active_grapple_root.global_rotation = 0.0
 		active_grapple_root.global_scale = Vector2.ONE
 
+	_configure_grapple_raycast()
 	_reset_active_grapple_visuals()
 	print("✅ BaseGloves ready")
 
 func on_equipped() -> void:
 	visible = true
+	_configure_grapple_raycast()
 	_show_stowed_rope()
 
 	if rope_hang_anchor and rope_hang_anchor.has_method("reset_rope"):
@@ -224,6 +227,19 @@ func _reset_active_grapple_visuals() -> void:
 		active_needle_sprite.visible = false
 
 	_show_stowed_rope()
+
+func _configure_grapple_raycast() -> void:
+	if not grapple_raycast:
+		return
+
+	grapple_raycast.enabled = true
+	grapple_raycast.collide_with_bodies = true
+	grapple_raycast.collide_with_areas = false
+	grapple_raycast.collision_mask = grapple_collision_mask
+	grapple_raycast.clear_exceptions()
+
+	if player:
+		grapple_raycast.add_exception(player)
 
 # ===============================
 # ROPE PHYSICS
@@ -521,10 +537,7 @@ func thread_mechanic(delta: float) -> void:
 			var distance := grapple_tip_position.distance_to(grapple_start_position)
 			if distance >= grapple_max_distance and not grapple_attached:
 				grapple_tip_velocity = Vector2.ZERO
-				grapple_attach_position = grapple_tip_position
-				grapple_state = GrappleState.ATTACHED
-
-				current_rope_length = grapple_max_distance
+				_begin_grapple_retract()
 
 			_update_active_grapple_visuals()
 

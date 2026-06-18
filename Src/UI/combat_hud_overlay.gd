@@ -10,7 +10,6 @@ const ORB_CENTERS := [
 	Vector2(383.0, 1000.0),
 	Vector2(871.0, 1000.0),
 ]
-const CENTER := Vector2(627.0, 627.0)
 
 @export_range(1, 6, 1) var max_action_points := 6:
 	set(value):
@@ -30,8 +29,6 @@ const CENTER := Vector2(627.0, 627.0)
 
 @export var active_orb_color := Color(0.95, 0.72, 0.28, 0.9)
 @export var inactive_orb_color := Color(0.05, 0.06, 0.08, 0.58)
-@export var momentum_color := Color(0.28, 0.8, 1.0, 0.86)
-@export var momentum_back_color := Color(0.04, 0.06, 0.08, 0.72)
 
 var rune_colors: Array[Color] = []
 var rune_available: Array[bool] = []
@@ -62,12 +59,6 @@ func _draw() -> void:
 		draw_arc(center, radius * 0.82, 0.0, TAU, 48, color.lightened(0.35), 2.0 * scale_factor, true)
 		if available:
 			_draw_rune(center, radius * 0.48, scale_factor, color)
-
-	var gauge_center: Vector2 = offset + CENTER * scale_factor
-	var gauge_radius: float = 165.0 * scale_factor
-	draw_arc(gauge_center, gauge_radius, -PI * 0.5, PI * 1.5, 96, momentum_back_color, 15.0 * scale_factor, true)
-	if momentum > 0.0:
-		draw_arc(gauge_center, gauge_radius, -PI * 0.5, -PI * 0.5 + TAU * momentum, 96, momentum_color, 15.0 * scale_factor, true)
 
 func _draw_rune(center: Vector2, radius: float, scale_factor: float, rune_color: Color) -> void:
 	var color := rune_color.lightened(0.55)

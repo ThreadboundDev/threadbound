@@ -16,6 +16,7 @@ signal momentum_changed(value: float)
 @onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
 @onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
+@onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
 
 # ===============================
 # EQUIPMENT SCENES
@@ -49,10 +50,12 @@ signal momentum_changed(value: float)
 # MOVEMENT TUNABLES
 # ===============================
 @export var speed: float = 500.0
-@export var air_control_mult: float = 0.75
-@export var gravity: float = 1600.0
-@export var max_fall_speed: float = 1000.0
-@export var coyote_time: float = 0.12
+@export var air_control_mult: float = 0.9
+@export var gravity: float = 2200.0
+@export var fall_gravity_multiplier: float = 1.55
+@export var jump_cut_gravity_multiplier: float = 2.25
+@export var max_fall_speed: float = 1500.0
+@export var coyote_time: float = 0.1
 
 # Base grapple movement while rope is taut.
 @export var base_grapple_steer_speed: float = 120.0
@@ -77,6 +80,9 @@ signal momentum_changed(value: float)
 # ===============================
 # STATE
 # ===============================
+const ATTACK_HITBOX_DISTANCE := 58.0
+const ATTACK_DIRECTION_DEADZONE := 0.15
+
 var coyote_timer: float = 0.0
 var last_direction: int = 1
 var is_near_interactable: bool = false
@@ -91,10 +97,13 @@ var dash_charge_ratio: float = 0.0
 
 var current_body_anim := ""
 var current_equip_anim := ""
+var current_weapon_pose_anim := ""
+var current_attack_body_anim := "Attack"
 
 var is_attacking := false
 var is_hurt := false
 var is_dead := false
+var attack_direction := Vector2.RIGHT
 var attack_timer := 0.0
 var attack_cooldown_timer := 0.0
 var hurt_timer := 0.0
@@ -174,7 +183,7 @@ func unequip_gloves() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
-		velocity.y += gravity * delta
+		velocity.y += _get_current_gravity() * delta
 		velocity.y = min(velocity.y, max_fall_speed)
 		move_and_slide()
 		return
@@ -183,7 +192,7 @@ func _physics_process(delta: float) -> void:
 
 	# Gravity + coyote time
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += _get_current_gravity() * delta
 		velocity.y = min(velocity.y, max_fall_speed)
 		coyote_timer -= delta
 	else:
@@ -284,6 +293,14 @@ func handle_wall_cling(delta: float) -> void:
 		is_wall_clinging = false
 		wall_cling_timer = 0.0
 
+func _get_current_gravity() -> float:
+	if velocity.y < 0.0:
+		if not Input.is_action_pressed("Jump"):
+			return gravity * jump_cut_gravity_multiplier
+		return gravity
+
+	return gravity * fall_gravity_multiplier
+
 # ===============================
 # ANIMATION
 # ===============================
@@ -293,6 +310,8 @@ func play_character_anim(body_anim: String, equip_anim: String) -> void:
 	if body_changed:
 		current_body_anim = body_anim
 		player_animation.play(body_anim)
+		if not is_attacking:
+			_play_weapon_pose_anim(body_anim)
 
 	if current_gloves:
 		if body_changed or current_equip_anim != equip_anim:
@@ -303,6 +322,10 @@ func play_character_anim(body_anim: String, equip_anim: String) -> void:
 
 func update_animations(dir: float) -> void:
 	if not player_animation or not player_animation.sprite_frames:
+		return
+
+	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		play_character_anim(current_attack_body_anim, "equip_idle")
 		return
 	
 	var is_dashing = false
@@ -346,7 +369,7 @@ func update_equipment_facing() -> void:
 		equipment_mount.scale.x = 1
 		equipment_mount.position = equipment_right_offset
 
-	update_attack_facing()
+	_apply_attack_direction()
 
 # ===============================
 # COMBAT
@@ -383,7 +406,7 @@ func update_combat_timers(delta: float) -> void:
 		_reset_weapon_visuals()
 
 func start_attack() -> void:
-	if is_dead or is_hurt or is_attacking or attack_cooldown_timer > 0.0:
+	if not can_start_attack():
 		return
 
 	is_attacking = true
@@ -391,11 +414,17 @@ func start_attack() -> void:
 	attack_cooldown_timer = player_stats.attack_cooldown
 	attack_active_started = false
 	attack_active_finished = false
-	update_attack_facing()
+	attack_direction = _get_attack_input_direction()
+	current_attack_body_anim = _get_attack_body_animation()
+	update_equipment_facing()
 	_play_weapon_attack_anim()
 
-	if player_animation and player_animation.sprite_frames.has_animation("Attack"):
-		play_character_anim("Attack", "equip_idle")
+	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		play_character_anim(current_attack_body_anim, "equip_idle")
+
+func can_start_attack() -> bool:
+	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
+	return not is_dead and not is_hurt and not is_attacking and attack_cooldown_timer <= 0.0
 
 func _play_weapon_attack_anim() -> void:
 	if not weapon_animation_player:
@@ -407,8 +436,30 @@ func _play_weapon_attack_anim() -> void:
 	weapon_animation_player.stop()
 	weapon_animation_player.play("quick_attack")
 
-func _reset_weapon_visuals() -> void:
+func _play_weapon_pose_anim(body_anim: String) -> void:
 	if not weapon_animation_player:
+		return
+
+	var pose_anim := "weapon_%s" % body_anim.to_lower()
+	if not weapon_animation_player.has_animation(pose_anim):
+		pose_anim = "weapon_idle"
+	if not weapon_animation_player.has_animation(pose_anim):
+		return
+	if current_weapon_pose_anim == pose_anim and weapon_animation_player.current_animation == pose_anim:
+		return
+
+	current_weapon_pose_anim = pose_anim
+	weapon_animation_player.play(pose_anim)
+
+func _reset_weapon_visuals() -> void:
+	if attack_swing_root:
+		attack_swing_root.rotation = 0.0
+
+	if not weapon_animation_player:
+		return
+
+	if weapon_animation_player.has_animation("weapon_%s" % current_body_anim.to_lower()):
+		_play_weapon_pose_anim(current_body_anim)
 		return
 
 	if not weapon_animation_player.has_animation("RESET"):
@@ -417,24 +468,71 @@ func _reset_weapon_visuals() -> void:
 	weapon_animation_player.play("RESET")
 	weapon_animation_player.seek(0.0, true)
 
-func update_attack_facing() -> void:
-	if not attack_hitbox:
-		return
+func _get_attack_input_direction() -> Vector2:
+	var direction := Vector2(
+		Input.get_axis("move_left", "move_right"),
+		Input.get_axis("move_up", "move_down")
+	)
 
-	var direction := last_direction
-	if player_animation and player_animation.flip_h:
-		direction = -1
-	elif player_animation:
-		direction = 1
+	if direction.length() > ATTACK_DIRECTION_DEADZONE:
+		direction = direction.normalized()
+	else:
+		direction = Vector2(float(last_direction), 0.0)
 
-	attack_hitbox.position.x = abs(attack_hitbox.position.x) * float(direction)
+	if abs(direction.x) > ATTACK_DIRECTION_DEADZONE:
+		last_direction = int(sign(direction.x))
+		if player_animation:
+			player_animation.flip_h = direction.x < 0.0
+
+	return direction
+
+func _get_attack_body_animation() -> String:
+	if not player_animation or not player_animation.sprite_frames:
+		return "Attack"
+
+	if is_on_floor() and not _is_grapple_restricting():
+		return "Attack"
+
+	var attack_anim := "Attack_Forward"
+	if attack_direction.y < -0.6 and abs(attack_direction.y) >= abs(attack_direction.x):
+		attack_anim = "Attack_Up"
+	elif attack_direction.y > 0.6 and abs(attack_direction.y) >= abs(attack_direction.x):
+		attack_anim = "Attack_Down"
+	elif abs(attack_direction.y) > 0.25 and abs(attack_direction.x) > 0.25:
+		attack_anim = "Attack_Diagonal"
+
+	if player_animation.sprite_frames.has_animation(attack_anim):
+		return attack_anim
+	return "Attack"
+
+func _is_grapple_restricting() -> bool:
+	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
+		return current_gloves.is_base_grapple_restricting()
+	return false
+
+func _apply_attack_direction() -> void:
+	var direction := attack_direction
+	if direction.length() <= ATTACK_DIRECTION_DEADZONE:
+		direction = Vector2(float(last_direction), 0.0)
+	direction = direction.normalized()
+
+	if attack_hitbox:
+		attack_hitbox.position = direction * ATTACK_HITBOX_DISTANCE
+		attack_hitbox.rotation = direction.angle()
+
+	if attack_swing_root and equipment_mount:
+		var local_direction := equipment_mount.global_transform.basis_xform_inv(direction).normalized()
+		attack_swing_root.rotation = local_direction.angle()
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
 	data.amount = player_stats.attack_damage
 	data.hitstun = player_stats.hurt_time
 	data.hit_pause = player_stats.hit_pause
-	data.knockback = Vector2(float(last_direction) * player_stats.knockback_strength, -90.0)
+	var knockback_direction := attack_direction
+	if knockback_direction.length() <= ATTACK_DIRECTION_DEADZONE:
+		knockback_direction = Vector2(float(last_direction), 0.0)
+	data.knockback = knockback_direction.normalized() * player_stats.knockback_strength
 	return data
 
 func set_action_points(current: int, maximum: int = max_action_points) -> void:

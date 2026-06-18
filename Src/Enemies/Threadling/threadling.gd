@@ -54,7 +54,9 @@ func update_attack_motion(_delta: float) -> void:
 
 func patrol(_delta: float) -> void:
 	var distance_from_home := global_position.x - home_position.x
-	if abs(distance_from_home) >= patrol_distance:
+	var is_moving_past_right_edge := distance_from_home >= patrol_distance and facing > 0
+	var is_moving_past_left_edge := distance_from_home <= -patrol_distance and facing < 0
+	if is_moving_past_right_edge or is_moving_past_left_edge:
 		facing *= -1
 		update_facing(facing)
 
@@ -67,7 +69,15 @@ func chase_target(_delta: float) -> void:
 		_flight_target_y = home_position.y
 		return
 
-	var direction := int(sign(target.global_position.x - global_position.x))
+	var target_delta_x := target.global_position.x - global_position.x
+	var direction := facing
+	if abs(target_delta_x) > facing_dead_zone:
+		direction = int(sign(target_delta_x))
+	else:
+		set_horizontal_target_speed(0.0)
+		_flight_target_y = target.global_position.y + hover_offset
+		return
+
 	if direction == 0:
 		direction = facing
 
