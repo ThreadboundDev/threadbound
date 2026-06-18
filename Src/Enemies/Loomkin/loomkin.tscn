@@ -1,13 +1,13 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://clcrpas7q7s00"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://Src/Enemies/Loomkin/loomkin.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://dwtg2fvpij8sk" path="res://Src/Enemies/Loomkin/loomkin.gd" id="2_script"]
 [ext_resource type="Resource" path="res://Src/Enemies/Loomkin/loomkin_stats.tres" id="3_stats"]
-[ext_resource type="Texture2D" path="res://Assets/Enemys/Loomkin/loomkin_walk.png" id="4_walk"]
-[ext_resource type="Texture2D" path="res://Assets/Enemys/Loomkin/loomkin_attack.png" id="5_attack"]
+[ext_resource type="Texture2D" uid="uid://r065xo833dar" path="res://Assets/Enemys/Loomkin/loomkin_walk.png" id="4_walk"]
+[ext_resource type="Texture2D" uid="uid://bqj7h4s5owxpp" path="res://Assets/Enemys/Loomkin/loomkin_attack.png" id="5_attack"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(76, 124)
+size = Vector2(193.005, 149.795)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 380.0
@@ -15,11 +15,8 @@ radius = 380.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(104, 86)
 
-[node name="Loomkin" instance=ExtResource("1_base")]
+[node name="Loomkin" unique_id=1319529929 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-stats = ExtResource("3_stats")
-patrol_distance = 220.0
-start_facing = -1
 walk_texture = ExtResource("4_walk")
 attack_texture = ExtResource("5_attack")
 walk_columns = 6
@@ -30,6 +27,8 @@ chase_fps_multiplier = 1.55
 attack_columns = 6
 attack_rows = 8
 attack_frame_count = 48
+stats = ExtResource("3_stats")
+patrol_distance = 220.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(0, -62)
@@ -38,9 +37,9 @@ shape = SubResource("RectangleShape2D_body")
 [node name="Body" parent="Visuals" index="0"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1"]
+[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1" unique_id=1099379997]
 position = Vector2(0, -67)
-scale = Vector2(0.285, 0.285)
+scale = Vector2(0.36, 0.36)
 texture = ExtResource("4_walk")
 hframes = 6
 vframes = 8
@@ -52,7 +51,7 @@ shape = SubResource("RectangleShape2D_body")
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
 shape = SubResource("CircleShape2D_detection")
 
-[node name="AttackArea" parent="." index="4"]
+[node name="AttackArea" parent="." index="5"]
 position = Vector2(-76, -58)
 
 [node name="CollisionShape2D" parent="AttackArea" index="0"]
