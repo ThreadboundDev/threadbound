@@ -1,107 +1,435 @@
-# Asset Standards
+# Threadbound Art Bible (Production Version)
 
-This document defines working standards for placeholder and production art. The goal is to keep Threadbound visually consistent while the project still uses a mix of sprite exports, AI-assisted concepts, and experimental rigging tests.
+## Vision Statement
 
-## File Naming
+Threadbound is a 2.5D metroidvania inspired by Hollow Knight, Crowsworn, gothic fantasy architecture, and illuminated manuscript ornamentation.
 
-Use lowercase `snake_case` for new runtime art files and folders.
+The visual identity of the game is built around:
 
-Preferred examples:
+* strong silhouettes
+* clean black outlines
+* graphic rendering
+* gameplay readability
+* ornate but controlled detail
 
-- `threadborne_idle_right.png`
-- `base_grapple_needle.png`
-- `mossy_tileset.png`
-- `equip_icon_monarch_gloves.png`
+The world should feel ancient, woven, and mysterious while remaining instantly readable during gameplay.
 
-Source art files such as `.kra` may keep descriptive working names while they are still exploratory, but exported runtime art should use stable names.
+---
 
-## Player Sprite Standards
+# Core Art Philosophy
 
-Until rigged animation is ready, the active player uses sprite-based animation.
+## Readability First
 
-For new Threadborne sprite exports:
+Gameplay readability takes priority over realism, rendering complexity, or visual spectacle.
 
-- Use a consistent canvas size within each animation set.
-- Keep the character centered around a consistent foot position.
-- Keep the same visual scale between idle, run, jump, wall cling, and grapple frames.
-- Preserve transparent padding instead of cropping each frame tightly.
-- Avoid changing camera distance or perspective between frames.
+Every asset must remain readable at gameplay distance.
 
-Current inconsistency to clean up over time:
+If visual detail reduces readability:
 
-- Idle sheet: `3072x3072`
-- Run frames: `1095x1095`
-- Jump/grapple frames: mixed rectangular canvases
-- Rig base pieces: mostly `1023x1537`
+remove detail.
 
-## Rigging-Friendly Art
+---
 
-Experimental rigging is archived for now. Future rig-ready art should be planned around clean layer separation rather than cutting up a flattened image.
+## Silhouette Before Detail
 
-Recommended layer groups:
+Assets should read in this order:
 
-- Head
-- Torso
-- Upper arms
-- Forearms
-- Hands
-- Belt / waist
-- Upper legs
-- Shins
-- Feet
-- Scarf / cloth accents
+1. Silhouette
+2. Major Shapes
+3. Secondary Forms
+4. Surface Detail
 
-To avoid boxy joint artifacts:
+The silhouette should communicate the object before any internal detail is visible.
 
-- Paint overlap past the joint area.
-- Round limb ends where rotation will expose edges.
-- Keep elbows, knees, wrists, and ankles separated enough for deformation.
-- Add hidden under-painting behind rotating parts.
-- Use consistent pivots for mirrored left/right limbs.
+---
 
-## Threadborne Palette
+## Graphic Illustration, Not Painterly Rendering
 
-Use `docs/art/concept_art/threadborne_master_palette_final.png` as the current palette reference.
+Threadbound uses a graphic illustration style.
 
-Current base swatches:
+The game does not use painterly rendering.
 
-- Head / hands: `#e7af8d`
-- Chest / pants: `#2d2123`
-- Belt / bracers / boots: `#5b2c21`
-- Global outline: `#000000`
+Avoid:
 
-Supporting shades from the palette may be used for highlights and shadows, but new placeholder art should avoid drifting into unrelated skin, cloth, or leather colors.
+* visible brush strokes
+* smeared textures
+* soft painting
+* concept art rendering
+* atmospheric paint effects
+* realistic surface rendering
 
-## UI Icon Standards
+Prefer:
 
-Equipment icons should eventually share:
+* clean linework
+* hard-edged forms
+* controlled shadow shapes
+* flat color masses
+* strong silhouette definition
 
-- Matching canvas size
-- Matching camera distance
-- Matching background treatment
-- Matching outline thickness
-- Clear silhouette at small sizes
+---
 
-Current equipment icon exports are mostly `1920x1080`, which is oversized for runtime UI. Keep source-resolution files if useful, but future runtime exports should be sized intentionally for UI use.
+# Linework Standards
 
-## Validation Checklist
+## Outlines Are Structural
 
-Before adding or replacing runtime art, check:
+Outlines are a core part of the art style.
 
-- Does the filename use `snake_case`?
-- Does the image match the expected canvas size for its set?
-- Does the character/object keep the same scale as neighboring assets?
-- Does the transparent bounding box drift between animation frames?
-- Does the palette match the master reference?
-- Does the asset need a source file archived beside it?
-- Is the import path referenced by scenes or scripts?
+They are not optional decoration.
 
-## Automation Ideas
+Outlines define:
 
-Useful future tooling:
+* readability
+* separation
+* depth
+* gameplay clarity
 
-- Generate an asset inventory with image dimensions.
-- Report transparent bounding boxes for player animation frames.
-- Create contact sheets for visual review.
-- Compare sampled colors against the master palette.
-- Flag runtime assets with spaces, uppercase names, or punctuation-heavy paths.
+---
+
+## Outline Hierarchy
+
+### Foreground
+
+Strongest outlines.
+
+Used for:
+
+* player
+* enemies
+* interactables
+* gameplay platforms
+
+---
+
+### Midground
+
+Moderate outlines.
+
+Used for:
+
+* major architecture
+* traversal structures
+* environmental landmarks
+
+---
+
+### Background
+
+Lightest outlines.
+
+Backgrounds should remain graphic and readable without competing with gameplay.
+
+Never use blurry or painterly backgrounds.
+
+---
+
+# Rendering Standards
+
+## Shape-Based Rendering
+
+Forms should be described through:
+
+* shape design
+* value grouping
+* shadow masses
+
+Not through excessive texture.
+
+---
+
+## Value Grouping
+
+Use:
+
+* clear light areas
+* clear shadow areas
+* limited value transitions
+
+Avoid noisy rendering.
+
+Large value shapes should dominate.
+
+---
+
+## Texture Philosophy
+
+Texture should be implied rather than painted.
+
+Good examples:
+
+* stone cracks
+* carved ornamentation
+* architectural seams
+* woven thread motifs
+
+Bad examples:
+
+* noise overlays
+* heavy brush textures
+* grunge layers
+* photorealistic materials
+
+---
+
+# Architecture Style
+
+## Architectural Identity
+
+Threadbound architecture combines:
+
+* gothic ruins
+* cathedral forms
+* woven motifs
+* circular loom-inspired geometry
+* vertical compositions
+
+Architecture should feel:
+
+* ancient
+* sacred
+* constructed around weaving symbolism
+
+---
+
+## Common Architectural Elements
+
+Use frequently:
+
+* arches
+* spires
+* circular frames
+* hanging ornaments
+* suspended chains
+* thread motifs
+* woven lattice structures
+
+---
+
+## Ornamentation Rule
+
+Decoration should feel built into the structure.
+
+Never pasted onto the surface.
+
+Details should appear structural.
+
+---
+
+# Environment Art
+
+## Visual Hierarchy
+
+Environment art exists to support gameplay.
+
+Priority:
+
+1. Gameplay elements
+2. Traversal readability
+3. Environmental storytelling
+4. Decorative detail
+
+---
+
+## Platform Design
+
+Platforms must clearly communicate:
+
+"This is a surface the player can stand on."
+
+Top surfaces should be:
+
+* readable
+* high contrast
+* visually stable
+
+Undersides may contain:
+
+* roots
+* threads
+* hanging ornamentation
+* ruins
+
+but must never obscure gameplay.
+
+---
+
+# Color Direction
+
+## Palette Philosophy
+
+Threadbound uses restrained color palettes.
+
+The world is primarily built from:
+
+* stone greys
+* weathered golds
+* muted greens
+* neutral earth tones
+
+Accent colors are used intentionally.
+
+---
+
+## Thread Colors
+
+Thread influence should remain visually important.
+
+Red:
+
+* power
+* force
+* dominance
+
+Blue:
+
+* balance
+* flow
+* calm
+
+Yellow:
+
+* essence
+* knowledge
+* perception
+
+Thread colors should act as focal points rather than flood entire scenes.
+
+---
+
+# Character Design Standards
+
+## Readability Over Complexity
+
+Characters should be the most readable assets in the game.
+
+Requirements:
+
+* clear silhouette
+* recognizable shape language
+* strong outline treatment
+* readable pose language
+
+A player should immediately understand:
+
+* direction
+* threat level
+* current action
+
+---
+
+## Animation Philosophy
+
+Animation should prioritize:
+
+* readability
+* responsiveness
+* strong key poses
+
+Avoid excessive in-between detail.
+
+Strong poses are more important than smooth rendering.
+
+---
+
+# Enemy Design Philosophy
+
+Enemies should follow Hollow Knight principles:
+
+* simple primary shape
+* recognizable silhouette
+* clear attack language
+* readable movement
+
+Complexity should come from behavior rather than visual noise.
+
+---
+
+# VFX Standards
+
+## Hollow Knight Philosophy
+
+The VFX sells the attack.
+
+The weapon supports the attack.
+
+Not the other way around.
+
+---
+
+## VFX Characteristics
+
+Preferred:
+
+* clean graphic shapes
+* sharp arcs
+* strong motion language
+* white dominant effects
+* black contour accents
+* thread-inspired breakup
+
+Avoid:
+
+* smoke clouds
+* particle spam
+* painterly magic effects
+* blurry glows
+
+---
+
+# Asset Generation Guidelines
+
+## Preferred Keywords
+
+Use:
+
+* graphic fantasy illustration
+* clean black outlines
+* strong silhouette
+* hard-edged rendering
+* gameplay asset
+* hand-drawn 2D game art
+* gothic fantasy architecture
+* Hollow Knight readability
+* Crowsworn-inspired detail
+* transparent background
+
+---
+
+## Forbidden Keywords
+
+Do not use:
+
+* painterly
+* painterly rendering
+* concept art
+* digital painting
+* oil painting
+* brush strokes
+* realistic rendering
+* atmospheric painting
+* cinematic illustration
+* photorealistic
+* soft shading
+
+---
+
+# The Final Test
+
+Every asset should pass a simple question:
+
+"Could a player instantly understand this while moving at full speed?"
+
+If the answer is no:
+
+simplify it.
+
+---
+
+> Threadbound is not painted.
+>
+> It is illustrated.
+>
+> Readability creates beauty.
+>
+> Clarity creates immersion.
+>
+> The silhouette comes first.
