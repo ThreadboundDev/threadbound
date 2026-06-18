@@ -17,6 +17,8 @@ extends EnemyBase
 var _animation_timer := 0.0
 var _current_frame := 0
 var _playing_attack := false
+var _base_sprite_scale := Vector2.ONE
+var _base_cell_size := Vector2.ONE
 
 func _ready() -> void:
 	super._ready()
@@ -24,7 +26,10 @@ func _ready() -> void:
 
 	if visuals.has_node("Body"):
 		visuals.get_node("Body").visible = false
-	if sprite and walk_texture:
+	if sprite:
+		_base_sprite_scale = sprite.scale
+		if walk_texture:
+			_base_cell_size = _get_sheet_cell_size(walk_texture, walk_columns, walk_rows)
 		_play_walk_animation()
 
 func _process(delta: float) -> void:
@@ -60,6 +65,26 @@ func _configure_sprite_sheet(texture: Texture2D, columns: int, rows: int) -> voi
 	sprite.hframes = max(1, columns)
 	sprite.vframes = max(1, rows)
 	sprite.frame = 0
+	sprite.scale = _get_scale_for_sheet(texture, sprite.hframes, sprite.vframes)
+
+func _get_sheet_cell_size(texture: Texture2D, columns: int, rows: int) -> Vector2:
+	if not texture:
+		return Vector2.ONE
+
+	return Vector2(
+		float(texture.get_width()) / float(max(1, columns)),
+		float(texture.get_height()) / float(max(1, rows))
+	)
+
+func _get_scale_for_sheet(texture: Texture2D, columns: int, rows: int) -> Vector2:
+	var cell_size := _get_sheet_cell_size(texture, columns, rows)
+	if cell_size.x <= 0.0 or cell_size.y <= 0.0:
+		return _base_sprite_scale
+
+	return Vector2(
+		_base_sprite_scale.x * (_base_cell_size.x / cell_size.x),
+		_base_sprite_scale.y * (_base_cell_size.y / cell_size.y)
+	)
 
 func _update_sprite_animation(delta: float) -> void:
 	if not sprite:
