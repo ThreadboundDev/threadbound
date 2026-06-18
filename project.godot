@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Threadbound"
-run/main_scene="res://Src/Environment/World/world.tscn"
+run/main_scene="res://Src/Environment/World/test_world.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
