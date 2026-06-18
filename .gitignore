@@ -8,6 +8,7 @@
 *.autosave
 *.autosave.*
 *.kra-autosave.kra
+*-autosave.kra
 
 # Godot editor temporary scene saves
 *.tscn*.tmp

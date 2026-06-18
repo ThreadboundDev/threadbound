@@ -27,6 +27,7 @@ var player: CharacterBody2D = null
 @export var grapple_max_distance := 360.0
 @export var grapple_retract_speed := 1800.0
 @export var needle_rotation_offset := -PI / 2.0
+@export_flags_2d_physics var grapple_collision_mask := 1
 
 # Active rope visuals/physics
 @export var active_rope_segment_count := 12
@@ -39,8 +40,9 @@ var player: CharacterBody2D = null
 @export var enforce_player_rope_limit := true
 @export var rope_limit_slack := 6.0
 @export var rope_limit_pull_strength := 18.0
-@export var rope_tangent_max_speed := 220.0
-@export var rope_tangent_damping := 0.90
+@export var rope_tangent_max_speed := 380.0
+@export var rope_tangent_damping := 0.985
+@export var rope_jump_force := 760.0
 
 # Climbing Variables
 @export var rope_climb_speed := 220.0
@@ -88,11 +90,13 @@ func _ready() -> void:
 		active_grapple_root.global_rotation = 0.0
 		active_grapple_root.global_scale = Vector2.ONE
 
+	_configure_grapple_raycast()
 	_reset_active_grapple_visuals()
 	print("✅ BaseGloves ready")
 
 func on_equipped() -> void:
 	visible = true
+	_configure_grapple_raycast()
 	_show_stowed_rope()
 
 	if rope_hang_anchor and rope_hang_anchor.has_method("reset_rope"):
@@ -171,6 +175,27 @@ func is_base_grapple_restricting() -> bool:
 
 	return distance > current_rope_length + rope_limit_slack
 
+func jump_off_grapple() -> bool:
+	if grapple_state != GrappleState.ATTACHED:
+		return false
+
+	if not player:
+		return false
+
+	var origin := get_grapple_origin_global_position()
+	var from_anchor := origin - grapple_attach_position
+
+	if from_anchor.length() > 0.001:
+		var rope_dir := from_anchor.normalized()
+		var tangent := Vector2(-rope_dir.y, rope_dir.x)
+		var tangent_speed := player.velocity.dot(tangent)
+		tangent_speed = clamp(tangent_speed, -rope_tangent_max_speed, rope_tangent_max_speed)
+		player.velocity = tangent * tangent_speed
+
+	player.velocity.y = min(player.velocity.y, -rope_jump_force)
+	_begin_grapple_retract()
+	return true
+
 # ===============================
 # STOWED / ACTIVE VISUALS
 # ===============================
@@ -202,6 +227,19 @@ func _reset_active_grapple_visuals() -> void:
 		active_needle_sprite.visible = false
 
 	_show_stowed_rope()
+
+func _configure_grapple_raycast() -> void:
+	if not grapple_raycast:
+		return
+
+	grapple_raycast.enabled = true
+	grapple_raycast.collide_with_bodies = true
+	grapple_raycast.collide_with_areas = false
+	grapple_raycast.collision_mask = grapple_collision_mask
+	grapple_raycast.clear_exceptions()
+
+	if player:
+		grapple_raycast.add_exception(player)
 
 # ===============================
 # ROPE PHYSICS
@@ -339,7 +377,11 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		grapple_tip_velocity = Vector2.ZERO
 		grapple_state = GrappleState.ATTACHED
 
-		current_rope_length = grapple_max_distance
+		current_rope_length = clamp(
+			get_grapple_origin_global_position().distance_to(grapple_attach_position),
+			rope_min_length,
+			grapple_max_distance
+		)
 
 		_update_active_grapple_visuals()
 
@@ -456,7 +498,7 @@ func apply_grapple_velocity(delta: float) -> void:
 	# Clamp sideways swing so base grapple cannot build big momentum.
 	var tangent_speed: float = player.velocity.dot(tangent)
 	tangent_speed = clamp(tangent_speed, -rope_tangent_max_speed, rope_tangent_max_speed)
-	tangent_speed *= rope_tangent_damping
+	tangent_speed *= pow(rope_tangent_damping, delta * 60.0)
 
 	var inward_speed: float = min(player.velocity.dot(rope_dir), 0.0)
 	player.velocity = tangent * tangent_speed + rope_dir * inward_speed
@@ -495,10 +537,7 @@ func thread_mechanic(delta: float) -> void:
 			var distance := grapple_tip_position.distance_to(grapple_start_position)
 			if distance >= grapple_max_distance and not grapple_attached:
 				grapple_tip_velocity = Vector2.ZERO
-				grapple_attach_position = grapple_tip_position
-				grapple_state = GrappleState.ATTACHED
-
-				current_rope_length = grapple_max_distance
+				_begin_grapple_retract()
 
 			_update_active_grapple_visuals()
 

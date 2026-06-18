@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerStats" format=3 uid="uid://bjxayisrhlyr0"]
+
+[ext_resource type="Script" uid="uid://d06tpnxwfyr56" path="res://Src/Characters/Player/player_stats.gd" id="1_stats"]
+
+[resource]
+script = ExtResource("1_stats")
+attack_windup = 0.24
+attack_active_time = 0.11
+attack_recovery = 0.18
+attack_cooldown = 0.3

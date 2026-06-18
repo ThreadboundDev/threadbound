@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bk6sithumcg8y"]
+
+[ext_resource type="Script" uid="uid://1hfdow24pasf" path="res://Src/UI/combat_hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" uid="uid://b01tqqm32cdws" path="res://Assets/UI/Momentum+Action Points.png" id="2_frame"]
+[ext_resource type="Script" uid="uid://c78ttgxmfkl61" path="res://Src/UI/combat_hud_overlay.gd" id="3_overlay"]
+[ext_resource type="Texture2D" uid="uid://5vuncxh6067i" path="res://Assets/UI/health_bar_game_asset.png" id="4_health_frame"]
+[ext_resource type="Script" uid="uid://br7xx5380ryc2" path="res://Src/UI/combat_health_bar.gd" id="5_health_bar"]
+
+[node name="CombatHUD" type="Control" unique_id=1968709405]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hud")
+
+[node name="HealthBar" type="Control" parent="." unique_id=1167632650]
+custom_minimum_size = Vector2(640, 427)
+layout_mode = 1
+anchors_preset = 0
+offset_left = 16.0
+offset_top = -42.0
+offset_right = 656.0
+offset_bottom = 385.0
+mouse_filter = 2
+script = ExtResource("5_health_bar")
+frame_texture = ExtResource("4_health_frame")
+
+[node name="ActionPointPanel" type="Control" parent="." unique_id=1343509761]
+custom_minimum_size = Vector2(260, 260)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -284.0
+offset_right = 284.0
+offset_bottom = -24.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="ActionPointPanel" unique_id=1199675483]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GaugeOverlay" type="Control" parent="ActionPointPanel" unique_id=702995877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_overlay")

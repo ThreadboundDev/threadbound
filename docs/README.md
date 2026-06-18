@@ -6,6 +6,7 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 
 - `docs/narrative/CANON.md` - current narrative canon and guardrails
 - `docs/gameplay/core_mechanics.md` - traversal and real-time weaving philosophy
+- `docs/gameplay/combat_foundation.md` - reusable combat components and enemy framework
 - `docs/gameplay/equipment_slots.md` - equipment slot design
 - `docs/narrative/story/endings.md` - ending structure and secret-route development reference
 - `docs/design/project_structure_and_naming.md` - project naming and folder conventions
