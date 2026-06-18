@@ -15,6 +15,9 @@
 [ext_resource type="TileSet" uid="uid://ejgfpekpqd7o" path="res://Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_tileset_128.tres" id="13_541qs"]
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="14_yhgke"]
 [ext_resource type="Shader" path="res://Src/Environment/World/environment_depth_grade.gdshader" id="15_depth"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/cave_opening_light.png" id="16_cave_light"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/thread_light.png" id="17_thread_light"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/shrine_light.png" id="18_shrine_light"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -25,6 +28,10 @@ shader_parameter/top_light_strength = 0.22
 shader_parameter/top_light_position = Vector2(0.5, 0.02)
 shader_parameter/top_light_radius = 0.58
 shader_parameter/edge_shadow_strength = 0.16
+shader_parameter/cavern_falloff = 0.32
+shader_parameter/shaft_strength = 0.18
+shader_parameter/shaft_spread = 0.22
+shader_parameter/grain_strength = 0.014
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_far_depth_grade"]
 shader = ExtResource("15_depth")
@@ -39,6 +46,8 @@ shader_parameter/top_light_origin = Vector2(0.5, -0.08)
 shader_parameter/top_light_radius = 0.95
 shader_parameter/top_light_color = Color(1, 0.9, 0.68, 1)
 shader_parameter/vertical_fade = 0.28
+shader_parameter/lower_shadow = 0.2
+shader_parameter/rim_strength = 0.04
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mid_depth_grade"]
 shader = ExtResource("15_depth")
@@ -53,6 +62,8 @@ shader_parameter/top_light_origin = Vector2(0.5, -0.1)
 shader_parameter/top_light_radius = 0.85
 shader_parameter/top_light_color = Color(1, 0.88, 0.62, 1)
 shader_parameter/vertical_fade = 0.22
+shader_parameter/lower_shadow = 0.24
+shader_parameter/rim_strength = 0.05
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shrine_depth_grade"]
 shader = ExtResource("15_depth")
@@ -67,6 +78,8 @@ shader_parameter/top_light_origin = Vector2(0.5, -0.16)
 shader_parameter/top_light_radius = 0.78
 shader_parameter/top_light_color = Color(1, 0.86, 0.52, 1)
 shader_parameter/vertical_fade = 0.16
+shader_parameter/lower_shadow = 0.16
+shader_parameter/rim_strength = 0.08
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_foreground_depth_grade"]
 shader = ExtResource("15_depth")
@@ -81,8 +94,33 @@ shader_parameter/top_light_origin = Vector2(0.5, -0.1)
 shader_parameter/top_light_radius = 0.75
 shader_parameter/top_light_color = Color(0.86, 0.78, 0.54, 1)
 shader_parameter/vertical_fade = 0.35
+shader_parameter/lower_shadow = 0.42
+shader_parameter/rim_strength = 0.02
 
 [node name="COTFW - Demo Level" type="Node2D" unique_id=1831855878]
+
+[node name="CaveAmbient" type="CanvasModulate" parent="." unique_id=1502695573]
+color = Color(0.55, 0.52, 0.44, 1)
+
+[node name="CaveOpeningLight" type="PointLight2D" parent="." unique_id=1294032634]
+position = Vector2(0, -3372)
+texture = ExtResource("16_cave_light")
+texture_scale = 10.5
+color = Color(1, 0.83, 0.52, 1)
+energy = 1.45
+range_z_min = -4096
+range_z_max = 4096
+shadow_enabled = true
+shadow_filter_smooth = 5.0
+
+[node name="CaveOpeningSoftFill" type="PointLight2D" parent="." unique_id=2067136995]
+position = Vector2(0, -2090)
+texture = ExtResource("16_cave_light")
+texture_scale = 7.0
+color = Color(0.64, 0.73, 0.9, 1)
+energy = 0.42
+range_z_min = -4096
+range_z_max = 4096
 
 [node name="AtmosphereGrade" type="CanvasLayer" parent="." unique_id=68169695]
 layer = 30
@@ -159,6 +197,33 @@ glow_width = 42.0
 motion_speed = 0.78
 loom_origin = Vector2(0, 475)
 conduit_top = Vector2(0, -6576)
+
+[node name="ThreadConduitGlow" type="PointLight2D" parent="WorldArt" unique_id=957652412]
+position = Vector2(0, -3350)
+texture = ExtResource("17_thread_light")
+texture_scale = 5.0
+color = Color(1, 0.72, 0.3, 1)
+energy = 0.86
+range_z_min = -4096
+range_z_max = 4096
+
+[node name="LoomShrineGlow" type="PointLight2D" parent="WorldArt" unique_id=717731465]
+position = Vector2(0, 2420)
+texture = ExtResource("18_shrine_light")
+texture_scale = 4.2
+color = Color(1, 0.68, 0.34, 1)
+energy = 0.62
+range_z_min = -4096
+range_z_max = 4096
+
+[node name="LowerThreadGlow" type="PointLight2D" parent="WorldArt" unique_id=1960446754]
+position = Vector2(0, 3690)
+texture = ExtResource("17_thread_light")
+texture_scale = 4.8
+color = Color(0.95, 0.42, 0.28, 1)
+energy = 0.46
+range_z_min = -4096
+range_z_max = 4096
 
 [node name="ChamberTileMap" type="TileMapLayer" parent="WorldArt" unique_id=1000527789]
 z_index = 11

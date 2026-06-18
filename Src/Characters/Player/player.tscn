@@ -35,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://rkk1tmumt0sa" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_01.png" id="95_attack_air_01"]
 [ext_resource type="Texture2D" uid="uid://dhflxhl2x4hyi" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_02.png" id="96_attack_air_02"]
 [ext_resource type="Texture2D" uid="uid://bkoc2cvkd8oms" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_03.png" id="97_attack_air_03"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="98_player_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -447,9 +448,9 @@ animations = [{
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f1uaf"]
 shader = ExtResource("82_dj0x0")
-shader_parameter/glow_color = Color(1, 0, 0, 1)
-shader_parameter/glow_width = 2.0
-shader_parameter/glow_intensity = 0.5
+shader_parameter/glow_color = Color(1, 0.78, 0.34, 0.78)
+shader_parameter/glow_width = 2.6
+shader_parameter/glow_intensity = 0.72
 
 [sub_resource type="Animation" id="Animation_player_reset"]
 resource_name = "RESET"
@@ -1027,6 +1028,15 @@ scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
 animation = &"Idle"
 frame_progress = 0.6664412
+
+[node name="PlayerSoulLight" type="PointLight2D" parent="." unique_id=2075335125]
+position = Vector2(5, -38)
+texture = ExtResource("98_player_light")
+texture_scale = 1.45
+color = Color(1, 0.78, 0.42, 1)
+energy = 0.42
+range_z_min = -4096
+range_z_max = 4096
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")

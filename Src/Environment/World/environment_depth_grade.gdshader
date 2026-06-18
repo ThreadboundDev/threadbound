@@ -11,6 +11,8 @@ uniform vec2 top_light_origin = vec2(0.5, -0.12);
 uniform float top_light_radius : hint_range(0.1, 2.0) = 0.9;
 uniform vec4 top_light_color : source_color = vec4(1.0, 0.92, 0.74, 1.0);
 uniform float vertical_fade : hint_range(0.0, 1.0) = 0.2;
+uniform float lower_shadow : hint_range(0.0, 1.0) = 0.18;
+uniform float rim_strength : hint_range(0.0, 1.0) = 0.0;
 
 void fragment() {
 	vec4 tex = texture(TEXTURE, UV);
@@ -24,6 +26,12 @@ void fragment() {
 	float light_mask = 1.0 - smoothstep(0.0, top_light_radius, light_distance);
 	light_mask *= 1.0 - smoothstep(0.0, 1.0, UV.y) * vertical_fade;
 	graded = mix(graded, top_light_color.rgb, light_mask * top_light_strength);
+
+	float bottom_mask = smoothstep(0.15, 1.0, UV.y);
+	graded *= 1.0 - bottom_mask * lower_shadow;
+
+	float edge_alpha = smoothstep(0.02, 0.22, tex.a) * (1.0 - smoothstep(0.22, 0.9, tex.a));
+	graded += top_light_color.rgb * edge_alpha * rim_strength;
 
 	COLOR = vec4(clamp(graded, 0.0, 1.0), tex.a * alpha_multiplier);
 }
