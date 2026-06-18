@@ -17,6 +17,7 @@ signal momentum_changed(value: float)
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
 @onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
+@onready var attack_slash_sprite: Sprite2D = $EquipmentMount/AttackSwingRoot/AttackSlashVFX/SlashSprite
 
 # ===============================
 # EQUIPMENT SCENES
@@ -80,7 +81,6 @@ signal momentum_changed(value: float)
 # ===============================
 # STATE
 # ===============================
-const ATTACK_HITBOX_DISTANCE := 58.0
 const ATTACK_DIRECTION_DEADZONE := 0.15
 
 var coyote_timer: float = 0.0
@@ -387,12 +387,14 @@ func update_combat_timers(delta: float) -> void:
 		return
 
 	attack_timer += delta
+	_sync_attack_hitbox_to_slash()
 	var windup := player_stats.attack_windup
 	var active_time := player_stats.attack_active_time
 	var recovery := player_stats.attack_recovery
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
+		_sync_attack_hitbox_to_slash()
 		attack_hitbox.damage = _build_attack_damage()
 		attack_hitbox.enable()
 
@@ -516,13 +518,16 @@ func _apply_attack_direction() -> void:
 		direction = Vector2(float(last_direction), 0.0)
 	direction = direction.normalized()
 
-	if attack_hitbox:
-		attack_hitbox.position = direction * ATTACK_HITBOX_DISTANCE
-		attack_hitbox.rotation = direction.angle()
-
 	if attack_swing_root and equipment_mount:
 		var local_direction := equipment_mount.global_transform.basis_xform_inv(direction).normalized()
 		attack_swing_root.rotation = local_direction.angle()
+		_sync_attack_hitbox_to_slash()
+
+func _sync_attack_hitbox_to_slash() -> void:
+	if not attack_hitbox or not attack_slash_sprite:
+		return
+
+	attack_hitbox.global_transform = attack_slash_sprite.global_transform
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()

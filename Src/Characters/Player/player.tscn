@@ -42,9 +42,6 @@ size = Vector2(37, 126.244995)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
 size = Vector2(38, 124)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(72, 52)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6acp"]
 atlas = ExtResource("2_jr15c")
 region = Rect2(1536, 0, 512, 512)
@@ -994,7 +991,7 @@ player_stats = ExtResource("83_stats")
 equipment_left_offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
-position = Vector2(0.5, 14.122499)
+position = Vector2(0.5, 6.1224995)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=2021687560]
@@ -1012,25 +1009,24 @@ position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_hurtbox")
 
 [node name="AttackHitbox" type="Area2D" parent="." unique_id=2128718605]
-position = Vector2(48, -10)
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("86_hitbox")
 hitbox_owner_path = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=843783285]
-shape = SubResource("RectangleShape2D_attack")
+[node name="SlashCollisionPolygon" type="CollisionPolygon2D" parent="AttackHitbox" unique_id=843783285]
+polygon = PackedVector2Array(-350, -15, -300, -90, -180, -135, -30, -145, 100, -95, 136, -15, 85, 20, -40, 38, -165, 58, -285, 98, -345, 60, -315, 22)
 
 [node name="HitFlashComponent" type="Node" parent="." unique_id=358513544]
 script = ExtResource("87_flash")
 target_path = NodePath("../Player Animation")
 
 [node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=609748328]
+position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Run"
-frame = 6
-frame_progress = 0.31862456
+animation = &"Idle"
+frame_progress = 0.6664412
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
@@ -1060,7 +1056,8 @@ scale = Vector2(0.82, 0.82)
 
 [node name="SlashSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot/AttackSlashVFX" unique_id=1969796276]
 z_index = 5
-position = Vector2(118, -20)
+position = Vector2(15, -30)
+rotation = 4.392994
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("93_attack_arc_pop")
 
