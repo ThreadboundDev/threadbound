@@ -8,8 +8,7 @@ signal momentum_stage_changed(stage: int)
 signal rune_changed(index: int, color: Color, available: bool)
 
 @onready var gauge_overlay: CombatHUDOverlay = $ActionPointPanel/GaugeOverlay as CombatHUDOverlay
-@onready var health_bar: ProgressBar = $HealthPanel/MarginContainer/VBoxContainer/HealthBar as ProgressBar
-@onready var health_label: Label = $HealthPanel/MarginContainer/VBoxContainer/HealthLabel as Label
+@onready var health_bar: CombatHealthBar = $HealthBar as CombatHealthBar
 
 var _rune_colors: Array[Color] = []
 var _rune_available: Array[bool] = []
@@ -125,11 +124,7 @@ func _sync_health() -> void:
 		return
 
 	if health_bar:
-		health_bar.max_value = max_health
-		health_bar.value = current_health
-
-	if health_label:
-		health_label.text = "%d / %d" % [current_health, max_health]
+		health_bar.set_health(current_health, max_health)
 
 func _configure_default_runes() -> void:
 	if _rune_colors.size() == 6 and _rune_available.size() == 6:

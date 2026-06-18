@@ -4,20 +4,20 @@
 
 [resource]
 script = ExtResource("1_stats")
-max_health = 3
-move_speed = 80.0
-chase_speed = 150.0
-acceleration = 900.0
-gravity = 0.0
-max_fall_speed = 220.0
-patrol_wait_time = 0.45
+max_health = 4
+move_speed = 95.0
+chase_speed = 165.0
+acceleration = 1100.0
+gravity = 1800.0
+max_fall_speed = 950.0
+patrol_wait_time = 0.35
 attack_damage = 1
-attack_windup = 0.26
-attack_active_time = 0.16
+attack_windup = 0.24
+attack_active_time = 0.13
 attack_recovery = 0.28
-attack_cooldown = 0.8
-hurt_time = 0.24
+attack_cooldown = 0.75
+hurt_time = 0.2
 death_cleanup_delay = 0.7
-knockback_strength = 95.0
-hit_pause = 0.05
+knockback_strength = 115.0
+hit_pause = 0.045
 screen_shake_strength = 3.0

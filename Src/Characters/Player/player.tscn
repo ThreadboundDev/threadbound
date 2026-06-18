@@ -22,13 +22,19 @@
 [ext_resource type="Texture2D" uid="uid://b1jcuu18tfomp" path="res://Assets/Threadborne/Run/ezgif-frame-005.png" id="24_soka2"]
 [ext_resource type="Texture2D" uid="uid://dy71g0b6smw3n" path="res://Assets/Threadborne/Run/ezgif-frame-006.png" id="25_5qgfs"]
 [ext_resource type="Shader" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
-[ext_resource type="Resource" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
+[ext_resource type="Resource" uid="uid://bjxayisrhlyr0" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
 [ext_resource type="Script" uid="uid://6cp7uurvooma" path="res://Src/Components/health_component.gd" id="84_health"]
 [ext_resource type="Script" uid="uid://d1svuo20lfx4e" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
 [ext_resource type="Script" uid="uid://br8r048uv1yqv" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
 [ext_resource type="Script" uid="uid://dnsl0nd3gwkof" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Weavers_Shuttle_Club.png" id="88_shuttle"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Weavers_Shuttle_Club_Smear.png" id="89_shuttle_smear"]
+[ext_resource type="Texture2D" uid="uid://2g6o51kn0eqk" path="res://Assets/Threadborne/Equipment/Weavers_Shuttle_Club_v2.png" id="88_shuttle"]
+[ext_resource type="Texture2D" uid="uid://dqs5oxuk5cswy" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Ground_01.png" id="91_attack_start"]
+[ext_resource type="Texture2D" uid="uid://d2nshpxq04sa1" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Ground_02.png" id="92_attack_ground_02"]
+[ext_resource type="Texture2D" uid="uid://dvkshtr5yk4pd" path="res://Assets/VFX/weapon_attack_arc_pop.png" id="93_attack_arc_pop"]
+[ext_resource type="Texture2D" uid="uid://cra2ewga7p2m8" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Ground_03.png" id="94_attack_ground_03"]
+[ext_resource type="Texture2D" uid="uid://rkk1tmumt0sa" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_01.png" id="95_attack_air_01"]
+[ext_resource type="Texture2D" uid="uid://dhflxhl2x4hyi" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_02.png" id="96_attack_air_02"]
+[ext_resource type="Texture2D" uid="uid://bkoc2cvkd8oms" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_03.png" id="97_attack_air_03"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -173,6 +179,76 @@ region = Rect2(2560, 2560, 512, 512)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wf5ty"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("91_attack_start")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_attack_ground_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_attack_ground_03")
+}],
+"loop": false,
+"name": &"Attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("95_attack_air_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_attack_air_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_attack_air_03")
+}],
+"loop": false,
+"name": &"Attack_Diagonal",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("95_attack_air_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_attack_air_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_attack_air_03")
+}],
+"loop": false,
+"name": &"Attack_Down",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("95_attack_air_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_attack_air_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_attack_air_03")
+}],
+"loop": false,
+"name": &"Attack_Forward",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("95_attack_air_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_attack_air_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_attack_air_03")
+}],
+"loop": false,
+"name": &"Attack_Up",
+"speed": 7.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_puhm8")
@@ -403,7 +479,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-12, -24)]
+"values": [Vector2(-8.025, -9.24)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -415,7 +491,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [-0.62]
+"values": [1.4416419]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -427,27 +503,15 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(0.28, 0.28)]
+"values": [Vector2(0.052, 0.052)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:visible")
+tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSlashVFX:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -456,7 +520,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_quick_attack"]
 resource_name = "quick_attack"
-length = 0.22
+length = 0.58
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -464,7 +528,7 @@ tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.035, 0.155),
+"times": PackedFloat32Array(0, 0.095, 0.48),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -472,11 +536,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:visible")
+tracks/1/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSlashVFX:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.035, 0.125),
+"times": PackedFloat32Array(0, 0.245, 0.42),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -484,92 +548,443 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:position")
+tracks/2/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSlashVFX:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.035, 0.075, 0.125),
+"times": PackedFloat32Array(0.245, 0.305, 0.42),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(18, -33), Vector2(52, -27), Vector2(68, -18)]
+"values": [Vector2(38, -42), Vector2(58, -48), Vector2(72, -34)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:rotation")
+tracks/3/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSlashVFX:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.035, 0.075, 0.125),
+"times": PackedFloat32Array(0.245, 0.305, 0.42),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-0.9, 0.25, 0.85]
+"values": [Vector2(0.82, 0.82), Vector2(1.12, 1.02), Vector2(1, 0.74)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackWeaponSprite:scale")
+tracks/4/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSlashVFX:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.245, 0.315, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0.34, 0.34)]
+"values": [Color(1, 1, 1, 0), Color(1.35, 1.25, 0.95, 1), Color(1.15, 1.05, 0.78, 0.95), Color(1, 0.86, 0.55, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:visible")
+tracks/5/path = NodePath("Player Animation:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.045, 0.12, 0.145),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [false, true, true, false]
+"times": PackedFloat32Array(0, 0.105, 0.22, 0.315, 0.45, 0.54),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(4, -2), Vector2(2, -1), Vector2(0, -5), Vector2(8, -8), Vector2(5, -3), Vector2(4, -2)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:position")
+tracks/6/path = NodePath("Player Animation:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.105, 0.22, 0.315, 0.45, 0.54),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(50, -27)]
+"values": [0.0, -0.025, -0.055, 0.075, 0.025, 0.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+
+[sub_resource type="Animation" id="Animation_weapon_jump_ascent"]
+resource_name = "weapon_jump_ascent"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("EquipmentMount/AttackSwingRoot/AttackSmearSprite:scale")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-9.025, -12.24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.5016419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_jump_apex"]
+resource_name = "weapon_jump_apex"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8.025, -9.24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.4416419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_idle"]
+resource_name = "weapon_idle"
+length = 1.375
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.34, 0.69, 1.03, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-8.025, -9.24), Vector2(-8.025, -9.74), Vector2(-7.525, -9.24), Vector2(-8.025, -8.74), Vector2(-8.025, -9.24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.69, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.4416419, 1.4616419, 1.4416419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.48, 0.48)]
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_jump_descent"]
+resource_name = "weapon_jump_descent"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-7.525, -7.74)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.3816419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_jump_land"]
+resource_name = "weapon_jump_land"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8.025, -7.24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.4016419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_run"]
+resource_name = "weapon_run"
+length = 0.46
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.115, 0.23, 0.345, 0.46),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-8.025, -9.24), Vector2(-7.525, -8.74), Vector2(-8.525, -8.99), Vector2(-7.775, -9.74), Vector2(-8.025, -9.24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.115, 0.23, 0.345, 0.46),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.4416419, 1.4216419, 1.4716419, 1.4616419, 1.4416419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.052, 0.052)]
+}
+
+[sub_resource type="Animation" id="Animation_weapon_wall_cling"]
+resource_name = "weapon_wall_cling"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-10.025, -9.74)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.5216419]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EquipmentMount/BackSheathedWeaverShuttle:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.052, 0.052)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_player_pose"]
 _data = {
 &"RESET": SubResource("Animation_player_reset"),
-&"quick_attack": SubResource("Animation_quick_attack")
+&"quick_attack": SubResource("Animation_quick_attack"),
+&"weapon_grapple_diagonal": SubResource("Animation_weapon_jump_ascent"),
+&"weapon_grapple_horizontal": SubResource("Animation_weapon_jump_apex"),
+&"weapon_idle": SubResource("Animation_weapon_idle"),
+&"weapon_jump_apex": SubResource("Animation_weapon_jump_apex"),
+&"weapon_jump_ascent": SubResource("Animation_weapon_jump_ascent"),
+&"weapon_jump_descent": SubResource("Animation_weapon_jump_descent"),
+&"weapon_jump_land": SubResource("Animation_weapon_jump_land"),
+&"weapon_run": SubResource("Animation_weapon_run"),
+&"weapon_wall_cling": SubResource("Animation_weapon_wall_cling")
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=994170439 groups=["player"]]
@@ -579,8 +994,7 @@ player_stats = ExtResource("83_stats")
 equipment_left_offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
-visible = false
-position = Vector2(0.5, 7.1224995)
+position = Vector2(0.5, 14.122499)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=2021687560]
@@ -612,10 +1026,11 @@ script = ExtResource("87_flash")
 target_path = NodePath("../Player Animation")
 
 [node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=609748328]
-position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Grapple_Diagonal"
+animation = &"Run"
+frame = 6
+frame_progress = 0.31862456
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=689696678]
 material = SubResource("ShaderMaterial_f1uaf")
@@ -629,27 +1044,25 @@ one_shot = true
 
 [node name="BackSheathedWeaverShuttle" type="Sprite2D" parent="EquipmentMount" unique_id=1756899710]
 z_index = -2
-position = Vector2(-12, -24)
-rotation = -0.62
-scale = Vector2(0.28, 0.28)
+position = Vector2(-8.025, -9.24)
+rotation = 1.4416419
+scale = Vector2(0.052, 0.052)
 texture = ExtResource("88_shuttle")
 
 [node name="AttackSwingRoot" type="Node2D" parent="EquipmentMount" unique_id=1849983732]
 
-[node name="AttackSmearSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot" unique_id=788882607]
+[node name="AttackSlashVFX" type="Node2D" parent="EquipmentMount/AttackSwingRoot" unique_id=1479062686]
 visible = false
-z_index = 3
-position = Vector2(50, -27)
-scale = Vector2(0.48, 0.48)
-texture = ExtResource("89_shuttle_smear")
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+position = Vector2(38, -42)
+scale = Vector2(0.82, 0.82)
 
-[node name="AttackWeaponSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot" unique_id=690699467]
-visible = false
-z_index = 4
-position = Vector2(18, -33)
-rotation = -0.9
-scale = Vector2(0.34, 0.34)
-texture = ExtResource("88_shuttle")
+[node name="SlashSprite" type="Sprite2D" parent="EquipmentMount/AttackSwingRoot/AttackSlashVFX" unique_id=1969796276]
+z_index = 5
+position = Vector2(118, -20)
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("93_attack_arc_pop")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1040515148]
 libraries/ = SubResource("AnimationLibrary_player_pose")

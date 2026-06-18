@@ -6,9 +6,14 @@ signal target_lost()
 signal attack_started()
 signal attack_finished()
 
+const ENEMY_DAMAGE_FRAY_TEXTURE := preload("res://Assets/VFX/enemy_damage_fray_VFX.png")
+const ENEMY_DEATH_UNRAVEL_TEXTURE := preload("res://Assets/VFX/enemy_death_unravel_VFX.png")
+const WHITE_KEY_VFX_SHADER := preload("res://Src/VFX/white_key_vfx.gdshader")
+
 @export var stats: EnemyStats
 @export var patrol_distance: float = 160.0
 @export var start_facing: int = -1
+@export var facing_dead_zone: float = 12.0
 
 @onready var visuals: Node2D = $Visuals
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
@@ -81,7 +86,9 @@ func on_patrol_started() -> void:
 
 func patrol(_delta: float) -> void:
 	var distance_from_home := global_position.x - home_position.x
-	if abs(distance_from_home) >= patrol_distance:
+	var is_moving_past_right_edge := distance_from_home >= patrol_distance and facing > 0
+	var is_moving_past_left_edge := distance_from_home <= -patrol_distance and facing < 0
+	if is_moving_past_right_edge or is_moving_past_left_edge:
 		facing *= -1
 		update_facing(facing)
 
@@ -92,7 +99,14 @@ func chase_target(_delta: float) -> void:
 		set_horizontal_target_speed(0.0)
 		return
 
-	var direction: int = int(sign(target.global_position.x - global_position.x))
+	var target_delta_x := target.global_position.x - global_position.x
+	var direction: int = facing
+	if abs(target_delta_x) > facing_dead_zone:
+		direction = int(sign(target_delta_x))
+	else:
+		set_horizontal_target_speed(0.0)
+		return
+
 	if direction == 0:
 		direction = facing
 
@@ -133,6 +147,7 @@ func die() -> void:
 	detection_area.set_deferred("monitoring", false)
 	attack_area.set_deferred("monitoring", false)
 	velocity = Vector2.ZERO
+	_play_death_collapse()
 	await get_tree().create_timer(stats.death_cleanup_delay).timeout
 	queue_free()
 
@@ -178,6 +193,9 @@ func _on_damaged(damage: DamageData) -> void:
 	if hit_flash:
 		hit_flash.flash()
 
+	if health_component.current_health > 0:
+		_spawn_enemy_damage_vfx(damage)
+
 	CombatFeedback.screen_shake(self, stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
@@ -192,9 +210,87 @@ func _on_damaged(damage: DamageData) -> void:
 		state_machine.transition_to(&"Hurt")
 
 func _on_died(_damage: DamageData) -> void:
+	_spawn_enemy_death_vfx(_damage)
 	if state_machine.current_state_name != &"Dead":
 		state_machine.transition_to(&"Dead")
 
 func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
 	CombatFeedback.screen_shake(self, stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
+
+func _spawn_enemy_damage_vfx(damage: DamageData) -> void:
+	var direction := _get_hit_direction(damage)
+	var sprite := _make_one_shot_vfx_sprite(ENEMY_DAMAGE_FRAY_TEXTURE, 0.085)
+	sprite.global_position = _get_vfx_origin(damage) + direction * 16.0
+	sprite.rotation = direction.angle()
+	sprite.modulate = Color(1.0, 1.0, 1.0, 0.88)
+
+	var tween := sprite.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(sprite, "scale", Vector2(0.18, 0.18), 0.06).from(Vector2(0.045, 0.045))
+	tween.tween_property(sprite, "modulate:a", 0.0, 0.16).set_delay(0.04)
+	tween.tween_property(sprite, "position", sprite.position + direction * 22.0, 0.14)
+	tween.set_parallel(false)
+	tween.tween_callback(sprite.queue_free)
+
+func _spawn_enemy_death_vfx(damage: DamageData) -> void:
+	var direction := _get_hit_direction(damage)
+	var sprite := _make_one_shot_vfx_sprite(ENEMY_DEATH_UNRAVEL_TEXTURE, 0.12)
+	sprite.global_position = global_position + Vector2(0.0, -24.0)
+	sprite.rotation = direction.angle() * 0.2
+	sprite.modulate = Color(1.0, 1.0, 1.0, 0.0)
+
+	var tween := sprite.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(sprite, "scale", Vector2(0.34, 0.34), 0.2).from(Vector2(0.08, 0.08))
+	tween.tween_property(sprite, "modulate:a", 0.95, 0.08)
+	tween.tween_property(sprite, "position", sprite.position + direction * 18.0, 0.24)
+	tween.set_parallel(false)
+	tween.tween_property(sprite, "modulate:a", 0.0, 0.26)
+	tween.tween_callback(sprite.queue_free)
+
+func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite2D:
+	var sprite := Sprite2D.new()
+	sprite.texture = texture
+	sprite.centered = true
+	sprite.scale = Vector2(start_scale, start_scale)
+	sprite.z_index = 80
+	sprite.material = _make_white_key_material()
+
+	var parent := get_parent()
+	if parent:
+		parent.add_child(sprite)
+	else:
+		add_child(sprite)
+	return sprite
+
+func _make_white_key_material() -> ShaderMaterial:
+	var material := ShaderMaterial.new()
+	material.shader = WHITE_KEY_VFX_SHADER
+	material.set_shader_parameter("key_threshold", 0.93)
+	material.set_shader_parameter("key_softness", 0.08)
+	return material
+
+func _get_vfx_origin(damage: DamageData) -> Vector2:
+	if damage.hit_position != Vector2.ZERO:
+		return damage.hit_position
+	return global_position + Vector2(0.0, -24.0)
+
+func _get_hit_direction(damage: DamageData) -> Vector2:
+	if damage.knockback.length() > 0.01:
+		return damage.knockback.normalized()
+	if damage.source is Node2D:
+		var source_node := damage.source as Node2D
+		var from_source := global_position - source_node.global_position
+		if from_source.length() > 0.01:
+			return from_source.normalized()
+	return Vector2(float(facing), -0.15).normalized()
+
+func _play_death_collapse() -> void:
+	if not visuals:
+		return
+
+	var tween := visuals.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(visuals, "scale", Vector2(0.12 * float(facing), 0.02), 0.18)
+	tween.tween_property(visuals, "modulate:a", 0.0, 0.18)
