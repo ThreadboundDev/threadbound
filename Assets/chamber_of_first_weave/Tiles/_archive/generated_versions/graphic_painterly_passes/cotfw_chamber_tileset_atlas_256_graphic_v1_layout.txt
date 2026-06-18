@@ -1,0 +1,27 @@
+cell=256
+cols=4
+source=Assets/chamber_of_first_weave/tileset_reference.png
+
+top_left_corner.png: atlas=(0,0) pixels=(0,0,256,256) source_bbox=(23,21,698,739) source_pixels=470330
+top_center.png: atlas=(1,0) pixels=(256,0,256,256) source_bbox=(724,22,975,272) source_pixels=36590
+top_right_corner.png: atlas=(2,0) pixels=(512,0,256,256) source_bbox=(728,294,977,542) source_pixels=37652
+inner_top_left.png: atlas=(3,0) pixels=(768,0,256,256) source_bbox=(724,560,979,839) source_pixels=65885
+left_side.png: atlas=(0,1) pixels=(0,256,256,256) source_bbox=(27,793,699,961) source_pixels=66672
+center.png: atlas=(1,1) pixels=(256,256,256,256) source_bbox=(754,956,999,1261) source_pixels=41828
+right_side.png: atlas=(2,1) pixels=(512,256,256,256) source_bbox=(22,985,700,1164) source_pixels=81202
+inner_top_right.png: atlas=(3,1) pixels=(768,256,256,256) source_bbox=(23,1194,203,1386) source_pixels=24485
+bottum_left_corner.png: atlas=(0,2) pixels=(0,512,256,256) source_bbox=(231,1194,415,1387) source_pixels=23366
+bottum_center.png: atlas=(1,2) pixels=(256,512,256,256) source_bbox=(443,1194,756,1482) source_pixels=51175
+bottum_right_corner.png: atlas=(2,2) pixels=(512,512,256,256) source_bbox=(778,1275,999,1482) source_pixels=30598
+inner_bottum_left.png: atlas=(3,2) pixels=(768,512,256,256) source_bbox=(25,1410,494,1513) source_pixels=44548
+inner_bottum_right.png: atlas=(3,3) pixels=(768,768,256,256) source_bbox=(23,21,698,739) source_pixels=470330
+platform_left.png: atlas=(0,4) pixels=(0,1024,256,256) source_bbox=(724,22,975,272) source_pixels=36590
+platform_center.png: atlas=(1,4) pixels=(256,1024,256,256) source_bbox=(728,294,977,542) source_pixels=37652
+platform_right.png: atlas=(2,4) pixels=(512,1024,256,256) source_bbox=(724,560,979,839) source_pixels=65885
+left_t.png: atlas=(0,5) pixels=(0,1280,256,256) source_bbox=(27,793,699,961) source_pixels=66672
+top_t.png: atlas=(1,5) pixels=(256,1280,256,256) source_bbox=(754,956,999,1261) source_pixels=41828
+right_t.png: atlas=(2,5) pixels=(512,1280,256,256) source_bbox=(22,985,700,1164) source_pixels=81202
+convex_ceiling_left.png: atlas=(0,6) pixels=(0,1536,256,256) source_bbox=(23,1194,203,1386) source_pixels=24485
+convex_ceiling_right.png: atlas=(1,6) pixels=(256,1536,256,256) source_bbox=(231,1194,415,1387) source_pixels=23366
+convex_floor_left.png: atlas=(2,6) pixels=(512,1536,256,256) source_bbox=(443,1194,756,1482) source_pixels=51175
+convex_floor_right.png: atlas=(3,6) pixels=(768,1536,256,256) source_bbox=(778,1275,999,1482) source_pixels=30598

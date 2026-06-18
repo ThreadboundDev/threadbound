@@ -1,0 +1,4 @@
+source=new_tiles_atlas.png
+source_crop=(0,0,1024,1024)
+tile_size=128
+nonempty_cells=0,0,1,0,2,0,0,1,1,1,2,1,0,2,1,2,2,2,0,3,1,3,2,3,3,3
