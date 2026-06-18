@@ -32,6 +32,25 @@ Threadbound should feel elegant, ancient, woven, and above all readable.
 - Platform centers should remain calm and minimally detailed.
 - Use shadow gradients, dark fades, and simplified surfaces instead of noisy center detail.
 
+## Chamber Lighting Direction
+
+The Chamber of the First Weave should read as an underground space with a clear hierarchy between playable elements and decorative depth layers.
+
+- Primary light enters from the top-center world opening.
+- Gameplay platforms, the player, enemies, and interactables remain the highest-contrast elements.
+- Far-background architecture should be lighter, lower contrast, and less saturated than gameplay tiles.
+- Midground architecture may retain more form and texture, but it should not compete with traversal silhouettes.
+- Decorative foreground silhouettes should frame the view without obscuring or mimicking platforms.
+- Character readability takes priority over atmospheric darkness.
+
+Future lighting and shader work should focus on:
+
+- screen-space cave atmosphere and edge falloff
+- stronger foreground/background separation
+- subtle thread-themed glow and motion accents
+- restrained local player light that supports readability
+- material presets for far, mid, gameplay, and foreground layers
+
 ## Architectural Language
 
 Do not create generic fantasy ruins.
