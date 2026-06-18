@@ -1,0 +1,97 @@
+class_name Loomkin
+extends EnemyBase
+
+@export var walk_texture: Texture2D
+@export var attack_texture: Texture2D
+@export var walk_columns := 6
+@export var walk_rows := 8
+@export var walk_frame_count := 48
+@export var walk_fps := 9.0
+@export var chase_fps_multiplier := 1.45
+@export var attack_columns := 6
+@export var attack_rows := 8
+@export var attack_frame_count := 48
+
+@onready var sprite: Sprite2D = $Visuals/Sprite2D as Sprite2D
+
+var _animation_timer := 0.0
+var _current_frame := 0
+var _playing_attack := false
+
+func _ready() -> void:
+	super._ready()
+	add_to_group("loomkin")
+
+	if visuals.has_node("Body"):
+		visuals.get_node("Body").visible = false
+	if sprite and walk_texture:
+		_play_walk_animation()
+
+func _process(delta: float) -> void:
+	_update_sprite_animation(delta)
+
+func begin_attack() -> void:
+	super.begin_attack()
+	if sprite and attack_texture:
+		_play_attack_animation()
+
+func end_attack() -> void:
+	super.end_attack()
+	if sprite and walk_texture:
+		_play_walk_animation()
+
+func _play_walk_animation() -> void:
+	_playing_attack = false
+	_animation_timer = 0.0
+	_current_frame = 0
+	_configure_sprite_sheet(walk_texture, walk_columns, walk_rows)
+
+func _play_attack_animation() -> void:
+	_playing_attack = true
+	_animation_timer = 0.0
+	_current_frame = 0
+	_configure_sprite_sheet(attack_texture, attack_columns, attack_rows)
+
+func _configure_sprite_sheet(texture: Texture2D, columns: int, rows: int) -> void:
+	if not sprite or not texture:
+		return
+
+	sprite.texture = texture
+	sprite.hframes = max(1, columns)
+	sprite.vframes = max(1, rows)
+	sprite.frame = 0
+
+func _update_sprite_animation(delta: float) -> void:
+	if not sprite:
+		return
+
+	var frame_count := attack_frame_count if _playing_attack else walk_frame_count
+	frame_count = clampi(frame_count, 1, max(1, sprite.hframes * sprite.vframes))
+
+	var fps := _get_attack_fps() if _playing_attack else _get_walk_fps()
+	if fps <= 0.0:
+		return
+
+	_animation_timer += delta
+	var next_frame := int(floor(_animation_timer * fps))
+	if _playing_attack:
+		_current_frame = mini(next_frame, frame_count - 1)
+	else:
+		_current_frame = next_frame % frame_count
+
+	sprite.frame = _current_frame
+
+func _get_walk_fps() -> float:
+	if state_machine and state_machine.current_state_name == &"Chase":
+		return walk_fps * chase_fps_multiplier
+	return walk_fps
+
+func _get_attack_fps() -> float:
+	if not stats:
+		return 24.0
+
+	var attack_duration := stats.attack_windup + stats.attack_active_time + stats.attack_recovery
+	if attack_duration <= 0.0:
+		return 24.0
+
+	return float(max(1, attack_frame_count)) / attack_duration

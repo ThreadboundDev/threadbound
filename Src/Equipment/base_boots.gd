@@ -1,9 +1,9 @@
 class_name BaseBoots
 extends BaseEquipment
 
-@export var base_jump_force: float = 720.0
-@export var wall_jump_force: float = 620.0
-@export var wall_jump_up_force: float = 680.0
+@export var base_jump_force: float = 960.0
+@export var wall_jump_force: float = 700.0
+@export var wall_jump_up_force: float = 840.0
 
 func _init(_player = null):
 	super(_player)

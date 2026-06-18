@@ -317,6 +317,7 @@
 [ext_resource type="PackedScene" uid="uid://drraly7lxsapf" path="res://Src/UI/radial_menu.tscn" id="320_5nt33"]
 [ext_resource type="Texture2D" uid="uid://cj1irc0x6omk0" path="res://Assets/Tiles/Mossy - FloatingPlatforms - Edited.png" id="320_m2p3j"]
 [ext_resource type="Shader" uid="uid://byxdrvwx0jif5" path="res://Src/Environment/World/menu_blur.gdshader" id="321_wfyk8"]
+[ext_resource type="PackedScene" path="res://Src/UI/combat_hud.tscn" id="322_combat_hud"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uo7di"]
 shader = ExtResource("1_q2d71")
@@ -15966,6 +15967,8 @@ shape = SubResource("RectangleShape2D_q2d71")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=808696143]
 follow_viewport_enabled = true
+
+[node name="CombatHUD" parent="HUD" instance=ExtResource("322_combat_hud")]
 
 [node name="RadialMenu" parent="." unique_id=1881525942 instance=ExtResource("320_5nt33")]
 offset = Vector2(0, 100)

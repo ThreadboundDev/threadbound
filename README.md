@@ -60,7 +60,7 @@ threadbound/
 Important runtime files:
 
 - `project.godot`
-- `Src/Environment/World/world.tscn`
+- `Src/Environment/World/test_world.tscn`
 - `Src/Characters/Player/player.tscn`
 - `Src/Characters/Player/player.gd`
 - `Src/Equipment/base_gloves.gd`
