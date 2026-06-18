@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://chjbc1kgc3esj"]
+[gd_scene load_steps=8 format=3 uid="uid://chjbc1kgc3esj"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_eeuym"]
 [ext_resource type="Script" path="res://Src/Enemies/Tensioner/tensioner.gd" id="2_tensioner"]
 [ext_resource type="Texture2D" uid="uid://ce36bdjt1wvpv" path="res://Assets/Enemys/Tensioner/Tensioner_Walk.png" id="3_walk"]
 [ext_resource type="Resource" path="res://Src/Enemies/Tensioner/tensioner_stats.tres" id="4_stats"]
+[ext_resource type="Texture2D" uid="uid://d2qgkudiixg2l" path="res://Assets/Enemys/Tensioner/Tensioner_Attack.png" id="5_attack"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(193.005, 149.795)
@@ -19,11 +20,15 @@ script = ExtResource("2_tensioner")
 stats = ExtResource("4_stats")
 patrol_distance = 220.0
 walk_texture = ExtResource("3_walk")
+attack_texture = ExtResource("5_attack")
 walk_columns = 6
 walk_rows = 4
 walk_frame_count = 24
 walk_fps = 8.0
 chase_fps_multiplier = 1.35
+attack_columns = 5
+attack_rows = 8
+attack_frame_count = 40
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(-4.23, -73.995)
@@ -58,5 +63,9 @@ position = Vector2(-4.23, -73.995)
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("RectangleShape2D_attack")
 
-[node name="HitFlashComponent" parent="." index="7"]
+[node name="CollisionShape2D" parent="ContactHitbox" index="0"]
+position = Vector2(-4.5025015, -77.1025)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="HitFlashComponent" parent="." index="8"]
 target_path = NodePath("../Visuals/Sprite2D")

@@ -23,6 +23,7 @@ radius = 220.0
 size = Vector2(56, 42)
 
 [node name="EnemyBase" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 0
 script = ExtResource("1_enemy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -73,6 +74,14 @@ hitbox_owner_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
 shape = SubResource("RectangleShape2D_attack")
+
+[node name="ContactHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox"]
+position = Vector2(0, -21)
+shape = SubResource("RectangleShape2D_body")
 
 [node name="HitFlashComponent" type="Node" parent="."]
 script = ExtResource("5_flash")

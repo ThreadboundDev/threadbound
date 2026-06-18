@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver.gd" id="2_script"]
+[ext_resource type="Resource" path="res://Src/Enemies/ProtoWeaver/proto_weaver_stats.tres" id="3_stats"]
+[ext_resource type="Texture2D" uid="uid://6fglcvgmh18v" path="res://Assets/Enemys/proto_weaver/proto_weaver_walk.png" id="4_walk"]
+[ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="5_stab"]
+[ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_threadburst"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="7_missile"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(104, 136)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 520.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(178, 108)
+
+[node name="ProtoWeaver" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+stats = ExtResource("3_stats")
+patrol_distance = 260.0
+start_facing = -1
+facing_dead_zone = 18.0
+walk_texture = ExtResource("4_walk")
+stab_texture = ExtResource("5_stab")
+threadburst_texture = ExtResource("6_threadburst")
+thread_missile_scene = ExtResource("7_missile")
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -68)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Body" parent="Visuals" index="0"]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1"]
+position = Vector2(0, -82)
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("4_walk")
+hframes = 6
+vframes = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -68)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = SubResource("CircleShape2D_detection")
+
+[node name="AttackArea" parent="." index="5"]
+position = Vector2(-112, -76)
+
+[node name="CollisionShape2D" parent="AttackArea" index="0"]
+shape = SubResource("RectangleShape2D_attack")
+
+[node name="AttackHitbox" parent="." index="6"]
+position = Vector2(-112, -76)
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("RectangleShape2D_attack")
+
+[node name="CollisionShape2D" parent="ContactHitbox" index="0"]
+position = Vector2(0, -68)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="HitFlashComponent" parent="." index="8"]
+target_path = NodePath("../Visuals/Sprite2D")

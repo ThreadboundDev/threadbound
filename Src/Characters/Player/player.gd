@@ -208,9 +208,11 @@ func _physics_process(delta: float) -> void:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
-	if not grapple_restricting:
+	if not grapple_restricting and not is_hurt:
 		var control = 1.0 if is_on_floor() else air_control_mult
 		velocity.x = speed * horizontal_input * control
+	elif is_hurt:
+		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
 
 	# Jump
 	if Input.is_action_just_pressed("Jump"):
