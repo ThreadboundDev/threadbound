@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var thread_width := 9.0
-@export var glow_width := 34.0
+@export var glow_width := 52.0
 @export var motion_speed := 1.15
 @export var wiggle_strength := 28.0
 @export var loom_origin := Vector2(0, 500)
@@ -35,13 +35,19 @@ func _draw() -> void:
 	for spec in specs:
 		var points := _thread_points(float(spec["offset"]), float(spec["phase"]))
 		var glow_color: Color = spec["color"] as Color
-		glow_color.a = 0.18
+		glow_color.a = 0.12
+		draw_polyline(points, glow_color, glow_width * 1.75, true)
+
+	for spec in specs:
+		var points := _thread_points(float(spec["offset"]), float(spec["phase"]))
+		var glow_color: Color = spec["color"] as Color
+		glow_color.a = 0.34
 		draw_polyline(points, glow_color, glow_width, true)
 
 	for spec in specs:
 		var points := _thread_points(float(spec["offset"]), float(spec["phase"]))
 		var mid_color: Color = spec["color"] as Color
-		mid_color.a = 0.55
+		mid_color.a = 0.76
 		draw_polyline(points, mid_color, thread_width * 1.8, true)
 
 	for spec in specs:
