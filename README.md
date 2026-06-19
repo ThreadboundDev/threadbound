@@ -2,7 +2,7 @@
 
 ![Threadbound Banner](docs/art/concept_art/banner.png)
 
-Threadbound is a painterly 2D action metroidvania built in Godot.
+Threadbound is a 2D action metroidvania with a clean graphic illustration style, built in Godot.
 
 The game is about movement, identity, and choice: the player weaves traversal, equipment, and eventually combat together in real time while deciding what kind of being the Threadborne becomes.
 

@@ -2,7 +2,7 @@
 
 
 
-Threadbound’s gameplay is built on \*\*flow-state traversal\*\* and \*\*real-time ability weaving\*\* in a painterly 2.5D world.
+Threadbound’s gameplay is built on \*\*flow-state traversal\*\* and \*\*real-time ability weaving\*\* in a clean graphic 2.5D world.
 
 
 
@@ -435,4 +435,3 @@ It is about:
 > You are not navigating the world.  
 
 > You are weaving through it.
-

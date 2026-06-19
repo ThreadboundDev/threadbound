@@ -247,7 +247,7 @@ These encounters push the player to:
 
 ## 🎨 Audio & Visual Feedback
 
-- Hits produce painterly thread bursts  
+- Hits produce clean graphic thread bursts  
 - Impact intensity reflects weapon weight  
 - Enemy damage shows thread fraying  
 - Player visuals reflect current identity  

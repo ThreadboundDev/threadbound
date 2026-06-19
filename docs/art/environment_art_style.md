@@ -20,7 +20,7 @@ Region-specific identity should be stored in separate supplement files.
 
 Threadbound environments follow a:
 
-**Graphic Painterly 2.5D** style.
+**Graphic Illustration 2.5D** style.
 
 Not:
 - photoreal
@@ -32,7 +32,8 @@ Instead:
 
 - readability first
 - silhouette driven
-- painterly support
+- graphic shape language
+- controlled shading and lighting support
 - gameplay clarity
 - stylized rendering
 - atmosphere serving movement
@@ -51,7 +52,7 @@ Environment must inherit:
 - contour treatment
 - silhouette readability
 - stylized rendering
-- painterly balance
+- graphic rendering balance
 - value grouping
 - edge clarity
 
@@ -75,10 +76,10 @@ but do NOT override character readability.
 
 ---
 
-# 3. Graphic vs Painterly Ratios
+# 3. Graphic vs Rendering Support
 
 ## Gameplay Geometry
-**70% Graphic / 30% Painterly**
+**Graphic first, minimal rendering support**
 
 Applies to:
 
@@ -96,11 +97,12 @@ Characteristics:
 - highest readability
 - clean silhouette
 - restrained texture
+- hard-edged shadow shapes
 
 ---
 
 ## Midground
-**50% Graphic / 50% Painterly**
+**Graphic forms with moderate shading support**
 
 Applies to:
 
@@ -113,7 +115,7 @@ Applies to:
 ---
 
 ## Deep Background
-**30% Graphic / 70% Painterly**
+**Simplified graphic forms with atmospheric lighting support**
 
 Applies to:
 
@@ -122,7 +124,7 @@ Applies to:
 - distant structures
 - ambient forms
 
-Background should support mood while remaining cohesive.
+Background should support mood while remaining cohesive, never becoming a soft matte painting.
 
 ---
 
@@ -146,7 +148,6 @@ Avoid:
 Outlines should be:
 
 - stylized
-- painterly
 - restrained
 
 Not comic-book thick.
@@ -230,7 +231,8 @@ Subject to gameplay iteration.
 - atmosphere
 - cave scale
 - slow parallax
-- painterly support
+- simplified graphic forms
+- controlled atmospheric lighting
 
 ## Layer 2 – Mid Background
 - decor
@@ -292,7 +294,7 @@ Human controls:
 
 # 10. Prompt Formula
 
-"Graphic painterly 2.5D Threadbound environment matching Threadborne silhouette and contour readability. Shape-first rendering, restrained painterly texture, readable gameplay forms, cave plus architecture integration, atmospheric but controlled lighting, no photorealism, no matte-painting softness."
+"Graphic illustration 2.5D Threadbound environment matching Threadborne silhouette and contour readability. Shape-first rendering, clean black outline hierarchy, controlled shading, readable gameplay forms, cave plus architecture integration, atmospheric but restrained lighting, no photorealism, no painterly brushwork, no matte-painting softness."
 
 Then append:
 - region identity
