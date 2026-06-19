@@ -9,6 +9,14 @@ signal rune_changed(index: int, color: Color, available: bool)
 
 @onready var gauge_overlay: CombatHUDOverlay = $ActionPointPanel/GaugeOverlay as CombatHUDOverlay
 @onready var health_bar: CombatHealthBar = $HealthBar as CombatHealthBar
+@onready var action_point_orbs: Array[TextureRect] = [
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb1 as TextureRect,
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb2 as TextureRect,
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb3 as TextureRect,
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb4 as TextureRect,
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb5 as TextureRect,
+	$ActionPointPanel/ActionPointOrbs/ActionPointOrb6 as TextureRect,
+]
 
 var _rune_colors: Array[Color] = []
 var _rune_available: Array[bool] = []
@@ -118,6 +126,7 @@ func _sync_overlay() -> void:
 	gauge_overlay.current_action_points = current_action_points
 	gauge_overlay.momentum = momentum / 100.0
 	gauge_overlay.set_rune_states(_rune_colors, _rune_available)
+	_sync_action_point_orbs()
 
 func _sync_health() -> void:
 	if not is_node_ready():
@@ -125,6 +134,16 @@ func _sync_health() -> void:
 
 	if health_bar:
 		health_bar.set_health(current_health, max_health)
+
+func _sync_action_point_orbs() -> void:
+	for i in action_point_orbs.size():
+		var orb := action_point_orbs[i]
+		if not orb:
+			continue
+
+		orb.visible = i < max_action_points
+		var available := i < current_action_points and i < _rune_available.size() and _rune_available[i]
+		orb.modulate = Color.WHITE if available else Color(0.55, 0.57, 0.62, 0.42)
 
 func _configure_default_runes() -> void:
 	if _rune_colors.size() == 6 and _rune_available.size() == 6:

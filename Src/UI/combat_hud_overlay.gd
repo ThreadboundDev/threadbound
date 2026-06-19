@@ -1,3 +1,4 @@
+@tool
 extends Control
 class_name CombatHUDOverlay
 
@@ -29,6 +30,22 @@ const ORB_CENTERS := [
 
 @export var active_orb_color := Color(0.95, 0.72, 0.28, 0.9)
 @export var inactive_orb_color := Color(0.05, 0.06, 0.08, 0.58)
+@export var draw_procedural_orbs := false:
+	set(value):
+		draw_procedural_orbs = value
+		queue_redraw()
+@export var action_point_orb_texture: Texture2D:
+	set(value):
+		action_point_orb_texture = value
+		queue_redraw()
+@export_range(80.0, 260.0, 1.0) var orb_texture_diameter := 188.0:
+	set(value):
+		orb_texture_diameter = value
+		queue_redraw()
+@export_range(0.0, 1.0, 0.01) var inactive_orb_alpha := 0.42:
+	set(value):
+		inactive_orb_alpha = value
+		queue_redraw()
 
 var rune_colors: Array[Color] = []
 var rune_available: Array[bool] = []
@@ -55,10 +72,21 @@ func _draw() -> void:
 		var radius: float = 62.0 * scale_factor
 		var available := rune_available[i] and i < current_action_points
 		var color := rune_colors[i] if available else inactive_orb_color
-		draw_circle(center, radius, color)
+		if draw_procedural_orbs:
+			_draw_action_point_orb(center, scale_factor, color, available)
 		draw_arc(center, radius * 0.82, 0.0, TAU, 48, color.lightened(0.35), 2.0 * scale_factor, true)
 		if available:
 			_draw_rune(center, radius * 0.48, scale_factor, color)
+
+func _draw_action_point_orb(center: Vector2, scale_factor: float, color: Color, available: bool) -> void:
+	if action_point_orb_texture:
+		var diameter := orb_texture_diameter * scale_factor
+		var rect := Rect2(center - Vector2.ONE * diameter * 0.5, Vector2.ONE * diameter)
+		var tint := Color.WHITE if available else Color(0.55, 0.57, 0.62, inactive_orb_alpha)
+		draw_texture_rect(action_point_orb_texture, rect, false, tint)
+		return
+
+	draw_circle(center, 62.0 * scale_factor, color)
 
 func _draw_rune(center: Vector2, radius: float, scale_factor: float, rune_color: Color) -> void:
 	var color := rune_color.lightened(0.55)

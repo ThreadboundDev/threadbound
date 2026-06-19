@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://d2yp0m1u5qw7"]
+
+[ext_resource type="Script" uid="uid://cpxukd2gyup4p" path="res://Src/UI/boss_health_bar.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dljou2hlqpqwo" path="res://Assets/Enemys/proto_weaver/boss_hp_bar.png" id="2_frame"]
+[ext_resource type="Texture2D" uid="uid://dav7m7xvqk42s" path="res://Assets/Enemys/proto_weaver/proto_weaver_beam_texture.png" id="3_fill"]
+[ext_resource type="Texture2D" uid="uid://c78upkrfm4hgm" path="res://Assets/Enemys/Threadling/threadlin_idleright.png" id="4_threadling"]
+
+[node name="BossHealthBar" type="Control" unique_id=154424498]
+custom_minimum_size = Vector2(768, 260)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -12.0
+offset_bottom = 248.0
+grow_horizontal = 2
+script = ExtResource("1_script")
+frame_texture = ExtResource("2_frame")
+fill_texture = ExtResource("3_fill")
+threadling_icon_texture = ExtResource("4_threadling")
