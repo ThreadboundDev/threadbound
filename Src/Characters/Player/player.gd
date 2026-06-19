@@ -20,6 +20,7 @@ const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 @onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
 @onready var attack_slash_sprite: Sprite2D = $EquipmentMount/AttackSwingRoot/AttackSlashVFX/SlashSprite
+@onready var wall_cling_vfx: AnimatedSprite2D = $WallClingVFX as AnimatedSprite2D
 
 # ===============================
 # EQUIPMENT SCENES
@@ -154,6 +155,7 @@ func _ready() -> void:
 		equip_gloves(base_gloves_scene)
 
 	update_equipment_facing()
+	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
 
 # ===============================
@@ -364,6 +366,8 @@ func update_animations(dir: float) -> void:
 		player_animation.flip_h = velocity.x < 0
 		update_equipment_facing()
 
+	_update_wall_cling_vfx()
+
 func update_equipment_facing() -> void:
 	if not equipment_mount:
 		return
@@ -376,6 +380,25 @@ func update_equipment_facing() -> void:
 		equipment_mount.position = equipment_right_offset
 
 	_apply_attack_direction()
+
+func _update_wall_cling_vfx() -> void:
+	if not wall_cling_vfx:
+		return
+
+	var should_show := is_wall_clinging and not is_on_floor()
+	wall_cling_vfx.visible = should_show
+	if not should_show:
+		wall_cling_vfx.stop()
+		return
+
+	var wall_direction: float = -signf(get_wall_normal().x)
+	if wall_direction == 0.0:
+		wall_direction = -1 if player_animation.flip_h else 1
+
+	wall_cling_vfx.position = Vector2(32.0 * wall_direction, -54.0)
+	wall_cling_vfx.flip_h = wall_direction > 0
+	if not wall_cling_vfx.is_playing():
+		wall_cling_vfx.play("cling")
 
 # ===============================
 # COMBAT
