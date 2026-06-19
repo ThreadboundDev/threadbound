@@ -15,9 +15,10 @@
 [ext_resource type="TileSet" uid="uid://ejgfpekpqd7o" path="res://Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_tileset_128.tres" id="13_541qs"]
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="14_yhgke"]
 [ext_resource type="Shader" uid="uid://cgra1ey57geo8" path="res://Src/Environment/World/environment_depth_grade.gdshader" id="15_depth"]
-[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/cave_opening_light.png" id="16_cave_light"]
-[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/thread_light.png" id="17_thread_light"]
-[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/shrine_light.png" id="18_shrine_light"]
+[ext_resource type="Texture2D" uid="uid://d3ijp3n1vfdwt" path="res://Src/Environment/World/lighting/cave_opening_light.png" id="16_cave_light"]
+[ext_resource type="PackedScene" uid="uid://btnl0a31p3ycy" path="res://Src/Enemies/ProtoWeaver/proto_weaver.tscn" id="17_f4x7l"]
+[ext_resource type="Texture2D" uid="uid://c4brju0je8s5n" path="res://Src/Environment/World/lighting/thread_light.png" id="17_thread_light"]
+[ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="18_shrine_light"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -104,23 +105,23 @@ color = Color(0.55, 0.52, 0.44, 1)
 
 [node name="CaveOpeningLight" type="PointLight2D" parent="." unique_id=1294032634]
 position = Vector2(0, -3372)
-texture = ExtResource("16_cave_light")
-texture_scale = 10.5
 color = Color(1, 0.83, 0.52, 1)
 energy = 1.45
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
 shadow_filter_smooth = 5.0
+texture = ExtResource("16_cave_light")
+texture_scale = 10.5
 
 [node name="CaveOpeningSoftFill" type="PointLight2D" parent="." unique_id=2067136995]
 position = Vector2(0, -2090)
-texture = ExtResource("16_cave_light")
-texture_scale = 7.0
 color = Color(0.64, 0.73, 0.9, 1)
 energy = 0.42
 range_z_min = -4096
 range_z_max = 4096
+texture = ExtResource("16_cave_light")
+texture_scale = 7.0
 
 [node name="AtmosphereGrade" type="CanvasLayer" parent="." unique_id=68169695]
 layer = 30
@@ -200,30 +201,30 @@ conduit_top = Vector2(0, -6576)
 
 [node name="ThreadConduitGlow" type="PointLight2D" parent="WorldArt" unique_id=957652412]
 position = Vector2(0, -3350)
-texture = ExtResource("17_thread_light")
-texture_scale = 6.8
 color = Color(1, 0.72, 0.3, 1)
 energy = 1.35
 range_z_min = -4096
 range_z_max = 4096
+texture = ExtResource("17_thread_light")
+texture_scale = 6.8
 
 [node name="LoomShrineGlow" type="PointLight2D" parent="WorldArt" unique_id=717731465]
 position = Vector2(0, 2420)
-texture = ExtResource("18_shrine_light")
-texture_scale = 4.2
 color = Color(1, 0.68, 0.34, 1)
 energy = 0.62
 range_z_min = -4096
 range_z_max = 4096
+texture = ExtResource("18_shrine_light")
+texture_scale = 4.2
 
 [node name="LowerThreadGlow" type="PointLight2D" parent="WorldArt" unique_id=1960446754]
 position = Vector2(0, 3690)
-texture = ExtResource("17_thread_light")
-texture_scale = 6.2
 color = Color(0.95, 0.42, 0.28, 1)
 energy = 0.9
 range_z_min = -4096
 range_z_max = 4096
+texture = ExtResource("17_thread_light")
+texture_scale = 6.2
 
 [node name="ChamberTileMap" type="TileMapLayer" parent="WorldArt" unique_id=1000527789]
 z_index = 11
@@ -239,6 +240,11 @@ position = Vector2(383, -2375)
 [node name="Tensioner" parent="WorldArt" unique_id=1012165391 instance=ExtResource("12_un15s")]
 position = Vector2(-14, -1264)
 
+[node name="ProtoWeaver" parent="WorldArt" unique_id=337995925 instance=ExtResource("17_f4x7l")]
+position = Vector2(-163, 4361)
+threadburst_spawn_offset = Vector2(0, -8)
+threadburst_horizontal_spread = 360.0
+
 [node name="ForegroundParallax" type="ParallaxBackground" parent="." unique_id=411989452]
 
 [node name="Layer04_ForegroundSilhouettes" type="ParallaxLayer" parent="ForegroundParallax" unique_id=1846896755]
@@ -252,7 +258,7 @@ tile_set = ExtResource("13_541qs")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(21, -2442)
+position = Vector2(-842, 4176)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -260,7 +266,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(21, -2442)
+position = Vector2(-842, 4176)
 limit_left = -5700
 limit_top = -3480
 limit_right = 5580

@@ -1,69 +1,105 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://btnl0a31p3ycy"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
-[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://drjjx2rv1ep6v" path="res://Src/Enemies/ProtoWeaver/proto_weaver.gd" id="2_script"]
 [ext_resource type="Resource" path="res://Src/Enemies/ProtoWeaver/proto_weaver_stats.tres" id="3_stats"]
 [ext_resource type="Texture2D" uid="uid://6fglcvgmh18v" path="res://Assets/Enemys/proto_weaver/proto_weaver_walk.png" id="4_walk"]
 [ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="5_stab"]
 [ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_threadburst"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="7_missile"]
+[ext_resource type="PackedScene" uid="uid://bbuxvfd44htht" path="res://Src/Enemies/Threadling/threadling.tscn" id="8_threadling"]
+[ext_resource type="Resource" path="res://Src/Enemies/ProtoWeaver/proto_weaver_link_threadling_stats.tres" id="9_link_stats"]
+[ext_resource type="PackedScene" path="res://Src/UI/boss_health_bar.tscn" id="10_boss_bar"]
+[ext_resource type="Texture2D" uid="uid://dav7m7xvqk42s" path="res://Assets/Enemys/proto_weaver/proto_weaver_beam_texture.png" id="11_beam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(104, 136)
+size = Vector2(196, 256)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
-radius = 520.0
+radius = 650.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(178, 108)
+size = Vector2(336, 204)
 
-[node name="ProtoWeaver" instance=ExtResource("1_base")]
+[node name="ProtoWeaver" unique_id=1107662247 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-stats = ExtResource("3_stats")
-patrol_distance = 260.0
-start_facing = -1
-facing_dead_zone = 18.0
 walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
 threadburst_texture = ExtResource("6_threadburst")
+beam_texture = ExtResource("11_beam")
 thread_missile_scene = ExtResource("7_missile")
+armor_link_scene = ExtResource("8_threadling")
+armor_link_stats = ExtResource("9_link_stats")
+boss_health_bar_scene = ExtResource("10_boss_bar")
+walk_columns = 6
+walk_rows = 8
+walk_frame_count = 48
+walk_fps = 8.0
+chase_fps_multiplier = 1.25
+attack_columns = 6
+attack_rows = 8
+attack_frame_count = 48
+threadburst_every_n_attacks = 3
+threadburst_min_missile_count = 3
+threadburst_max_missile_count = 5
+threadburst_low_health_max_missile_count = 8
+threadburst_spawn_offset = Vector2(0, -10)
+threadburst_horizontal_spread = 600.0
+threadburst_min_lane_spacing = 72.0
+threadburst_min_launch_speed = 760.0
+threadburst_max_launch_speed = 900.0
+threadburst_horizontal_force = 300.0
+threadburst_lane_jitter = 18.0
+threadburst_velocity_jitter = 55.0
+armor_link_left_offset = Vector2(-420, -48)
+armor_link_right_offset = Vector2(420, -48)
+armor_link_respawn_time = 12.0
+armor_link_pulse_warning_time = 3.0
+stats = ExtResource("3_stats")
+patrol_distance = 260.0
+facing_dead_zone = 18.0
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(0, -68)
+position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Body" parent="Visuals" index="0"]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1"]
-position = Vector2(0, -82)
-scale = Vector2(0.34, 0.34)
+[node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1" unique_id=568550965]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
 texture = ExtResource("4_walk")
 hframes = 6
 vframes = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
-position = Vector2(0, -68)
+position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
 shape = SubResource("CircleShape2D_detection")
 
 [node name="AttackArea" parent="." index="5"]
-position = Vector2(-112, -76)
+position = Vector2(-210, -143)
 
 [node name="CollisionShape2D" parent="AttackArea" index="0"]
 shape = SubResource("RectangleShape2D_attack")
 
 [node name="AttackHitbox" parent="." index="6"]
-position = Vector2(-112, -76)
+position = Vector2(-210, -143)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("RectangleShape2D_attack")
 
 [node name="CollisionShape2D" parent="ContactHitbox" index="0"]
-position = Vector2(0, -68)
+position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="HitFlashComponent" parent="." index="8"]
 target_path = NodePath("../Visuals/Sprite2D")
+
+[node name="BossHealthLayer" type="CanvasLayer" parent="." index="10" unique_id=1548498347]
+layer = 20
+
+[node name="BossHealthBar" parent="BossHealthLayer" index="0" unique_id=632084359 instance=ExtResource("10_boss_bar")]
