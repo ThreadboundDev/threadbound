@@ -272,7 +272,7 @@ They may:
 
 
 
-\- Weave Moments trigger painterly thread bursts  
+\- Weave Moments trigger clean graphic thread bursts  
 
 \- Boss health visually “frays” as damage accumulates  
 
@@ -311,4 +311,3 @@ They are about:
 > You do not break the boss.  
 
 > You out-weave it.
-
