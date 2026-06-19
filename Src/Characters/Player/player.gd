@@ -3,6 +3,8 @@ extends CharacterBody2D
 signal action_points_changed(current: int, maximum: int)
 signal momentum_changed(value: float)
 
+const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
+
 # ===============================
 # NODES
 # ===============================
@@ -259,7 +261,7 @@ func _physics_process(delta: float) -> void:
 # PROCESS
 # ===============================
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
 		get_tree().quit()
 
 	var menu = get_tree().get_first_node_in_group("radial_menu")
@@ -613,12 +615,24 @@ func _on_died(_damage: DamageData) -> void:
 	is_attacking = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
-	call_deferred("_reload_scene_after_death")
+	call_deferred("_show_game_over_after_death")
 
-func _reload_scene_after_death() -> void:
+func _show_game_over_after_death() -> void:
 	if death_reset_delay > 0.0:
 		await get_tree().create_timer(death_reset_delay, true, false, true).timeout
 
+	if not is_inside_tree():
+		return
+
+	var overlay := GAME_OVER_OVERLAY_SCENE.instantiate()
+	get_tree().root.add_child(overlay)
+
+	if overlay.has_signal("completed"):
+		await overlay.completed
+
+	_reload_scene_after_death()
+
+func _reload_scene_after_death() -> void:
 	if not is_inside_tree():
 		return
 

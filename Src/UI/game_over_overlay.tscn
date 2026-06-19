@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/game_over_overlay.gd" id="1_overlay"]
+
+[node name="GameOverOverlay" type="CanvasLayer"]
+layer = 120
+process_mode = 3
+script = ExtResource("1_overlay")
+
+[node name="BlurRect" type="ColorRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 1)
+
+[node name="VeilRect" type="ColorRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.015, 0.01, 0.018, 0.62)
+
+[node name="FrameRect" type="TextureRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+expand_mode = 1
+stretch_mode = 6

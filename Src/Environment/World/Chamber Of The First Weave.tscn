@@ -258,7 +258,7 @@ tile_set = ExtResource("13_541qs")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(-842, 4176)
+position = Vector2(9, 245)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -266,7 +266,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(-842, 4176)
+position = Vector2(9, 245)
 limit_left = -5700
 limit_top = -3480
 limit_right = 5580
