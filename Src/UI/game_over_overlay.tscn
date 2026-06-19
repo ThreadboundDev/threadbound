@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/game_over_overlay.gd" id="1_overlay"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_start_frame.png" id="2_start_frame"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_end_frame.png" id="3_end_frame"]
+
+[node name="GameOverOverlay" type="CanvasLayer"]
+layer = 120
+process_mode = 3
+script = ExtResource("1_overlay")
+
+[node name="BlurRect" type="ColorRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 1)
+
+[node name="StartFrameRect" type="TextureRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("2_start_frame")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+expand_mode = 1
+stretch_mode = 6
+
+[node name="EndFrameRect" type="TextureRect" parent="."]
+visible = false
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("3_end_frame")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VeilRect" type="ColorRect" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
