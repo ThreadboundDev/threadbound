@@ -36,6 +36,8 @@
 [ext_resource type="Texture2D" uid="uid://dhflxhl2x4hyi" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_02.png" id="96_attack_air_02"]
 [ext_resource type="Texture2D" uid="uid://bkoc2cvkd8oms" path="res://Assets/Threadborne/Player_Normalized_V1/Attack_Air_03.png" id="97_attack_air_03"]
 [ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="98_player_light"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Dash/dash_frame.png" id="99_dash"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/wall_cling_VFX.png" id="100_wall_cling_vfx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -175,6 +177,22 @@ region = Rect2(2048, 2560, 512, 512)
 atlas = ExtResource("2_jr15c")
 region = Rect2(2560, 2560, 512, 512)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_vfx_0"]
+atlas = ExtResource("100_wall_cling_vfx")
+region = Rect2(0, 0, 313.5, 1254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_vfx_1"]
+atlas = ExtResource("100_wall_cling_vfx")
+region = Rect2(313.5, 0, 313.5, 1254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_vfx_2"]
+atlas = ExtResource("100_wall_cling_vfx")
+region = Rect2(627, 0, 313.5, 1254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_vfx_3"]
+atlas = ExtResource("100_wall_cling_vfx")
+region = Rect2(940.5, 0, 313.5, 1254)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_wf5ty"]
 animations = [{
 "frames": [{
@@ -246,6 +264,14 @@ animations = [{
 "loop": false,
 "name": &"Attack_Up",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("99_dash")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -444,6 +470,26 @@ animations = [{
 "loop": true,
 "name": &"Wall_Cling",
 "speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wall_cling_vfx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_vfx_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_vfx_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_vfx_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_vfx_3")
+}],
+"loop": true,
+"name": &"cling",
+"speed": 12.0
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f1uaf"]
@@ -1028,6 +1074,14 @@ scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
 animation = &"Idle"
 frame_progress = 0.6664412
+
+[node name="WallClingVFX" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 4
+position = Vector2(-32, -54)
+scale = Vector2(0.16, 0.16)
+sprite_frames = SubResource("SpriteFrames_wall_cling_vfx")
+animation = &"cling"
 
 [node name="PlayerSoulLight" type="PointLight2D" parent="." unique_id=2075335125]
 position = Vector2(5, -38)
