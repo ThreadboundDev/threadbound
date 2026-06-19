@@ -448,9 +448,9 @@ animations = [{
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f1uaf"]
 shader = ExtResource("82_dj0x0")
-shader_parameter/glow_color = Color(1, 0.78, 0.34, 0.78)
-shader_parameter/glow_width = 2.6
-shader_parameter/glow_intensity = 0.72
+shader_parameter/glow_color = Color(1, 0.82, 0.42, 0.9)
+shader_parameter/glow_width = 3.4
+shader_parameter/glow_intensity = 1.05
 
 [sub_resource type="Animation" id="Animation_player_reset"]
 resource_name = "RESET"
@@ -1032,9 +1032,9 @@ frame_progress = 0.6664412
 [node name="PlayerSoulLight" type="PointLight2D" parent="." unique_id=2075335125]
 position = Vector2(5, -38)
 texture = ExtResource("98_player_light")
-texture_scale = 1.45
+texture_scale = 1.8
 color = Color(1, 0.78, 0.42, 1)
-energy = 0.42
+energy = 0.62
 range_z_min = -4096
 range_z_max = 4096
 
