@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/boss_health_bar.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dljou2hlqpqwo" path="res://Assets/Enemys/proto_weaver/boss_hp_bar.png" id="2_frame"]
+
+[node name="BossHealthBar" type="Control"]
+custom_minimum_size = Vector2(768, 190)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 206.0
+grow_horizontal = 2
+script = ExtResource("1_script")
+frame_texture = ExtResource("2_frame")

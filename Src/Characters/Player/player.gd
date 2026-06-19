@@ -27,6 +27,7 @@ signal momentum_changed(value: float)
 
 # Basic combat resource values for the HUD. Gameplay costs can build on these.
 @export_range(1, 20, 1) var max_health := 5
+@export_range(0.0, 5.0, 0.05) var death_reset_delay := 0.45
 
 @export_range(1, 6, 1) var max_action_points := 6:
 	set(value):
@@ -103,6 +104,7 @@ var current_attack_body_anim := "Attack"
 var is_attacking := false
 var is_hurt := false
 var is_dead := false
+var death_reset_started := false
 var attack_direction := Vector2.RIGHT
 var attack_timer := 0.0
 var attack_cooldown_timer := 0.0
@@ -603,10 +605,26 @@ func _on_damaged(damage: DamageData) -> void:
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
 func _on_died(_damage: DamageData) -> void:
+	if death_reset_started:
+		return
+
 	is_dead = true
+	death_reset_started = true
 	is_attacking = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
+	call_deferred("_reload_scene_after_death")
+
+func _reload_scene_after_death() -> void:
+	if death_reset_delay > 0.0:
+		await get_tree().create_timer(death_reset_delay, true, false, true).timeout
+
+	if not is_inside_tree():
+		return
+
+	var error := get_tree().reload_current_scene()
+	if error != OK:
+		push_warning("Player: Failed to reload current scene after death.")
 
 # ===============================
 # CHARGE / COOLDOWN HELPERS
