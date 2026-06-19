@@ -473,15 +473,12 @@ func _reset_weapon_visuals() -> void:
 	weapon_animation_player.seek(0.0, true)
 
 func _get_attack_input_direction() -> Vector2:
-	var direction := Vector2(
-		Input.get_axis("move_left", "move_right"),
-		Input.get_axis("move_up", "move_down")
+	var direction := AimHelper.get_aim_direction(
+		self,
+		global_position,
+		Vector2(float(last_direction), 0.0),
+		ATTACK_DIRECTION_DEADZONE
 	)
-
-	if direction.length() > ATTACK_DIRECTION_DEADZONE:
-		direction = direction.normalized()
-	else:
-		direction = Vector2(float(last_direction), 0.0)
 
 	if abs(direction.x) > ATTACK_DIRECTION_DEADZONE:
 		last_direction = int(sign(direction.x))
