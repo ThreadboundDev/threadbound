@@ -1,6 +1,8 @@
 class_name BaseGloves
 extends Node2D
 
+const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
+
 var player: CharacterBody2D = null
 
 # ===============================
@@ -328,11 +330,11 @@ func _start_grapple_fire() -> void:
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 
-	var aim_target := get_global_mouse_position()
-	grapple_direction = (aim_target - grapple_start_position).normalized()
-
-	if grapple_direction == Vector2.ZERO:
-		grapple_direction = Vector2.RIGHT
+	grapple_direction = AimHelperScript.get_aim_direction(
+		self,
+		grapple_start_position,
+		grapple_direction
+	)
 
 	grapple_tip_velocity = grapple_direction * grapple_speed
 	_reset_active_rope_physics()

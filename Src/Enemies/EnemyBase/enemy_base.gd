@@ -21,6 +21,7 @@ const WHITE_KEY_VFX_SHADER := preload("res://Src/VFX/white_key_vfx.gdshader")
 @onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_area: Area2D = $AttackArea
+@onready var contact_hitbox: Area2D = $ContactHitbox
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
 @onready var state_machine: EnemyStateMachine = $StateMachine as EnemyStateMachine
 
@@ -30,6 +31,7 @@ var is_dead := false
 var home_position := Vector2.ZERO
 var _target_speed := 0.0
 var _attack_cooldown_timer := 0.0
+var _contact_damage_cooldown_timer := 0.0
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -55,6 +57,7 @@ func _ready() -> void:
 	detection_area.body_exited.connect(_on_detection_body_exited)
 	attack_area.body_entered.connect(_on_attack_body_entered)
 	attack_area.body_exited.connect(_on_attack_body_exited)
+	contact_hitbox.area_entered.connect(_on_contact_area_entered)
 
 	update_facing(facing)
 	state_machine.initialize(self)
@@ -62,6 +65,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if _attack_cooldown_timer > 0.0:
 		_attack_cooldown_timer -= delta
+	if _contact_damage_cooldown_timer > 0.0:
+		_contact_damage_cooldown_timer -= delta
 
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
@@ -71,6 +76,7 @@ func apply_gravity(delta: float) -> void:
 func move_enemy(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
 	move_and_slide()
+	_process_contact_overlaps()
 
 func update_attack_motion(delta: float) -> void:
 	apply_gravity(delta)
@@ -146,6 +152,7 @@ func die() -> void:
 	hurtbox.set_deferred("monitorable", false)
 	detection_area.set_deferred("monitoring", false)
 	attack_area.set_deferred("monitoring", false)
+	contact_hitbox.set_deferred("monitoring", false)
 	velocity = Vector2.ZERO
 	_play_death_collapse()
 	await get_tree().create_timer(stats.death_cleanup_delay).timeout
@@ -185,6 +192,69 @@ func _on_attack_body_entered(_body: Node2D) -> void:
 
 func _on_attack_body_exited(_body: Node2D) -> void:
 	pass
+
+func _on_contact_area_entered(area: Area2D) -> void:
+	_try_contact_hurtbox(area)
+
+func _process_contact_overlaps() -> void:
+	if is_dead:
+		return
+
+	for area in contact_hitbox.get_overlapping_areas():
+		if _try_contact_hurtbox(area):
+			return
+
+func _try_contact_hurtbox(area: Area2D) -> bool:
+	if is_dead:
+		return false
+
+	var target_hurtbox := area as HurtboxComponent
+	if not target_hurtbox or not target_hurtbox.hurtbox_owner or not target_hurtbox.hurtbox_owner.is_in_group("player"):
+		return false
+
+	var away_from_enemy := _get_contact_away_direction(target_hurtbox)
+	_separate_from_contact(away_from_enemy)
+
+	if _contact_damage_cooldown_timer > 0.0:
+		return true
+
+	var damage := DamageData.new()
+	damage.amount = stats.contact_damage
+	damage.source = self
+	damage.hit_position = global_position
+	damage.knockback = Vector2(
+		sign(away_from_enemy.x) * stats.contact_knockback_strength,
+		-90.0
+	)
+	damage.hitstun = stats.hurt_time
+	damage.hit_pause = stats.hit_pause
+
+	if target_hurtbox.receive_hit(damage):
+		_contact_damage_cooldown_timer = stats.contact_damage_cooldown
+		return true
+
+	return false
+
+func _get_contact_away_direction(target_hurtbox: HurtboxComponent) -> Vector2:
+	var away_from_enemy := Vector2(float(facing), 0.0)
+	if target_hurtbox.hurtbox_owner is Node2D:
+		var target_node := target_hurtbox.hurtbox_owner as Node2D
+		away_from_enemy = target_node.global_position - global_position
+	if away_from_enemy.length() <= 0.01 or abs(away_from_enemy.x) <= 0.01:
+		away_from_enemy = Vector2(float(facing), 0.0)
+	return away_from_enemy.normalized()
+
+func _separate_from_contact(away_from_enemy: Vector2) -> void:
+	var direction: int = int(sign(away_from_enemy.x))
+	if direction == 0:
+		direction = facing
+
+	global_position.x -= float(direction) * 3.0
+	velocity.x = -float(direction) * stats.contact_knockback_strength * 0.35
+	if direction > 0:
+		_target_speed = min(_target_speed, 0.0)
+	else:
+		_target_speed = max(_target_speed, 0.0)
 
 func _on_hurtbox_hit_received(_damage: DamageData) -> void:
 	pass

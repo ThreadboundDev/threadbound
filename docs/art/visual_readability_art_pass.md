@@ -2,9 +2,9 @@
 
 ## Core Philosophy
 
-Threadbound uses graphic silhouettes with painterly rendering.
+Threadbound uses graphic silhouettes with clean illustrated rendering.
 
-Readability is the highest priority. If painterly detail conflicts with gameplay readability, choose readability.
+Readability is the highest priority. If rendering detail conflicts with gameplay readability, choose readability.
 
 Threadbound should feel elegant, ancient, woven, and above all readable.
 
@@ -14,14 +14,14 @@ Threadbound should feel elegant, ancient, woven, and above all readable.
 - Every asset should be immediately readable from gameplay distance before internal details are visible.
 - Use minimal visual noise and sharper silhouettes.
 - Large forms should remain visible even when zoomed out.
-- Painterly detail should support broad form, material, and age. It should not define the object.
+- Shading and texture detail should support broad form, material, and age. They should not define the object.
 
-## Painterly Rendering Rules
+## Rendering Rules
 
-- Rendering should feel painted.
+- Rendering should feel hand-drawn and shape-based.
 - Rendering should never destroy readability.
 - Avoid excessive texture noise, photorealistic stone surfaces, and busy surface detail.
-- Use broad value shapes, controlled highlights, subtle color variation, and painterly wear/aging.
+- Use broad value shapes, controlled highlights, subtle color variation, and restrained wear/aging.
 
 ## Platform Rules
 
@@ -147,7 +147,7 @@ Files:
 
 Current issue:
 
-The normalized jump/grapple frames are more consistent than the originals, but internal clothing folds and painterly leg/boot details are close to overpowering the gameplay silhouette. The weapon is readable but should stay small and simple.
+The normalized jump/grapple frames are more consistent than the originals, but internal clothing folds and leg/boot rendering details are close to overpowering the gameplay silhouette. The weapon is readable but should stay small and simple.
 
 Pass direction:
 
