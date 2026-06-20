@@ -5,18 +5,14 @@ signal completed
 
 const BLUR_SHADER := preload("res://Src/Environment/World/menu_blur.gdshader")
 
-@export_file("*.mp4", "*.ogv", "*.webm") var video_path := "res://Assets/UI/Game Over Screen/game_over_video.mp4"
 @export var world_fade_duration := 1.15
-@export var video_fade_duration := 0.35
 @export var final_hold_duration := 2.25
-@export var fallback_video_duration := 2.0
 @export var blur_alpha := 1.0
 @export var veil_alpha := 1.0
 
 @onready var blur_rect: ColorRect = $BlurRect as ColorRect
 @onready var start_frame_rect: TextureRect = $StartFrameRect as TextureRect
-@onready var video_player: VideoStreamPlayer = $VideoPlayer as VideoStreamPlayer
-@onready var end_frame_rect: TextureRect = $EndFrameRect as TextureRect
+@onready var sprite_sheet_player: Control = $SpriteSheetPlayer as Control
 @onready var veil_rect: ColorRect = $VeilRect as ColorRect
 
 var _finished := false
@@ -28,7 +24,7 @@ func _ready() -> void:
 	_configure_blur()
 	_prepare_visuals()
 	_start_world_fade()
-	_play_video()
+	_play_sprite_sheet()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _finished:
@@ -56,9 +52,8 @@ func _prepare_visuals() -> void:
 	blur_rect.modulate.a = 0.0
 	veil_rect.modulate.a = 0.0
 	start_frame_rect.modulate.a = 1.0
-	video_player.modulate.a = 0.0
-	end_frame_rect.modulate.a = 0.0
-	end_frame_rect.visible = false
+	sprite_sheet_player.modulate.a = 0.0
+	sprite_sheet_player.visible = false
 
 func _start_world_fade() -> void:
 	var tween := create_tween()
@@ -67,40 +62,32 @@ func _start_world_fade() -> void:
 	tween.tween_property(blur_rect, "modulate:a", blur_alpha, world_fade_duration)
 	tween.tween_property(veil_rect, "modulate:a", veil_alpha, world_fade_duration)
 
-func _play_video() -> void:
-	var stream := load(video_path) as VideoStream
-	if not stream:
-		push_warning("GameOverOverlay: Could not load video stream: %s. Showing final frame fallback." % video_path)
-		_show_final_frame_after_delay(fallback_video_duration)
+func _play_sprite_sheet() -> void:
+	if not sprite_sheet_player:
+		_finish()
 		return
 
-	video_player.stream = stream
-	if not video_player.finished.is_connected(_on_video_finished):
-		video_player.finished.connect(_on_video_finished)
+	var finished_callable := Callable(self, "_on_sprite_sheet_finished")
+	if sprite_sheet_player.has_signal("animation_finished") and not sprite_sheet_player.is_connected("animation_finished", finished_callable):
+		sprite_sheet_player.connect("animation_finished", finished_callable)
 
-	video_player.play()
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.set_parallel(true)
-	tween.tween_property(video_player, "modulate:a", 1.0, video_fade_duration)
-	tween.tween_property(start_frame_rect, "modulate:a", 0.0, video_fade_duration)
+	tween.tween_property(start_frame_rect, "modulate:a", 0.0, world_fade_duration * 0.35)
+	sprite_sheet_player.call("play")
 
-func _on_video_finished() -> void:
-	_show_final_frame_after_delay(0.0)
+func _on_sprite_sheet_finished() -> void:
+	_hold_final_frame()
 
-func _show_final_frame_after_delay(delay: float) -> void:
+func _hold_final_frame() -> void:
 	if _hold_started:
 		return
 
 	_hold_started = true
-	if delay > 0.0:
-		await get_tree().create_timer(delay, true, false, true).timeout
 	if _finished:
 		return
 
-	end_frame_rect.visible = true
-	end_frame_rect.modulate.a = 1.0
-	video_player.visible = false
+	sprite_sheet_player.call("skip_to_last_frame")
 	start_frame_rect.visible = false
 
 	await get_tree().create_timer(final_hold_duration, true, false, true).timeout
@@ -114,8 +101,8 @@ func _finish() -> void:
 		return
 
 	_finished = true
-	if video_player:
-		video_player.stop()
+	if sprite_sheet_player:
+		sprite_sheet_player.call("skip_to_last_frame")
 	get_tree().paused = false
 	completed.emit()
 	queue_free()

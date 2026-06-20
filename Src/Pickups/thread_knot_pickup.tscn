@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Src/Pickups/thread_knot_pickup.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/thread_knots.png" id="2_texture"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thread_knot"]
+atlas = ExtResource("2_texture")
+region = Rect2(680, 270, 220, 230)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 26.0
+
+[node name="ThreadKnotPickup" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_thread_knot")
+scale = Vector2(0.34, 0.34)
+z_index = 65
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pickup")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
