@@ -122,13 +122,18 @@ func chase_target(_delta: float) -> void:
 func can_attack() -> bool:
 	return _attack_cooldown_timer <= 0.0 and not is_dead
 
+func start_attack_cooldown(multiplier: float = 1.0) -> void:
+	if not stats:
+		return
+
+	_attack_cooldown_timer = maxf(_attack_cooldown_timer, stats.attack_cooldown * maxf(0.0, multiplier))
+
 func is_player_in_attack_range() -> bool:
 	return target != null and attack_area.get_overlapping_bodies().has(target)
 
 func begin_attack() -> void:
 	attack_started.emit()
 	set_horizontal_target_speed(0.0)
-	_attack_cooldown_timer = stats.attack_cooldown
 
 func activate_attack_hitbox() -> void:
 	attack_hitbox.damage = _build_attack_damage()
@@ -275,6 +280,7 @@ func _on_damaged(damage: DamageData) -> void:
 		knockback = Vector2(sign(global_position.x - source_node.global_position.x) * stats.knockback_strength, -70.0)
 
 	velocity = knockback
+	start_attack_cooldown(0.45)
 
 	if state_machine.current_state_name != &"Dead":
 		state_machine.transition_to(&"Hurt")

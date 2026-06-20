@@ -5,6 +5,7 @@ extends Resource
 @export var knockback: Vector2 = Vector2.ZERO
 @export var hitstun: float = 0.12
 @export var hit_pause: float = 0.04
+@export var allow_friendly_fire := false
 
 var source: Node = null
 var hit_position: Vector2 = Vector2.ZERO

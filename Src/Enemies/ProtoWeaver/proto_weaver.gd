@@ -51,7 +51,9 @@ enum AttackMode {
 @export var armor_link_pulse_warning_time := 3.0
 @export var hang_rise_offset := Vector2(0.0, -360.0)
 @export var hang_ceiling_offset := Vector2(0.0, -620.0)
-@export var hang_thread_cast_distance := 900.0
+@export var hang_thread_body_offset := Vector2(0.0, -185.0)
+@export var hang_thread_cast_distance := 1800.0
+@export var hang_thread_anchor_search_width := 220.0
 @export var hang_thread_grow_time := 0.24
 @export_flags_2d_physics var hang_thread_collision_mask := 1
 @export var hang_arena_half_width := 390.0
@@ -408,10 +410,10 @@ func _start_hanging_laser_sequence() -> void:
 	_hanging_laser_landing = false
 	_laser_firing = false
 	_laser_hit_this_shot = false
-	_hang_origin = _get_hang_home_position() if hang_return_to_home else global_position
+	_hang_origin = global_position
 	_hang_position = _clamp_to_hang_arena(_hang_origin + hang_rise_offset)
 	_hang_anchor = _find_hang_anchor(_hang_position)
-	_hang_thread_attach = _hang_position + Vector2(0.0, -250.0)
+	_hang_thread_attach = _hang_position + hang_thread_body_offset
 	_hang_thread_draw_ratio = 0.0
 	_hang_sway_timer = 0.0
 	deactivate_attack_hitbox()
@@ -585,7 +587,10 @@ func _update_hanging_thread_line() -> void:
 	if not hanging_thread_line:
 		return
 
-	var body_attach := global_position + Vector2(0.0, -250.0)
+	var visual_offset := Vector2.ZERO
+	if visuals:
+		visual_offset.x = visuals.position.x
+	var body_attach := global_position + visual_offset + hang_thread_body_offset
 	_hang_thread_attach = body_attach
 	var end := body_attach.lerp(_hang_anchor, _hang_thread_draw_ratio)
 	hanging_thread_line.global_position = Vector2.ZERO
@@ -616,16 +621,39 @@ func _grow_hanging_thread() -> void:
 	_update_hanging_thread_line()
 
 func _find_hang_anchor(body_position: Vector2) -> Vector2:
-	var from := body_position + Vector2(0.0, -250.0)
-	var to := from + Vector2.UP * hang_thread_cast_distance
+	var from := body_position + hang_thread_body_offset
+	var best_anchor := Vector2.ZERO
+	var best_distance := INF
+	var search_offsets: Array[float] = [0.0]
+	if hang_thread_anchor_search_width > 0.0:
+		search_offsets.append(-hang_thread_anchor_search_width * 0.5)
+		search_offsets.append(hang_thread_anchor_search_width * 0.5)
+		search_offsets.append(-hang_thread_anchor_search_width)
+		search_offsets.append(hang_thread_anchor_search_width)
+
+	for x_offset in search_offsets:
+		var ray_from := from + Vector2(x_offset, 0.0)
+		var ray_to := ray_from + Vector2.UP * hang_thread_cast_distance
+		var result := _cast_hang_anchor_ray(ray_from, ray_to)
+		if not result.has("position"):
+			continue
+
+		var anchor := result["position"] as Vector2
+		var distance := ray_from.distance_to(anchor)
+		if distance < best_distance:
+			best_distance = distance
+			best_anchor = anchor
+
+	if best_anchor != Vector2.ZERO:
+		return best_anchor
+
+	return from + Vector2.UP * hang_thread_cast_distance
+
+func _cast_hang_anchor_ray(from: Vector2, to: Vector2) -> Dictionary:
 	var query := PhysicsRayQueryParameters2D.create(from, to)
 	query.collision_mask = hang_thread_collision_mask
 	query.exclude = [get_rid()]
-	var result := get_world_2d().direct_space_state.intersect_ray(query)
-	if result.has("position"):
-		return result["position"]
-
-	return _get_hang_home_position() + hang_ceiling_offset
+	return get_world_2d().direct_space_state.intersect_ray(query)
 
 func _update_laser_target_from_player() -> void:
 	var player_node := get_tree().get_first_node_in_group("player") as Node2D
@@ -731,7 +759,11 @@ func _spawn_armor_link(index: int) -> void:
 		parent = self
 
 	parent.add_child(link)
-	link.global_position = global_position + _get_armor_link_offset(index)
+	var link_offset := _get_armor_link_offset(index)
+	link.global_position = global_position + link_offset
+	link.home_position = link.global_position
+	if link.has_method("configure_boss_tether"):
+		link.configure_boss_tether(self, link_offset, index)
 	link.health_component.died.connect(_on_armor_link_died.bind(index))
 	_armor_links[index] = link
 	_armor_link_respawn_timers[index] = 0.0

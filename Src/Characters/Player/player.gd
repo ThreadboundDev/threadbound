@@ -77,6 +77,10 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 @export var wall_cling_stall_time: float = 0.32
 @export var wall_slide_max_speed: float = 620.0
 
+# Debug testing helpers
+@export var god_mode_fly_speed: float = 620.0
+@export var god_mode_fly_acceleration: float = 2600.0
+
 # Glow configuration
 @export var idle_glow_width: float = 1.2
 @export var idle_glow_intensity: float = 0.35
@@ -109,6 +113,7 @@ var current_attack_body_anim := "Attack"
 var is_attacking := false
 var is_hurt := false
 var is_dead := false
+var god_mode_enabled := false
 var death_reset_started := false
 var attack_direction := Vector2.RIGHT
 var attack_timer := 0.0
@@ -189,6 +194,8 @@ func unequip_gloves() -> void:
 # PHYSICS PROCESS
 # ===============================
 func _physics_process(delta: float) -> void:
+	_update_god_mode_toggle()
+
 	if is_dead:
 		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
 		velocity.y += _get_current_gravity() * delta
@@ -199,7 +206,11 @@ func _physics_process(delta: float) -> void:
 	update_combat_timers(delta)
 
 	# Gravity + coyote time
-	if not is_on_floor():
+	if god_mode_enabled:
+		coyote_timer = coyote_time
+		has_wall_jumped = false
+		air_jump_available = true
+	elif not is_on_floor():
 		velocity.y += _get_current_gravity() * delta
 		velocity.y = min(velocity.y, max_fall_speed)
 		coyote_timer -= delta
@@ -222,6 +233,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = speed * horizontal_input * control
 	elif is_hurt:
 		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
+
+	if god_mode_enabled:
+		_apply_god_mode_flight(delta)
 
 	# Jump
 	if Input.is_action_just_pressed("Jump"):
@@ -254,7 +268,7 @@ func _physics_process(delta: float) -> void:
 		current_chest.process_passive(delta)
 
 	# Apply base grapple rope limit before movement.
-	if current_gloves and current_gloves.has_method("apply_grapple_velocity"):
+	if current_gloves and current_gloves.has_method("apply_grapple_velocity") and not god_mode_enabled:
 		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
@@ -275,6 +289,24 @@ func _process(_delta: float) -> void:
 
 	if is_near_interactable and current_selector and Input.is_action_just_pressed("move_up"):
 		print("Interacting with: ", current_selector.name)
+
+func _update_god_mode_toggle() -> void:
+	if Input.is_action_just_pressed("debug_god_mode"):
+		god_mode_enabled = not god_mode_enabled
+		if god_mode_enabled and health_component:
+			health_component.heal(health_component.max_health)
+		_sync_hud()
+		print("God mode: ", "ON" if god_mode_enabled else "OFF")
+
+func _apply_god_mode_flight(delta: float) -> void:
+	var vertical_input := 0.0
+	if Input.is_action_pressed("Jump") or Input.is_action_pressed("move_up"):
+		vertical_input -= 1.0
+	if Input.is_action_pressed("move_down"):
+		vertical_input += 1.0
+
+	var target_y := vertical_input * god_mode_fly_speed
+	velocity.y = move_toward(velocity.y, target_y, god_mode_fly_acceleration * delta)
 
 # ===============================
 # WALL CLING
@@ -611,6 +643,13 @@ func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> vo
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
 func _on_health_changed(_current: int, _maximum: int) -> void:
+	_sync_hud()
+
+func should_ignore_health_damage(_damage: DamageData) -> bool:
+	return god_mode_enabled
+
+func receive_ignored_health_hit(damage: DamageData) -> void:
+	_on_damaged(damage)
 	_sync_hud()
 
 func _on_damaged(damage: DamageData) -> void:

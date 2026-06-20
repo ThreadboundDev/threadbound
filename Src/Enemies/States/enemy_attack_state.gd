@@ -39,9 +39,8 @@ func physics_update(delta: float) -> void:
 		if enemy.has_method("is_attack_sequence_busy") and enemy.is_attack_sequence_busy():
 			return
 
-		if enemy.target and enemy.is_player_in_attack_range() and enemy.can_attack():
-			state_machine.transition_to(&"Attack")
-		elif enemy.target:
+		enemy.start_attack_cooldown()
+		if enemy.target:
 			state_machine.transition_to(&"Chase")
 		else:
 			state_machine.transition_to(&"Idle")

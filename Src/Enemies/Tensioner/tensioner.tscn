@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://chjbc1kgc3esj"]
+[gd_scene load_steps=9 format=3 uid="uid://chjbc1kgc3esj"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_eeuym"]
 [ext_resource type="Script" path="res://Src/Enemies/Tensioner/tensioner.gd" id="2_tensioner"]
 [ext_resource type="Texture2D" uid="uid://ce36bdjt1wvpv" path="res://Assets/Enemys/Tensioner/Tensioner_Walk.png" id="3_walk"]
 [ext_resource type="Resource" path="res://Src/Enemies/Tensioner/tensioner_stats.tres" id="4_stats"]
 [ext_resource type="Texture2D" uid="uid://d2qgkudiixg2l" path="res://Assets/Enemys/Tensioner/Tensioner_Attack.png" id="5_attack"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="6_missile"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(193.005, 149.795)
@@ -13,7 +14,7 @@ size = Vector2(193.005, 149.795)
 radius = 380.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(193.005, 149.795)
+size = Vector2(310, 176)
 
 [node name="Tensioner" unique_id=1012165391 instance=ExtResource("1_eeuym")]
 script = ExtResource("2_tensioner")
@@ -28,7 +29,12 @@ walk_fps = 8.0
 chase_fps_multiplier = 1.35
 attack_columns = 5
 attack_rows = 8
-attack_frame_count = 40
+attack_frame_count = 36
+attack_visual_offset = Vector2(5, 0)
+thread_missile_scene = ExtResource("6_missile")
+thread_smash_min_missile_count = 2
+thread_smash_max_missile_count = 4
+thread_smash_horizontal_spread = 380.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(-4.23, -73.995)
@@ -52,13 +58,13 @@ shape = SubResource("RectangleShape2D_body")
 shape = SubResource("CircleShape2D_detection")
 
 [node name="AttackArea" parent="." index="5"]
-position = Vector2(-4.23, -73.995)
+position = Vector2(-4.23, -86)
 
 [node name="CollisionShape2D" parent="AttackArea" index="0"]
 shape = SubResource("RectangleShape2D_attack")
 
 [node name="AttackHitbox" parent="." index="6"]
-position = Vector2(-4.23, -73.995)
+position = Vector2(-4.23, -86)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("RectangleShape2D_attack")
