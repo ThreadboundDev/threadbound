@@ -28,4 +28,14 @@ static func get_right_stick_direction(deadzone: float = DEFAULT_AIM_DEADZONE) ->
 		if direction.length() > deadzone:
 			return direction.normalized()
 
+	if (
+		InputMap.has_action("aim_left")
+		and InputMap.has_action("aim_right")
+		and InputMap.has_action("aim_up")
+		and InputMap.has_action("aim_down")
+	):
+		var action_direction := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down", deadzone)
+		if action_direction.length() > 0.0:
+			return action_direction.normalized()
+
 	return Vector2.ZERO
