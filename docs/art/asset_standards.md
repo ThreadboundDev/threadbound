@@ -47,7 +47,7 @@ The silhouette should communicate the object before any internal detail is visib
 
 Threadbound uses a graphic illustration style.
 
-The game does not use painterly rendering.
+Threadbound is not a painterly game. It uses clean, graphic shapes first, with controlled shading and lighting accents where they support form, material, mood, and readability.
 
 Avoid:
 
@@ -63,6 +63,7 @@ Prefer:
 * clean linework
 * hard-edged forms
 * controlled shadow shapes
+* restrained lighting accents
 * flat color masses
 * strong silhouette definition
 

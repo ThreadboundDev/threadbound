@@ -3,6 +3,9 @@ extends CharacterBody2D
 signal action_points_changed(current: int, maximum: int)
 signal momentum_changed(value: float)
 
+const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
+const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
+
 # ===============================
 # NODES
 # ===============================
@@ -18,6 +21,7 @@ signal momentum_changed(value: float)
 @onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
 @onready var attack_slash_sprite: Sprite2D = $EquipmentMount/AttackSwingRoot/AttackSlashVFX/SlashSprite
+@onready var wall_cling_vfx: AnimatedSprite2D = $WallClingVFX as AnimatedSprite2D
 
 # ===============================
 # EQUIPMENT SCENES
@@ -27,6 +31,7 @@ signal momentum_changed(value: float)
 
 # Basic combat resource values for the HUD. Gameplay costs can build on these.
 @export_range(1, 20, 1) var max_health := 5
+@export_range(0.0, 5.0, 0.05) var death_reset_delay := 0.45
 
 @export_range(1, 6, 1) var max_action_points := 6:
 	set(value):
@@ -103,6 +108,7 @@ var current_attack_body_anim := "Attack"
 var is_attacking := false
 var is_hurt := false
 var is_dead := false
+var death_reset_started := false
 var attack_direction := Vector2.RIGHT
 var attack_timer := 0.0
 var attack_cooldown_timer := 0.0
@@ -150,6 +156,7 @@ func _ready() -> void:
 		equip_gloves(base_gloves_scene)
 
 	update_equipment_facing()
+	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
 
 # ===============================
@@ -208,9 +215,11 @@ func _physics_process(delta: float) -> void:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
-	if not grapple_restricting:
+	if not grapple_restricting and not is_hurt:
 		var control = 1.0 if is_on_floor() else air_control_mult
 		velocity.x = speed * horizontal_input * control
+	elif is_hurt:
+		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
 
 	# Jump
 	if Input.is_action_just_pressed("Jump"):
@@ -255,7 +264,7 @@ func _physics_process(delta: float) -> void:
 # PROCESS
 # ===============================
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
 		get_tree().quit()
 
 	var menu = get_tree().get_first_node_in_group("radial_menu")
@@ -358,6 +367,8 @@ func update_animations(dir: float) -> void:
 		player_animation.flip_h = velocity.x < 0
 		update_equipment_facing()
 
+	_update_wall_cling_vfx()
+
 func update_equipment_facing() -> void:
 	if not equipment_mount:
 		return
@@ -370,6 +381,25 @@ func update_equipment_facing() -> void:
 		equipment_mount.position = equipment_right_offset
 
 	_apply_attack_direction()
+
+func _update_wall_cling_vfx() -> void:
+	if not wall_cling_vfx:
+		return
+
+	var should_show := is_wall_clinging and not is_on_floor()
+	wall_cling_vfx.visible = should_show
+	if not should_show:
+		wall_cling_vfx.stop()
+		return
+
+	var wall_direction: float = -signf(get_wall_normal().x)
+	if wall_direction == 0.0:
+		wall_direction = -1 if player_animation.flip_h else 1
+
+	wall_cling_vfx.position = Vector2(32.0 * wall_direction, -54.0)
+	wall_cling_vfx.flip_h = wall_direction > 0
+	if not wall_cling_vfx.is_playing():
+		wall_cling_vfx.play("cling")
 
 # ===============================
 # COMBAT
@@ -471,15 +501,12 @@ func _reset_weapon_visuals() -> void:
 	weapon_animation_player.seek(0.0, true)
 
 func _get_attack_input_direction() -> Vector2:
-	var direction := Vector2(
-		Input.get_axis("move_left", "move_right"),
-		Input.get_axis("move_up", "move_down")
+	var direction := AimHelperScript.get_aim_direction(
+		self,
+		global_position,
+		Vector2(float(last_direction), 0.0),
+		ATTACK_DIRECTION_DEADZONE
 	)
-
-	if direction.length() > ATTACK_DIRECTION_DEADZONE:
-		direction = direction.normalized()
-	else:
-		direction = Vector2(float(last_direction), 0.0)
 
 	if abs(direction.x) > ATTACK_DIRECTION_DEADZONE:
 		last_direction = int(sign(direction.x))
@@ -604,10 +631,38 @@ func _on_damaged(damage: DamageData) -> void:
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
 func _on_died(_damage: DamageData) -> void:
+	if death_reset_started:
+		return
+
 	is_dead = true
+	death_reset_started = true
 	is_attacking = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
+	call_deferred("_show_game_over_after_death")
+
+func _show_game_over_after_death() -> void:
+	if death_reset_delay > 0.0:
+		await get_tree().create_timer(death_reset_delay, true, false, true).timeout
+
+	if not is_inside_tree():
+		return
+
+	var overlay := GAME_OVER_OVERLAY_SCENE.instantiate()
+	get_tree().root.add_child(overlay)
+
+	if overlay.has_signal("completed"):
+		await overlay.completed
+
+	_reload_scene_after_death()
+
+func _reload_scene_after_death() -> void:
+	if not is_inside_tree():
+		return
+
+	var error := get_tree().reload_current_scene()
+	if error != OK:
+		push_warning("Player: Failed to reload current scene after death.")
 
 # ===============================
 # CHARGE / COOLDOWN HELPERS
