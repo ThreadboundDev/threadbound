@@ -96,6 +96,7 @@ var current_selector = null
 var is_wall_clinging: bool = false
 var wall_cling_timer: float = 0.0
 var has_wall_jumped: bool = false
+var air_jump_available: bool = true
 
 var jump_charge_ratio: float = 0.0
 var dash_charge_ratio: float = 0.0
@@ -205,6 +206,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		coyote_timer = coyote_time
 		has_wall_jumped = false
+		air_jump_available = true
 
 	# Horizontal movement
 	var horizontal_input := Input.get_axis("move_left", "move_right")
