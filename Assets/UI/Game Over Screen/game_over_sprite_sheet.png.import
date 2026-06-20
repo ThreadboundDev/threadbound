@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0lmdl07484rr"
-path="res://.godot/imported/game_over_gif.png-60030a992921c6129f5b5b0f5d73982f.ctex"
+uid="uid://3hqic1g5sv5i"
+path="res://.godot/imported/game_over_sprite_sheet.png-123aea9784893f5a49c5ac1571a3462c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Game Over Gif/game_over_gif.png"
-dest_files=["res://.godot/imported/game_over_gif.png-60030a992921c6129f5b5b0f5d73982f.ctex"]
+source_file="res://Assets/UI/Game Over Screen/game_over_sprite_sheet.png"
+dest_files=["res://.godot/imported/game_over_sprite_sheet.png-123aea9784893f5a49c5ac1571a3462c.ctex"]
 
 [params]
 

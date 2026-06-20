@@ -8,6 +8,7 @@ signal attack_finished()
 
 const ENEMY_DAMAGE_FRAY_TEXTURE := preload("res://Assets/VFX/enemy_damage_fray_VFX.png")
 const ENEMY_DEATH_UNRAVEL_TEXTURE := preload("res://Assets/VFX/enemy_death_unravel_VFX.png")
+const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.tscn")
 const WHITE_KEY_VFX_SHADER := preload("res://Src/VFX/white_key_vfx.gdshader")
 
 @export var stats: EnemyStats
@@ -287,6 +288,7 @@ func _on_damaged(damage: DamageData) -> void:
 
 func _on_died(_damage: DamageData) -> void:
 	_spawn_enemy_death_vfx(_damage)
+	_drop_thread_knots()
 	if state_machine.current_state_name != &"Dead":
 		state_machine.transition_to(&"Dead")
 
@@ -324,6 +326,27 @@ func _spawn_enemy_death_vfx(damage: DamageData) -> void:
 	tween.set_parallel(false)
 	tween.tween_property(sprite, "modulate:a", 0.0, 0.26)
 	tween.tween_callback(sprite.queue_free)
+
+func _drop_thread_knots() -> void:
+	if not stats or stats.thread_knot_drop_count <= 0:
+		return
+
+	var parent := get_parent()
+	if not parent:
+		return
+
+	var spread_step := TAU / float(maxi(stats.thread_knot_drop_count, 1))
+	for i in stats.thread_knot_drop_count:
+		var pickup := THREAD_KNOT_PICKUP_SCENE.instantiate() as Node2D
+		if not pickup:
+			continue
+
+		parent.add_child(pickup)
+		pickup.global_position = global_position + Vector2(0.0, -24.0)
+		var angle := -PI * 0.74 + spread_step * float(i)
+		var launch_speed := 125.0 + float(i % 3) * 24.0
+		if pickup.has_method("launch"):
+			pickup.call("launch", Vector2(cos(angle) * launch_speed, sin(angle) * launch_speed - 120.0))
 
 func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite2D:
 	var sprite := Sprite2D.new()
