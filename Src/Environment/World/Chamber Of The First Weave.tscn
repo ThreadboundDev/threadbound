@@ -288,13 +288,19 @@ tile_map_data = PackedByteArray("AAD+/+7/AAACAAIAAAD+/+3/AAACAAAAAAD9/+7/AAABAAI
 tile_set = ExtResource("9_n6a6r")
 
 [node name="Loomkin" parent="WorldArt" unique_id=2139353811 instance=ExtResource("10_4fmyt")]
-position = Vector2(-1159, -1813)
+position = Vector2(-1029, -30)
 
 [node name="Threadling" parent="WorldArt" unique_id=1215671625 instance=ExtResource("11_be3p8")]
-position = Vector2(383, -2375)
+position = Vector2(1254, -1854)
+
+[node name="Threadling2" parent="WorldArt" unique_id=1838824112 instance=ExtResource("11_be3p8")]
+position = Vector2(277, -1431)
+
+[node name="Threadling3" parent="WorldArt" unique_id=17572351 instance=ExtResource("11_be3p8")]
+position = Vector2(-1148, -1854)
 
 [node name="Tensioner" parent="WorldArt" unique_id=1012165391 instance=ExtResource("12_un15s")]
-position = Vector2(-14, -1264)
+position = Vector2(-950, 4361)
 
 [node name="ProtoWeaver" parent="WorldArt" unique_id=337995925 instance=ExtResource("17_f4x7l")]
 position = Vector2(6559, 4361)
@@ -314,7 +320,7 @@ tile_set = ExtResource("13_541qs")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(2466, 2740)
+position = Vector2(73, -2747)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -322,7 +328,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(2466, 2740)
+position = Vector2(73, -2747)
 limit_left = -5700
 limit_top = -3480
 limit_right = 8200
