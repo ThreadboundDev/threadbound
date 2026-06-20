@@ -76,8 +76,8 @@ func _on_area_entered(area: Area2D) -> void:
 		knockback_direction = Vector2.RIGHT
 	damage.knockback = knockback_direction * knockback_strength
 
-	hurtbox.receive_hit(damage)
-	_start_impact()
+	if hurtbox.receive_hit(damage):
+		_start_impact()
 
 func _on_body_entered(body: Node2D) -> void:
 	if _is_impacting or not monitoring or body.is_in_group("player"):
