@@ -7,16 +7,17 @@ signal momentum_changed(value: float)
 signal momentum_stage_changed(stage: int)
 signal rune_changed(index: int, color: Color, available: bool)
 
-@onready var gauge_overlay: CombatHUDOverlay = $ActionPointPanel/GaugeOverlay as CombatHUDOverlay
-@onready var health_bar: CombatHealthBar = $HealthBar as CombatHealthBar
+@onready var health_bar: CombatHealthBar = $HUDRoot/HealthBar as CombatHealthBar
+@onready var momentum_bar: Control = $HUDRoot/MomentumBar as Control
 @onready var action_point_orbs: Array[TextureRect] = [
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb1 as TextureRect,
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb2 as TextureRect,
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb3 as TextureRect,
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb4 as TextureRect,
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb5 as TextureRect,
-	$ActionPointPanel/ActionPointOrbs/ActionPointOrb6 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb1 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb2 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb3 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb4 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb5 as TextureRect,
+	$HUDRoot/ActionPointOrbs/ActionPointOrb6 as TextureRect,
 ]
+@onready var thread_knot_label: Label = $ThreadKnotCounter/CountLabel as Label
 
 var _rune_colors: Array[Color] = []
 var _rune_available: Array[bool] = []
@@ -39,20 +40,20 @@ var _last_momentum_stage := 0
 	set(value):
 		max_action_points = clampi(value, 1, 6)
 		current_action_points = clampi(current_action_points, 0, max_action_points)
-		_sync_overlay()
+		_sync_hud_visuals()
 		action_points_changed.emit(current_action_points, max_action_points)
 
 @export_range(0, 6, 1) var current_action_points := 6:
 	set(value):
 		current_action_points = clampi(value, 0, max_action_points)
-		_sync_overlay()
+		_sync_hud_visuals()
 		action_points_changed.emit(current_action_points, max_action_points)
 
 @export_range(0.0, 100.0, 1.0) var momentum := 0.0:
 	set(value):
 		var previous_stage := get_momentum_stage()
 		momentum = clampf(value, 0.0, 100.0)
-		_sync_overlay()
+		_sync_hud_visuals()
 		momentum_changed.emit(momentum)
 		var new_stage := get_momentum_stage()
 		if new_stage != previous_stage:
@@ -64,11 +65,17 @@ var _last_momentum_stage := 0
 		momentum_stage_thresholds = value
 		_emit_stage_if_changed()
 
+@export var thread_knot_count := 0:
+	set(value):
+		thread_knot_count = maxi(0, value)
+		_sync_thread_knot_counter()
+
 func _ready() -> void:
 	add_to_group("combat_hud")
 	_configure_default_runes()
-	_sync_overlay()
+	_sync_hud_visuals()
 	_sync_health()
+	_sync_thread_knot_counter()
 
 func set_health(current: int, maximum: int = max_health) -> void:
 	max_health = maximum
@@ -79,7 +86,7 @@ func set_action_points(current: int, maximum: int = max_action_points) -> void:
 	current_action_points = current
 	for i in _rune_available.size():
 		_rune_available[i] = i < current_action_points
-	_sync_overlay()
+	_sync_hud_visuals()
 
 func spend_action_points(amount: int) -> bool:
 	if amount <= 0:
@@ -99,6 +106,9 @@ func refill_action_points() -> void:
 func set_momentum(value: float) -> void:
 	momentum = value
 
+func set_thread_knots(count: int) -> void:
+	thread_knot_count = count
+
 func get_momentum_stage() -> int:
 	var clamped_momentum := clampf(momentum, 0.0, 100.0)
 	for i in momentum_stage_thresholds.size():
@@ -115,17 +125,15 @@ func set_rune(index: int, color: Color, available: bool) -> void:
 	_configure_default_runes()
 	_rune_colors[index] = color
 	_rune_available[index] = available
-	_sync_overlay()
+	_sync_hud_visuals()
 	rune_changed.emit(index, color, available)
 
-func _sync_overlay() -> void:
-	if not is_node_ready() or not gauge_overlay:
+func _sync_hud_visuals() -> void:
+	if not is_node_ready():
 		return
 
-	gauge_overlay.max_action_points = max_action_points
-	gauge_overlay.current_action_points = current_action_points
-	gauge_overlay.momentum = momentum / 100.0
-	gauge_overlay.set_rune_states(_rune_colors, _rune_available)
+	if momentum_bar and momentum_bar.has_method("set_momentum"):
+		momentum_bar.call("set_momentum", momentum / 100.0)
 	_sync_action_point_orbs()
 
 func _sync_health() -> void:
@@ -134,6 +142,13 @@ func _sync_health() -> void:
 
 	if health_bar:
 		health_bar.set_health(current_health, max_health)
+
+func _sync_thread_knot_counter() -> void:
+	if not is_node_ready():
+		return
+
+	if thread_knot_label:
+		thread_knot_label.text = str(thread_knot_count)
 
 func _sync_action_point_orbs() -> void:
 	for i in action_point_orbs.size():
@@ -152,7 +167,7 @@ func _configure_default_runes() -> void:
 	_rune_colors.clear()
 	_rune_available.clear()
 	for i in 6:
-		_rune_colors.append(Color(0.95, 0.72, 0.28, 0.9))
+		_rune_colors.append(Color.WHITE)
 		_rune_available.append(i < current_action_points)
 
 func _emit_stage_if_changed() -> void:

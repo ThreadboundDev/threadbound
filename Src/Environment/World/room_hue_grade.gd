@@ -15,6 +15,10 @@ extends CanvasLayer
 @export var bottom_left_room := Rect2(Vector2(-5700.0, 2500.0), Vector2(5700.0, 3700.0))
 @export var bottom_right_room := Rect2(Vector2(0.0, 2500.0), Vector2(8200.0, 3700.0))
 @export var center_neutral_room := Rect2(Vector2(-1000.0, 1680.0), Vector2(2000.0, 1620.0))
+@export var top_left_polygon := PackedVector2Array()
+@export var top_right_polygon := PackedVector2Array()
+@export var bottom_left_polygon := PackedVector2Array()
+@export var bottom_right_polygon := PackedVector2Array()
 @export var placeholder_default_size := Vector2(1200.0, 900.0)
 
 @export_group("Placeholder Node Names")
@@ -57,13 +61,13 @@ func _target_grade_for_position(global_position: Vector2) -> Dictionary:
 	if center_neutral_room.has_point(global_position):
 		return {"color": neutral_color, "strength": 0.0}
 
-	if bottom_right_room.has_point(global_position):
+	if _room_contains(bottom_right_polygon, bottom_right_room, global_position):
 		return {"color": bottom_right_color, "strength": max_strength}
-	if bottom_left_room.has_point(global_position):
+	if _room_contains(bottom_left_polygon, bottom_left_room, global_position):
 		return {"color": bottom_left_color, "strength": max_strength}
-	if top_right_room.has_point(global_position):
+	if _room_contains(top_right_polygon, top_right_room, global_position):
 		return {"color": top_right_color, "strength": max_strength}
-	if top_left_room.has_point(global_position):
+	if _room_contains(top_left_polygon, top_left_room, global_position):
 		return {"color": top_left_color, "strength": max_strength}
 
 	return {"color": neutral_color, "strength": 0.0}
@@ -92,6 +96,11 @@ func _sync_room_bounds_from_placeholders() -> void:
 	bottom_left_room = _placeholder_rect_or_existing(root, yellow_placeholder_name, bottom_left_room)
 	bottom_right_room = _placeholder_rect_or_existing(root, purple_placeholder_name, bottom_right_room)
 
+	top_left_polygon = _placeholder_polygon_or_existing(root, red_placeholder_name, top_left_polygon)
+	top_right_polygon = _placeholder_polygon_or_existing(root, blue_placeholder_name, top_right_polygon)
+	bottom_left_polygon = _placeholder_polygon_or_existing(root, yellow_placeholder_name, bottom_left_polygon)
+	bottom_right_polygon = _placeholder_polygon_or_existing(root, purple_placeholder_name, bottom_right_polygon)
+
 func _placeholder_rect_or_existing(root: Node, placeholder_name: String, existing: Rect2) -> Rect2:
 	var placeholder := _find_node_recursive(root, placeholder_name)
 	if not placeholder and placeholder_name.ends_with(" Her"):
@@ -105,6 +114,26 @@ func _placeholder_rect_or_existing(root: Node, placeholder_name: String, existin
 	elif placeholder is CanvasItem:
 		(placeholder as CanvasItem).visible = false
 	return rect
+
+func _placeholder_polygon_or_existing(root: Node, placeholder_name: String, existing: PackedVector2Array) -> PackedVector2Array:
+	var placeholder := _find_placeholder(root, placeholder_name)
+	if not placeholder:
+		return existing
+
+	var polygon_node := placeholder as CollisionPolygon2D
+	if polygon_node:
+		var global_polygon := PackedVector2Array()
+		for point in polygon_node.polygon:
+			global_polygon.append(polygon_node.to_global(point))
+		return global_polygon
+
+	return existing
+
+func _find_placeholder(root: Node, placeholder_name: String) -> Node:
+	var placeholder := _find_node_recursive(root, placeholder_name)
+	if not placeholder and placeholder_name.ends_with(" Her"):
+		placeholder = _find_node_recursive(root, "%se" % placeholder_name)
+	return placeholder
 
 func _find_node_recursive(node: Node, target_name: String) -> Node:
 	if node.name == target_name:
@@ -135,6 +164,11 @@ func _rect_from_placeholder(placeholder: Node, fallback: Rect2) -> Rect2:
 		return Rect2(center - placeholder_default_size * 0.5, placeholder_default_size).abs()
 
 	return fallback
+
+func _room_contains(room_polygon: PackedVector2Array, room_rect: Rect2, global_position: Vector2) -> bool:
+	if room_polygon.size() >= 3:
+		return Geometry2D.is_point_in_polygon(global_position, room_polygon)
+	return room_rect.has_point(global_position)
 
 func _first_collision_shape_child(node: Node) -> CollisionShape2D:
 	for child in node.get_children():

@@ -1,11 +1,19 @@
 [gd_scene format=3 uid="uid://bk6sithumcg8y"]
 
 [ext_resource type="Script" uid="uid://1hfdow24pasf" path="res://Src/UI/combat_hud.gd" id="1_hud"]
-[ext_resource type="Texture2D" uid="uid://b01tqqm32cdws" path="res://Assets/UI/Momentum+Action Points.png" id="2_frame"]
-[ext_resource type="Script" uid="uid://c78ttgxmfkl61" path="res://Src/UI/combat_hud_overlay.gd" id="3_overlay"]
-[ext_resource type="Texture2D" uid="uid://5vuncxh6067i" path="res://Assets/UI/health_bar_game_asset.png" id="4_health_frame"]
-[ext_resource type="Script" uid="uid://br7xx5380ryc2" path="res://Src/UI/combat_health_bar.gd" id="5_health_bar"]
-[ext_resource type="Texture2D" uid="uid://co3r0e37vuumv" path="res://Assets/UI/action_point_orb_colorless.png" id="6_action_orb"]
+[ext_resource type="Texture2D" uid="uid://ct7git7xdtjxv" path="res://Assets/UI/hud_no_momentum.png" id="2_frame"]
+[ext_resource type="Script" uid="uid://br7xx5380ryc2" path="res://Src/UI/combat_health_bar.gd" id="3_health_bar"]
+[ext_resource type="Texture2D" uid="uid://c51r5qwdm0g3v" path="res://Assets/UI/hp_bar_texture_negative.png" id="4_hp_negative"]
+[ext_resource type="Texture2D" uid="uid://dmi0essia8c0e" path="res://Assets/UI/hp_bar_texture_green.png" id="5_hp_green"]
+[ext_resource type="Texture2D" uid="uid://bjijf1wmbbyvo" path="res://Assets/UI/hp_bar_texture_yellow.png" id="6_hp_yellow"]
+[ext_resource type="Texture2D" uid="uid://vklctecg3fot" path="res://Assets/UI/hp_bar_texture_orange.png" id="7_hp_orange"]
+[ext_resource type="Texture2D" uid="uid://csvrxxx6d8u4e" path="res://Assets/UI/hp_bar_texture_red.png" id="8_hp_red"]
+[ext_resource type="Script" uid="uid://d0iudj04ffbw0" path="res://Src/UI/combat_momentum_bar.gd" id="9_momentum_bar"]
+[ext_resource type="Texture2D" uid="uid://dj7jh1fldwmbb" path="res://Assets/UI/momentum_bar_texture.png" id="10_momentum_fill"]
+[ext_resource type="Texture2D" uid="uid://ctqavo45xjrdr" path="res://Assets/UI/momentum_bar_endcaps.png" id="11_momentum_caps"]
+[ext_resource type="Texture2D" uid="uid://co3r0e37vuumv" path="res://Assets/UI/action_point_orb_colorless.png" id="12_action_orb"]
+[ext_resource type="Texture2D" uid="uid://bp1db0wq5b0xv" path="res://Assets/UI/thread_knot_counter.png" id="13_thread_knot_counter"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="14_threadbound_label_settings"]
 
 [node name="CombatHUD" type="Control" unique_id=1968709405]
 layout_mode = 3
@@ -17,32 +25,62 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hud")
 
-[node name="HealthBar" type="Control" parent="." unique_id=1167632650]
-custom_minimum_size = Vector2(640, 427)
+[node name="HUDRoot" type="Control" parent="." unique_id=687305413]
+custom_minimum_size = Vector2(512, 341)
 layout_mode = 1
 anchors_preset = 0
-offset_left = -48.0
-offset_top = -96.0
-offset_right = 592.0
-offset_bottom = 331.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 524.0
+offset_bottom = 351.0
 mouse_filter = 2
-script = ExtResource("5_health_bar")
-frame_texture = ExtResource("4_health_frame")
 
-[node name="ActionPointPanel" type="Control" parent="." unique_id=1343509761]
-custom_minimum_size = Vector2(260, 260)
+[node name="HealthBar" type="Control" parent="HUDRoot" unique_id=1720618208]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -284.0
-offset_right = 284.0
-offset_bottom = -24.0
-grow_vertical = 0
+offset_left = -7.0
+offset_top = -2.0
+offset_right = -7.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("3_health_bar")
+negative_texture = ExtResource("4_hp_negative")
+green_texture = ExtResource("5_hp_green")
+yellow_texture = ExtResource("6_hp_yellow")
+orange_texture = ExtResource("7_hp_orange")
+red_texture = ExtResource("8_hp_red")
+fill_rect = Rect2(218, 146, 285, 50)
+corner_radius = 25.0
+corner_segments = 12
 
-[node name="ActionPointOrbs" type="Control" parent="ActionPointPanel"]
+[node name="MomentumBar" type="Control" parent="HUDRoot" unique_id=428083362]
+anchors_preset = 0
+offset_left = 214.0
+offset_top = 103.0
+offset_right = 482.0
+offset_bottom = 134.0
+mouse_filter = 2
+script = ExtResource("9_momentum_bar")
+fill_texture = ExtResource("10_momentum_fill")
+fill_rect = Rect2(28, 9, 212, 13)
+value = 1.0
+
+[node name="MomentumCaps" type="TextureRect" parent="HUDRoot" unique_id=702580787]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 103.0
+offset_right = 482.0
+offset_bottom = 134.0
+mouse_filter = 2
+texture = ExtResource("11_momentum_caps")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionPointOrbs" type="Control" parent="HUDRoot" unique_id=573409196]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,83 +89,73 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ActionPointOrb1" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb1" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=1142888634]
 layout_mode = 0
-offset_left = 59.89
-offset_top = 32.56
-offset_right = 98.83
-offset_bottom = 71.5
+offset_left = 113.0
+offset_top = 22.0
+offset_right = 150.0
+offset_bottom = 59.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb2" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb2" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=307898889]
 layout_mode = 0
-offset_left = 160.9
-offset_top = 32.56
-offset_right = 199.84
-offset_bottom = 71.5
+offset_left = 57.0
+offset_top = 53.0
+offset_right = 94.0
+offset_bottom = 90.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb3" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb3" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=333213171]
 layout_mode = 0
-offset_left = 20.32
-offset_top = 108.04
-offset_right = 59.26
-offset_bottom = 146.98
+offset_left = 27.0
+offset_top = 102.0
+offset_right = 64.0
+offset_bottom = 139.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb4" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb4" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=646743468]
 layout_mode = 0
-offset_left = 200.74
-offset_top = 108.04
-offset_right = 239.68
-offset_bottom = 146.98
+offset_left = 27.0
+offset_top = 159.0
+offset_right = 64.0
+offset_bottom = 196.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb5" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb5" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=120400246]
 layout_mode = 0
-offset_left = 59.89
-offset_top = 187.87
-offset_right = 98.83
-offset_bottom = 226.81
+offset_left = 56.0
+offset_top = 205.0
+offset_right = 93.0
+offset_bottom = 242.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb6" type="TextureRect" parent="ActionPointPanel/ActionPointOrbs"]
+[node name="ActionPointOrb6" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=70215195]
 layout_mode = 0
-offset_left = 160.9
-offset_top = 187.87
-offset_right = 199.84
-offset_bottom = 226.81
+offset_left = 109.0
+offset_top = 237.0
+offset_right = 146.0
+offset_bottom = 274.0
 mouse_filter = 2
-texture = ExtResource("6_action_orb")
+texture = ExtResource("12_action_orb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GaugeOverlay" type="Control" parent="ActionPointPanel" unique_id=702995877]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("3_overlay")
-
-[node name="Frame" type="TextureRect" parent="ActionPointPanel" unique_id=1199675483]
+[node name="Frame" type="TextureRect" parent="HUDRoot" unique_id=1268736954]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -138,3 +166,43 @@ mouse_filter = 2
 texture = ExtResource("2_frame")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="ThreadKnotCounter" type="Control" parent="."]
+custom_minimum_size = Vector2(384, 256)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -424.0
+offset_top = -288.0
+offset_right = -40.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="ThreadKnotCounter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_thread_knot_counter")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CountLabel" type="Label" parent="ThreadKnotCounter"]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 163.0
+offset_right = 265.0
+offset_bottom = 217.0
+mouse_filter = 2
+text = "0"
+label_settings = ExtResource("14_threadbound_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1

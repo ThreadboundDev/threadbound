@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://bbkkjrph3icc1"]
 
-[ext_resource type="Script" path="res://Src/Enemies/enemy_stats.gd" id="1_stats"]
+[ext_resource type="Script" uid="uid://dfw7gb00lv5j7" path="res://Src/Enemies/enemy_stats.gd" id="1_stats"]
 
 [resource]
 script = ExtResource("1_stats")
@@ -11,7 +11,6 @@ acceleration = 1100.0
 gravity = 1800.0
 max_fall_speed = 950.0
 patrol_wait_time = 0.35
-attack_damage = 1
 attack_windup = 0.32
 attack_active_time = 0.16
 attack_recovery = 0.36
@@ -21,4 +20,3 @@ death_cleanup_delay = 0.7
 thread_knot_drop_count = 2
 knockback_strength = 115.0
 hit_pause = 0.045
-screen_shake_strength = 3.0

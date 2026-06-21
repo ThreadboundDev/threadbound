@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://ch50blhxndouc"
+path="res://.godot/imported/threadbound_font.fnt-5374bce494d0a4c92fdacfc8850c24b9.fontdata"
+
+[deps]
+
+source_file="res://Assets/UI/Fonts/threadbound_font.fnt"
+dest_files=["res://.godot/imported/threadbound_font.fnt-5374bce494d0a4c92fdacfc8850c24b9.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2
