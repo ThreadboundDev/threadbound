@@ -18,10 +18,12 @@ signal rune_changed(index: int, color: Color, available: bool)
 	$HUDRoot/ActionPointOrbs/ActionPointOrb6 as TextureRect,
 ]
 @onready var thread_knot_label: Label = $ThreadKnotCounter/CountLabel as Label
+@onready var thread_knot_counter: Control = $ThreadKnotCounter as Control
 
 var _rune_colors: Array[Color] = []
 var _rune_available: Array[bool] = []
 var _last_momentum_stage := 0
+var _thread_knot_counter_tween: Tween
 
 @export var max_health := 5:
 	set(value):
@@ -67,11 +69,16 @@ var _last_momentum_stage := 0
 
 @export var thread_knot_count := 0:
 	set(value):
+		var previous_count := thread_knot_count
 		thread_knot_count = maxi(0, value)
 		_sync_thread_knot_counter()
+		if thread_knot_count > previous_count:
+			_pulse_thread_knot_counter()
 
 func _ready() -> void:
 	add_to_group("combat_hud")
+	if thread_knot_counter:
+		thread_knot_counter.pivot_offset = thread_knot_counter.size * 0.5
 	_configure_default_runes()
 	_sync_hud_visuals()
 	_sync_health()
@@ -149,6 +156,18 @@ func _sync_thread_knot_counter() -> void:
 
 	if thread_knot_label:
 		thread_knot_label.text = str(thread_knot_count)
+
+func _pulse_thread_knot_counter() -> void:
+	if not is_node_ready() or not thread_knot_counter:
+		return
+
+	if _thread_knot_counter_tween:
+		_thread_knot_counter_tween.kill()
+
+	thread_knot_counter.scale = Vector2.ONE
+	_thread_knot_counter_tween = create_tween()
+	_thread_knot_counter_tween.tween_property(thread_knot_counter, "scale", Vector2(1.06, 1.06), 0.06)
+	_thread_knot_counter_tween.tween_property(thread_knot_counter, "scale", Vector2.ONE, 0.12)
 
 func _sync_action_point_orbs() -> void:
 	for i in action_point_orbs.size():

@@ -19,6 +19,10 @@ extends Resource
 @export var hurt_time: float = 0.18
 @export var death_cleanup_delay: float = 0.6
 @export_range(0, 99, 1) var thread_knot_drop_count: int = 0
+@export var thread_knot_drop_speed_min: float = 145.0
+@export var thread_knot_drop_speed_max: float = 245.0
+@export var thread_knot_drop_upward_bias: float = 180.0
+@export var thread_knot_drop_horizontal_bias: float = 24.0
 @export var knockback_strength: float = 180.0
 @export var contact_knockback_strength: float = 260.0
 @export var hit_pause: float = 0.04

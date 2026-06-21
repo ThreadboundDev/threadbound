@@ -52,6 +52,11 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 		_sync_hud()
 		momentum_changed.emit(momentum)
 
+@export_range(0, 999999, 1) var thread_knot_count := 0:
+	set(value):
+		thread_knot_count = maxi(0, value)
+		_sync_hud()
+
 # ===============================
 # MOVEMENT TUNABLES
 # ===============================
@@ -623,6 +628,9 @@ func refill_action_points() -> void:
 func set_momentum(value: float) -> void:
 	momentum = value
 
+func collect_thread_knots(amount: int) -> void:
+	thread_knot_count += maxi(0, amount)
+
 func _sync_hud() -> void:
 	if not is_inside_tree():
 		return
@@ -637,6 +645,8 @@ func _sync_hud() -> void:
 		hud.set_action_points(current_action_points, max_action_points)
 	if hud.has_method("set_momentum"):
 		hud.set_momentum(momentum)
+	if hud.has_method("set_thread_knots"):
+		hud.set_thread_knots(thread_knot_count)
 
 func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
 	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
