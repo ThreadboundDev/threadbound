@@ -20,7 +20,7 @@ signal animation_finished
 		frame_count = maxi(1, value)
 		queue_redraw()
 @export_range(1.0, 60.0, 0.5) var frames_per_second := 18.0
-@export_range(1, 60, 1) var fade_in_frames := 12
+@export_range(0, 60, 1) var fade_in_frames := 0
 
 var _elapsed := 0.0
 var _current_frame := 0
@@ -28,6 +28,7 @@ var _playing := false
 var _finished := false
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	set_process(false)
 
 func play() -> void:
@@ -36,7 +37,7 @@ func play() -> void:
 	_playing = true
 	_finished = false
 	visible = true
-	modulate.a = 0.0
+	modulate.a = 0.0 if fade_in_frames > 0 else 1.0
 	set_process(true)
 	queue_redraw()
 
@@ -59,7 +60,10 @@ func _process(delta: float) -> void:
 		_current_frame = next_frame
 		queue_redraw()
 
-	modulate.a = clampf(float(_current_frame + 1) / float(maxi(fade_in_frames, 1)), 0.0, 1.0)
+	if fade_in_frames > 0:
+		modulate.a = clampf(float(_current_frame + 1) / float(fade_in_frames), 0.0, 1.0)
+	else:
+		modulate.a = 1.0
 	if _current_frame >= frame_count - 1 and not _finished:
 		_playing = false
 		_finished = true

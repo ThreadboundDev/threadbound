@@ -1,14 +1,16 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Src/UI/game_over_overlay.gd" id="1_overlay"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_start_frame.png" id="2_start_frame"]
 [ext_resource type="Script" path="res://Src/UI/game_over_sprite_sheet_player.gd" id="3_sheet_player"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_sprite_sheet.png" id="4_sprite_sheet"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="5_threadbound_label_settings"]
 
 [node name="GameOverOverlay" type="CanvasLayer"]
 layer = 120
 process_mode = 3
 script = ExtResource("1_overlay")
+world_fade_duration = 1.8
+prompt_fade_duration = 0.55
 
 [node name="BlurRect" type="ColorRect" parent="."]
 process_mode = 3
@@ -20,7 +22,7 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(1, 1, 1, 1)
 
-[node name="StartFrameRect" type="TextureRect" parent="."]
+[node name="VeilRect" type="ColorRect" parent="."]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,9 +30,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-texture = ExtResource("2_start_frame")
-expand_mode = 1
-stretch_mode = 6
+color = Color(0, 0, 0, 1)
 
 [node name="SpriteSheetPlayer" type="Control" parent="."]
 process_mode = 3
@@ -45,15 +45,22 @@ sprite_sheet_texture = ExtResource("4_sprite_sheet")
 columns = 6
 rows = 6
 frame_count = 36
-frames_per_second = 18.0
-fade_in_frames = 12
+frames_per_second = 10.0
 
-[node name="VeilRect" type="ColorRect" parent="."]
+[node name="PromptLabel" type="Label" parent="."]
 process_mode = 3
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -96.0
+offset_right = -24.0
+offset_bottom = -46.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 mouse_filter = 1
-color = Color(0, 0, 0, 1)
+text = "PRESS ANY BUTTON TO CONTINUE"
+label_settings = ExtResource("5_threadbound_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1

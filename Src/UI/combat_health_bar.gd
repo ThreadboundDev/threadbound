@@ -1,13 +1,46 @@
 extends Control
 class_name CombatHealthBar
 
-const ART_SIZE := Vector2(1536.0, 1024.0)
-const BAR_RECT := Rect2(Vector2(475.0, 486.0), Vector2(918.0, 46.0))
-const BAR_RADIUS := 22.0
-
-@export var frame_texture: Texture2D:
+@export var negative_texture: Texture2D:
 	set(value):
-		frame_texture = value
+		negative_texture = value
+		queue_redraw()
+@export var green_texture: Texture2D:
+	set(value):
+		green_texture = value
+		queue_redraw()
+@export var yellow_texture: Texture2D:
+	set(value):
+		yellow_texture = value
+		queue_redraw()
+@export var orange_texture: Texture2D:
+	set(value):
+		orange_texture = value
+		queue_redraw()
+@export var red_texture: Texture2D:
+	set(value):
+		red_texture = value
+		queue_redraw()
+
+@export var fill_rect := Rect2(Vector2(0.0, 0.0), Vector2(760.0, 82.0)):
+	set(value):
+		fill_rect = value
+		queue_redraw()
+@export var texture_source_rect := Rect2(Vector2.ZERO, Vector2(1774.0, 887.0)):
+	set(value):
+		texture_source_rect = value
+		queue_redraw()
+@export_range(0.0, 80.0, 0.5) var corner_radius := 15.0:
+	set(value):
+		corner_radius = value
+		queue_redraw()
+@export_range(2, 24, 1) var corner_segments := 10:
+	set(value):
+		corner_segments = value
+		queue_redraw()
+@export var round_fill_leading_edge := false:
+	set(value):
+		round_fill_leading_edge = value
 		queue_redraw()
 
 @export var max_health := 5:
@@ -26,42 +59,85 @@ func set_health(current: int, maximum: int) -> void:
 	current_health = current
 
 func _draw() -> void:
-	if not frame_texture:
-		return
-
-	var scale_factor: float = min(size.x / ART_SIZE.x, size.y / ART_SIZE.y)
-	var draw_size := ART_SIZE * scale_factor
-	var offset := (size - draw_size) * 0.5
-	var fill_rect := Rect2(offset + BAR_RECT.position * scale_factor, BAR_RECT.size * scale_factor)
 	var health_ratio := float(current_health) / float(max_health)
 
+	if negative_texture:
+		_draw_textured_rounded_rect(negative_texture, fill_rect, texture_source_rect, true, true)
+
 	if health_ratio > 0.0:
-		var active_rect := fill_rect
-		active_rect.size.x *= health_ratio
-		var color := _get_health_color(health_ratio)
-		draw_rect(active_rect, color)
-		_draw_woven_bands(active_rect, color.lightened(0.28), scale_factor)
+		var active_texture := _get_health_texture(health_ratio)
+		if active_texture:
+			var active_rect := fill_rect
+			active_rect.size.x *= health_ratio
+			var source_rect := texture_source_rect
+			source_rect.size.x *= health_ratio
+			_draw_textured_rounded_rect(active_texture, active_rect, source_rect, true, round_fill_leading_edge or is_equal_approx(health_ratio, 1.0))
 
-	draw_texture_rect(frame_texture, Rect2(offset, draw_size), false)
-
-func _get_health_color(ratio: float) -> Color:
+func _get_health_texture(ratio: float) -> Texture2D:
 	if ratio >= 0.75:
-		return Color(0.18, 0.9, 0.22, 1.0).lerp(Color(0.98, 0.86, 0.16, 1.0), (1.0 - ratio) / 0.25)
-	if ratio >= 0.45:
-		return Color(0.98, 0.86, 0.16, 1.0).lerp(Color(1.0, 0.48, 0.08, 1.0), (0.75 - ratio) / 0.3)
-	return Color(1.0, 0.48, 0.08, 1.0).lerp(Color(0.95, 0.05, 0.04, 1.0), (0.45 - ratio) / 0.45)
+		return green_texture
+	if ratio >= 0.5:
+		return yellow_texture
+	if ratio >= 0.25:
+		return orange_texture
+	return red_texture
 
-func _draw_woven_bands(rect: Rect2, band_color: Color, scale_factor: float) -> void:
-	var spacing := 30.0 * scale_factor
-	var width := 6.0 * scale_factor
-	var start_x := rect.position.x - rect.size.y
-	var end_x := rect.end.x + rect.size.y
-	var x := start_x
-	while x < end_x:
-		var from_x := clampf(x, rect.position.x, rect.end.x)
-		var to_x := clampf(x + rect.size.y, rect.position.x, rect.end.x)
-		if to_x > from_x:
-			var from_y := rect.end.y - (from_x - x)
-			var to_y := rect.end.y - (to_x - x)
-			draw_line(Vector2(from_x, from_y), Vector2(to_x, to_y), band_color, width, true)
-		x += spacing
+func _draw_textured_rounded_rect(texture: Texture2D, rect: Rect2, source_rect: Rect2, round_left: bool, round_right: bool) -> void:
+	if rect.size.x <= 0.0 or rect.size.y <= 0.0:
+		return
+
+	var radius := minf(corner_radius, minf(rect.size.y * 0.5, rect.size.x * 0.5))
+	var points := _make_rounded_rect_points(rect, radius, round_left, round_right)
+	var texture_size := texture.get_size()
+	var colors := PackedColorArray()
+	var uvs := PackedVector2Array()
+	for point in points:
+		colors.append(Color.WHITE)
+		var normalized := Vector2(
+			(point.x - rect.position.x) / rect.size.x,
+			(point.y - rect.position.y) / rect.size.y
+		)
+		var source_point := source_rect.position + normalized * source_rect.size
+		uvs.append(source_point / texture_size)
+
+	draw_polygon(points, colors, uvs, texture)
+
+func _make_rounded_rect_points(rect: Rect2, radius: float, round_left: bool, round_right: bool) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var left := rect.position.x
+	var top := rect.position.y
+	var right := rect.end.x
+	var bottom := rect.end.y
+	var center_left_top := Vector2(left + radius, top + radius)
+	var center_right_top := Vector2(right - radius, top + radius)
+	var center_right_bottom := Vector2(right - radius, bottom - radius)
+	var center_left_bottom := Vector2(left + radius, bottom - radius)
+
+	if round_left:
+		_append_arc(points, center_left_top, radius, PI, PI * 1.5)
+	else:
+		points.append(Vector2(left, top))
+
+	if round_right:
+		_append_arc(points, center_right_top, radius, PI * 1.5, TAU)
+	else:
+		points.append(Vector2(right, top))
+
+	if round_right:
+		_append_arc(points, center_right_bottom, radius, 0.0, PI * 0.5)
+	else:
+		points.append(Vector2(right, bottom))
+
+	if round_left:
+		_append_arc(points, center_left_bottom, radius, PI * 0.5, PI)
+	else:
+		points.append(Vector2(left, bottom))
+
+	return points
+
+func _append_arc(points: PackedVector2Array, center: Vector2, radius: float, start_angle: float, end_angle: float) -> void:
+	var segments := maxi(corner_segments, 2)
+	for i in range(segments + 1):
+		var t := float(i) / float(segments)
+		var angle := lerpf(start_angle, end_angle, t)
+		points.append(center + Vector2(cos(angle), sin(angle)) * radius)
