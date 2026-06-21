@@ -335,7 +335,7 @@ func _drop_thread_knots() -> void:
 	if not parent:
 		return
 
-	var spread_step := TAU / float(maxi(stats.thread_knot_drop_count, 1))
+	var spread_step := PI / float(maxi(stats.thread_knot_drop_count - 1, 1))
 	for i in stats.thread_knot_drop_count:
 		var pickup := THREAD_KNOT_PICKUP_SCENE.instantiate() as Node2D
 		if not pickup:
@@ -343,10 +343,15 @@ func _drop_thread_knots() -> void:
 
 		parent.add_child(pickup)
 		pickup.global_position = global_position + Vector2(0.0, -24.0)
-		var angle := -PI * 0.74 + spread_step * float(i)
-		var launch_speed := 125.0 + float(i % 3) * 24.0
+		var angle := -PI * 0.5 if stats.thread_knot_drop_count == 1 else -PI + spread_step * float(i)
+		angle += randf_range(-0.18, 0.18)
+		var launch_speed := randf_range(stats.thread_knot_drop_speed_min, stats.thread_knot_drop_speed_max)
+		var horizontal_bias := randf_range(-stats.thread_knot_drop_horizontal_bias, stats.thread_knot_drop_horizontal_bias)
 		if pickup.has_method("launch"):
-			pickup.call("launch", Vector2(cos(angle) * launch_speed, sin(angle) * launch_speed - 120.0))
+			pickup.call(
+				"launch",
+				Vector2(cos(angle) * launch_speed + horizontal_bias, sin(angle) * launch_speed - stats.thread_knot_drop_upward_bias)
+			)
 
 func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite2D:
 	var sprite := Sprite2D.new()
