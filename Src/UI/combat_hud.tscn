@@ -66,7 +66,7 @@ offset_bottom = 134.0
 mouse_filter = 2
 script = ExtResource("9_momentum_bar")
 fill_texture = ExtResource("10_momentum_fill")
-fill_rect = Rect2(28, 9, 212, 13)
+fill_rect = Rect2(28, 9, 212, 20)
 value = 1.0
 
 [node name="MomentumCaps" type="TextureRect" parent="HUDRoot" unique_id=702580787]
@@ -167,7 +167,7 @@ texture = ExtResource("2_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ThreadKnotCounter" type="Control" parent="."]
+[node name="ThreadKnotCounter" type="Control" parent="." unique_id=312521386]
 custom_minimum_size = Vector2(384, 256)
 layout_mode = 1
 anchors_preset = 3
@@ -183,7 +183,7 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="ThreadKnotCounter"]
+[node name="Frame" type="TextureRect" parent="ThreadKnotCounter" unique_id=973682478]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -195,13 +195,13 @@ texture = ExtResource("13_thread_knot_counter")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CountLabel" type="Label" parent="ThreadKnotCounter"]
+[node name="CountLabel" type="Label" parent="ThreadKnotCounter" unique_id=769082520]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 163.0
-offset_right = 265.0
-offset_bottom = 217.0
-mouse_filter = 2
+offset_left = 145.0
+offset_top = 142.0
+offset_right = 272.90698
+offset_bottom = 282.0
+scale = Vector2(0.75, 0.75)
 text = "0"
 label_settings = ExtResource("14_threadbound_label_settings")
 horizontal_alignment = 1
