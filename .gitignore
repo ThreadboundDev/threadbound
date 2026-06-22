@@ -16,10 +16,12 @@
 # Local export/build outputs
 /export_test/
 /export_test.zip
+/Threadbound_Windows_Send.zip
 /Threadbound.exe
 /Threadbound.console.exe
 /Threadbound.pck
 /data_Threadbound_windows_x86_64/
+/threadbound_app_icon.ico
 /Threadbound.csproj
 /Threadbound.sln
 /export_presets.cfg
