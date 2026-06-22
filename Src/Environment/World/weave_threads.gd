@@ -61,7 +61,7 @@ func _build_beams() -> void:
 		beam.z_index = -1
 		beam.width = beam_width
 		beam.texture = spec["texture"] as Texture2D
-		beam.texture_mode = 2
+		beam.texture_mode = Line2D.LINE_TEXTURE_TILE
 		beam.default_color = Color(1.18, 1.12, 1.0, 1.0)
 		beam.antialiased = true
 		add_child(beam)

@@ -21,13 +21,12 @@
 /Threadbound.console.exe
 /Threadbound.pck
 /data_Threadbound_windows_x86_64/
-/threadbound_app_icon.ico
-/Threadbound.csproj
-/Threadbound.sln
-/export_presets.cfg
-/icon.svg
-/icon.svg.import
 /ThreadboundMovement.avi
+/exports/
+/export_templates/
+/feature_profiles/
+/script_templates/
+/text_editor_themes/
 Assets/UI/Main Menu/*.mp4
 
 # Local IDE/editor folders

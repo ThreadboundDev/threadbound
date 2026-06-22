@@ -76,12 +76,12 @@ func _apply_grade() -> void:
 	if not _grade_rect or not _grade_rect.material:
 		return
 
-	var material := _grade_rect.material as ShaderMaterial
-	if not material:
+	var shader_material := _grade_rect.material as ShaderMaterial
+	if not shader_material:
 		return
 
-	material.set_shader_parameter("hue_color", _current_color)
-	material.set_shader_parameter("hue_strength", _current_strength)
+	shader_material.set_shader_parameter("hue_color", _current_color)
+	shader_material.set_shader_parameter("hue_strength", _current_strength)
 
 func _sync_room_bounds_from_placeholders() -> void:
 	if not sync_bounds_from_placeholders:
