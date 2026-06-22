@@ -197,7 +197,7 @@ func _draw_threadling_icon(center: Vector2, radius: float, alive: bool, flip_ico
 		float(threadling_icon_texture.get_height()) / float(THREADLING_IDLE_ROWS)
 	)
 	var frame_column := THREADLING_ICON_FRAME % THREADLING_IDLE_COLUMNS
-	var frame_row := THREADLING_ICON_FRAME / THREADLING_IDLE_COLUMNS
+	var frame_row := floori(float(THREADLING_ICON_FRAME) / float(THREADLING_IDLE_COLUMNS))
 	var source_rect := Rect2(Vector2(frame_column, frame_row) * cell_size + THREADLING_ICON_INSET.position, THREADLING_ICON_INSET.size)
 	var icon_size := Vector2(radius * threadling_icon_scale.x, radius * threadling_icon_scale.y)
 	var local_rect := Rect2(-icon_size * 0.5 + threadling_icon_offset, icon_size)

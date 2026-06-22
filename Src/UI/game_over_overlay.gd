@@ -39,14 +39,14 @@ func _notification(what: int) -> void:
 		get_tree().paused = false
 
 func _configure_blur() -> void:
-	var material := ShaderMaterial.new()
-	material.shader = BLUR_SHADER
-	material.set_shader_parameter("blur_amount", 5.8)
-	material.set_shader_parameter("blur_samples", 5.0)
-	material.set_shader_parameter("desaturation", 0.92)
-	material.set_shader_parameter("blue_tint_strength", 0.08)
-	material.set_shader_parameter("blue_tint_color", Color(0.78, 0.84, 1.0, 1.0))
-	blur_rect.material = material
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = BLUR_SHADER
+	shader_material.set_shader_parameter("blur_amount", 5.8)
+	shader_material.set_shader_parameter("blur_samples", 5.0)
+	shader_material.set_shader_parameter("desaturation", 0.92)
+	shader_material.set_shader_parameter("blue_tint_strength", 0.08)
+	shader_material.set_shader_parameter("blue_tint_color", Color(0.78, 0.84, 1.0, 1.0))
+	blur_rect.material = shader_material
 
 func _prepare_visuals() -> void:
 	blur_rect.modulate.a = 0.0

@@ -10,7 +10,7 @@ func _init(_player = null):
 	super(_player)
 	slot_name = "Boots"
 
-func handle_primary(delta: float, state: ActionState) -> void:
+func handle_primary(_delta: float, state: ActionState) -> void:
 	if state == ActionState.PRESSED:
 		if player.is_on_floor() or player.coyote_timer > 0.0:
 			_perform_normal_jump()

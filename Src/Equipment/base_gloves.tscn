@@ -316,7 +316,7 @@ rotation = 1.5707964
 points = PackedVector2Array(0, 8, 0, 16, 0, 24, 0, 32, 0, 48)
 width = 2.0
 texture = ExtResource("5_pl50a")
-texture_mode = 2
+texture_mode = 1
 antialiased = true
 
 [node name="GrappleOrigin" type="Marker2D" parent="Equipment/RightHandAnchor" unique_id=615522391]
@@ -332,7 +332,7 @@ libraries/ = SubResource("AnimationLibrary_gtq23")
 z_index = -1
 width = 6.5
 texture = ExtResource("5_pl50a")
-texture_mode = 2
+texture_mode = 1
 
 [node name="ActiveNeedleSprite" type="Sprite2D" parent="Equipment/ActiveGrappleRoot" unique_id=722727145]
 z_index = 1

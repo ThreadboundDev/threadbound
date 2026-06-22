@@ -14,7 +14,7 @@ func _init(_player = null):
 	slot_name = "Chest"
 
 # Use the ActionState from BaseEquipment
-func handle_secondary(delta: float, state: ActionState) -> void:
+func handle_secondary(_delta: float, state: ActionState) -> void:
 	if state == ActionState.PRESSED and not is_dashing:
 		_start_dash()
 

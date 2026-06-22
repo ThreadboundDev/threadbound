@@ -341,17 +341,22 @@ func _drop_thread_knots() -> void:
 		if not pickup:
 			continue
 
-		parent.add_child(pickup)
-		pickup.global_position = global_position + Vector2(0.0, -24.0)
+		var drop_position := global_position + Vector2(0.0, -24.0)
 		var angle := -PI * 0.5 if stats.thread_knot_drop_count == 1 else -PI + spread_step * float(i)
 		angle += randf_range(-0.18, 0.18)
 		var launch_speed := randf_range(stats.thread_knot_drop_speed_min, stats.thread_knot_drop_speed_max)
 		var horizontal_bias := randf_range(-stats.thread_knot_drop_horizontal_bias, stats.thread_knot_drop_horizontal_bias)
-		if pickup.has_method("launch"):
-			pickup.call(
-				"launch",
-				Vector2(cos(angle) * launch_speed + horizontal_bias, sin(angle) * launch_speed - stats.thread_knot_drop_upward_bias)
-			)
+		var launch_velocity := Vector2(cos(angle) * launch_speed + horizontal_bias, sin(angle) * launch_speed - stats.thread_knot_drop_upward_bias)
+		_add_thread_knot_drop.call_deferred(parent, pickup, drop_position, launch_velocity)
+
+func _add_thread_knot_drop(parent: Node, pickup: Node2D, drop_position: Vector2, launch_velocity: Vector2) -> void:
+	if not is_instance_valid(parent) or not is_instance_valid(pickup):
+		return
+
+	parent.add_child(pickup)
+	pickup.global_position = drop_position
+	if pickup.has_method("launch"):
+		pickup.call("launch", launch_velocity)
 
 func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite2D:
 	var sprite := Sprite2D.new()
@@ -369,11 +374,11 @@ func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite
 	return sprite
 
 func _make_white_key_material() -> ShaderMaterial:
-	var material := ShaderMaterial.new()
-	material.shader = WHITE_KEY_VFX_SHADER
-	material.set_shader_parameter("key_threshold", 0.93)
-	material.set_shader_parameter("key_softness", 0.08)
-	return material
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = WHITE_KEY_VFX_SHADER
+	shader_material.set_shader_parameter("key_threshold", 0.93)
+	shader_material.set_shader_parameter("key_softness", 0.08)
+	return shader_material
 
 func _get_vfx_origin(damage: DamageData) -> Vector2:
 	if damage.hit_position != Vector2.ZERO:
