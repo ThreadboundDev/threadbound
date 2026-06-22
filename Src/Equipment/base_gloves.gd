@@ -336,7 +336,10 @@ func _start_grapple_fire() -> void:
 		grapple_direction
 	)
 
-	grapple_tip_velocity = grapple_direction * grapple_speed
+	var speed_multiplier: float = 1.0
+	if player and player.has_method("get_momentum_grapple_speed_multiplier"):
+		speed_multiplier = player.get_momentum_grapple_speed_multiplier()
+	grapple_tip_velocity = grapple_direction * grapple_speed * speed_multiplier
 	_reset_active_rope_physics()
 
 	grapple_state = GrappleState.FIRING
@@ -507,7 +510,10 @@ func apply_grapple_velocity(delta: float) -> void:
 
 	# Gentle inward correction if already stretched too far.
 	var excess: float = distance - max_allowed
-	player.velocity -= rope_dir * excess * rope_limit_pull_strength * delta
+	var pull_multiplier: float = 1.0
+	if player.has_method("get_momentum_grapple_pull_multiplier"):
+		pull_multiplier = player.get_momentum_grapple_pull_multiplier()
+	player.velocity -= rope_dir * excess * rope_limit_pull_strength * pull_multiplier * delta
 
 # ===============================
 # MAIN ABILITY LOOP
@@ -522,7 +528,10 @@ func thread_mechanic(delta: float) -> void:
 	if InputMap.has_action(grapple_input_action):
 		if Input.is_action_just_pressed(grapple_input_action):
 			if grapple_state == GrappleState.STOWED:
-				_start_grapple_fire()
+				if not player.has_method("spend_action_points") or player.spend_action_points(1):
+					_start_grapple_fire()
+					if player.has_method("report_momentum_action"):
+						player.report_momentum_action(&"Grapple")
 			else:
 				_begin_grapple_retract()
 

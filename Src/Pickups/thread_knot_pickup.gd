@@ -43,7 +43,10 @@ func _physics_process(delta: float) -> void:
 
 	_age += delta
 	var player := _find_player()
-	if player and _age >= vacuum_delay and global_position.distance_to(player.global_position) <= vacuum_radius:
+	var active_vacuum_radius := vacuum_radius
+	if player and player.has_method("get_coin_vacuum_multiplier"):
+		active_vacuum_radius *= player.get_coin_vacuum_multiplier()
+	if player and _age >= vacuum_delay and global_position.distance_to(player.global_position) <= active_vacuum_radius:
 		_is_vacuuming = true
 
 	if _is_vacuuming and player:

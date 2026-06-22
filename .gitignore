@@ -13,5 +13,19 @@
 # Godot editor temporary scene saves
 *.tscn*.tmp
 
+# Local export/build outputs
+/export_test/
+/export_test.zip
+/Threadbound.exe
+/Threadbound.console.exe
+/Threadbound.pck
+/Threadbound.csproj
+/Threadbound.sln
+/export_presets.cfg
+/icon.svg
+/icon.svg.import
+/ThreadboundMovement.avi
+Assets/UI/Main Menu/*.mp4
+
 # Local IDE/editor folders
 .idea/

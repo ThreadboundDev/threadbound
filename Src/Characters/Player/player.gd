@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal action_points_changed(current: int, maximum: int)
 signal momentum_changed(value: float)
+signal momentum_state_changed(state: StringName, flow_active: bool)
 
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
@@ -46,9 +47,12 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 		_sync_hud()
 		action_points_changed.emit(current_action_points, max_action_points)
 
+@export_range(0.5, 30.0, 0.5) var action_point_recharge_time := 10.0
+
 @export_range(0.0, 100.0, 1.0) var momentum := 0.0:
 	set(value):
 		momentum = clampf(value, 0.0, 100.0)
+		_update_momentum_state()
 		_sync_hud()
 		momentum_changed.emit(momentum)
 
@@ -71,6 +75,86 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 # Base grapple movement while rope is taut.
 @export var base_grapple_steer_speed: float = 120.0
 @export var base_grapple_steer_accel: float = 500.0
+
+# Momentum tuning. Abilities should call report_momentum_action(category) when
+# they successfully fire, connect, or otherwise complete a meaningful action.
+@export_group("Momentum Gains")
+@export var momentum_gain_movement := 0.32
+@export var momentum_gain_jump := 2.2
+@export var momentum_gain_dash := 11.0
+@export var momentum_gain_grapple := 12.0
+@export var momentum_gain_attack := 4.0
+@export var momentum_gain_pogo := 9.0
+@export var momentum_gain_utility := 3.0
+@export var momentum_gain_equipment_swap := 1.5
+@export var momentum_gain_use_after_swap := 10.0
+
+@export_group("Momentum Rules")
+@export var momentum_movement_report_interval := 0.16
+@export var momentum_movement_min_speed := 90.0
+@export var momentum_movement_reference_speed := 520.0
+@export var momentum_movement_stale_duration := 5.0
+@export var momentum_stale_duration := 7.0
+@export_range(0.0, 1.0, 0.05) var momentum_stale_recovery_fraction := 0.25
+@export var momentum_stale_penalty := 1.35
+@export var momentum_weave_bonus_per_category := 0.12
+@export var momentum_weave_recent_count := 4
+@export var momentum_use_after_swap_window := 2.5
+@export var momentum_low_threshold := 30.0
+@export var momentum_high_threshold := 70.0
+@export var flow_state_drain_delay := 1.35
+@export var flow_state_drain_base := 3.0
+@export var flow_state_drain_growth := 0.72
+@export var flow_state_drain_max := 13.0
+@export var momentum_damage_loss_per_damage := 8.0
+@export var momentum_damage_loss_current_scale := 0.06
+@export_range(1.0, 100.0, 1.0) var debug_momentum_fill_amount := 25.0
+
+@export_group("Momentum Multipliers")
+@export var momentum_action_point_recharge_low := 0.9
+@export var momentum_action_point_recharge_mid := 1.0
+@export var momentum_action_point_recharge_high := 1.18
+@export var momentum_action_point_recharge_flow := 1.35
+@export var momentum_move_speed_low := 0.92
+@export var momentum_move_speed_mid := 1.0
+@export var momentum_move_speed_high := 1.1
+@export var momentum_move_speed_flow := 1.18
+@export var momentum_jump_low := 0.94
+@export var momentum_jump_mid := 1.0
+@export var momentum_jump_high := 1.07
+@export var momentum_jump_flow := 1.12
+@export var momentum_air_control_low := 0.9
+@export var momentum_air_control_mid := 1.0
+@export var momentum_air_control_high := 1.12
+@export var momentum_air_control_flow := 1.22
+@export var momentum_grapple_speed_low := 0.94
+@export var momentum_grapple_speed_mid := 1.0
+@export var momentum_grapple_speed_high := 1.12
+@export var momentum_grapple_speed_flow := 1.22
+@export var momentum_grapple_pull_low := 0.92
+@export var momentum_grapple_pull_mid := 1.0
+@export var momentum_grapple_pull_high := 1.12
+@export var momentum_grapple_pull_flow := 1.24
+@export var momentum_attack_speed_low := 0.94
+@export var momentum_attack_speed_mid := 1.0
+@export var momentum_attack_speed_high := 1.12
+@export var momentum_attack_speed_flow := 1.22
+@export var momentum_dash_speed_low := 0.95
+@export var momentum_dash_speed_mid := 1.0
+@export var momentum_dash_speed_high := 1.1
+@export var momentum_dash_speed_flow := 1.18
+@export var momentum_dash_iframe_low := 0.9
+@export var momentum_dash_iframe_mid := 1.0
+@export var momentum_dash_iframe_high := 1.15
+@export var momentum_dash_iframe_flow := 1.3
+@export var momentum_coin_vacuum_low := 0.92
+@export var momentum_coin_vacuum_mid := 1.0
+@export var momentum_coin_vacuum_high := 1.2
+@export var momentum_coin_vacuum_flow := 1.45
+@export var momentum_decay_resistance_low := 0.0
+@export var momentum_decay_resistance_mid := 0.05
+@export var momentum_decay_resistance_high := 0.12
+@export var momentum_decay_resistance_flow := 0.2
 
 # Equipment flip offsets
 @export var equipment_right_offset := Vector2.ZERO
@@ -96,6 +180,19 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 # STATE
 # ===============================
 const ATTACK_DIRECTION_DEADZONE := 0.15
+const MOMENTUM_CATEGORY_MOVEMENT := &"Movement"
+const MOMENTUM_CATEGORY_JUMP := &"Jump"
+const MOMENTUM_CATEGORY_DASH := &"Dash"
+const MOMENTUM_CATEGORY_GRAPPLE := &"Grapple"
+const MOMENTUM_CATEGORY_ATTACK := &"Attack"
+const MOMENTUM_CATEGORY_POGO := &"Pogo"
+const MOMENTUM_CATEGORY_UTILITY := &"Utility"
+const MOMENTUM_CATEGORY_EQUIPMENT_SWAP := &"EquipmentSwap"
+const MOMENTUM_CATEGORY_USE_AFTER_SWAP := &"UseAfterSwap"
+const MOMENTUM_STATE_LOW := &"Low"
+const MOMENTUM_STATE_MID := &"Mid"
+const MOMENTUM_STATE_HIGH := &"High"
+const MOMENTUM_STATE_FLOW := &"Flow"
 
 var coyote_timer: float = 0.0
 var last_direction: int = 1
@@ -109,6 +206,20 @@ var air_jump_available: bool = true
 
 var jump_charge_ratio: float = 0.0
 var dash_charge_ratio: float = 0.0
+var _action_point_recharge_timers: Array[float] = []
+var _momentum_staleness: Dictionary = {}
+var _momentum_recent_categories: Array[StringName] = []
+var _movement_momentum_timer := 0.0
+var _movement_momentum_distance := 0.0
+var _movement_momentum_last_position := Vector2.ZERO
+var _flow_state_active := false
+var _flow_state_duration := 0.0
+var _momentum_state: StringName = MOMENTUM_STATE_LOW
+var _pending_use_after_swap := false
+var _use_after_swap_timer := 0.0
+var _momentum_system_ready := false
+var _dash_iframe_timer := 0.0
+var _debug_momentum_was_pressed := false
 
 var current_body_anim := ""
 var current_equip_anim := ""
@@ -157,6 +268,7 @@ func _ready() -> void:
 	if not current_chest:
 		current_chest = BaseChest.new(self)
 
+	_ensure_action_point_timers()
 	add_to_group("player")
 	print("✅ Player ready - Scene-based equipment system active")
 
@@ -166,6 +278,8 @@ func _ready() -> void:
 	if base_gloves_scene:
 		equip_gloves(base_gloves_scene)
 
+	_movement_momentum_last_position = global_position
+	_momentum_system_ready = true
 	update_equipment_facing()
 	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
@@ -184,6 +298,9 @@ func equip_gloves(glove_scene: PackedScene) -> void:
 	if current_gloves.has_method("on_equipped"):
 		current_gloves.on_equipped()
 
+	if _momentum_system_ready:
+		report_momentum_action(MOMENTUM_CATEGORY_EQUIPMENT_SWAP)
+
 	update_equipment_facing()
 
 func unequip_gloves() -> void:
@@ -200,9 +317,12 @@ func unequip_gloves() -> void:
 # ===============================
 func _physics_process(delta: float) -> void:
 	_update_god_mode_toggle()
+	_update_debug_momentum_fill()
+	_process_momentum(delta)
+	_process_action_point_recharge(delta)
 
 	if is_dead:
-		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
+		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
 		velocity.y += _get_current_gravity() * delta
 		velocity.y = min(velocity.y, max_fall_speed)
 		move_and_slide()
@@ -234,10 +354,10 @@ func _physics_process(delta: float) -> void:
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
 	if not grapple_restricting and not is_hurt:
-		var control = 1.0 if is_on_floor() else air_control_mult
-		velocity.x = speed * horizontal_input * control
+		var control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
+		velocity.x = speed * get_momentum_move_speed_multiplier() * horizontal_input * control
 	elif is_hurt:
-		velocity.x = move_toward(velocity.x, 0.0, speed * delta)
+		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
 
 	if god_mode_enabled:
 		_apply_god_mode_flight(delta)
@@ -277,6 +397,7 @@ func _physics_process(delta: float) -> void:
 		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
+	_process_movement_momentum(delta)
 
 	handle_wall_cling(delta)
 	update_animations(horizontal_input)
@@ -302,6 +423,13 @@ func _update_god_mode_toggle() -> void:
 			health_component.heal(health_component.max_health)
 		_sync_hud()
 		print("God mode: ", "ON" if god_mode_enabled else "OFF")
+
+func _update_debug_momentum_fill() -> void:
+	var pressed := Input.is_key_pressed(KEY_F8)
+	if pressed and not _debug_momentum_was_pressed:
+		_change_momentum(debug_momentum_fill_amount)
+		print("Debug momentum: ", momentum)
+	_debug_momentum_was_pressed = pressed
 
 func _apply_god_mode_flight(delta: float) -> void:
 	var vertical_input := 0.0
@@ -457,9 +585,10 @@ func update_combat_timers(delta: float) -> void:
 
 	attack_timer += delta
 	_sync_attack_hitbox_to_slash()
-	var windup := player_stats.attack_windup
-	var active_time := player_stats.attack_active_time
-	var recovery := player_stats.attack_recovery
+	var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
+	var windup := player_stats.attack_windup / attack_speed_multiplier
+	var active_time := player_stats.attack_active_time / attack_speed_multiplier
+	var recovery := player_stats.attack_recovery / attack_speed_multiplier
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
@@ -482,7 +611,7 @@ func start_attack() -> void:
 
 	is_attacking = true
 	attack_timer = 0.0
-	attack_cooldown_timer = player_stats.attack_cooldown
+	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
 	attack_active_started = false
 	attack_active_finished = false
 	attack_direction = _get_attack_input_direction()
@@ -609,20 +738,45 @@ func _build_attack_damage() -> DamageData:
 func set_action_points(current: int, maximum: int = max_action_points) -> void:
 	max_action_points = maximum
 	current_action_points = current
+	_ensure_action_point_timers()
 
 func spend_action_points(amount: int) -> bool:
 	if amount <= 0:
 		return true
+	_ensure_action_point_timers()
 	if current_action_points < amount:
 		return false
 
-	current_action_points -= amount
+	var spent := 0
+	for i in range(max_action_points - 1, -1, -1):
+		if _action_point_recharge_timers[i] <= 0.0:
+			_action_point_recharge_timers[i] = action_point_recharge_time
+			spent += 1
+			if spent >= amount:
+				break
+
+	current_action_points = _count_available_action_points()
 	return true
 
 func restore_action_points(amount: int) -> void:
-	current_action_points += max(0, amount)
+	if amount <= 0:
+		return
+
+	_ensure_action_point_timers()
+	var restored := 0
+	for i in max_action_points:
+		if _action_point_recharge_timers[i] > 0.0:
+			_action_point_recharge_timers[i] = 0.0
+			restored += 1
+			if restored >= amount:
+				break
+
+	current_action_points = _count_available_action_points()
 
 func refill_action_points() -> void:
+	_ensure_action_point_timers()
+	for i in _action_point_recharge_timers.size():
+		_action_point_recharge_timers[i] = 0.0
 	current_action_points = max_action_points
 
 func set_momentum(value: float) -> void:
@@ -643,22 +797,297 @@ func _sync_hud() -> void:
 		hud.set_health(health_component.current_health, health_component.max_health)
 	if hud.has_method("set_action_points"):
 		hud.set_action_points(current_action_points, max_action_points)
+	if hud.has_method("set_action_point_cooldowns"):
+		hud.set_action_point_cooldowns(_get_action_point_cooldown_ratios())
 	if hud.has_method("set_momentum"):
 		hud.set_momentum(momentum)
+	if hud.has_method("set_momentum_state"):
+		hud.set_momentum_state(_momentum_state, _flow_state_active)
 	if hud.has_method("set_thread_knots"):
 		hud.set_thread_knots(thread_knot_count)
+
+func _process_action_point_recharge(delta: float) -> void:
+	_ensure_action_point_timers()
+	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier()
+	var changed := false
+	for i in _action_point_recharge_timers.size():
+		if _action_point_recharge_timers[i] <= 0.0:
+			continue
+
+		_action_point_recharge_timers[i] = maxf(0.0, _action_point_recharge_timers[i] - recharge_delta)
+		changed = true
+
+	if changed:
+		current_action_points = _count_available_action_points()
+		_sync_hud()
+
+func _ensure_action_point_timers() -> void:
+	while _action_point_recharge_timers.size() < max_action_points:
+		_action_point_recharge_timers.append(0.0)
+	while _action_point_recharge_timers.size() > max_action_points:
+		_action_point_recharge_timers.pop_back()
+
+func _count_available_action_points() -> int:
+	_ensure_action_point_timers()
+	var available := 0
+	for timer in _action_point_recharge_timers:
+		if timer <= 0.0:
+			available += 1
+	return clampi(available, 0, max_action_points)
+
+func _get_action_point_cooldown_ratios() -> Array[float]:
+	_ensure_action_point_timers()
+	var ratios: Array[float] = []
+	var recharge_time := maxf(action_point_recharge_time, 0.001)
+	for timer in _action_point_recharge_timers:
+		ratios.append(clampf(timer / recharge_time, 0.0, 1.0))
+	return ratios
+
+func report_momentum_action(category: StringName, strength: float = 1.0) -> void:
+	if strength <= 0.0:
+		return
+
+	_apply_momentum_category(category, strength)
+
+	if _pending_use_after_swap and category != MOMENTUM_CATEGORY_EQUIPMENT_SWAP and category != MOMENTUM_CATEGORY_USE_AFTER_SWAP and category != MOMENTUM_CATEGORY_MOVEMENT:
+		_pending_use_after_swap = false
+		_use_after_swap_timer = 0.0
+		_apply_momentum_category(MOMENTUM_CATEGORY_USE_AFTER_SWAP, 1.0)
+
+func start_dash_iframe(duration: float) -> void:
+	_dash_iframe_timer = maxf(_dash_iframe_timer, duration * get_momentum_dash_iframe_multiplier())
+
+func get_momentum_action_point_recharge_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_action_point_recharge_low, momentum_action_point_recharge_mid, momentum_action_point_recharge_high, momentum_action_point_recharge_flow)
+
+func get_momentum_move_speed_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_move_speed_low, momentum_move_speed_mid, momentum_move_speed_high, momentum_move_speed_flow)
+
+func get_momentum_jump_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_jump_low, momentum_jump_mid, momentum_jump_high, momentum_jump_flow)
+
+func get_momentum_air_control_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_air_control_low, momentum_air_control_mid, momentum_air_control_high, momentum_air_control_flow)
+
+func get_momentum_grapple_speed_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_grapple_speed_low, momentum_grapple_speed_mid, momentum_grapple_speed_high, momentum_grapple_speed_flow)
+
+func get_momentum_grapple_pull_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_grapple_pull_low, momentum_grapple_pull_mid, momentum_grapple_pull_high, momentum_grapple_pull_flow)
+
+func get_momentum_attack_speed_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_attack_speed_low, momentum_attack_speed_mid, momentum_attack_speed_high, momentum_attack_speed_flow)
+
+func get_momentum_dash_speed_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_dash_speed_low, momentum_dash_speed_mid, momentum_dash_speed_high, momentum_dash_speed_flow)
+
+func get_momentum_dash_iframe_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_dash_iframe_low, momentum_dash_iframe_mid, momentum_dash_iframe_high, momentum_dash_iframe_flow)
+
+func get_coin_vacuum_multiplier() -> float:
+	return _get_momentum_multiplier(momentum_coin_vacuum_low, momentum_coin_vacuum_mid, momentum_coin_vacuum_high, momentum_coin_vacuum_flow)
+
+func _process_momentum(delta: float) -> void:
+	if _dash_iframe_timer > 0.0:
+		_dash_iframe_timer = maxf(0.0, _dash_iframe_timer - delta)
+
+	if _pending_use_after_swap:
+		_use_after_swap_timer -= delta
+		if _use_after_swap_timer <= 0.0:
+			_pending_use_after_swap = false
+
+	if not _flow_state_active:
+		return
+
+	_flow_state_duration += delta
+	if _flow_state_duration < flow_state_drain_delay:
+		return
+
+	var active_flow_time := _flow_state_duration - flow_state_drain_delay
+	var drain := minf(flow_state_drain_base + active_flow_time * flow_state_drain_growth, flow_state_drain_max)
+	_change_momentum(-drain * delta)
+	if momentum <= 0.0:
+		_flow_state_active = false
+		_flow_state_duration = 0.0
+		_update_momentum_state()
+
+func _process_movement_momentum(delta: float) -> void:
+	var moved_distance := global_position.distance_to(_movement_momentum_last_position)
+	_movement_momentum_last_position = global_position
+
+	if is_dead or is_hurt:
+		_movement_momentum_distance = 0.0
+		return
+
+	_movement_momentum_distance += moved_distance
+	_movement_momentum_timer -= delta
+	if _movement_momentum_timer > 0.0:
+		return
+
+	var sample_time := maxf(momentum_movement_report_interval, 0.001)
+	var sample_speed := _movement_momentum_distance / sample_time
+	_movement_momentum_timer = momentum_movement_report_interval
+	_movement_momentum_distance = 0.0
+
+	if sample_speed < momentum_movement_min_speed:
+		return
+
+	var strength := clampf(sample_speed / maxf(momentum_movement_reference_speed, 1.0), 0.15, 1.6)
+	report_momentum_action(MOMENTUM_CATEGORY_MOVEMENT, strength)
+
+func _apply_momentum_category(category: StringName, strength: float) -> void:
+	var base_gain := _get_momentum_base_gain(category)
+	if base_gain == 0.0:
+		return
+
+	if category == MOMENTUM_CATEGORY_MOVEMENT:
+		var movement_stale_timer := float(_momentum_staleness.get(category, 0.0))
+		var movement_duration := maxf(momentum_movement_stale_duration, 0.001)
+		var movement_stale_multiplier := maxf(0.0, 1.0 - movement_stale_timer / movement_duration)
+		var movement_gain := base_gain * strength * movement_stale_multiplier * _get_momentum_gain_curve_multiplier()
+		_change_momentum(movement_gain)
+		_reduce_other_momentum_staleness(category)
+		_momentum_staleness[category] = minf(movement_duration, movement_stale_timer + momentum_movement_report_interval)
+		_update_recent_momentum_categories(category)
+		return
+
+	var stale_duration := maxf(momentum_stale_duration, 0.001)
+	var stale_timer := float(_momentum_staleness.get(category, 0.0))
+	var stale_ratio := clampf(stale_timer / stale_duration, 0.0, 1.0)
+	var stale_multiplier := maxf(0.0, 1.0 - stale_ratio)
+	var gain := base_gain * strength * stale_multiplier * _get_momentum_gain_curve_multiplier() * _get_weaving_multiplier(category)
+
+	if stale_ratio >= 1.0:
+		gain -= momentum_stale_penalty
+
+	_change_momentum(gain)
+	_reduce_other_momentum_staleness(category)
+	_momentum_staleness[category] = stale_duration
+	_update_recent_momentum_categories(category)
+
+	if category == MOMENTUM_CATEGORY_EQUIPMENT_SWAP:
+		_pending_use_after_swap = true
+		_use_after_swap_timer = momentum_use_after_swap_window
+
+func _get_momentum_base_gain(category: StringName) -> float:
+	match category:
+		MOMENTUM_CATEGORY_MOVEMENT:
+			return momentum_gain_movement
+		MOMENTUM_CATEGORY_JUMP:
+			return momentum_gain_jump
+		MOMENTUM_CATEGORY_DASH:
+			return momentum_gain_dash
+		MOMENTUM_CATEGORY_GRAPPLE:
+			return momentum_gain_grapple
+		MOMENTUM_CATEGORY_ATTACK:
+			return momentum_gain_attack
+		MOMENTUM_CATEGORY_POGO:
+			return momentum_gain_pogo
+		MOMENTUM_CATEGORY_UTILITY:
+			return momentum_gain_utility
+		MOMENTUM_CATEGORY_EQUIPMENT_SWAP:
+			return momentum_gain_equipment_swap
+		MOMENTUM_CATEGORY_USE_AFTER_SWAP:
+			return momentum_gain_use_after_swap
+	return 0.0
+
+func _get_momentum_gain_curve_multiplier() -> float:
+	if momentum < momentum_low_threshold:
+		return 1.25
+	if momentum < momentum_high_threshold:
+		return 1.0
+	if momentum < 100.0:
+		var high_span := maxf(1.0, 100.0 - momentum_high_threshold)
+		return lerpf(0.72, 0.28, (momentum - momentum_high_threshold) / high_span)
+	return 0.15
+
+func _get_weaving_multiplier(category: StringName) -> float:
+	if _momentum_recent_categories.is_empty() or _momentum_recent_categories.back() == category:
+		return 1.0
+
+	var distinct := {}
+	for recent_category in _momentum_recent_categories:
+		if recent_category != category:
+			distinct[recent_category] = true
+
+	return 1.0 + minf(0.6, float(distinct.size()) * momentum_weave_bonus_per_category)
+
+func _reduce_other_momentum_staleness(category: StringName) -> void:
+	for key in _momentum_staleness.keys():
+		if key == category:
+			continue
+		var timer := float(_momentum_staleness[key])
+		var duration := momentum_movement_stale_duration if key == MOMENTUM_CATEGORY_MOVEMENT else momentum_stale_duration
+		var reduction := maxf(duration, 0.001) * momentum_stale_recovery_fraction
+		_momentum_staleness[key] = maxf(0.0, timer - reduction)
+
+func _update_recent_momentum_categories(category: StringName) -> void:
+	_momentum_recent_categories.append(category)
+	while _momentum_recent_categories.size() > momentum_weave_recent_count:
+		_momentum_recent_categories.pop_front()
+
+func _change_momentum(amount: float) -> void:
+	if amount == 0.0:
+		return
+
+	momentum = clampf(momentum + amount, 0.0, 100.0)
+	if momentum >= 100.0 and not _flow_state_active:
+		_flow_state_active = true
+		_flow_state_duration = 0.0
+		_update_momentum_state()
+
+func _lose_momentum_from_damage(damage: DamageData) -> void:
+	var severity := maxf(1.0, float(damage.amount))
+	var resistance := _get_momentum_multiplier(momentum_decay_resistance_low, momentum_decay_resistance_mid, momentum_decay_resistance_high, momentum_decay_resistance_flow)
+	var loss := (momentum_damage_loss_per_damage * severity) + (momentum * momentum_damage_loss_current_scale * severity)
+	_change_momentum(-loss * (1.0 - clampf(resistance, 0.0, 0.9)))
+
+func _get_momentum_multiplier(low_value: float, mid_value: float, high_value: float, flow_value: float) -> float:
+	if _flow_state_active:
+		return flow_value
+
+	if momentum <= momentum_low_threshold:
+		return lerpf(low_value, mid_value, clampf(momentum / maxf(momentum_low_threshold, 1.0), 0.0, 1.0))
+	if momentum < momentum_high_threshold:
+		return mid_value
+
+	var high_span := maxf(1.0, 100.0 - momentum_high_threshold)
+	return lerpf(mid_value, high_value, clampf((momentum - momentum_high_threshold) / high_span, 0.0, 1.0))
+
+func _update_momentum_state() -> void:
+	var next_state := MOMENTUM_STATE_MID
+	if _flow_state_active:
+		next_state = MOMENTUM_STATE_FLOW
+	elif momentum < momentum_low_threshold:
+		next_state = MOMENTUM_STATE_LOW
+	elif momentum >= momentum_high_threshold:
+		next_state = MOMENTUM_STATE_HIGH
+
+	if next_state == _momentum_state:
+		return
+
+	_momentum_state = next_state
+	momentum_state_changed.emit(_momentum_state, _flow_state_active)
 
 func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
 	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
+	if attack_direction.y > 0.55 and not is_on_floor():
+		report_momentum_action(MOMENTUM_CATEGORY_POGO)
+	else:
+		report_momentum_action(MOMENTUM_CATEGORY_ATTACK, 1.25)
 
 func _on_health_changed(_current: int, _maximum: int) -> void:
 	_sync_hud()
 
 func should_ignore_health_damage(_damage: DamageData) -> bool:
-	return god_mode_enabled
+	return god_mode_enabled or _dash_iframe_timer > 0.0
 
 func receive_ignored_health_hit(damage: DamageData) -> void:
+	if _dash_iframe_timer > 0.0 and not god_mode_enabled:
+		_sync_hud()
+		return
+
 	_on_damaged(damage)
 	_sync_hud()
 
@@ -678,6 +1107,7 @@ func _on_damaged(damage: DamageData) -> void:
 		knockback = Vector2(sign(global_position.x - source_node.global_position.x) * player_stats.knockback_strength, -90.0)
 
 	velocity = knockback
+	_lose_momentum_from_damage(damage)
 	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
