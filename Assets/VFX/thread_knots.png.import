@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btrekj20u2awg"
-path="res://.godot/imported/hp_bar_texture_white.png-b8436247a3e21c0a49baa72bb32bc09e.ctex"
+uid="uid://dafth16a8cwud"
+path="res://.godot/imported/thread_knots.png-e69dec8e83c16357861d9651a659dc60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/hp_bar_texture_white.png"
-dest_files=["res://.godot/imported/hp_bar_texture_white.png-b8436247a3e21c0a49baa72bb32bc09e.ctex"]
+source_file="res://Assets/VFX/thread_knots.png"
+dest_files=["res://.godot/imported/thread_knots.png-e69dec8e83c16357861d9651a659dc60.ctex"]
 
 [params]
 

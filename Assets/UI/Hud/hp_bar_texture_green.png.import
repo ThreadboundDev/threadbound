@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctqavo45xjrdr"
-path="res://.godot/imported/momentum_bar_endcaps.png-0f16444045fac3cc95d51d7233e1bc25.ctex"
+uid="uid://dmi0essia8c0e"
+path="res://.godot/imported/hp_bar_texture_green.png-e1ebf8dd89a2c26c551f51c3720ce15b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/momentum_bar_endcaps.png"
-dest_files=["res://.godot/imported/momentum_bar_endcaps.png-0f16444045fac3cc95d51d7233e1bc25.ctex"]
+source_file="res://Assets/UI/Hud/hp_bar_texture_green.png"
+dest_files=["res://.godot/imported/hp_bar_texture_green.png-e1ebf8dd89a2c26c551f51c3720ce15b.ctex"]
 
 [params]
 

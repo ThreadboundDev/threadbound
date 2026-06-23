@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct7git7xdtjxv"
-path="res://.godot/imported/hud_no_momentum.png-45392265773275ab0435f7b91fe08b89.ctex"
+uid="uid://ctqavo45xjrdr"
+path="res://.godot/imported/momentum_bar_endcaps.png-6aa2a9f2d356495a3a78eb1d35eed409.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/hud_no_momentum.png"
-dest_files=["res://.godot/imported/hud_no_momentum.png-45392265773275ab0435f7b91fe08b89.ctex"]
+source_file="res://Assets/UI/Hud/momentum_bar_endcaps.png"
+dest_files=["res://.godot/imported/momentum_bar_endcaps.png-6aa2a9f2d356495a3a78eb1d35eed409.ctex"]
 
 [params]
 

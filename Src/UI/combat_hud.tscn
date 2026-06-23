@@ -1,18 +1,18 @@
 [gd_scene format=3 uid="uid://bk6sithumcg8y"]
 
 [ext_resource type="Script" uid="uid://1hfdow24pasf" path="res://Src/UI/combat_hud.gd" id="1_hud"]
-[ext_resource type="Texture2D" uid="uid://ct7git7xdtjxv" path="res://Assets/UI/hud_no_momentum.png" id="2_frame"]
+[ext_resource type="Texture2D" uid="uid://ct7git7xdtjxv" path="res://Assets/UI/Hud/hud_no_momentum.png" id="2_frame"]
 [ext_resource type="Script" uid="uid://br7xx5380ryc2" path="res://Src/UI/combat_health_bar.gd" id="3_health_bar"]
-[ext_resource type="Texture2D" uid="uid://c51r5qwdm0g3v" path="res://Assets/UI/hp_bar_texture_negative.png" id="4_hp_negative"]
-[ext_resource type="Texture2D" uid="uid://dmi0essia8c0e" path="res://Assets/UI/hp_bar_texture_green.png" id="5_hp_green"]
-[ext_resource type="Texture2D" uid="uid://bjijf1wmbbyvo" path="res://Assets/UI/hp_bar_texture_yellow.png" id="6_hp_yellow"]
-[ext_resource type="Texture2D" uid="uid://vklctecg3fot" path="res://Assets/UI/hp_bar_texture_orange.png" id="7_hp_orange"]
-[ext_resource type="Texture2D" uid="uid://csvrxxx6d8u4e" path="res://Assets/UI/hp_bar_texture_red.png" id="8_hp_red"]
+[ext_resource type="Texture2D" uid="uid://c51r5qwdm0g3v" path="res://Assets/UI/Hud/hp_bar_texture_negative.png" id="4_hp_negative"]
+[ext_resource type="Texture2D" uid="uid://dmi0essia8c0e" path="res://Assets/UI/Hud/hp_bar_texture_green.png" id="5_hp_green"]
+[ext_resource type="Texture2D" uid="uid://bjijf1wmbbyvo" path="res://Assets/UI/Hud/hp_bar_texture_yellow.png" id="6_hp_yellow"]
+[ext_resource type="Texture2D" uid="uid://vklctecg3fot" path="res://Assets/UI/Hud/hp_bar_texture_orange.png" id="7_hp_orange"]
+[ext_resource type="Texture2D" uid="uid://csvrxxx6d8u4e" path="res://Assets/UI/Hud/hp_bar_texture_red.png" id="8_hp_red"]
 [ext_resource type="Script" uid="uid://d0iudj04ffbw0" path="res://Src/UI/combat_momentum_bar.gd" id="9_momentum_bar"]
-[ext_resource type="Texture2D" uid="uid://dj7jh1fldwmbb" path="res://Assets/UI/momentum_bar_texture.png" id="10_momentum_fill"]
-[ext_resource type="Texture2D" uid="uid://ctqavo45xjrdr" path="res://Assets/UI/momentum_bar_endcaps.png" id="11_momentum_caps"]
-[ext_resource type="Texture2D" uid="uid://co3r0e37vuumv" path="res://Assets/UI/action_point_orb_colorless.png" id="12_action_orb"]
-[ext_resource type="Texture2D" uid="uid://bp1db0wq5b0xv" path="res://Assets/UI/thread_knot_counter.png" id="13_thread_knot_counter"]
+[ext_resource type="Texture2D" uid="uid://dj7jh1fldwmbb" path="res://Assets/UI/Hud/momentum_bar_texture.png" id="10_momentum_fill"]
+[ext_resource type="Texture2D" uid="uid://ctqavo45xjrdr" path="res://Assets/UI/Hud/momentum_bar_endcaps.png" id="11_momentum_caps"]
+[ext_resource type="Texture2D" uid="uid://co3r0e37vuumv" path="res://Assets/UI/Hud/action_point_orb_colorless.png" id="12_action_orb"]
+[ext_resource type="Texture2D" uid="uid://bp1db0wq5b0xv" path="res://Assets/UI/Hud/thread_knot_counter.png" id="13_thread_knot_counter"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="14_threadbound_label_settings"]
 
 [node name="CombatHUD" type="Control" unique_id=1968709405]
@@ -59,22 +59,23 @@ corner_segments = 12
 
 [node name="MomentumBar" type="Control" parent="HUDRoot" unique_id=428083362]
 anchors_preset = 0
-offset_left = 214.0
+offset_left = 213.0
 offset_top = 103.0
-offset_right = 482.0
+offset_right = 481.0
 offset_bottom = 134.0
 mouse_filter = 2
 script = ExtResource("9_momentum_bar")
 fill_texture = ExtResource("10_momentum_fill")
-fill_rect = Rect2(28, 9, 212, 20)
+fill_rect = Rect2(0, -5, 325, 41)
 value = 1.0
 
 [node name="MomentumCaps" type="TextureRect" parent="HUDRoot" unique_id=702580787]
 layout_mode = 0
 offset_left = 214.0
-offset_top = 103.0
+offset_top = 99.0
 offset_right = 482.0
-offset_bottom = 134.0
+offset_bottom = 130.0
+scale = Vector2(1.2, 1.2)
 mouse_filter = 2
 texture = ExtResource("11_momentum_caps")
 expand_mode = 1
@@ -160,6 +161,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

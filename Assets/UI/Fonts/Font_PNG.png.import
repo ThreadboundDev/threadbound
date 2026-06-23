@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dafth16a8cwud"
-path="res://.godot/imported/thread_knots.png-f6de81a900df19c77532e072079ca508.ctex"
+uid="uid://ctpbrkn6lsvpj"
+path="res://.godot/imported/Font_PNG.png-9742f655158cb0fcdf791897fc46ace6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/thread_knots.png"
-dest_files=["res://.godot/imported/thread_knots.png-f6de81a900df19c77532e072079ca508.ctex"]
+source_file="res://Assets/UI/Fonts/Font_PNG.png"
+dest_files=["res://.godot/imported/Font_PNG.png-9742f655158cb0fcdf791897fc46ace6.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Src/Pickups/thread_knot_pickup.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/thread_knots.png" id="2_texture"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/thread_knots.png" id="2_texture"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_thread_knot"]
 atlas = ExtResource("2_texture")
