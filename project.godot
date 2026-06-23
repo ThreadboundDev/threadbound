@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Threadbound"
 run/main_scene="res://Src/Environment/World/Chamber Of The First Weave.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 PhantomCameraManager="*uid://duq6jhf6unyis"
 DebugUI="*res://Src/Global/debug_ui.gd"
 EquipManager="*res://Src/Equipment/equip_manager.gd"
+DemoProgress="*res://Src/Global/demo_progress.gd"
 
 [display]
 

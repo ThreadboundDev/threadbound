@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="2_label_settings"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_proximity"]
+size = Vector2(900, 620)
+
+[node name="BaseSavePoint" type="Area2D"]
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="SavePointSprite" type="AnimatedSprite2D" parent="."]
+z_index = 2
+
+[node name="ProximityShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -160)
+shape = SubResource("RectangleShape2D_proximity")
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+z_index = 5
+offset_left = -190.0
+offset_top = -780.0
+offset_right = 190.0
+offset_bottom = -700.0
+text = "W"
+label_settings = ExtResource("2_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1

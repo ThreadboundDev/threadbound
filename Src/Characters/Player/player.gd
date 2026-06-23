@@ -415,6 +415,8 @@ func _process(_delta: float) -> void:
 
 	if is_near_interactable and current_selector and Input.is_action_just_pressed("move_up"):
 		print("Interacting with: ", current_selector.name)
+		if current_selector.has_method("interact"):
+			current_selector.interact(self)
 
 func _update_god_mode_toggle() -> void:
 	if Input.is_action_just_pressed("debug_god_mode"):

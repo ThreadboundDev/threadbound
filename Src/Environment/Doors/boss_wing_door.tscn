@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/boss_wing_door.png" id="2_boss_door"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/boss_door_open.png" id="3_boss_open"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_interact"]
+size = Vector2(820, 840)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_blocker"]
+size = Vector2(470, 760)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boss_door"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_boss_door")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}]
+
+[node name="BossWingDoor" instance=ExtResource("1_base_door")]
+door_kind = 1
+display_name = "Tri-Thread Door"
+message = "The tri-thread seal holds. Collect the three threads to open the way forward."
+open_after_message = false
+door_color = Color(1, 1, 1, 1)
+opening_sprite_sheet = ExtResource("3_boss_open")
+
+[node name="FogPanel" parent="." index="0"]
+polygon = PackedVector2Array(-600, -820, 600, -820, 600, 150, -600, 150)
+
+[node name="DoorSprite" parent="." index="1"]
+scale = Vector2(0.56, 0.56)
+sprite_frames = SubResource("SpriteFrames_boss_door")
+animation = &"closed"
+
+[node name="CollisionShape2D" parent="Blocker" index="0"]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_boss_blocker")
+
+[node name="InteractionShape" parent="." index="3"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_boss_interact")
+
+[node name="PromptLabel" parent="." index="4"]
+offset_top = -640.0
+offset_bottom = -560.0
