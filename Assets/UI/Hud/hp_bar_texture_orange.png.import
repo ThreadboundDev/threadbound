@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp1db0wq5b0xv"
-path="res://.godot/imported/thread_knot_counter.png-7befb1a6aacbf01b5f8eafe7ef86145c.ctex"
+uid="uid://vklctecg3fot"
+path="res://.godot/imported/hp_bar_texture_orange.png-1ee2f22f1dc30a3b348b147d731779e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/thread_knot_counter.png"
-dest_files=["res://.godot/imported/thread_knot_counter.png-7befb1a6aacbf01b5f8eafe7ef86145c.ctex"]
+source_file="res://Assets/UI/Hud/hp_bar_texture_orange.png"
+dest_files=["res://.godot/imported/hp_bar_texture_orange.png-1ee2f22f1dc30a3b348b147d731779e5.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmi0essia8c0e"
-path="res://.godot/imported/hp_bar_texture_green.png-2fa988bf9f2688eccf3ed9cfb2fb863f.ctex"
+uid="uid://dwb1cooutxvi"
+path="res://.godot/imported/threadbound_icon.png-cb7e289ffb5df43a3d6056f07c95c099.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/hp_bar_texture_green.png"
-dest_files=["res://.godot/imported/hp_bar_texture_green.png-2fa988bf9f2688eccf3ed9cfb2fb863f.ctex"]
+source_file="res://Assets/UI/threadbound_icon.png"
+dest_files=["res://.godot/imported/threadbound_icon.png-cb7e289ffb5df43a3d6056f07c95c099.ctex"]
 
 [params]
 
