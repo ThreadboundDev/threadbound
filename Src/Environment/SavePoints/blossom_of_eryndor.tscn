@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c1hxr2mg4bjmm"]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/SavePoints/base_save_point.tscn" id="1_base_save_point"]
+[ext_resource type="Texture2D" uid="uid://cw5btlvcifkv8" path="res://Assets/Environment/Blossom of Eryndor/blossom_of_eryndor_spritesheet.png" id="2_sheet"]
+
+[node name="BlossomOfEryndor" unique_id=323926507 instance=ExtResource("1_base_save_point")]
+save_point_id = &"blossom_of_eryndor"
+interaction_message = "The Blossom of Eryndor blooms into rest."
+sprite_sheet = ExtResource("2_sheet")
+sheet_columns = 6
+sheet_rows = 8
+animation_frame_count = 36
+
+[node name="SavePointSprite" parent="." index="0"]
+position = Vector2(0, -101.000015)
+scale = Vector2(0.34, 0.34)
+
+[node name="ProximityShape" parent="." index="1"]
+position = Vector2(0, -256)
