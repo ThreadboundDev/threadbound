@@ -116,11 +116,10 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var plaque := row.get_node("Plaque") as TextureRect
 	var label := row.get_node("Label") as Label
 	var target_scale := selected_scale if is_selected else normal_scale
-	var target_color := Color(1.0, 0.91, 0.72, 1.0) if is_selected else Color(0.78, 0.70, 0.58, 1.0)
 
 	if instant:
 		row.scale = target_scale
-		label.modulate = target_color
+		label.modulate = Color.WHITE
 		return
 
 	if _row_tweens.has(row):
@@ -129,7 +128,7 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	_row_tweens[row] = tween
 	tween.set_parallel(true)
 	tween.tween_property(row, "scale", target_scale, 0.12)
-	tween.tween_property(label, "modulate", target_color, 0.12)
+	tween.tween_property(label, "modulate", Color.WHITE, 0.12)
 	tween.tween_property(plaque, "modulate", Color.WHITE, 0.12)
 
 func _activate_selected() -> void:
