@@ -23,6 +23,7 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var focus_right_screen_position := Vector2(0.72, 0.56)
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D
+@onready var editor_preview_sprite: Sprite2D = get_node_or_null("EditorPreviewSprite") as Sprite2D
 @onready var prompt_label: Label = $PromptLabel as Label
 @onready var interaction_area: Area2D = $InteractionArea as Area2D
 @onready var sit_target: Marker2D = $SitTarget as Marker2D
@@ -39,6 +40,8 @@ var _remote_update_position := true
 var _remote_path := NodePath("")
 
 func _ready() -> void:
+	if editor_preview_sprite:
+		editor_preview_sprite.visible = false
 	add_to_group("save_points")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)

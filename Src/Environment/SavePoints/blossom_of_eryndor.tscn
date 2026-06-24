@@ -15,7 +15,15 @@ animation_frame_count = 36
 position = Vector2(0, -101.000015)
 scale = Vector2(0.34, 0.34)
 
-[node name="ProximityShape" parent="." index="1"]
+[node name="EditorPreviewSprite" type="Sprite2D" parent="." index="1"]
+z_index = 1
+position = Vector2(0, -101.000015)
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("2_sheet")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 1024)
+
+[node name="ProximityShape" parent="." index="2"]
 position = Vector2(0, -256)
 
 [node name="InteractionShape" parent="InteractionArea" index="0"]
