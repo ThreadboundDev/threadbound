@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://byn6s4mv4jqi2"]
 
-[ext_resource type="Script" path="res://Src/UI/MainMenu/main_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/title screen.png" id="2_title"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/main_menu_buttons.png" id="3_button"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="4_selector"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/threadbound_font.fnt" id="5_threadbound_font"]
+[ext_resource type="Script" uid="uid://cmew8j7etcvtt" path="res://Src/UI/MainMenu/main_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d2bwsrah2vqt7" path="res://Assets/UI/Main Menu/title screen.png" id="2_title"]
+[ext_resource type="Texture2D" uid="uid://bmfe7jogql2rf" path="res://Assets/UI/Main Menu/main_menu_buttons.png" id="3_button"]
+[ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="4_selector"]
+[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/threadbound_font.fnt" id="5_threadbound_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_menu"]
 font = ExtResource("5_threadbound_font")
@@ -13,7 +13,7 @@ font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 5
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1105765620]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=161686846]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +34,7 @@ texture = ExtResource("2_title")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Shade" type="ColorRect" parent="."]
+[node name="Shade" type="ColorRect" parent="." unique_id=1265977094]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,19 +44,20 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.08)
 
-[node name="Selector" type="TextureRect" parent="."]
+[node name="Selector" type="TextureRect" parent="." unique_id=746893063]
 visible = false
 layout_mode = 0
-offset_left = 493.0
+offset_left = 1150.0
 offset_top = 440.0
-offset_right = 673.0
+offset_right = 1330.0
 offset_bottom = 560.0
+rotation = -6.2831855
 mouse_filter = 2
 texture = ExtResource("4_selector")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MenuButtons" type="Control" parent="."]
+[node name="MenuButtons" type="Control" parent="." unique_id=464414466]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,12 +71,12 @@ offset_bottom = 557.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Continue" type="Control" parent="MenuButtons"]
-layout_mode = 0
+[node name="Continue" type="Control" parent="MenuButtons" unique_id=390074975]
+anchors_preset = 0
 offset_right = 780.0
 offset_bottom = 82.0
 
-[node name="Plaque" type="TextureRect" parent="MenuButtons/Continue"]
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Continue" unique_id=1211749855]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,26 +88,25 @@ texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuButtons/Continue"]
+[node name="Label" type="Label" parent="MenuButtons/Continue" unique_id=2016001713]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "CONTINUE"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NewJourney" type="Control" parent="MenuButtons"]
-layout_mode = 0
+[node name="NewJourney" type="Control" parent="MenuButtons" unique_id=2123741577]
+anchors_preset = 0
 offset_top = 98.0
 offset_right = 780.0
 offset_bottom = 180.0
 
-[node name="Plaque" type="TextureRect" parent="MenuButtons/NewJourney"]
+[node name="Plaque" type="TextureRect" parent="MenuButtons/NewJourney" unique_id=544004895]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,26 +118,25 @@ texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuButtons/NewJourney"]
+[node name="Label" type="Label" parent="MenuButtons/NewJourney" unique_id=948167315]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "NEW JOURNEY"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Settings" type="Control" parent="MenuButtons"]
-layout_mode = 0
+[node name="Settings" type="Control" parent="MenuButtons" unique_id=1251718983]
+anchors_preset = 0
 offset_top = 196.0
 offset_right = 780.0
 offset_bottom = 278.0
 
-[node name="Plaque" type="TextureRect" parent="MenuButtons/Settings"]
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Settings" unique_id=954141370]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -149,26 +148,25 @@ texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuButtons/Settings"]
+[node name="Label" type="Label" parent="MenuButtons/Settings" unique_id=314201989]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "SETTINGS"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Extras" type="Control" parent="MenuButtons"]
-layout_mode = 0
+[node name="Extras" type="Control" parent="MenuButtons" unique_id=432748587]
+anchors_preset = 0
 offset_top = 294.0
 offset_right = 780.0
 offset_bottom = 376.0
 
-[node name="Plaque" type="TextureRect" parent="MenuButtons/Extras"]
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Extras" unique_id=1769326288]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,26 +178,25 @@ texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuButtons/Extras"]
+[node name="Label" type="Label" parent="MenuButtons/Extras" unique_id=1085646501]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "EXTRAS"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quit" type="Control" parent="MenuButtons"]
-layout_mode = 0
+[node name="Quit" type="Control" parent="MenuButtons" unique_id=1186495716]
+anchors_preset = 0
 offset_top = 392.0
 offset_right = 780.0
 offset_bottom = 474.0
 
-[node name="Plaque" type="TextureRect" parent="MenuButtons/Quit"]
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Quit" unique_id=1773837196]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -211,14 +208,13 @@ texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuButtons/Quit"]
+[node name="Label" type="Label" parent="MenuButtons/Quit" unique_id=780102490]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 text = "QUIT"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
