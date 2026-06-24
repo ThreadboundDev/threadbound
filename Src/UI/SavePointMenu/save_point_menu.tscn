@@ -37,6 +37,7 @@ outline_color = Color(0.04, 0.03, 0.025, 1)
 script = ExtResource("1_script")
 
 [node name="BlurRect" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_blur")
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,10 +48,10 @@ mouse_filter = 2
 color = Color(1, 1, 1, 1)
 
 [node name="MenuRoot" type="Control" parent="."]
-offset_left = 1140.0
-offset_top = 318.0
-offset_right = 1720.0
-offset_bottom = 880.0
+offset_left = 220.0
+offset_top = 220.0
+offset_right = 800.0
+offset_bottom = 782.0
 
 [node name="TextBox" type="TextureRect" parent="MenuRoot"]
 layout_mode = 0
@@ -78,7 +79,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Selector" type="TextureRect" parent="MenuRoot"]
-visible = false
 layout_mode = 0
 offset_left = 514.0
 offset_top = 84.0

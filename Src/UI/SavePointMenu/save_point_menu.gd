@@ -82,6 +82,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _configure_initial_state() -> void:
 	blur_rect.material = blur_rect.material.duplicate()
+	blur_rect.visible = true
 	menu_root.modulate.a = 0.0
 	blur_rect.modulate.a = 0.0
 
