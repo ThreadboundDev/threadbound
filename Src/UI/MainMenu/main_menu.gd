@@ -6,8 +6,6 @@ const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
 @export var disabled_alpha := 0.55
-@export var plaque_padding := Vector2(92.0, 22.0)
-@export var plaque_min_size := Vector2(280.0, 72.0)
 
 @onready var selector: TextureRect = $Selector as TextureRect
 @onready var rows: Array[Control] = [
@@ -22,7 +20,6 @@ var _selected_index := 1
 var _row_tweens: Dictionary = {}
 
 func _ready() -> void:
-	_fit_rows_to_labels()
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -31,18 +28,6 @@ func _ready() -> void:
 		row.gui_input.connect(_on_row_gui_input.bind(i))
 
 	_select_index(_selected_index, true)
-
-func _fit_rows_to_labels() -> void:
-	var menu_width := ($MenuButtons as Control).size.x
-	for row in rows:
-		var label := row.get_node("Label") as Label
-		var text_size := label.get_combined_minimum_size()
-		var row_size := Vector2(
-			maxf(plaque_min_size.x, text_size.x + plaque_padding.x * 2.0),
-			maxf(plaque_min_size.y, text_size.y + plaque_padding.y * 2.0)
-		)
-		row.size = row_size
-		row.position.x = (menu_width - row_size.x) * 0.5
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
