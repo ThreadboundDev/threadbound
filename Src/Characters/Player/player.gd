@@ -8,10 +8,11 @@ signal save_point_seated(player: CharacterBody2D)
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
+const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
 const SIT_ANIMATION := &"Sit"
 const SIT_COLUMNS := 5
 const SIT_ROWS := 10
-const SIT_FRAME_COUNT := 50
+const SIT_FRAME_COUNT := 48
 const SIT_FPS := 12.0
 
 # ===============================
@@ -256,8 +257,13 @@ var current_chest: BaseEquipment = null
 
 var save_point_interaction_active := false
 var _save_point_target_position := Vector2.ZERO
+var _save_point_sitting_down := false
 var _save_point_seated := false
+var _save_point_standing_up := false
 var _save_point_controller: Node = null
+var _save_point_original_material: Material
+var _save_point_original_scale := Vector2.ONE
+var _save_point_breath_tween: Tween
 
 # ===============================
 # READY
@@ -1204,7 +1210,9 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	save_point_interaction_active = true
 	_save_point_controller = save_point
 	_save_point_target_position = sit_target_position
+	_save_point_sitting_down = false
 	_save_point_seated = false
+	_save_point_standing_up = false
 	is_near_interactable = false
 	current_selector = null
 	is_attacking = false
@@ -1220,12 +1228,19 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	return true
 
 func end_save_point_interaction() -> void:
-	save_point_interaction_active = false
-	_save_point_controller = null
-	_save_point_seated = false
-	velocity = Vector2.ZERO
-	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
-		play_character_anim("Idle", "equip_idle")
+	if not save_point_interaction_active:
+		return
+	if _save_point_standing_up:
+		return
+
+	_save_point_standing_up = true
+	_stop_save_point_breathing()
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		player_animation.animation = SIT_ANIMATION
+		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
+		player_animation.play_backwards(SIT_ANIMATION)
+		await player_animation.animation_finished
+	_complete_save_point_interaction()
 
 func recover_at_save_point() -> void:
 	if health_component:
@@ -1233,8 +1248,18 @@ func recover_at_save_point() -> void:
 	refill_action_points()
 	_sync_hud()
 
+func _complete_save_point_interaction() -> void:
+	save_point_interaction_active = false
+	_save_point_controller = null
+	_save_point_sitting_down = false
+	_save_point_seated = false
+	_save_point_standing_up = false
+	velocity = Vector2.ZERO
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
+		play_character_anim("Idle", "equip_idle")
+
 func _process_save_point_interaction(delta: float) -> void:
-	if _save_point_seated:
+	if _save_point_sitting_down or _save_point_seated or _save_point_standing_up:
 		return
 
 	var target_delta := _save_point_target_position - global_position
@@ -1254,10 +1279,46 @@ func _process_save_point_interaction(delta: float) -> void:
 
 	global_position = _save_point_target_position
 	velocity = Vector2.ZERO
-	_save_point_seated = true
+	_save_point_sitting_down = true
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		play_character_anim(String(SIT_ANIMATION), "equip_idle")
+		call_deferred("_complete_save_point_sit_down")
+	else:
+		_complete_save_point_sit_down()
+
+func _complete_save_point_sit_down() -> void:
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		await player_animation.animation_finished
+		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
+	_save_point_sitting_down = false
+	_save_point_seated = true
+	_start_save_point_breathing()
 	save_point_seated.emit(self)
+
+func _start_save_point_breathing() -> void:
+	if not player_animation:
+		return
+
+	_save_point_original_material = player_animation.material
+	_save_point_original_scale = player_animation.scale
+	var meditation_material := ShaderMaterial.new()
+	meditation_material.shader = MEDITATION_SHADER
+	player_animation.material = meditation_material
+
+	if _save_point_breath_tween:
+		_save_point_breath_tween.kill()
+	_save_point_breath_tween = create_tween()
+	_save_point_breath_tween.set_loops()
+	_save_point_breath_tween.tween_property(player_animation, "scale", _save_point_original_scale * Vector2(1.015, 0.992), 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_save_point_breath_tween.tween_property(player_animation, "scale", _save_point_original_scale, 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+func _stop_save_point_breathing() -> void:
+	if _save_point_breath_tween:
+		_save_point_breath_tween.kill()
+		_save_point_breath_tween = null
+	if player_animation:
+		player_animation.material = _save_point_original_material
+		player_animation.scale = _save_point_original_scale
 
 func _ensure_sit_animation() -> void:
 	if not player_animation or not player_animation.sprite_frames:

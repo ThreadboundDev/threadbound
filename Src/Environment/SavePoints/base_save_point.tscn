@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="2_label_settings"]
@@ -8,6 +8,9 @@ size = Vector2(900, 620)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
 size = Vector2(360, 260)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seat_guide"]
+radius = 28.0
 
 [node name="BaseSavePoint" type="Area2D"]
 collision_mask = 1
@@ -28,7 +31,12 @@ position = Vector2(0, -120)
 shape = SubResource("RectangleShape2D_interaction")
 
 [node name="SitTarget" type="Marker2D" parent="."]
-position = Vector2(0, -54)
+position = Vector2(0, -132)
+
+[node name="SeatGuide" type="CollisionShape2D" parent="SitTarget"]
+modulate = Color(0.96, 0.72, 0.24, 0.58)
+shape = SubResource("CircleShape2D_seat_guide")
+disabled = true
 
 [node name="PromptLabel" type="Label" parent="."]
 visible = false
