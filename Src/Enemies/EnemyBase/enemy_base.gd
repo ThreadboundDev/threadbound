@@ -15,6 +15,7 @@ const WHITE_KEY_VFX_SHADER := preload("res://Src/VFX/white_key_vfx.gdshader")
 @export var patrol_distance: float = 160.0
 @export var start_facing: int = -1
 @export var facing_dead_zone: float = 12.0
+@export var resets_at_save_points := true
 
 @onready var visuals: Node2D = $Visuals
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
@@ -163,6 +164,29 @@ func die() -> void:
 	_play_death_collapse()
 	await get_tree().create_timer(stats.death_cleanup_delay).timeout
 	queue_free()
+
+func reset_for_save_point() -> void:
+	if is_dead or not resets_at_save_points or is_in_group("bosses"):
+		return
+
+	end_attack()
+	target = null
+	target_lost.emit()
+	_attack_cooldown_timer = 0.0
+	_contact_damage_cooldown_timer = 0.0
+	_target_speed = 0.0
+	velocity = Vector2.ZERO
+	global_position = home_position
+	facing = sign(start_facing) if start_facing != 0 else -1
+	update_facing(facing)
+	if detection_area:
+		detection_area.set_deferred("monitoring", true)
+	if attack_area:
+		attack_area.set_deferred("monitoring", true)
+	if contact_hitbox:
+		contact_hitbox.set_deferred("monitoring", true)
+	if state_machine and state_machine.current_state_name != &"Dead":
+		state_machine.transition_to(&"Idle")
 
 func update_facing(direction: int) -> void:
 	if direction == 0:

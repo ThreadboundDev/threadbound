@@ -94,6 +94,15 @@ func deactivate_attack_hitbox() -> void:
 	if sprite and idle_texture:
 		_play_idle_animation()
 
+func reset_for_save_point() -> void:
+	if _has_tether_anchor():
+		return
+
+	super.reset_for_save_point()
+	_flight_target_y = home_position.y
+	if sprite and idle_texture:
+		_play_idle_animation()
+
 func apply_gravity(_delta: float) -> void:
 	pass
 

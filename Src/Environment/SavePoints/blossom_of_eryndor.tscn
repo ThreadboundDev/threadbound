@@ -17,3 +17,9 @@ scale = Vector2(0.34, 0.34)
 
 [node name="ProximityShape" parent="." index="1"]
 position = Vector2(0, -256)
+
+[node name="InteractionShape" parent="InteractionArea" index="0"]
+position = Vector2(0, -142)
+
+[node name="SitTarget" parent="." index="3"]
+position = Vector2(0, -42)

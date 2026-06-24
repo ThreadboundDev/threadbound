@@ -3,9 +3,16 @@ extends CharacterBody2D
 signal action_points_changed(current: int, maximum: int)
 signal momentum_changed(value: float)
 signal momentum_state_changed(state: StringName, flow_active: bool)
+signal save_point_seated(player: CharacterBody2D)
 
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
+const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
+const SIT_ANIMATION := &"Sit"
+const SIT_COLUMNS := 5
+const SIT_ROWS := 10
+const SIT_FRAME_COUNT := 50
+const SIT_FPS := 12.0
 
 # ===============================
 # NODES
@@ -170,6 +177,10 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 @export var god_mode_fly_speed: float = 620.0
 @export var god_mode_fly_acceleration: float = 2600.0
 
+@export_group("Save Point Interaction")
+@export var save_point_auto_run_speed := 420.0
+@export var save_point_arrive_distance := 10.0
+
 # Glow configuration
 @export var idle_glow_width: float = 1.2
 @export var idle_glow_intensity: float = 0.35
@@ -243,6 +254,11 @@ var current_gloves: Node = null
 var current_boots: BaseEquipment = null
 var current_chest: BaseEquipment = null
 
+var save_point_interaction_active := false
+var _save_point_target_position := Vector2.ZERO
+var _save_point_seated := false
+var _save_point_controller: Node = null
+
 # ===============================
 # READY
 # ===============================
@@ -280,6 +296,7 @@ func _ready() -> void:
 
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
+	_ensure_sit_animation()
 	update_equipment_facing()
 	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
@@ -329,6 +346,10 @@ func _physics_process(delta: float) -> void:
 		return
 
 	update_combat_timers(delta)
+
+	if save_point_interaction_active:
+		_process_save_point_interaction(delta)
+		return
 
 	# Gravity + coyote time
 	if god_mode_enabled:
@@ -406,6 +427,9 @@ func _physics_process(delta: float) -> void:
 # PROCESS
 # ===============================
 func _process(_delta: float) -> void:
+	if save_point_interaction_active:
+		return
+
 	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
 		get_tree().quit()
 
@@ -500,6 +524,9 @@ func play_character_anim(body_anim: String, equip_anim: String) -> void:
 
 func update_animations(dir: float) -> void:
 	if not player_animation or not player_animation.sprite_frames:
+		return
+
+	if save_point_interaction_active:
 		return
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
@@ -1166,6 +1193,93 @@ func _on_ability_cooldown_timeout() -> void:
 		current_boots.on_ability_cooldown_complete()
 	if current_gloves and current_gloves.has_method("on_ability_cooldown_complete"):
 		current_gloves.on_ability_cooldown_complete()
+
+# ===============================
+# SAVE POINT INTERACTION
+# ===============================
+func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2) -> bool:
+	if save_point_interaction_active or is_dead:
+		return false
+
+	save_point_interaction_active = true
+	_save_point_controller = save_point
+	_save_point_target_position = sit_target_position
+	_save_point_seated = false
+	is_near_interactable = false
+	current_selector = null
+	is_attacking = false
+	is_hurt = false
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+	attack_timer = 0.0
+	attack_cooldown_timer = 0.0
+	velocity = Vector2.ZERO
+	if attack_hitbox:
+		attack_hitbox.disable()
+	_reset_weapon_visuals()
+	return true
+
+func end_save_point_interaction() -> void:
+	save_point_interaction_active = false
+	_save_point_controller = null
+	_save_point_seated = false
+	velocity = Vector2.ZERO
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
+		play_character_anim("Idle", "equip_idle")
+
+func recover_at_save_point() -> void:
+	if health_component:
+		health_component.heal(health_component.max_health)
+	refill_action_points()
+	_sync_hud()
+
+func _process_save_point_interaction(delta: float) -> void:
+	if _save_point_seated:
+		return
+
+	var target_delta := _save_point_target_position - global_position
+	if abs(target_delta.x) > save_point_arrive_distance:
+		var direction := int(sign(target_delta.x))
+		last_direction = direction
+		if player_animation:
+			player_animation.flip_h = direction < 0
+		update_equipment_facing()
+		velocity.x = float(direction) * save_point_auto_run_speed
+		velocity.y += _get_current_gravity() * delta
+		velocity.y = min(velocity.y, max_fall_speed)
+		move_and_slide()
+		if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Run"):
+			play_character_anim("Run", "equip_run")
+		return
+
+	global_position = _save_point_target_position
+	velocity = Vector2.ZERO
+	_save_point_seated = true
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		play_character_anim(String(SIT_ANIMATION), "equip_idle")
+	save_point_seated.emit(self)
+
+func _ensure_sit_animation() -> void:
+	if not player_animation or not player_animation.sprite_frames:
+		return
+	if player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		return
+
+	player_animation.sprite_frames.add_animation(SIT_ANIMATION)
+	player_animation.sprite_frames.set_animation_loop(SIT_ANIMATION, false)
+	player_animation.sprite_frames.set_animation_speed(SIT_ANIMATION, SIT_FPS)
+	var frame_width := SIT_TEXTURE.get_width() / SIT_COLUMNS
+	var frame_height := SIT_TEXTURE.get_height() / SIT_ROWS
+	for frame_index in SIT_FRAME_COUNT:
+		var atlas_texture := AtlasTexture.new()
+		atlas_texture.atlas = SIT_TEXTURE
+		atlas_texture.region = Rect2(
+			(frame_index % SIT_COLUMNS) * frame_width,
+			(frame_index / SIT_COLUMNS) * frame_height,
+			frame_width,
+			frame_height
+		)
+		player_animation.sprite_frames.add_frame(SIT_ANIMATION, atlas_texture)
 
 # ===============================
 # INTERACTABLES

@@ -25,6 +25,7 @@ size = Vector2(336, 204)
 
 [node name="ProtoWeaver" unique_id=1107662247 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
+resets_at_save_points = false
 walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
 threadburst_texture = ExtResource("6_threadburst")
