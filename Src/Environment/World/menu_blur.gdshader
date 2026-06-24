@@ -10,6 +10,9 @@ uniform float blur_samples : hint_range(1, 9) = 5;            // more = smoother
 uniform float desaturation : hint_range(0.0, 1.0) = 0.65;    // how grey to make it
 uniform float blue_tint_strength : hint_range(0.0, 1.0) = 0.35;
 uniform vec4 blue_tint_color : source_color = vec4(0.75, 0.85, 1.0, 1.0); // soft cool blue
+uniform vec2 focus_center = vec2(0.5, 0.5);
+uniform vec2 focus_radius = vec2(0.0, 0.0);
+uniform float focus_softness : hint_range(0.001, 1.0) = 0.12;
 
 void fragment() {
     vec2 ps = SCREEN_PIXEL_SIZE;
@@ -34,5 +37,11 @@ void fragment() {
     // Apply subtle blue tint
     vec3 tinted = mix(desat, blue_tint_color.rgb, blue_tint_strength * blue_tint_color.a);
 
-    COLOR = vec4(tinted, 1.0);
+    vec4 original = texture(SCREEN_TEXTURE, SCREEN_UV);
+    vec2 radius = max(focus_radius, vec2(0.001));
+    vec2 focus_delta = (SCREEN_UV - focus_center) / radius;
+    float focus_distance = length(focus_delta);
+    float focus_mix = smoothstep(1.0 - focus_softness, 1.0, focus_distance);
+
+    COLOR = vec4(mix(original.rgb, tinted, focus_mix), 1.0);
 }

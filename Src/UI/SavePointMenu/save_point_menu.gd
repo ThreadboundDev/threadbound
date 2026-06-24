@@ -3,12 +3,15 @@ extends CanvasLayer
 signal option_selected(option_name: StringName)
 signal rise_requested
 
-@export var selector_offset := Vector2(-92.0, -10.0)
+@export var selector_offset := Vector2(18.0, -10.0)
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
-@export var menu_left_position := Vector2(132.0, 360.0)
-@export var menu_right_position := Vector2(1150.0, 360.0)
+@export var menu_left_position := Vector2(180.0, 318.0)
+@export var menu_right_position := Vector2(1140.0, 318.0)
 @export var fade_duration := 0.18
+@export var focus_left_center := Vector2(0.28, 0.56)
+@export var focus_right_center := Vector2(0.72, 0.56)
+@export var focus_radius := Vector2(0.22, 0.33)
 
 @onready var blur_rect: ColorRect = $BlurRect as ColorRect
 @onready var menu_root: Control = $MenuRoot as Control
@@ -39,6 +42,7 @@ func _ready() -> void:
 
 func open(menu_side: int) -> void:
 	menu_root.position = menu_right_position if menu_side >= 0 else menu_left_position
+	_configure_focus(menu_side)
 	_select_index(_selected_index, true)
 	blur_rect.modulate.a = 0.0
 	menu_root.modulate.a = 0.0
@@ -81,6 +85,16 @@ func _configure_initial_state() -> void:
 	menu_root.modulate.a = 0.0
 	blur_rect.modulate.a = 0.0
 
+func _configure_focus(menu_side: int) -> void:
+	var shader_material := blur_rect.material as ShaderMaterial
+	if not shader_material:
+		return
+
+	var focus_center := focus_left_center if menu_side >= 0 else focus_right_center
+	shader_material.set_shader_parameter("focus_center", focus_center)
+	shader_material.set_shader_parameter("focus_radius", focus_radius)
+	shader_material.set_shader_parameter("focus_softness", 0.2)
+
 func _on_row_gui_input(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_select_index(index)
@@ -92,8 +106,9 @@ func _select_index(index: int, instant := false) -> void:
 		_set_row_selected(i, i == _selected_index, instant)
 
 	var row := rows[_selected_index]
+	var plaque := row.get_node("Plaque") as TextureRect
 	selector.visible = true
-	selector.global_position = row.global_position + selector_offset
+	selector.global_position = plaque.global_position + Vector2(plaque.size.x, 0.0) + selector_offset
 
 func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var row := rows[index]

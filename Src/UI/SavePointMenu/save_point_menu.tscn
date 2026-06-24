@@ -14,6 +14,9 @@ shader_parameter/blur_samples = 5.0
 shader_parameter/desaturation = 0.72
 shader_parameter/blue_tint_strength = 0.1
 shader_parameter/blue_tint_color = Color(0.78, 0.84, 1, 1)
+shader_parameter/focus_center = Vector2(0.28, 0.56)
+shader_parameter/focus_radius = Vector2(0.22, 0.33)
+shader_parameter/focus_softness = 0.2
 
 [sub_resource type="LabelSettings" id="LabelSettings_option"]
 font = ExtResource("6_font")
@@ -36,31 +39,30 @@ mouse_filter = 2
 color = Color(1, 1, 1, 1)
 
 [node name="MenuRoot" type="Control" parent="."]
-offset_left = 1150.0
-offset_top = 360.0
-offset_right = 1830.0
-offset_bottom = 950.0
+offset_left = 1140.0
+offset_top = 318.0
+offset_right = 1720.0
+offset_bottom = 880.0
 
 [node name="TextBox" type="TextureRect" parent="MenuRoot"]
 layout_mode = 0
-offset_left = -20.0
-offset_top = -112.0
-offset_right = 680.0
-offset_bottom = 64.0
+offset_left = -18.0
+offset_top = -96.0
+offset_right = 578.0
+offset_bottom = 50.0
 mouse_filter = 2
 texture = ExtResource("3_text_box")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Prompt" type="Label" parent="MenuRoot/TextBox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 44.0
-offset_top = 20.0
-offset_right = -44.0
-offset_bottom = -16.0
+offset_left = 40.0
+offset_top = 16.0
+offset_right = -40.0
+offset_bottom = -14.0
 mouse_filter = 2
 text = "THE BLOSSOM WAITS."
 label_settings = SubResource("LabelSettings_option")
@@ -70,10 +72,10 @@ vertical_alignment = 1
 [node name="Selector" type="TextureRect" parent="MenuRoot"]
 visible = false
 layout_mode = 0
-offset_left = -112.0
-offset_top = 86.0
-offset_right = 32.0
-offset_bottom = 182.0
+offset_left = 514.0
+offset_top = 84.0
+offset_right = 658.0
+offset_bottom = 180.0
 mouse_filter = 2
 texture = ExtResource("5_selector")
 expand_mode = 1
@@ -81,33 +83,28 @@ stretch_mode = 5
 
 [node name="Options" type="Control" parent="MenuRoot"]
 layout_mode = 0
-offset_right = 640.0
-offset_bottom = 420.0
+offset_right = 560.0
+offset_bottom = 430.0
 
 [node name="Reflect" type="Control" parent="MenuRoot/Options"]
 layout_mode = 0
-offset_right = 640.0
+offset_right = 560.0
 offset_bottom = 84.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Options/Reflect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuRoot/Options/Reflect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 text = "REFLECT"
 label_settings = SubResource("LabelSettings_option")
@@ -117,28 +114,23 @@ vertical_alignment = 1
 [node name="Weave" type="Control" parent="MenuRoot/Options"]
 layout_mode = 0
 offset_top = 100.0
-offset_right = 640.0
+offset_right = 560.0
 offset_bottom = 184.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Options/Weave"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuRoot/Options/Weave"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 text = "WEAVE"
 label_settings = SubResource("LabelSettings_option")
@@ -148,28 +140,23 @@ vertical_alignment = 1
 [node name="Listen" type="Control" parent="MenuRoot/Options"]
 layout_mode = 0
 offset_top = 200.0
-offset_right = 640.0
+offset_right = 560.0
 offset_bottom = 284.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Options/Listen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuRoot/Options/Listen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 text = "LISTEN"
 label_settings = SubResource("LabelSettings_option")
@@ -179,28 +166,23 @@ vertical_alignment = 1
 [node name="Rise" type="Control" parent="MenuRoot/Options"]
 layout_mode = 0
 offset_top = 300.0
-offset_right = 640.0
+offset_right = 560.0
 offset_bottom = 384.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Options/Rise"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuRoot/Options/Rise"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 66.0
+offset_right = 494.0
+offset_bottom = 84.0
 mouse_filter = 2
 text = "RISE"
 label_settings = SubResource("LabelSettings_option")

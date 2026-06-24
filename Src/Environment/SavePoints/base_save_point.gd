@@ -18,8 +18,9 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export_range(1.0, 30.0, 0.5) var animation_speed := 12.0
 @export_group("Focus")
 @export var camera_zoom := Vector2(1.65, 1.65)
-@export var camera_focus_offset := Vector2(520.0, -140.0)
 @export var camera_tween_duration := 0.45
+@export var focus_left_screen_position := Vector2(0.28, 0.56)
+@export var focus_right_screen_position := Vector2(0.72, 0.56)
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D
 @onready var prompt_label: Label = $PromptLabel as Label
@@ -199,7 +200,10 @@ func _present_camera_and_menu(player: Node) -> void:
 	var menu_side := -save_side
 	var focus_position := _get_sit_target_position()
 	if _camera:
-		var target_camera_position := focus_position - Vector2(float(save_side) * camera_focus_offset.x, -camera_focus_offset.y)
+		var focus_screen_position := focus_left_screen_position if menu_side >= 0 else focus_right_screen_position
+		var viewport_size := get_viewport().get_visible_rect().size
+		var screen_delta := (focus_screen_position - Vector2(0.5, 0.5)) * viewport_size
+		var target_camera_position := focus_position - Vector2(screen_delta.x / camera_zoom.x, screen_delta.y / camera_zoom.y)
 		var tween := create_tween()
 		tween.set_parallel(true)
 		tween.tween_property(_camera, "global_position", target_camera_position, camera_tween_duration)
