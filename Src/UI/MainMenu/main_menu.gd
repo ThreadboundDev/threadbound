@@ -2,7 +2,7 @@ extends Control
 
 const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn"
 
-@export var selector_offset := Vector2(500.0, -15.0)
+@export var selector_offset := Vector2(20.0, -15.0)
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
 @export var disabled_alpha := 0.55
@@ -53,8 +53,9 @@ func _select_index(index: int, instant := false) -> void:
 		_set_row_selected(i, i == _selected_index, instant)
 
 	var row := rows[_selected_index]
+	var plaque := row.get_node("Plaque") as TextureRect
 	selector.visible = true
-	selector.global_position = row.global_position + selector_offset
+	selector.global_position = plaque.global_position + Vector2(plaque.size.x, 0.0) + selector_offset
 
 func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var row := rows[index]

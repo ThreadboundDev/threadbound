@@ -73,29 +73,24 @@ grow_vertical = 2
 
 [node name="Continue" type="Control" parent="MenuButtons" unique_id=390074975]
 anchors_preset = 0
-offset_left = 130.0
-offset_right = 650.0
+offset_right = 780.0
 offset_bottom = 82.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Continue" unique_id=1211749855]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Continue" unique_id=2016001713]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
 text = "CONTINUE"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
@@ -103,30 +98,25 @@ vertical_alignment = 1
 
 [node name="NewJourney" type="Control" parent="MenuButtons" unique_id=2123741577]
 anchors_preset = 0
-offset_left = 130.0
 offset_top = 98.0
-offset_right = 650.0
+offset_right = 780.0
 offset_bottom = 180.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/NewJourney" unique_id=544004895]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 110.0
+offset_right = 670.0
+offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/NewJourney" unique_id=948167315]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 110.0
+offset_right = 670.0
+offset_bottom = 82.0
 text = "NEW JOURNEY"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
@@ -134,30 +124,25 @@ vertical_alignment = 1
 
 [node name="Settings" type="Control" parent="MenuButtons" unique_id=1251718983]
 anchors_preset = 0
-offset_left = 130.0
 offset_top = 196.0
-offset_right = 650.0
+offset_right = 780.0
 offset_bottom = 278.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Settings" unique_id=954141370]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Settings" unique_id=314201989]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
 text = "SETTINGS"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
@@ -165,30 +150,25 @@ vertical_alignment = 1
 
 [node name="Extras" type="Control" parent="MenuButtons" unique_id=432748587]
 anchors_preset = 0
-offset_left = 130.0
 offset_top = 294.0
-offset_right = 650.0
+offset_right = 780.0
 offset_bottom = 376.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Extras" unique_id=1769326288]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 210.0
+offset_right = 570.0
+offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Extras" unique_id=1085646501]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 210.0
+offset_right = 570.0
+offset_bottom = 82.0
 text = "EXTRAS"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
@@ -196,30 +176,25 @@ vertical_alignment = 1
 
 [node name="Quit" type="Control" parent="MenuButtons" unique_id=1186495716]
 anchors_preset = 0
-offset_left = 130.0
 offset_top = 392.0
-offset_right = 650.0
+offset_right = 780.0
 offset_bottom = 474.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Quit" unique_id=1773837196]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 240.0
+offset_right = 540.0
+offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Quit" unique_id=780102490]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 240.0
+offset_right = 540.0
+offset_bottom = 82.0
 text = "QUIT"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
