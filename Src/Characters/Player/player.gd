@@ -181,6 +181,7 @@ const SIT_FPS := 12.0
 @export_group("Save Point Interaction")
 @export var save_point_auto_run_speed := 420.0
 @export var save_point_arrive_distance := 10.0
+@export var save_point_sit_visual_scale := Vector2(1.4, 1.4)
 
 # Glow configuration
 @export var idle_glow_width: float = 1.2
@@ -656,6 +657,8 @@ func start_attack() -> void:
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		play_character_anim(current_attack_body_anim, "equip_idle")
+		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
+			current_gloves.play_attack_follow_pose(attack_direction)
 
 func can_start_attack() -> bool:
 	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
@@ -1222,6 +1225,8 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	attack_timer = 0.0
 	attack_cooldown_timer = 0.0
 	velocity = Vector2.ZERO
+	if player_animation:
+		_save_point_original_scale = player_animation.scale
 	if attack_hitbox:
 		attack_hitbox.disable()
 	_reset_weapon_visuals()
@@ -1234,7 +1239,7 @@ func end_save_point_interaction() -> void:
 		return
 
 	_save_point_standing_up = true
-	_stop_save_point_breathing()
+	_stop_save_point_breathing(false)
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		player_animation.animation = SIT_ANIMATION
 		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
@@ -1255,6 +1260,9 @@ func _complete_save_point_interaction() -> void:
 	_save_point_seated = false
 	_save_point_standing_up = false
 	velocity = Vector2.ZERO
+	_restore_save_point_visual_state()
+	if current_gloves and current_gloves.has_method("exit_save_point_pose"):
+		current_gloves.exit_save_point_pose()
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
 		play_character_anim("Idle", "equip_idle")
 
@@ -1281,7 +1289,10 @@ func _process_save_point_interaction(delta: float) -> void:
 	velocity = Vector2.ZERO
 	_save_point_sitting_down = true
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		player_animation.scale = _save_point_original_scale * save_point_sit_visual_scale
 		play_character_anim(String(SIT_ANIMATION), "equip_idle")
+		if current_gloves and current_gloves.has_method("enter_save_point_pose"):
+			current_gloves.enter_save_point_pose()
 		call_deferred("_complete_save_point_sit_down")
 	else:
 		_complete_save_point_sit_down()
@@ -1300,7 +1311,7 @@ func _start_save_point_breathing() -> void:
 		return
 
 	_save_point_original_material = player_animation.material
-	_save_point_original_scale = player_animation.scale
+	var seated_scale := player_animation.scale
 	var meditation_material := ShaderMaterial.new()
 	meditation_material.shader = MEDITATION_SHADER
 	player_animation.material = meditation_material
@@ -1309,13 +1320,19 @@ func _start_save_point_breathing() -> void:
 		_save_point_breath_tween.kill()
 	_save_point_breath_tween = create_tween()
 	_save_point_breath_tween.set_loops()
-	_save_point_breath_tween.tween_property(player_animation, "scale", _save_point_original_scale * Vector2(1.015, 0.992), 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_save_point_breath_tween.tween_property(player_animation, "scale", _save_point_original_scale, 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_save_point_breath_tween.tween_property(player_animation, "scale", seated_scale * Vector2(1.015, 0.992), 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_save_point_breath_tween.tween_property(player_animation, "scale", seated_scale, 1.25).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-func _stop_save_point_breathing() -> void:
+func _stop_save_point_breathing(restore_scale := true) -> void:
 	if _save_point_breath_tween:
 		_save_point_breath_tween.kill()
 		_save_point_breath_tween = null
+	if player_animation:
+		player_animation.material = _save_point_original_material
+		if restore_scale:
+			player_animation.scale = _save_point_original_scale
+
+func _restore_save_point_visual_state() -> void:
 	if player_animation:
 		player_animation.material = _save_point_original_material
 		player_animation.scale = _save_point_original_scale

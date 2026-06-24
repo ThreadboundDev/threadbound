@@ -12,6 +12,7 @@ var player: CharacterBody2D = null
 @onready var animation_player: AnimationPlayer = $Equipment/AnimationPlayer
 
 @onready var right_hand_anchor: Marker2D = $Equipment/RightHandAnchor
+@onready var wrist_wrap_pivot: Node2D = $Equipment/RightHandAnchor/WristWrapPivot
 @onready var rope_hang_anchor: Node2D = $Equipment/RightHandAnchor/RopeHangAnchor
 @onready var grapple_origin: Marker2D = $Equipment/RightHandAnchor/GrappleOrigin
 
@@ -52,6 +53,9 @@ var player: CharacterBody2D = null
 
 # Animation lock
 @export var grapple_fire_anim_lock_time := 0.14
+@export var attack_follow_anim_lock_time := 0.22
+@export var save_point_hand_position := Vector2(-12.0, -34.0)
+@export var save_point_wrist_rotation := -0.35
 var action_anim_lock_timer := 0.0
 
 # ===============================
@@ -146,6 +150,29 @@ func _play_grapple_fire_animation() -> void:
 			var body_anim: AnimatedSprite2D = player.get_node("Player Animation")
 			if body_anim.sprite_frames.has_animation("Grapple_Horizontal"):
 				body_anim.play("Grapple_Horizontal")
+
+func play_attack_follow_pose(direction: Vector2) -> void:
+	action_anim_lock_timer = attack_follow_anim_lock_time
+	var use_diagonal := abs(direction.y) > 0.35
+	if use_diagonal and animation_player and animation_player.has_animation("equip_grapple_fire_diagonal"):
+		play_equipment_anim("equip_grapple_fire_diagonal")
+	elif animation_player and animation_player.has_animation("equip_grapple_fire_straight"):
+		play_equipment_anim("equip_grapple_fire_straight")
+
+func enter_save_point_pose() -> void:
+	action_anim_lock_timer = 999.0
+	if animation_player:
+		animation_player.stop()
+	if right_hand_anchor:
+		right_hand_anchor.position = save_point_hand_position
+	if wrist_wrap_pivot:
+		wrist_wrap_pivot.rotation = save_point_wrist_rotation
+	if rope_hang_anchor and rope_hang_anchor.has_method("reset_rope"):
+		rope_hang_anchor.reset_rope()
+
+func exit_save_point_pose() -> void:
+	action_anim_lock_timer = 0.0
+	play_equipment_anim("equip_idle")
 
 # ===============================
 # BASIC HELPERS

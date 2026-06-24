@@ -21,6 +21,7 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var camera_tween_duration := 0.45
 @export var focus_left_screen_position := Vector2(0.28, 0.56)
 @export var focus_right_screen_position := Vector2(0.72, 0.56)
+@export var player_sit_offset := Vector2(-32.0, -56.0)
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D
 @onready var editor_preview_sprite: Sprite2D = get_node_or_null("EditorPreviewSprite") as Sprite2D
@@ -60,7 +61,7 @@ func interact(interacting_player: Node) -> void:
 	activated.emit(self, interacting_player)
 	_reset_regular_enemies()
 	if interacting_player.has_method("begin_save_point_interaction"):
-		var started: bool = interacting_player.begin_save_point_interaction(self, _get_sit_target_position())
+		var started: bool = interacting_player.begin_save_point_interaction(self, _get_player_sit_position())
 		if not started:
 			return
 		_active_player = interacting_player
@@ -178,8 +179,14 @@ func _on_player_seated(player: Node) -> void:
 
 func _get_sit_target_position() -> Vector2:
 	if sit_target:
+		var seat_guide := sit_target.get_node_or_null("SeatGuide") as Node2D
+		if seat_guide:
+			return seat_guide.global_position
 		return sit_target.global_position
 	return global_position
+
+func _get_player_sit_position() -> Vector2:
+	return _get_sit_target_position() + player_sit_offset
 
 func _disable_prompt() -> void:
 	if prompt_label:
