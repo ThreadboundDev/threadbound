@@ -22,4 +22,4 @@ position = Vector2(0, -256)
 position = Vector2(0, -142)
 
 [node name="SitTarget" parent="." index="3"]
-position = Vector2(0, -142)
+position = Vector2(0, -58)
