@@ -1,0 +1,225 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/MainMenu/main_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/title screen.png" id="2_title"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/main_menu_buttons.png" id="3_button"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="4_selector"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/threadbound_font.fnt" id="5_threadbound_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_menu"]
+font = ExtResource("5_threadbound_font")
+font_size = 42
+font_color = Color(0.82, 0.76, 0.64, 1)
+outline_size = 5
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_title")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.08)
+
+[node name="Selector" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 493.0
+offset_top = 440.0
+offset_right = 673.0
+offset_bottom = 560.0
+mouse_filter = 2
+texture = ExtResource("4_selector")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MenuButtons" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -390.0
+offset_top = 82.0
+offset_right = 390.0
+offset_bottom = 557.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Continue" type="Control" parent="MenuButtons"]
+layout_mode = 0
+offset_right = 780.0
+offset_bottom = 82.0
+
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Continue"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuButtons/Continue"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "CONTINUE"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewJourney" type="Control" parent="MenuButtons"]
+layout_mode = 0
+offset_top = 98.0
+offset_right = 780.0
+offset_bottom = 180.0
+
+[node name="Plaque" type="TextureRect" parent="MenuButtons/NewJourney"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuButtons/NewJourney"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "NEW JOURNEY"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Control" parent="MenuButtons"]
+layout_mode = 0
+offset_top = 196.0
+offset_right = 780.0
+offset_bottom = 278.0
+
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuButtons/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "SETTINGS"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Extras" type="Control" parent="MenuButtons"]
+layout_mode = 0
+offset_top = 294.0
+offset_right = 780.0
+offset_bottom = 376.0
+
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Extras"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuButtons/Extras"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "EXTRAS"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="Control" parent="MenuButtons"]
+layout_mode = 0
+offset_top = 392.0
+offset_right = 780.0
+offset_bottom = 474.0
+
+[node name="Plaque" type="TextureRect" parent="MenuButtons/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_button")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuButtons/Quit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "QUIT"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
