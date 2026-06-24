@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3]
-
-[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/threadbound_font.fnt" id="1_threadbound_font"]
-
-[resource]
-default_font = ExtResource("1_threadbound_font")
-default_font_size = 64

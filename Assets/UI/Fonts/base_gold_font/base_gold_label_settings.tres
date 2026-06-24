@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="1_base_gold_font"]
+
+[resource]
+font = ExtResource("1_base_gold_font")
+font_size = 48
+font_color = Color(0.88, 0.72, 0.38, 1)
+outline_size = 3
+outline_color = Color(0.04, 0.03, 0.02, 0.92)

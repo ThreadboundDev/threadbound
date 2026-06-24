@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Src/UI/game_over_overlay.gd" id="1_overlay"]
 [ext_resource type="Script" path="res://Src/UI/game_over_sprite_sheet_player.gd" id="3_sheet_player"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_sprite_sheet.png" id="4_sprite_sheet"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="5_threadbound_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="5_threadbound_label_settings"]
 
 [node name="GameOverOverlay" type="CanvasLayer"]
 layer = 120

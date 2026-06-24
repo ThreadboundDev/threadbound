@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://Src/UI/demo_message_box.gd" id="1_message_box"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_message_label_settings.tres" id="2_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_message_label_settings.tres" id="2_label_settings"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.04, 0.035, 0.03, 0.88)

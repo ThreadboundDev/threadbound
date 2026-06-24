@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://ctqavo45xjrdr" path="res://Assets/UI/Hud/momentum_bar_endcaps.png" id="11_momentum_caps"]
 [ext_resource type="Texture2D" uid="uid://co3r0e37vuumv" path="res://Assets/UI/Hud/action_point_orb_colorless.png" id="12_action_orb"]
 [ext_resource type="Texture2D" uid="uid://bp1db0wq5b0xv" path="res://Assets/UI/Hud/thread_knot_counter.png" id="13_thread_knot_counter"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="14_threadbound_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="14_threadbound_label_settings"]
 
 [node name="CombatHUD" type="Control" unique_id=1968709405]
 layout_mode = 3

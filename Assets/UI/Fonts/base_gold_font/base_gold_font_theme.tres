@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="1_base_gold_font"]
+
+[resource]
+default_font = ExtResource("1_base_gold_font")
+default_font_size = 48

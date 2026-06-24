@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://ch50blhxndouc"
+path="res://.godot/imported/decorative_font.fnt-c25cbd6eafdb977aba2ddd7646b85f08.fontdata"
+
+[deps]
+
+source_file="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt"
+dest_files=["res://.godot/imported/decorative_font.fnt-c25cbd6eafdb977aba2ddd7646b85f08.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

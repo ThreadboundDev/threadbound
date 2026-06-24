@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3]
 
-[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/threadbound_font.fnt" id="1_threadbound_font"]
+[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="1_threadbound_font"]
 
 [resource]
 font = ExtResource("1_threadbound_font")

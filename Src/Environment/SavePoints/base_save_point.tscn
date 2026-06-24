@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/threadbound_label_settings.tres" id="2_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="2_label_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_proximity"]
 size = Vector2(900, 620)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5j7bieab1sir"
-path="res://.godot/imported/Font_Lower_Case.png-dedf0ac264c056dd2ab5c0b9c42c2154.ctex"
+uid="uid://77l83cmhx7sl"
+path="res://.godot/imported/end_point.png-1552e74fd16cbff82828f0e796863aba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Fonts/Font_Lower_Case.png"
-dest_files=["res://.godot/imported/Font_Lower_Case.png-dedf0ac264c056dd2ab5c0b9c42c2154.ctex"]
+source_file="res://Assets/UI/controller/end_point.png"
+dest_files=["res://.godot/imported/end_point.png-1552e74fd16cbff82828f0e796863aba.ctex"]
 
 [params]
 

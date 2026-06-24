@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctpbrkn6lsvpj"
-path="res://.godot/imported/Font_PNG.png-9742f655158cb0fcdf791897fc46ace6.ctex"
+path="res://.godot/imported/decorative_font_caps_source.png-de4fbe3f9a8dbfa2308bc2cfc13a7cb9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Fonts/Font_PNG.png"
-dest_files=["res://.godot/imported/Font_PNG.png-9742f655158cb0fcdf791897fc46ace6.ctex"]
+source_file="res://Assets/UI/Fonts/decorative_font/decorative_font_caps_source.png"
+dest_files=["res://.godot/imported/decorative_font_caps_source.png-de4fbe3f9a8dbfa2308bc2cfc13a7cb9.ctex"]
 
 [params]
 
