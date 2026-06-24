@@ -29,7 +29,7 @@ outline_color = Color(0.04, 0.03, 0.025, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_option"]
 font = ExtResource("7_base_gold_font")
 font_size = 40
-font_color = Color(1, 1, 1, 1)
+font_color = Color(0.88, 0.72, 0.38, 1)
 outline_size = 0
 outline_color = Color(0, 0, 0, 0)
 
