@@ -84,7 +84,6 @@ offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Continue" unique_id=2016001713]
 layout_mode = 0
@@ -110,7 +109,6 @@ offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/NewJourney" unique_id=948167315]
 layout_mode = 0
@@ -136,7 +134,6 @@ offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Settings" unique_id=314201989]
 layout_mode = 0
@@ -162,7 +159,6 @@ offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Extras" unique_id=1085646501]
 layout_mode = 0
@@ -188,7 +184,6 @@ offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Quit" unique_id=780102490]
 layout_mode = 0
