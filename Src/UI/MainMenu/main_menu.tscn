@@ -156,8 +156,8 @@ offset_bottom = 376.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Extras" unique_id=1769326288]
 layout_mode = 0
-offset_left = 210.0
-offset_right = 570.0
+offset_left = 180.0
+offset_right = 600.0
 offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
@@ -166,8 +166,8 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Extras" unique_id=1085646501]
 layout_mode = 0
-offset_left = 210.0
-offset_right = 570.0
+offset_left = 180.0
+offset_right = 600.0
 offset_bottom = 82.0
 text = "EXTRAS"
 label_settings = SubResource("LabelSettings_menu")
@@ -182,8 +182,8 @@ offset_bottom = 474.0
 
 [node name="Plaque" type="TextureRect" parent="MenuButtons/Quit" unique_id=1773837196]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 540.0
+offset_left = 180.0
+offset_right = 600.0
 offset_bottom = 82.0
 mouse_filter = 2
 texture = ExtResource("3_button")
@@ -192,8 +192,8 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="MenuButtons/Quit" unique_id=780102490]
 layout_mode = 0
-offset_left = 240.0
-offset_right = 540.0
+offset_left = 180.0
+offset_right = 600.0
 offset_bottom = 82.0
 text = "QUIT"
 label_settings = SubResource("LabelSettings_menu")
