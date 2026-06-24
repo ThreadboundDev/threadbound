@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://Src/UI/SavePointMenu/save_point_menu.gd" id="1_script"]
 [ext_resource type="Shader" path="res://Src/Environment/World/menu_blur.gdshader" id="2_blur_shader"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/blossom_of_eryndor_menu_buttons.png" id="4_button"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="5_selector"]
 [ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="6_font"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="7_base_gold_font"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("2_blur_shader")
@@ -27,11 +26,11 @@ outline_size = 5
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_option"]
-font = ExtResource("7_base_gold_font")
-font_size = 40
-font_color = Color(0.88, 0.72, 0.38, 1)
-outline_size = 0
-outline_color = Color(0, 0, 0, 0)
+font = ExtResource("6_font")
+font_size = 38
+font_color = Color(0.82, 0.76, 0.64, 1)
+outline_size = 5
+outline_color = Color(0.04, 0.03, 0.025, 1)
 
 [node name="SavePointMenu" type="CanvasLayer"]
 script = ExtResource("1_script")
