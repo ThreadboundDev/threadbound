@@ -182,6 +182,7 @@ const SIT_FPS := 12.0
 @export var save_point_auto_run_speed := 420.0
 @export var save_point_arrive_distance := 10.0
 @export var save_point_sit_visual_scale := Vector2(1.4, 1.4)
+@export var save_point_stand_up_speed_scale: float = 2.0
 
 # Glow configuration
 @export var idle_glow_width: float = 1.2
@@ -264,6 +265,8 @@ var _save_point_standing_up := false
 var _save_point_controller: Node = null
 var _save_point_original_material: Material
 var _save_point_original_scale := Vector2.ONE
+var _save_point_original_animation_speed_scale: float = 1.0
+var _save_point_equipment_was_visible := true
 var _save_point_breath_tween: Tween
 
 # ===============================
@@ -1227,6 +1230,9 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	velocity = Vector2.ZERO
 	if player_animation:
 		_save_point_original_scale = player_animation.scale
+		_save_point_original_animation_speed_scale = player_animation.speed_scale
+	if equipment_mount:
+		_save_point_equipment_was_visible = equipment_mount.visible
 	if attack_hitbox:
 		attack_hitbox.disable()
 	_reset_weapon_visuals()
@@ -1243,6 +1249,7 @@ func end_save_point_interaction() -> void:
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		player_animation.animation = SIT_ANIMATION
 		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
+		player_animation.speed_scale = _save_point_original_animation_speed_scale * save_point_stand_up_speed_scale
 		player_animation.play_backwards(SIT_ANIMATION)
 		await player_animation.animation_finished
 	_complete_save_point_interaction()
@@ -1263,6 +1270,7 @@ func _complete_save_point_interaction() -> void:
 	_restore_save_point_visual_state()
 	if current_gloves and current_gloves.has_method("exit_save_point_pose"):
 		current_gloves.exit_save_point_pose()
+	_restore_save_point_equipment()
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
 		play_character_anim("Idle", "equip_idle")
 
@@ -1290,6 +1298,7 @@ func _process_save_point_interaction(delta: float) -> void:
 	_save_point_sitting_down = true
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		player_animation.scale = _save_point_original_scale * save_point_sit_visual_scale
+		_hide_save_point_equipment()
 		play_character_anim(String(SIT_ANIMATION), "equip_idle")
 		if current_gloves and current_gloves.has_method("enter_save_point_pose"):
 			current_gloves.enter_save_point_pose()
@@ -1331,11 +1340,21 @@ func _stop_save_point_breathing(restore_scale := true) -> void:
 		player_animation.material = _save_point_original_material
 		if restore_scale:
 			player_animation.scale = _save_point_original_scale
+			player_animation.speed_scale = _save_point_original_animation_speed_scale
 
 func _restore_save_point_visual_state() -> void:
 	if player_animation:
 		player_animation.material = _save_point_original_material
 		player_animation.scale = _save_point_original_scale
+		player_animation.speed_scale = _save_point_original_animation_speed_scale
+
+func _hide_save_point_equipment() -> void:
+	if equipment_mount:
+		equipment_mount.visible = false
+
+func _restore_save_point_equipment() -> void:
+	if equipment_mount:
+		equipment_mount.visible = _save_point_equipment_was_visible
 
 func _ensure_sit_animation() -> void:
 	if not player_animation or not player_animation.sprite_frames:
