@@ -153,7 +153,7 @@ func _play_grapple_fire_animation() -> void:
 
 func play_attack_follow_pose(direction: Vector2) -> void:
 	action_anim_lock_timer = attack_follow_anim_lock_time
-	var use_diagonal := abs(direction.y) > 0.35
+	var use_diagonal: bool = absf(direction.y) > 0.35
 	if use_diagonal and animation_player and animation_player.has_animation("equip_grapple_fire_diagonal"):
 		play_equipment_anim("equip_grapple_fire_diagonal")
 	elif animation_player and animation_player.has_animation("equip_grapple_fire_straight"):
