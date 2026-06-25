@@ -90,43 +90,43 @@ pitch_variation = 0.02
 script = ExtResource("2_sound")
 stream = ExtResource("19_momentum_aura")
 bus = &"Background Audio"
-volume_db = -10.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_boss"]
 script = ExtResource("2_sound")
 stream = ExtResource("28_music_boss")
 bus = &"Music"
-volume_db = -6.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_cotfw_background"]
 script = ExtResource("2_sound")
 stream = ExtResource("31_music_cotfw_background")
 bus = &"Background Audio"
-volume_db = -9.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_exploration"]
 script = ExtResource("2_sound")
 stream = ExtResource("27_music_exploration")
 bus = &"Music"
-volume_db = -6.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_game_over"]
 script = ExtResource("2_sound")
 stream = ExtResource("30_music_game_over")
 bus = &"Music"
-volume_db = -5.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_pause"]
 script = ExtResource("2_sound")
 stream = ExtResource("29_music_pause")
 bus = &"Music"
-volume_db = -6.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_music_title"]
 script = ExtResource("2_sound")
 stream = ExtResource("26_music_title")
 bus = &"Music"
-volume_db = -6.0
+volume_db = 0.0
 
 [sub_resource type="Resource" id="AudioSound_player_attack"]
 script = ExtResource("2_sound")
