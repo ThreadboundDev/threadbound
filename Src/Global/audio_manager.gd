@@ -12,7 +12,7 @@ const MASTER_BUS := &"Master"
 const MUSIC_BUS := &"Music"
 const SFX_BUS := &"SFX"
 const UI_BUS := &"UI"
-const AMBIENCE_BUS := &"Ambience"
+const BACKGROUND_AUDIO_BUS := &"Background Audio"
 const AUDIO_SETTINGS_PATH := "user://audio_settings.cfg"
 const MIN_BUS_VOLUME_DB := -60.0
 const DEFAULT_BUS_VOLUME := 1.0
@@ -64,7 +64,7 @@ func play_loop(sound_name: StringName, volume_offset_db := 0.0, pitch_variation_
 	if not sound:
 		return null
 
-	var player := _create_player(_resolve_bus(_get_sound_bus(sound), AMBIENCE_BUS), "Loop_%s" % String(sound_name))
+	var player := _create_player(_resolve_bus(_get_sound_bus(sound), BACKGROUND_AUDIO_BUS), "Loop_%s" % String(sound_name))
 	player.stream = _make_playback_stream(sound, true)
 	player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
 	player.pitch_scale = _get_sound_pitch_scale(sound, pitch_variation_override)
@@ -114,7 +114,22 @@ func stop_music() -> void:
 	_current_music_name = &""
 
 func get_volume_categories() -> Array[StringName]:
-	return [&"master", &"music", &"sfx", &"ui", &"ambience"]
+	return [&"master", &"music", &"sfx", &"ui", &"background_audio"]
+
+func get_volume_category_label(category: StringName) -> String:
+	match category:
+		&"master":
+			return "Master"
+		&"music":
+			return "Music"
+		&"sfx":
+			return "SFX"
+		&"ui":
+			return "UI"
+		&"background_audio", &"ambience":
+			return "Background Audio"
+		_:
+			return String(category).capitalize()
 
 func set_category_volume(category: StringName, volume: float, save_settings := true) -> void:
 	var bus := _category_to_bus(category)
@@ -159,10 +174,16 @@ func get_ui_volume() -> float:
 	return get_category_volume(&"ui")
 
 func set_ambience_volume(volume: float, save_settings := true) -> void:
-	set_category_volume(&"ambience", volume, save_settings)
+	set_background_audio_volume(volume, save_settings)
 
 func get_ambience_volume() -> float:
-	return get_category_volume(&"ambience")
+	return get_background_audio_volume()
+
+func set_background_audio_volume(volume: float, save_settings := true) -> void:
+	set_category_volume(&"background_audio", volume, save_settings)
+
+func get_background_audio_volume() -> float:
+	return get_category_volume(&"background_audio")
 
 func set_bus_volume_linear(bus: StringName, volume: float) -> void:
 	var bus_index := AudioServer.get_bus_index(String(bus))
@@ -326,7 +347,7 @@ func _resolve_bus(bus: StringName, fallback_bus: StringName) -> StringName:
 	return MASTER_BUS
 
 func _ensure_runtime_buses() -> void:
-	var required_buses := [MUSIC_BUS, SFX_BUS, UI_BUS, AMBIENCE_BUS]
+	var required_buses := [MUSIC_BUS, SFX_BUS, UI_BUS, BACKGROUND_AUDIO_BUS]
 	for bus in required_buses:
 		if AudioServer.get_bus_index(String(bus)) == -1:
 			var bus_index := AudioServer.bus_count
@@ -348,8 +369,8 @@ func _category_to_bus(category: StringName) -> StringName:
 			return SFX_BUS
 		&"ui":
 			return UI_BUS
-		&"ambience":
-			return AMBIENCE_BUS
+		&"background_audio", &"ambience":
+			return BACKGROUND_AUDIO_BUS
 		_:
 			return &""
 

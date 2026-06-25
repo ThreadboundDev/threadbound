@@ -89,7 +89,7 @@ pitch_variation = 0.02
 [sub_resource type="Resource" id="AudioSound_momentum_aura"]
 script = ExtResource("2_sound")
 stream = ExtResource("19_momentum_aura")
-bus = &"Ambience"
+bus = &"Background Audio"
 volume_db = -10.0
 
 [sub_resource type="Resource" id="AudioSound_music_boss"]
@@ -101,7 +101,7 @@ volume_db = -6.0
 [sub_resource type="Resource" id="AudioSound_music_cotfw_background"]
 script = ExtResource("2_sound")
 stream = ExtResource("31_music_cotfw_background")
-bus = &"Ambience"
+bus = &"Background Audio"
 volume_db = -9.0
 
 [sub_resource type="Resource" id="AudioSound_music_exploration"]
