@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="AudioRegistry" load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://Src/Global/audio_registry.gd" id="1_registry"]
+[ext_resource type="Script" path="res://Src/Global/audio_sound.gd" id="2_sound"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/coin_pickup.wav" id="3_coin"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/enemy_death.mp3" id="4_enemy_death"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/threadborne_grapple_connect.mp3" id="5_grapple_connect"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/threadborne_grapple_hanging.mp3" id="6_grapple_hanging"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/threadborne_grapple_throw.wav" id="7_grapple_throw"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/threadborne_walk_run_jump_dash.wav" id="9_movement"]
+[ext_resource type="AudioStream" path="res://Assets/SFX/threadborne_weapon_attack.wav" id="10_weapon_attack"]
+
+[sub_resource type="Resource" id="AudioSound_coin_pickup"]
+script = ExtResource("2_sound")
+stream = ExtResource("3_coin")
+bus = &"SFX"
+volume_db = 0.0
+pitch_scale = 1.0
+pitch_variation = 0.04
+
+[sub_resource type="Resource" id="AudioSound_enemy_death"]
+script = ExtResource("2_sound")
+stream = ExtResource("4_enemy_death")
+bus = &"SFX"
+volume_db = 0.0
+pitch_scale = 1.0
+pitch_variation = 0.03
+
+[sub_resource type="Resource" id="AudioSound_grapple_connect"]
+script = ExtResource("2_sound")
+stream = ExtResource("5_grapple_connect")
+bus = &"SFX"
+volume_db = 0.0
+pitch_scale = 1.0
+pitch_variation = 0.02
+
+[sub_resource type="Resource" id="AudioSound_grapple_hanging"]
+script = ExtResource("2_sound")
+stream = ExtResource("6_grapple_hanging")
+bus = &"SFX"
+volume_db = -3.0
+pitch_scale = 1.0
+pitch_variation = 0.0
+
+[sub_resource type="Resource" id="AudioSound_grapple_throw"]
+script = ExtResource("2_sound")
+stream = ExtResource("7_grapple_throw")
+bus = &"SFX"
+volume_db = 0.0
+pitch_scale = 1.0
+pitch_variation = 0.02
+
+[sub_resource type="Resource" id="AudioSound_movement"]
+script = ExtResource("2_sound")
+stream = ExtResource("9_movement")
+bus = &"SFX"
+volume_db = -6.0
+pitch_scale = 1.0
+pitch_variation = 0.04
+
+[sub_resource type="Resource" id="AudioSound_weapon_attack"]
+script = ExtResource("2_sound")
+stream = ExtResource("10_weapon_attack")
+bus = &"SFX"
+volume_db = -2.0
+pitch_scale = 1.0
+pitch_variation = 0.03
+
+[resource]
+script = ExtResource("1_registry")
+sounds = {
+&"coin_pickup": SubResource("AudioSound_coin_pickup"),
+&"enemy_death": SubResource("AudioSound_enemy_death"),
+&"grapple": SubResource("AudioSound_grapple_throw"),
+&"grapple_connect": SubResource("AudioSound_grapple_connect"),
+&"grapple_hanging": SubResource("AudioSound_grapple_hanging"),
+&"movement": SubResource("AudioSound_movement"),
+&"sword_hit": SubResource("AudioSound_weapon_attack")
+}
