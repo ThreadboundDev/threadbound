@@ -20,8 +20,7 @@ var _selected_index := 1
 var _row_tweens: Dictionary = {}
 
 func _ready() -> void:
-	AudioManager.stop_loop(&"music_cotfw_background")
-	AudioManager.play_music(&"music_title")
+	AudioManager.play_title_screen_music()
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP

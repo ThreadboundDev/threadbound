@@ -16,6 +16,7 @@ const BACKGROUND_AUDIO_BUS := &"Background Audio"
 const AUDIO_SETTINGS_PATH := "user://audio_settings.cfg"
 const MIN_BUS_VOLUME_DB := -60.0
 const DEFAULT_BUS_VOLUME := 1.0
+const DEFAULT_MUSIC_FADE_DURATION := 0.6
 
 @export var registry: Resource = DEFAULT_REGISTRY
 @export var sfx_pool_size := 16
@@ -27,8 +28,13 @@ var _ui_players: Array[AudioStreamPlayer] = []
 var _loop_players: Dictionary = {}
 var _music_player: AudioStreamPlayer
 var _current_music_name := &""
+var _music_tween: Tween
+var _boss_music_active := false
+var _pause_music_active := false
+var _game_over_music_active := false
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	randomize()
 	_ensure_runtime_buses()
 	load_audio_settings()
@@ -90,7 +96,53 @@ func stop_all_loops() -> void:
 	for sound_name in _loop_players.keys():
 		stop_loop(sound_name)
 
-func play_music(sound_name: StringName, volume_offset_db := 0.0) -> AudioStreamPlayer:
+func play_title_screen_music() -> AudioStreamPlayer:
+	_boss_music_active = false
+	_pause_music_active = false
+	_game_over_music_active = false
+	stop_loop(&"music_cotfw_background")
+	return play_music(&"music_title")
+
+func enter_gameplay_music() -> void:
+	_game_over_music_active = false
+	_pause_music_active = false
+	_boss_music_active = false
+	play_loop(&"music_cotfw_background")
+	play_exploration_music()
+
+func play_exploration_music(fade_duration := 0.0) -> AudioStreamPlayer:
+	if _game_over_music_active or _pause_music_active or _boss_music_active:
+		return _music_player
+	return play_music(&"music_exploration", 0.0, fade_duration)
+
+func play_boss_music(fade_duration := 0.0) -> AudioStreamPlayer:
+	if _game_over_music_active or _pause_music_active:
+		return _music_player
+	_boss_music_active = true
+	return play_music(&"music_boss_proto_weaver", 0.0, fade_duration)
+
+func stop_boss_music() -> void:
+	_boss_music_active = false
+	if not _game_over_music_active and not _pause_music_active:
+		play_exploration_music()
+
+func play_pause_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> AudioStreamPlayer:
+	if _game_over_music_active:
+		return _music_player
+	_pause_music_active = true
+	return play_music(&"music_pause", 0.0, fade_duration)
+
+func stop_pause_music() -> void:
+	_pause_music_active = false
+	_resume_gameplay_music()
+
+func play_game_over_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> AudioStreamPlayer:
+	_game_over_music_active = true
+	_pause_music_active = false
+	_boss_music_active = false
+	return play_music(&"music_game_over", 0.0, fade_duration)
+
+func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration := 0.0) -> AudioStreamPlayer:
 	if _current_music_name == sound_name and _music_player and _music_player.playing:
 		return _music_player
 
@@ -98,16 +150,28 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0) -> AudioStreamP
 	if not sound:
 		return null
 
+	if _music_tween:
+		_music_tween.kill()
+		_music_tween = null
+
+	var target_volume := _get_sound_volume_db(sound) + volume_offset_db
 	_music_player.stop()
 	_current_music_name = sound_name
 	_music_player.stream = _make_playback_stream(sound, true)
 	_music_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
-	_music_player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
+	_music_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
 	_music_player.pitch_scale = _get_sound_pitch_scale(sound)
 	_music_player.play()
+	if fade_duration > 0.0:
+		_music_tween = create_tween()
+		_music_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		_music_tween.tween_property(_music_player, "volume_db", target_volume, fade_duration)
 	return _music_player
 
 func stop_music() -> void:
+	if _music_tween:
+		_music_tween.kill()
+		_music_tween = null
 	if _music_player:
 		_music_player.stop()
 		_music_player.stream = null
@@ -336,8 +400,17 @@ func _create_player(bus: StringName, player_name: String) -> AudioStreamPlayer:
 	var player := AudioStreamPlayer.new()
 	player.name = player_name
 	player.bus = _resolve_bus(bus, MASTER_BUS)
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(player)
 	return player
+
+func _resume_gameplay_music() -> void:
+	if _game_over_music_active or _pause_music_active:
+		return
+	if _boss_music_active:
+		play_music(&"music_boss_proto_weaver")
+	else:
+		play_exploration_music()
 
 func _resolve_bus(bus: StringName, fallback_bus: StringName) -> StringName:
 	if AudioServer.get_bus_index(String(bus)) != -1:

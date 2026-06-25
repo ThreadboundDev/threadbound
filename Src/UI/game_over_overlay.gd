@@ -21,7 +21,7 @@ var _waiting_for_continue := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	AudioManager.play_music(&"music_game_over")
+	AudioManager.play_game_over_music()
 	get_tree().paused = true
 	_configure_blur()
 	_prepare_visuals()

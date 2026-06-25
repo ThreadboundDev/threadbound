@@ -214,13 +214,13 @@ func is_attack_sequence_busy() -> bool:
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	super._on_detection_body_entered(body)
-	AudioManager.play_music(&"music_boss_proto_weaver")
+	AudioManager.play_boss_music()
 	_update_boss_health_visibility()
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	super._on_detection_body_exited(body)
 	if not is_dead and target == null:
-		AudioManager.play_music(&"music_exploration")
+		AudioManager.stop_boss_music()
 	_update_boss_health_visibility()
 
 func _on_hurtbox_hit_received(damage: DamageData) -> void:
@@ -241,7 +241,7 @@ func _on_boss_health_changed(_current: int, _maximum: int) -> void:
 func _on_boss_died(_damage: DamageData) -> void:
 	for index in range(_armor_links.size()):
 		_clear_armor_link(index)
-	AudioManager.play_music(&"music_exploration")
+	AudioManager.stop_boss_music()
 	_update_boss_health_bar()
 	_update_boss_health_visibility()
 

@@ -26,6 +26,7 @@ signal rise_requested
 var _selected_index := 0
 var _row_tweens: Dictionary = {}
 var _closing := false
+var _started_pause_music := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -41,6 +42,8 @@ func _ready() -> void:
 	_select_index(_selected_index, true)
 
 func open(menu_side: int) -> void:
+	AudioManager.play_pause_music()
+	_started_pause_music = true
 	menu_root.position = menu_right_position if menu_side >= 0 else menu_left_position
 	_configure_focus(menu_side)
 	_select_index(_selected_index, true)
@@ -61,6 +64,8 @@ func close() -> void:
 	tween.tween_property(blur_rect, "modulate:a", 0.0, fade_duration)
 	tween.tween_property(menu_root, "modulate:a", 0.0, fade_duration)
 	await tween.finished
+	if _started_pause_music:
+		AudioManager.stop_pause_music()
 	queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
