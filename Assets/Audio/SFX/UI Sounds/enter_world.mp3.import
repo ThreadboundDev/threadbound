@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cndegq5udfsyc"
+path="res://.godot/imported/enter_world.mp3-7a568f5691de411b81f297cf2ac7adc8.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/UI Sounds/enter_world.mp3"
+dest_files=["res://.godot/imported/enter_world.mp3-7a568f5691de411b81f297cf2ac7adc8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

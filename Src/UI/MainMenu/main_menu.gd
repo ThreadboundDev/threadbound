@@ -20,6 +20,7 @@ var _selected_index := 1
 var _row_tweens: Dictionary = {}
 
 func _ready() -> void:
+	AudioManager.play_music(&"music_title")
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -48,6 +49,9 @@ func _on_row_gui_input(event: InputEvent, index: int) -> void:
 		_activate_selected()
 
 func _select_index(index: int, instant := false) -> void:
+	if not instant:
+		AudioManager.play_ui(&"ui_click")
+
 	_selected_index = wrapi(index, 0, rows.size())
 	for i in rows.size():
 		_set_row_selected(i, i == _selected_index, instant)
@@ -81,8 +85,10 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	tween.tween_property(label, "modulate", target_color, 0.12)
 
 func _activate_selected() -> void:
+	AudioManager.play_ui(&"menu_select")
 	match rows[_selected_index].name:
 		&"NewJourney":
+			AudioManager.play_ui(&"enter_world")
 			get_tree().change_scene_to_file(DEMO_SCENE)
 		&"Quit":
 			get_tree().quit()

@@ -311,6 +311,7 @@ func _on_damaged(damage: DamageData) -> void:
 		state_machine.transition_to(&"Hurt")
 
 func _on_died(_damage: DamageData) -> void:
+	AudioManager.play_sfx(&"enemy_death")
 	_spawn_enemy_death_vfx(_damage)
 	_drop_thread_knots()
 	if state_machine.current_state_name != &"Dead":

@@ -26,6 +26,7 @@ func _start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 	dash_direction = player.last_direction
+	AudioManager.play_sfx(&"player_dash")
 	if player.has_method("start_dash_iframe"):
 		player.start_dash_iframe(dash_duration)
 	if player.has_method("report_momentum_action"):

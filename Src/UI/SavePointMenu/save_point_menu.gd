@@ -102,6 +102,9 @@ func _on_row_gui_input(event: InputEvent, index: int) -> void:
 		_activate_selected()
 
 func _select_index(index: int, instant := false) -> void:
+	if not instant:
+		AudioManager.play_ui(&"ui_click")
+
 	_selected_index = wrapi(index, 0, rows.size())
 	for i in rows.size():
 		_set_row_selected(i, i == _selected_index, instant)
@@ -132,6 +135,7 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	tween.tween_property(plaque, "modulate", Color.WHITE, 0.12)
 
 func _activate_selected() -> void:
+	AudioManager.play_ui(&"menu_select")
 	var selected_name := StringName(rows[_selected_index].name)
 	if selected_name == &"Rise":
 		rise_requested.emit()

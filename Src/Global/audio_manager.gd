@@ -26,6 +26,7 @@ var _sfx_players: Array[AudioStreamPlayer] = []
 var _ui_players: Array[AudioStreamPlayer] = []
 var _loop_players: Dictionary = {}
 var _music_player: AudioStreamPlayer
+var _current_music_name := &""
 
 func _ready() -> void:
 	randomize()
@@ -34,6 +35,10 @@ func _ready() -> void:
 	_build_pool(_sfx_players, sfx_pool_size, SFX_BUS, "SFXPlayer")
 	_build_pool(_ui_players, ui_pool_size, UI_BUS, "UIPlayer")
 	_music_player = _create_player(MUSIC_BUS, "MusicPlayer")
+
+func _exit_tree() -> void:
+	stop_all_loops()
+	stop_music()
 
 func play_sfx(sound_name: StringName, volume_offset_db := 0.0, pitch_variation_override := -1.0) -> AudioStreamPlayer:
 	var sound := _get_sound(sound_name)
@@ -78,6 +83,7 @@ func stop_loop(sound_name: StringName) -> void:
 		return
 
 	player.stop()
+	player.stream = null
 	player.queue_free()
 
 func stop_all_loops() -> void:
@@ -85,11 +91,15 @@ func stop_all_loops() -> void:
 		stop_loop(sound_name)
 
 func play_music(sound_name: StringName, volume_offset_db := 0.0) -> AudioStreamPlayer:
+	if _current_music_name == sound_name and _music_player and _music_player.playing:
+		return _music_player
+
 	var sound := _get_sound(sound_name)
 	if not sound:
 		return null
 
 	_music_player.stop()
+	_current_music_name = sound_name
 	_music_player.stream = _get_sound_stream(sound)
 	_music_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
 	_music_player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
@@ -100,6 +110,8 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0) -> AudioStreamP
 func stop_music() -> void:
 	if _music_player:
 		_music_player.stop()
+		_music_player.stream = null
+	_current_music_name = &""
 
 func get_volume_categories() -> Array[StringName]:
 	return [&"master", &"music", &"sfx", &"ui", &"ambience"]
@@ -213,13 +225,13 @@ func _play_one_shot(
 	volume_offset_db: float,
 	pitch_variation_override: float
 ) -> AudioStreamPlayer:
+	var stream := _get_sound_stream(sound)
 	var player := _get_available_one_shot_player(pool, fallback_bus)
 	if not player:
-		var stream := _get_sound_stream(sound)
 		push_warning("AudioManager has no available one-shot player for %s." % stream.resource_path)
 		return null
 
-	player.stream = _get_sound_stream(sound)
+	player.stream = stream
 	player.bus = _resolve_bus(_get_sound_bus(sound), fallback_bus)
 	player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
 	player.pitch_scale = _get_sound_pitch_scale(sound, pitch_variation_override)
@@ -256,6 +268,8 @@ func _get_sound(sound_name: StringName) -> Resource:
 	return sound
 
 func _get_sound_stream(sound: Resource) -> AudioStream:
+	if sound.has_method("get_stream"):
+		return sound.get_stream() as AudioStream
 	return sound.get("stream") as AudioStream
 
 func _get_sound_bus(sound: Resource) -> StringName:

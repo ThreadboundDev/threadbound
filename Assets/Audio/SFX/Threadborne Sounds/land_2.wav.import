@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://h1hayvnrgj6n"
+path="res://.godot/imported/land_2.wav-597246e106327057546c170f0a733af0.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Threadborne Sounds/land_2.wav"
+dest_files=["res://.godot/imported/land_2.wav-597246e106327057546c170f0a733af0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -135,6 +135,7 @@ func _update_hover() -> void:
 	if hovered_slot:
 		_on_slot_unhover(hovered_slot)
 	if new_hover:
+		AudioManager.play_ui(&"ui_click")
 		_on_slot_hover(new_hover)
 	hovered_slot = new_hover
 
@@ -177,6 +178,7 @@ func _on_slot_unhover(slot: Control) -> void:
 	icon.modulate.a = 1.0
 
 func select_equip(slot_idx: int) -> void:
+	AudioManager.play_ui(&"menu_select")
 	if EquipManager:
 		EquipManager.equip_item(slot_idx)
 	slow_bank = max_slow_bank

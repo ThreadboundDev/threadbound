@@ -184,6 +184,11 @@ const SIT_FPS := 12.0
 @export var save_point_sit_visual_scale := Vector2(1.4, 1.4)
 @export var save_point_stand_up_speed_scale: float = 2.0
 
+@export_group("Audio")
+@export var footstep_interval := 0.28
+@export var footstep_min_speed := 80.0
+@export var coin_pickup_audio_cooldown := 0.045
+
 # Glow configuration
 @export var idle_glow_width: float = 1.2
 @export var idle_glow_intensity: float = 0.35
@@ -234,6 +239,8 @@ var _use_after_swap_timer := 0.0
 var _momentum_system_ready := false
 var _dash_iframe_timer := 0.0
 var _debug_momentum_was_pressed := false
+var _footstep_timer := 0.0
+var _coin_pickup_audio_timer := 0.0
 
 var current_body_anim := ""
 var current_equip_anim := ""
@@ -304,6 +311,7 @@ func _ready() -> void:
 	if base_gloves_scene:
 		equip_gloves(base_gloves_scene)
 
+	AudioManager.play_music(&"music_exploration")
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
 	_ensure_sit_animation()
@@ -345,6 +353,7 @@ func unequip_gloves() -> void:
 func _physics_process(delta: float) -> void:
 	_update_god_mode_toggle()
 	_update_debug_momentum_fill()
+	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
 
@@ -360,6 +369,8 @@ func _physics_process(delta: float) -> void:
 	if save_point_interaction_active:
 		_process_save_point_interaction(delta)
 		return
+
+	var was_on_floor := is_on_floor()
 
 	# Gravity + coyote time
 	if god_mode_enabled:
@@ -428,6 +439,7 @@ func _physics_process(delta: float) -> void:
 		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
+	_process_movement_audio(delta, was_on_floor)
 	_process_movement_momentum(delta)
 
 	handle_wall_cling(delta)
@@ -648,6 +660,7 @@ func start_attack() -> void:
 	if not can_start_attack():
 		return
 
+	AudioManager.play_sfx(&"player_attack")
 	is_attacking = true
 	attack_timer = 0.0
 	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
@@ -788,6 +801,7 @@ func spend_action_points(amount: int) -> bool:
 	if current_action_points < amount:
 		return false
 
+	AudioManager.play_ui(&"ui_click")
 	var spent := 0
 	for i in range(max_action_points - 1, -1, -1):
 		if _action_point_recharge_timers[i] <= 0.0:
@@ -819,12 +833,16 @@ func refill_action_points() -> void:
 	for i in _action_point_recharge_timers.size():
 		_action_point_recharge_timers[i] = 0.0
 	current_action_points = max_action_points
+	AudioManager.play_ui(&"loot_special_item")
 
 func set_momentum(value: float) -> void:
 	momentum = value
 
 func collect_thread_knots(amount: int) -> void:
 	thread_knot_count += maxi(0, amount)
+	if _coin_pickup_audio_timer <= 0.0:
+		AudioManager.play_ui(&"coin_pickup")
+		_coin_pickup_audio_timer = coin_pickup_audio_cooldown
 
 func _sync_hud() -> void:
 	if not is_inside_tree():
@@ -950,7 +968,23 @@ func _process_momentum(delta: float) -> void:
 	if momentum <= 0.0:
 		_flow_state_active = false
 		_flow_state_duration = 0.0
+		AudioManager.stop_loop(&"momentum_aura")
 		_update_momentum_state()
+
+func _process_audio_timers(delta: float) -> void:
+	if _footstep_timer > 0.0:
+		_footstep_timer = maxf(0.0, _footstep_timer - delta)
+	if _coin_pickup_audio_timer > 0.0:
+		_coin_pickup_audio_timer = maxf(0.0, _coin_pickup_audio_timer - delta)
+
+func _process_movement_audio(_delta: float, was_on_floor: bool) -> void:
+	var on_floor := is_on_floor()
+	if on_floor and not was_on_floor and not god_mode_enabled:
+		AudioManager.play_sfx(&"player_land")
+
+	if on_floor and not is_dead and not is_hurt and absf(velocity.x) >= footstep_min_speed and _footstep_timer <= 0.0:
+		AudioManager.play_sfx(&"player_footstep")
+		_footstep_timer = footstep_interval
 
 func _process_movement_momentum(delta: float) -> void:
 	var moved_distance := global_position.distance_to(_movement_momentum_last_position)
@@ -1075,6 +1109,8 @@ func _change_momentum(amount: float) -> void:
 	if momentum >= 100.0 and not _flow_state_active:
 		_flow_state_active = true
 		_flow_state_duration = 0.0
+		AudioManager.play_sfx(&"enter_momentum")
+		AudioManager.play_loop(&"momentum_aura")
 		_update_momentum_state()
 
 func _lose_momentum_from_damage(damage: DamageData) -> void:
@@ -1138,6 +1174,7 @@ func _on_damaged(damage: DamageData) -> void:
 	is_attacking = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
+	AudioManager.play_sfx(&"player_damage")
 
 	if hit_flash:
 		hit_flash.flash(Color(1.0, 0.35, 0.35, 1.0), 0.08)
@@ -1156,6 +1193,8 @@ func _on_died(_damage: DamageData) -> void:
 	if death_reset_started:
 		return
 
+	AudioManager.stop_loop(&"momentum_aura")
+	AudioManager.stop_loop(&"grapple_hanging")
 	is_dead = true
 	death_reset_started = true
 	is_attacking = false

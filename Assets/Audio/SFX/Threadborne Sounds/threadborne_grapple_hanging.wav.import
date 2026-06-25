@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwqt2l0i4qn5a"
+path="res://.godot/imported/threadborne_grapple_hanging.wav-a773e3cf1d072736a05eede1b03b602a.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Threadborne Sounds/threadborne_grapple_hanging.wav"
+dest_files=["res://.godot/imported/threadborne_grapple_hanging.wav-a773e3cf1d072736a05eede1b03b602a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -240,6 +240,7 @@ func _show_stowed_rope() -> void:
 			rope_hang_anchor.reset_rope()
 
 func _reset_active_grapple_visuals() -> void:
+	AudioManager.stop_loop(&"grapple_hanging")
 	grapple_state = GrappleState.STOWED
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
@@ -385,11 +386,13 @@ func _start_grapple_fire() -> void:
 		active_needle_sprite.visible = true
 		active_needle_sprite.global_position = grapple_tip_position
 
+	AudioManager.play_sfx(&"grapple")
 	_play_grapple_fire_animation()
 	_update_active_grapple_visuals()
 
 func _begin_grapple_retract() -> void:
 	if grapple_state != GrappleState.STOWED:
+		AudioManager.stop_loop(&"grapple_hanging")
 		grapple_state = GrappleState.RETRACTING
 		grapple_attached = false
 
@@ -408,6 +411,8 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		grapple_state = GrappleState.ATTACHED
+		AudioManager.play_sfx(&"grapple_connect")
+		AudioManager.play_loop(&"grapple_hanging")
 
 		current_rope_length = clamp(
 			get_grapple_origin_global_position().distance_to(grapple_attach_position),

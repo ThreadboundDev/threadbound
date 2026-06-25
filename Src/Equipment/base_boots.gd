@@ -27,6 +27,7 @@ func perform_wall_jump() -> void:
 	player.air_jump_available = true
 	player.is_wall_clinging = false
 	player.wall_cling_timer = 0.0
+	AudioManager.play_sfx(&"player_jump")
 	if player.has_method("report_momentum_action"):
 		player.report_momentum_action(&"Jump", 0.7)
 
@@ -36,6 +37,7 @@ func _perform_normal_jump() -> void:
 	player.coyote_timer = 0.0
 	player.has_wall_jumped = false
 	player.air_jump_available = true
+	AudioManager.play_sfx(&"player_jump")
 	if player.has_method("report_momentum_action"):
 		player.report_momentum_action(&"Jump", 0.55)
 
@@ -48,5 +50,6 @@ func _perform_air_jump() -> void:
 	player.air_jump_available = false
 	player.is_wall_clinging = false
 	player.wall_cling_timer = 0.0
+	AudioManager.play_sfx(&"player_jump")
 	if player.has_method("report_momentum_action"):
 		player.report_momentum_action(&"Jump", 1.35)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bl7bqe4smhomx"
+path="res://.godot/imported/enter_momentum.wav-2c3f72834bd36e17b3436e77d82c0ceb.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Threadborne Sounds/enter_momentum.wav"
+dest_files=["res://.godot/imported/enter_momentum.wav-2c3f72834bd36e17b3436e77d82c0ceb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
