@@ -19,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://dwqt2l0i4qn5a" path="res://Assets/Audio/SFX/Threadborne Sounds/threadborne_grapple_hanging.wav" id="17_grapple_hanging"]
 [ext_resource type="AudioStream" uid="uid://bl7bqe4smhomx" path="res://Assets/Audio/SFX/Threadborne Sounds/enter_momentum.wav" id="18_enter_momentum"]
 [ext_resource type="AudioStream" uid="uid://ce5112umkuo8v" path="res://Assets/Audio/SFX/Threadborne Sounds/momentum_aura.wav" id="19_momentum_aura"]
-[ext_resource type="AudioStream" uid="uid://8j2lglli12d" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_death.mp3" id="20_enemy_death"]
+[ext_resource type="AudioStream" uid="uid://b1l6m8rxg5cjx" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_death.wav" id="20_enemy_death"]
 [ext_resource type="AudioStream" uid="uid://cqbiadt661pp4" path="res://Assets/Audio/SFX/UI Sounds/ui_click.wav" id="21_ui_click"]
 [ext_resource type="AudioStream" uid="uid://d05eh8yvy6eev" path="res://Assets/Audio/SFX/UI Sounds/menu_select.wav" id="22_menu_select"]
 [ext_resource type="AudioStream" uid="uid://ca7636v5vnlwe" path="res://Assets/Audio/SFX/UI Sounds/loot_special_item.wav" id="23_loot_special"]
