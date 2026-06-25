@@ -801,7 +801,6 @@ func spend_action_points(amount: int) -> bool:
 	if current_action_points < amount:
 		return false
 
-	AudioManager.play_ui(&"ui_click")
 	var spent := 0
 	for i in range(max_action_points - 1, -1, -1):
 		if _action_point_recharge_timers[i] <= 0.0:
