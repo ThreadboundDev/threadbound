@@ -20,6 +20,7 @@ var _selected_index := 1
 var _row_tweens: Dictionary = {}
 
 func _ready() -> void:
+	AudioManager.stop_loop(&"music_cotfw_background")
 	AudioManager.play_music(&"music_title")
 	for i in rows.size():
 		var row := rows[i]

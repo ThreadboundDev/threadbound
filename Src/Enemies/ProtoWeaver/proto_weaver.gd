@@ -219,6 +219,8 @@ func _on_detection_body_entered(body: Node2D) -> void:
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	super._on_detection_body_exited(body)
+	if not is_dead and target == null:
+		AudioManager.play_music(&"music_exploration")
 	_update_boss_health_visibility()
 
 func _on_hurtbox_hit_received(damage: DamageData) -> void:

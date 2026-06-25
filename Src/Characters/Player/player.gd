@@ -311,6 +311,7 @@ func _ready() -> void:
 	if base_gloves_scene:
 		equip_gloves(base_gloves_scene)
 
+	AudioManager.play_loop(&"music_cotfw_background")
 	AudioManager.play_music(&"music_exploration")
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
