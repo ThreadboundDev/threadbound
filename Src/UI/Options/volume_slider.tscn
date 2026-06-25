@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://dgj2gxbqifgcm"]
+
+[ext_resource type="Script" path="res://Src/UI/Options/volume_slider.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_empty_bar_and_icons.png" id="2_shell"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_bar_empty.png" id="3_empty"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_bar_filled.png" id="4_filled"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_slider_button.png" id="5_knob"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="6_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_volume"]
+font = ExtResource("6_font")
+font_size = 34
+font_color = Color(0.86, 0.78, 0.58, 1)
+outline_size = 4
+outline_color = Color(0.04, 0.035, 0.025, 1)
+
+[node name="VolumeSlider" type="Control"]
+custom_minimum_size = Vector2(1050, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1050.0
+offset_bottom = 200.0
+focus_mode = 2
+mouse_filter = 0
+script = ExtResource("1_script")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 8.0
+offset_right = 896.0
+offset_bottom = 56.0
+mouse_filter = 2
+text = "MUSIC"
+label_settings = SubResource("LabelSettings_volume")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 78.0
+offset_right = 818.0
+offset_bottom = 122.0
+mouse_filter = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+texture_under = ExtResource("3_empty")
+texture_progress = ExtResource("4_filled")
+stretch_margin_left = 14
+stretch_margin_top = 8
+stretch_margin_right = 14
+stretch_margin_bottom = 8
+
+[node name="Shell" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1050.0
+offset_bottom = 200.0
+mouse_filter = 2
+texture = ExtResource("2_shell")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Knob" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 766.5
+offset_top = 34.5
+offset_right = 869.5
+offset_bottom = 165.5
+mouse_filter = 2
+texture = ExtResource("5_knob")
+expand_mode = 1
+stretch_mode = 5

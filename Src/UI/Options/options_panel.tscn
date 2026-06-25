@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://bsmheog2d3vd3"]
+
+[ext_resource type="Script" path="res://Src/UI/Options/options_panel.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Src/UI/Options/volume_slider.tscn" id="2_slider"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_background.png" id="3_background"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_separator.png" id="4_separator"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="5_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("5_font")
+font_size = 54
+font_color = Color(0.94, 0.84, 0.58, 1)
+outline_size = 5
+outline_color = Color(0.04, 0.035, 0.025, 1)
+
+[node name="OptionsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -620.0
+offset_top = -430.0
+offset_right = 620.0
+offset_bottom = 430.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_background")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.0
+offset_top = 130.0
+offset_right = 350.0
+offset_bottom = 206.0
+grow_horizontal = 2
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separator" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -420.0
+offset_top = 204.0
+offset_right = 420.0
+offset_bottom = 272.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("4_separator")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sliders" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -525.0
+offset_top = -240.0
+offset_right = 525.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -74
+
+[node name="Master" parent="Sliders" instance=ExtResource("2_slider")]
+layout_mode = 2
+category = &"master"
+label_text = "MASTER"
+
+[node name="Music" parent="Sliders" instance=ExtResource("2_slider")]
+layout_mode = 2
+category = &"music"
+label_text = "MUSIC"
+
+[node name="BackgroundAudio" parent="Sliders" instance=ExtResource("2_slider")]
+layout_mode = 2
+category = &"background_audio"
+label_text = "BACKGROUND AUDIO"
+
+[node name="SFX" parent="Sliders" instance=ExtResource("2_slider")]
+layout_mode = 2
+category = &"sfx"
+label_text = "SFX"
+
+[node name="UI" parent="Sliders" instance=ExtResource("2_slider")]
+layout_mode = 2
+category = &"ui"
+label_text = "UI"

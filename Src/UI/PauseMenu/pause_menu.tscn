@@ -1,0 +1,196 @@
+[gd_scene load_steps=8 format=3 uid="uid://b36m3lb6kjice"]
+
+[ext_resource type="Script" path="res://Src/UI/PauseMenu/pause_menu.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://Src/UI/Options/options_panel.tscn" id="2_options"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_background.png" id="3_background"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/main_menu_buttons.png" id="4_button"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="5_selector"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_separator.png" id="6_separator"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="7_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("7_font")
+font_size = 58
+font_color = Color(0.94, 0.84, 0.58, 1)
+outline_size = 5
+outline_color = Color(0.04, 0.035, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_menu"]
+font = ExtResource("7_font")
+font_size = 42
+font_color = Color(0.82, 0.76, 0.64, 1)
+outline_size = 5
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.52)
+
+[node name="MenuRoot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -330.0
+offset_right = 420.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_background")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 226.0
+offset_right = 280.0
+offset_bottom = 300.0
+grow_horizontal = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separator" type="TextureRect" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_top = 294.0
+offset_right = 330.0
+offset_bottom = 352.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_separator")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Selector" type="TextureRect" parent="MenuRoot"]
+visible = false
+layout_mode = 0
+offset_left = 1170.0
+offset_top = 420.0
+offset_right = 1314.0
+offset_bottom = 516.0
+mouse_filter = 2
+texture = ExtResource("5_selector")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Buttons" type="Control" parent="MenuRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -390.0
+offset_top = -76.0
+offset_right = 390.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resume" type="Control" parent="MenuRoot/Buttons"]
+offset_right = 780.0
+offset_bottom = 82.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Resume"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Resume"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "RESUME"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Options" type="Control" parent="MenuRoot/Buttons"]
+offset_top = 112.0
+offset_right = 780.0
+offset_bottom = 194.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Options"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Options"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="Control" parent="MenuRoot/Buttons"]
+offset_top = 224.0
+offset_right = 780.0
+offset_bottom = 306.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Quit"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Quit"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "QUIT"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsPanel" parent="." instance=ExtResource("2_options")]
+visible = false
+process_mode = 3

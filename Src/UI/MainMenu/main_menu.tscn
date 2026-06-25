@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://byn6s4mv4jqi2"]
+[gd_scene load_steps=8 format=3 uid="uid://byn6s4mv4jqi2"]
 
 [ext_resource type="Script" uid="uid://cmew8j7etcvtt" path="res://Src/UI/MainMenu/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d2bwsrah2vqt7" path="res://Assets/UI/Main Menu/title screen.png" id="2_title"]
 [ext_resource type="Texture2D" uid="uid://bmfe7jogql2rf" path="res://Assets/UI/Main Menu/main_menu_buttons.png" id="3_button"]
 [ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="4_selector"]
 [ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="5_threadbound_font"]
+[ext_resource type="PackedScene" path="res://Src/UI/Options/options_panel.tscn" id="6_options"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_menu"]
 font = ExtResource("5_threadbound_font")
@@ -202,3 +203,6 @@ text = "QUIT"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="OptionsPanel" parent="." instance=ExtResource("6_options")]
+visible = false
