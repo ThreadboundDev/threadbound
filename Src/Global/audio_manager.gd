@@ -17,6 +17,7 @@ const AUDIO_SETTINGS_PATH := "user://audio_settings.cfg"
 const MIN_BUS_VOLUME_DB := -60.0
 const DEFAULT_BUS_VOLUME := 1.0
 const DEFAULT_MUSIC_FADE_DURATION := 0.6
+const MUSIC_PLAYER_COUNT := 2
 
 @export var registry: Resource = DEFAULT_REGISTRY
 @export var sfx_pool_size := 16
@@ -26,9 +27,12 @@ const DEFAULT_MUSIC_FADE_DURATION := 0.6
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _ui_players: Array[AudioStreamPlayer] = []
 var _loop_players: Dictionary = {}
+var _music_players: Array[AudioStreamPlayer] = []
 var _music_player: AudioStreamPlayer
 var _current_music_name := &""
 var _music_tween: Tween
+var _music_fade_tweens: Array[Tween] = []
+var _music_player_index := 0
 var _boss_music_active := false
 var _pause_music_active := false
 var _game_over_music_active := false
@@ -40,7 +44,11 @@ func _ready() -> void:
 	load_audio_settings()
 	_build_pool(_sfx_players, sfx_pool_size, SFX_BUS, "SFXPlayer")
 	_build_pool(_ui_players, ui_pool_size, UI_BUS, "UIPlayer")
-	_music_player = _create_player(MUSIC_BUS, "MusicPlayer")
+	for index in MUSIC_PLAYER_COUNT:
+		var player := _create_player(MUSIC_BUS, "MusicPlayer%d" % (index + 1))
+		player.finished.connect(_on_music_finished.bind(player))
+		_music_players.append(player)
+	_music_player = _music_players[0]
 
 func _exit_tree() -> void:
 	stop_all_loops()
@@ -101,7 +109,7 @@ func play_title_screen_music() -> AudioStreamPlayer:
 	_pause_music_active = false
 	_game_over_music_active = false
 	stop_loop(&"music_cotfw_background")
-	return play_music(&"music_title")
+	return play_music(&"music_title", 0.0, DEFAULT_MUSIC_FADE_DURATION)
 
 func enter_gameplay_music() -> void:
 	_game_over_music_active = false
@@ -113,13 +121,13 @@ func enter_gameplay_music() -> void:
 func play_exploration_music(fade_duration := 0.0) -> AudioStreamPlayer:
 	if _game_over_music_active or _pause_music_active or _boss_music_active:
 		return _music_player
-	return play_music(&"music_exploration", 0.0, fade_duration)
+	return play_music(&"music_exploration", 0.0, maxf(fade_duration, DEFAULT_MUSIC_FADE_DURATION))
 
 func play_boss_music(fade_duration := 0.0) -> AudioStreamPlayer:
 	if _game_over_music_active or _pause_music_active:
 		return _music_player
 	_boss_music_active = true
-	return play_music(&"music_boss_proto_weaver", 0.0, fade_duration)
+	return play_music(&"music_boss_proto_weaver", 0.0, maxf(fade_duration, DEFAULT_MUSIC_FADE_DURATION))
 
 func stop_boss_music() -> void:
 	_boss_music_active = false
@@ -150,31 +158,41 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration :
 	if not sound:
 		return null
 
-	if _music_tween:
-		_music_tween.kill()
-		_music_tween = null
+	_kill_music_fade_tweens()
 
 	var target_volume := _get_sound_volume_db(sound) + volume_offset_db
-	_music_player.stop()
+	var previous_player := _music_player
+	var next_player := _get_next_music_player()
 	_current_music_name = sound_name
-	_music_player.stream = _get_sound_stream(sound)
-	_music_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
-	_music_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
-	_music_player.pitch_scale = _get_sound_pitch_scale(sound)
-	_music_player.play()
+	next_player.stop()
+	next_player.stream = _get_sound_stream(sound)
+	next_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
+	next_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
+	next_player.pitch_scale = _get_sound_pitch_scale(sound)
+	next_player.play()
+	_music_player = next_player
+
+	if previous_player and previous_player != next_player and previous_player.playing:
+		if fade_duration > 0.0:
+			var fade_out := create_tween()
+			fade_out.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+			_music_fade_tweens.append(fade_out)
+			fade_out.tween_property(previous_player, "volume_db", MIN_BUS_VOLUME_DB, fade_duration)
+			fade_out.tween_callback(_stop_music_player.bind(previous_player))
+		else:
+			_stop_music_player(previous_player)
+
 	if fade_duration > 0.0:
 		_music_tween = create_tween()
 		_music_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-		_music_tween.tween_property(_music_player, "volume_db", target_volume, fade_duration)
+		_music_fade_tweens.append(_music_tween)
+		_music_tween.tween_property(next_player, "volume_db", target_volume, fade_duration)
 	return _music_player
 
 func stop_music() -> void:
-	if _music_tween:
-		_music_tween.kill()
-		_music_tween = null
-	if _music_player:
-		_music_player.stop()
-		_music_player.stream = null
+	_kill_music_fade_tweens()
+	for player in _music_players:
+		_stop_music_player(player)
 	_current_music_name = &""
 
 func get_volume_categories() -> Array[StringName]:
@@ -383,6 +401,29 @@ func _create_player(bus: StringName, player_name: String) -> AudioStreamPlayer:
 	add_child(player)
 	return player
 
+func _get_next_music_player() -> AudioStreamPlayer:
+	if _music_players.is_empty():
+		_music_player = _create_player(MUSIC_BUS, "MusicPlayer")
+		_music_player.finished.connect(_on_music_finished.bind(_music_player))
+		_music_players.append(_music_player)
+		return _music_player
+
+	_music_player_index = (_music_player_index + 1) % _music_players.size()
+	return _music_players[_music_player_index]
+
+func _stop_music_player(player: AudioStreamPlayer) -> void:
+	if not player:
+		return
+	player.stop()
+	player.stream = null
+
+func _kill_music_fade_tweens() -> void:
+	for tween in _music_fade_tweens:
+		if tween:
+			tween.kill()
+	_music_fade_tweens.clear()
+	_music_tween = null
+
 func _resume_gameplay_music() -> void:
 	if _game_over_music_active or _pause_music_active:
 		return
@@ -428,4 +469,12 @@ func _category_to_bus(category: StringName) -> StringName:
 
 func _on_loop_finished(sound_name: StringName) -> void:
 	if _loop_players.has(sound_name):
-		_loop_players.erase(sound_name)
+		var player := _loop_players[sound_name] as AudioStreamPlayer
+		if player and player.stream:
+			player.play()
+		else:
+			_loop_players.erase(sound_name)
+
+func _on_music_finished(player: AudioStreamPlayer) -> void:
+	if player == _music_player and _current_music_name != &"" and player.stream:
+		player.play()

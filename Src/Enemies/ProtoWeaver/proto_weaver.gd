@@ -80,6 +80,7 @@ enum AttackMode {
 @onready var laser_line: Line2D = $LaserLine as Line2D
 @onready var boss_health_layer: CanvasLayer = $BossHealthLayer as CanvasLayer
 @onready var boss_health_bar: BossHealthBar = $BossHealthLayer/BossHealthBar as BossHealthBar
+@onready var boss_music_area: Area2D = $BossMusicArea as Area2D
 
 var _animation_timer := 0.0
 var _current_frame := 0
@@ -102,6 +103,7 @@ var _hang_sway_timer := 0.0
 var _laser_target_position := Vector2.ZERO
 var _laser_firing := false
 var _laser_hit_this_shot := false
+var _player_in_boss_music_area := false
 
 func _ready() -> void:
 	super._ready()
@@ -109,6 +111,9 @@ func _ready() -> void:
 	hurtbox.health_component = null
 	health_component.health_changed.connect(_on_boss_health_changed)
 	health_component.died.connect(_on_boss_died)
+	if boss_music_area:
+		boss_music_area.body_entered.connect(_on_boss_music_area_body_entered)
+		boss_music_area.body_exited.connect(_on_boss_music_area_body_exited)
 	if boss_health_layer:
 		boss_health_layer.visible = false
 	if hanging_thread_line:
@@ -214,14 +219,37 @@ func is_attack_sequence_busy() -> bool:
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	super._on_detection_body_entered(body)
-	AudioManager.play_boss_music()
+	_update_boss_music_state()
 	_update_boss_health_visibility()
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	super._on_detection_body_exited(body)
 	if not is_dead and target == null:
-		AudioManager.stop_boss_music()
+		_update_boss_music_state()
 	_update_boss_health_visibility()
+
+func _on_boss_music_area_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
+
+	_player_in_boss_music_area = true
+	_update_boss_music_state()
+
+func _on_boss_music_area_body_exited(body: Node2D) -> void:
+	if not body.is_in_group("player"):
+		return
+
+	_player_in_boss_music_area = false
+	_update_boss_music_state()
+
+func _update_boss_music_state() -> void:
+	if is_dead:
+		AudioManager.stop_boss_music()
+		return
+	if target != null and _player_in_boss_music_area:
+		AudioManager.play_boss_music()
+	else:
+		AudioManager.stop_boss_music()
 
 func _on_hurtbox_hit_received(damage: DamageData) -> void:
 	if boss_health_layer:
