@@ -71,7 +71,7 @@ func play_loop(sound_name: StringName, volume_offset_db := 0.0, pitch_variation_
 		return null
 
 	var player := _create_player(_resolve_bus(_get_sound_bus(sound), BACKGROUND_AUDIO_BUS), "Loop_%s" % String(sound_name))
-	player.stream = _make_playback_stream(sound, true)
+	player.stream = _get_sound_stream(sound)
 	player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
 	player.pitch_scale = _get_sound_pitch_scale(sound, pitch_variation_override)
 	player.finished.connect(_on_loop_finished.bind(sound_name), CONNECT_ONE_SHOT)
@@ -157,7 +157,7 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration :
 	var target_volume := _get_sound_volume_db(sound) + volume_offset_db
 	_music_player.stop()
 	_current_music_name = sound_name
-	_music_player.stream = _make_playback_stream(sound, true)
+	_music_player.stream = _get_sound_stream(sound)
 	_music_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
 	_music_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
 	_music_player.pitch_scale = _get_sound_pitch_scale(sound)
@@ -310,7 +310,7 @@ func _play_one_shot(
 	volume_offset_db: float,
 	pitch_variation_override: float
 ) -> AudioStreamPlayer:
-	var stream := _make_playback_stream(sound, false)
+	var stream := _get_sound_stream(sound)
 	var player := _get_available_one_shot_player(pool, fallback_bus)
 	if not player:
 		push_warning("AudioManager has no available one-shot player for %s." % stream.resource_path)
@@ -356,27 +356,6 @@ func _get_sound_stream(sound: Resource) -> AudioStream:
 	if sound.has_method("get_stream"):
 		return sound.get_stream() as AudioStream
 	return sound.get("stream") as AudioStream
-
-func _make_playback_stream(sound: Resource, should_loop: bool) -> AudioStream:
-	var source_stream := _get_sound_stream(sound)
-	if not should_loop:
-		return source_stream
-
-	var playback_stream := source_stream.duplicate() as AudioStream
-	if not playback_stream:
-		return source_stream
-
-	_set_stream_looping(playback_stream)
-	return playback_stream
-
-func _set_stream_looping(stream: AudioStream) -> void:
-	for property_info in stream.get_property_list():
-		var property_name := StringName(String(property_info.get("name", "")))
-		match property_name:
-			&"loop":
-				stream.set("loop", true)
-			&"loop_mode":
-				stream.set("loop_mode", 1)
 
 func _get_sound_bus(sound: Resource) -> StringName:
 	var bus: Variant = sound.get("bus")
