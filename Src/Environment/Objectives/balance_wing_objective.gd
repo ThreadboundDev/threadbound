@@ -1,58 +1,63 @@
-extends Area2D
+extends Node2D
 class_name BalanceWingObjective
 
 @export var thread_scene: PackedScene = preload("res://Src/Pickups/DemoThreads/thread_of_balance_pickup.tscn")
+@export var button_paths: Array[NodePath] = []
 @export var spawn_parent_path: NodePath = ^""
 @export var spawn_offset_from_player := Vector2(0.0, -96.0)
-@export_range(1.0, 100.0, 1.0) var required_momentum := 100.0
-@export var reset_momentum_on_enter := true
 
-var _active_player: Node = null
+var _buttons: Array[BlueWingButton] = []
+var _last_activator: Node = null
 var _spawned := false
 
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 	if DemoProgress.has_thread(&"balance"):
 		_spawned = true
-		monitoring = false
-
-func _on_body_entered(body: Node) -> void:
-	if _spawned or not body.is_in_group("player"):
 		return
 
-	_active_player = body
-	if reset_momentum_on_enter and body.has_method("set_momentum"):
-		body.set_momentum(0.0)
+	_setup_buttons.call_deferred()
 
-	if body.has_signal("momentum_changed"):
-		var callable := _on_player_momentum_changed.bind(body)
-		if not body.is_connected("momentum_changed", callable):
-			body.connect("momentum_changed", callable)
+func _setup_buttons() -> void:
+	_buttons.clear()
 
-func _on_body_exited(body: Node) -> void:
-	if body != _active_player:
+	if button_paths.is_empty():
+		for child in get_children():
+			if child is BlueWingButton:
+				_register_button(child as BlueWingButton)
+	else:
+		for path in button_paths:
+			var button := get_node_or_null(path) as BlueWingButton
+			if button:
+				_register_button(button)
+
+	_check_completion()
+
+func _register_button(button: BlueWingButton) -> void:
+	if button in _buttons:
 		return
 
-	_disconnect_player_momentum(body)
-	_active_player = null
+	_buttons.append(button)
+	if not button.active_changed.is_connected(_on_button_active_changed):
+		button.active_changed.connect(_on_button_active_changed)
 
-func _on_player_momentum_changed(value: float, player: Node) -> void:
-	if _spawned or value < required_momentum:
+func _on_button_active_changed(_button: BlueWingButton, active: bool, activator: Node) -> void:
+	if active and activator:
+		_last_activator = activator
+
+	_check_completion()
+
+func _check_completion() -> void:
+	if _spawned or _buttons.is_empty():
 		return
+
+	for button in _buttons:
+		if not button.is_active:
+			return
 
 	_spawned = true
-	_disconnect_player_momentum(player)
-	_spawn_thread_of_balance(player)
-	monitoring = false
+	_spawn_thread_of_balance(_last_activator)
 
-func _disconnect_player_momentum(player: Node) -> void:
-	if player and player.has_signal("momentum_changed"):
-		var callable := _on_player_momentum_changed.bind(player)
-		if player.is_connected("momentum_changed", callable):
-			player.disconnect("momentum_changed", callable)
-
-func _spawn_thread_of_balance(player: Node) -> void:
+func _spawn_thread_of_balance(activator: Node = null) -> void:
 	if not thread_scene:
 		return
 
@@ -67,5 +72,14 @@ func _spawn_thread_of_balance(player: Node) -> void:
 		spawn_parent = self
 
 	spawn_parent.add_child(thread)
-	var player_node := player as Node2D
+	var player_node := _resolve_spawn_player(activator)
 	thread.global_position = player_node.global_position + spawn_offset_from_player if player_node else global_position + spawn_offset_from_player
+
+func _resolve_spawn_player(activator: Node) -> Node2D:
+	var player := activator
+	if player and not player.is_in_group("player"):
+		player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().get_first_node_in_group("player")
+
+	return player as Node2D

@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/Environment/blue_buttons.png" id="1_buttons"]
+[ext_resource type="Script" path="res://Src/Environment/Objectives/blue_wing_button.gd" id="2_script"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="3_hurtbox"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="4_label_settings"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inactive"]
+atlas = ExtResource("1_buttons")
+region = Rect2(0, 0, 627, 1254)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_active"]
+atlas = ExtResource("1_buttons")
+region = Rect2(627, 0, 627, 1254)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_blue_button"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inactive")
+}],
+"loop": true,
+"name": &"inactive",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_active")
+}],
+"loop": true,
+"name": &"active",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 190.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_button"]
+radius = 135.0
+
+[node name="BlueWingButton" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2_script")
+
+[node name="ButtonSprite" type="AnimatedSprite2D" parent="."]
+z_index = 12
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_blue_button")
+animation = &"inactive"
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_hurtbox")
+hurtbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -25)
+shape = SubResource("CircleShape2D_button")
+
+[node name="GrappleTarget" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+position = Vector2(0, -25)
+shape = SubResource("CircleShape2D_button")
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+z_index = 20
+offset_left = -54.0
+offset_top = -220.0
+offset_right = 54.0
+offset_bottom = -156.0
+text = "W"
+label_settings = ExtResource("4_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1

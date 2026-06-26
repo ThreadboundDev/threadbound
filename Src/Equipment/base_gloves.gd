@@ -406,6 +406,7 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	grapple_raycast.force_raycast_update()
 
 	if grapple_raycast.is_colliding():
+		_notify_grapple_collider(grapple_raycast.get_collider())
 		grapple_attached = true
 		grapple_attach_position = grapple_raycast.get_collision_point()
 
@@ -422,6 +423,19 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		)
 
 		_update_active_grapple_visuals()
+
+func _notify_grapple_collider(collider: Object) -> void:
+	if not collider:
+		return
+
+	if collider.has_method("activate_from_grapple"):
+		collider.activate_from_grapple(player)
+		return
+
+	if collider is Node:
+		var parent := (collider as Node).get_parent()
+		if parent and parent.has_method("activate_from_grapple"):
+			parent.activate_from_grapple(player)
 
 # ===============================
 # ACTIVE GRAPPLE VISUAL UPDATE

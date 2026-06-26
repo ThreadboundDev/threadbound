@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://biqmejdjtgpcp" path="res://Src/Environment/Doors/boss_wing_door.tscn" id="24_boss_door"]
 [ext_resource type="PackedScene" uid="uid://c1hxr2mg4bjmm" path="res://Src/Environment/SavePoints/blossom_of_eryndor.tscn" id="25_blossom"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/red_wing_thread_objective.tscn" id="26_red_objective"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Objectives/balance_wing_objective.tscn" id="27_balance_objective"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Objectives/blue_wing_button.tscn" id="28_blue_button"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -499,6 +501,18 @@ position = Vector2(-2816, -768)
 
 [node name="BlueWingDoor" parent="DemoDoors" unique_id=1591533616 instance=ExtResource("22_blue_door")]
 position = Vector2(2432, -1024)
+
+[node name="BlueWingObjective" parent="DemoDoors" instance=ExtResource("27_balance_objective")]
+position = Vector2(2432, -1024)
+
+[node name="BlueButton1" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
+position = Vector2(-360, 420)
+
+[node name="BlueButton2" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
+position = Vector2(0, 420)
+
+[node name="BlueButton3" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
+position = Vector2(360, 420)
 
 [node name="YellowWingDoor" parent="DemoDoors" unique_id=1241953404 instance=ExtResource("23_yellow_door")]
 position = Vector2(-2687, 1245)
