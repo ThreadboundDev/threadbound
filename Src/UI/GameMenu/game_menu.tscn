@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://dvccsgp56ypd0"]
 
-[ext_resource type="Script" path="res://Src/UI/GameMenu/game_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="4_decorative_font"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="5_base_font"]
+[ext_resource type="Script" uid="uid://c5os2vg8reytn" path="res://Src/UI/GameMenu/game_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b1dyj5i1o528r" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
+[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="4_decorative_font"]
+[ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="5_base_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -27,11 +27,11 @@ font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 3
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
-[node name="GameMenu" type="CanvasLayer"]
+[node name="GameMenu" type="CanvasLayer" unique_id=649142321]
 process_mode = 3
 script = ExtResource("1_script")
 
-[node name="Dim" type="ColorRect" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=273603498]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -40,7 +40,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.52)
 
-[node name="MenuRoot" type="Control" parent="."]
+[node name="MenuRoot" type="Control" parent="." unique_id=1591350640]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,17 +48,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="TextureRect" parent="MenuRoot"]
+[node name="Background" type="TextureRect" parent="MenuRoot" unique_id=950016045]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -520.0
-offset_top = -340.0
-offset_right = 520.0
-offset_bottom = 340.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -66,156 +64,178 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Title" type="Label" parent="MenuRoot"]
+[node name="Title" type="Label" parent="MenuRoot" unique_id=856245086]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -360.0
-offset_top = 118.0
+offset_top = 42.0
 offset_right = 360.0
-offset_bottom = 196.0
+offset_bottom = 120.0
 grow_horizontal = 2
 text = "INVENTORY"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Separator" type="TextureRect" parent="MenuRoot"]
+[node name="Separator" type="TextureRect" parent="MenuRoot" unique_id=405193388]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 184.0
+offset_top = 108.0
 offset_right = 350.0
-offset_bottom = 242.0
+offset_bottom = 166.0
 grow_horizontal = 2
 mouse_filter = 2
 texture = ExtResource("3_separator")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tabs" type="HBoxContainer" parent="MenuRoot"]
+[node name="Tabs" type="HBoxContainer" parent="MenuRoot" unique_id=402763332]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -430.0
-offset_top = 242.0
+offset_top = 174.0
 offset_right = 430.0
-offset_bottom = 292.0
+offset_bottom = 224.0
 grow_horizontal = 2
 theme_override_constants/separation = 42
 alignment = 1
 
-[node name="InventoryTab" type="Label" parent="MenuRoot/Tabs"]
+[node name="InventoryTab" type="Label" parent="MenuRoot/Tabs" unique_id=470975677]
 layout_mode = 2
 text = "INVENTORY"
 label_settings = SubResource("LabelSettings_tab")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MapTab" type="Label" parent="MenuRoot/Tabs"]
+[node name="MapTab" type="Label" parent="MenuRoot/Tabs" unique_id=1022868995]
 layout_mode = 2
 text = "MAP"
 label_settings = SubResource("LabelSettings_tab")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LoreTab" type="Label" parent="MenuRoot/Tabs"]
+[node name="LoreTab" type="Label" parent="MenuRoot/Tabs" unique_id=454295106]
 layout_mode = 2
 text = "LORE"
 label_settings = SubResource("LabelSettings_tab")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ControlsTab" type="Label" parent="MenuRoot/Tabs"]
+[node name="ControlsTab" type="Label" parent="MenuRoot/Tabs" unique_id=1065664484]
 layout_mode = 2
 text = "CONTROLS"
 label_settings = SubResource("LabelSettings_tab")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pages" type="Control" parent="MenuRoot"]
+[node name="Pages" type="Control" parent="MenuRoot" unique_id=1594327101]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -28.0
-offset_right = 420.0
-offset_bottom = 240.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 240.0
+offset_right = -96.0
+offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InventoryPage" type="Control" parent="MenuRoot/Pages"]
-layout_mode = 0
-offset_right = 840.0
-offset_bottom = 268.0
+[node name="InventoryPage" type="Control" parent="MenuRoot/Pages" unique_id=222614757]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/InventoryPage"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 816.0
-offset_bottom = 244.0
+[node name="Body" type="Label" parent="MenuRoot/Pages/InventoryPage" unique_id=1647007499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
 text = "NO THREADS CLAIMED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="MapPage" type="Control" parent="MenuRoot/Pages"]
+[node name="MapPage" type="Control" parent="MenuRoot/Pages" unique_id=897145029]
 visible = false
-layout_mode = 0
-offset_right = 840.0
-offset_bottom = 268.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/MapPage"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 816.0
-offset_bottom = 244.0
+[node name="Body" type="Label" parent="MenuRoot/Pages/MapPage" unique_id=1833338565]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
 text = "MAP UNCHARTED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="LorePage" type="Control" parent="MenuRoot/Pages"]
+[node name="LorePage" type="Control" parent="MenuRoot/Pages" unique_id=519739836]
 visible = false
-layout_mode = 0
-offset_right = 840.0
-offset_bottom = 268.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/LorePage"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 816.0
-offset_bottom = 244.0
+[node name="Body" type="Label" parent="MenuRoot/Pages/LorePage" unique_id=1595261006]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
 text = "NO LORE RECORDED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="ControlsPage" type="Control" parent="MenuRoot/Pages"]
+[node name="ControlsPage" type="Control" parent="MenuRoot/Pages" unique_id=357483101]
 visible = false
-layout_mode = 0
-offset_right = 840.0
-offset_bottom = 268.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/ControlsPage"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 816.0
-offset_bottom = 244.0
+[node name="Body" type="Label" parent="MenuRoot/Pages/ControlsPage" unique_id=857323471]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
 text = "CONTROLS"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
