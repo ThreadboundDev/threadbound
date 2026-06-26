@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
+
 @export var selector_offset := Vector2(20.0, -15.0)
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
@@ -9,7 +11,10 @@ extends CanvasLayer
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var rows: Array[Control] = [
 	$MenuRoot/Buttons/Resume,
-	$MenuRoot/Buttons/Options,
+	$MenuRoot/Buttons/Inventory,
+	$MenuRoot/Buttons/Map,
+	$MenuRoot/Buttons/Settings,
+	$MenuRoot/Buttons/Controls,
 	$MenuRoot/Buttons/Quit,
 ]
 
@@ -23,6 +28,7 @@ func _ready() -> void:
 	layer = 110
 	add_to_group("pause_menu")
 	get_tree().paused = true
+	_set_player_flow_audio_suspended(true)
 	AudioManager.play_pause_music()
 
 	options_panel.visible = false
@@ -103,8 +109,14 @@ func _activate_selected() -> void:
 	match rows[_selected_index].name:
 		&"Resume":
 			_resume_game()
-		&"Options":
+		&"Inventory":
+			_open_game_menu_tab(&"Inventory")
+		&"Map":
+			_open_game_menu_tab(&"Map")
+		&"Settings":
 			_show_options()
+		&"Controls":
+			_open_game_menu_tab(&"Controls")
 		&"Quit":
 			get_tree().quit()
 
@@ -125,8 +137,26 @@ func _resume_game() -> void:
 
 	_closing = true
 	AudioManager.stop_pause_music()
+	_set_player_flow_audio_suspended(false)
 	get_tree().paused = false
 	queue_free()
+
+func _open_game_menu_tab(tab_name: StringName) -> void:
+	if _closing:
+		return
+
+	_closing = true
+	AudioManager.stop_pause_music()
+	var game_menu := GAME_MENU_SCENE.instantiate()
+	get_tree().current_scene.add_child(game_menu)
+	if game_menu.has_method("open"):
+		game_menu.open(tab_name)
+	queue_free()
+
+func _set_player_flow_audio_suspended(is_suspended: bool) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_flow_state_audio_suspended"):
+		player.set_flow_state_audio_suspended(is_suspended)
 
 func _is_confirm_event(event: InputEvent) -> bool:
 	if event is InputEventKey and event.pressed and not event.echo:

@@ -112,9 +112,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -391.0
-offset_top = -98.0
+offset_top = -188.0
 offset_right = 389.0
-offset_bottom = 228.0
+offset_bottom = 272.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -143,13 +143,13 @@ label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Options" type="Control" parent="MenuRoot/Buttons" unique_id=751664839]
+[node name="Inventory" type="Control" parent="MenuRoot/Buttons" unique_id=751664839]
 anchors_preset = 0
-offset_top = 112.0
+offset_top = 78.0
 offset_right = 780.0
-offset_bottom = 194.0
+offset_bottom = 148.0
 
-[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Options" unique_id=853682263]
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Inventory" unique_id=853682263]
 layout_mode = 0
 offset_left = 140.0
 offset_top = -38.0
@@ -159,21 +159,99 @@ mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="MenuRoot/Buttons/Options" unique_id=1455413280]
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Inventory" unique_id=1455413280]
 layout_mode = 0
 offset_left = 180.0
 offset_right = 600.0
 offset_bottom = 82.0
-text = "OPTIONS"
+text = "INVENTORY"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Buttons"]
+anchors_preset = 0
+offset_top = 156.0
+offset_right = 780.0
+offset_bottom = 226.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Map"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Map"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "MAP"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Control" parent="MenuRoot/Buttons"]
+anchors_preset = 0
+offset_top = 234.0
+offset_right = 780.0
+offset_bottom = 304.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Settings"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Settings"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "SETTINGS"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Buttons"]
+anchors_preset = 0
+offset_top = 312.0
+offset_right = 780.0
+offset_bottom = 382.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Controls"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/Controls"]
+layout_mode = 0
+offset_left = 180.0
+offset_right = 600.0
+offset_bottom = 82.0
+text = "CONTROLS"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Quit" type="Control" parent="MenuRoot/Buttons" unique_id=404074249]
 anchors_preset = 0
-offset_top = 224.0
+offset_top = 390.0
 offset_right = 780.0
-offset_bottom = 306.0
+offset_bottom = 460.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Quit" unique_id=776076669]
 layout_mode = 0

@@ -90,15 +90,15 @@ const SIT_FPS := 12.0
 # Momentum tuning. Abilities should call report_momentum_action(category) when
 # they successfully fire, connect, or otherwise complete a meaningful action.
 @export_group("Momentum Gains")
-@export var momentum_gain_movement := 0.32
-@export var momentum_gain_jump := 2.2
-@export var momentum_gain_dash := 11.0
-@export var momentum_gain_grapple := 12.0
-@export var momentum_gain_attack := 4.0
-@export var momentum_gain_pogo := 9.0
-@export var momentum_gain_utility := 3.0
+@export var momentum_gain_movement := 0.24
+@export var momentum_gain_jump := 1.7
+@export var momentum_gain_dash := 7.5
+@export var momentum_gain_grapple := 8.0
+@export var momentum_gain_attack := 3.2
+@export var momentum_gain_pogo := 6.5
+@export var momentum_gain_utility := 2.4
 @export var momentum_gain_equipment_swap := 1.5
-@export var momentum_gain_use_after_swap := 10.0
+@export var momentum_gain_use_after_swap := 7.0
 
 @export_group("Momentum Rules")
 @export var momentum_movement_report_interval := 0.16
@@ -108,7 +108,7 @@ const SIT_FPS := 12.0
 @export var momentum_stale_duration := 7.0
 @export_range(0.0, 1.0, 0.05) var momentum_stale_recovery_fraction := 0.25
 @export var momentum_stale_penalty := 1.35
-@export var momentum_weave_bonus_per_category := 0.12
+@export var momentum_weave_bonus_per_category := 0.16
 @export var momentum_weave_recent_count := 4
 @export var momentum_use_after_swap_window := 2.5
 @export var momentum_low_threshold := 30.0
@@ -124,35 +124,35 @@ const SIT_FPS := 12.0
 @export_group("Momentum Multipliers")
 @export var momentum_action_point_recharge_low := 0.9
 @export var momentum_action_point_recharge_mid := 1.0
-@export var momentum_action_point_recharge_high := 1.18
-@export var momentum_action_point_recharge_flow := 1.35
+@export var momentum_action_point_recharge_high := 1.24
+@export var momentum_action_point_recharge_flow := 1.32
 @export var momentum_move_speed_low := 0.92
 @export var momentum_move_speed_mid := 1.0
-@export var momentum_move_speed_high := 1.1
-@export var momentum_move_speed_flow := 1.18
+@export var momentum_move_speed_high := 1.14
+@export var momentum_move_speed_flow := 1.2
 @export var momentum_jump_low := 0.94
 @export var momentum_jump_mid := 1.0
-@export var momentum_jump_high := 1.07
+@export var momentum_jump_high := 1.09
 @export var momentum_jump_flow := 1.12
 @export var momentum_air_control_low := 0.9
 @export var momentum_air_control_mid := 1.0
-@export var momentum_air_control_high := 1.12
+@export var momentum_air_control_high := 1.16
 @export var momentum_air_control_flow := 1.22
 @export var momentum_grapple_speed_low := 0.94
 @export var momentum_grapple_speed_mid := 1.0
-@export var momentum_grapple_speed_high := 1.12
+@export var momentum_grapple_speed_high := 1.16
 @export var momentum_grapple_speed_flow := 1.22
 @export var momentum_grapple_pull_low := 0.92
 @export var momentum_grapple_pull_mid := 1.0
-@export var momentum_grapple_pull_high := 1.12
+@export var momentum_grapple_pull_high := 1.16
 @export var momentum_grapple_pull_flow := 1.24
 @export var momentum_attack_speed_low := 0.94
 @export var momentum_attack_speed_mid := 1.0
-@export var momentum_attack_speed_high := 1.12
-@export var momentum_attack_speed_flow := 1.22
+@export var momentum_attack_speed_high := 1.16
+@export var momentum_attack_speed_flow := 1.2
 @export var momentum_dash_speed_low := 0.95
 @export var momentum_dash_speed_mid := 1.0
-@export var momentum_dash_speed_high := 1.1
+@export var momentum_dash_speed_high := 1.14
 @export var momentum_dash_speed_flow := 1.18
 @export var momentum_dash_iframe_low := 0.9
 @export var momentum_dash_iframe_mid := 1.0
@@ -236,6 +236,7 @@ var _movement_momentum_distance := 0.0
 var _movement_momentum_last_position := Vector2.ZERO
 var _flow_state_active := false
 var _flow_state_duration := 0.0
+var _flow_state_audio_suspended := false
 var _momentum_state: StringName = MOMENTUM_STATE_LOW
 var _pending_use_after_swap := false
 var _use_after_swap_timer := 0.0
@@ -1107,12 +1108,12 @@ func _get_momentum_base_gain(category: StringName) -> float:
 
 func _get_momentum_gain_curve_multiplier() -> float:
 	if momentum < momentum_low_threshold:
-		return 1.25
+		return 1.05
 	if momentum < momentum_high_threshold:
 		return 1.0
 	if momentum < 100.0:
 		var high_span := maxf(1.0, 100.0 - momentum_high_threshold)
-		return lerpf(0.72, 0.28, (momentum - momentum_high_threshold) / high_span)
+		return lerpf(0.58, 0.22, (momentum - momentum_high_threshold) / high_span)
 	return 0.15
 
 func _get_weaving_multiplier(category: StringName) -> float:
@@ -1155,7 +1156,7 @@ func _enter_flow_state() -> void:
 	_flow_state_active = true
 	_flow_state_duration = 0.0
 	AudioManager.play_sfx(&"enter_momentum")
-	AudioManager.play_loop(&"momentum_aura")
+	_sync_flow_state_audio()
 	_set_flow_state_visuals(true)
 	_update_momentum_state()
 
@@ -1165,9 +1166,19 @@ func _exit_flow_state() -> void:
 
 	_flow_state_active = false
 	_flow_state_duration = 0.0
-	AudioManager.stop_loop(&"momentum_aura")
+	_sync_flow_state_audio()
 	_set_flow_state_visuals(false)
 	_update_momentum_state()
+
+func set_flow_state_audio_suspended(is_suspended: bool) -> void:
+	_flow_state_audio_suspended = is_suspended
+	_sync_flow_state_audio()
+
+func _sync_flow_state_audio() -> void:
+	if _flow_state_active and not _flow_state_audio_suspended:
+		AudioManager.play_loop(&"momentum_aura")
+	else:
+		AudioManager.stop_loop(&"momentum_aura")
 
 func _set_flow_state_visuals(is_active: bool) -> void:
 	if flow_state_aura and flow_state_aura.has_method("set_flow_active"):

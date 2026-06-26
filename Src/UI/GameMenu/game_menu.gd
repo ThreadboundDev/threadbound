@@ -7,25 +7,25 @@ const INVENTORY_THREADS := [
 		"id": &"power",
 		"name": "THREAD OF POWER",
 		"description": "Claimed from the red wing.",
-		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Icon",
-		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Name",
-		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Description",
+		"icon": "MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot/Description",
 	},
 	{
 		"id": &"balance",
 		"name": "THREAD OF BALANCE",
 		"description": "Claimed from the blue wing.",
-		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Icon",
-		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Name",
-		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Description",
+		"icon": "MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot/Description",
 	},
 	{
 		"id": &"essence",
 		"name": "THREAD OF ESSENCE",
 		"description": "Claimed from the yellow wing.",
-		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Icon",
-		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Name",
-		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Description",
+		"icon": "MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot/Description",
 	},
 ]
 
@@ -47,7 +47,7 @@ const INVENTORY_THREADS := [
 	$MenuRoot/Pages/LorePage,
 	$MenuRoot/Pages/ControlsPage,
 ]
-@onready var inventory_empty_label: Label = $MenuRoot/Pages/InventoryPage/InventoryFrame/EmptyLabel as Label
+@onready var inventory_empty_label: Label = $MenuRoot/Pages/InventoryPage/EmptyLabel as Label
 
 var _selected_index := 0
 var _closing := false
@@ -68,6 +68,7 @@ func _ready() -> void:
 
 func open(initial_tab: StringName = &"Inventory") -> void:
 	get_tree().paused = true
+	_set_player_flow_audio_suspended(true)
 	_select_tab(TAB_ORDER.find(initial_tab) if TAB_ORDER.has(initial_tab) else 0, true)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -153,5 +154,11 @@ func _close() -> void:
 
 	_closing = true
 	AudioManager.play_ui(&"menu_select")
+	_set_player_flow_audio_suspended(false)
 	get_tree().paused = false
 	queue_free()
+
+func _set_player_flow_audio_suspended(is_suspended: bool) -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_flow_state_audio_suspended"):
+		player.set_flow_state_audio_suspended(is_suspended)

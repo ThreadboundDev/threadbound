@@ -99,8 +99,8 @@ layout_mode = 2
 
 [node name="BackgroundAudio" parent="Sliders" unique_id=1192675924 instance=ExtResource("2_slider")]
 layout_mode = 2
-category = &"background_audio"
-label_text = "BACKGROUND AUDIO"
+category = &"ambient"
+label_text = "AMBIENT"
 
 [node name="SFX" parent="Sliders" unique_id=1922839679 instance=ExtResource("2_slider")]
 layout_mode = 2

@@ -12,7 +12,9 @@ const MASTER_BUS := &"Master"
 const MUSIC_BUS := &"Music"
 const SFX_BUS := &"SFX"
 const UI_BUS := &"UI"
-const BACKGROUND_AUDIO_BUS := &"Background Audio"
+const AMBIENT_BUS := &"Ambient"
+const BACKGROUND_AUDIO_BUS := AMBIENT_BUS
+const LEGACY_BACKGROUND_AUDIO_BUS := &"Background Audio"
 const AUDIO_SETTINGS_PATH := "user://audio_settings.cfg"
 const MIN_BUS_VOLUME_DB := -60.0
 const DEFAULT_BUS_VOLUME := 1.0
@@ -79,7 +81,7 @@ func play_loop(sound_name: StringName, volume_offset_db := 0.0, pitch_variation_
 		return null
 
 	var player := _create_player(_resolve_bus(_get_sound_bus(sound), BACKGROUND_AUDIO_BUS), "Loop_%s" % String(sound_name))
-	player.stream = _get_sound_stream(sound)
+	player.stream = _get_looping_stream(sound)
 	player.volume_db = _get_sound_volume_db(sound) + volume_offset_db
 	player.pitch_scale = _get_sound_pitch_scale(sound, pitch_variation_override)
 	player.finished.connect(_on_loop_finished.bind(sound_name), CONNECT_ONE_SHOT)
@@ -165,7 +167,7 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration :
 	var next_player := _get_next_music_player()
 	_current_music_name = sound_name
 	next_player.stop()
-	next_player.stream = _get_sound_stream(sound)
+	next_player.stream = _get_looping_stream(sound)
 	next_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
 	next_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
 	next_player.pitch_scale = _get_sound_pitch_scale(sound)
@@ -196,7 +198,7 @@ func stop_music() -> void:
 	_current_music_name = &""
 
 func get_volume_categories() -> Array[StringName]:
-	return [&"master", &"music", &"sfx", &"ui", &"background_audio"]
+	return [&"master", &"music", &"ambient", &"sfx", &"ui"]
 
 func get_volume_category_label(category: StringName) -> String:
 	match category:
@@ -208,8 +210,8 @@ func get_volume_category_label(category: StringName) -> String:
 			return "SFX"
 		&"ui":
 			return "UI"
-		&"background_audio", &"ambience":
-			return "Background Audio"
+		&"ambient", &"background_audio", &"ambience":
+			return "Ambient"
 		_:
 			return String(category).capitalize()
 
@@ -309,7 +311,10 @@ func load_audio_settings() -> void:
 		return
 
 	for category in get_volume_categories():
-		var saved_volume := float(config.get_value("audio", String(category), DEFAULT_BUS_VOLUME))
+		var key := String(category)
+		if category == &"ambient" and not config.has_section_key("audio", key):
+			key = "background_audio"
+		var saved_volume := float(config.get_value("audio", key, DEFAULT_BUS_VOLUME))
 		set_category_volume(category, saved_volume, false)
 
 func has_sound(sound_name: StringName) -> bool:
@@ -374,6 +379,20 @@ func _get_sound_stream(sound: Resource) -> AudioStream:
 	if sound.has_method("get_stream"):
 		return sound.get_stream() as AudioStream
 	return sound.get("stream") as AudioStream
+
+func _get_looping_stream(sound: Resource) -> AudioStream:
+	var stream := _get_sound_stream(sound)
+	if not stream:
+		return null
+
+	var looping_stream := stream.duplicate() as AudioStream
+	if looping_stream is AudioStreamWAV:
+		(looping_stream as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
+	elif looping_stream is AudioStreamMP3:
+		(looping_stream as AudioStreamMP3).loop = true
+	elif looping_stream is AudioStreamOggVorbis:
+		(looping_stream as AudioStreamOggVorbis).loop = true
+	return looping_stream
 
 func _get_sound_bus(sound: Resource) -> StringName:
 	var bus: Variant = sound.get("bus")
@@ -440,6 +459,10 @@ func _resolve_bus(bus: StringName, fallback_bus: StringName) -> StringName:
 	return MASTER_BUS
 
 func _ensure_runtime_buses() -> void:
+	var legacy_bus_index := AudioServer.get_bus_index(String(LEGACY_BACKGROUND_AUDIO_BUS))
+	if legacy_bus_index != -1 and AudioServer.get_bus_index(String(AMBIENT_BUS)) == -1:
+		AudioServer.set_bus_name(legacy_bus_index, String(AMBIENT_BUS))
+
 	var required_buses := [MUSIC_BUS, SFX_BUS, UI_BUS, BACKGROUND_AUDIO_BUS]
 	for bus in required_buses:
 		if AudioServer.get_bus_index(String(bus)) == -1:
@@ -462,7 +485,7 @@ func _category_to_bus(category: StringName) -> StringName:
 			return SFX_BUS
 		&"ui":
 			return UI_BUS
-		&"background_audio", &"ambience":
+		&"ambient", &"background_audio", &"ambience":
 			return BACKGROUND_AUDIO_BUS
 		_:
 			return &""
