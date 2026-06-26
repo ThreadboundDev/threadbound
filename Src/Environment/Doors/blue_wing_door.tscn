@@ -1,8 +1,10 @@
-[gd_scene format=3 uid="uid://cju2v2tgjwr5y"]
+[gd_scene load_steps=6 format=3 uid="uid://cju2v2tgjwr5y"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
 [ext_resource type="Texture2D" uid="uid://ch4c6rfsn0gl6" path="res://Assets/Environment/Doors/blue_wing_door.png" id="2_blue_door"]
 [ext_resource type="Texture2D" uid="uid://bbv1uls5nbicq" path="res://Assets/Environment/Doors/blue_door_open.png" id="3_blue_open"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/blue_door_open_low.png" id="4_blue_open_low"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/blue_door_open_high.png" id="5_blue_open_high"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_blue_door"]
 animations = [{
@@ -21,6 +23,8 @@ display_name = "Thread of Balance"
 message = "To claim the Thread of Balance, one must display control over momentum."
 door_color = Color(1, 1, 1, 1)
 opening_sprite_sheet = ExtResource("3_blue_open")
+opened_low_texture = ExtResource("4_blue_open_low")
+opened_high_texture = ExtResource("5_blue_open_high")
 
 [node name="FogPanel" parent="." index="0"]
 position = Vector2(384, 168)

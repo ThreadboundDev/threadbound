@@ -40,6 +40,14 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_demo_door")
 animation = &"closed"
 
+[node name="OpenedLowSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+
+[node name="OpenedHighSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 6
+
 [node name="Blocker" type="StaticBody2D" parent="."]
 collision_layer = 1
 collision_mask = 1

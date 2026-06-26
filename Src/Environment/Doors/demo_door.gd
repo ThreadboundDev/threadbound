@@ -26,8 +26,15 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_range(1, 256, 1) var opening_animation_frame_count := 48
 @export_range(1.0, 30.0, 0.5) var opening_animation_speed := 18.0
 @export var use_opening_first_frame_for_closed := false
+@export_group("Opened Split Layers")
+@export var opened_low_texture: Texture2D
+@export var opened_high_texture: Texture2D
+@export var opened_low_z_index := 2
+@export var opened_high_z_index := 6
 
 @onready var door_sprite: AnimatedSprite2D = $DoorSprite as AnimatedSprite2D
+@onready var opened_low_sprite: Sprite2D = get_node_or_null("OpenedLowSprite") as Sprite2D
+@onready var opened_high_sprite: Sprite2D = get_node_or_null("OpenedHighSprite") as Sprite2D
 @onready var fog_panel: Polygon2D = $FogPanel as Polygon2D
 @onready var blocker_shape: CollisionShape2D = $Blocker/CollisionShape2D as CollisionShape2D
 @onready var interact_shape: CollisionShape2D = $InteractionShape as CollisionShape2D
@@ -41,6 +48,7 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_build_opening_animation_from_sheet()
+	_configure_opened_split_layers()
 	_apply_visual_state()
 
 func interact(_interacting_player: Node) -> void:
@@ -83,12 +91,15 @@ func _open() -> void:
 	if door_sprite and door_sprite.sprite_frames and door_sprite.sprite_frames.has_animation(opening_animation):
 		door_sprite.visible = true
 		door_sprite.modulate.a = 1.0
+		_set_opened_split_visible(false)
 		door_sprite.play(opening_animation)
 		door_sprite.animation_finished.connect(func() -> void:
 			_is_opening = false
+			_show_opened_split_layers()
 		, CONNECT_ONE_SHOT)
 	else:
 		_is_opening = false
+		_show_opened_split_layers()
 
 	if fog_panel:
 		var tween := create_tween()
@@ -140,7 +151,7 @@ func _atlas_frame_from_opening_sheet(frame_index: int, frame_width: float, frame
 func _apply_visual_state() -> void:
 	if door_sprite:
 		door_sprite.self_modulate = door_color
-		door_sprite.visible = true
+		door_sprite.visible = closed or _is_opening or not _has_opened_split_layers()
 		door_sprite.modulate.a = 1.0
 		if closed and door_sprite.sprite_frames and door_sprite.sprite_frames.has_animation(closed_animation):
 			door_sprite.animation = closed_animation
@@ -148,6 +159,10 @@ func _apply_visual_state() -> void:
 		elif not closed and door_sprite.sprite_frames and door_sprite.sprite_frames.has_animation(opening_animation):
 			door_sprite.animation = opening_animation
 			door_sprite.frame = maxi(door_sprite.sprite_frames.get_frame_count(opening_animation) - 1, 0)
+	if closed:
+		_set_opened_split_visible(false)
+	else:
+		_show_opened_split_layers()
 	if fog_panel:
 		fog_panel.color = fog_color
 		fog_panel.visible = closed
@@ -158,6 +173,42 @@ func _apply_visual_state() -> void:
 		interact_shape.disabled = not closed
 	if prompt_label:
 		prompt_label.visible = false
+
+func _configure_opened_split_layers() -> void:
+	_configure_opened_split_sprite(opened_low_sprite, opened_low_texture, opened_low_z_index)
+	_configure_opened_split_sprite(opened_high_sprite, opened_high_texture, opened_high_z_index)
+	_set_opened_split_visible(false)
+
+func _configure_opened_split_sprite(sprite: Sprite2D, texture: Texture2D, target_z_index: int) -> void:
+	if not sprite:
+		return
+
+	sprite.texture = texture
+	sprite.z_index = target_z_index
+	sprite.visible = false
+	if door_sprite:
+		sprite.position = door_sprite.position
+		sprite.rotation = door_sprite.rotation
+		sprite.scale = door_sprite.scale
+		sprite.centered = door_sprite.centered
+		sprite.offset = door_sprite.offset
+
+func _has_opened_split_layers() -> bool:
+	return opened_low_texture != null or opened_high_texture != null
+
+func _show_opened_split_layers() -> void:
+	if not _has_opened_split_layers():
+		return
+
+	if door_sprite:
+		door_sprite.visible = false
+	_set_opened_split_visible(true)
+
+func _set_opened_split_visible(is_visible: bool) -> void:
+	if opened_low_sprite:
+		opened_low_sprite.visible = is_visible and opened_low_texture != null
+	if opened_high_sprite:
+		opened_high_sprite.visible = is_visible and opened_high_texture != null
 
 func _show_message(text: String) -> void:
 	var box := get_tree().get_first_node_in_group("demo_message_box")
