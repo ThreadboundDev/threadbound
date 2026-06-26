@@ -84,7 +84,7 @@ func _place_needle_at_rope_end(rope_end_global: Vector2) -> void:
 	if last_index <= 0:
 		return
 
-	var rope_end_local := to_local(points[last_index])
+	var rope_end_local := to_local(rope_end_global)
 	var rope_prev_local := to_local(points[last_index - 1])
 	var rope_direction_local := rope_end_local - rope_prev_local
 

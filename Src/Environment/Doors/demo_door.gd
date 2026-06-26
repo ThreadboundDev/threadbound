@@ -119,8 +119,8 @@ func _build_opening_animation_from_sheet() -> void:
 	sprite_frames.set_animation_loop(opening_animation, false)
 	sprite_frames.set_animation_speed(opening_animation, opening_animation_speed)
 
-	var frame_width := opening_sprite_sheet.get_width() / opening_sheet_columns
-	var frame_height := opening_sprite_sheet.get_height() / opening_sheet_rows
+	var frame_width := float(opening_sprite_sheet.get_width()) / float(opening_sheet_columns)
+	var frame_height := float(opening_sprite_sheet.get_height()) / float(opening_sheet_rows)
 	var max_frames := opening_sheet_columns * opening_sheet_rows
 	var used_frames := clampi(opening_animation_frame_count, 1, max_frames)
 
@@ -141,8 +141,8 @@ func _atlas_frame_from_opening_sheet(frame_index: int, frame_width: float, frame
 	var atlas_texture := AtlasTexture.new()
 	atlas_texture.atlas = opening_sprite_sheet
 	atlas_texture.region = Rect2(
-		(frame_index % opening_sheet_columns) * frame_width,
-		(frame_index / opening_sheet_columns) * frame_height,
+		float(frame_index % opening_sheet_columns) * frame_width,
+		floorf(float(frame_index) / float(opening_sheet_columns)) * frame_height,
 		frame_width,
 		frame_height
 	)

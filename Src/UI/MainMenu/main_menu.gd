@@ -48,8 +48,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_select_index(_selected_index + 1)
 		get_viewport().set_input_as_handled()
 	elif _is_confirm_event(event):
-		_activate_selected()
 		get_viewport().set_input_as_handled()
+		_activate_selected()
 	elif event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
