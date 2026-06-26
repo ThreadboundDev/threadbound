@@ -151,13 +151,11 @@ func _play_grapple_fire_animation() -> void:
 			if body_anim.sprite_frames.has_animation("Grapple_Horizontal"):
 				body_anim.play("Grapple_Horizontal")
 
-func play_attack_follow_pose(direction: Vector2) -> void:
+func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> void:
 	action_anim_lock_timer = attack_follow_anim_lock_time
-	var use_diagonal: bool = absf(direction.y) > 0.35
-	if use_diagonal and animation_player and animation_player.has_animation("equip_grapple_fire_diagonal"):
-		play_equipment_anim("equip_grapple_fire_diagonal")
-	elif animation_player and animation_player.has_animation("equip_grapple_fire_straight"):
-		play_equipment_anim("equip_grapple_fire_straight")
+	var attack_anim := "attack_ground" if body_anim == "Attack" else "attack_air"
+	if animation_player and animation_player.has_animation(attack_anim):
+		play_equipment_anim(attack_anim)
 
 func enter_save_point_pose() -> void:
 	action_anim_lock_timer = 999.0

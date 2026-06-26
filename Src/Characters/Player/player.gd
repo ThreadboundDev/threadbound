@@ -684,7 +684,7 @@ func start_attack() -> void:
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
-			current_gloves.play_attack_follow_pose(attack_direction)
+			current_gloves.play_attack_follow_pose(attack_direction, current_attack_body_anim)
 
 func can_start_attack() -> bool:
 	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.

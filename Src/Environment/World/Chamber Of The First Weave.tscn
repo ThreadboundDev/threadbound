@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://diqf8q0wwmlag" path="res://Src/Environment/Doors/red_wing_door.tscn" id="21_red_door"]
 [ext_resource type="PackedScene" uid="uid://cju2v2tgjwr5y" path="res://Src/Environment/Doors/blue_wing_door.tscn" id="22_blue_door"]
 [ext_resource type="PackedScene" uid="uid://c0v5jygnf0ot7" path="res://Src/Environment/Doors/yellow_wing_door.tscn" id="23_yellow_door"]
-[ext_resource type="PackedScene" path="res://Src/Environment/Doors/boss_wing_door.tscn" id="24_boss_door"]
+[ext_resource type="PackedScene" uid="uid://biqmejdjtgpcp" path="res://Src/Environment/Doors/boss_wing_door.tscn" id="24_boss_door"]
 [ext_resource type="PackedScene" uid="uid://c1hxr2mg4bjmm" path="res://Src/Environment/SavePoints/blossom_of_eryndor.tscn" id="25_blossom"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
@@ -140,14 +140,17 @@ texture_scale = 8.6
 z_index = -55
 
 [node name="CenterShaft" type="Polygon2D" parent="SunShafts" unique_id=2024653915]
+position = Vector2(0, -1450)
 color = Color(1, 0.83, 0.52, 0.13)
 polygon = PackedVector2Array(-180, -3320, 190, -3320, 520, 2680, -420, 2680)
 
 [node name="LeftShaft" type="Polygon2D" parent="SunShafts" unique_id=1831595408]
+position = Vector2(0, -1450)
 color = Color(1, 0.78, 0.42, 0.07)
 polygon = PackedVector2Array(-430, -3300, -150, -3320, -820, 2460, -1460, 2460)
 
 [node name="RightShaft" type="Polygon2D" parent="SunShafts" unique_id=831578316]
+position = Vector2(0, -1450)
 color = Color(0.86, 0.9, 1, 0.065)
 polygon = PackedVector2Array(150, -3320, 460, -3300, 1380, 2480, 660, 2480)
 
