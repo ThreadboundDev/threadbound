@@ -1,0 +1,119 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/Environment/yellow_portal_spritesheet.png" id="1_portal_sheet"]
+[ext_resource type="Script" path="res://Src/Environment/Portals/yellow_portal.gd" id="2_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_00"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_01"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_02"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(2048, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_03"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(3072, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_04"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(4096, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_05"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(5120, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_06"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_07"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_08"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(2048, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_09"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(3072, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_10"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(4096, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portal_11"]
+atlas = ExtResource("1_portal_sheet")
+region = Rect2(5120, 1024, 1024, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yellow_portal"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_00")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_09")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_portal_11")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_portal"]
+radius = 95.0
+height = 330.0
+
+[node name="YellowPortal" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("2_script")
+
+[node name="PortalSprite" type="AnimatedSprite2D" parent="."]
+z_index = 14
+scale = Vector2(0.42, 0.42)
+sprite_frames = SubResource("SpriteFrames_yellow_portal")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("CapsuleShape2D_portal")
+
+[node name="ExitPoint" type="Marker2D" parent="."]
+position = Vector2(0, 160)

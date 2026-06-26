@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/red_wing_thread_objective.tscn" id="26_red_objective"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/balance_wing_objective.tscn" id="27_balance_objective"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/blue_wing_button.tscn" id="28_blue_button"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Portals/yellow_portal.tscn" id="29_yellow_portal"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -516,6 +517,19 @@ position = Vector2(360, 420)
 
 [node name="YellowWingDoor" parent="DemoDoors" unique_id=1241953404 instance=ExtResource("23_yellow_door")]
 position = Vector2(-2687, 1245)
+
+[node name="YellowWingPortals" type="Node2D" parent="DemoDoors"]
+position = Vector2(-2687, 1245)
+
+[node name="YellowPortal1A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(-360, 360)
+portal_id = 1
+sequence_index = 0
+
+[node name="YellowPortal1B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(360, 360)
+portal_id = 1
+sequence_index = 1
 
 [node name="TriThreadDoor" parent="DemoDoors" unique_id=1847726991 instance=ExtResource("24_boss_door")]
 position = Vector2(2431.9998, 3565.9995)
