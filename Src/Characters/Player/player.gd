@@ -7,6 +7,7 @@ signal save_point_seated(player: CharacterBody2D)
 
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const PAUSE_MENU_SCENE := preload("res://Src/UI/PauseMenu/pause_menu.tscn")
+const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -456,6 +457,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
 		_open_pause_menu()
 
+	var requested_game_menu_tab := _get_requested_game_menu_tab()
+	if requested_game_menu_tab != &"" and not death_reset_started:
+		_open_game_menu(requested_game_menu_tab)
+
 	var menu = get_tree().get_first_node_in_group("radial_menu")
 	if menu:
 		menu.update_hold_state(Input.is_action_pressed("open_menu"))
@@ -473,6 +478,28 @@ func _open_pause_menu() -> void:
 
 	var pause_menu := PAUSE_MENU_SCENE.instantiate()
 	get_tree().current_scene.add_child(pause_menu)
+
+func _get_requested_game_menu_tab() -> StringName:
+	if Input.is_action_just_pressed("open_inventory"):
+		return &"Inventory"
+	if Input.is_action_just_pressed("open_map"):
+		return &"Map"
+	if Input.is_action_just_pressed("open_lore"):
+		return &"Lore"
+	if Input.is_action_just_pressed("open_controls"):
+		return &"Controls"
+	return &""
+
+func _open_game_menu(initial_tab: StringName) -> void:
+	if get_tree().paused:
+		return
+	if get_tree().get_first_node_in_group("game_menu"):
+		return
+
+	var game_menu := GAME_MENU_SCENE.instantiate()
+	get_tree().current_scene.add_child(game_menu)
+	if game_menu.has_method("open"):
+		game_menu.open(initial_tab)
 
 func _update_god_mode_toggle() -> void:
 	if Input.is_action_just_pressed("debug_god_mode"):
