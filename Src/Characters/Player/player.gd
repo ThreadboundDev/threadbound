@@ -24,6 +24,7 @@ const SIT_FPS := 12.0
 @onready var equipment_mount: Node2D = $EquipmentMount
 @onready var camera = get_node_or_null("../Camera Master/Camera2D/PhantomCameraHost2D/MainFollowCam")
 @onready var glow_sprite: Sprite2D = $GlowSprite
+@onready var flow_state_aura: Node = get_node_or_null("FlowStateAura")
 @onready var ability_cooldown_timer: Timer = $AbilityCooldownTimer
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
 @onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
@@ -316,6 +317,7 @@ func _ready() -> void:
 	AudioManager.enter_gameplay_music()
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
+	_set_flow_state_visuals(_flow_state_active)
 	_ensure_sit_animation()
 	update_equipment_facing()
 	_update_wall_cling_vfx()
@@ -873,6 +875,10 @@ func refill_action_points() -> void:
 
 func set_momentum(value: float) -> void:
 	momentum = value
+	if momentum >= 100.0 and not _flow_state_active:
+		_enter_flow_state()
+	elif momentum < 100.0 and _flow_state_active:
+		_exit_flow_state()
 
 func collect_thread_knots(amount: int) -> void:
 	thread_knot_count += maxi(0, amount)
@@ -1002,10 +1008,7 @@ func _process_momentum(delta: float) -> void:
 	var drain := minf(flow_state_drain_base + active_flow_time * flow_state_drain_growth, flow_state_drain_max)
 	_change_momentum(-drain * delta)
 	if momentum <= 0.0:
-		_flow_state_active = false
-		_flow_state_duration = 0.0
-		AudioManager.stop_loop(&"momentum_aura")
-		_update_momentum_state()
+		_exit_flow_state()
 
 func _process_audio_timers(delta: float) -> void:
 	if _footstep_timer > 0.0:
@@ -1143,11 +1146,32 @@ func _change_momentum(amount: float) -> void:
 
 	momentum = clampf(momentum + amount, 0.0, 100.0)
 	if momentum >= 100.0 and not _flow_state_active:
-		_flow_state_active = true
-		_flow_state_duration = 0.0
-		AudioManager.play_sfx(&"enter_momentum")
-		AudioManager.play_loop(&"momentum_aura")
-		_update_momentum_state()
+		_enter_flow_state()
+
+func _enter_flow_state() -> void:
+	if _flow_state_active:
+		return
+
+	_flow_state_active = true
+	_flow_state_duration = 0.0
+	AudioManager.play_sfx(&"enter_momentum")
+	AudioManager.play_loop(&"momentum_aura")
+	_set_flow_state_visuals(true)
+	_update_momentum_state()
+
+func _exit_flow_state() -> void:
+	if not _flow_state_active:
+		return
+
+	_flow_state_active = false
+	_flow_state_duration = 0.0
+	AudioManager.stop_loop(&"momentum_aura")
+	_set_flow_state_visuals(false)
+	_update_momentum_state()
+
+func _set_flow_state_visuals(is_active: bool) -> void:
+	if flow_state_aura and flow_state_aura.has_method("set_flow_active"):
+		flow_state_aura.set_flow_active(is_active)
 
 func _lose_momentum_from_damage(damage: DamageData) -> void:
 	var severity := maxf(1.0, float(damage.amount))
@@ -1229,7 +1253,7 @@ func _on_died(_damage: DamageData) -> void:
 	if death_reset_started:
 		return
 
-	AudioManager.stop_loop(&"momentum_aura")
+	_exit_flow_state()
 	AudioManager.stop_loop(&"grapple_hanging")
 	is_dead = true
 	death_reset_started = true
