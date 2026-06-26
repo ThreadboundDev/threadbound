@@ -40,6 +40,10 @@ func begin_attack() -> void:
 	if sprite and attack_texture:
 		_play_attack_animation()
 
+func activate_attack_hitbox() -> void:
+	super.activate_attack_hitbox()
+	AudioManager.play_sfx(&"enemy_sword_attack")
+
 func end_attack() -> void:
 	super.end_attack()
 	if sprite and walk_texture:

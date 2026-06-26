@@ -58,6 +58,7 @@ func begin_attack() -> void:
 
 func activate_attack_hitbox() -> void:
 	super.activate_attack_hitbox()
+	AudioManager.play_sfx(&"enemy_stomp_attack")
 	if not _thread_smash_spawned:
 		_thread_smash_spawned = true
 		_spawn_thread_smash_missiles()

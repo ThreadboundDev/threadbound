@@ -290,6 +290,8 @@ func _on_hurtbox_hit_received(_damage: DamageData) -> void:
 	pass
 
 func _on_damaged(damage: DamageData) -> void:
+	AudioManager.play_sfx(&"enemy_hit")
+
 	if hit_flash:
 		hit_flash.flash()
 

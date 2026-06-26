@@ -20,6 +20,10 @@
 [ext_resource type="AudioStream" uid="uid://bl7bqe4smhomx" path="res://Assets/Audio/SFX/Threadborne Sounds/enter_momentum.wav" id="18_enter_momentum"]
 [ext_resource type="AudioStream" uid="uid://ce5112umkuo8v" path="res://Assets/Audio/SFX/Threadborne Sounds/momentum_aura.wav" id="19_momentum_aura"]
 [ext_resource type="AudioStream" uid="uid://b1l6m8rxg5cjx" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_death.wav" id="20_enemy_death"]
+[ext_resource type="AudioStream" uid="uid://cpjxex6mwso4e" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_hit.wav" id="32_enemy_hit"]
+[ext_resource type="AudioStream" uid="uid://c04w1qukryr60" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_sword_attack.wav" id="33_enemy_sword_attack"]
+[ext_resource type="AudioStream" uid="uid://yw86i8jvti5m" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_stomp_attack.wav" id="34_enemy_stomp_attack"]
+[ext_resource type="AudioStream" uid="uid://cdvf4h5spbtos" path="res://Assets/Audio/SFX/Enemy Sounds/enemy_laser_attack.wav" id="35_enemy_laser_attack"]
 [ext_resource type="AudioStream" uid="uid://cqbiadt661pp4" path="res://Assets/Audio/SFX/UI Sounds/ui_click.wav" id="21_ui_click"]
 [ext_resource type="AudioStream" uid="uid://d05eh8yvy6eev" path="res://Assets/Audio/SFX/UI Sounds/menu_select.wav" id="22_menu_select"]
 [ext_resource type="AudioStream" uid="uid://ca7636v5vnlwe" path="res://Assets/Audio/SFX/UI Sounds/loot_special_item.wav" id="23_loot_special"]
@@ -44,6 +48,30 @@ script = ExtResource("2_sound")
 stream = ExtResource("20_enemy_death")
 volume_db = -1.5
 pitch_variation = 0.03
+
+[sub_resource type="Resource" id="AudioSound_enemy_hit"]
+script = ExtResource("2_sound")
+stream = ExtResource("32_enemy_hit")
+volume_db = -2.0
+pitch_variation = 0.03
+
+[sub_resource type="Resource" id="AudioSound_enemy_sword_attack"]
+script = ExtResource("2_sound")
+stream = ExtResource("33_enemy_sword_attack")
+volume_db = -2.5
+pitch_variation = 0.02
+
+[sub_resource type="Resource" id="AudioSound_enemy_stomp_attack"]
+script = ExtResource("2_sound")
+stream = ExtResource("34_enemy_stomp_attack")
+volume_db = -3.0
+pitch_variation = 0.02
+
+[sub_resource type="Resource" id="AudioSound_enemy_laser_attack"]
+script = ExtResource("2_sound")
+stream = ExtResource("35_enemy_laser_attack")
+volume_db = -4.0
+pitch_variation = 0.01
 
 [sub_resource type="Resource" id="AudioSound_enter_momentum"]
 script = ExtResource("2_sound")
@@ -176,6 +204,10 @@ script = ExtResource("1_registry")
 sounds = {
 &"coin_pickup": SubResource("AudioSound_coin_pickup"),
 &"enemy_death": SubResource("AudioSound_enemy_death"),
+&"enemy_hit": SubResource("AudioSound_enemy_hit"),
+&"enemy_laser_attack": SubResource("AudioSound_enemy_laser_attack"),
+&"enemy_stomp_attack": SubResource("AudioSound_enemy_stomp_attack"),
+&"enemy_sword_attack": SubResource("AudioSound_enemy_sword_attack"),
 &"enter_momentum": SubResource("AudioSound_enter_momentum"),
 &"enter_world": SubResource("AudioSound_enter_world"),
 &"grapple": SubResource("AudioSound_grapple_throw"),
