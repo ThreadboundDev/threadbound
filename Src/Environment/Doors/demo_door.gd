@@ -25,6 +25,11 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export var opened_high_texture: Texture2D
 @export var opened_low_z_index := 2
 @export var opened_high_z_index := 6
+@export_group("Doorway Depth")
+@export var doorway_depth_enabled := true
+@export var doorway_depth_only_when_open := true
+@export var doorway_player_z_index := 3
+@export var doorway_equipment_z_index := 4
 
 @onready var door_sprite: AnimatedSprite2D = $DoorSprite as AnimatedSprite2D
 @onready var opened_low_sprite: Sprite2D = get_node_or_null("OpenedLowSprite") as Sprite2D
@@ -32,17 +37,25 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @onready var fog_panel: Polygon2D = $FogPanel as Polygon2D
 @onready var blocker_shape: CollisionShape2D = $Blocker/CollisionShape2D as CollisionShape2D
 @onready var interact_shape: CollisionShape2D = $InteractionShape as CollisionShape2D
+@onready var doorway_depth_area: Area2D = get_node_or_null("DoorwayDepthArea") as Area2D
 @onready var prompt_label: Label = $PromptLabel as Label
 
 var _player: Node
 var _is_opening := false
+var _doorway_depth_originals: Dictionary = {}
 
 func _ready() -> void:
 	add_to_group("demo_doors")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	if doorway_depth_area:
+		doorway_depth_area.body_entered.connect(_on_doorway_depth_body_entered)
+		doorway_depth_area.body_exited.connect(_on_doorway_depth_body_exited)
 	_configure_opened_split_layers()
 	_apply_visual_state()
+
+func _exit_tree() -> void:
+	_restore_all_doorway_depth()
 
 func interact(_interacting_player: Node) -> void:
 	if _is_opening:
@@ -154,12 +167,105 @@ func _show_opened_split_layers() -> void:
 	if door_sprite:
 		door_sprite.visible = false
 	_set_opened_split_visible(true)
+	_apply_depth_to_bodies_inside_doorway()
 
 func _set_opened_split_visible(is_visible: bool) -> void:
 	if opened_low_sprite:
 		opened_low_sprite.visible = is_visible and opened_low_sprite.texture != null
 	if opened_high_sprite:
 		opened_high_sprite.visible = is_visible and opened_high_sprite.texture != null
+
+func _apply_depth_to_bodies_inside_doorway() -> void:
+	if not doorway_depth_area:
+		return
+
+	for body in doorway_depth_area.get_overlapping_bodies():
+		_try_apply_doorway_depth(body)
+
+func _try_apply_doorway_depth(body: Node) -> void:
+	if not doorway_depth_enabled:
+		return
+	if doorway_depth_only_when_open and closed:
+		return
+	if not body or not body.is_in_group("player"):
+		return
+
+	var instance_id := body.get_instance_id()
+	if _doorway_depth_originals.has(instance_id):
+		return
+
+	var records: Array[Dictionary] = []
+	var seen := {}
+	var equipment_mount := body.get_node_or_null("EquipmentMount")
+	_collect_player_depth_items(body, equipment_mount, records, seen)
+	_collect_equipment_depth_items(equipment_mount, records, seen)
+	if records.is_empty():
+		return
+
+	_doorway_depth_originals[instance_id] = {
+		"body": body,
+		"records": records,
+	}
+
+func _collect_player_depth_items(root: Node, equipment_mount: Node, records: Array[Dictionary], seen: Dictionary) -> void:
+	if not root:
+		return
+	if root == equipment_mount:
+		return
+
+	if root is CanvasItem:
+		_apply_depth_to_canvas_item(root as CanvasItem, doorway_player_z_index, records, seen)
+
+	for child in root.get_children():
+		_collect_player_depth_items(child, equipment_mount, records, seen)
+
+func _collect_equipment_depth_items(root: Node, records: Array[Dictionary], seen: Dictionary) -> void:
+	if not root:
+		return
+
+	if root is CanvasItem:
+		_apply_depth_to_canvas_item(root as CanvasItem, doorway_equipment_z_index, records, seen)
+
+	for child in root.get_children():
+		_collect_equipment_depth_items(child, records, seen)
+
+func _apply_depth_to_canvas_item(item: CanvasItem, target_z_index: int, records: Array[Dictionary], seen: Dictionary) -> void:
+	var instance_id := item.get_instance_id()
+	if seen.has(instance_id):
+		return
+
+	seen[instance_id] = true
+	records.append({
+		"item": item,
+		"z_index": item.z_index,
+		"z_as_relative": item.z_as_relative,
+	})
+	item.z_as_relative = false
+	item.z_index = target_z_index
+
+func _restore_doorway_depth(body: Node) -> void:
+	if not body:
+		return
+
+	var instance_id := body.get_instance_id()
+	if not _doorway_depth_originals.has(instance_id):
+		return
+
+	var depth_state: Dictionary = _doorway_depth_originals[instance_id]
+	for record in depth_state.get("records", []):
+		var item = record.get("item")
+		if not is_instance_valid(item):
+			continue
+		item.z_index = int(record.get("z_index", 0))
+		item.z_as_relative = bool(record.get("z_as_relative", true))
+	_doorway_depth_originals.erase(instance_id)
+
+func _restore_all_doorway_depth() -> void:
+	var states := _doorway_depth_originals.values()
+	for depth_state in states:
+		var body = depth_state.get("body")
+		if is_instance_valid(body):
+			_restore_doorway_depth(body)
 
 func _show_message(text: String) -> void:
 	var box := get_tree().get_first_node_in_group("demo_message_box")
@@ -189,3 +295,10 @@ func _on_body_exited(body: Node) -> void:
 	if body.has_method("_on_interactable_exited"):
 		body._on_interactable_exited(self)
 	_player = null
+
+func _on_doorway_depth_body_entered(body: Node) -> void:
+	_try_apply_doorway_depth(body)
+
+func _on_doorway_depth_body_exited(body: Node) -> void:
+	if body and body.is_in_group("player"):
+		_restore_doorway_depth(body)

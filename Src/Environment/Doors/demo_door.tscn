@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/Doors/demo_door.gd" id="1_door_script"]
 [ext_resource type="Texture2D" path="res://Assets/Environment/Doors/threadbound_demo_door.svg" id="2_door_texture"]
@@ -9,6 +9,9 @@ size = Vector2(720, 760)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_blocker"]
 size = Vector2(380, 650)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_doorway_depth"]
+size = Vector2(340, 640)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fog"]
 blend_mode = 0
@@ -59,6 +62,13 @@ shape = SubResource("RectangleShape2D_blocker")
 [node name="InteractionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_interact")
+
+[node name="DoorwayDepthArea" type="Area2D" parent="."]
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorwayDepthArea"]
+position = Vector2(0, 18)
+shape = SubResource("RectangleShape2D_doorway_depth")
 
 [node name="PromptLabel" type="Label" parent="."]
 visible = false
