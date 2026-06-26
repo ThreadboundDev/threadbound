@@ -2,6 +2,32 @@ extends CanvasLayer
 class_name GameMenu
 
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
+const INVENTORY_THREADS := [
+	{
+		"id": &"power",
+		"name": "THREAD OF POWER",
+		"description": "Claimed from the red wing.",
+		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot/Description",
+	},
+	{
+		"id": &"balance",
+		"name": "THREAD OF BALANCE",
+		"description": "Claimed from the blue wing.",
+		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot/Description",
+	},
+	{
+		"id": &"essence",
+		"name": "THREAD OF ESSENCE",
+		"description": "Claimed from the yellow wing.",
+		"icon": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Icon",
+		"label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Name",
+		"description_label": "MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot/Description",
+	},
+]
 
 @export var selected_tab_color := Color(1.0, 0.91, 0.72, 1.0)
 @export var normal_tab_color := Color(0.70, 0.64, 0.53, 1.0)
@@ -21,6 +47,7 @@ const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"
 	$MenuRoot/Pages/LorePage,
 	$MenuRoot/Pages/ControlsPage,
 ]
+@onready var inventory_empty_label: Label = $MenuRoot/Pages/InventoryPage/InventoryFrame/EmptyLabel as Label
 
 var _selected_index := 0
 var _closing := false
@@ -35,6 +62,9 @@ func _ready() -> void:
 		tab.mouse_filter = Control.MOUSE_FILTER_STOP
 		tab.pivot_offset = tab.size * 0.5
 		tab.gui_input.connect(_on_tab_gui_input.bind(i))
+	if not DemoProgress.threads_changed.is_connected(_update_inventory_threads):
+		DemoProgress.threads_changed.connect(_update_inventory_threads)
+	_update_inventory_threads()
 
 func open(initial_tab: StringName = &"Inventory") -> void:
 	get_tree().paused = true
@@ -78,6 +108,8 @@ func _select_named_tab(tab_name: StringName) -> void:
 func _select_tab(index: int, instant := false) -> void:
 	_selected_index = wrapi(index, 0, TAB_ORDER.size())
 	title_label.text = String(TAB_ORDER[_selected_index]).to_upper()
+	if TAB_ORDER[_selected_index] == &"Inventory":
+		_update_inventory_threads()
 
 	for i in pages.size():
 		pages[i].visible = i == _selected_index
@@ -89,6 +121,31 @@ func _select_tab(index: int, instant := false) -> void:
 
 	if not instant:
 		AudioManager.play_ui(&"ui_click")
+
+func _update_inventory_threads() -> void:
+	var claimed_count := 0
+	for thread_data in INVENTORY_THREADS:
+		var thread_id: StringName = thread_data["id"]
+		var claimed := DemoProgress.has_thread(thread_id)
+		if claimed:
+			claimed_count += 1
+
+		var icon := get_node_or_null(String(thread_data["icon"])) as TextureRect
+		if icon:
+			icon.modulate = Color(1.0, 1.0, 1.0, 1.0) if claimed else Color(0.18, 0.18, 0.18, 0.45)
+
+		var label := get_node_or_null(String(thread_data["label"])) as Label
+		if label:
+			label.text = String(thread_data["name"]) if claimed else "UNKNOWN THREAD"
+			label.modulate = Color(1.0, 0.93, 0.72, 1.0) if claimed else Color(0.48, 0.43, 0.34, 0.72)
+
+		var description_label := get_node_or_null(String(thread_data["description_label"])) as Label
+		if description_label:
+			description_label.text = String(thread_data["description"]) if claimed else "Not yet claimed."
+			description_label.modulate = Color(0.86, 0.78, 0.60, 1.0) if claimed else Color(0.44, 0.40, 0.34, 0.68)
+
+	if inventory_empty_label:
+		inventory_empty_label.visible = claimed_count == 0
 
 func _close() -> void:
 	if _closing:

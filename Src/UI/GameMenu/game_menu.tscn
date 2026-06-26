@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
 [ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="4_decorative_font"]
 [ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="5_base_font"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/inventory_frame.png" id="6_inventory_frame"]
+[ext_resource type="Texture2D" uid="uid://ckvdkmt3s0pnj" path="res://Assets/chamber_of_first_weave/Threads/thread_of_power.png" id="7_thread_power"]
+[ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
+[ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -25,6 +29,20 @@ font = ExtResource("5_base_font")
 font_size = 28
 font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 3
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_inventory_name"]
+font = ExtResource("5_base_font")
+font_size = 24
+font_color = Color(0.94, 0.84, 0.58, 1)
+outline_size = 3
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_inventory_description"]
+font = ExtResource("5_base_font")
+font_size = 18
+font_color = Color(0.82, 0.76, 0.64, 1)
+outline_size = 2
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
 [node name="GameMenu" type="CanvasLayer" unique_id=649142321]
@@ -155,17 +173,202 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/InventoryPage" unique_id=1647007499]
+[node name="InventoryFrame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -416.0
+offset_top = -324.0
+offset_right = 416.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_inventory_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EmptyLabel" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 284.0
+offset_right = 260.0
+offset_bottom = 334.0
+grow_horizontal = 2
+text = "NO THREADS CLAIMED"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ThreadSlots" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = 48.0
-offset_right = -48.0
-offset_bottom = -48.0
-text = "NO THREADS CLAIMED"
-label_settings = SubResource("LabelSettings_body")
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PowerSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 92.0
+offset_top = -154.0
+offset_right = 332.0
+offset_bottom = 174.0
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.0
+offset_top = -8.0
+offset_right = 78.0
+offset_bottom = 156.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("7_thread_power")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 166.0
+offset_bottom = 208.0
+grow_horizontal = 2
+text = "UNKNOWN THREAD"
+label_settings = SubResource("LabelSettings_inventory_name")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 208.0
+offset_bottom = 276.0
+grow_horizontal = 2
+text = "Not yet claimed."
+label_settings = SubResource("LabelSettings_inventory_description")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BalanceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -154.0
+offset_right = 120.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.0
+offset_top = -8.0
+offset_right = 78.0
+offset_bottom = 156.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("8_thread_balance")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 166.0
+offset_bottom = 208.0
+grow_horizontal = 2
+text = "UNKNOWN THREAD"
+label_settings = SubResource("LabelSettings_inventory_name")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 208.0
+offset_bottom = 276.0
+grow_horizontal = 2
+text = "Not yet claimed."
+label_settings = SubResource("LabelSettings_inventory_description")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="EssenceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -332.0
+offset_top = -154.0
+offset_right = -92.0
+offset_bottom = 174.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.0
+offset_top = -8.0
+offset_right = 78.0
+offset_bottom = 156.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("9_thread_essence")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 166.0
+offset_bottom = 208.0
+grow_horizontal = 2
+text = "UNKNOWN THREAD"
+label_settings = SubResource("LabelSettings_inventory_name")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 208.0
+offset_bottom = 276.0
+grow_horizontal = 2
+text = "Not yet claimed."
+label_settings = SubResource("LabelSettings_inventory_description")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
