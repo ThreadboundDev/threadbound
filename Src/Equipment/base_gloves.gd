@@ -265,7 +265,7 @@ func _configure_grapple_raycast() -> void:
 
 	grapple_raycast.enabled = true
 	grapple_raycast.collide_with_bodies = true
-	grapple_raycast.collide_with_areas = false
+	grapple_raycast.collide_with_areas = true
 	grapple_raycast.collision_mask = grapple_collision_mask
 	grapple_raycast.clear_exceptions()
 

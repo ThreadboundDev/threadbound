@@ -1,34 +1,34 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://q8mvp2yr11to"]
 
-[ext_resource type="Texture2D" path="res://Assets/Environment/blue_buttons.png" id="1_buttons"]
-[ext_resource type="Script" path="res://Src/Environment/Objectives/blue_wing_button.gd" id="2_script"]
-[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="3_hurtbox"]
+[ext_resource type="Texture2D" uid="uid://ch4rr2ty171jo" path="res://Assets/Environment/blue_buttons.png" id="1_buttons"]
+[ext_resource type="Script" uid="uid://5xm8e0es51in" path="res://Src/Environment/Objectives/blue_wing_button.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://d1svuo20lfx4e" path="res://Src/Components/hurtbox_component.gd" id="3_hurtbox"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="4_label_settings"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_inactive"]
-atlas = ExtResource("1_buttons")
-region = Rect2(0, 0, 627, 1254)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_active"]
 atlas = ExtResource("1_buttons")
 region = Rect2(627, 0, 627, 1254)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_inactive"]
+atlas = ExtResource("1_buttons")
+region = Rect2(0, 0, 627, 1254)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_blue_button"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_inactive")
-}],
-"loop": true,
-"name": &"inactive",
-"speed": 1.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_active")
 }],
 "loop": true,
 "name": &"active",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inactive")
+}],
+"loop": true,
+"name": &"inactive",
 "speed": 1.0
 }]
 
@@ -38,40 +38,51 @@ radius = 190.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_button"]
 radius = 135.0
 
-[node name="BlueWingButton" type="Area2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_physical_collision"]
+radius = 72.0
+
+[node name="BlueWingButton" type="Area2D" unique_id=1800674497]
+z_index = -2
 collision_layer = 0
-collision_mask = 1
 script = ExtResource("2_script")
 
-[node name="ButtonSprite" type="AnimatedSprite2D" parent="."]
+[node name="ButtonSprite" type="AnimatedSprite2D" parent="." unique_id=363175851]
 z_index = 12
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_blue_button")
 animation = &"inactive"
 
-[node name="InteractionShape" type="CollisionShape2D" parent="."]
+[node name="InteractionShape" type="CollisionShape2D" parent="." unique_id=1583545711]
 position = Vector2(0, 15)
 shape = SubResource("CircleShape2D_interaction")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1385551716]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("3_hurtbox")
 hurtbox_owner_path = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=616360285]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_button")
 
-[node name="GrappleTarget" type="StaticBody2D" parent="."]
+[node name="GrappleTarget" type="Area2D" parent="." unique_id=771490521]
 collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget" unique_id=769090032]
 position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_button")
 
-[node name="PromptLabel" type="Label" parent="."]
+[node name="PhysicalCollision" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PhysicalCollision"]
+position = Vector2(0, -15)
+shape = SubResource("CircleShape2D_physical_collision")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=130570099]
 visible = false
 z_index = 20
 offset_left = -54.0
