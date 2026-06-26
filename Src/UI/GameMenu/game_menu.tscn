@@ -5,17 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
 [ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="4_decorative_font"]
 [ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="5_base_font"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/inventory_frame.png" id="6_inventory_frame"]
+[ext_resource type="Texture2D" uid="uid://cxaw4ta3n4xdv" path="res://Assets/UI/Main Menu/inventory_frame.png" id="6_inventory_frame"]
 [ext_resource type="Texture2D" uid="uid://ckvdkmt3s0pnj" path="res://Assets/chamber_of_first_weave/Threads/thread_of_power.png" id="7_thread_power"]
 [ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
 [ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
-font_size = 58
+font_size = 70
 font_color = Color(0.94, 0.84, 0.58, 1)
 outline_size = 5
 outline_color = Color(0.04, 0.035, 0.025, 1)
+shadow_size = 3
+shadow_color = Color(0.7058824, 0.57254905, 0, 0.65882355)
 
 [sub_resource type="LabelSettings" id="LabelSettings_tab"]
 font = ExtResource("5_base_font")
@@ -71,10 +73,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 24.0
-offset_right = -32.0
-offset_bottom = -24.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 9.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -88,9 +90,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -360.0
-offset_top = 42.0
+offset_top = 61.0
 offset_right = 360.0
-offset_bottom = 120.0
+offset_bottom = 157.25
 grow_horizontal = 2
 text = "INVENTORY"
 label_settings = SubResource("LabelSettings_title")
@@ -102,11 +104,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -350.0
-offset_top = 108.0
-offset_right = 350.0
-offset_bottom = 166.0
+offset_left = -685.0
+offset_top = 88.0
+offset_right = 15.0
+offset_bottom = 146.0
 grow_horizontal = 2
+scale = Vector2(1.97, 1.97)
 mouse_filter = 2
 texture = ExtResource("3_separator")
 expand_mode = 1
@@ -173,59 +176,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InventoryFrame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -416.0
-offset_top = -324.0
-offset_right = 416.0
-offset_bottom = 324.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("6_inventory_frame")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="EmptyLabel" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame"]
+[node name="EmptyLabel" type="Label" parent="MenuRoot/Pages/InventoryPage" unique_id=1685511125]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -260.0
-offset_top = 284.0
+offset_top = 336.0
 offset_right = 260.0
-offset_bottom = 334.0
+offset_bottom = 386.0
 grow_horizontal = 2
 text = "NO THREADS CLAIMED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ThreadSlots" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame"]
+[node name="ThreadSlots" type="Control" parent="MenuRoot/Pages/InventoryPage" unique_id=1161619070]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 448.0
+offset_top = 52.0
+offset_right = 448.0
+offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PowerSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+[node name="PowerSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/ThreadSlots" unique_id=2087533456]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 92.0
-offset_top = -154.0
-offset_right = 332.0
-offset_bottom = 174.0
+offset_left = -222.0
+offset_top = -314.0
+offset_right = 18.0
+offset_bottom = 14.0
 grow_vertical = 2
 
-[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot" unique_id=771408785]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -240,7 +229,7 @@ texture = ExtResource("7_thread_power")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot" unique_id=1677463871]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -252,7 +241,7 @@ label_settings = SubResource("LabelSettings_inventory_name")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/PowerSlot"]
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot" unique_id=1054580694]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -265,21 +254,40 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BalanceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+[node name="InventoryFrame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/PowerSlot" unique_id=1881038516]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -154.0
-offset_right = 120.0
-offset_bottom = 174.0
+offset_left = 273.0
+offset_top = -307.0
+offset_right = 832.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+mouse_filter = 2
+texture = ExtResource("6_inventory_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BalanceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/ThreadSlots" unique_id=736313482]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -571.0
+offset_top = -314.0
+offset_right = -331.00024
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot" unique_id=315305175]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -294,7 +302,7 @@ texture = ExtResource("8_thread_balance")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot" unique_id=1510478274]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -306,7 +314,7 @@ label_settings = SubResource("LabelSettings_inventory_name")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/BalanceSlot"]
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot" unique_id=477581841]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -319,21 +327,40 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="EssenceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots"]
+[node name="InventoryFrame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/BalanceSlot" unique_id=424310523]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 273.0
+offset_top = -307.0
+offset_right = 832.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+mouse_filter = 2
+texture = ExtResource("6_inventory_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EssenceSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/ThreadSlots" unique_id=1246407847]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -332.0
-offset_top = -154.0
-offset_right = -92.0
-offset_bottom = 174.0
+offset_left = -923.0
+offset_top = -314.0
+offset_right = -683.0
+offset_bottom = 14.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot" unique_id=1765288274]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -348,7 +375,7 @@ texture = ExtResource("9_thread_essence")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+[node name="Name" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot" unique_id=1824537070]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -360,7 +387,7 @@ label_settings = SubResource("LabelSettings_inventory_name")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/InventoryFrame/ThreadSlots/EssenceSlot"]
+[node name="Description" type="Label" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot" unique_id=1721692864]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -372,6 +399,25 @@ label_settings = SubResource("LabelSettings_inventory_description")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="InventoryFrame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/ThreadSlots/EssenceSlot" unique_id=1050301507]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 273.0
+offset_top = -307.0
+offset_right = 832.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+mouse_filter = 2
+texture = ExtResource("6_inventory_frame")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MapPage" type="Control" parent="MenuRoot/Pages" unique_id=897145029]
 visible = false
@@ -391,6 +437,8 @@ offset_left = 48.0
 offset_top = 48.0
 offset_right = -48.0
 offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "MAP UNCHARTED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
@@ -415,6 +463,8 @@ offset_left = 48.0
 offset_top = 48.0
 offset_right = -48.0
 offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "NO LORE RECORDED"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
@@ -439,6 +489,8 @@ offset_left = 48.0
 offset_top = 48.0
 offset_right = -48.0
 offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "CONTROLS"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1

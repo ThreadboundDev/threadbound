@@ -1,8 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://biqmejdjtgpcp"]
+[gd_scene format=3 uid="uid://biqmejdjtgpcp"]
 
-[ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
-[ext_resource type="Texture2D" uid="uid://cqv4sa7b8q065" path="res://Assets/Environment/Doors/boss_wing_door.png" id="2_boss_door"]
+[ext_resource type="PackedScene" uid="uid://h5l1vdplj1nk" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
+[ext_resource type="Texture2D" uid="uid://ip8rtxowuyl0" path="res://Assets/Environment/Doors/boss_door_open_low.png" id="3_6c25g"]
 [ext_resource type="Texture2D" uid="uid://byfbqaa6wapao" path="res://Assets/Environment/Doors/boss_door_open.png" id="3_boss_open"]
+[ext_resource type="Texture2D" uid="uid://dpdsibj568fxd" path="res://Assets/Environment/Doors/boss_door_open_high.png" id="4_7wioj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_boss_open_00"]
 atlas = ExtResource("3_boss_open")
@@ -360,7 +361,7 @@ animations = [{
 size = Vector2(470, 760)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_interact"]
-size = Vector2(820, 840)
+size = Vector2(712, 805)
 
 [node name="BossWingDoor" unique_id=1356882730 instance=ExtResource("1_base_door")]
 door_kind = 1
@@ -369,22 +370,32 @@ message = "The tri-thread seal holds. Collect the three threads to open the way 
 open_after_message = false
 door_color = Color(1, 1, 1, 1)
 
-[node name="FogPanel" parent="." index="0"]
+[node name="FogPanel" parent="." index="0" unique_id=78285732]
 position = Vector2(640, 256)
 polygon = PackedVector2Array(-640, -1280, 2432, -1280, 2432, 384, 384, 384, -600, 150)
 
-[node name="DoorSprite" parent="." index="1"]
-scale = Vector2(0.56, 0.56)
+[node name="DoorSprite" parent="." index="1" unique_id=1920746392]
+scale = Vector2(0.98, 0.98)
 sprite_frames = SubResource("SpriteFrames_boss_door")
+animation = &"open"
+frame = 47
 
-[node name="CollisionShape2D" parent="Blocker" index="0"]
-position = Vector2(0, 30)
+[node name="OpenedLowSprite" parent="." index="2" unique_id=707379622]
+position = Vector2(-166, 9)
+texture = ExtResource("3_6c25g")
+
+[node name="OpenedHighSprite" parent="." index="3" unique_id=1371245658]
+position = Vector2(217, 9)
+texture = ExtResource("4_7wioj")
+
+[node name="CollisionShape2D" parent="Blocker" parent_id_path=PackedInt32Array(1812810036) index="0" unique_id=781168983]
+position = Vector2(199, -27)
 shape = SubResource("RectangleShape2D_boss_blocker")
 
-[node name="InteractionShape" parent="." index="3"]
-position = Vector2(0, 0)
+[node name="InteractionShape" parent="." index="5" unique_id=1747571831]
+position = Vector2(36, -43)
 shape = SubResource("RectangleShape2D_boss_interact")
 
-[node name="PromptLabel" parent="." index="4"]
+[node name="PromptLabel" parent="." index="7" unique_id=192562315]
 offset_top = -640.0
 offset_bottom = -560.0
