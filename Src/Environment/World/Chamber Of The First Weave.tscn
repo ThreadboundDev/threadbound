@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://c0v5jygnf0ot7" path="res://Src/Environment/Doors/yellow_wing_door.tscn" id="23_yellow_door"]
 [ext_resource type="PackedScene" uid="uid://biqmejdjtgpcp" path="res://Src/Environment/Doors/boss_wing_door.tscn" id="24_boss_door"]
 [ext_resource type="PackedScene" uid="uid://c1hxr2mg4bjmm" path="res://Src/Environment/SavePoints/blossom_of_eryndor.tscn" id="25_blossom"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Objectives/red_wing_thread_objective.tscn" id="26_red_objective"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -417,6 +418,8 @@ tether_line_anchor_offset = Vector2(0, -230)
 
 [node name="Loomkin4" parent="WorldArt/Red Room Enemys" unique_id=353775617 instance=ExtResource("10_4fmyt")]
 position = Vector2(1920, 384)
+
+[node name="RedWingThreadObjective" parent="WorldArt/Red Room Enemys" instance=ExtResource("26_red_objective")]
 
 [node name="Enemies" type="Node2D" parent="WorldArt" unique_id=1862765831]
 position = Vector2(-2816, -768)
