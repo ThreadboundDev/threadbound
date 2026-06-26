@@ -20,8 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://c4brju0je8s5n" path="res://Src/Environment/World/lighting/thread_light.png" id="17_thread_light"]
 [ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="18_shrine_light"]
 [ext_resource type="Shader" uid="uid://bbq71jwtvm55a" path="res://Src/Environment/World/room_hue_grade.gdshader" id="19_room_hue_shader"]
-[ext_resource type="Script" uid="uid://cl5f35tuhdom0" path="res://Src/Environment/World/room_hue_grade.gd" id="20_room_hue_script"]
 [ext_resource type="PackedScene" path="res://Src/Pickups/DemoThreads/thread_of_essence_pickup.tscn" id="20_essence_pickup"]
+[ext_resource type="Script" uid="uid://cl5f35tuhdom0" path="res://Src/Environment/World/room_hue_grade.gd" id="20_room_hue_script"]
 [ext_resource type="PackedScene" uid="uid://diqf8q0wwmlag" path="res://Src/Environment/Doors/red_wing_door.tscn" id="21_red_door"]
 [ext_resource type="PackedScene" uid="uid://cju2v2tgjwr5y" path="res://Src/Environment/Doors/blue_wing_door.tscn" id="22_blue_door"]
 [ext_resource type="PackedScene" uid="uid://c0v5jygnf0ot7" path="res://Src/Environment/Doors/yellow_wing_door.tscn" id="23_yellow_door"]
@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://c1hxr2mg4bjmm" path="res://Src/Environment/SavePoints/blossom_of_eryndor.tscn" id="25_blossom"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/red_wing_thread_objective.tscn" id="26_red_objective"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/balance_wing_objective.tscn" id="27_balance_objective"]
-[ext_resource type="PackedScene" path="res://Src/Environment/Objectives/blue_wing_button.tscn" id="28_blue_button"]
+[ext_resource type="PackedScene" uid="uid://q8mvp2yr11to" path="res://Src/Environment/Objectives/blue_wing_button.tscn" id="28_blue_button"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Portals/yellow_portal.tscn" id="29_yellow_portal"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
@@ -506,13 +506,15 @@ position = Vector2(2432, -1024)
 position = Vector2(2432, -1024)
 
 [node name="BlueButton1" parent="DemoDoors/BlueWingObjective" unique_id=1721665559 instance=ExtResource("28_blue_button")]
-position = Vector2(635, 511)
+position = Vector2(2428, 1034)
 
 [node name="BlueButton2" parent="DemoDoors/BlueWingObjective" unique_id=61759611 instance=ExtResource("28_blue_button")]
-position = Vector2(1018, 488)
+position = Vector2(5031, -276)
+rotation = -1.5707964
 
 [node name="BlueButton3" parent="DemoDoors/BlueWingObjective" unique_id=1661429890 instance=ExtResource("28_blue_button")]
-position = Vector2(1313, 488)
+position = Vector2(1925, -3317)
+rotation = -3.1764991
 
 [node name="YellowWingDoor" parent="DemoDoors" unique_id=1241953404 instance=ExtResource("23_yellow_door")]
 position = Vector2(-2687, 1245)
@@ -522,51 +524,45 @@ position = Vector2(-2687, 1245)
 
 [node name="YellowPortal1A" parent="DemoDoors/YellowWingPortals" unique_id=114734576 instance=ExtResource("29_yellow_portal")]
 position = Vector2(-698, 668)
-portal_id = 1
 
 [node name="YellowPortal1B" parent="DemoDoors/YellowWingPortals" unique_id=552975524 instance=ExtResource("29_yellow_portal")]
-position = Vector2(-620, -350)
-portal_id = 1
+position = Vector2(-2356, 2950)
 sequence_index = 1
 
-[node name="YellowPortal2A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(-320, 668)
+[node name="YellowPortal2A" parent="DemoDoors/YellowWingPortals" unique_id=1514287443 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-2887, 1158)
 portal_id = 2
-sequence_index = 0
 
-[node name="YellowPortal2B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(-320, -350)
+[node name="YellowPortal2B" parent="DemoDoors/YellowWingPortals" unique_id=416109463 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-5173, 2195)
 portal_id = 2
 sequence_index = 1
 
-[node name="YellowPortal3A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(0, 668)
+[node name="YellowPortal3A" parent="DemoDoors/YellowWingPortals" unique_id=1160724245 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-3532, 1192)
 portal_id = 3
-sequence_index = 0
 
-[node name="YellowPortal3B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(0, -350)
+[node name="YellowPortal3B" parent="DemoDoors/YellowWingPortals" unique_id=1363497727 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-4550, 405)
 portal_id = 3
 sequence_index = 1
 
-[node name="YellowPortal4A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(320, 668)
+[node name="YellowPortal4A" parent="DemoDoors/YellowWingPortals" unique_id=64748055 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-3539, -866)
 portal_id = 4
-sequence_index = 0
 
-[node name="YellowPortal4B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(320, -350)
+[node name="YellowPortal4B" parent="DemoDoors/YellowWingPortals" unique_id=1913119068 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-2414, -604)
 portal_id = 4
 sequence_index = 1
 
-[node name="YellowPortal5A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(640, 668)
+[node name="YellowPortal5A" parent="DemoDoors/YellowWingPortals" unique_id=1981300672 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-2007, 155)
 portal_id = 5
-sequence_index = 0
 required_thread = &"essence"
 
-[node name="YellowPortal5B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(640, -350)
+[node name="YellowPortal5B" parent="DemoDoors/YellowWingPortals" unique_id=1110329763 instance=ExtResource("29_yellow_portal")]
+position = Vector2(568, 113)
 portal_id = 5
 sequence_index = 1
 required_thread = &"essence"
