@@ -1,73 +1,88 @@
 [gd_scene load_steps=7 format=3 uid="uid://dgj2gxbqifgcm"]
 
-[ext_resource type="Script" path="res://Src/UI/Options/volume_slider.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_empty_bar_and_icons.png" id="2_shell"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_bar_empty.png" id="3_empty"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_bar_filled.png" id="4_filled"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/volume_slider_button.png" id="5_knob"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="6_font"]
+[ext_resource type="Script" uid="uid://xuh0tmpxenyf" path="res://Src/UI/Options/volume_slider.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://biy3orjswjjwo" path="res://Assets/UI/Main Menu/volume_empty_bar_and_icons.png" id="2_shell"]
+[ext_resource type="Texture2D" uid="uid://bm1ds7d5akyrc" path="res://Assets/UI/Main Menu/volume_bar_empty.png" id="3_empty"]
+[ext_resource type="Texture2D" uid="uid://bdw2p0nyjehyq" path="res://Assets/UI/Main Menu/volume_bar_filled.png" id="4_filled"]
+[ext_resource type="Texture2D" uid="uid://c444vlhmlxypx" path="res://Assets/UI/Main Menu/volume_slider_button.png" id="5_knob"]
+[ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="6_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_volume"]
 font = ExtResource("6_font")
-font_size = 34
-font_color = Color(0.86, 0.78, 0.58, 1)
-outline_size = 4
-outline_color = Color(0.04, 0.035, 0.025, 1)
+font_size = 46
+font_color = Color(0.968627, 0.788235, 0.458824, 1)
+outline_size = 2
+outline_color = Color(0.02, 0.018, 0.012, 0.95)
 
-[node name="VolumeSlider" type="Control"]
-custom_minimum_size = Vector2(1050, 200)
+[node name="VolumeSlider" type="Control" unique_id=598317861]
+custom_minimum_size = Vector2(1050, 166)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1050.0
-offset_bottom = 200.0
+offset_bottom = 166.0
 focus_mode = 2
-mouse_filter = 0
 script = ExtResource("1_script")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=316240656]
 layout_mode = 0
 offset_left = 156.0
-offset_top = 8.0
+offset_top = -14.0
 offset_right = 896.0
-offset_bottom = 56.0
-mouse_filter = 2
+offset_bottom = 38.0
 text = "MUSIC"
 label_settings = SubResource("LabelSettings_volume")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VolumeBar" type="TextureProgressBar" parent="."]
+[node name="VolumeBar" type="Control" parent="." unique_id=535643438]
 layout_mode = 0
-offset_left = 236.0
-offset_top = 78.0
-offset_right = 818.0
-offset_bottom = 122.0
+offset_left = 170.99998
+offset_top = 70.99999
+offset_right = 879.0
+offset_bottom = 114.99999
 mouse_filter = 2
-max_value = 1.0
-step = 0.001
-value = 1.0
-texture_under = ExtResource("3_empty")
-texture_progress = ExtResource("4_filled")
-stretch_margin_left = 14
-stretch_margin_top = 8
-stretch_margin_right = 14
-stretch_margin_bottom = 8
 
-[node name="Shell" type="TextureRect" parent="."]
+[node name="Empty" type="TextureRect" parent="VolumeBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_empty")
+stretch_mode = 1
+
+[node name="FilledClip" type="Control" parent="VolumeBar"]
+clip_contents = true
+layout_mode = 0
+offset_right = 708.0
+offset_bottom = 44.0
+mouse_filter = 2
+
+[node name="Filled" type="TextureRect" parent="VolumeBar/FilledClip"]
+layout_mode = 0
+offset_right = 708.0
+offset_bottom = 44.0
+mouse_filter = 2
+texture = ExtResource("4_filled")
+stretch_mode = 1
+
+[node name="Shell" type="TextureRect" parent="." unique_id=406573209]
 layout_mode = 0
 offset_right = 1050.0
-offset_bottom = 200.0
+offset_bottom = 166.0
 mouse_filter = 2
 texture = ExtResource("2_shell")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Knob" type="TextureRect" parent="."]
+[node name="Knob" type="TextureRect" parent="." unique_id=1310518631]
 layout_mode = 0
 offset_left = 766.5
-offset_top = 34.5
+offset_top = 27.0
 offset_right = 869.5
-offset_bottom = 165.5
+offset_bottom = 158.0
 mouse_filter = 2
 texture = ExtResource("5_knob")
 expand_mode = 1

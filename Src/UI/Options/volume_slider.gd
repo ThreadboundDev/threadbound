@@ -9,10 +9,12 @@ signal focused(slider: VolumeSlider)
 @export var knob_center_offset := Vector2(0.0, 0.0)
 
 @onready var label: Label = $Label as Label
-@onready var progress_bar: TextureProgressBar = $VolumeBar as TextureProgressBar
+@onready var volume_bar: Control = $VolumeBar as Control
+@onready var filled_clip: Control = $VolumeBar/FilledClip as Control
 @onready var knob: TextureRect = $Knob as TextureRect
 
 var _dragging := false
+var _value := 1.0
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -48,25 +50,26 @@ func set_selected(is_selected: bool) -> void:
 		grab_focus()
 
 func _refresh_from_audio() -> void:
-	progress_bar.value = AudioManager.get_category_volume(category)
+	_value = AudioManager.get_category_volume(category)
 
 func _set_from_local_x(local_x: float) -> void:
-	var value := clampf((local_x - progress_bar.position.x) / maxf(progress_bar.size.x, 1.0), 0.0, 1.0)
+	var value := clampf((local_x - volume_bar.position.x) / maxf(volume_bar.size.x, 1.0), 0.0, 1.0)
 	_set_value(value)
 
 func _nudge(amount: float) -> void:
-	_set_value(clampf(float(progress_bar.value) + amount, 0.0, 1.0))
+	_set_value(clampf(_value + amount, 0.0, 1.0))
 
 func _set_value(value: float) -> void:
-	progress_bar.value = value
+	_value = value
 	AudioManager.set_category_volume(category, value)
 	_update_knob()
 
 func _update_knob() -> void:
-	if not progress_bar or not knob:
+	if not volume_bar or not filled_clip or not knob:
 		return
 
-	var ratio := clampf(float(progress_bar.value), 0.0, 1.0)
-	var knob_x := progress_bar.position.x + ratio * progress_bar.size.x - (knob.size.x * 0.5)
+	var ratio := clampf(_value, 0.0, 1.0)
+	filled_clip.size.x = volume_bar.size.x * ratio
+	var knob_x := volume_bar.position.x + ratio * volume_bar.size.x - (knob.size.x * 0.5)
 	knob.position.x = knob_x + knob_center_offset.x
-	knob.position.y = progress_bar.position.y + (progress_bar.size.y - knob.size.y) * 0.5 + knob_center_offset.y
+	knob.position.y = volume_bar.position.y + (volume_bar.size.y - knob.size.y) * 0.5 + knob_center_offset.y
