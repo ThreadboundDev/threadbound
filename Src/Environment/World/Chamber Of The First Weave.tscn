@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="18_shrine_light"]
 [ext_resource type="Shader" uid="uid://bbq71jwtvm55a" path="res://Src/Environment/World/room_hue_grade.gdshader" id="19_room_hue_shader"]
 [ext_resource type="Script" uid="uid://cl5f35tuhdom0" path="res://Src/Environment/World/room_hue_grade.gd" id="20_room_hue_script"]
-[ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="20_yhgke"]
+[ext_resource type="PackedScene" path="res://Src/Pickups/DemoThreads/thread_of_essence_pickup.tscn" id="20_essence_pickup"]
 [ext_resource type="PackedScene" uid="uid://diqf8q0wwmlag" path="res://Src/Environment/Doors/red_wing_door.tscn" id="21_red_door"]
 [ext_resource type="PackedScene" uid="uid://cju2v2tgjwr5y" path="res://Src/Environment/Doors/blue_wing_door.tscn" id="22_blue_door"]
 [ext_resource type="PackedScene" uid="uid://c0v5jygnf0ot7" path="res://Src/Environment/Doors/yellow_wing_door.tscn" id="23_yellow_door"]
@@ -316,10 +316,9 @@ hang_thread_texture = null
 threadburst_spawn_offset = Vector2(0, -8)
 threadburst_horizontal_spread = 360.0
 
-[node name="ThreadOfEssence" type="Sprite2D" parent="WorldArt" unique_id=1541427510]
+[node name="ThreadOfEssence" parent="WorldArt" unique_id=1541427510 instance=ExtResource("20_essence_pickup")]
 position = Vector2(-5120, 1280)
 scale = Vector2(0.73021585, 0.71512604)
-texture = ExtResource("20_yhgke")
 
 [node name="Red Room Enemys" type="Node2D" parent="WorldArt" unique_id=1501328778]
 position = Vector2(-5760, -1792)
@@ -422,7 +421,7 @@ tether_line_anchor_offset = Vector2(0, -230)
 [node name="Loomkin4" parent="WorldArt/Red Room Enemys" unique_id=353775617 instance=ExtResource("10_4fmyt")]
 position = Vector2(1920, 384)
 
-[node name="RedWingThreadObjective" parent="WorldArt/Red Room Enemys" instance=ExtResource("26_red_objective")]
+[node name="RedWingThreadObjective" parent="WorldArt/Red Room Enemys" unique_id=874164745 instance=ExtResource("26_red_objective")]
 
 [node name="Enemies" type="Node2D" parent="WorldArt" unique_id=1862765831]
 position = Vector2(-2816, -768)
@@ -503,32 +502,71 @@ position = Vector2(-2816, -768)
 [node name="BlueWingDoor" parent="DemoDoors" unique_id=1591533616 instance=ExtResource("22_blue_door")]
 position = Vector2(2432, -1024)
 
-[node name="BlueWingObjective" parent="DemoDoors" instance=ExtResource("27_balance_objective")]
+[node name="BlueWingObjective" parent="DemoDoors" unique_id=1652813332 instance=ExtResource("27_balance_objective")]
 position = Vector2(2432, -1024)
 
-[node name="BlueButton1" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
-position = Vector2(-360, 420)
+[node name="BlueButton1" parent="DemoDoors/BlueWingObjective" unique_id=1721665559 instance=ExtResource("28_blue_button")]
+position = Vector2(635, 511)
 
-[node name="BlueButton2" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
-position = Vector2(0, 420)
+[node name="BlueButton2" parent="DemoDoors/BlueWingObjective" unique_id=61759611 instance=ExtResource("28_blue_button")]
+position = Vector2(1018, 488)
 
-[node name="BlueButton3" parent="DemoDoors/BlueWingObjective" instance=ExtResource("28_blue_button")]
-position = Vector2(360, 420)
+[node name="BlueButton3" parent="DemoDoors/BlueWingObjective" unique_id=1661429890 instance=ExtResource("28_blue_button")]
+position = Vector2(1313, 488)
 
 [node name="YellowWingDoor" parent="DemoDoors" unique_id=1241953404 instance=ExtResource("23_yellow_door")]
 position = Vector2(-2687, 1245)
 
-[node name="YellowWingPortals" type="Node2D" parent="DemoDoors"]
+[node name="YellowWingPortals" type="Node2D" parent="DemoDoors" unique_id=775772412]
 position = Vector2(-2687, 1245)
 
-[node name="YellowPortal1A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(-360, 360)
+[node name="YellowPortal1A" parent="DemoDoors/YellowWingPortals" unique_id=114734576 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-698, 668)
 portal_id = 1
+
+[node name="YellowPortal1B" parent="DemoDoors/YellowWingPortals" unique_id=552975524 instance=ExtResource("29_yellow_portal")]
+position = Vector2(-620, -350)
+portal_id = 1
+sequence_index = 1
+
+[node name="YellowPortal2A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(-320, 668)
+portal_id = 2
 sequence_index = 0
 
-[node name="YellowPortal1B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
-position = Vector2(360, 360)
-portal_id = 1
+[node name="YellowPortal2B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(-320, -350)
+portal_id = 2
+sequence_index = 1
+
+[node name="YellowPortal3A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(0, 668)
+portal_id = 3
+sequence_index = 0
+
+[node name="YellowPortal3B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(0, -350)
+portal_id = 3
+sequence_index = 1
+
+[node name="YellowPortal4A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(320, 668)
+portal_id = 4
+sequence_index = 0
+
+[node name="YellowPortal4B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(320, -350)
+portal_id = 4
+sequence_index = 1
+
+[node name="YellowPortal5A" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(640, 668)
+portal_id = 5
+sequence_index = 0
+
+[node name="YellowPortal5B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
+position = Vector2(640, -350)
+portal_id = 5
 sequence_index = 1
 
 [node name="TriThreadDoor" parent="DemoDoors" unique_id=1847726991 instance=ExtResource("24_boss_door")]
