@@ -183,18 +183,16 @@ func _configure_opened_split_sprite(sprite: Sprite2D, texture: Texture2D, target
 	if not sprite:
 		return
 
-	sprite.texture = texture
+	if texture:
+		sprite.texture = texture
 	sprite.z_index = target_z_index
 	sprite.visible = false
-	if door_sprite:
-		sprite.position = door_sprite.position
-		sprite.rotation = door_sprite.rotation
-		sprite.scale = door_sprite.scale
-		sprite.centered = door_sprite.centered
-		sprite.offset = door_sprite.offset
 
 func _has_opened_split_layers() -> bool:
-	return opened_low_texture != null or opened_high_texture != null
+	return _opened_split_sprite_has_texture(opened_low_sprite) or _opened_split_sprite_has_texture(opened_high_sprite)
+
+func _opened_split_sprite_has_texture(sprite: Sprite2D) -> bool:
+	return sprite != null and sprite.texture != null
 
 func _show_opened_split_layers() -> void:
 	if not _has_opened_split_layers():
@@ -206,9 +204,9 @@ func _show_opened_split_layers() -> void:
 
 func _set_opened_split_visible(is_visible: bool) -> void:
 	if opened_low_sprite:
-		opened_low_sprite.visible = is_visible and opened_low_texture != null
+		opened_low_sprite.visible = is_visible and opened_low_sprite.texture != null
 	if opened_high_sprite:
-		opened_high_sprite.visible = is_visible and opened_high_texture != null
+		opened_high_sprite.visible = is_visible and opened_high_sprite.texture != null
 
 func _show_message(text: String) -> void:
 	var box := get_tree().get_first_node_in_group("demo_message_box")

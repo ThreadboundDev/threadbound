@@ -33,3 +33,9 @@ polygon = PackedVector2Array(-512, -2344, 896, -2344, 896, 472, 0, 472, -520, 13
 [node name="DoorSprite" parent="." index="1"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_blue_door")
+
+[node name="OpenedLowSprite" parent="." index="2"]
+texture = ExtResource("4_blue_open_low")
+
+[node name="OpenedHighSprite" parent="." index="3"]
+texture = ExtResource("5_blue_open_high")
