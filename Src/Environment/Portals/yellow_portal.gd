@@ -5,6 +5,7 @@ static var _teleport_locks: Dictionary = {}
 
 @export var portal_id := 1
 @export var sequence_index := 0
+@export var required_thread: StringName = &""
 @export var teleport_cooldown := 0.45
 @export var arrival_velocity_multiplier := 1.0
 @export var animation_speed := 8.0
@@ -15,15 +16,18 @@ static var _teleport_locks: Dictionary = {}
 func _ready() -> void:
 	add_to_group("yellow_portals")
 	body_entered.connect(_on_body_entered)
+	if not DemoProgress.threads_changed.is_connected(_update_lock_state):
+		DemoProgress.threads_changed.connect(_update_lock_state)
 	if portal_sprite:
 		portal_sprite.speed_scale = animation_speed
 		portal_sprite.play(&"idle")
+	_update_lock_state()
 
 func get_exit_global_position() -> Vector2:
 	return exit_point.global_position if exit_point else global_position
 
 func _on_body_entered(body: Node) -> void:
-	if not body.is_in_group("player") or _is_body_locked(body):
+	if not _is_unlocked() or not body.is_in_group("player") or _is_body_locked(body):
 		return
 
 	var destination := _find_destination_portal()
@@ -37,7 +41,7 @@ func _find_destination_portal() -> YellowPortal:
 	var matching_portals: Array[YellowPortal] = []
 	for node in get_tree().get_nodes_in_group("yellow_portals"):
 		var portal := node as YellowPortal
-		if portal and portal.portal_id == portal_id:
+		if portal and portal.portal_id == portal_id and portal._is_unlocked():
 			matching_portals.append(portal)
 
 	if matching_portals.size() <= 1:
@@ -79,3 +83,12 @@ func _is_body_locked(body: Node) -> bool:
 func _lock_body(body: Node) -> void:
 	var lock_msec := int(maxf(0.0, teleport_cooldown) * 1000.0)
 	_teleport_locks[body.get_instance_id()] = Time.get_ticks_msec() + lock_msec
+
+func _is_unlocked() -> bool:
+	return String(required_thread).is_empty() or DemoProgress.has_thread(required_thread)
+
+func _update_lock_state() -> void:
+	var unlocked := _is_unlocked()
+	visible = unlocked
+	monitoring = unlocked
+	monitorable = unlocked

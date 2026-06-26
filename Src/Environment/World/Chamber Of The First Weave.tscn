@@ -563,11 +563,13 @@ sequence_index = 1
 position = Vector2(640, 668)
 portal_id = 5
 sequence_index = 0
+required_thread = &"essence"
 
 [node name="YellowPortal5B" parent="DemoDoors/YellowWingPortals" instance=ExtResource("29_yellow_portal")]
 position = Vector2(640, -350)
 portal_id = 5
 sequence_index = 1
+required_thread = &"essence"
 
 [node name="TriThreadDoor" parent="DemoDoors" unique_id=1847726991 instance=ExtResource("24_boss_door")]
 position = Vector2(2431.9998, 3565.9995)
