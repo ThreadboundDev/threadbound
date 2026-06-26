@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://cswc8ndjakrv5"]
 
-[ext_resource type="Script" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://do6571xji8gg4" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="2_label_settings"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_proximity"]
@@ -12,33 +12,31 @@ size = Vector2(360, 260)
 [sub_resource type="CircleShape2D" id="CircleShape2D_seat_guide"]
 radius = 28.0
 
-[node name="BaseSavePoint" type="Area2D"]
-collision_mask = 1
+[node name="BaseSavePoint" type="Area2D" unique_id=740464047]
 script = ExtResource("1_script")
 
-[node name="SavePointSprite" type="AnimatedSprite2D" parent="."]
+[node name="SavePointSprite" type="AnimatedSprite2D" parent="." unique_id=1693153872]
 z_index = 2
 
-[node name="ProximityShape" type="CollisionShape2D" parent="."]
+[node name="ProximityShape" type="CollisionShape2D" parent="." unique_id=1541660845]
 position = Vector2(0, -160)
 shape = SubResource("RectangleShape2D_proximity")
 
-[node name="InteractionArea" type="Area2D" parent="."]
-collision_mask = 1
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1628221456]
 
-[node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
+[node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea" unique_id=1840004463]
 position = Vector2(0, -120)
 shape = SubResource("RectangleShape2D_interaction")
 
-[node name="SitTarget" type="Marker2D" parent="."]
+[node name="SitTarget" type="Marker2D" parent="." unique_id=539947769]
 position = Vector2(0, -132)
 
-[node name="SeatGuide" type="CollisionShape2D" parent="SitTarget"]
+[node name="SeatGuide" type="CollisionShape2D" parent="SitTarget" unique_id=1250685443]
 modulate = Color(0.96, 0.72, 0.24, 0.58)
 shape = SubResource("CircleShape2D_seat_guide")
 disabled = true
 
-[node name="PromptLabel" type="Label" parent="."]
+[node name="PromptLabel" type="Label" parent="." unique_id=1235159232]
 visible = false
 z_index = 5
 offset_left = -190.0

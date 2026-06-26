@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://but0rhdobsnfq"
-path="res://.godot/imported/controller_map.png-3625309403816e6b2a04d858cdcc8ad2.ctex"
+uid="uid://bjc4uw8d6vl53"
+path="res://.godot/imported/Nintendo.png-f5b19ac135a17e25de2c9b45d7b9c790.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/controller/controller_map.png"
-dest_files=["res://.godot/imported/controller_map.png-3625309403816e6b2a04d858cdcc8ad2.ctex"]
+source_file="res://Assets/UI/controller/Nintendo.png"
+dest_files=["res://.godot/imported/Nintendo.png-f5b19ac135a17e25de2c9b45d7b9c790.ctex"]
 
 [params]
 

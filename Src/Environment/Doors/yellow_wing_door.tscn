@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://c0v5jygnf0ot7"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/yellow_wing_door.png" id="2_yellow_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/yellow_door_open.png" id="3_yellow_open"]
+[ext_resource type="Texture2D" uid="uid://ba3ekuf8ymfs3" path="res://Assets/Environment/Doors/yellow_wing_door.png" id="2_yellow_door"]
+[ext_resource type="Texture2D" uid="uid://db5qd0taewd11" path="res://Assets/Environment/Doors/yellow_door_open.png" id="3_yellow_open"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yellow_door"]
 animations = [{
@@ -15,14 +15,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="YellowWingDoor" instance=ExtResource("1_base_door")]
+[node name="YellowWingDoor" unique_id=24194392 instance=ExtResource("1_base_door")]
 door_id = &"essence"
 display_name = "Thread of Essence"
 message = "To claim the Thread of Essence, one must prove intelligence within the weave."
 door_color = Color(1, 1, 1, 1)
 opening_sprite_sheet = ExtResource("3_yellow_open")
 
+[node name="FogPanel" parent="." index="0"]
+position = Vector2(-384, 256)
+polygon = PackedVector2Array(-1408, -896, 512, -896, 520, 130, -128, 896, -1408, 896)
+
 [node name="DoorSprite" parent="." index="1"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_yellow_door")
-animation = &"closed"

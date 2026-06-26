@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c1hxr2mg4bjmm"]
 
-[ext_resource type="PackedScene" path="res://Src/Environment/SavePoints/base_save_point.tscn" id="1_base_save_point"]
+[ext_resource type="PackedScene" uid="uid://cswc8ndjakrv5" path="res://Src/Environment/SavePoints/base_save_point.tscn" id="1_base_save_point"]
 [ext_resource type="Texture2D" uid="uid://cw5btlvcifkv8" path="res://Assets/Environment/Blossom of Eryndor/blossom_of_eryndor_spritesheet.png" id="2_sheet"]
 
 [node name="BlossomOfEryndor" unique_id=323926507 instance=ExtResource("1_base_save_point")]
@@ -11,23 +11,29 @@ sheet_columns = 6
 sheet_rows = 8
 animation_frame_count = 36
 
-[node name="SavePointSprite" parent="." index="0"]
+[node name="SavePointSprite" parent="." index="0" unique_id=1693153872]
 position = Vector2(0, -101.000015)
 scale = Vector2(0.34, 0.34)
 
-[node name="EditorPreviewSprite" type="Sprite2D" parent="." index="1"]
+[node name="EditorPreviewSprite" type="Sprite2D" parent="." index="1" unique_id=799093839]
 z_index = 1
-position = Vector2(0, -101.000015)
+position = Vector2(4.455, -101)
 scale = Vector2(0.34, 0.34)
 texture = ExtResource("2_sheet")
 region_enabled = true
 region_rect = Rect2(0, 0, 1024, 1024)
 
-[node name="ProximityShape" parent="." index="2"]
-position = Vector2(0, -256)
+[node name="ProximityShape" parent="." index="2" unique_id=1541660845]
+position = Vector2(1, -186)
 
-[node name="InteractionShape" parent="InteractionArea" index="0"]
-position = Vector2(0, -142)
+[node name="InteractionShape" parent="InteractionArea" parent_id_path=PackedInt32Array(1628221456) index="0" unique_id=1840004463]
+position = Vector2(0, -111)
 
-[node name="SitTarget" parent="." index="3"]
-position = Vector2(0, -58)
+[node name="SitTarget" parent="." index="4" unique_id=539947769]
+position = Vector2(1, -39)
+
+[node name="SeatGuide" parent="SitTarget" index="0" unique_id=1250685443]
+position = Vector2(22, -6)
+
+[node name="PromptLabel" parent="." index="5" unique_id=1235159232]
+visible = true

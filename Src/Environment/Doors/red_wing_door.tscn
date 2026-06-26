@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://diqf8q0wwmlag"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/red_wing_door.png" id="2_red_door"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/red_door_open.png" id="3_red_open"]
+[ext_resource type="Texture2D" uid="uid://40t21asaksk6" path="res://Assets/Environment/Doors/red_wing_door.png" id="2_red_door"]
+[ext_resource type="Texture2D" uid="uid://cr0o3fxji41y1" path="res://Assets/Environment/Doors/red_door_open.png" id="3_red_open"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_red_door"]
 animations = [{
@@ -15,14 +15,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="RedWingDoor" instance=ExtResource("1_base_door")]
+[node name="RedWingDoor" unique_id=92597966 instance=ExtResource("1_base_door")]
 door_id = &"power"
 display_name = "Thread of Power"
 message = "To claim the Thread of Power, one must defeat all enemies that bind the wing."
 door_color = Color(1, 1, 1, 1)
 opening_sprite_sheet = ExtResource("3_red_open")
 
+[node name="FogPanel" parent="." index="0"]
+position = Vector2(-522, 166)
+polygon = PackedVector2Array(-1910, -4262, -118, -4262, 1802, -4262, 1802, -4262, 1290, -934, 522, -934, 520, 130, -1855, 120)
+
 [node name="DoorSprite" parent="." index="1"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_red_door")
-animation = &"closed"
