@@ -20,12 +20,6 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_group("Opening Animation")
 @export var closed_animation := &"closed"
 @export var opening_animation := &"open"
-@export var opening_sprite_sheet: Texture2D
-@export_range(1, 24, 1) var opening_sheet_columns := 6
-@export_range(1, 24, 1) var opening_sheet_rows := 8
-@export_range(1, 256, 1) var opening_animation_frame_count := 48
-@export_range(1.0, 30.0, 0.5) var opening_animation_speed := 18.0
-@export var use_opening_first_frame_for_closed := false
 @export_group("Opened Split Layers")
 @export var opened_low_texture: Texture2D
 @export var opened_high_texture: Texture2D
@@ -47,7 +41,6 @@ func _ready() -> void:
 	add_to_group("demo_doors")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	_build_opening_animation_from_sheet()
 	_configure_opened_split_layers()
 	_apply_visual_state()
 
@@ -107,46 +100,6 @@ func _open() -> void:
 		tween.finished.connect(func() -> void:
 			fog_panel.visible = false
 		)
-
-func _build_opening_animation_from_sheet() -> void:
-	if not door_sprite or not opening_sprite_sheet:
-		return
-
-	var sprite_frames := door_sprite.sprite_frames.duplicate(true) as SpriteFrames if door_sprite.sprite_frames else SpriteFrames.new()
-	if sprite_frames.has_animation(opening_animation):
-		sprite_frames.remove_animation(opening_animation)
-	sprite_frames.add_animation(opening_animation)
-	sprite_frames.set_animation_loop(opening_animation, false)
-	sprite_frames.set_animation_speed(opening_animation, opening_animation_speed)
-
-	var frame_width := float(opening_sprite_sheet.get_width()) / float(opening_sheet_columns)
-	var frame_height := float(opening_sprite_sheet.get_height()) / float(opening_sheet_rows)
-	var max_frames := opening_sheet_columns * opening_sheet_rows
-	var used_frames := clampi(opening_animation_frame_count, 1, max_frames)
-
-	if use_opening_first_frame_for_closed:
-		if sprite_frames.has_animation(closed_animation):
-			sprite_frames.remove_animation(closed_animation)
-		sprite_frames.add_animation(closed_animation)
-		sprite_frames.set_animation_loop(closed_animation, true)
-		sprite_frames.add_frame(closed_animation, _atlas_frame_from_opening_sheet(0, frame_width, frame_height))
-
-	for frame_index in used_frames:
-		var atlas_texture := _atlas_frame_from_opening_sheet(frame_index, frame_width, frame_height)
-		sprite_frames.add_frame(opening_animation, atlas_texture)
-
-	door_sprite.sprite_frames = sprite_frames
-
-func _atlas_frame_from_opening_sheet(frame_index: int, frame_width: float, frame_height: float) -> AtlasTexture:
-	var atlas_texture := AtlasTexture.new()
-	atlas_texture.atlas = opening_sprite_sheet
-	atlas_texture.region = Rect2(
-		float(frame_index % opening_sheet_columns) * frame_width,
-		floorf(float(frame_index) / float(opening_sheet_columns)) * frame_height,
-		frame_width,
-		frame_height
-	)
-	return atlas_texture
 
 func _apply_visual_state() -> void:
 	if door_sprite:
