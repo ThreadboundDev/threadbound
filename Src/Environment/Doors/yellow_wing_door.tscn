@@ -1,10 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://c0v5jygnf0ot7"]
+[gd_scene format=3 uid="uid://c0v5jygnf0ot7"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
-[ext_resource type="Texture2D" uid="uid://ba3ekuf8ymfs3" path="res://Assets/Environment/Doors/yellow_wing_door.png" id="2_yellow_door"]
 [ext_resource type="Texture2D" uid="uid://db5qd0taewd11" path="res://Assets/Environment/Doors/yellow_door_open.png" id="3_yellow_open"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/yellow_door_open_low.png" id="4_yellow_open_low"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/yellow_door_open_high.png" id="5_yellow_open_high"]
+[ext_resource type="Texture2D" uid="uid://bl7lhhl3lrs2b" path="res://Assets/Environment/Doors/yellow_door_open_low.png" id="4_yellow_open_low"]
+[ext_resource type="Texture2D" uid="uid://ug4jx7h5eeyy" path="res://Assets/Environment/Doors/yellow_door_open_high.png" id="5_yellow_open_high"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yellow_open_00"]
 atlas = ExtResource("3_yellow_open")
@@ -371,11 +370,18 @@ position = Vector2(-384, 256)
 polygon = PackedVector2Array(-1408, -896, 512, -896, 520, 130, -128, 896, -1408, 896)
 
 [node name="DoorSprite" parent="." index="1"]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.98, 0.98)
 sprite_frames = SubResource("SpriteFrames_yellow_door")
+animation = &"open"
+frame = 1
 
 [node name="OpenedLowSprite" parent="." index="2"]
+position = Vector2(201, -5)
 texture = ExtResource("4_yellow_open_low")
 
 [node name="OpenedHighSprite" parent="." index="3"]
+position = Vector2(-226, -5)
 texture = ExtResource("5_yellow_open_high")
+
+[node name="Blocker" parent="." index="4"]
+position = Vector2(-71, -12)

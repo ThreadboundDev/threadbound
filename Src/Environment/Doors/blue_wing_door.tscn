@@ -1,10 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://cju2v2tgjwr5y"]
+[gd_scene format=3 uid="uid://cju2v2tgjwr5y"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/Doors/demo_door.tscn" id="1_base_door"]
-[ext_resource type="Texture2D" uid="uid://ch4c6rfsn0gl6" path="res://Assets/Environment/Doors/blue_wing_door.png" id="2_blue_door"]
 [ext_resource type="Texture2D" uid="uid://bbv1uls5nbicq" path="res://Assets/Environment/Doors/blue_door_open.png" id="3_blue_open"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/blue_door_open_low.png" id="4_blue_open_low"]
-[ext_resource type="Texture2D" path="res://Assets/Environment/Doors/blue_door_open_high.png" id="5_blue_open_high"]
+[ext_resource type="Texture2D" uid="uid://bah2cjt4iffd1" path="res://Assets/Environment/Doors/blue_door_open_low.png" id="4_blue_open_low"]
+[ext_resource type="Texture2D" uid="uid://ce35btpb6bqc8" path="res://Assets/Environment/Doors/blue_door_open_high.png" id="5_blue_open_high"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blue_open_00"]
 atlas = ExtResource("3_blue_open")
@@ -367,15 +366,26 @@ opened_low_texture = ExtResource("4_blue_open_low")
 opened_high_texture = ExtResource("5_blue_open_high")
 
 [node name="FogPanel" parent="." index="0"]
+visible = false
 position = Vector2(384, 168)
 polygon = PackedVector2Array(-512, -2344, 896, -2344, 896, 472, 0, 472, -520, 130)
 
 [node name="DoorSprite" parent="." index="1"]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.98, 0.98)
 sprite_frames = SubResource("SpriteFrames_blue_door")
+animation = &"open"
+frame = 1
 
 [node name="OpenedLowSprite" parent="." index="2"]
+position = Vector2(-165, 0)
 texture = ExtResource("4_blue_open_low")
 
 [node name="OpenedHighSprite" parent="." index="3"]
+position = Vector2(169, 0)
 texture = ExtResource("5_blue_open_high")
+
+[node name="CollisionShape2D" parent="Blocker" index="0"]
+position = Vector2(163, 30)
+
+[node name="InteractionShape" parent="." index="5"]
+position = Vector2(52.5, 38.5)
