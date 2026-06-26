@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Objectives/balance_wing_objective.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_balance_area"]
+size = Vector2(640, 560)
+
+[node name="BalanceWingObjective" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_balance_area")
