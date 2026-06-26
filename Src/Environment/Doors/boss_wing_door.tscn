@@ -200,7 +200,7 @@ region = Rect2(5120, 7168, 1024, 1024)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_boss_door")
+"texture": SubResource("AtlasTexture_boss_open_00")
 }],
 "loop": true,
 "name": &"closed",
