@@ -28,6 +28,8 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_group("Doorway Depth")
 @export var doorway_depth_enabled := true
 @export var doorway_depth_only_when_open := true
+@export var doorway_depth_area_position := Vector2(0.0, 18.0)
+@export var doorway_depth_area_size := Vector2(340.0, 640.0)
 @export var doorway_player_z_index := 3
 @export var doorway_equipment_z_index := 4
 
@@ -38,6 +40,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @onready var blocker_shape: CollisionShape2D = $Blocker/CollisionShape2D as CollisionShape2D
 @onready var interact_shape: CollisionShape2D = $InteractionShape as CollisionShape2D
 @onready var doorway_depth_area: Area2D = get_node_or_null("DoorwayDepthArea") as Area2D
+@onready var doorway_depth_shape: CollisionShape2D = get_node_or_null("DoorwayDepthArea/CollisionShape2D") as CollisionShape2D
 @onready var prompt_label: Label = $PromptLabel as Label
 
 var _player: Node
@@ -51,6 +54,7 @@ func _ready() -> void:
 	if doorway_depth_area:
 		doorway_depth_area.body_entered.connect(_on_doorway_depth_body_entered)
 		doorway_depth_area.body_exited.connect(_on_doorway_depth_body_exited)
+	_configure_doorway_depth_area()
 	_configure_opened_split_layers()
 	_apply_visual_state()
 
@@ -144,6 +148,19 @@ func _configure_opened_split_layers() -> void:
 	_configure_opened_split_sprite(opened_low_sprite, opened_low_texture, opened_low_z_index)
 	_configure_opened_split_sprite(opened_high_sprite, opened_high_texture, opened_high_z_index)
 	_set_opened_split_visible(false)
+
+func _configure_doorway_depth_area() -> void:
+	if doorway_depth_area:
+		doorway_depth_area.monitoring = doorway_depth_enabled
+		doorway_depth_area.monitorable = doorway_depth_enabled
+	if not doorway_depth_shape:
+		return
+
+	doorway_depth_shape.position = doorway_depth_area_position
+	if doorway_depth_shape.shape is RectangleShape2D:
+		var rectangle := doorway_depth_shape.shape.duplicate() as RectangleShape2D
+		rectangle.size = doorway_depth_area_size
+		doorway_depth_shape.shape = rectangle
 
 func _configure_opened_split_sprite(sprite: Sprite2D, texture: Texture2D, target_z_index: int) -> void:
 	if not sprite:
