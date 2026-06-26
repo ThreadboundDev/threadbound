@@ -28,6 +28,8 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_group("Doorway Depth")
 @export var doorway_depth_enabled := true
 @export var doorway_depth_only_when_open := true
+@export var doorway_depth_use_open_high_sprite := true
+@export var doorway_depth_padding := Vector2(0.0, 0.0)
 @export var doorway_depth_area_position := Vector2(0.0, 18.0)
 @export var doorway_depth_area_size := Vector2(340.0, 640.0)
 @export var doorway_player_z_index := 3
@@ -156,11 +158,34 @@ func _configure_doorway_depth_area() -> void:
 	if not doorway_depth_shape:
 		return
 
-	doorway_depth_shape.position = doorway_depth_area_position
+	var depth_position := doorway_depth_area_position
+	var depth_size := doorway_depth_area_size
+	if doorway_depth_use_open_high_sprite:
+		var sprite_bounds := _get_open_high_sprite_local_bounds()
+		if sprite_bounds.size != Vector2.ZERO:
+			depth_position = sprite_bounds.get_center()
+			depth_size = sprite_bounds.size + doorway_depth_padding
+
+	doorway_depth_shape.position = depth_position
 	if doorway_depth_shape.shape is RectangleShape2D:
 		var rectangle := doorway_depth_shape.shape.duplicate() as RectangleShape2D
-		rectangle.size = doorway_depth_area_size
+		rectangle.size = depth_size.abs()
 		doorway_depth_shape.shape = rectangle
+
+func _get_open_high_sprite_local_bounds() -> Rect2:
+	if not opened_high_sprite or not opened_high_sprite.texture:
+		return Rect2()
+
+	var texture_size := opened_high_sprite.texture.get_size()
+	var local_position := opened_high_sprite.position
+	if opened_high_sprite.centered:
+		local_position -= texture_size * opened_high_sprite.scale * 0.5
+	local_position += opened_high_sprite.offset * opened_high_sprite.scale
+
+	var local_size := texture_size * opened_high_sprite.scale
+	var min_x := minf(local_position.x, local_position.x + local_size.x)
+	var min_y := minf(local_position.y, local_position.y + local_size.y)
+	return Rect2(Vector2(min_x, min_y), local_size.abs())
 
 func _configure_opened_split_sprite(sprite: Sprite2D, texture: Texture2D, target_z_index: int) -> void:
 	if not sprite:
