@@ -122,8 +122,8 @@ func play_equipment_anim(anim_name: String) -> void:
 		print("Missing glove anim: ", anim_name)
 		return
 
-	# Do not let idle/run/jump overwrite the grapple fire pose.
-	if action_anim_lock_timer > 0.0 and not anim_name.begins_with("equip_grapple"):
+	# Do not let idle/run/jump overwrite action poses.
+	if action_anim_lock_timer > 0.0 and not _is_action_equipment_anim(anim_name):
 		return
 
 	animation_player.stop()
@@ -156,6 +156,9 @@ func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> voi
 	var attack_anim := "attack_ground" if body_anim == "Attack" else "attack_air"
 	if animation_player and animation_player.has_animation(attack_anim):
 		play_equipment_anim(attack_anim)
+
+func _is_action_equipment_anim(anim_name: String) -> bool:
+	return anim_name.begins_with("equip_grapple") or anim_name.begins_with("attack_")
 
 func enter_save_point_pose() -> void:
 	action_anim_lock_timer = 999.0

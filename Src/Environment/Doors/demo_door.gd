@@ -25,7 +25,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_range(1, 24, 1) var opening_sheet_rows := 8
 @export_range(1, 256, 1) var opening_animation_frame_count := 48
 @export_range(1.0, 30.0, 0.5) var opening_animation_speed := 18.0
-@export var use_opening_first_frame_for_closed := true
+@export var use_opening_first_frame_for_closed := false
 
 @onready var door_sprite: AnimatedSprite2D = $DoorSprite as AnimatedSprite2D
 @onready var fog_panel: Polygon2D = $FogPanel as Polygon2D
