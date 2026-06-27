@@ -24,9 +24,14 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1024, 1024)
 
 [node name="ProximityShape" parent="." index="2" unique_id=1541660845]
+visible = false
 position = Vector2(1, -186)
 
-[node name="InteractionShape" parent="InteractionArea" parent_id_path=PackedInt32Array(1628221456) index="0" unique_id=1840004463]
+[node name="InteractionArea" parent="." index="3" unique_id=1628221456]
+visible = false
+
+[node name="InteractionShape" parent="InteractionArea" index="0" unique_id=1840004463]
+visible = false
 position = Vector2(0, -111)
 
 [node name="SitTarget" parent="." index="4" unique_id=539947769]
