@@ -53,6 +53,16 @@ const THREADLING_ICON_INSET := Rect2(Vector2(42.0, 30.0), Vector2(142.0, 112.0))
 		editor_preview_armored_fill = value
 		queue_redraw()
 
+@export_group("Boss Bar Colors")
+@export var unarmored_fill_tint := Color(1.0, 0.22, 0.08, 1.0):
+	set(value):
+		unarmored_fill_tint = value
+		queue_redraw()
+@export var armored_fill_tint := Color(0.86, 0.88, 0.9, 0.94):
+	set(value):
+		armored_fill_tint = value
+		queue_redraw()
+
 @export_group("Textures")
 
 @export var frame_texture: Texture2D:
@@ -130,9 +140,9 @@ func _draw_health_fill(offset: Vector2, scale_factor: float, health_ratio: float
 	var fill_width := health_fill_rect.size.x * health_ratio
 	var source_rect := Rect2(health_fill_rect.position, Vector2(fill_width, health_fill_rect.size.y)).grow(bar_fill_bleed)
 	var rect := _source_to_draw_rect(source_rect, offset, scale_factor)
-	var color := Color(1.0, 1.0, 1.0, 1.0)
+	var color := unarmored_fill_tint
 	if is_armored:
-		color = Color(0.86, 0.88, 0.9, 0.94)
+		color = armored_fill_tint
 
 	_draw_textured_fill(rect, color, scale_factor, is_armored)
 
