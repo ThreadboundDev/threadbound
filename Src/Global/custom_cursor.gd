@@ -1,7 +1,7 @@
 extends Node
 
 const THREADBOUND_CURSOR_PATH := "res://Assets/UI/threadbound_cursor.png"
-const CURSOR_HOTSPOT := Vector2(4.0, 4.0)
+const CURSOR_HOTSPOT := Vector2(2.0, 2.0)
 
 
 func _ready() -> void:
