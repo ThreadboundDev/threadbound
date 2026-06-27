@@ -307,6 +307,7 @@ func _ready() -> void:
 
 	_ensure_action_point_timers()
 	add_to_group("player")
+	_apply_demo_checkpoint_spawn()
 	print("✅ Player ready - Scene-based equipment system active")
 
 	if ability_cooldown_timer:
@@ -1369,6 +1370,17 @@ func recover_at_save_point() -> void:
 		health_component.heal(health_component.max_health)
 	refill_action_points()
 	_sync_hud()
+
+func _apply_demo_checkpoint_spawn() -> void:
+	if not DemoProgress.has_checkpoint():
+		return
+
+	var current_scene := get_tree().current_scene
+	if not current_scene or current_scene.scene_file_path != DemoProgress.get_checkpoint_scene_path():
+		return
+
+	global_position = DemoProgress.get_checkpoint_position()
+	_movement_momentum_last_position = global_position
 
 func _complete_save_point_interaction() -> void:
 	save_point_interaction_active = false

@@ -7,11 +7,11 @@ class_name ThreadKnotPickup
 @export var floor_friction := 760.0
 @export var floor_bounce_damping := 0.22
 @export var min_bounce_speed := 220.0
-@export var vacuum_delay := 0.28
-@export var vacuum_radius := 145.0
-@export var vacuum_acceleration := 2450.0
-@export var vacuum_max_speed := 760.0
-@export var collect_distance := 18.0
+@export var vacuum_delay := 0.12
+@export var vacuum_radius := 260.0
+@export var vacuum_acceleration := 6200.0
+@export var vacuum_max_speed := 1320.0
+@export var collect_distance := 32.0
 @export var collect_fade_time := 0.12
 @export var bob_height := 2.5
 @export var bob_speed := 4.2
@@ -83,7 +83,12 @@ func _process_vacuum(delta: float, player: Node2D) -> void:
 
 	var desired_velocity := to_player.normalized() * vacuum_max_speed
 	velocity = velocity.move_toward(desired_velocity, vacuum_acceleration * delta)
-	global_position += velocity * delta
+	var next_position := global_position + velocity * delta
+	if next_position.distance_to(player.global_position) <= collect_distance:
+		_collect(player)
+		return
+
+	global_position = next_position
 	if sprite:
 		sprite.position.y = 0.0
 

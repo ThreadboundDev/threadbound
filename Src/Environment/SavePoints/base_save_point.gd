@@ -59,7 +59,6 @@ func interact(interacting_player: Node) -> void:
 		return
 
 	activated.emit(self, interacting_player)
-	_reset_regular_enemies()
 	if interacting_player.has_method("begin_save_point_interaction"):
 		var started: bool = interacting_player.begin_save_point_interaction(self, _get_player_sit_position())
 		if not started:
@@ -229,8 +228,8 @@ func _present_camera_and_menu(player: Node) -> void:
 		_menu.option_selected.connect(_on_menu_option_selected)
 
 func _on_menu_option_selected(option_name: StringName) -> void:
-	if option_name == &"Reflect" and _active_player and _active_player.has_method("recover_at_save_point"):
-		_active_player.recover_at_save_point()
+	if option_name == &"Reflect":
+		_rest_at_save_point()
 
 func _on_rise_requested() -> void:
 	_end_save_point_interaction()
@@ -271,3 +270,18 @@ func _reset_regular_enemies() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if enemy.has_method("reset_for_save_point"):
 			enemy.reset_for_save_point()
+
+func _rest_at_save_point() -> void:
+	if _active_player and _active_player.has_method("recover_at_save_point"):
+		_active_player.recover_at_save_point()
+
+	var scene_path := ""
+	if get_tree().current_scene:
+		scene_path = get_tree().current_scene.scene_file_path
+	var checkpoint_id := save_point_id
+	if String(checkpoint_id).is_empty():
+		checkpoint_id = StringName(get_path())
+	if _active_player is Node2D:
+		DemoProgress.save_checkpoint(checkpoint_id, scene_path, (_active_player as Node2D).global_position)
+
+	_reset_regular_enemies()

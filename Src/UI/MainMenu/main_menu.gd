@@ -23,7 +23,10 @@ var _showing_options := false
 
 func _ready() -> void:
 	AudioManager.play_title_screen_music()
+	DemoProgress.load_checkpoint()
 	options_panel.visible = false
+	if not DemoProgress.checkpoint_changed.is_connected(_refresh_continue_state):
+		DemoProgress.checkpoint_changed.connect(_refresh_continue_state)
 	options_panel.back_requested.connect(_hide_options)
 	for i in rows.size():
 		var row := rows[i]
@@ -33,6 +36,7 @@ func _ready() -> void:
 		row.gui_input.connect(_on_row_gui_input.bind(i))
 
 	_select_index(_selected_index, true)
+	_refresh_continue_state()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _showing_options:
@@ -97,7 +101,15 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 func _activate_selected() -> void:
 	AudioManager.play_ui(&"menu_select")
 	match rows[_selected_index].name:
+		&"Continue":
+			if DemoProgress.has_checkpoint():
+				AudioManager.play_ui(&"enter_world")
+				get_tree().change_scene_to_file(DemoProgress.get_checkpoint_scene_path())
+			else:
+				_pulse_unavailable(rows[_selected_index])
 		&"NewJourney":
+			DemoProgress.clear_checkpoint()
+			DemoProgress.reset_demo_threads()
 			AudioManager.play_ui(&"enter_world")
 			get_tree().change_scene_to_file(DEMO_SCENE)
 		&"Settings":
@@ -117,7 +129,11 @@ func _pulse_unavailable(row: Control) -> void:
 
 func _is_row_enabled(index: int) -> bool:
 	var row_name := rows[index].name
-	return row_name == &"NewJourney" or row_name == &"Settings" or row_name == &"Quit"
+	return (row_name == &"Continue" and DemoProgress.has_checkpoint()) or row_name == &"NewJourney" or row_name == &"Settings" or row_name == &"Quit"
+
+func _refresh_continue_state() -> void:
+	for i in rows.size():
+		_set_row_selected(i, i == _selected_index, true)
 
 func _show_options() -> void:
 	_showing_options = true

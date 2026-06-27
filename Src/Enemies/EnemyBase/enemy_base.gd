@@ -34,11 +34,16 @@ var home_position := Vector2.ZERO
 var _target_speed := 0.0
 var _attack_cooldown_timer := 0.0
 var _contact_damage_cooldown_timer := 0.0
+var _base_visuals_scale := Vector2.ONE
+var _base_visuals_modulate := Color.WHITE
 
 func _ready() -> void:
 	add_to_group("enemies")
 	home_position = global_position
 	facing = sign(start_facing) if start_facing != 0 else -1
+	if visuals:
+		_base_visuals_scale = visuals.scale
+		_base_visuals_modulate = visuals.modulate
 
 	if not stats:
 		stats = EnemyStats.new()
@@ -163,15 +168,26 @@ func die() -> void:
 	velocity = Vector2.ZERO
 	_play_death_collapse()
 	await get_tree().create_timer(stats.death_cleanup_delay).timeout
+	if resets_at_save_points and not is_in_group("bosses"):
+		visible = false
+		return
 	queue_free()
 
 func reset_for_save_point() -> void:
-	if is_dead or not resets_at_save_points or is_in_group("bosses"):
+	if not resets_at_save_points or is_in_group("bosses"):
 		return
 
 	end_attack()
+	is_dead = false
 	target = null
 	target_lost.emit()
+	if health_component:
+		health_component.configure(stats.max_health)
+	if visuals:
+		visuals.scale = _base_visuals_scale
+		visuals.modulate = _base_visuals_modulate
+	visible = true
+	set_physics_process(true)
 	_attack_cooldown_timer = 0.0
 	_contact_damage_cooldown_timer = 0.0
 	_target_speed = 0.0
@@ -179,13 +195,15 @@ func reset_for_save_point() -> void:
 	global_position = home_position
 	facing = sign(start_facing) if start_facing != 0 else -1
 	update_facing(facing)
+	if hurtbox:
+		hurtbox.set_deferred("monitorable", true)
 	if detection_area:
 		detection_area.set_deferred("monitoring", true)
 	if attack_area:
 		attack_area.set_deferred("monitoring", true)
 	if contact_hitbox:
 		contact_hitbox.set_deferred("monitoring", true)
-	if state_machine and state_machine.current_state_name != &"Dead":
+	if state_machine:
 		state_machine.transition_to(&"Idle")
 
 func update_facing(direction: int) -> void:

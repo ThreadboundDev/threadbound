@@ -9,12 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_laser"]
 size = Vector2(176, 34)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_threadling_detection"]
+radius = 520.0
+
 [node name="Threadling" unique_id=1838824112 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 hover_offset = -36.0
 bob_amplitude = 18.0
 bob_speed = 3.2
-vertical_speed = 120.0
+vertical_speed = 155.0
 idle_texture = ExtResource("4_idle")
 attack_texture = ExtResource("5_attack")
 idle_columns = 6
@@ -25,7 +28,7 @@ attack_columns = 5
 attack_rows = 8
 attack_frame_count = 36
 stats = ExtResource("3_stats")
-patrol_distance = 140.0
+patrol_distance = 260.0
 
 [node name="Body" parent="Visuals" index="0"]
 visible = false
@@ -53,3 +56,6 @@ shape = SubResource("RectangleShape2D_laser")
 
 [node name="HitFlashComponent" parent="." index="7"]
 target_path = NodePath("../Visuals/Sprite2D")
+
+[node name="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = SubResource("CircleShape2D_threadling_detection")

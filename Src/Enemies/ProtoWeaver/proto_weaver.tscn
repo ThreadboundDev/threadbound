@@ -18,7 +18,7 @@
 size = Vector2(196, 256)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
-radius = 650.0
+radius = 1450.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_boss_music"]
 radius = 420.0
@@ -53,10 +53,10 @@ hang_frame_count = 48
 hang_fps = 18.0
 hang_scale_multiplier = 1.38
 threadburst_every_n_attacks = 3
-hanging_laser_every_n_attacks = 5
+hanging_laser_every_n_attacks = 6
 threadburst_min_missile_count = 3
-threadburst_max_missile_count = 5
-threadburst_low_health_max_missile_count = 8
+threadburst_max_missile_count = 4
+threadburst_low_health_max_missile_count = 6
 threadburst_spawn_offset = Vector2(0, -10)
 threadburst_horizontal_spread = 600.0
 threadburst_min_lane_spacing = 72.0
@@ -67,7 +67,7 @@ threadburst_lane_jitter = 18.0
 threadburst_velocity_jitter = 55.0
 armor_link_left_offset = Vector2(-320, -64)
 armor_link_right_offset = Vector2(320, -64)
-armor_link_respawn_time = 20.0
+armor_link_respawn_time = 26.0
 armor_link_pulse_warning_time = 3.0
 hang_rise_offset = Vector2(0, -360)
 hang_ceiling_offset = Vector2(0, -620)
@@ -82,10 +82,10 @@ hang_rise_time = 0.45
 hang_return_time = 0.5
 hang_sway_pixels = 24.0
 hang_sway_speed = 2.2
-laser_shot_count = 3
-laser_tracking_time = 0.9
-laser_lock_time = 0.32
-laser_fire_time = 0.22
+laser_shot_count = 2
+laser_tracking_time = 0.78
+laser_lock_time = 0.38
+laser_fire_time = 0.2
 laser_damage = 1
 laser_hit_width = 42.0
 laser_max_distance = 980.0

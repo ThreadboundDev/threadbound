@@ -104,6 +104,7 @@ var _laser_target_position := Vector2.ZERO
 var _laser_firing := false
 var _laser_hit_this_shot := false
 var _player_in_boss_music_area := false
+var _boss_music_latched := false
 
 func _ready() -> void:
 	super._ready()
@@ -219,6 +220,8 @@ func is_attack_sequence_busy() -> bool:
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	super._on_detection_body_entered(body)
+	if body.is_in_group("player"):
+		_boss_music_latched = true
 	_update_boss_music_state()
 	_update_boss_health_visibility()
 
@@ -246,10 +249,8 @@ func _update_boss_music_state() -> void:
 	if is_dead:
 		AudioManager.stop_boss_music()
 		return
-	if target != null and _player_in_boss_music_area:
+	if _boss_music_latched or target != null or _player_in_boss_music_area:
 		AudioManager.play_boss_music()
-	else:
-		AudioManager.stop_boss_music()
 
 func _on_hurtbox_hit_received(damage: DamageData) -> void:
 	if boss_health_layer:
@@ -597,9 +598,12 @@ func _play_hang_animation_forward() -> void:
 	_configure_hang_sprite_sheet()
 
 func _configure_hang_sprite_sheet() -> void:
-	_configure_sprite_sheet(hang_texture, hang_columns, hang_rows)
-	if sprite:
-		sprite.scale *= hang_scale_multiplier
+	var texture := hang_texture if hang_texture else walk_texture
+	var columns := hang_columns if hang_texture else walk_columns
+	var rows := hang_rows if hang_texture else walk_rows
+	_configure_sprite_sheet(texture, columns, rows)
+	if sprite and texture:
+		sprite.scale = _get_scale_for_sheet(texture, columns, rows) * hang_scale_multiplier
 
 func _update_hanging_laser_visuals(delta: float) -> void:
 	if not _hanging_laser_active:

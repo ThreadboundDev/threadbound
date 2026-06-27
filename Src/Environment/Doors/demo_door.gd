@@ -13,6 +13,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_multiline var message := ""
 @export var open_after_message := true
 @export var claim_thread_on_open := false
+@export var interaction_enabled := true
 @export var required_threads: Array[StringName] = [&"power", &"essence", &"balance"]
 @export var door_color := Color(0.8, 0.6, 0.28, 1.0)
 @export var fog_color := Color(0.015, 0.012, 0.018, 0.96)
@@ -64,6 +65,8 @@ func _exit_tree() -> void:
 	_restore_all_doorway_depth()
 
 func interact(_interacting_player: Node) -> void:
+	if not interaction_enabled:
+		return
 	if _is_opening:
 		return
 
@@ -119,6 +122,38 @@ func _open() -> void:
 		tween.finished.connect(func() -> void:
 			fog_panel.visible = false
 		)
+
+func open_silently() -> void:
+	_open()
+
+func lock_closed_for_boss() -> void:
+	interaction_enabled = false
+	closed = true
+	_is_opening = true
+	_set_opened_split_visible(false)
+	if blocker_shape:
+		blocker_shape.set_deferred("disabled", false)
+	if interact_shape:
+		interact_shape.set_deferred("disabled", true)
+	if prompt_label:
+		prompt_label.visible = false
+	if fog_panel:
+		fog_panel.visible = false
+
+	if door_sprite and door_sprite.sprite_frames and door_sprite.sprite_frames.has_animation(opening_animation):
+		door_sprite.visible = true
+		door_sprite.modulate.a = 1.0
+		door_sprite.animation = opening_animation
+		door_sprite.frame = maxi(door_sprite.sprite_frames.get_frame_count(opening_animation) - 1, 0)
+		door_sprite.play_backwards(opening_animation)
+		door_sprite.animation_finished.connect(func() -> void:
+			_is_opening = false
+			door_sprite.animation = closed_animation
+			door_sprite.frame = 0
+		, CONNECT_ONE_SHOT)
+	else:
+		_is_opening = false
+		_apply_visual_state()
 
 func _apply_visual_state() -> void:
 	if door_sprite:
@@ -330,9 +365,9 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	_player = body
-	if prompt_label and closed:
+	if prompt_label and closed and interaction_enabled:
 		prompt_label.visible = true
-	if body.has_method("_on_interactable_entered"):
+	if interaction_enabled and body.has_method("_on_interactable_entered"):
 		body._on_interactable_entered(self)
 
 func _on_body_exited(body: Node) -> void:
@@ -341,7 +376,7 @@ func _on_body_exited(body: Node) -> void:
 
 	if prompt_label:
 		prompt_label.visible = false
-	if body.has_method("_on_interactable_exited"):
+	if interaction_enabled and body.has_method("_on_interactable_exited"):
 		body._on_interactable_exited(self)
 	_player = null
 
