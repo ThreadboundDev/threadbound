@@ -74,6 +74,14 @@ enum AttackMode {
 @export var detached_head_source_rect := Rect2(430.0, 90.0, 420.0, 420.0)
 @export var detached_head_scale := Vector2(0.26, 0.26)
 
+@export_group("Boss SFX")
+@export var boss_sfx_volume_offset_db := 1.5
+@export_range(0.25, 1.25, 0.01) var boss_stab_pitch := 0.78
+@export_range(0.25, 1.25, 0.01) var boss_threadburst_pitch := 0.72
+@export_range(0.25, 1.25, 0.01) var boss_laser_pitch := 0.68
+@export_range(0.25, 1.25, 0.01) var boss_subtone_pitch := 0.48
+@export var boss_subtone_volume_offset_db := -10.0
+
 @onready var sprite: Sprite2D = $Visuals/Sprite2D as Sprite2D
 @onready var hanging_thread_line: Line2D = $HangingThreadLine as Line2D
 @onready var detached_head: Sprite2D = $DetachedHead as Sprite2D
@@ -201,6 +209,7 @@ func activate_attack_hitbox() -> void:
 		_spawn_threadburst_missiles()
 		return
 
+	_play_boss_sfx(&"enemy_sword_attack", boss_stab_pitch)
 	super.activate_attack_hitbox()
 
 func deactivate_attack_hitbox() -> void:
@@ -378,6 +387,7 @@ func _spawn_threadburst_missiles() -> void:
 	if not thread_missile_scene:
 		return
 
+	_play_boss_sfx(&"enemy_stomp_attack", boss_threadburst_pitch)
 	var parent := get_parent()
 	if not parent:
 		parent = self
@@ -507,6 +517,7 @@ func _lock_hanging_laser(duration: float) -> void:
 func _fire_hanging_laser(duration: float) -> void:
 	_laser_firing = true
 	_laser_hit_this_shot = false
+	_play_boss_sfx(&"enemy_laser_attack", boss_laser_pitch)
 	if laser_line:
 		laser_line.visible = true
 		laser_line.width = 22.0
@@ -523,6 +534,15 @@ func _fire_hanging_laser(duration: float) -> void:
 	if laser_line:
 		laser_line.width = 9.0
 		laser_line.visible = false
+
+func _play_boss_sfx(sound_name: StringName, pitch_scale: float) -> void:
+	var primary := AudioManager.play_sfx(sound_name, boss_sfx_volume_offset_db, 0.015)
+	if primary:
+		primary.pitch_scale *= pitch_scale
+
+	var subtone := AudioManager.play_sfx(sound_name, boss_subtone_volume_offset_db, 0.0)
+	if subtone:
+		subtone.pitch_scale *= boss_subtone_pitch
 
 func _finish_hanging_laser_sequence() -> void:
 	_hanging_laser_busy = false
