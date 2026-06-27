@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ip8rtxowuyl0" path="res://Assets/Environment/Doors/boss_door_open_low.png" id="3_6c25g"]
 [ext_resource type="Texture2D" uid="uid://byfbqaa6wapao" path="res://Assets/Environment/Doors/boss_door_open.png" id="3_boss_open"]
 [ext_resource type="Texture2D" uid="uid://dpdsibj568fxd" path="res://Assets/Environment/Doors/boss_door_open_high.png" id="4_7wioj"]
+[ext_resource type="Texture2D" uid="uid://bae8m1uvku2ae" path="res://Assets/UI/Main Menu/text_box.png" id="5_7wioj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_boss_open_00"]
 atlas = ExtResource("3_boss_open")
@@ -378,7 +379,7 @@ polygon = PackedVector2Array(-640, -1280, 2432, -1280, 2432, 384, 384, 384, -600
 scale = Vector2(0.98, 0.98)
 sprite_frames = SubResource("SpriteFrames_boss_door")
 animation = &"open"
-frame = 47
+frame = 1
 
 [node name="OpenedLowSprite" parent="." index="2" unique_id=707379622]
 position = Vector2(-166, 9)
@@ -397,5 +398,14 @@ position = Vector2(36, -43)
 shape = SubResource("RectangleShape2D_boss_interact")
 
 [node name="PromptLabel" parent="." index="7" unique_id=192562315]
-offset_top = -640.0
-offset_bottom = -560.0
+visible = true
+offset_left = -186.0
+offset_top = -29.0
+offset_right = 194.0
+offset_bottom = 59.0
+
+[node name="Sprite2D" type="Sprite2D" parent="PromptLabel" index="0" unique_id=1004643492]
+z_index = -1
+position = Vector2(187.00002, 43)
+scale = Vector2(0.2068771, 0.19664326)
+texture = ExtResource("5_7wioj")

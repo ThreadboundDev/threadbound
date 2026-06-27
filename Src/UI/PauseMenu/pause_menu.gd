@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
-
 @export var selector_offset := Vector2(20.0, -15.0)
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
@@ -11,10 +9,7 @@ const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var rows: Array[Control] = [
 	$MenuRoot/Buttons/Resume,
-	$MenuRoot/Buttons/Inventory,
-	$MenuRoot/Buttons/Map,
 	$MenuRoot/Buttons/Settings,
-	$MenuRoot/Buttons/Controls,
 	$MenuRoot/Buttons/Quit,
 ]
 
@@ -109,14 +104,8 @@ func _activate_selected() -> void:
 	match rows[_selected_index].name:
 		&"Resume":
 			_resume_game()
-		&"Inventory":
-			_open_game_menu_tab(&"Inventory")
-		&"Map":
-			_open_game_menu_tab(&"Map")
 		&"Settings":
 			_show_options()
-		&"Controls":
-			_open_game_menu_tab(&"Controls")
 		&"Quit":
 			get_tree().quit()
 
@@ -139,18 +128,6 @@ func _resume_game() -> void:
 	AudioManager.stop_pause_music()
 	_set_player_flow_audio_suspended(false)
 	get_tree().paused = false
-	queue_free()
-
-func _open_game_menu_tab(tab_name: StringName) -> void:
-	if _closing:
-		return
-
-	_closing = true
-	AudioManager.stop_pause_music()
-	var game_menu := GAME_MENU_SCENE.instantiate()
-	get_tree().current_scene.add_child(game_menu)
-	if game_menu.has_method("open"):
-		game_menu.open(tab_name)
 	queue_free()
 
 func _set_player_flow_audio_suspended(is_suspended: bool) -> void:

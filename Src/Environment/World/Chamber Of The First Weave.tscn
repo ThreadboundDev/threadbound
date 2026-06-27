@@ -100,6 +100,9 @@ shader_parameter/vertical_fade = 0.16
 shader_parameter/lower_shadow = 0.16
 shader_parameter/rim_strength = 0.08
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_arena_lock"]
+size = Vector2(5100, 2300)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_foreground_depth_grade"]
 shader = ExtResource("15_depth")
 shader_parameter/depth_tint = Color(0.18, 0.18, 0.14, 1)
@@ -115,9 +118,6 @@ shader_parameter/top_light_color = Color(0.86, 0.78, 0.54, 1)
 shader_parameter/vertical_fade = 0.35
 shader_parameter/lower_shadow = 0.42
 shader_parameter/rim_strength = 0.02
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_arena_lock"]
-size = Vector2(5100, 2300)
 
 [node name="COTFW - Demo Level" type="Node2D" unique_id=1831855878]
 
@@ -315,7 +315,7 @@ tile_set = ExtResource("9_n6a6r")
 
 [node name="ChamberLedgerTileMap" type="TileMapLayer" parent="WorldArt" unique_id=1396432170]
 z_index = 9
-collision_enabled = false
+tile_map_data = PackedByteArray("AADo//L/AAAAAAMAAADp//L/AAABAAMAAADq//L/AAACAAMAAAD3////AAAAAAMAAAD4////AAABAAMAAAD5////AAACAAMAAAATAPb/AAAAAAMAAAAUAPb/AAABAAMAAAAVAPb/AAACAAMAAAAHAAgAAAAAAAMAAAAIAAgAAAABAAMAAAAJAAgAAAACAAMAAAD2/wkAAAAAAAMAAAD3/wkAAAABAAMAAAD4/wkAAAACAAMAAADz/wwAAAAAAAMAAAD0/wwAAAABAAMAAAD1/wwAAAACAAMAAADe/wsAAAAAAAMAAADf/wsAAAABAAMAAADg/wsAAAACAAMAAADm/wsAAAAAAAMAAADn/wsAAAABAAMAAADo/wsAAAACAAMAAAA=")
 tile_set = ExtResource("9_n6a6r")
 
 [node name="ProtoWeaver" parent="WorldArt" unique_id=337995925 instance=ExtResource("17_f4x7l")]
@@ -581,7 +581,6 @@ scale = Vector2(1.675, 1.675)
 [node name="BossArenaLock" type="Area2D" parent="DemoDoors" unique_id=1044286421]
 position = Vector2(5568, 3820)
 collision_layer = 0
-collision_mask = 1
 script = ExtResource("30_boss_arena_lock")
 boss_path = NodePath("../../WorldArt/ProtoWeaver")
 entrance_door_path = NodePath("../TriThreadDoor")

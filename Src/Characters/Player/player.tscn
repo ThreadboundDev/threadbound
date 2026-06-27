@@ -38,7 +38,7 @@
 [ext_resource type="Texture2D" uid="uid://ceqax8suqqvk6" path="res://Src/Environment/World/lighting/player_light.png" id="98_player_light"]
 [ext_resource type="Texture2D" uid="uid://rhj1gcl5orv3" path="res://Assets/Threadborne/Dash/dash_frame_normalized.png" id="99_dash"]
 [ext_resource type="Texture2D" uid="uid://brwaxrjpcjgfj" path="res://Assets/VFX/wall_cling_VFX.png" id="100_wall_cling_vfx"]
-[ext_resource type="Script" path="res://Src/Characters/Player/flow_state_aura.gd" id="101_flow_aura"]
+[ext_resource type="Script" uid="uid://dnqxqnrmch1uj" path="res://Src/Characters/Player/flow_state_aura.gd" id="101_flow_aura"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -1076,13 +1076,10 @@ sprite_frames = SubResource("SpriteFrames_wf5ty")
 animation = &"Idle"
 frame_progress = 0.6664412
 
-[node name="FlowStateAura" type="Node2D" parent="."]
+[node name="FlowStateAura" type="Node2D" parent="." unique_id=1696995547]
 visible = false
 z_index = -1
 script = ExtResource("101_flow_aura")
-body_height = 148.0
-body_width = 86.0
-ground_y = 36.0
 
 [node name="WallClingVFX" type="AnimatedSprite2D" parent="." unique_id=563678322]
 visible = false

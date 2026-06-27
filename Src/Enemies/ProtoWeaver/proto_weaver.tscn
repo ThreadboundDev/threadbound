@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btnl0a31p3ycy"]
+[gd_scene format=3 uid="uid://btnl0a31p3ycy"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://drjjx2rv1ep6v" path="res://Src/Enemies/ProtoWeaver/proto_weaver.gd" id="2_script"]
@@ -20,15 +20,14 @@ size = Vector2(196, 256)
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 1450.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_boss_music"]
-radius = 420.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(336, 204)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss_music"]
+radius = 420.0
+
 [node name="ProtoWeaver" unique_id=1107662247 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-resets_at_save_points = false
 walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
 threadburst_texture = ExtResource("6_threadburst")
@@ -96,6 +95,7 @@ detached_head_scale = Vector2(0.26, 0.26)
 stats = ExtResource("3_stats")
 patrol_distance = 260.0
 facing_dead_zone = 18.0
+resets_at_save_points = false
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(0, -128)
@@ -168,10 +168,8 @@ offset_bottom = 206.0
 fill_texture = null
 threadling_icon_texture = null
 
-[node name="BossMusicArea" type="Area2D" parent="." index="14"]
+[node name="BossMusicArea" type="Area2D" parent="." index="14" unique_id=61703702]
 collision_layer = 0
-collision_mask = 1
-monitoring = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossMusicArea" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossMusicArea" index="0" unique_id=1882481179]
 shape = SubResource("CircleShape2D_boss_music")

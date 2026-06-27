@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AudioRegistry" format=3 uid="uid://djuckbxt47c8e"]
 
-[ext_resource type="Script" path="res://Src/Global/audio_registry.gd" id="1_registry"]
+[ext_resource type="Script" uid="uid://byllf7mi8o041" path="res://Src/Global/audio_registry.gd" id="1_registry"]
 [ext_resource type="Script" uid="uid://dqc0q38c4yo3c" path="res://Src/Global/audio_sound.gd" id="2_sound"]
 [ext_resource type="AudioStream" uid="uid://cywvalm7es6bw" path="res://Assets/Audio/SFX/Threadborne Sounds/dash.wav" id="3_dash"]
 [ext_resource type="AudioStream" uid="uid://727u0ld6545t" path="res://Assets/Audio/SFX/Threadborne Sounds/step_1.wav" id="4_step_1"]
