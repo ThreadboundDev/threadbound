@@ -21,6 +21,12 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export_group("Prompt")
 @export var prompt_read_text := "W - Read"
 @export var prompt_open_text := "W - Open"
+@export_group("Message Box")
+@export var message_box_rect := Rect2(-560.0, -190.0, 1120.0, 118.0)
+@export var message_text_margins := Vector4(24.0, 18.0, 24.0, 18.0)
+@export var message_display_time := 4.0
+@export var message_fade_time := 0.18
+@export var message_label_settings: LabelSettings
 @export_group("Opening Animation")
 @export var closed_animation := &"closed"
 @export var opening_animation := &"open"
@@ -394,6 +400,15 @@ func _show_message(text: String) -> void:
 	if not box:
 		box = MESSAGE_BOX_SCENE.instantiate()
 		get_tree().root.add_child(box)
+
+	if box.has_method("configure_layout"):
+		box.configure_layout({
+			"panel_rect": message_box_rect,
+			"text_margins": message_text_margins,
+			"display_time": message_display_time,
+			"fade_time": message_fade_time,
+			"label_settings": message_label_settings,
+		})
 
 	if box.has_method("show_message"):
 		box.show_message(text)
