@@ -18,6 +18,9 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export var door_color := Color(0.8, 0.6, 0.28, 1.0)
 @export var fog_color := Color(0.015, 0.012, 0.018, 0.96)
 @export var closed := true
+@export_group("Prompt")
+@export var prompt_read_text := "W - Read"
+@export var prompt_open_text := "W - Open"
 @export_group("Opening Animation")
 @export var closed_animation := &"closed"
 @export var opening_animation := &"open"
@@ -48,6 +51,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 
 var _player: Node
 var _is_opening := false
+var _message_acknowledged := false
 var _doorway_depth_originals: Dictionary = {}
 
 func _ready() -> void:
@@ -74,17 +78,29 @@ func interact(_interacting_player: Node) -> void:
 		_interact_with_boss_door()
 		return
 
-	_show_message(message)
+	if not _message_acknowledged:
+		_show_message(message)
+		_message_acknowledged = true
+		_refresh_prompt_label()
+		return
+
 	if open_after_message:
 		_open()
 
 func _interact_with_boss_door() -> void:
 	var remaining := DemoProgress.remaining_threads(required_threads)
 	if remaining.is_empty():
-		_show_message("The three threads answer. The way forward opens.")
+		if not _message_acknowledged:
+			_show_message("The three threads answer. The way forward opens.")
+			_message_acknowledged = true
+			_refresh_prompt_label()
+			return
+
 		_open()
 		return
 
+	_message_acknowledged = false
+	_refresh_prompt_label()
 	var count := remaining.size()
 	var noun := "thread remains" if count == 1 else "threads remain"
 	_show_message("%s\n\n%d %s." % [message, count, noun])
@@ -95,6 +111,7 @@ func _open() -> void:
 
 	closed = false
 	_is_opening = true
+	_message_acknowledged = false
 	if claim_thread_on_open:
 		DemoProgress.claim_thread(door_id)
 
@@ -124,11 +141,13 @@ func _open() -> void:
 		)
 
 func open_silently() -> void:
+	_message_acknowledged = false
 	_open()
 
 func debug_force_open() -> void:
 	closed = false
 	_is_opening = false
+	_message_acknowledged = false
 	interaction_enabled = false
 	if door_sprite:
 		door_sprite.stop()
@@ -198,6 +217,7 @@ func _apply_visual_state() -> void:
 		interact_shape.disabled = not closed
 	if prompt_label:
 		prompt_label.visible = false
+		_refresh_prompt_label()
 
 func _configure_opened_split_layers() -> void:
 	_configure_opened_split_sprite(opened_low_sprite, opened_low_texture, opened_low_z_index)
@@ -378,12 +398,19 @@ func _show_message(text: String) -> void:
 	if box.has_method("show_message"):
 		box.show_message(text)
 
+func _refresh_prompt_label() -> void:
+	if not prompt_label:
+		return
+
+	prompt_label.text = prompt_open_text if _message_acknowledged else prompt_read_text
+
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
 
 	_player = body
 	if prompt_label and closed and interaction_enabled:
+		_refresh_prompt_label()
 		prompt_label.visible = true
 	if interaction_enabled and body.has_method("_on_interactable_entered"):
 		body._on_interactable_entered(self)
@@ -394,6 +421,8 @@ func _on_body_exited(body: Node) -> void:
 
 	if prompt_label:
 		prompt_label.visible = false
+	_message_acknowledged = false
+	_refresh_prompt_label()
 	if interaction_enabled and body.has_method("_on_interactable_exited"):
 		body._on_interactable_exited(self)
 	_player = null
