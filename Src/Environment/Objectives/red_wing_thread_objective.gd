@@ -12,15 +12,19 @@ class_name RedWingThreadObjective
 @export var enemy_indicator_color := Color(1.0, 0.18, 0.12, 0.9)
 @export var edge_indicator_padding := 72.0
 @export var edge_indicator_size := 26.0
+@export var require_player_in_enemy_area := true
+@export var enemy_area_activation_padding := Vector2(640.0, 420.0)
 
 var _tracked_enemies: Array[EnemyBase] = []
 var _enemy_indicators: Dictionary = {}
 var _edge_indicator: Polygon2D
 var _spawned := false
 var _had_tracked_enemies := false
+var _player_entered_enemy_area := false
 
 func _process(_delta: float) -> void:
 	if show_enemy_indicators:
+		_update_enemy_area_entry()
 		_update_enemy_indicators()
 
 func _ready() -> void:
@@ -104,6 +108,7 @@ func _ensure_enemy_indicator(enemy: EnemyBase) -> void:
 
 	var indicator := _make_indicator()
 	indicator.name = "%sIndicator" % enemy.name
+	indicator.visible = _should_show_enemy_indicators()
 	add_child(indicator)
 	_enemy_indicators[enemy.get_instance_id()] = {
 		"enemy": enemy,
@@ -122,6 +127,10 @@ func _make_indicator() -> Polygon2D:
 	return indicator
 
 func _update_enemy_indicators() -> void:
+	if not _should_show_enemy_indicators():
+		_hide_enemy_indicators()
+		return
+
 	var nearest_enemy := _get_nearest_live_enemy()
 	var camera := get_viewport().get_camera_2d()
 	var visible_rect := _get_camera_world_rect(camera)
@@ -142,6 +151,49 @@ func _update_enemy_indicators() -> void:
 			indicator.rotation = 0.0
 
 	_update_edge_indicator(nearest_enemy, visible_rect)
+
+func _update_enemy_area_entry() -> void:
+	if _player_entered_enemy_area or not require_player_in_enemy_area:
+		return
+
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if not player:
+		return
+
+	if _get_enemy_area_activation_rect().has_point(player.global_position):
+		_player_entered_enemy_area = true
+
+func _should_show_enemy_indicators() -> bool:
+	return show_enemy_indicators and (not require_player_in_enemy_area or _player_entered_enemy_area)
+
+func _get_enemy_area_activation_rect() -> Rect2:
+	var has_bounds := false
+	var bounds := Rect2(global_position, Vector2.ZERO)
+	for enemy in _tracked_enemies:
+		if not is_instance_valid(enemy):
+			continue
+		if not has_bounds:
+			bounds = Rect2(enemy.global_position, Vector2.ZERO)
+			has_bounds = true
+		else:
+			bounds = bounds.expand(enemy.global_position)
+
+	if not has_bounds:
+		bounds = Rect2(global_position, Vector2.ZERO)
+	return bounds.grow_individual(
+		enemy_area_activation_padding.x,
+		enemy_area_activation_padding.y,
+		enemy_area_activation_padding.x,
+		enemy_area_activation_padding.y
+	)
+
+func _hide_enemy_indicators() -> void:
+	for record in _enemy_indicators.values():
+		var indicator := record.get("indicator") as Polygon2D
+		if indicator:
+			indicator.visible = false
+	if _edge_indicator:
+		_edge_indicator.visible = false
 
 func _get_nearest_live_enemy() -> EnemyBase:
 	var player := get_tree().get_first_node_in_group("player") as Node2D
