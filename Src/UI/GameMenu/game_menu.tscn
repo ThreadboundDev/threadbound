@@ -10,6 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
 [ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
 [ext_resource type="Texture2D" uid="uid://br81t00qqcgt2" path="res://Assets/UI/rough_map.png" id="10_rough_map"]
+[ext_resource type="Texture2D" uid="uid://fnm3yntrmbs6" path="res://Assets/UI/controller/controller_background.png" id="11_controller_background"]
+[ext_resource type="Texture2D" uid="uid://chs3y5kxsqq5o" path="res://Assets/UI/controller/mouse_and_keyboard.png" id="12_mouse_keyboard"]
+[ext_resource type="Texture2D" uid="uid://e5yfxdgg7kvb" path="res://Assets/UI/controller/xbox.png" id="13_xbox"]
+[ext_resource type="Texture2D" uid="uid://cu02osqqs77g0" path="res://Assets/UI/controller/PS5.png" id="14_ps5"]
+[ext_resource type="Texture2D" uid="uid://bjc4uw8d6vl53" path="res://Assets/UI/controller/Nintendo.png" id="15_nintendo"]
+[ext_resource type="Texture2D" uid="uid://b1noqpj1jfrqt" path="res://Assets/UI/controller/Steam.png" id="16_steam"]
+[ext_resource type="Texture2D" uid="uid://dw1jy8o28mqp1" path="res://Assets/UI/controller/line.png" id="17_line"]
+[ext_resource type="Texture2D" uid="uid://77l83cmhx7sl" path="res://Assets/UI/controller/end_point.png" id="18_endpoint"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -480,19 +488,519 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/ControlsPage" unique_id=857323471]
+[node name="ControlsLayout" type="Control" parent="MenuRoot/Pages/ControlsPage" unique_id=857323471]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = 48.0
-offset_right = -48.0
-offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "CONTROLS"
+
+[node name="ControllerBackground" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.0
+offset_top = -292.0
+offset_right = 470.0
+offset_bottom = 294.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("11_controller_background")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeviceLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 16.0
+offset_right = 320.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "MOUSE & KEYBOARD"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3
+
+[node name="DeviceArt" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -188.0
+offset_right = 320.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_mouse_keyboard")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Xbox" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_xbox")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_ps5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Nintendo" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("15_nintendo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Steam" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("16_steam")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LeftCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 148.0
+offset_top = 126.0
+offset_right = 556.0
+offset_bottom = 434.0
+
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
+layout_mode = 0
+offset_right = 408.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 42.0
+text = "Inventory"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 18.0
+offset_right = 394.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 9.0
+offset_right = 171.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 9.0
+offset_right = 407.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 408.0
+offset_bottom = 108.0
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 42.0
+text = "Map"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 18.0
+offset_right = 394.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 9.0
+offset_right = 171.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 9.0
+offset_right = 407.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
+layout_mode = 0
+offset_top = 132.0
+offset_right = 408.0
+offset_bottom = 174.0
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 42.0
+text = "Move"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 18.0
+offset_right = 394.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 9.0
+offset_right = 171.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 9.0
+offset_right = 407.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RightCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -556.0
+offset_top = 126.0
+offset_right = -148.0
+offset_bottom = 566.0
+grow_horizontal = 0
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
+layout_mode = 0
+offset_right = 408.0
+offset_bottom = 42.0
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 240.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 9.0
+offset_right = 253.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+layout_mode = 0
+offset_left = 258.0
+offset_right = 408.0
+offset_bottom = 42.0
+text = "Pause"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 408.0
+offset_bottom = 108.0
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 240.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 9.0
+offset_right = 253.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+layout_mode = 0
+offset_left = 258.0
+offset_right = 408.0
+offset_bottom = 42.0
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
+layout_mode = 0
+offset_top = 132.0
+offset_right = 408.0
+offset_bottom = 174.0
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 240.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 9.0
+offset_right = 253.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+layout_mode = 0
+offset_left = 258.0
+offset_right = 408.0
+offset_bottom = 42.0
+text = "Grapple"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
+layout_mode = 0
+offset_top = 198.0
+offset_right = 408.0
+offset_bottom = 240.0
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 240.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 9.0
+offset_right = 253.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+layout_mode = 0
+offset_left = 258.0
+offset_right = 408.0
+offset_bottom = 42.0
+text = "Jump"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
+layout_mode = 0
+offset_top = 264.0
+offset_right = 408.0
+offset_bottom = 306.0
+
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 240.0
+offset_bottom = 24.0
+mouse_filter = 2
+texture = ExtResource("17_line")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 9.0
+offset_right = 253.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("18_endpoint")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+layout_mode = 0
+offset_left = 258.0
+offset_right = 408.0
+offset_bottom = 42.0
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1

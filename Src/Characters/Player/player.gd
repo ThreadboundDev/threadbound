@@ -509,7 +509,63 @@ func _open_game_menu(initial_tab: StringName) -> void:
 	var game_menu := GAME_MENU_SCENE.instantiate()
 	get_tree().current_scene.add_child(game_menu)
 	if game_menu.has_method("open"):
-		game_menu.open(initial_tab)
+		game_menu.open(initial_tab, _get_game_menu_input_family(initial_tab))
+
+func _get_game_menu_input_family(initial_tab: StringName) -> StringName:
+	if _is_game_menu_keyboard_tab_pressed(initial_tab):
+		return &"keyboard_mouse"
+	if _is_game_menu_controller_tab_pressed(initial_tab):
+		return _get_connected_controller_family()
+	return &"keyboard_mouse"
+
+func _is_game_menu_keyboard_tab_pressed(initial_tab: StringName) -> bool:
+	match initial_tab:
+		&"Inventory":
+			return Input.is_physical_key_pressed(KEY_I)
+		&"Map":
+			return Input.is_physical_key_pressed(KEY_M)
+		&"Lore":
+			return Input.is_physical_key_pressed(KEY_L)
+		&"Controls":
+			return Input.is_physical_key_pressed(KEY_C)
+	return false
+
+func _is_game_menu_controller_tab_pressed(initial_tab: StringName) -> bool:
+	var button_index := -1
+	match initial_tab:
+		&"Inventory":
+			button_index = 11
+		&"Map":
+			button_index = 13
+		&"Lore":
+			button_index = 12
+		&"Controls":
+			button_index = 14
+
+	if button_index < 0:
+		return false
+
+	for device_id in Input.get_connected_joypads():
+		if Input.is_joy_button_pressed(device_id, button_index):
+			return true
+	return false
+
+func _get_connected_controller_family(device_id := -1) -> StringName:
+	var resolved_device_id := device_id
+	if resolved_device_id < 0:
+		var connected := Input.get_connected_joypads()
+		if connected.is_empty():
+			return &"xbox"
+		resolved_device_id = int(connected[0])
+
+	var joy_name := Input.get_joy_name(resolved_device_id).to_lower()
+	if joy_name.contains("playstation") or joy_name.contains("ps5") or joy_name.contains("dualsense") or joy_name.contains("dualshock"):
+		return &"ps5"
+	if joy_name.contains("nintendo") or joy_name.contains("switch") or joy_name.contains("joy-con") or joy_name.contains("pro controller"):
+		return &"nintendo"
+	if joy_name.contains("steam"):
+		return &"steam"
+	return &"xbox"
 
 func _update_god_mode_toggle() -> void:
 	if Input.is_action_just_pressed("debug_god_mode"):
