@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cswc8ndjakrv5" path="res://Src/Environment/SavePoints/base_save_point.tscn" id="1_base_save_point"]
 [ext_resource type="Texture2D" uid="uid://cw5btlvcifkv8" path="res://Assets/Environment/Blossom of Eryndor/blossom_of_eryndor_spritesheet.png" id="2_sheet"]
+[ext_resource type="Texture2D" uid="uid://bae8m1uvku2ae" path="res://Assets/UI/Main Menu/text_box.png" id="3_63476"]
 
 [node name="BlossomOfEryndor" unique_id=323926507 instance=ExtResource("1_base_save_point")]
 save_point_id = &"blossom_of_eryndor"
@@ -42,3 +43,13 @@ position = Vector2(22, -6)
 
 [node name="PromptLabel" parent="." index="5" unique_id=1235159232]
 visible = true
+offset_left = -187.0
+offset_top = -349.0
+offset_right = 193.0
+offset_bottom = -261.0
+
+[node name="Sprite2D" type="Sprite2D" parent="PromptLabel" index="0" unique_id=1981094673]
+z_index = -1
+position = Vector2(187.00002, 43)
+scale = Vector2(0.2068771, 0.19664326)
+texture = ExtResource("3_63476")

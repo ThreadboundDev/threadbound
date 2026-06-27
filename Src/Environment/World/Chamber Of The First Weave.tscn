@@ -322,12 +322,24 @@ tile_set = ExtResource("9_n6a6r")
 position = Vector2(5460, 4337)
 threadburst_spawn_offset = Vector2(0, -8)
 threadburst_horizontal_spread = 360.0
+chase_freely_after_aggro = true
+prefer_laser_when_player_above = true
+laser_preference_height_threshold = 210.0
+laser_preference_horizontal_range = 1500.0
+laser_preference_min_attacks_between = 2
+boss_sfx_volume_offset_db = 1.5
+boss_stab_pitch = 0.78
+boss_threadburst_pitch = 0.72
+boss_laser_pitch = 0.68
+boss_subtone_pitch = 0.48
+boss_subtone_volume_offset_db = -10.0
 
 [node name="ThreadOfEssence" parent="WorldArt" unique_id=1541427510 instance=ExtResource("20_essence_pickup")]
 position = Vector2(-5120, 1280)
 scale = Vector2(0.73021585, 0.71512604)
 
 [node name="Red Room Enemys" type="Node2D" parent="WorldArt" unique_id=1501328778]
+visible = false
 position = Vector2(-5760, -1792)
 
 [node name="Threadling6" parent="WorldArt/Red Room Enemys" unique_id=1131037234 instance=ExtResource("11_be3p8")]
@@ -431,6 +443,7 @@ position = Vector2(1920, 384)
 [node name="RedWingThreadObjective" parent="WorldArt/Red Room Enemys" unique_id=874164745 instance=ExtResource("26_red_objective")]
 
 [node name="Enemies" type="Node2D" parent="WorldArt" unique_id=1862765831]
+visible = false
 position = Vector2(-2816, -768)
 
 [node name="Loomkin" parent="WorldArt/Enemies" unique_id=2139353811 instance=ExtResource("10_4fmyt")]
@@ -592,6 +605,15 @@ shape = SubResource("RectangleShape2D_boss_arena_lock")
 
 [node name="BlossomOfEryndor" parent="SavePoints" unique_id=1451018606 instance=ExtResource("25_blossom")]
 position = Vector2(768, 4381)
+
+[node name="BlossomOfEryndor2" parent="SavePoints" unique_id=323926507 instance=ExtResource("25_blossom")]
+position = Vector2(3337, -473)
+
+[node name="BlossomOfEryndor3" parent="SavePoints" unique_id=561739876 instance=ExtResource("25_blossom")]
+position = Vector2(-4179, -468)
+
+[node name="BlossomOfEryndor4" parent="SavePoints" unique_id=1414417200 instance=ExtResource("25_blossom")]
+position = Vector2(-3707, 4397)
 
 [node name="ForegroundParallax" type="ParallaxBackground" parent="." unique_id=411989452]
 
