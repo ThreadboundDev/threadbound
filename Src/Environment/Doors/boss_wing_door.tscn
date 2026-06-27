@@ -398,7 +398,6 @@ position = Vector2(36, -43)
 shape = SubResource("RectangleShape2D_boss_interact")
 
 [node name="PromptLabel" parent="." index="7" unique_id=192562315]
-visible = true
 offset_left = -186.0
 offset_top = -29.0
 offset_right = 194.0
@@ -406,6 +405,6 @@ offset_bottom = 59.0
 
 [node name="Sprite2D" type="Sprite2D" parent="PromptLabel" index="0" unique_id=1004643492]
 z_index = -1
-position = Vector2(187.00002, 43)
-scale = Vector2(0.2068771, 0.19664326)
+position = Vector2(186, 39)
+scale = Vector2(0.30918828, 0.19664326)
 texture = ExtResource("5_7wioj")

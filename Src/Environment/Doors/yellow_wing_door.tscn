@@ -363,12 +363,14 @@ door_id = &"essence"
 display_name = "Thread of Essence"
 message = "To claim the Thread of Essence, one must prove intelligence within the weave."
 door_color = Color(1, 1, 1, 1)
+prompt_read_text = "Up - Read"
+prompt_open_text = "Up - Open"
 opened_low_texture = ExtResource("4_yellow_open_low")
 opened_high_texture = ExtResource("5_yellow_open_high")
 
 [node name="FogPanel" parent="." index="0" unique_id=78285732]
 position = Vector2(-384, 256)
-polygon = PackedVector2Array(-1408, -896, 512, -896, 520, 130, -128, 896, -1408, 896)
+polygon = PackedVector2Array(-1408, -896, 512, -896, 520, 130, -128, 896, -3839, 2852)
 
 [node name="DoorSprite" parent="." index="1" unique_id=1920746392]
 scale = Vector2(0.98, 0.98)

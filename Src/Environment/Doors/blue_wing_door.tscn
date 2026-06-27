@@ -363,6 +363,8 @@ door_id = &"balance"
 display_name = "Thread of Balance"
 message = "To claim the Thread of Balance, one must display control over momentum."
 door_color = Color(1, 1, 1, 1)
+prompt_read_text = "Up - Read"
+prompt_open_text = "Up - Open"
 opened_low_texture = ExtResource("4_blue_open_low")
 opened_high_texture = ExtResource("5_blue_open_high")
 

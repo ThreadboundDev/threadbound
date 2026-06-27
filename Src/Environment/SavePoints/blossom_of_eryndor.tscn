@@ -47,6 +47,7 @@ offset_left = -187.0
 offset_top = -349.0
 offset_right = 193.0
 offset_bottom = -261.0
+text = "Up - Save"
 
 [node name="Sprite2D" type="Sprite2D" parent="PromptLabel" index="0" unique_id=1981094673]
 z_index = -1
