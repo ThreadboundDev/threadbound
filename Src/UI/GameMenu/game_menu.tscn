@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ckvdkmt3s0pnj" path="res://Assets/chamber_of_first_weave/Threads/thread_of_power.png" id="7_thread_power"]
 [ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
 [ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
+[ext_resource type="Texture2D" uid="uid://br81t00qqcgt2" path="res://Assets/UI/rough_map.png" id="10_rough_map"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -428,22 +429,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Body" type="Label" parent="MenuRoot/Pages/MapPage" unique_id=1833338565]
+[node name="RoughMap" type="TextureRect" parent="MenuRoot/Pages/MapPage" unique_id=1833338565]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = 48.0
-offset_right = -48.0
-offset_bottom = -48.0
+offset_left = 120.0
+offset_top = 24.0
+offset_right = -120.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "MAP UNCHARTED"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+mouse_filter = 2
+texture = ExtResource("10_rough_map")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="LorePage" type="Control" parent="MenuRoot/Pages" unique_id=519739836]
 visible = false
