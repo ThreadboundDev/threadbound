@@ -20,6 +20,7 @@ const MIN_BUS_VOLUME_DB := -60.0
 const DEFAULT_BUS_VOLUME := 1.0
 const DEFAULT_MUSIC_FADE_DURATION := 0.6
 const MUSIC_PLAYER_COUNT := 2
+const MIN_SAVED_MUSIC_VOLUME := 0.05
 
 @export var registry: Resource = DEFAULT_REGISTRY
 @export var sfx_pool_size := 16
@@ -154,7 +155,8 @@ func play_game_over_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> Audio
 
 func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration := 0.0) -> AudioStreamPlayer:
 	if _current_music_name == sound_name and _music_player and _music_player.playing:
-		return _music_player
+		if _music_player.stream and (_music_player.volume_db > MIN_BUS_VOLUME_DB + 0.5 or _music_tween):
+			return _music_player
 
 	var sound := _get_sound(sound_name)
 	if not sound:
@@ -315,6 +317,8 @@ func load_audio_settings() -> void:
 		if category == &"ambient" and not config.has_section_key("audio", key):
 			key = "background_audio"
 		var saved_volume := float(config.get_value("audio", key, DEFAULT_BUS_VOLUME))
+		if (category == &"music" or category == &"ambient") and saved_volume < MIN_SAVED_MUSIC_VOLUME:
+			saved_volume = DEFAULT_BUS_VOLUME
 		set_category_volume(category, saved_volume, false)
 
 func has_sound(sound_name: StringName) -> bool:
