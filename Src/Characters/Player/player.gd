@@ -243,6 +243,7 @@ var _use_after_swap_timer := 0.0
 var _momentum_system_ready := false
 var _dash_iframe_timer := 0.0
 var _debug_momentum_was_pressed := false
+var _debug_force_doors_was_pressed := false
 var _footstep_timer := 0.0
 var _coin_pickup_audio_timer := 0.0
 
@@ -458,6 +459,11 @@ func _process(_delta: float) -> void:
 	if save_point_interaction_active:
 		return
 
+	var debug_force_doors_pressed := Input.is_key_pressed(KEY_F7)
+	if debug_force_doors_pressed and not _debug_force_doors_was_pressed:
+		_debug_force_open_demo_doors()
+	_debug_force_doors_was_pressed = debug_force_doors_pressed
+
 	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
 		_open_pause_menu()
 
@@ -519,6 +525,12 @@ func _update_debug_momentum_fill() -> void:
 		_change_momentum(debug_momentum_fill_amount)
 		print("Debug momentum: ", momentum)
 	_debug_momentum_was_pressed = pressed
+
+func _debug_force_open_demo_doors() -> void:
+	for door in get_tree().get_nodes_in_group("demo_doors"):
+		if door.has_method("debug_force_open"):
+			door.debug_force_open()
+	print("Debug doors: forced open")
 
 func _apply_god_mode_flight(delta: float) -> void:
 	var vertical_input := 0.0

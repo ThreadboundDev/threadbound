@@ -126,6 +126,24 @@ func _open() -> void:
 func open_silently() -> void:
 	_open()
 
+func debug_force_open() -> void:
+	closed = false
+	_is_opening = false
+	interaction_enabled = false
+	if door_sprite:
+		door_sprite.stop()
+		door_sprite.visible = false
+	if blocker_shape:
+		blocker_shape.set_deferred("disabled", true)
+	if interact_shape:
+		interact_shape.set_deferred("disabled", true)
+	if prompt_label:
+		prompt_label.visible = false
+	if fog_panel:
+		fog_panel.visible = false
+		fog_panel.modulate.a = 0.0
+	_show_opened_split_layers()
+
 func lock_closed_for_boss() -> void:
 	interaction_enabled = false
 	closed = true
