@@ -74,6 +74,13 @@ enum AttackMode {
 @export var detached_head_source_rect := Rect2(430.0, 90.0, 420.0, 420.0)
 @export var detached_head_scale := Vector2(0.26, 0.26)
 
+@export_group("Boss Behavior")
+@export var chase_freely_after_aggro := true
+@export var prefer_laser_when_player_above := true
+@export var laser_preference_height_threshold := 210.0
+@export var laser_preference_horizontal_range := 1500.0
+@export var laser_preference_min_attacks_between := 2
+
 @export_group("Boss SFX")
 @export var boss_sfx_volume_offset_db := 1.5
 @export_range(0.25, 1.25, 0.01) var boss_stab_pitch := 0.78
@@ -113,6 +120,8 @@ var _laser_firing := false
 var _laser_hit_this_shot := false
 var _player_in_boss_music_area := false
 var _boss_music_latched := false
+var _boss_aggro_latched := false
+var _last_preferred_laser_attack_count := -999
 
 func _ready() -> void:
 	super._ready()
@@ -167,22 +176,27 @@ func update_facing(direction: int) -> void:
 		visuals.scale.x = -abs(visuals.scale.x) * float(facing)
 
 func chase_target(delta: float) -> void:
-	if _try_return_inside_hang_arena():
+	if not _should_chase_freely() and _try_return_inside_hang_arena():
 		return
 
 	super.chase_target(delta)
-	_prevent_moving_outside_hang_arena()
+	if not _should_chase_freely():
+		_prevent_moving_outside_hang_arena()
 
 func patrol(delta: float) -> void:
-	if _try_return_inside_hang_arena():
+	if not _should_chase_freely() and _try_return_inside_hang_arena():
 		return
 
 	super.patrol(delta)
-	_prevent_moving_outside_hang_arena()
+	if not _should_chase_freely():
+		_prevent_moving_outside_hang_arena()
 
 func begin_attack() -> void:
 	_attack_count += 1
-	if hanging_laser_every_n_attacks > 0 and _attack_count % hanging_laser_every_n_attacks == 0:
+	if _should_prefer_hanging_laser():
+		_current_attack_mode = AttackMode.HANGING_LASER
+		_last_preferred_laser_attack_count = _attack_count
+	elif hanging_laser_every_n_attacks > 0 and _attack_count % hanging_laser_every_n_attacks == 0:
 		_current_attack_mode = AttackMode.HANGING_LASER
 	elif threadburst_every_n_attacks > 0 and _attack_count % threadburst_every_n_attacks == 0:
 		_current_attack_mode = AttackMode.THREADBURST
@@ -224,18 +238,27 @@ func update_attack_motion(_delta: float) -> void:
 
 	super.update_attack_motion(_delta)
 
+func is_player_in_attack_range() -> bool:
+	if super.is_player_in_attack_range():
+		return true
+
+	return _should_prefer_hanging_laser()
+
 func is_attack_sequence_busy() -> bool:
 	return _hanging_laser_busy
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	super._on_detection_body_entered(body)
 	if body.is_in_group("player"):
+		_boss_aggro_latched = true
 		_boss_music_latched = true
 	_update_boss_music_state()
 	_update_boss_health_visibility()
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	super._on_detection_body_exited(body)
+	if body.is_in_group("player") and _boss_aggro_latched and not is_dead:
+		target = body
 	if not is_dead and target == null:
 		_update_boss_music_state()
 	_update_boss_health_visibility()
@@ -543,6 +566,23 @@ func _play_boss_sfx(sound_name: StringName, pitch_scale: float) -> void:
 	var subtone := AudioManager.play_sfx(sound_name, boss_subtone_volume_offset_db, 0.0)
 	if subtone:
 		subtone.pitch_scale *= boss_subtone_pitch
+
+func _should_chase_freely() -> bool:
+	return chase_freely_after_aggro and _boss_aggro_latched
+
+func _should_prefer_hanging_laser() -> bool:
+	if not prefer_laser_when_player_above or not target or _hanging_laser_busy:
+		return false
+	if _attack_count - _last_preferred_laser_attack_count < laser_preference_min_attacks_between:
+		return false
+
+	var target_delta := target.global_position - global_position
+	if target_delta.y > -laser_preference_height_threshold:
+		return false
+	if absf(target_delta.x) > laser_preference_horizontal_range:
+		return false
+
+	return true
 
 func _finish_hanging_laser_sequence() -> void:
 	_hanging_laser_busy = false
