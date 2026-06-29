@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b1noqpj1jfrqt" path="res://Assets/UI/controller/Steam.png" id="16_steam"]
 [ext_resource type="Texture2D" uid="uid://dw1jy8o28mqp1" path="res://Assets/UI/controller/line.png" id="17_line"]
 [ext_resource type="Texture2D" uid="uid://77l83cmhx7sl" path="res://Assets/UI/controller/end_point.png" id="18_endpoint"]
-[ext_resource type="Script" path="res://Src/UI/GameMenu/controller_callout.gd" id="19_callout"]
+[ext_resource type="Script" path="res://Src/UI/GameMenu/controller_line_callout.gd" id="19_callout"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -528,24 +528,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControllerBackground" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=876563408]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -470.0
-offset_top = -292.0
-offset_right = 470.0
-offset_bottom = 294.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("11_controller_background")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="DeviceLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=976328176]
 layout_mode = 1
 anchors_preset = 5
@@ -568,14 +550,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -188.0
-offset_right = 320.0
-offset_bottom = 260.0
+offset_left = -360.0
+offset_top = -205.0
+offset_right = 360.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=2027766681]
+[node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -587,7 +570,7 @@ texture = ExtResource("12_mouse_keyboard")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Xbox" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=2125733380]
+[node name="Xbox" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -600,7 +583,7 @@ texture = ExtResource("13_xbox")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1787255274]
+[node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -613,7 +596,7 @@ texture = ExtResource("14_ps5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Nintendo" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1714034648]
+[node name="Nintendo" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -626,7 +609,7 @@ texture = ExtResource("15_nintendo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Steam" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1316324674]
+[node name="Steam" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -657,24 +640,22 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+[node name="BindingPanel" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -250.0
+offset_right = -40.0
+offset_bottom = 300.0
+grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Inventory"
-label_position = Vector2(132, 142)
-label_size = Vector2(190, 42)
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(330, 164, 510, 164, 610, 250)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -682,121 +663,465 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Map"
-label_position = Vector2(132, 204)
-label_size = Vector2(190, 42)
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(330, 226, 548, 226, 650, 310)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
+color = Color(0.025, 0.021, 0.016, 0.54)
 
-[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Move"
-label_position = Vector2(132, 328)
-label_size = Vector2(190, 42)
+[node name="HeaderAction" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 250.0
+offset_bottom = 54.0
+text = "ACTION"
 label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(330, 350, 532, 350, 610, 390)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
+vertical_alignment = 1
 
-[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Pause"
-label_position = Vector2(1150, 142)
-label_size = Vector2(190, 42)
-label_alignment = 2
+[node name="HeaderInput" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel"]
+layout_mode = 0
+offset_left = 290.0
+offset_top = 12.0
+offset_right = 542.0
+offset_bottom = 54.0
+text = "INPUT"
 label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 164, 940, 164, 820, 250)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Bindings" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 62.0
+offset_right = 542.0
+offset_bottom = 536.0
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Dash"
-label_position = Vector2(1150, 204)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 226, 938, 226, 840, 315)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 0
+offset_right = 560.0
+offset_bottom = 42
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Grapple"
-label_position = Vector2(1150, 266)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 288, 970, 288, 875, 355)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Move"]
 layout_mode = 1
 anchors_preset = 15
-anchor_right = 1.0
+anchor_right = 0.48
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Jump"
-label_position = Vector2(1150, 328)
-label_size = Vector2(190, 42)
-label_alignment = 2
+text = "Move"
 label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 350, 952, 350, 812, 420)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
+vertical_alignment = 1
 
-[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Move"]
 layout_mode = 1
 anchors_preset = 15
+anchor_left = 0.52
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("19_callout")
-label_text = "Attack"
-label_position = Vector2(1150, 390)
-label_size = Vector2(190, 42)
-label_alignment = 2
+text = "A / D"
 label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 412, 990, 412, 850, 465)
-line_texture = ExtResource("17_line")
-endpoint_texture = ExtResource("18_endpoint")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 36
+offset_right = 560.0
+offset_bottom = 78
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Look"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Look"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Look"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "W / S"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 72
+offset_right = 560.0
+offset_bottom = 114
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Jump"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Jump"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Spacebar"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 108
+offset_right = 560.0
+offset_bottom = 150
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Dash"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Dash"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Shift"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 144
+offset_right = 560.0
+offset_bottom = 186
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Grapple"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Grapple"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Grapple"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Q"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 180
+offset_right = 560.0
+offset_bottom = 222
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Attack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Attack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "J / LMB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 216
+offset_right = 560.0
+offset_bottom = 258
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Inventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "I"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 252
+offset_right = 560.0
+offset_bottom = 294
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Map"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "M"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 288
+offset_right = 560.0
+offset_bottom = 330
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Lore"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Lore"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Lore"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "L"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 324
+offset_right = 560.0
+offset_bottom = 366
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "C"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 360
+offset_right = 560.0
+offset_bottom = 402
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Esc"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 396
+offset_right = 560.0
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/CycleLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Left"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/CycleLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Left Arrow"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings"]
+layout_mode = 0
+offset_top = 432
+offset_right = 560.0
+offset_bottom = 474
+mouse_filter = 2
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/CycleRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.48
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Right"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings/CycleRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.52
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Right Arrow"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Xbox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
 visible = false
@@ -817,13 +1142,304 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Inventory"
-label_position = Vector2(132, 142)
-label_size = Vector2(190, 42)
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(330, 164, 510, 164, 610, 250)
+action_text = "Inventory"
+input_text = "D-Pad Up"
+text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory"]
+points = PackedVector2Array(610, 250, 500, 166, 330, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory"]
+layout_mode = 0
+offset_left = 16
+offset_top = 142
+offset_right = 302
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Up"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Map"
+input_text = "D-Pad Left"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map"]
+points = PackedVector2Array(610, 310, 500, 228, 330, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 310)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map"]
+layout_mode = 0
+offset_left = 16
+offset_top = 204
+offset_right = 302
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Map"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Left"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Lore"
+input_text = "D-Pad Down"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore"]
+points = PackedVector2Array(610, 370, 500, 290, 330, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 370)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore"]
+layout_mode = 0
+offset_left = 16
+offset_top = 266
+offset_right = 302
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Lore"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Down"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Controls"
+input_text = "D-Pad Right"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls"]
+points = PackedVector2Array(650, 420, 500, 352, 330, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(650, 420)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls"]
+layout_mode = 0
+offset_left = 16
+offset_top = 328
+offset_right = 302
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Right"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
 layout_mode = 1
@@ -834,13 +1450,73 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Move"
-label_position = Vector2(132, 328)
-label_size = Vector2(190, 42)
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(330, 350, 532, 350, 610, 390)
+action_text = "Move"
+input_text = "Left Stick"
+text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move"]
+points = PackedVector2Array(675, 475, 500, 414, 330, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(675, 475)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move"]
+layout_mode = 0
+offset_left = 16
+offset_top = 390
+offset_right = 302
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Move"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Left Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
 layout_mode = 1
@@ -851,16 +1527,75 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Pause"
-label_position = Vector2(1150, 142)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 164, 940, 164, 820, 250)
+action_text = "Pause"
+input_text = "Start"
+text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause"]
+points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(865, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 142
+offset_right = 1514
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Start"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -869,16 +1604,75 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Dash"
-label_position = Vector2(1150, 204)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 226, 938, 226, 840, 315)
+action_text = "Cycle Left"
+input_text = "LB"
+text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft"]
+points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(720, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 204
+offset_right = 1514
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Left"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "LB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -887,14 +1681,150 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Jump"
-label_position = Vector2(1150, 328)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 350, 952, 350, 812, 420)
+action_text = "Cycle Right"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight"]
+points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(815, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 266
+offset_right = 1514
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Right"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Grapple"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple"]
+points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(870, 335)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 328
+offset_right = 1514
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Grapple"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
 layout_mode = 1
@@ -905,14 +1835,304 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-label_text = "Attack"
-label_position = Vector2(1150, 390)
-label_size = Vector2(190, 42)
-label_alignment = 2
-label_settings = SubResource("LabelSettings_body")
-points = PackedVector2Array(1128, 412, 990, 412, 850, 465)
+action_text = "Attack"
+input_text = "X"
+text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack"]
+points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(855, 410)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 390
+offset_right = 1514
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "X"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Dash"
+input_text = "B"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash"]
+points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 385)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 476)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 452
+offset_right = 1514
+offset_bottom = 500
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "B"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Jump"
+input_text = "A"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump"]
+points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 450)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 538)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 514
+offset_right = 1514
+offset_bottom = 562
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "A"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Look"
+input_text = "Right Stick"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look"]
+points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(800, 492)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 600)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 576
+offset_right = 1514
+offset_bottom = 624
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Look"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Right Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="PS5" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
 visible = false
@@ -924,6 +2144,1007 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Inventory"
+input_text = "D-Pad Up"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory"]
+points = PackedVector2Array(610, 250, 500, 166, 330, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory"]
+layout_mode = 0
+offset_left = 16
+offset_top = 142
+offset_right = 302
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Up"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Map"
+input_text = "D-Pad Left"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map"]
+points = PackedVector2Array(610, 310, 500, 228, 330, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 310)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map"]
+layout_mode = 0
+offset_left = 16
+offset_top = 204
+offset_right = 302
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Map"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Left"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Lore"
+input_text = "D-Pad Down"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore"]
+points = PackedVector2Array(610, 370, 500, 290, 330, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 370)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore"]
+layout_mode = 0
+offset_left = 16
+offset_top = 266
+offset_right = 302
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Lore"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Down"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Controls"
+input_text = "D-Pad Right"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls"]
+points = PackedVector2Array(650, 420, 500, 352, 330, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(650, 420)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls"]
+layout_mode = 0
+offset_left = 16
+offset_top = 328
+offset_right = 302
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Right"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Move"
+input_text = "Left Stick"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move"]
+points = PackedVector2Array(675, 475, 500, 414, 330, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(675, 475)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move"]
+layout_mode = 0
+offset_left = 16
+offset_top = 390
+offset_right = 302
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Move"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Left Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Pause"
+input_text = "Start"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause"]
+points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(865, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 142
+offset_right = 1514
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Start"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Left"
+input_text = "LB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft"]
+points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(720, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 204
+offset_right = 1514
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Left"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "LB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Right"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight"]
+points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(815, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 266
+offset_right = 1514
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Right"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Grapple"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple"]
+points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(870, 335)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 328
+offset_right = 1514
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Grapple"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Attack"
+input_text = "X"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack"]
+points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(855, 410)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 390
+offset_right = 1514
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "X"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Dash"
+input_text = "B"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash"]
+points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 385)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 476)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 452
+offset_right = 1514
+offset_bottom = 500
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "B"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Jump"
+input_text = "A"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump"]
+points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 450)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 538)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 514
+offset_right = 1514
+offset_bottom = 562
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "A"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Look"
+input_text = "Right Stick"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look"]
+points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(800, 492)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 600)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 576
+offset_right = 1514
+offset_bottom = 624
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Look"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Right Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Nintendo" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
 visible = false
 layout_mode = 1
@@ -933,6 +3154,1007 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Inventory"
+input_text = "D-Pad Up"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory"]
+points = PackedVector2Array(610, 250, 500, 166, 330, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory"]
+layout_mode = 0
+offset_left = 16
+offset_top = 142
+offset_right = 302
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Up"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Map"
+input_text = "D-Pad Left"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map"]
+points = PackedVector2Array(610, 310, 500, 228, 330, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 310)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map"]
+layout_mode = 0
+offset_left = 16
+offset_top = 204
+offset_right = 302
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Map"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Left"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Lore"
+input_text = "D-Pad Down"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore"]
+points = PackedVector2Array(610, 370, 500, 290, 330, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 370)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore"]
+layout_mode = 0
+offset_left = 16
+offset_top = 266
+offset_right = 302
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Lore"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Down"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Controls"
+input_text = "D-Pad Right"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls"]
+points = PackedVector2Array(650, 420, 500, 352, 330, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(650, 420)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls"]
+layout_mode = 0
+offset_left = 16
+offset_top = 328
+offset_right = 302
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Right"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Move"
+input_text = "Left Stick"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move"]
+points = PackedVector2Array(675, 475, 500, 414, 330, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(675, 475)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move"]
+layout_mode = 0
+offset_left = 16
+offset_top = 390
+offset_right = 302
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Move"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Left Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Pause"
+input_text = "Start"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause"]
+points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(865, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 142
+offset_right = 1514
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Start"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Left"
+input_text = "LB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft"]
+points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(720, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 228)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 204
+offset_right = 1514
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Left"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "LB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Right"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight"]
+points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(815, 190)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 290)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 266
+offset_right = 1514
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Right"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Grapple"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple"]
+points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(870, 335)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 328
+offset_right = 1514
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Grapple"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Attack"
+input_text = "X"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack"]
+points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(855, 410)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 390
+offset_right = 1514
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "X"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Dash"
+input_text = "B"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash"]
+points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 385)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 476)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 452
+offset_right = 1514
+offset_bottom = 500
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "B"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Jump"
+input_text = "A"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump"]
+points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 450)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 538)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 514
+offset_right = 1514
+offset_bottom = 562
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "A"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Look"
+input_text = "Right Stick"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look"]
+points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(800, 492)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 600)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 576
+offset_right = 1514
+offset_bottom = 624
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Look"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Right Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Steam" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
 visible = false
@@ -944,404 +4166,1003 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="LeftCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=91343346]
-visible = false
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
 layout_mode = 1
-anchors_preset = 0
-offset_left = 148.0
-offset_top = 126.0
-offset_right = 556.0
-offset_bottom = 434.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Inventory"
+input_text = "D-Pad Up"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=263783161]
-anchors_preset = 0
-offset_right = 408.0
-offset_bottom = 42.0
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory"]
+points = PackedVector2Array(610, 250, 500, 166, 330, 166)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=1356792862]
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(610, 250)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 166)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory"]
 layout_mode = 0
-offset_right = 150.0
-offset_bottom = 42.0
+offset_left = 16
+offset_top = 142
+offset_right = 302
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Inventory"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=127557722]
-layout_mode = 0
-offset_left = 168.0
-offset_top = 18.0
-offset_right = 394.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+text = "D-Pad Up"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Map"
+input_text = "D-Pad Left"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map"]
+points = PackedVector2Array(610, 310, 500, 228, 330, 228)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=508901967]
-layout_mode = 0
-offset_left = 153.0
-offset_top = 9.0
-offset_right = 171.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(610, 310)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=964077639]
-layout_mode = 0
-offset_left = 389.0
-offset_top = 9.0
-offset_right = 407.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(330, 228)
+scale = Vector2(0.5, 0.5)
 
-[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=217634683]
-anchors_preset = 0
-offset_top = 66.0
-offset_right = 408.0
-offset_bottom = 108.0
-
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=572077853]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map"]
 layout_mode = 0
-offset_right = 150.0
-offset_bottom = 42.0
+offset_left = 16
+offset_top = 204
+offset_right = 302
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Map"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=1853017738]
-layout_mode = 0
-offset_left = 168.0
-offset_top = 18.0
-offset_right = 394.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+text = "D-Pad Left"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Lore"
+input_text = "D-Pad Down"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore"]
+points = PackedVector2Array(610, 370, 500, 290, 330, 290)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=712721629]
-layout_mode = 0
-offset_left = 153.0
-offset_top = 9.0
-offset_right = 171.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(610, 370)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=2005422808]
-layout_mode = 0
-offset_left = 389.0
-offset_top = 9.0
-offset_right = 407.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(330, 290)
+scale = Vector2(0.5, 0.5)
 
-[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=625554125]
-anchors_preset = 0
-offset_top = 132.0
-offset_right = 408.0
-offset_bottom = 174.0
-
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=733595112]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore"]
 layout_mode = 0
-offset_right = 150.0
-offset_bottom = 42.0
+offset_left = 16
+offset_top = 266
+offset_right = 302
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Lore"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Down"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Controls"
+input_text = "D-Pad Right"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls"]
+points = PackedVector2Array(650, 420, 500, 352, 330, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(650, 420)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls"]
+layout_mode = 0
+offset_left = 16
+offset_top = 328
+offset_right = 302
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Controls"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "D-Pad Right"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Move"
+input_text = "Left Stick"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move"]
+points = PackedVector2Array(675, 475, 500, 414, 330, 414)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(675, 475)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move"]
+texture = ExtResource("18_endpoint")
+position = Vector2(330, 414)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move"]
+layout_mode = 0
+offset_left = 16
+offset_top = 390
+offset_right = 302
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Move"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=1466716716]
-layout_mode = 0
-offset_left = 168.0
-offset_top = 18.0
-offset_right = 394.0
-offset_bottom = 24.0
-mouse_filter = 2
-texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=1178692895]
-layout_mode = 0
-offset_left = 153.0
-offset_top = 9.0
-offset_right = 171.0
-offset_bottom = 31.0
-mouse_filter = 2
-texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=143908444]
-layout_mode = 0
-offset_left = 389.0
-offset_top = 9.0
-offset_right = 407.0
-offset_bottom = 31.0
-mouse_filter = 2
-texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="RightCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=241043904]
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move/TextBox"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
+anchors_preset = 15
+anchor_left = 0.54
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -556.0
-offset_top = 126.0
-offset_right = -148.0
-offset_bottom = 566.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=357148550]
-anchors_preset = 0
-offset_right = 408.0
-offset_bottom = 42.0
-
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=751764890]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 18.0
-offset_right = 240.0
-offset_bottom = 24.0
 mouse_filter = 2
+text = "Left Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Pause"
+input_text = "Start"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause"]
+points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=704189269]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(865, 250)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=2044065981]
-layout_mode = 0
-offset_left = 235.0
-offset_top = 9.0
-offset_right = 253.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(1200, 166)
+scale = Vector2(0.5, 0.5)
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=1682470757]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause"]
 layout_mode = 0
-offset_left = 258.0
-offset_right = 408.0
-offset_bottom = 42.0
+offset_left = 1228
+offset_top = 142
+offset_right = 1514
+offset_bottom = 190
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Pause"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1036146199]
-anchors_preset = 0
-offset_top = 66.0
-offset_right = 408.0
-offset_bottom = 108.0
-
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=83767358]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 18.0
-offset_right = 240.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+text = "Start"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Left"
+input_text = "LB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft"]
+points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=572141007]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(720, 190)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=544559237]
-layout_mode = 0
-offset_left = 235.0
-offset_top = 9.0
-offset_right = 253.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(1200, 228)
+scale = Vector2(0.5, 0.5)
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=1277221680]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft"]
 layout_mode = 0
-offset_left = 258.0
-offset_right = 408.0
-offset_bottom = 42.0
-text = "Dash"
+offset_left = 1228
+offset_top = 204
+offset_right = 1514
+offset_bottom = 252
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Left"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1919034333]
-anchors_preset = 0
-offset_top = 132.0
-offset_right = 408.0
-offset_bottom = 174.0
-
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=176165896]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 18.0
-offset_right = 240.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+text = "LB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Cycle Right"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight"]
+points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=980003831]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(815, 190)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=1703119021]
-layout_mode = 0
-offset_left = 235.0
-offset_top = 9.0
-offset_right = 253.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(1200, 290)
+scale = Vector2(0.5, 0.5)
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=401220842]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight"]
 layout_mode = 0
-offset_left = 258.0
-offset_right = 408.0
-offset_bottom = 42.0
+offset_left = 1228
+offset_top = 266
+offset_right = 1514
+offset_bottom = 314
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Cycle Right"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Grapple"
+input_text = "RB"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple"]
+points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(870, 335)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 352)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 328
+offset_right = 1514
+offset_bottom = 376
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Grapple"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=67323322]
-anchors_preset = 0
-offset_top = 198.0
-offset_right = 408.0
-offset_bottom = 240.0
-
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=2121987102]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 18.0
-offset_right = 240.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+text = "RB"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Attack"
+input_text = "X"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack"]
+points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
+width = 8.0
 texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=647766893]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(855, 410)
+scale = Vector2(0.5, 0.5)
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=2065508868]
-layout_mode = 0
-offset_left = 235.0
-offset_top = 9.0
-offset_right = 253.0
-offset_bottom = 31.0
-mouse_filter = 2
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack"]
 texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(1200, 414)
+scale = Vector2(0.5, 0.5)
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=556009877]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack"]
 layout_mode = 0
-offset_left = 258.0
-offset_right = 408.0
-offset_bottom = 42.0
+offset_left = 1228
+offset_top = 390
+offset_right = 1514
+offset_bottom = 438
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Attack"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "X"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Dash"
+input_text = "B"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash"]
+points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 385)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 476)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 452
+offset_right = 1514
+offset_bottom = 500
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "B"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Jump"
+input_text = "A"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump"]
+points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(900, 450)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 538)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 514
+offset_right = 1514
+offset_bottom = 562
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 text = "Jump"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1730929283]
-anchors_preset = 0
-offset_top = 264.0
-offset_right = 408.0
-offset_bottom = 306.0
-
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1280165828]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 18.0
-offset_right = 240.0
-offset_bottom = 24.0
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("17_line")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1360733144]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 9.0
-offset_right = 19.0
-offset_bottom = 31.0
-mouse_filter = 2
-texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1501950346]
-layout_mode = 0
-offset_left = 235.0
-offset_top = 9.0
-offset_right = 253.0
-offset_bottom = 31.0
-mouse_filter = 2
-texture = ExtResource("18_endpoint")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1582076674]
-layout_mode = 0
-offset_left = 258.0
-offset_right = 408.0
-offset_bottom = 42.0
-text = "Attack"
+text = "A"
 label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Look"
+input_text = "Right Stick"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look"]
+points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
+width = 8.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(800, 492)
+scale = Vector2(0.5, 0.5)
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look"]
+texture = ExtResource("18_endpoint")
+position = Vector2(1200, 600)
+scale = Vector2(0.5, 0.5)
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look"]
+layout_mode = 0
+offset_left = 1228
+offset_top = 576
+offset_right = 1514
+offset_bottom = 624
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Look"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.54
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Right Stick"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 2
 vertical_alignment = 1

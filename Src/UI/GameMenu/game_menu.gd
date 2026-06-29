@@ -2,6 +2,21 @@ extends CanvasLayer
 class_name GameMenu
 
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
+const CONTROL_BINDINGS := [
+	{"node": "Move", "label": "Move", "actions": [&"move_left", &"move_right"]},
+	{"node": "Look", "label": "Look", "actions": [&"move_up", &"move_down"]},
+	{"node": "Jump", "label": "Jump", "actions": [&"Jump"]},
+	{"node": "Dash", "label": "Dash", "actions": [&"Dash"]},
+	{"node": "Grapple", "label": "Grapple", "actions": [&"Grapple"]},
+	{"node": "Attack", "label": "Attack", "actions": [&"Attack"]},
+	{"node": "Inventory", "label": "Inventory", "actions": [&"open_inventory"]},
+	{"node": "Map", "label": "Map", "actions": [&"open_map"]},
+	{"node": "Lore", "label": "Lore", "actions": [&"open_lore"]},
+	{"node": "Controls", "label": "Controls", "actions": [&"open_controls"]},
+	{"node": "Pause", "label": "Pause", "actions": [&"ui_cancel"]},
+	{"node": "CycleLeft", "label": "Cycle Left", "actions": [&"menu_tab_left"]},
+	{"node": "CycleRight", "label": "Cycle Right", "actions": [&"menu_tab_right"]},
+]
 const INVENTORY_THREADS := [
 	{
 		"id": &"power",
@@ -190,6 +205,7 @@ func _refresh_controls_page() -> void:
 
 	if controls_device_label:
 		controls_device_label.text = _get_controls_device_display_name(_controls_input_family)
+	_update_control_binding_labels()
 
 func _get_controller_family(device_id: int) -> StringName:
 	var joy_name := Input.get_joy_name(device_id).to_lower()
@@ -212,7 +228,146 @@ func _get_controls_device_display_name(input_family: StringName) -> String:
 		&"steam":
 			return "STEAM"
 		_:
-			return "XBOX"
+	return "XBOX"
+
+func _update_control_binding_labels() -> void:
+	var active_layout := controls_callout_layouts.get(_controls_input_family) as Control
+	if not active_layout or active_layout.get_child_count() == 0:
+		active_layout = controls_callout_layouts.get(controller_callout_fallback_family) as Control
+	if not active_layout:
+		return
+
+	for binding in CONTROL_BINDINGS:
+		var binding_node := active_layout.find_child(String(binding["node"]), true, false)
+		if not binding_node:
+			continue
+
+		var action_text := String(binding["label"])
+		var input_text := _format_control_binding(binding["actions"], _controls_input_family)
+		if binding_node.has_method("set"):
+			binding_node.set("action_text", action_text)
+			binding_node.set("input_text", input_text)
+
+		var action_label := binding_node.find_child("ActionLabel", true, false) as Label
+		if action_label:
+			action_label.text = action_text
+		var input_label := binding_node.find_child("InputLabel", true, false) as Label
+		if input_label:
+			input_label.text = input_text
+
+func _format_control_binding(actions: Array, input_family: StringName) -> String:
+	var labels: Array[String] = []
+	for action in actions:
+		if not InputMap.has_action(action):
+			continue
+		for event in InputMap.action_get_events(action):
+			var label := _format_input_event(event, input_family)
+			if label != "" and not labels.has(label):
+				labels.append(label)
+	if labels.is_empty():
+		return "UNBOUND"
+	return " / ".join(labels)
+
+func _format_input_event(event: InputEvent, input_family: StringName) -> String:
+	if input_family == &"keyboard_mouse":
+		if event is InputEventKey:
+			return _format_key_event(event)
+		if event is InputEventMouseButton:
+			return _format_mouse_button(event)
+		return ""
+
+	if event is InputEventJoypadButton:
+		return _format_joypad_button(event.button_index, input_family)
+	if event is InputEventJoypadMotion:
+		return _format_joypad_motion(event.axis, event.axis_value)
+	return ""
+
+func _format_key_event(event: InputEventKey) -> String:
+	var keycode := event.physical_keycode if event.physical_keycode != 0 else event.keycode
+	match keycode:
+		KEY_SPACE:
+			return "Spacebar"
+		KEY_ESCAPE:
+			return "Esc"
+		KEY_SHIFT:
+			return "Shift"
+		KEY_LEFT:
+			return "Left Arrow"
+		KEY_RIGHT:
+			return "Right Arrow"
+		KEY_UP:
+			return "Up Arrow"
+		KEY_DOWN:
+			return "Down Arrow"
+		_:
+			var text := OS.get_keycode_string(keycode)
+			return text if text != "" else event.as_text()
+
+func _format_mouse_button(event: InputEventMouseButton) -> String:
+	match event.button_index:
+		MOUSE_BUTTON_LEFT:
+			return "LMB"
+		MOUSE_BUTTON_RIGHT:
+			return "RMB"
+		MOUSE_BUTTON_MIDDLE:
+			return "MMB"
+		_:
+			return "Mouse %d" % event.button_index
+
+func _format_joypad_button(button_index: int, input_family: StringName) -> String:
+	match input_family:
+		&"ps5":
+			match button_index:
+				0: return "Cross"
+				1: return "Circle"
+				2: return "Square"
+				3: return "Triangle"
+				9: return "L1"
+				10: return "R1"
+				11: return "D-Pad Up"
+				12: return "D-Pad Down"
+				13: return "D-Pad Left"
+				14: return "D-Pad Right"
+				_: return "Button %d" % button_index
+		&"nintendo":
+			match button_index:
+				0: return "B"
+				1: return "A"
+				2: return "Y"
+				3: return "X"
+				9: return "L"
+				10: return "R"
+				11: return "D-Pad Up"
+				12: return "D-Pad Down"
+				13: return "D-Pad Left"
+				14: return "D-Pad Right"
+				_: return "Button %d" % button_index
+		_:
+			match button_index:
+				0: return "A"
+				1: return "B"
+				2: return "X"
+				3: return "Y"
+				9: return "LB"
+				10: return "RB"
+				11: return "D-Pad Up"
+				12: return "D-Pad Down"
+				13: return "D-Pad Left"
+				14: return "D-Pad Right"
+				_: return "Button %d" % button_index
+
+func _format_joypad_motion(axis: int, axis_value: float) -> String:
+	match axis:
+		0:
+			return "Left Stick Left" if axis_value < 0.0 else "Left Stick Right"
+		1:
+			return "Left Stick Up" if axis_value < 0.0 else "Left Stick Down"
+		2:
+			return "Right Stick Left" if axis_value < 0.0 else "Right Stick Right"
+		3:
+			return "Right Stick Up" if axis_value < 0.0 else "Right Stick Down"
+		_:
+			return "Axis %d" % axis
 
 func _update_inventory_threads() -> void:
 	var claimed_count := 0
