@@ -154,10 +154,10 @@ const EQUIPPED_SLOT_ITEMS := {
 @onready var inventory_thread_knot_count: Label = $MenuRoot/Pages/InventoryPage/CurrenciesPanel/ThreadKnots/Count as Label
 @onready var inventory_health_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Health as Label
 @onready var inventory_attack_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Attack as Label
-@onready var inventory_speed_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Speed as Label
-@onready var inventory_action_points_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/ActionPoints as Label
+@onready var inventory_skill_damage_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/SkillDamage as Label
 @onready var inventory_action_recharge_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/ActionRecharge as Label
-@onready var inventory_flow_speed_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/FlowSpeed as Label
+@onready var inventory_momentum_gain_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/MomentumGain as Label
+@onready var inventory_resistance_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Resistance as Label
 @onready var rough_map: TextureRect = $MenuRoot/Pages/MapPage/RoughMap as TextureRect
 @onready var map_player_marker: Control = $MenuRoot/Pages/MapPage/RoughMap/PlayerMarker as Control
 @onready var controls_device_label: Label = $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceLabel as Label
@@ -846,19 +846,16 @@ func _update_inventory_stats() -> void:
 		inventory_health_label.text = "HP %d" % health
 	if inventory_attack_label:
 		var attack: int = stats.attack_damage if stats else 0
-		inventory_attack_label.text = "ATTACK %d" % attack
-	if inventory_speed_label:
-		var move_speed: int = int(round(float(player.get("speed")))) if player else 0
-		inventory_speed_label.text = "SPEED %d" % move_speed
-	if inventory_action_points_label:
-		var action_points: int = int(player.get("max_action_points")) if player else 0
-		inventory_action_points_label.text = "ACTION POINTS %d" % action_points
+		inventory_attack_label.text = "ATTACK DAMAGE - %d" % attack
+	if inventory_skill_damage_label:
+		inventory_skill_damage_label.text = "SKILL DAMAGE - 0"
 	if inventory_action_recharge_label:
 		var recharge_time: float = float(player.get("action_point_recharge_time")) if player else 0.0
-		inventory_action_recharge_label.text = "AP RECHARGE %.1f SEC" % recharge_time
-	if inventory_flow_speed_label:
-		var flow_speed: float = float(player.get("momentum_move_speed_flow")) if player else 1.0
-		inventory_flow_speed_label.text = "FLOW SPEED %d%%" % int(round(flow_speed * 100.0))
+		inventory_action_recharge_label.text = "ACTION POINT RECHARGE %.1f SEC" % recharge_time
+	if inventory_momentum_gain_label:
+		inventory_momentum_gain_label.text = "MOMENTUM GAIN 100%"
+	if inventory_resistance_label:
+		inventory_resistance_label.text = "RESISTANCE 0%"
 
 func _update_map_tracker() -> void:
 	if not rough_map or not map_player_marker or map_world_bounds.size == Vector2.ZERO:

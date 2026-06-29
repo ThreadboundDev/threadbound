@@ -849,7 +849,7 @@ anchors_preset = 0
 offset_left = 30.0
 offset_top = 540.0
 offset_right = 590.0
-offset_bottom = 770.0
+offset_bottom = 850.0
 mouse_filter = 2
 
 [node name="Stats_Backing" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel" unique_id=1017243409]
@@ -857,13 +857,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -28.0
-offset_top = -33.0
-offset_right = -198.46155
-offset_bottom = 242.375
+offset_left = -63.0
+offset_top = -39.0
+offset_right = -5.0
+offset_bottom = 139.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.625, 1.625)
+scale = Vector2(1.11, 1.11)
 mouse_filter = 2
 texture = ExtResource("24_identity_frame")
 expand_mode = 1
@@ -874,12 +874,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -119.0
-offset_right = 30.0
-offset_bottom = 24.0
+offset_left = -60.0
+offset_top = -180.0
+offset_right = -1.0
+offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.1, 1.1)
 mouse_filter = 2
 texture = ExtResource("24_identity_frame")
 expand_mode = 1
@@ -928,10 +929,10 @@ vertical_alignment = 1
 
 [node name="StatsTitle" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel" unique_id=552616127]
 layout_mode = 0
-offset_left = 54.0
-offset_top = 132.0
-offset_right = 506.0
-offset_bottom = 166.0
+offset_left = 48.0
+offset_top = 170.0
+offset_right = 500.0
+offset_bottom = 204.0
 text = "STATS"
 label_settings = SubResource("LabelSettings_inventory_name")
 horizontal_alignment = 1
@@ -942,61 +943,66 @@ anchors_preset = 0
 offset_left = 46.0
 offset_top = 168.0
 offset_right = 516.0
-offset_bottom = 222.0
+offset_bottom = 296.0
 mouse_filter = 2
 
 [node name="Health" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=1833869204]
 layout_mode = 0
-offset_right = 222.0
-offset_bottom = 30.0
-text = "HP 5"
+offset_left = -20.0
+offset_top = 29.0
+offset_right = 450.0
+offset_bottom = 57.0
+text = "HP - 5"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
 [node name="Attack" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=223990872]
 layout_mode = 0
-offset_left = 248.0
-offset_right = 470.0
-offset_bottom = 30.0
-text = "ATTACK 1"
+offset_left = -20.0
+offset_top = 53.395
+offset_right = 450.0
+offset_bottom = 81.395004
+text = "ATTACK DAMAGE - 1"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
-[node name="Speed" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=90849146]
+[node name="SkillDamage" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid"]
 layout_mode = 0
-offset_top = 38.0
-offset_right = 222.0
-offset_bottom = 68.0
-text = "SPEED 500"
-label_settings = SubResource("LabelSettings_controls_binding")
-vertical_alignment = 1
-
-[node name="ActionPoints" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=1075799883]
-layout_mode = 0
-offset_left = 248.0
-offset_top = 38.0
-offset_right = 470.0
-offset_bottom = 68.0
-text = "ACTION POINTS 6"
+offset_left = -20.0
+offset_top = 77.79
+offset_right = 450.0
+offset_bottom = 105.79
+text = "SKILL DAMAGE - 0"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
 [node name="ActionRecharge" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=817442510]
 layout_mode = 0
-offset_top = 76.0
-offset_right = 222.0
-offset_bottom = 106.0
-text = "AP RECHARGE 10.0 SEC"
+offset_left = 265.0
+offset_top = 72.99997
+offset_right = 735.0
+offset_bottom = 100.99997
+text = "AP RECHARGE - 10.0 SEC"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
-[node name="FlowSpeed" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=478444877]
+[node name="MomentumGain" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=1075799883]
 layout_mode = 0
-offset_left = 248.0
-offset_top = 76.0
-offset_right = 470.0
-offset_bottom = 106.0
-text = "FLOW SPEED 120%"
+offset_left = 265.0
+offset_top = 51.94
+offset_right = 735.0
+offset_bottom = 79.94
+text = "MOMENTUM GAIN - 100%"
+label_settings = SubResource("LabelSettings_controls_binding")
+vertical_alignment = 1
+
+[node name="Resistance" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=478444877]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 29.0
+offset_right = 735.0
+offset_bottom = 57.0
+text = "RESISTANCE - 0%"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
