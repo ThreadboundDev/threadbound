@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bm1ds7d5akyrc" path="res://Assets/UI/Main Menu/volume_bar_empty.png" id="3_empty"]
 [ext_resource type="Texture2D" uid="uid://bdw2p0nyjehyq" path="res://Assets/UI/Main Menu/volume_bar_filled.png" id="4_filled"]
 [ext_resource type="Texture2D" uid="uid://c444vlhmlxypx" path="res://Assets/UI/Main Menu/volume_slider_button.png" id="5_knob"]
-[ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="6_font"]
+[ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="6_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_volume"]
 font = ExtResource("6_font")

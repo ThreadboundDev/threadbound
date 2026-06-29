@@ -475,7 +475,7 @@ func _process(_delta: float) -> void:
 	if menu:
 		menu.update_hold_state(Input.is_action_pressed("open_menu"))
 
-	if is_near_interactable and current_selector and Input.is_action_just_pressed("move_up"):
+	if is_near_interactable and current_selector and Input.is_action_just_pressed("interact"):
 		print("Interacting with: ", current_selector.name)
 		if current_selector.has_method("interact"):
 			current_selector.interact(self)

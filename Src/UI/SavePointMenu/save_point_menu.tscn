@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cc8f0t5u7s2sn" path="res://Assets/UI/Main Menu/blossom_of_eryndor_menu_buttons.png" id="4_button"]
 [ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="5_selector"]
 [ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="6_font"]
-[ext_resource type="FontFile" uid="uid://dvjkof51d14h6" path="res://Assets/UI/Fonts/base_gold_font/base_gold_font.fnt" id="7_base_gold_font"]
+[ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="7_base_gold_font"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("2_blur_shader")
