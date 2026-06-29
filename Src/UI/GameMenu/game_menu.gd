@@ -33,6 +33,11 @@ const INVENTORY_THREADS := [
 @export var normal_tab_color := Color(0.70, 0.64, 0.53, 1.0)
 @export var selected_tab_scale := Vector2(1.04, 1.04)
 @export var normal_tab_scale := Vector2.ONE
+@export_group("Map Tracker")
+@export var map_world_bounds := Rect2(-9500.0, -4500.0, 17700.0, 9400.0)
+@export var map_tracker_clamp_to_map := true
+@export_group("Controls Page")
+@export var controller_callout_fallback_family: StringName = &"xbox"
 
 @onready var title_label: Label = $MenuRoot/Title as Label
 @onready var tab_labels: Array[Label] = [
@@ -48,6 +53,8 @@ const INVENTORY_THREADS := [
 	$MenuRoot/Pages/ControlsPage,
 ]
 @onready var inventory_empty_label: Label = $MenuRoot/Pages/InventoryPage/EmptyLabel as Label
+@onready var rough_map: TextureRect = $MenuRoot/Pages/MapPage/RoughMap as TextureRect
+@onready var map_player_marker: Control = $MenuRoot/Pages/MapPage/RoughMap/PlayerMarker as Control
 @onready var controls_device_label: Label = $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceLabel as Label
 @onready var controls_device_art: Dictionary = {
 	&"keyboard_mouse": $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt/MouseKeyboard,
@@ -55,6 +62,13 @@ const INVENTORY_THREADS := [
 	&"ps5": $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt/PS5,
 	&"nintendo": $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt/Nintendo,
 	&"steam": $MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt/Steam,
+}
+@onready var controls_callout_layouts: Dictionary = {
+	&"keyboard_mouse": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse,
+	&"xbox": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox,
+	&"ps5": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5,
+	&"nintendo": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo,
+	&"steam": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam,
 }
 
 var _selected_index := 0
@@ -74,6 +88,11 @@ func _ready() -> void:
 	if not DemoProgress.threads_changed.is_connected(_update_inventory_threads):
 		DemoProgress.threads_changed.connect(_update_inventory_threads)
 	_update_inventory_threads()
+	_update_map_tracker()
+
+func _process(_delta: float) -> void:
+	if TAB_ORDER[_selected_index] == &"Map":
+		_update_map_tracker()
 
 func open(initial_tab: StringName = &"Inventory", input_family: StringName = &"keyboard_mouse") -> void:
 	get_tree().paused = true
@@ -122,6 +141,8 @@ func _select_tab(index: int, instant := false) -> void:
 	title_label.text = String(TAB_ORDER[_selected_index]).to_upper()
 	if TAB_ORDER[_selected_index] == &"Inventory":
 		_update_inventory_threads()
+	elif TAB_ORDER[_selected_index] == &"Map":
+		_update_map_tracker()
 	elif TAB_ORDER[_selected_index] == &"Controls":
 		_refresh_controls_page()
 
@@ -155,6 +176,17 @@ func _refresh_controls_page() -> void:
 		var art := controls_device_art[family] as CanvasItem
 		if art:
 			art.visible = family == _controls_input_family
+
+	var active_layout := controls_callout_layouts.get(_controls_input_family) as Control
+	var use_fallback_layout := (
+		active_layout != null
+		and active_layout.get_child_count() == 0
+		and _controls_input_family != controller_callout_fallback_family
+	)
+	for family in controls_callout_layouts:
+		var layout := controls_callout_layouts[family] as CanvasItem
+		if layout:
+			layout.visible = family == _controls_input_family or (use_fallback_layout and family == controller_callout_fallback_family)
 
 	if controls_device_label:
 		controls_device_label.text = _get_controls_device_display_name(_controls_input_family)
@@ -206,6 +238,25 @@ func _update_inventory_threads() -> void:
 
 	if inventory_empty_label:
 		inventory_empty_label.visible = claimed_count == 0
+
+func _update_map_tracker() -> void:
+	if not rough_map or not map_player_marker or map_world_bounds.size == Vector2.ZERO:
+		return
+
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if not player:
+		map_player_marker.visible = false
+		return
+
+	map_player_marker.visible = true
+	var normalized := Vector2(
+		(player.global_position.x - map_world_bounds.position.x) / map_world_bounds.size.x,
+		(player.global_position.y - map_world_bounds.position.y) / map_world_bounds.size.y
+	)
+	if map_tracker_clamp_to_map:
+		normalized = normalized.clamp(Vector2.ZERO, Vector2.ONE)
+
+	map_player_marker.position = normalized * rough_map.size - map_player_marker.size * 0.5
 
 func _close() -> void:
 	if _closing:

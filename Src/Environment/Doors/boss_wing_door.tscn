@@ -372,6 +372,7 @@ open_after_message = false
 door_color = Color(1, 1, 1, 1)
 
 [node name="FogPanel" parent="." index="0" unique_id=78285732]
+visible = false
 position = Vector2(640, 256)
 polygon = PackedVector2Array(-640, -1280, 2432, -1280, 2432, 384, 384, 384, -600, 150)
 

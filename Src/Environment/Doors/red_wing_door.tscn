@@ -369,6 +369,7 @@ opened_low_texture = ExtResource("4_red_open_low")
 opened_high_texture = ExtResource("5_red_open_high")
 
 [node name="FogPanel" parent="." index="0" unique_id=78285732]
+visible = false
 position = Vector2(-522, 166)
 polygon = PackedVector2Array(-1910, -4262, -118, -4262, 1802, -4262, 1802, -4262, 1290, -934, 522, -934, 520, 130, -1855, 120)
 

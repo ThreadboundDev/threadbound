@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://b1noqpj1jfrqt" path="res://Assets/UI/controller/Steam.png" id="16_steam"]
 [ext_resource type="Texture2D" uid="uid://dw1jy8o28mqp1" path="res://Assets/UI/controller/line.png" id="17_line"]
 [ext_resource type="Texture2D" uid="uid://77l83cmhx7sl" path="res://Assets/UI/controller/end_point.png" id="18_endpoint"]
+[ext_resource type="Script" path="res://Src/UI/GameMenu/controller_callout.gd" id="19_callout"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_decorative_font")
@@ -453,6 +454,37 @@ texture = ExtResource("10_rough_map")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="PlayerMarker" type="Control" parent="MenuRoot/Pages/MapPage/RoughMap"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 0
+offset_right = 34.0
+offset_bottom = 34.0
+mouse_filter = 2
+
+[node name="OuterRing" type="ColorRect" parent="MenuRoot/Pages/MapPage/RoughMap/PlayerMarker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.04, 0.035, 0.025, 0.88)
+
+[node name="Core" type="ColorRect" parent="MenuRoot/Pages/MapPage/RoughMap/PlayerMarker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.95, 0.76, 0.28, 1)
+
 [node name="LorePage" type="Control" parent="MenuRoot/Pages" unique_id=519739836]
 visible = false
 layout_mode = 1
@@ -496,7 +528,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControllerBackground" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="ControllerBackground" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=876563408]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -514,7 +546,7 @@ texture = ExtResource("11_controller_background")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="DeviceLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="DeviceLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=976328176]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -524,12 +556,12 @@ offset_top = 16.0
 offset_right = 320.0
 offset_bottom = 70.0
 grow_horizontal = 2
-text = "MOUSE & KEYBOARD"
+text = "MOUSE AND KEYBOARD"
 label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DeviceArt" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="DeviceArt" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=1602359410]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -543,7 +575,7 @@ offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+[node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=2027766681]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -555,7 +587,7 @@ texture = ExtResource("12_mouse_keyboard")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Xbox" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+[node name="Xbox" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=2125733380]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -568,7 +600,7 @@ texture = ExtResource("13_xbox")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+[node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1787255274]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -581,7 +613,7 @@ texture = ExtResource("14_ps5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Nintendo" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+[node name="Nintendo" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1714034648]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -594,7 +626,7 @@ texture = ExtResource("15_nintendo")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Steam" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt"]
+[node name="Steam" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1316324674]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -607,7 +639,313 @@ texture = ExtResource("16_steam")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="LeftCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="CalloutLayouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="KeyboardMouse" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Inventory"
+label_position = Vector2(132, 142)
+label_size = Vector2(190, 42)
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(330, 164, 510, 164, 610, 250)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Map"
+label_position = Vector2(132, 204)
+label_size = Vector2(190, 42)
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(330, 226, 548, 226, 650, 310)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Move"
+label_position = Vector2(132, 328)
+label_size = Vector2(190, 42)
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(330, 350, 532, 350, 610, 390)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Pause"
+label_position = Vector2(1150, 142)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 164, 940, 164, 820, 250)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Dash"
+label_position = Vector2(1150, 204)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 226, 938, 226, 840, 315)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Grapple"
+label_position = Vector2(1150, 266)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 288, 970, 288, 875, 355)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Jump"
+label_position = Vector2(1150, 328)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 350, 952, 350, 812, 420)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Attack"
+label_position = Vector2(1150, 390)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 412, 990, 412, 850, 465)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Xbox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Inventory"
+label_position = Vector2(132, 142)
+label_size = Vector2(190, 42)
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(330, 164, 510, 164, 610, 250)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Move"
+label_position = Vector2(132, 328)
+label_size = Vector2(190, 42)
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(330, 350, 532, 350, 610, 390)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Pause"
+label_position = Vector2(1150, 142)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 164, 940, 164, 820, 250)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Dash"
+label_position = Vector2(1150, 204)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 226, 938, 226, 840, 315)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Jump"
+label_position = Vector2(1150, 328)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 350, 952, 350, 812, 420)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+label_text = "Attack"
+label_position = Vector2(1150, 390)
+label_size = Vector2(190, 42)
+label_alignment = 2
+label_settings = SubResource("LabelSettings_body")
+points = PackedVector2Array(1128, 412, 990, 412, 850, 465)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="PS5" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Nintendo" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Steam" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeftCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=91343346]
+visible = false
 layout_mode = 1
 anchors_preset = 0
 offset_left = 148.0
@@ -615,12 +953,12 @@ offset_top = 126.0
 offset_right = 556.0
 offset_bottom = 434.0
 
-[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
-layout_mode = 0
+[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=263783161]
+anchors_preset = 0
 offset_right = 408.0
 offset_bottom = 42.0
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=1356792862]
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 42.0
@@ -628,7 +966,7 @@ text = "Inventory"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=127557722]
 layout_mode = 0
 offset_left = 168.0
 offset_top = 18.0
@@ -639,7 +977,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=508901967]
 layout_mode = 0
 offset_left = 153.0
 offset_top = 9.0
@@ -650,7 +988,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Inventory" unique_id=964077639]
 layout_mode = 0
 offset_left = 389.0
 offset_top = 9.0
@@ -661,13 +999,13 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
-layout_mode = 0
+[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=217634683]
+anchors_preset = 0
 offset_top = 66.0
 offset_right = 408.0
 offset_bottom = 108.0
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=572077853]
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 42.0
@@ -675,7 +1013,7 @@ text = "Map"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=1853017738]
 layout_mode = 0
 offset_left = 168.0
 offset_top = 18.0
@@ -686,7 +1024,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=712721629]
 layout_mode = 0
 offset_left = 153.0
 offset_top = 9.0
@@ -697,7 +1035,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Map" unique_id=2005422808]
 layout_mode = 0
 offset_left = 389.0
 offset_top = 9.0
@@ -708,13 +1046,13 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts"]
-layout_mode = 0
+[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts" unique_id=625554125]
+anchors_preset = 0
 offset_top = 132.0
 offset_right = 408.0
 offset_bottom = 174.0
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=733595112]
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 42.0
@@ -722,7 +1060,7 @@ text = "Move"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=1466716716]
 layout_mode = 0
 offset_left = 168.0
 offset_top = 18.0
@@ -733,7 +1071,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=1178692895]
 layout_mode = 0
 offset_left = 153.0
 offset_top = 9.0
@@ -744,7 +1082,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/LeftCallouts/Move" unique_id=143908444]
 layout_mode = 0
 offset_left = 389.0
 offset_top = 9.0
@@ -755,23 +1093,26 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RightCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="RightCallouts" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=241043904]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
+anchor_bottom = 0.5
 offset_left = -556.0
 offset_top = 126.0
 offset_right = -148.0
 offset_bottom = 566.0
 grow_horizontal = 0
+grow_vertical = 2
 
-[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
-layout_mode = 0
+[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=357148550]
+anchors_preset = 0
 offset_right = 408.0
 offset_bottom = 42.0
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=751764890]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 18.0
@@ -782,7 +1123,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=704189269]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 9.0
@@ -793,7 +1134,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=2044065981]
 layout_mode = 0
 offset_left = 235.0
 offset_top = 9.0
@@ -804,7 +1145,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Pause" unique_id=1682470757]
 layout_mode = 0
 offset_left = 258.0
 offset_right = 408.0
@@ -813,13 +1154,13 @@ text = "Pause"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
-layout_mode = 0
+[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1036146199]
+anchors_preset = 0
 offset_top = 66.0
 offset_right = 408.0
 offset_bottom = 108.0
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=83767358]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 18.0
@@ -830,7 +1171,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=572141007]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 9.0
@@ -841,7 +1182,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=544559237]
 layout_mode = 0
 offset_left = 235.0
 offset_top = 9.0
@@ -852,7 +1193,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Dash" unique_id=1277221680]
 layout_mode = 0
 offset_left = 258.0
 offset_right = 408.0
@@ -861,13 +1202,13 @@ text = "Dash"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
-layout_mode = 0
+[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1919034333]
+anchors_preset = 0
 offset_top = 132.0
 offset_right = 408.0
 offset_bottom = 174.0
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=176165896]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 18.0
@@ -878,7 +1219,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=980003831]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 9.0
@@ -889,7 +1230,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=1703119021]
 layout_mode = 0
 offset_left = 235.0
 offset_top = 9.0
@@ -900,7 +1241,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Grapple" unique_id=401220842]
 layout_mode = 0
 offset_left = 258.0
 offset_right = 408.0
@@ -909,13 +1250,13 @@ text = "Grapple"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
-layout_mode = 0
+[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=67323322]
+anchors_preset = 0
 offset_top = 198.0
 offset_right = 408.0
 offset_bottom = 240.0
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=2121987102]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 18.0
@@ -926,7 +1267,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=647766893]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 9.0
@@ -937,7 +1278,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=2065508868]
 layout_mode = 0
 offset_left = 235.0
 offset_top = 9.0
@@ -948,7 +1289,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Jump" unique_id=556009877]
 layout_mode = 0
 offset_left = 258.0
 offset_right = 408.0
@@ -957,13 +1298,13 @@ text = "Jump"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts"]
-layout_mode = 0
+[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts" unique_id=1730929283]
+anchors_preset = 0
 offset_top = 264.0
 offset_right = 408.0
 offset_bottom = 306.0
 
-[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+[node name="Line" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1280165828]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 18.0
@@ -974,7 +1315,7 @@ texture = ExtResource("17_line")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+[node name="StartPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1360733144]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 9.0
@@ -985,7 +1326,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+[node name="EndPoint" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1501950346]
 layout_mode = 0
 offset_left = 235.0
 offset_top = 9.0
@@ -996,7 +1337,7 @@ texture = ExtResource("18_endpoint")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack"]
+[node name="Label" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/RightCallouts/Attack" unique_id=1582076674]
 layout_mode = 0
 offset_left = 258.0
 offset_right = 408.0

@@ -507,11 +507,9 @@ thread_smash_velocity_jitter = 45.0
 [node name="DemoDoors" type="Node2D" parent="." unique_id=976358177]
 
 [node name="RedWingDoor" parent="DemoDoors" unique_id=1666223729 instance=ExtResource("21_red_door")]
-visible = false
 position = Vector2(-2816, -768)
 
 [node name="BlueWingDoor" parent="DemoDoors" unique_id=1591533616 instance=ExtResource("22_blue_door")]
-visible = false
 position = Vector2(2432, -1024)
 
 [node name="BlueWingObjective" parent="DemoDoors" unique_id=1652813332 instance=ExtResource("27_balance_objective")]
@@ -529,7 +527,6 @@ position = Vector2(1925, -3317)
 rotation = -3.1764991
 
 [node name="YellowWingDoor" parent="DemoDoors" unique_id=1241953404 instance=ExtResource("23_yellow_door")]
-visible = false
 position = Vector2(-2687, 1245)
 
 [node name="YellowWingPortals" type="Node2D" parent="DemoDoors" unique_id=775772412]
