@@ -1,0 +1,756 @@
+[gd_scene format=3 uid="uid://cxsgeg0kd3gjp"]
+
+[ext_resource type="Script" uid="uid://cbyky6qbj15m4" path="res://Src/UI/SavePointMenu/weave_level_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://ckm3mb1nnftis" path="res://Assets/UI/WeaveMenu/weave_meditation_emblem.png" id="2_emblem"]
+[ext_resource type="Texture2D" uid="uid://qdfo4rhaag1s" path="res://Assets/UI/WeaveMenu/weave_stat_ring_blue.png" id="3_ring_blue"]
+[ext_resource type="Texture2D" uid="uid://cmfvo4pcdef63" path="res://Assets/UI/WeaveMenu/weave_stat_ring_red.png" id="4_ring_red"]
+[ext_resource type="Texture2D" uid="uid://jh6fyd17pg84" path="res://Assets/UI/WeaveMenu/weave_stat_ring_gold.png" id="5_ring_gold"]
+[ext_resource type="Texture2D" uid="uid://d0fs8n726sc87" path="res://Assets/UI/WeaveMenu/weave_prompt_panel.png" id="6_prompt_panel"]
+[ext_resource type="Texture2D" uid="uid://3pamq7b06hkv" path="res://Assets/UI/WeaveMenu/weave_knot_panel.png" id="7_knot_panel"]
+[ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="8_thread_knot"]
+[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="9_decorative_font"]
+[ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="10_base_font"]
+[ext_resource type="Shader" uid="uid://bwvyn07b08cm1" path="res://Src/UI/SavePointMenu/weave_vignette.gdshader" id="11_vignette"]
+[ext_resource type="Texture2D" uid="uid://deirpb3ly77er" path="res://Assets/UI/WeaveMenu/weave_icon_health.png" id="12_icon_health"]
+[ext_resource type="Texture2D" uid="uid://bddjg7y6clxvj" path="res://Assets/UI/WeaveMenu/weave_icon_attack.png" id="13_icon_attack"]
+[ext_resource type="Texture2D" uid="uid://fy4dfutfvtny" path="res://Assets/UI/WeaveMenu/weave_icon_skill_damage.png" id="14_icon_skill"]
+[ext_resource type="Texture2D" uid="uid://4dduumjtali0" path="res://Assets/UI/WeaveMenu/weave_icon_momentum.png" id="15_icon_momentum"]
+[ext_resource type="Texture2D" uid="uid://cssqrvv8khkeu" path="res://Assets/UI/WeaveMenu/weave_icon_ap_recharge.png" id="16_icon_ap"]
+[ext_resource type="Texture2D" uid="uid://iyjhrj1b2gm6" path="res://Assets/UI/WeaveMenu/weave_icon_resistance.png" id="17_icon_resistance"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("11_vignette")
+shader_parameter/edge_color = Color(0, 0, 0, 0.9)
+shader_parameter/inner_color = Color(0, 0, 0, 0.12)
+shader_parameter/focal_center = Vector2(0.29, 0.53)
+shader_parameter/inner_radius = 0.2
+shader_parameter/outer_radius = 0.78
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("9_decorative_font")
+font_size = 58
+font_color = Color(0.9, 0.78, 0.52, 1)
+outline_size = 4
+outline_color = Color(0.03, 0.025, 0.02, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.65)
+
+[sub_resource type="LabelSettings" id="LabelSettings_body"]
+font = ExtResource("10_base_font")
+font_size = 34
+font_color = Color(0.94, 0.85, 0.64, 1)
+outline_size = 1
+outline_color = Color(0.025, 0.02, 0.015, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_small"]
+font = ExtResource("10_base_font")
+font_size = 26
+font_color = Color(0.9, 0.8, 0.58, 1)
+outline_size = 1
+outline_color = Color(0.025, 0.02, 0.015, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stat"]
+font = ExtResource("10_base_font")
+font_size = 30
+font_color = Color(0.96, 0.84, 0.58, 1)
+outline_size = 1
+outline_color = Color(0.025, 0.02, 0.015, 1)
+
+[node name="WeaveLevelMenu" type="Control" unique_id=479344330]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+stat_ring_blue = ExtResource("3_ring_blue")
+stat_ring_red = ExtResource("4_ring_red")
+stat_ring_gold = ExtResource("5_ring_gold")
+
+[node name="Shade" type="ColorRect" parent="." unique_id=147791081]
+material = SubResource("ShaderMaterial_vignette")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Header" type="Control" parent="." unique_id=995995139]
+anchors_preset = 0
+offset_left = 58.0
+offset_top = 36.0
+offset_right = 620.0
+offset_bottom = 182.0
+mouse_filter = 2
+
+[node name="HeaderEmblem" type="TextureRect" parent="Header" unique_id=1775675073]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+mouse_filter = 2
+texture = ExtResource("2_emblem")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="Header" unique_id=168194662]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 20.0
+offset_right = 558.0
+offset_bottom = 76.0
+text = "MEDITATION"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="Subtitle" type="Label" parent="Header" unique_id=784243673]
+layout_mode = 0
+offset_left = 178.0
+offset_top = 82.0
+offset_right = 558.0
+offset_bottom = 122.0
+text = "Weave your identity."
+label_settings = SubResource("LabelSettings_body")
+
+[node name="Divider" type="ColorRect" parent="Header" unique_id=1119852579]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 78.0
+offset_right = 570.0
+offset_bottom = 81.0
+color = Color(0.58, 0.42, 0.18, 0.85)
+
+[node name="BackHint" type="Control" parent="." unique_id=1995145735]
+anchors_preset = 0
+offset_left = 92.0
+offset_top = 992.0
+offset_right = 430.0
+offset_bottom = 1044.0
+mouse_filter = 2
+
+[node name="BackInputLabel" type="Label" parent="BackHint" unique_id=2004617393]
+layout_mode = 0
+offset_right = 54.0
+offset_bottom = 46.0
+text = "ESC"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackTextLabel" type="Label" parent="BackHint" unique_id=999102803]
+layout_mode = 0
+offset_left = 66.0
+offset_right = 338.0
+offset_bottom = 46.0
+text = "LEAVE MEDITATION"
+label_settings = SubResource("LabelSettings_small")
+vertical_alignment = 1
+
+[node name="KnotPanel" type="TextureRect" parent="." unique_id=180208418]
+layout_mode = 0
+offset_left = 1390.0
+offset_top = 34.0
+offset_right = 1886.0
+offset_bottom = 172.0
+mouse_filter = 2
+texture = ExtResource("7_knot_panel")
+expand_mode = 1
+
+[node name="KnotTitle" type="Label" parent="KnotPanel" unique_id=1661578461]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 24.0
+offset_right = 372.0
+offset_bottom = 62.0
+text = "AVAILABLE THREAD KNOTS"
+label_settings = SubResource("LabelSettings_small")
+
+[node name="KnotCountLabel" type="Label" parent="KnotPanel" unique_id=1458886073]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 58.0
+offset_right = 360.0
+offset_bottom = 120.0
+text = "0"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="KnotIcon" type="TextureRect" parent="KnotPanel" unique_id=306391596]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 42.0
+offset_right = 468.0
+offset_bottom = 132.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GraphRoot" type="Control" parent="." unique_id=1039500059]
+anchors_preset = 0
+offset_left = 740.0
+offset_top = 112.0
+offset_right = 1848.0
+offset_bottom = 848.0
+mouse_filter = 2
+
+[node name="Connectors" type="Node2D" parent="GraphRoot" unique_id=1364661192]
+
+[node name="HealthLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=67587943]
+points = PackedVector2Array(554, 254, 554, 198, 554, 174)
+width = 9.0
+default_color = Color(0.39, 0.65, 1, 0.82)
+antialiased = true
+
+[node name="AttackLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=1100479328]
+points = PackedVector2Array(462, 307, 413, 279, 393, 267)
+width = 9.0
+default_color = Color(0.93, 0.2, 0.18, 0.82)
+antialiased = true
+
+[node name="SkillLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=1905570779]
+points = PackedVector2Array(462, 413, 413, 441, 393, 453)
+width = 9.0
+default_color = Color(0.93, 0.2, 0.18, 0.82)
+antialiased = true
+
+[node name="MomentumLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=471897029]
+points = PackedVector2Array(554, 466, 554, 522, 554, 546)
+width = 9.0
+default_color = Color(0.95, 0.72, 0.22, 0.82)
+antialiased = true
+
+[node name="APLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=328480287]
+points = PackedVector2Array(646, 413, 695, 441, 715, 453)
+width = 9.0
+default_color = Color(0.95, 0.72, 0.22, 0.82)
+antialiased = true
+
+[node name="ResistanceLine" type="Line2D" parent="GraphRoot/Connectors" unique_id=359357544]
+points = PackedVector2Array(646, 307, 695, 279, 715, 267)
+width = 9.0
+default_color = Color(0.39, 0.65, 1, 0.82)
+antialiased = true
+
+[node name="CenterOrnament" type="TextureRect" parent="GraphRoot" unique_id=1017663559]
+modulate = Color(0.95, 0.72, 0.22, 0.34)
+layout_mode = 0
+offset_left = 393.0
+offset_top = 199.0
+offset_right = 715.0
+offset_bottom = 521.0
+mouse_filter = 2
+texture = ExtResource("5_ring_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CenterEmblem" type="TextureRect" parent="GraphRoot" unique_id=738367555]
+modulate = Color(1, 0.86, 0.48, 0.96)
+layout_mode = 0
+offset_left = 439.0
+offset_top = 245.0
+offset_right = 669.0
+offset_bottom = 475.0
+mouse_filter = 2
+texture = ExtResource("2_emblem")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Stats" type="Control" parent="GraphRoot" unique_id=1341924228]
+anchors_preset = 0
+offset_right = 1108.0
+offset_bottom = 736.0
+
+[node name="Health" type="Control" parent="GraphRoot/Stats" unique_id=364142233]
+anchors_preset = 0
+offset_left = 427.0
+offset_top = -63.0
+offset_right = 679.0
+offset_bottom = 223.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/Health" unique_id=524360457]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("3_ring_blue")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/Health" unique_id=1513223653]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 40.0
+text = "HEALTH"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/Health" unique_id=1221037483]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 86.0
+offset_right = 178.0
+offset_bottom = 192.0
+mouse_filter = 2
+texture = ExtResource("12_icon_health")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/Health" unique_id=351756370]
+layout_mode = 0
+offset_top = 212.0
+offset_right = 250.0
+offset_bottom = 246.0
+text = "100  >  115"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/Health" unique_id=676985477]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 254.0
+offset_right = 178.0
+offset_bottom = 285.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/Health" unique_id=292209027]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 249.0
+offset_right = 130.0
+offset_bottom = 289.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Attack" type="Control" parent="GraphRoot/Stats" unique_id=1235130637]
+anchors_preset = 0
+offset_left = 187.0
+offset_top = 77.0
+offset_right = 437.0
+offset_bottom = 363.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/Attack" unique_id=336371906]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("4_ring_red")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/Attack" unique_id=948494574]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 40.0
+text = "ATTACK"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/Attack" unique_id=373417299]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 85.0
+offset_right = 178.0
+offset_bottom = 191.0
+mouse_filter = 2
+texture = ExtResource("13_icon_attack")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/Attack" unique_id=1063711925]
+layout_mode = 0
+offset_top = 212.0
+offset_right = 250.0
+offset_bottom = 246.0
+text = "25  >  29"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/Attack" unique_id=1019656366]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 254.0
+offset_right = 178.0
+offset_bottom = 285.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/Attack" unique_id=1971390333]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 249.0
+offset_right = 130.0
+offset_bottom = 289.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SkillDamage" type="Control" parent="GraphRoot/Stats" unique_id=1329008776]
+anchors_preset = 0
+offset_left = 187.0
+offset_top = 357.0
+offset_right = 437.0
+offset_bottom = 643.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/SkillDamage" unique_id=1557389503]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("4_ring_red")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/SkillDamage" unique_id=657498053]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 218.0
+offset_right = 290.0
+offset_bottom = 254.0
+text = "SKILL DAMAGE"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/SkillDamage" unique_id=1964818572]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 87.0
+offset_right = 178.0
+offset_bottom = 193.0
+mouse_filter = 2
+texture = ExtResource("14_icon_skill")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/SkillDamage" unique_id=795654665]
+layout_mode = 0
+offset_top = 252.0
+offset_right = 250.0
+offset_bottom = 286.0
+text = "100  >  110"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/SkillDamage" unique_id=238468829]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 292.0
+offset_right = 178.0
+offset_bottom = 323.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/SkillDamage" unique_id=2126750767]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 287.0
+offset_right = 130.0
+offset_bottom = 327.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Momentum" type="Control" parent="GraphRoot/Stats" unique_id=873328198]
+anchors_preset = 0
+offset_left = 427.0
+offset_top = 437.0
+offset_right = 679.0
+offset_bottom = 723.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/Momentum" unique_id=702867492]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("5_ring_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/Momentum" unique_id=1143016567]
+layout_mode = 0
+offset_left = -50.0
+offset_top = 218.0
+offset_right = 300.0
+offset_bottom = 254.0
+text = "MOMENTUM GAIN"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/Momentum" unique_id=1011767459]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 90.0
+offset_right = 178.0
+offset_bottom = 196.0
+mouse_filter = 2
+texture = ExtResource("15_icon_momentum")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/Momentum" unique_id=1536087597]
+layout_mode = 0
+offset_top = 252.0
+offset_right = 250.0
+offset_bottom = 286.0
+text = "100  >  110"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/Momentum" unique_id=1372038350]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 292.0
+offset_right = 178.0
+offset_bottom = 323.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/Momentum" unique_id=925629573]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 287.0
+offset_right = 130.0
+offset_bottom = 327.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="APRecharge" type="Control" parent="GraphRoot/Stats" unique_id=884197086]
+anchors_preset = 0
+offset_left = 671.0
+offset_top = 357.0
+offset_right = 921.0
+offset_bottom = 643.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/APRecharge" unique_id=1680728524]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("5_ring_gold")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/APRecharge" unique_id=2003164263]
+layout_mode = 0
+offset_left = -32.0
+offset_top = 218.0
+offset_right = 282.0
+offset_bottom = 254.0
+text = "AP RECHARGE"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/APRecharge" unique_id=1103314367]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 90.0
+offset_right = 178.0
+offset_bottom = 196.0
+mouse_filter = 2
+texture = ExtResource("16_icon_ap")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/APRecharge" unique_id=1953281776]
+layout_mode = 0
+offset_top = 252.0
+offset_right = 250.0
+offset_bottom = 286.0
+text = "100  >  110"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/APRecharge" unique_id=2103529825]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 292.0
+offset_right = 178.0
+offset_bottom = 323.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/APRecharge" unique_id=93269576]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 287.0
+offset_right = 130.0
+offset_bottom = 327.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Resistance" type="Control" parent="GraphRoot/Stats" unique_id=1860728257]
+anchors_preset = 0
+offset_left = 671.0
+offset_top = 77.0
+offset_right = 921.0
+offset_bottom = 363.0
+
+[node name="Ring" type="TextureRect" parent="GraphRoot/Stats/Resistance" unique_id=972917074]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 42.0
+offset_right = 225.0
+offset_bottom = 242.0
+texture = ExtResource("3_ring_blue")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="GraphRoot/Stats/Resistance" unique_id=354508253]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 40.0
+text = "RESISTANCE"
+label_settings = SubResource("LabelSettings_stat")
+horizontal_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="GraphRoot/Stats/Resistance" unique_id=203151686]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 91.0
+offset_right = 178.0
+offset_bottom = 197.0
+mouse_filter = 2
+texture = ExtResource("17_icon_resistance")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Values" type="Label" parent="GraphRoot/Stats/Resistance" unique_id=1900175960]
+layout_mode = 0
+offset_top = 212.0
+offset_right = 250.0
+offset_bottom = 246.0
+text = "0%  >  5%"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="Cost" type="Label" parent="GraphRoot/Stats/Resistance" unique_id=414990003]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 254.0
+offset_right = 178.0
+offset_bottom = 285.0
+text = "1"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="CostIcon" type="TextureRect" parent="GraphRoot/Stats/Resistance" unique_id=1322662792]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 249.0
+offset_right = 130.0
+offset_bottom = 289.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptPanel" type="TextureRect" parent="." unique_id=927391721]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 866.0
+offset_right = 1838.0
+offset_bottom = 1078.0
+mouse_filter = 2
+texture = ExtResource("6_prompt_panel")
+expand_mode = 1
+
+[node name="PromptTitleLabel" type="Label" parent="PromptPanel" unique_id=579965556]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 28.0
+offset_right = 620.0
+offset_bottom = 72.0
+text = "HEALTH"
+label_settings = SubResource("LabelSettings_stat")
+
+[node name="PromptStatIcon" type="TextureRect" parent="PromptPanel" unique_id=1922780049]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 32.0
+offset_right = 174.0
+offset_bottom = 110.0
+mouse_filter = 2
+texture = ExtResource("12_icon_health")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptDescriptionLabel" type="Label" parent="PromptPanel" unique_id=1428331274]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 82.0
+offset_right = 678.0
+offset_bottom = 122.0
+text = "Increases the Threadborne vitality."
+label_settings = SubResource("LabelSettings_small")
+
+[node name="PromptQuoteLabel" type="Label" parent="PromptPanel" unique_id=1600718385]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 124.0
+offset_right = 690.0
+offset_bottom = 166.0
+text = "A stronger weave endures longer."
+label_settings = SubResource("LabelSettings_small")
+
+[node name="PromptCostTitle" type="Label" parent="PromptPanel" unique_id=1296828501]
+layout_mode = 0
+offset_left = 710.0
+offset_top = 34.0
+offset_right = 960.0
+offset_bottom = 70.0
+text = "THREAD KNOTS REQUIRED"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="PromptKnotIcon" type="TextureRect" parent="PromptPanel" unique_id=819357599]
+layout_mode = 0
+offset_left = 754.0
+offset_top = 86.0
+offset_right = 824.0
+offset_bottom = 156.0
+mouse_filter = 2
+texture = ExtResource("8_thread_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PromptCostLabel" type="Label" parent="PromptPanel" unique_id=1747643791]
+layout_mode = 0
+offset_left = 834.0
+offset_top = 90.0
+offset_right = 910.0
+offset_bottom = 150.0
+text = "1"
+label_settings = SubResource("LabelSettings_title")
+vertical_alignment = 1
+
+[node name="PromptInputLabel" type="Label" parent="PromptPanel" unique_id=1225231102]
+layout_mode = 0
+offset_left = 342.0
+offset_top = 176.0
+offset_right = 682.0
+offset_bottom = 214.0
+text = "E WEAVE THREAD"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1

@@ -10,14 +10,14 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("2_blur_shader")
-shader_parameter/blur_amount = 5.8
+shader_parameter/blur_amount = 3.2
 shader_parameter/blur_samples = 5.0
-shader_parameter/desaturation = 0.72
-shader_parameter/blue_tint_strength = 0.1
+shader_parameter/desaturation = 0.68
+shader_parameter/blue_tint_strength = 0.0
 shader_parameter/blue_tint_color = Color(0.78, 0.84, 1, 1)
 shader_parameter/focus_center = Vector2(0.28, 0.56)
-shader_parameter/focus_radius = Vector2(0.22, 0.33)
-shader_parameter/focus_softness = 0.2
+shader_parameter/focus_radius = Vector2(0.34, 0.42)
+shader_parameter/focus_softness = 0.32
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("6_font")

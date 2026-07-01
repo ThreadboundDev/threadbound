@@ -9,6 +9,7 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var save_point_id: StringName = &""
 @export var open_animation := &"open_to_closed"
 @export var interaction_message := "Save point activated."
+@export var prompt_action_text := "Save"
 @export var starts_closed := true
 @export var close_when_player_leaves := true
 @export var sprite_sheet: Texture2D
@@ -22,8 +23,11 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var focus_left_screen_position := Vector2(0.28, 0.56)
 @export var focus_right_screen_position := Vector2(0.72, 0.56)
 @export var player_sit_offset := Vector2(-32.0, -56.0)
+@export_range(0.0, 4.0, 0.05) var meditation_light_energy := 1.35
+@export_range(0.0, 2.0, 0.05) var meditation_light_fade_duration := 0.45
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D
+@onready var meditation_light: PointLight2D = get_node_or_null("MeditationLight") as PointLight2D
 @onready var editor_preview_sprite: Sprite2D = get_node_or_null("EditorPreviewSprite") as Sprite2D
 @onready var prompt_label: Label = $PromptLabel as Label
 @onready var interaction_area: Area2D = $InteractionArea as Area2D
@@ -43,12 +47,18 @@ var _remote_path := NodePath("")
 func _ready() -> void:
 	if editor_preview_sprite:
 		editor_preview_sprite.visible = false
+	if meditation_light:
+		meditation_light.visible = false
+		meditation_light.energy = 0.0
 	add_to_group("save_points")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_interaction_body_entered)
 		interaction_area.body_exited.connect(_on_interaction_body_exited)
+	var input_manager := get_node_or_null("/root/InputBindingManager")
+	if input_manager and input_manager.has_signal("bindings_changed"):
+		input_manager.bindings_changed.connect(_refresh_prompt_label)
 	_build_sprite_frames_from_sheet()
 	_apply_initial_state()
 
@@ -75,6 +85,7 @@ func is_open() -> bool:
 func _apply_initial_state() -> void:
 	if prompt_label:
 		prompt_label.visible = false
+		_refresh_prompt_label()
 	if not save_point_sprite:
 		return
 
@@ -152,6 +163,7 @@ func _on_interaction_body_entered(body: Node) -> void:
 
 	_interactable_player = body
 	if prompt_label:
+		_refresh_prompt_label()
 		prompt_label.visible = true
 	if body.has_method("_on_interactable_entered"):
 		body._on_interactable_entered(self)
@@ -193,6 +205,7 @@ func _disable_prompt() -> void:
 
 func _present_camera_and_menu(player: Node) -> void:
 	_camera = get_viewport().get_camera_2d()
+	_fade_meditation_light(true)
 	if _camera:
 		_camera_state = {
 			"position": _camera.global_position,
@@ -220,6 +233,8 @@ func _present_camera_and_menu(player: Node) -> void:
 
 	_menu = SAVE_POINT_MENU_SCENE.instantiate()
 	get_tree().current_scene.add_child(_menu)
+	if _menu.has_method("set_player"):
+		_menu.set_player(player)
 	if _menu.has_method("open"):
 		_menu.open(menu_side)
 	if _menu.has_signal("rise_requested"):
@@ -249,6 +264,8 @@ func _end_save_point_interaction() -> void:
 		tween.tween_property(_camera, "zoom", _camera_state.get("zoom", _camera.zoom), camera_tween_duration)
 		await tween.finished
 
+	_fade_meditation_light(false)
+
 	if _remote_transform and is_instance_valid(_remote_transform):
 		_remote_transform.update_position = _remote_update_position
 		_remote_transform.remote_path = _remote_path
@@ -262,6 +279,7 @@ func _end_save_point_interaction() -> void:
 	if finished_player and interaction_area and interaction_area.get_overlapping_bodies().has(finished_player):
 		_interactable_player = finished_player
 		if prompt_label:
+			_refresh_prompt_label()
 			prompt_label.visible = true
 		if finished_player.has_method("_on_interactable_entered"):
 			finished_player._on_interactable_entered(self)
@@ -270,6 +288,21 @@ func _reset_regular_enemies() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if enemy.has_method("reset_for_save_point"):
 			enemy.reset_for_save_point()
+
+func _fade_meditation_light(turn_on: bool) -> void:
+	if not meditation_light:
+		return
+
+	if turn_on:
+		meditation_light.visible = true
+	var target_energy := meditation_light_energy if turn_on else 0.0
+	var tween := create_tween()
+	tween.tween_property(meditation_light, "energy", target_energy, meditation_light_fade_duration)
+	if not turn_on:
+		tween.tween_callback(func() -> void:
+			if meditation_light:
+				meditation_light.visible = false
+		)
 
 func _rest_at_save_point() -> void:
 	if _active_player and _active_player.has_method("recover_at_save_point"):
@@ -285,3 +318,12 @@ func _rest_at_save_point() -> void:
 		DemoProgress.save_checkpoint(checkpoint_id, scene_path, (_active_player as Node2D).global_position)
 
 	_reset_regular_enemies()
+
+func _refresh_prompt_label() -> void:
+	if not prompt_label:
+		return
+
+	var action_text := prompt_action_text
+	if action_text.is_empty():
+		action_text = InteractionPromptFormatter.prompt_action_from_text(prompt_label.text, "Save")
+	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
