@@ -1,7 +1,7 @@
 class_name DamageData
 extends Resource
 
-@export var amount: int = 1
+@export var amount: int = 25
 @export var knockback: Vector2 = Vector2.ZERO
 @export var hitstun: float = 0.12
 @export var hit_pause: float = 0.04

@@ -21,11 +21,11 @@ z_index = 2
 
 [node name="MeditationLight" type="PointLight2D" parent="."]
 visible = false
-position = Vector2(0, -260)
-color = Color(1, 0.78, 0.38, 1)
+position = Vector2(0, -245)
+color = Color(1, 0.76, 0.34, 1)
 energy = 0.0
 texture = ExtResource("3_meditation_light")
-texture_scale = 1.85
+texture_scale = 2.35
 
 [node name="ProximityShape" type="CollisionShape2D" parent="." unique_id=1541660845]
 position = Vector2(0, -160)

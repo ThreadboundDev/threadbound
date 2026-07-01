@@ -27,22 +27,22 @@ class_name ControllerLineCallout
 		endpoint_texture = value
 		_sync_endpoint_style()
 
-@export var line_width := 8.0:
+@export var line_width := 4.0:
 	set(value):
 		line_width = value
 		_sync_line_style()
 
-@export var endpoint_scale := Vector2(0.5, 0.5):
+@export var endpoint_scale := Vector2(0.2, 0.2):
 	set(value):
 		endpoint_scale = value
 		_sync_endpoint_style()
 
 @onready var line: Line2D = $Line as Line2D
-@onready var start_point: Sprite2D = $StartPoint as Sprite2D
+@onready var start_point: Sprite2D = get_node_or_null("StartPoint") as Sprite2D
 @onready var end_point: Sprite2D = $EndPoint as Sprite2D
 @onready var text_box: Control = $TextBox as Control
 @onready var action_label: Label = $TextBox/ActionLabel as Label
-@onready var input_label: Label = $TextBox/InputLabel as Label
+@onready var input_label: Label = get_node_or_null("TextBox/InputLabel") as Label
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE

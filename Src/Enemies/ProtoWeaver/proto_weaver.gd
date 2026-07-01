@@ -66,7 +66,7 @@ enum AttackMode {
 @export var laser_tracking_time := 0.9
 @export var laser_lock_time := 0.32
 @export var laser_fire_time := 0.22
-@export var laser_damage := 1
+@export var laser_damage := 30
 @export var laser_hit_width := 42.0
 @export var laser_max_distance := 980.0
 @export var laser_head_offset := Vector2(0.0, -90.0)
@@ -794,7 +794,7 @@ func _try_damage_player_with_laser() -> void:
 		return
 
 	var damage := DamageData.new()
-	damage.amount = laser_damage
+	damage.amount = EnemyScaling.scale_damage(laser_damage)
 	damage.source = self
 	damage.hit_position = player_node.global_position
 	damage.knockback = direction * 220.0 + Vector2(0.0, -70.0)

@@ -381,6 +381,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Tabs" type="HBoxContainer" parent="MenuRoot" unique_id=402763332]
+z_index = 30
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -507,16 +508,19 @@ offset_right = -96.0
 offset_bottom = -88.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="InventoryPage" type="Control" parent="MenuRoot/Pages" unique_id=222614757]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -51.0
-offset_bottom = -51.0
+offset_top = -60.0
+offset_bottom = -216.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CharacterPanel" type="Control" parent="MenuRoot/Pages/InventoryPage" unique_id=1402888222]
 layout_mode = 1
@@ -553,11 +557,12 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 100.0
-offset_top = 64.0
-offset_right = -100.0
-offset_bottom = 92.0
+offset_left = 51.00003
+offset_top = 26.000004
+offset_right = -356.5782
+offset_bottom = 54.000004
 grow_horizontal = 2
+scale = Vector2(3.035, 3.035)
 mouse_filter = 2
 texture = ExtResource("3_separator")
 expand_mode = 1
@@ -959,19 +964,19 @@ vertical_alignment = 1
 [node name="Attack" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=223990872]
 layout_mode = 0
 offset_left = -20.0
-offset_top = 53.395
+offset_top = 54.0
 offset_right = 450.0
-offset_bottom = 81.395004
+offset_bottom = 82.0
 text = "ATTACK DAMAGE - 1"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
 
-[node name="SkillDamage" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid"]
+[node name="SkillDamage" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=882486581]
 layout_mode = 0
 offset_left = -20.0
-offset_top = 77.79
+offset_top = 78.0
 offset_right = 450.0
-offset_bottom = 105.79
+offset_bottom = 106.0
 text = "SKILL DAMAGE - 0"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
@@ -979,9 +984,9 @@ vertical_alignment = 1
 [node name="ActionRecharge" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=817442510]
 layout_mode = 0
 offset_left = 265.0
-offset_top = 72.99997
+offset_top = 78.0
 offset_right = 735.0
-offset_bottom = 100.99997
+offset_bottom = 106.0
 text = "AP RECHARGE - 10.0 SEC"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
@@ -989,9 +994,9 @@ vertical_alignment = 1
 [node name="MomentumGain" type="Label" parent="MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid" unique_id=1075799883]
 layout_mode = 0
 offset_left = 265.0
-offset_top = 51.94
+offset_top = 54.0
 offset_right = 735.0
-offset_bottom = 79.94
+offset_bottom = 82.0
 text = "MOMENTUM GAIN - 100%"
 label_settings = SubResource("LabelSettings_controls_binding")
 vertical_alignment = 1
@@ -2304,6 +2309,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="RoughMap" type="TextureRect" parent="MenuRoot/Pages/MapPage" unique_id=1833338565]
 layout_mode = 1
@@ -2360,6 +2366,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Body" type="Label" parent="MenuRoot/Pages/LorePage" unique_id=1595261006]
 layout_mode = 1
@@ -2379,13 +2386,13 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="ControlsPage" type="Control" parent="MenuRoot/Pages" unique_id=357483101]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ControlsLayout" type="Control" parent="MenuRoot/Pages/ControlsPage" unique_id=857323471]
 layout_mode = 1
@@ -2426,6 +2433,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="MouseKeyboard" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=313173660]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2455,7 +2463,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="PS5" type="TextureRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/DeviceArt" unique_id=1168730613]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2516,6 +2523,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="BindingPanel" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse" unique_id=1028516630]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3084,7 +3092,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory" unique_id=1464027220]
 points = PackedVector2Array(610, 250, 500, 166, 330, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3092,12 +3100,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory" unique_id=866445729]
 position = Vector2(610, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory" unique_id=749357986]
 position = Vector2(330, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Inventory" unique_id=2049132903]
@@ -3159,7 +3167,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map" unique_id=4943725]
 points = PackedVector2Array(610, 310, 500, 228, 330, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3167,12 +3175,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map" unique_id=136762763]
 position = Vector2(610, 310)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map" unique_id=840572217]
 position = Vector2(330, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Map" unique_id=923258167]
@@ -3234,7 +3242,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore" unique_id=846308820]
 points = PackedVector2Array(610, 370, 500, 290, 330, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3242,12 +3250,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore" unique_id=489904402]
 position = Vector2(610, 370)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore" unique_id=13406041]
 position = Vector2(330, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Lore" unique_id=1712327406]
@@ -3309,7 +3317,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls" unique_id=1767883297]
 points = PackedVector2Array(650, 420, 500, 352, 330, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3317,12 +3325,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls" unique_id=1301487063]
 position = Vector2(650, 420)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls" unique_id=349041600]
 position = Vector2(330, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Controls" unique_id=1249170881]
@@ -3384,7 +3392,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move" unique_id=1647568807]
 points = PackedVector2Array(675, 475, 500, 414, 330, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3392,12 +3400,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move" unique_id=493811658]
 position = Vector2(675, 475)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move" unique_id=1197659301]
 position = Vector2(330, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Move" unique_id=389430522]
@@ -3459,7 +3467,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause" unique_id=1553937537]
 points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3467,12 +3475,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause" unique_id=754214290]
 position = Vector2(865, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause" unique_id=93688129]
 position = Vector2(1200, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Pause" unique_id=712933957]
@@ -3534,7 +3542,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft" unique_id=882395779]
 points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3542,12 +3550,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft" unique_id=562830345]
 position = Vector2(720, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft" unique_id=414515541]
 position = Vector2(1200, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleLeft" unique_id=471080805]
@@ -3609,7 +3617,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight" unique_id=1524387356]
 points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3617,12 +3625,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight" unique_id=1136376345]
 position = Vector2(815, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight" unique_id=382938114]
 position = Vector2(1200, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/CycleRight" unique_id=1343316339]
@@ -3684,7 +3692,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple" unique_id=1053166029]
 points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3692,12 +3700,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple" unique_id=1812959121]
 position = Vector2(870, 335)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple" unique_id=2050728716]
 position = Vector2(1200, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Grapple" unique_id=672189505]
@@ -3759,7 +3767,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack" unique_id=174982721]
 points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3767,12 +3775,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack" unique_id=1748253932]
 position = Vector2(855, 410)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack" unique_id=2140901077]
 position = Vector2(1200, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Attack" unique_id=250098636]
@@ -3834,7 +3842,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash" unique_id=167290638]
 points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3842,12 +3850,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash" unique_id=458291498]
 position = Vector2(900, 385)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash" unique_id=584551951]
 position = Vector2(1200, 476)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Dash" unique_id=1485306014]
@@ -3909,7 +3917,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump" unique_id=610667553]
 points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3917,12 +3925,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump" unique_id=1485943562]
 position = Vector2(900, 450)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump" unique_id=2080032278]
 position = Vector2(1200, 538)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Jump" unique_id=277225798]
@@ -3984,7 +3992,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look" unique_id=1300147231]
 points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -3992,12 +4000,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look" unique_id=1379239241]
 position = Vector2(800, 492)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look" unique_id=1618387769]
 position = Vector2(1200, 600)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Xbox/Look" unique_id=552090404]
@@ -4043,7 +4051,6 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="PS5" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts" unique_id=1565195713]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4052,11 +4059,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Inventory" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1603110354]
+[node name="DPadUp" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1603110354]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 72.0
+offset_right = 40.0
+offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4067,25 +4078,20 @@ text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory" unique_id=1214648746]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp" unique_id=1214648746]
 points = PackedVector2Array(610, 250, 500, 166, 330, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory" unique_id=1341721290]
-position = Vector2(610, 250)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory" unique_id=1548072433]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp" unique_id=1548072433]
 position = Vector2(330, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory" unique_id=2015992615]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp" unique_id=2015992615]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 142.0
@@ -4093,7 +4099,7 @@ offset_right = 302.0
 offset_bottom = 190.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox" unique_id=1590366719]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp/TextBox" unique_id=1590366719]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4103,10 +4109,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox" unique_id=841926065]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp/TextBox" unique_id=841926065]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4114,24 +4120,13 @@ text = "Inventory"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Inventory/TextBox" unique_id=1018962139]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "D-Pad Up"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Map" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=376388262]
+[node name="DPadLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=376388262]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 61.0
+offset_bottom = 61.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4142,25 +4137,20 @@ text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map" unique_id=415234628]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft" unique_id=415234628]
 points = PackedVector2Array(610, 310, 500, 228, 330, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map" unique_id=1114913063]
-position = Vector2(610, 310)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map" unique_id=305165982]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft" unique_id=305165982]
 position = Vector2(330, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map" unique_id=1731847999]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft" unique_id=1731847999]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 204.0
@@ -4168,7 +4158,7 @@ offset_right = 302.0
 offset_bottom = 252.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox" unique_id=1344369987]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft/TextBox" unique_id=1344369987]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4178,10 +4168,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox" unique_id=1356845553]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft/TextBox" unique_id=1356845553]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4189,20 +4179,7 @@ text = "Map"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Map/TextBox" unique_id=2065848159]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "D-Pad Left"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Lore" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=256373656]
+[node name="DPadDown" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=256373656]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4217,25 +4194,20 @@ text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore" unique_id=621049469]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown" unique_id=621049469]
 points = PackedVector2Array(610, 370, 500, 290, 330, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore" unique_id=1613867485]
-position = Vector2(610, 370)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore" unique_id=1301828530]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown" unique_id=1301828530]
 position = Vector2(330, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore" unique_id=416976443]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown" unique_id=416976443]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 266.0
@@ -4243,7 +4215,7 @@ offset_right = 302.0
 offset_bottom = 314.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox" unique_id=1766559058]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown/TextBox" unique_id=1766559058]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4253,10 +4225,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox" unique_id=1444364343]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown/TextBox" unique_id=1444364343]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4264,20 +4236,7 @@ text = "Lore"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Lore/TextBox" unique_id=178012739]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "D-Pad Down"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Controls" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=43012425]
+[node name="DPadRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=43012425]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4292,25 +4251,20 @@ text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls" unique_id=255838595]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight" unique_id=255838595]
 points = PackedVector2Array(650, 420, 500, 352, 330, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls" unique_id=1980509087]
-position = Vector2(650, 420)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls" unique_id=2072124705]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight" unique_id=2072124705]
 position = Vector2(330, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls" unique_id=2121544813]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight" unique_id=2121544813]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 328.0
@@ -4318,7 +4272,7 @@ offset_right = 302.0
 offset_bottom = 376.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox" unique_id=353212649]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight/TextBox" unique_id=353212649]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4328,10 +4282,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox" unique_id=1727281439]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight/TextBox" unique_id=1727281439]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4339,20 +4293,7 @@ text = "Controls"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Controls/TextBox" unique_id=345917602]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "D-Pad Right"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Move" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=2138005280]
+[node name="LeftStick" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=2138005280]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4367,25 +4308,20 @@ text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move" unique_id=1334578488]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick" unique_id=1334578488]
 points = PackedVector2Array(675, 475, 500, 414, 330, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move" unique_id=1340146598]
-position = Vector2(675, 475)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move" unique_id=1048224143]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick" unique_id=1048224143]
 position = Vector2(330, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move" unique_id=60372397]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick" unique_id=60372397]
 anchors_preset = 0
 offset_left = 16.0
 offset_top = 390.0
@@ -4393,7 +4329,7 @@ offset_right = 302.0
 offset_bottom = 438.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox" unique_id=1137631807]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick/TextBox" unique_id=1137631807]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4403,10 +4339,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox" unique_id=929133423]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick/TextBox" unique_id=929133423]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4414,20 +4350,7 @@ text = "Move"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Move/TextBox" unique_id=686755818]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Left Stick"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Pause" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=709342203]
+[node name="OptionsButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=709342203]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4442,25 +4365,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause" unique_id=21186466]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=21186466]
 points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause" unique_id=1773456123]
-position = Vector2(865, 250)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause" unique_id=1097333287]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=1097333287]
 position = Vector2(1200, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause" unique_id=917307393]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=917307393]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 142.0
@@ -4468,7 +4386,7 @@ offset_right = 1514.0
 offset_bottom = 190.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox" unique_id=523431984]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton/TextBox" unique_id=523431984]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4478,10 +4396,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox" unique_id=1532020146]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton/TextBox" unique_id=1532020146]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4489,20 +4407,7 @@ text = "Pause"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Pause/TextBox" unique_id=54260468]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Start"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="CycleLeft" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=274053313]
+[node name="L1Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=274053313]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4517,25 +4422,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft" unique_id=338154969]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=338154969]
 points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft" unique_id=845161255]
-position = Vector2(720, 190)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft" unique_id=1404485324]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=1404485324]
 position = Vector2(1200, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft" unique_id=2103815053]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=2103815053]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 204.0
@@ -4543,7 +4443,7 @@ offset_right = 1514.0
 offset_bottom = 252.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox" unique_id=1242004092]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button/TextBox" unique_id=1242004092]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4553,10 +4453,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox" unique_id=22152300]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button/TextBox" unique_id=22152300]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4564,20 +4464,7 @@ text = "Cycle Left"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleLeft/TextBox" unique_id=186055276]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "LB"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="CycleRight" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=708352018]
+[node name="R1Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=708352018]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4592,25 +4479,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight" unique_id=154142247]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button" unique_id=154142247]
 points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight" unique_id=1237451891]
-position = Vector2(815, 190)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight" unique_id=1931615724]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button" unique_id=1931615724]
 position = Vector2(1200, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight" unique_id=1805137399]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button" unique_id=1805137399]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 266.0
@@ -4618,7 +4500,7 @@ offset_right = 1514.0
 offset_bottom = 314.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox" unique_id=211775136]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button/TextBox" unique_id=211775136]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4628,10 +4510,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox" unique_id=814417342]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button/TextBox" unique_id=814417342]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4639,20 +4521,7 @@ text = "Cycle Right"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CycleRight/TextBox" unique_id=898191784]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "RB"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Grapple" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1223305246]
+[node name="R2Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1223305246]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4667,25 +4536,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple" unique_id=1534794492]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button" unique_id=1534794492]
 points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple" unique_id=571459354]
-position = Vector2(870, 335)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple" unique_id=869020542]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button" unique_id=869020542]
 position = Vector2(1200, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple" unique_id=818695833]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button" unique_id=818695833]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 328.0
@@ -4693,7 +4557,7 @@ offset_right = 1514.0
 offset_bottom = 376.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox" unique_id=972127713]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button/TextBox" unique_id=972127713]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4703,10 +4567,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox" unique_id=998283264]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button/TextBox" unique_id=998283264]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4714,20 +4578,7 @@ text = "Grapple"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Grapple/TextBox" unique_id=346113651]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "RB"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Attack" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1742425697]
+[node name="SquareButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1742425697]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4742,25 +4593,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack" unique_id=425556602]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton" unique_id=425556602]
 points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack" unique_id=1806289691]
-position = Vector2(855, 410)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack" unique_id=416871793]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton" unique_id=416871793]
 position = Vector2(1200, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack" unique_id=1216695592]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton" unique_id=1216695592]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 390.0
@@ -4768,7 +4614,7 @@ offset_right = 1514.0
 offset_bottom = 438.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox" unique_id=1017647162]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton/TextBox" unique_id=1017647162]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4778,10 +4624,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox" unique_id=564265256]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton/TextBox" unique_id=564265256]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4789,20 +4635,7 @@ text = "Attack"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Attack/TextBox" unique_id=2065510402]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "X"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Dash" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=358762958]
+[node name="CircleButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=358762958]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4817,25 +4650,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash" unique_id=441457558]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton" unique_id=441457558]
 points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash" unique_id=1780435900]
-position = Vector2(900, 385)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash" unique_id=12529096]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton" unique_id=12529096]
 position = Vector2(1200, 476)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash" unique_id=1490145899]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton" unique_id=1490145899]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 452.0
@@ -4843,7 +4671,7 @@ offset_right = 1514.0
 offset_bottom = 500.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox" unique_id=813464963]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton/TextBox" unique_id=813464963]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4853,10 +4681,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox" unique_id=1823961622]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton/TextBox" unique_id=1823961622]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4864,20 +4692,7 @@ text = "Dash"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Dash/TextBox" unique_id=178192790]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "B"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Jump" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1501836867]
+[node name="CrossButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1501836867]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4892,25 +4707,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump" unique_id=433166212]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton" unique_id=433166212]
 points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump" unique_id=1687424130]
-position = Vector2(900, 450)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump" unique_id=449175725]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton" unique_id=449175725]
 position = Vector2(1200, 538)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump" unique_id=1809319543]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton" unique_id=1809319543]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 514.0
@@ -4918,7 +4728,7 @@ offset_right = 1514.0
 offset_bottom = 562.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox" unique_id=1487641530]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton/TextBox" unique_id=1487641530]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4928,10 +4738,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox" unique_id=434633085]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton/TextBox" unique_id=434633085]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -4939,20 +4749,7 @@ text = "Jump"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Jump/TextBox" unique_id=1553230068]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "A"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Look" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=797439854]
+[node name="RightStick" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=797439854]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4967,25 +4764,20 @@ text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
-[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look" unique_id=1306118273]
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/RightStick" unique_id=1306118273]
 points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look" unique_id=1689495601]
-position = Vector2(800, 492)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("18_endpoint")
-
-[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look" unique_id=943424435]
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/RightStick" unique_id=943424435]
 position = Vector2(1200, 600)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
-[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look" unique_id=1077661725]
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/RightStick" unique_id=1077661725]
 anchors_preset = 0
 offset_left = 1228.0
 offset_top = 576.0
@@ -4993,7 +4785,7 @@ offset_right = 1514.0
 offset_bottom = 624.0
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox" unique_id=285869704]
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/RightStick/TextBox" unique_id=285869704]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -5003,28 +4795,15 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.021, 0.016, 0.68)
 
-[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox" unique_id=1547469119]
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/RightStick/TextBox" unique_id=1547469119]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.54
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Look"
 label_settings = SubResource("LabelSettings_body")
-vertical_alignment = 1
-
-[node name="InputLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/Look/TextBox" unique_id=172223554]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.54
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Right Stick"
-label_settings = SubResource("LabelSettings_body")
-horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Nintendo" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts" unique_id=2075710987]
@@ -5054,7 +4833,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory" unique_id=1713375147]
 points = PackedVector2Array(610, 250, 500, 166, 330, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5062,12 +4841,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory" unique_id=844261185]
 position = Vector2(610, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory" unique_id=417739785]
 position = Vector2(330, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Inventory" unique_id=577968082]
@@ -5129,7 +4908,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map" unique_id=250397472]
 points = PackedVector2Array(610, 310, 500, 228, 330, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5137,12 +4916,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map" unique_id=155726742]
 position = Vector2(610, 310)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map" unique_id=1521170584]
 position = Vector2(330, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Map" unique_id=2012872379]
@@ -5204,7 +4983,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore" unique_id=1421588846]
 points = PackedVector2Array(610, 370, 500, 290, 330, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5212,12 +4991,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore" unique_id=619461228]
 position = Vector2(610, 370)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore" unique_id=692567552]
 position = Vector2(330, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Lore" unique_id=1108073635]
@@ -5279,7 +5058,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls" unique_id=539807375]
 points = PackedVector2Array(650, 420, 500, 352, 330, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5287,12 +5066,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls" unique_id=1001367470]
 position = Vector2(650, 420)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls" unique_id=1184170431]
 position = Vector2(330, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Controls" unique_id=244923390]
@@ -5354,7 +5133,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move" unique_id=2011580301]
 points = PackedVector2Array(675, 475, 500, 414, 330, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5362,12 +5141,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move" unique_id=662470427]
 position = Vector2(675, 475)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move" unique_id=69591546]
 position = Vector2(330, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Move" unique_id=747867320]
@@ -5429,7 +5208,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause" unique_id=1976697180]
 points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5437,12 +5216,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause" unique_id=1422190008]
 position = Vector2(865, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause" unique_id=304084727]
 position = Vector2(1200, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Pause" unique_id=880142360]
@@ -5504,7 +5283,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft" unique_id=2032467384]
 points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5512,12 +5291,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft" unique_id=811539245]
 position = Vector2(720, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft" unique_id=197926922]
 position = Vector2(1200, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleLeft" unique_id=201391843]
@@ -5579,7 +5358,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight" unique_id=567599222]
 points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5587,12 +5366,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight" unique_id=1597677799]
 position = Vector2(815, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight" unique_id=27925617]
 position = Vector2(1200, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/CycleRight" unique_id=1157876113]
@@ -5654,7 +5433,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple" unique_id=564397253]
 points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5662,12 +5441,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple" unique_id=724493152]
 position = Vector2(870, 335)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple" unique_id=943591291]
 position = Vector2(1200, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Grapple" unique_id=955596055]
@@ -5729,7 +5508,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack" unique_id=1530714732]
 points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5737,12 +5516,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack" unique_id=672730329]
 position = Vector2(855, 410)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack" unique_id=1526079328]
 position = Vector2(1200, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Attack" unique_id=807742080]
@@ -5804,7 +5583,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash" unique_id=2052234883]
 points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5812,12 +5591,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash" unique_id=854834495]
 position = Vector2(900, 385)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash" unique_id=1306977757]
 position = Vector2(1200, 476)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Dash" unique_id=644076992]
@@ -5879,7 +5658,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump" unique_id=1844568708]
 points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5887,12 +5666,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump" unique_id=188660405]
 position = Vector2(900, 450)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump" unique_id=536468066]
 position = Vector2(1200, 538)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Jump" unique_id=505216492]
@@ -5954,7 +5733,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look" unique_id=618692810]
 points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -5962,12 +5741,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look" unique_id=1456049414]
 position = Vector2(800, 492)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look" unique_id=1804030171]
 position = Vector2(1200, 600)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo/Look" unique_id=789563577]
@@ -6039,7 +5818,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory" unique_id=77939710]
 points = PackedVector2Array(610, 250, 500, 166, 330, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6047,12 +5826,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory" unique_id=197171800]
 position = Vector2(610, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory" unique_id=721189044]
 position = Vector2(330, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Inventory" unique_id=1700734744]
@@ -6114,7 +5893,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map" unique_id=1688688464]
 points = PackedVector2Array(610, 310, 500, 228, 330, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6122,12 +5901,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map" unique_id=599063471]
 position = Vector2(610, 310)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map" unique_id=783486808]
 position = Vector2(330, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Map" unique_id=80207845]
@@ -6189,7 +5968,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore" unique_id=1649071952]
 points = PackedVector2Array(610, 370, 500, 290, 330, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6197,12 +5976,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore" unique_id=605909985]
 position = Vector2(610, 370)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore" unique_id=1588711352]
 position = Vector2(330, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Lore" unique_id=483845904]
@@ -6264,7 +6043,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls" unique_id=1138835889]
 points = PackedVector2Array(650, 420, 500, 352, 330, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6272,12 +6051,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls" unique_id=1185540084]
 position = Vector2(650, 420)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls" unique_id=1631806995]
 position = Vector2(330, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Controls" unique_id=442577334]
@@ -6339,7 +6118,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move" unique_id=710706705]
 points = PackedVector2Array(675, 475, 500, 414, 330, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6347,12 +6126,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move" unique_id=1223181865]
 position = Vector2(675, 475)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move" unique_id=506836382]
 position = Vector2(330, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Move" unique_id=1672137395]
@@ -6414,7 +6193,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause" unique_id=430350036]
 points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6422,12 +6201,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause" unique_id=907671208]
 position = Vector2(865, 250)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause" unique_id=182512774]
 position = Vector2(1200, 166)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Pause" unique_id=1350810190]
@@ -6489,7 +6268,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft" unique_id=1596906667]
 points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6497,12 +6276,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft" unique_id=81287702]
 position = Vector2(720, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft" unique_id=1575072793]
 position = Vector2(1200, 228)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleLeft" unique_id=56073469]
@@ -6564,7 +6343,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight" unique_id=181464097]
 points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6572,12 +6351,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight" unique_id=649535147]
 position = Vector2(815, 190)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight" unique_id=1503020668]
 position = Vector2(1200, 290)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/CycleRight" unique_id=275540331]
@@ -6639,7 +6418,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple" unique_id=258970998]
 points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6647,12 +6426,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple" unique_id=779779210]
 position = Vector2(870, 335)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple" unique_id=292055979]
 position = Vector2(1200, 352)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Grapple" unique_id=1011569746]
@@ -6714,7 +6493,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack" unique_id=1154651305]
 points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6722,12 +6501,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack" unique_id=1980801647]
 position = Vector2(855, 410)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack" unique_id=506480825]
 position = Vector2(1200, 414)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Attack" unique_id=1476219093]
@@ -6789,7 +6568,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash" unique_id=1573577865]
 points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6797,12 +6576,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash" unique_id=1986901034]
 position = Vector2(900, 385)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash" unique_id=51014622]
 position = Vector2(1200, 476)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Dash" unique_id=781809212]
@@ -6864,7 +6643,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump" unique_id=38037064]
 points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6872,12 +6651,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump" unique_id=367555780]
 position = Vector2(900, 450)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump" unique_id=1767350222]
 position = Vector2(1200, 538)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Jump" unique_id=1501407616]
@@ -6939,7 +6718,7 @@ endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look" unique_id=430612142]
 points = PackedVector2Array(800, 492, 1015, 600, 1200, 600)
-width = 8.0
+width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
 begin_cap_mode = 2
@@ -6947,12 +6726,12 @@ end_cap_mode = 2
 
 [node name="StartPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look" unique_id=1608737042]
 position = Vector2(800, 492)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look" unique_id=329866125]
 position = Vector2(1200, 600)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam/Look" unique_id=1592418361]

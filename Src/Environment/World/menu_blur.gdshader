@@ -13,6 +13,15 @@ uniform vec4 blue_tint_color : source_color = vec4(0.75, 0.85, 1.0, 1.0); // sof
 uniform vec2 focus_center = vec2(0.5, 0.5);
 uniform vec2 focus_radius = vec2(0.0, 0.0);
 uniform float focus_softness : hint_range(0.001, 1.0) = 0.12;
+uniform float darken_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float vignette_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float vignette_radius : hint_range(0.0, 1.5) = 0.72;
+uniform float vignette_softness : hint_range(0.001, 1.0) = 0.36;
+uniform float focus_warmth : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 focus_warm_color : source_color = vec4(1.0, 0.72, 0.28, 1.0);
+uniform float focus_glow_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float focus_glow_radius : hint_range(0.0, 2.0) = 0.72;
+uniform float focus_glow_softness : hint_range(0.001, 1.0) = 0.5;
 
 void fragment() {
     vec2 ps = SCREEN_PIXEL_SIZE;
@@ -36,6 +45,7 @@ void fragment() {
 
     // Apply subtle blue tint
     vec3 tinted = mix(desat, blue_tint_color.rgb, blue_tint_strength * blue_tint_color.a);
+    tinted = mix(tinted, vec3(0.0), darken_strength);
 
     vec4 original = texture(SCREEN_TEXTURE, SCREEN_UV);
     vec2 radius = max(focus_radius, vec2(0.001));
@@ -43,5 +53,16 @@ void fragment() {
     float focus_distance = length(focus_delta);
     float focus_mix = smoothstep(1.0 - focus_softness, 1.0, focus_distance);
 
-    COLOR = vec4(mix(original.rgb, tinted, focus_mix), 1.0);
+    vec3 warm_original = mix(original.rgb, original.rgb * focus_warm_color.rgb, focus_warmth * focus_warm_color.a);
+    float glow_mix = 1.0 - smoothstep(focus_glow_radius, focus_glow_radius + focus_glow_softness, focus_distance);
+    warm_original += focus_warm_color.rgb * glow_mix * focus_glow_strength;
+
+    vec3 focused_color = mix(warm_original, tinted, focus_mix);
+    vec2 vignette_delta = SCREEN_UV - focus_center;
+    vignette_delta.x *= SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
+    float vignette_distance = length(vignette_delta);
+    float vignette_mix = smoothstep(vignette_radius, vignette_radius + vignette_softness, vignette_distance);
+    focused_color = mix(focused_color, focused_color * 0.2, vignette_mix * vignette_strength);
+
+    COLOR = vec4(focused_color, 1.0);
 }

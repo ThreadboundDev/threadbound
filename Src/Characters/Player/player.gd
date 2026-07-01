@@ -42,7 +42,7 @@ const SIT_FPS := 12.0
 @export var player_stats: PlayerStats
 
 # Basic combat resource values for the HUD. Gameplay costs can build on these.
-@export_range(1, 20, 1) var max_health := 5
+@export_range(1, 9999, 1) var max_health := 100
 @export_range(0.0, 5.0, 0.05) var death_reset_delay := 0.45
 
 @export_range(1, 6, 1) var max_action_points := 6:
@@ -120,6 +120,7 @@ const SIT_FPS := 12.0
 @export var momentum_damage_loss_per_damage := 8.0
 @export var momentum_damage_loss_current_scale := 0.06
 @export_range(1.0, 100.0, 1.0) var debug_momentum_fill_amount := 25.0
+@export_range(1, 9999, 1) var debug_thread_knots_amount := 25
 
 @export_group("Momentum Multipliers")
 @export var momentum_action_point_recharge_low := 0.9
@@ -244,6 +245,7 @@ var _momentum_system_ready := false
 var _dash_iframe_timer := 0.0
 var _debug_momentum_was_pressed := false
 var _debug_force_doors_was_pressed := false
+var _debug_thread_knots_was_pressed := false
 var _footstep_timer := 0.0
 var _coin_pickup_audio_timer := 0.0
 
@@ -288,7 +290,7 @@ func _ready() -> void:
 	if not player_stats:
 		player_stats = PlayerStats.new()
 
-	player_stats.max_health = max_health
+	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
 	health_component.damaged.connect(_on_damaged)
 	health_component.died.connect(_on_died)
@@ -360,6 +362,7 @@ func unequip_gloves() -> void:
 func _physics_process(delta: float) -> void:
 	_update_god_mode_toggle()
 	_update_debug_momentum_fill()
+	_update_debug_thread_knots()
 	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
@@ -581,6 +584,13 @@ func _update_debug_momentum_fill() -> void:
 		_change_momentum(debug_momentum_fill_amount)
 		print("Debug momentum: ", momentum)
 	_debug_momentum_was_pressed = pressed
+
+func _update_debug_thread_knots() -> void:
+	var pressed := Input.is_key_pressed(KEY_F9)
+	if pressed and not _debug_thread_knots_was_pressed:
+		collect_thread_knots(debug_thread_knots_amount)
+		print("Debug thread knots: +", debug_thread_knots_amount, " total ", thread_knot_count)
+	_debug_thread_knots_was_pressed = pressed
 
 func _debug_force_open_demo_doors() -> void:
 	for door in get_tree().get_nodes_in_group("demo_doors"):
@@ -956,6 +966,49 @@ func collect_thread_knots(amount: int) -> void:
 		AudioManager.play_ui(&"coin_pickup")
 		_coin_pickup_audio_timer = coin_pickup_audio_cooldown
 
+func can_weave_stat_upgrade(cost: int) -> bool:
+	return thread_knot_count >= maxi(0, cost)
+
+func weave_stat_upgrade(stat_id: StringName, cost: int = 0) -> bool:
+	var upgrade_cost := maxi(0, cost)
+	if not player_stats or not can_weave_stat_upgrade(upgrade_cost):
+		return false
+
+	var previous_max_health := player_stats.max_health
+	if not player_stats.apply_stat_upgrade(stat_id):
+		return false
+
+	if upgrade_cost > 0:
+		thread_knot_count -= upgrade_cost
+
+	_apply_player_stats_after_upgrade(previous_max_health)
+	AudioManager.play_ui(&"loot_special_item")
+	return true
+
+func get_weave_stat_display(stat_id: StringName) -> String:
+	if not player_stats:
+		return ""
+	return player_stats.get_stat_display_value(stat_id)
+
+func get_weave_stat_preview(stat_id: StringName) -> String:
+	if not player_stats:
+		return ""
+	return player_stats.get_next_stat_display_value(stat_id)
+
+func get_weave_stat_points(stat_id: StringName) -> int:
+	if not player_stats:
+		return 0
+	return player_stats.get_upgrade_points(stat_id)
+
+func _apply_player_stats_after_upgrade(previous_max_health: int) -> void:
+	max_health = player_stats.max_health
+	if health_component:
+		var health_delta := maxi(0, player_stats.max_health - previous_max_health)
+		health_component.max_health = player_stats.max_health
+		health_component.current_health = clampi(health_component.current_health + health_delta, 0, health_component.max_health)
+		health_component.health_changed.emit(health_component.current_health, health_component.max_health)
+	_sync_hud()
+
 func _sync_hud() -> void:
 	if not is_inside_tree():
 		return
@@ -979,7 +1032,7 @@ func _sync_hud() -> void:
 
 func _process_action_point_recharge(delta: float) -> void:
 	_ensure_action_point_timers()
-	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier()
+	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier
 	var changed := false
 	for i in _action_point_recharge_timers.size():
 		if _action_point_recharge_timers[i] <= 0.0:
@@ -1128,7 +1181,7 @@ func _apply_momentum_category(category: StringName, strength: float) -> void:
 		var movement_stale_timer := float(_momentum_staleness.get(category, 0.0))
 		var movement_duration := maxf(momentum_movement_stale_duration, 0.001)
 		var movement_stale_multiplier := maxf(0.0, 1.0 - movement_stale_timer / movement_duration)
-		var movement_gain := base_gain * strength * movement_stale_multiplier * _get_momentum_gain_curve_multiplier()
+		var movement_gain := base_gain * strength * movement_stale_multiplier * _get_momentum_gain_curve_multiplier() * player_stats.momentum_generation_multiplier
 		_change_momentum(movement_gain)
 		_reduce_other_momentum_staleness(category)
 		_momentum_staleness[category] = minf(movement_duration, movement_stale_timer + momentum_movement_report_interval)
@@ -1139,7 +1192,7 @@ func _apply_momentum_category(category: StringName, strength: float) -> void:
 	var stale_timer := float(_momentum_staleness.get(category, 0.0))
 	var stale_ratio := clampf(stale_timer / stale_duration, 0.0, 1.0)
 	var stale_multiplier := maxf(0.0, 1.0 - stale_ratio)
-	var gain := base_gain * strength * stale_multiplier * _get_momentum_gain_curve_multiplier() * _get_weaving_multiplier(category)
+	var gain := base_gain * strength * stale_multiplier * _get_momentum_gain_curve_multiplier() * _get_weaving_multiplier(category) * player_stats.momentum_generation_multiplier
 
 	if stale_ratio >= 1.0:
 		gain -= momentum_stale_penalty
@@ -1299,6 +1352,15 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 
 func should_ignore_health_damage(_damage: DamageData) -> bool:
 	return god_mode_enabled or _dash_iframe_timer > 0.0
+
+func modify_incoming_health_damage(damage: DamageData) -> DamageData:
+	if not player_stats or player_stats.resistance <= 0:
+		return damage
+
+	var modified := damage.duplicate(true) as DamageData
+	var mitigation := player_stats.get_resistance_mitigation()
+	modified.amount = maxi(1, roundi(float(damage.amount) * (1.0 - mitigation)))
+	return modified
 
 func receive_ignored_health_hit(damage: DamageData) -> void:
 	if _dash_iframe_timer > 0.0 and not god_mode_enabled:

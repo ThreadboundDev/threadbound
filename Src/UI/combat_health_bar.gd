@@ -43,13 +43,13 @@ class_name CombatHealthBar
 		round_fill_leading_edge = value
 		queue_redraw()
 
-@export var max_health := 5:
+@export var max_health := 100:
 	set(value):
 		max_health = maxi(1, value)
 		current_health = clampi(current_health, 0, max_health)
 		queue_redraw()
 
-@export var current_health := 5:
+@export var current_health := 100:
 	set(value):
 		current_health = clampi(value, 0, max_health)
 		queue_redraw()

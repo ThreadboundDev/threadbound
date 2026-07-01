@@ -8,7 +8,7 @@ const STAT_DATA := [
 		"id": &"health",
 		"title": "HEALTH",
 		"short": "HP",
-		"color": Color(0.39, 0.65, 1.0, 1.0),
+		"color": Color(0.439, 0.682, 1.0, 1.0),
 		"description": "Increases the Threadborne vitality.",
 		"quote": "A stronger weave endures longer.",
 		"node": "Health",
@@ -19,7 +19,7 @@ const STAT_DATA := [
 		"id": &"attack",
 		"title": "ATTACK",
 		"short": "ATK",
-		"color": Color(0.93, 0.2, 0.18, 1.0),
+		"color": Color(0.922, 0.227, 0.188, 1.0),
 		"description": "Increases basic weapon damage.",
 		"quote": "Power follows the hand that commits.",
 		"node": "Attack",
@@ -30,7 +30,7 @@ const STAT_DATA := [
 		"id": &"skill_damage",
 		"title": "SKILL DAMAGE",
 		"short": "SKL",
-		"color": Color(0.93, 0.2, 0.18, 1.0),
+		"color": Color(0.922, 0.227, 0.188, 1.0),
 		"description": "Increases future skill damage.",
 		"quote": "A sharper thread cuts deeper.",
 		"node": "SkillDamage",
@@ -41,7 +41,7 @@ const STAT_DATA := [
 		"id": &"momentum_generation",
 		"title": "MOMENTUM GAIN",
 		"short": "MOM",
-		"color": Color(0.95, 0.72, 0.22, 1.0),
+		"color": Color(0.933, 0.729, 0.243, 1.0),
 		"description": "Builds momentum more quickly.",
 		"quote": "Motion remembers devotion.",
 		"node": "Momentum",
@@ -52,7 +52,7 @@ const STAT_DATA := [
 		"id": &"ap_recharge",
 		"title": "AP RECHARGE",
 		"short": "AP",
-		"color": Color(0.95, 0.72, 0.22, 1.0),
+		"color": Color(0.933, 0.729, 0.243, 1.0),
 		"description": "Restores action points faster.",
 		"quote": "Stillness teaches the hand to return.",
 		"node": "APRecharge",
@@ -63,7 +63,7 @@ const STAT_DATA := [
 		"id": &"resistance",
 		"title": "RESISTANCE",
 		"short": "RES",
-		"color": Color(0.39, 0.65, 1.0, 1.0),
+		"color": Color(0.439, 0.682, 1.0, 1.0),
 		"description": "Reduces incoming damage.",
 		"quote": "The weave bends before it breaks.",
 		"node": "Resistance",
@@ -88,6 +88,7 @@ const STAT_DATA := [
 @onready var prompt_quote_label: Label = $PromptPanel/PromptQuoteLabel as Label
 @onready var prompt_cost_label: Label = $PromptPanel/PromptCostLabel as Label
 @onready var prompt_input_label: Label = $PromptPanel/PromptInputLabel as Label
+@onready var prompt_input_action_label: Label = $PromptPanel/PromptInputActionLabel as Label
 @onready var prompt_stat_icon: TextureRect = $PromptPanel/PromptStatIcon as TextureRect
 @onready var back_input_label: Label = $BackHint/BackInputLabel as Label
 @onready var stat_nodes_root: Control = $GraphRoot/Stats as Control
@@ -290,7 +291,9 @@ func _update_prompt() -> void:
 	prompt_description_label.text = String(data["description"])
 	prompt_quote_label.text = String(data["quote"])
 	prompt_cost_label.text = str(weave_upgrade_cost)
-	prompt_input_label.text = "%s  WEAVE THREAD" % _get_action_display(&"interact", "E")
+	prompt_input_label.text = _get_action_display(&"interact", "E")
+	if prompt_input_action_label:
+		prompt_input_action_label.text = "WEAVE THREAD"
 
 func _set_node_selected_visuals(node: Control, selected: bool) -> void:
 	var ring := node.get_node_or_null("Ring") as CanvasItem

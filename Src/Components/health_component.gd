@@ -5,7 +5,7 @@ signal health_changed(current: int, maximum: int)
 signal damaged(damage: DamageData)
 signal died(damage: DamageData)
 
-@export var max_health: int = 3:
+@export var max_health: int = 100:
 	set(value):
 		max_health = max(1, value)
 		current_health = clamp(current_health, 0, max_health)

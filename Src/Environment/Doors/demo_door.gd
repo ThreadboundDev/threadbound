@@ -19,8 +19,8 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export var fog_color := Color(0.015, 0.012, 0.018, 0.96)
 @export var closed := true
 @export_group("Prompt")
-@export var prompt_read_text := "W - Read"
-@export var prompt_open_text := "W - Open"
+@export var prompt_read_text := "Read"
+@export var prompt_open_text := "Open"
 @export_group("Message Box")
 @export var message_box_rect := Rect2(-560.0, -190.0, 1120.0, 118.0)
 @export var message_text_margins := Vector4(24.0, 18.0, 24.0, 18.0)
@@ -67,6 +67,9 @@ func _ready() -> void:
 	if doorway_depth_area:
 		doorway_depth_area.body_entered.connect(_on_doorway_depth_body_entered)
 		doorway_depth_area.body_exited.connect(_on_doorway_depth_body_exited)
+	var input_manager := get_node_or_null("/root/InputBindingManager")
+	if input_manager and input_manager.has_signal("bindings_changed"):
+		input_manager.bindings_changed.connect(_refresh_prompt_label)
 	_configure_doorway_depth_area()
 	_configure_opened_split_layers()
 	_apply_visual_state()
@@ -417,7 +420,10 @@ func _refresh_prompt_label() -> void:
 	if not prompt_label:
 		return
 
-	prompt_label.text = prompt_open_text if _message_acknowledged else prompt_read_text
+	var raw_text := prompt_open_text if _message_acknowledged else prompt_read_text
+	var fallback := "Open" if _message_acknowledged else "Read"
+	var action_text := InteractionPromptFormatter.prompt_action_from_text(raw_text, fallback)
+	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
 
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):

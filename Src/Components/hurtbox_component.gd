@@ -25,7 +25,7 @@ func receive_hit(damage: DamageData) -> bool:
 
 	var accepted := true
 	if health_component:
-		accepted = health_component.apply_damage(damage)
+		accepted = health_component.apply_damage(_get_modified_health_damage(damage))
 
 	if accepted:
 		hit_received.emit(damage)
@@ -47,3 +47,8 @@ func _should_ignore_health_damage(damage: DamageData) -> bool:
 func _receive_ignored_health_hit(damage: DamageData) -> void:
 	if hurtbox_owner and hurtbox_owner.has_method("receive_ignored_health_hit"):
 		hurtbox_owner.receive_ignored_health_hit(damage)
+
+func _get_modified_health_damage(damage: DamageData) -> DamageData:
+	if hurtbox_owner and hurtbox_owner.has_method("modify_incoming_health_damage"):
+		return hurtbox_owner.modify_incoming_health_damage(damage)
+	return damage

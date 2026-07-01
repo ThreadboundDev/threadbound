@@ -1,7 +1,7 @@
 class_name EnemyStats
 extends Resource
 
-@export var max_health: int = 3
+@export var max_health: int = 75
 @export var move_speed: float = 90.0
 @export var chase_speed: float = 150.0
 @export var acceleration: float = 900.0
@@ -9,8 +9,8 @@ extends Resource
 @export var max_fall_speed: float = 900.0
 
 @export var patrol_wait_time: float = 0.5
-@export var attack_damage: int = 1
-@export var contact_damage: int = 1
+@export var attack_damage: int = 18
+@export var contact_damage: int = 15
 @export var contact_damage_cooldown: float = 0.45
 @export var attack_windup: float = 0.18
 @export var attack_active_time: float = 0.14

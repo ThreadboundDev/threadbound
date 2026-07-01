@@ -3,24 +3,24 @@ class_name GameMenu
 
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const CONTROL_BINDINGS := [
-	{"node": "Move", "label": "MOVE", "actions": [&"move_left", &"move_right"]},
-	{"node": "Look", "label": "LOOK", "actions": [&"move_up", &"move_down"]},
+	{"node": "Move", "label": "MOVE", "actions": [&"move_left", &"move_right"], "layout_nodes": {&"ps5": "LeftStick"}},
+	{"node": "Look", "label": "LOOK", "actions": [&"move_up", &"move_down"], "layout_nodes": {&"ps5": "RightStick"}},
 	{"node": "MoveLeft", "label": "MOVE LEFT", "actions": [&"move_left"], "keyboard_input": "A"},
 	{"node": "MoveRight", "label": "MOVE RIGHT", "actions": [&"move_right"], "keyboard_input": "D"},
 	{"node": "Interact", "label": "INTERACT", "actions": [&"interact"], "keyboard_input": "E"},
 	{"node": "LookUp", "label": "LOOK UP", "actions": [&"move_up"], "keyboard_input": "W HELD"},
 	{"node": "LookDown", "label": "LOOK DOWN", "actions": [&"move_down"], "keyboard_input": "S HELD"},
-	{"node": "Jump", "label": "JUMP", "actions": [&"Jump"]},
-	{"node": "Dash", "label": "DASH", "actions": [&"Dash"]},
-	{"node": "Grapple", "label": "GRAPPLE", "actions": [&"Grapple"]},
-	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB"},
-	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"]},
-	{"node": "Map", "label": "MAP", "actions": [&"open_map"]},
-	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"]},
-	{"node": "Controls", "label": "CONTROLS", "actions": [&"open_controls"]},
-	{"node": "Pause", "label": "PAUSE", "actions": [&"ui_cancel"]},
-	{"node": "CycleLeft", "label": "CYCLE LEFT", "actions": [&"menu_tab_left"]},
-	{"node": "CycleRight", "label": "CYCLE RIGHT", "actions": [&"menu_tab_right"]},
+	{"node": "Jump", "label": "JUMP", "actions": [&"Jump"], "layout_nodes": {&"ps5": "CrossButton"}},
+	{"node": "Dash", "label": "DASH", "actions": [&"Dash"], "layout_nodes": {&"ps5": "CircleButton"}},
+	{"node": "Grapple", "label": "GRAPPLE", "actions": [&"Grapple"], "layout_nodes": {&"ps5": "R2Button"}},
+	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB", "layout_nodes": {&"ps5": "SquareButton"}},
+	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"], "layout_nodes": {&"ps5": "DPadUp"}},
+	{"node": "Map", "label": "MAP", "actions": [&"open_map"], "layout_nodes": {&"ps5": "DPadLeft"}},
+	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"], "layout_nodes": {&"ps5": "DPadDown"}},
+	{"node": "Controls", "label": "CONTROLS", "actions": [&"open_controls"], "layout_nodes": {&"ps5": "DPadRight"}},
+	{"node": "Pause", "label": "PAUSE", "actions": [&"ui_cancel"], "layout_nodes": {&"ps5": "OptionsButton"}},
+	{"node": "CycleLeft", "label": "CYCLE LEFT", "actions": [&"menu_tab_left"], "layout_nodes": {&"ps5": "L1Button"}},
+	{"node": "CycleRight", "label": "CYCLE RIGHT", "actions": [&"menu_tab_right"], "layout_nodes": {&"ps5": "R1Button"}},
 ]
 const REBINDABLE_KEYBOARD_NODES := [
 	"MoveLeft",
@@ -121,6 +121,7 @@ const EQUIPPED_SLOT_ITEMS := {
 @export var normal_tab_scale := Vector2.ONE
 @export var binding_hover_color := Color(0.52, 0.36, 0.12, 0.36)
 @export var binding_edit_color := Color(0.82, 0.54, 0.16, 0.54)
+@export var inventory_tooltip_mouse_offset := Vector2(28.0, 12.0)
 @export_group("Map Tracker")
 @export var map_world_bounds := Rect2(-9500.0, -4500.0, 17700.0, 9400.0)
 @export var map_tracker_clamp_to_map := true
@@ -217,6 +218,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if TAB_ORDER[_selected_index] == &"Map":
 		_update_map_tracker()
+	if inventory_tooltip and inventory_tooltip.visible:
+		_position_inventory_tooltip()
 
 func _input(event: InputEvent) -> void:
 	if _rebinding_action == &"":
@@ -330,6 +333,19 @@ func _show_inventory_tooltip(item: Dictionary) -> void:
 	inventory_tooltip.visible = true
 	inventory_tooltip_title.text = String(item.get("name", "ITEM")).to_upper()
 	inventory_tooltip_description.text = String(item.get("description", "")).to_upper()
+	_position_inventory_tooltip()
+
+func _position_inventory_tooltip() -> void:
+	if not inventory_tooltip:
+		return
+	var target_position := inventory_tooltip.get_global_mouse_position() + inventory_tooltip_mouse_offset
+	var viewport_rect := get_viewport().get_visible_rect()
+	var tooltip_size := inventory_tooltip.size
+	target_position.x = minf(target_position.x, viewport_rect.end.x - tooltip_size.x - 8.0)
+	target_position.y = minf(target_position.y, viewport_rect.end.y - tooltip_size.y - 8.0)
+	target_position.x = maxf(target_position.x, viewport_rect.position.x + 8.0)
+	target_position.y = maxf(target_position.y, viewport_rect.position.y + 8.0)
+	inventory_tooltip.global_position = target_position
 
 func _hide_inventory_tooltip() -> void:
 	if inventory_tooltip:
@@ -432,6 +448,13 @@ func _get_controls_device_display_name(input_family: StringName) -> String:
 		_:
 			return "XBOX"
 
+func _get_control_binding_node_name(binding: Dictionary, input_family: StringName) -> String:
+	if binding.has("layout_nodes"):
+		var layout_nodes := binding["layout_nodes"] as Dictionary
+		if layout_nodes.has(input_family):
+			return String(layout_nodes[input_family])
+	return String(binding["node"])
+
 func _update_control_binding_labels() -> void:
 	var active_layout := controls_callout_layouts.get(_controls_input_family) as Control
 	if not active_layout or active_layout.get_child_count() == 0:
@@ -440,7 +463,7 @@ func _update_control_binding_labels() -> void:
 		return
 
 	for binding in CONTROL_BINDINGS:
-		var binding_node := active_layout.find_child(String(binding["node"]), true, false)
+		var binding_node := active_layout.find_child(_get_control_binding_node_name(binding, _controls_input_family), true, false)
 		if not binding_node:
 			continue
 
@@ -848,14 +871,18 @@ func _update_inventory_stats() -> void:
 		var attack: int = stats.attack_damage if stats else 0
 		inventory_attack_label.text = "ATTACK DAMAGE - %d" % attack
 	if inventory_skill_damage_label:
-		inventory_skill_damage_label.text = "SKILL DAMAGE - 0"
+		var skill_damage_percent := roundi((stats.skill_damage_multiplier if stats else 1.0) * 100.0)
+		inventory_skill_damage_label.text = "SKILL DAMAGE - %d%%" % skill_damage_percent
 	if inventory_action_recharge_label:
-		var recharge_time: float = float(player.get("action_point_recharge_time")) if player else 0.0
-		inventory_action_recharge_label.text = "ACTION POINT RECHARGE %.1f SEC" % recharge_time
+		var recharge_multiplier := stats.action_point_recharge_multiplier if stats else 1.0
+		var recharge_percent := roundi(recharge_multiplier * 100.0)
+		inventory_action_recharge_label.text = "AP RECHARGE - %d%%" % recharge_percent
 	if inventory_momentum_gain_label:
-		inventory_momentum_gain_label.text = "MOMENTUM GAIN 100%"
+		var momentum_gain_percent := roundi((stats.momentum_generation_multiplier if stats else 1.0) * 100.0)
+		inventory_momentum_gain_label.text = "MOMENTUM GAIN - %d%%" % momentum_gain_percent
 	if inventory_resistance_label:
-		inventory_resistance_label.text = "RESISTANCE 0%"
+		var resistance_percent := roundi(stats.get_resistance_mitigation() * 100.0) if stats else 0
+		inventory_resistance_label.text = "RESISTANCE - %d%%" % resistance_percent
 
 func _update_map_tracker() -> void:
 	if not rough_map or not map_player_marker or map_world_bounds.size == Vector2.ZERO:

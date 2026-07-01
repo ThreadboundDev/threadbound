@@ -23,7 +23,7 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var focus_left_screen_position := Vector2(0.28, 0.56)
 @export var focus_right_screen_position := Vector2(0.72, 0.56)
 @export var player_sit_offset := Vector2(-32.0, -56.0)
-@export_range(0.0, 4.0, 0.05) var meditation_light_energy := 1.35
+@export_range(0.0, 4.0, 0.05) var meditation_light_energy := 1.65
 @export_range(0.0, 2.0, 0.05) var meditation_light_fade_duration := 0.45
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D

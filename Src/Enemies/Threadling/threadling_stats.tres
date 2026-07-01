@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_stats")
+max_health = 70
 move_speed = 96.0
 chase_speed = 170.0
 gravity = 0.0

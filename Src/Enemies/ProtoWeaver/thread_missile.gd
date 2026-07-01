@@ -1,7 +1,7 @@
 class_name ThreadMissile
 extends Area2D
 
-@export var damage_amount := 1
+@export var damage_amount := 25
 @export var knockback_strength := 190.0
 @export var arc_gravity := 1650.0
 @export var flight_fps := 10.0
@@ -68,7 +68,7 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 
 	var damage := DamageData.new()
-	damage.amount = damage_amount
+	damage.amount = EnemyScaling.scale_damage(damage_amount)
 	damage.source = source
 	damage.hit_position = global_position
 	var knockback_direction := velocity.normalized()

@@ -80,13 +80,13 @@ const THREADLING_ICON_INSET := Rect2(Vector2(42.0, 30.0), Vector2(142.0, 112.0))
 		threadling_icon_texture = value
 		queue_redraw()
 
-@export var max_health := 10:
+@export var max_health := 1000:
 	set(value):
 		max_health = maxi(1, value)
 		current_health = clampi(current_health, 0, max_health)
 		queue_redraw()
 
-@export var current_health := 10:
+@export var current_health := 1000:
 	set(value):
 		current_health = clampi(value, 0, max_health)
 		queue_redraw()

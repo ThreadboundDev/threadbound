@@ -11,6 +11,12 @@ const MAIN_OPTIONS := [
 	{"name": &"Listen", "label": "LISTEN"},
 	{"name": &"Rise", "label": "RISE"},
 ]
+const MAIN_OPTION_DESCRIPTIONS := {
+	&"Reflect": "Rest at the Blossom, restore your health, save your progress, and reset the world.",
+	&"Weave": "Spend Thread Knots to strengthen your Threadborne.",
+	&"Listen": "Hear the whispered memories of Eryndor.",
+	&"Rise": "Leave the Blossom and continue your journey.",
+}
 const WEAVE_OPTIONS := [
 	{"name": &"health", "label": "HEALTH"},
 	{"name": &"attack", "label": "ATTACK"},
@@ -27,14 +33,15 @@ const WEAVE_OPTIONS := [
 @export var menu_left_position := Vector2(180.0, 318.0)
 @export var menu_right_position := Vector2(1140.0, 318.0)
 @export var fade_duration := 0.18
-@export var focus_left_center := Vector2(0.28, 0.56)
-@export var focus_right_center := Vector2(0.72, 0.56)
-@export var focus_radius := Vector2(0.22, 0.33)
+@export var focus_left_center := Vector2(0.25, 0.50)
+@export var focus_right_center := Vector2(0.75, 0.50)
+@export var focus_radius := Vector2(0.24, 0.34)
 @export_range(0, 9999, 1) var weave_upgrade_cost := 1
 
 @onready var blur_rect: ColorRect = $BlurRect as ColorRect
 @onready var menu_root: Control = $MenuRoot as Control
 @onready var prompt_label: Label = $MenuRoot/TextBox/Prompt as Label
+@onready var description_label: Label = $MenuRoot/Description as Label
 @onready var options_root: Control = $MenuRoot/Options as Control
 @onready var selector: TextureRect = $MenuRoot/Selector as TextureRect
 @onready var rows: Array[Control] = [
@@ -137,7 +144,19 @@ func _configure_focus(menu_side: int) -> void:
 	var focus_center := focus_left_center if menu_side >= 0 else focus_right_center
 	shader_material.set_shader_parameter("focus_center", focus_center)
 	shader_material.set_shader_parameter("focus_radius", focus_radius)
-	shader_material.set_shader_parameter("focus_softness", 0.2)
+	shader_material.set_shader_parameter("focus_softness", 0.28)
+	shader_material.set_shader_parameter("blur_amount", 5.6)
+	shader_material.set_shader_parameter("desaturation", 0.88)
+	shader_material.set_shader_parameter("blue_tint_strength", 0.0)
+	shader_material.set_shader_parameter("darken_strength", 0.58)
+	shader_material.set_shader_parameter("vignette_strength", 0.94)
+	shader_material.set_shader_parameter("vignette_radius", 0.26)
+	shader_material.set_shader_parameter("vignette_softness", 0.48)
+	shader_material.set_shader_parameter("focus_warmth", 0.28)
+	shader_material.set_shader_parameter("focus_warm_color", Color(1.0, 0.62, 0.22, 1.0))
+	shader_material.set_shader_parameter("focus_glow_strength", 0.06)
+	shader_material.set_shader_parameter("focus_glow_radius", 0.62)
+	shader_material.set_shader_parameter("focus_glow_softness", 0.58)
 
 func _ensure_row_count(count: int) -> void:
 	if rows.is_empty():
@@ -157,12 +176,16 @@ func _show_main_options() -> void:
 	_selected_index = 0
 	if prompt_label:
 		prompt_label.text = "THE BLOSSOM AWAITS"
+	if description_label:
+		description_label.visible = true
 	_apply_active_options()
 
 func _show_weave_options() -> void:
 	_mode = &"weave"
 	_active_options = WEAVE_OPTIONS.duplicate(true)
 	_selected_index = 0
+	if description_label:
+		description_label.visible = false
 	_apply_active_options()
 	_refresh_weave_labels()
 
@@ -201,16 +224,20 @@ func _select_index(index: int, instant := false) -> void:
 	var plaque := row.get_node("Plaque") as TextureRect
 	selector.visible = true
 	selector.global_position = plaque.global_position + Vector2(plaque.size.x, 0.0) + selector_offset
+	_refresh_description()
 
 func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var row := rows[index]
 	var plaque := row.get_node("Plaque") as TextureRect
 	var label := row.get_node("Label") as Label
 	var target_scale := selected_scale if is_selected else normal_scale
+	var label_color := Color(1.0, 0.88, 0.58, 1.0) if is_selected else Color(0.58, 0.5, 0.36, 0.76)
+	var plaque_color := Color(1.0, 0.9, 0.62, 1.0) if is_selected else Color(0.48, 0.42, 0.32, 0.66)
 
 	if instant:
 		row.scale = target_scale
-		label.modulate = Color.WHITE
+		label.modulate = label_color
+		plaque.modulate = plaque_color
 		return
 
 	if _row_tweens.has(row):
@@ -219,8 +246,15 @@ func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	_row_tweens[row] = tween
 	tween.set_parallel(true)
 	tween.tween_property(row, "scale", target_scale, 0.12)
-	tween.tween_property(label, "modulate", Color.WHITE, 0.12)
-	tween.tween_property(plaque, "modulate", Color.WHITE, 0.12)
+	tween.tween_property(label, "modulate", label_color, 0.12)
+	tween.tween_property(plaque, "modulate", plaque_color, 0.12)
+
+func _refresh_description() -> void:
+	if not description_label or _mode != &"main" or _active_options.is_empty():
+		return
+
+	var selected_name := StringName(_active_options[_selected_index]["name"])
+	description_label.text = String(MAIN_OPTION_DESCRIPTIONS.get(selected_name, ""))
 
 func _activate_selected() -> void:
 	AudioManager.play_ui(&"menu_select")

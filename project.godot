@@ -26,6 +26,7 @@ DebugUI="*res://Src/Global/debug_ui.gd"
 EquipManager="*res://Src/Equipment/equip_manager.gd"
 DemoProgress="*res://Src/Global/demo_progress.gd"
 AudioManager="*res://Src/Global/audio_manager.gd"
+EnemyScaling="*res://Src/Global/enemy_scaling.gd"
 CustomCursor="*res://Src/Global/custom_cursor.gd"
 InputBindingManager="*res://Src/Global/input_binding_manager.gd"
 

@@ -48,7 +48,7 @@ func _ready() -> void:
 	if not stats:
 		stats = EnemyStats.new()
 
-	health_component.configure(stats.max_health)
+	health_component.configure(_get_scaled_max_health())
 	health_component.damaged.connect(_on_damaged)
 	health_component.died.connect(_on_died)
 
@@ -182,7 +182,7 @@ func reset_for_save_point() -> void:
 	target = null
 	target_lost.emit()
 	if health_component:
-		health_component.configure(stats.max_health)
+		health_component.configure(_get_scaled_max_health())
 	if visuals:
 		visuals.scale = _base_visuals_scale
 		visuals.modulate = _base_visuals_modulate
@@ -219,11 +219,20 @@ func update_facing(direction: int) -> void:
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
-	data.amount = stats.attack_damage
+	data.amount = _get_scaled_attack_damage()
 	data.hitstun = stats.hurt_time
 	data.hit_pause = stats.hit_pause
 	data.knockback = Vector2(float(facing) * stats.knockback_strength, -70.0)
 	return data
+
+func _get_scaled_max_health() -> int:
+	return EnemyScaling.scale_health(stats.max_health)
+
+func _get_scaled_attack_damage() -> int:
+	return EnemyScaling.scale_damage(stats.attack_damage)
+
+func _get_scaled_contact_damage() -> int:
+	return EnemyScaling.scale_damage(stats.contact_damage)
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -267,7 +276,7 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 		return true
 
 	var damage := DamageData.new()
-	damage.amount = stats.contact_damage
+	damage.amount = _get_scaled_contact_damage()
 	damage.source = self
 	damage.hit_position = global_position
 	damage.knockback = Vector2(

@@ -36,14 +36,14 @@ var _momentum_state: StringName = &"Low"
 var _momentum_flow_active := false
 var _thread_knot_counter_tween: Tween
 
-@export var max_health := 5:
+@export var max_health := 100:
 	set(value):
 		max_health = maxi(1, value)
 		current_health = clampi(current_health, 0, max_health)
 		_sync_health()
 		health_changed.emit(current_health, max_health)
 
-@export var current_health := 5:
+@export var current_health := 100:
 	set(value):
 		current_health = clampi(value, 0, max_health)
 		_sync_health()

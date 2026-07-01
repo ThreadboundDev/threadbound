@@ -10,20 +10,29 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("2_blur_shader")
-shader_parameter/blur_amount = 3.2
+shader_parameter/blur_amount = 4.4
 shader_parameter/blur_samples = 5.0
-shader_parameter/desaturation = 0.68
+shader_parameter/desaturation = 0.82
 shader_parameter/blue_tint_strength = 0.0
 shader_parameter/blue_tint_color = Color(0.78, 0.84, 1, 1)
-shader_parameter/focus_center = Vector2(0.28, 0.56)
+shader_parameter/focus_center = Vector2(0.25, 0.5)
 shader_parameter/focus_radius = Vector2(0.34, 0.42)
-shader_parameter/focus_softness = 0.32
+shader_parameter/focus_softness = 0.28
+shader_parameter/darken_strength = 0.58
+shader_parameter/vignette_strength = 0.94
+shader_parameter/vignette_radius = 0.26
+shader_parameter/vignette_softness = 0.48
+shader_parameter/focus_warmth = 0.28
+shader_parameter/focus_warm_color = Color(1, 0.62, 0.22, 1)
+shader_parameter/focus_glow_strength = 0.06
+shader_parameter/focus_glow_radius = 0.62
+shader_parameter/focus_glow_softness = 0.58
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("6_font")
-font_size = 38
-font_color = Color(0.82, 0.76, 0.64, 1)
-outline_size = 5
+font_size = 42
+font_color = Color(1, 0.9, 0.68, 1)
+outline_size = 4
 outline_color = Color(0.04, 0.03, 0.025, 1)
 shadow_size = 7
 shadow_color = Color(0, 0, 0, 1)
@@ -31,9 +40,18 @@ shadow_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_option"]
 font = ExtResource("7_base_gold_font")
 font_size = 40
-font_color = Color(0.96862745, 0.7882353, 0.45882353, 1)
+font_color = Color(1, 0.84, 0.52, 1)
 outline_color = Color(0, 0, 0, 0)
 shadow_size = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_description"]
+font = ExtResource("7_base_gold_font")
+font_size = 25
+font_color = Color(0.96, 0.86, 0.66, 1)
+outline_size = 1
+outline_color = Color(0.02, 0.015, 0.01, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.9)
 
 [node name="SavePointMenu" type="CanvasLayer" unique_id=757324453]
 script = ExtResource("1_script")
@@ -116,9 +134,9 @@ expand_mode = 1
 [node name="Label" type="Label" parent="MenuRoot/Options/Reflect" unique_id=1874145576]
 layout_mode = 0
 offset_left = 66.0
-offset_top = 10.0
+offset_top = 4.0
 offset_right = 494.0
-offset_bottom = 104.0
+offset_bottom = 98.0
 text = "REFLECT"
 label_settings = SubResource("LabelSettings_option")
 horizontal_alignment = 1
@@ -142,9 +160,9 @@ expand_mode = 1
 [node name="Label" type="Label" parent="MenuRoot/Options/Weave" unique_id=840867985]
 layout_mode = 0
 offset_left = 66.0
-offset_top = 10.0
+offset_top = 2.0
 offset_right = 494.0
-offset_bottom = 104.0
+offset_bottom = 96.0
 text = "WEAVE"
 label_settings = SubResource("LabelSettings_option")
 horizontal_alignment = 1
@@ -159,8 +177,9 @@ offset_bottom = 320.0
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Options/Listen" unique_id=1755278717]
 layout_mode = 0
 offset_left = 66.0
+offset_top = -1.0
 offset_right = 494.0
-offset_bottom = 96.0
+offset_bottom = 95.0
 mouse_filter = 2
 texture = ExtResource("4_button")
 expand_mode = 1
@@ -168,9 +187,9 @@ expand_mode = 1
 [node name="Label" type="Label" parent="MenuRoot/Options/Listen" unique_id=1752801975]
 layout_mode = 0
 offset_left = 66.0
-offset_top = 10.0
+offset_top = 1.0
 offset_right = 494.0
-offset_bottom = 104.0
+offset_bottom = 95.0
 text = "LISTEN"
 label_settings = SubResource("LabelSettings_option")
 horizontal_alignment = 1
@@ -194,10 +213,22 @@ expand_mode = 1
 [node name="Label" type="Label" parent="MenuRoot/Options/Rise" unique_id=219594139]
 layout_mode = 0
 offset_left = 66.0
-offset_top = 10.0
+offset_top = 2.0
 offset_right = 494.0
-offset_bottom = 104.0
+offset_bottom = 96.0
 text = "RISE"
 label_settings = SubResource("LabelSettings_option")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Description" type="Label" parent="MenuRoot" unique_id=605190791]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 466.0
+offset_right = 484.0
+offset_bottom = 552.0
+text = "Rest at the Blossom, restore your health, save your progress, and reset the world."
+label_settings = SubResource("LabelSettings_description")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

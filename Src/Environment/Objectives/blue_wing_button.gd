@@ -4,7 +4,7 @@ class_name BlueWingButton
 signal active_changed(button: BlueWingButton, active: bool, activator: Node)
 
 @export var active_duration := 60.0
-@export var prompt_text := "W"
+@export var prompt_text := "Activate"
 
 @onready var button_sprite: AnimatedSprite2D = $ButtonSprite as AnimatedSprite2D
 @onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
@@ -19,8 +19,11 @@ func _ready() -> void:
 	body_exited.connect(_on_body_exited)
 	if hurtbox:
 		hurtbox.hit_received.connect(_on_hurtbox_hit_received)
+	var input_manager := get_node_or_null("/root/InputBindingManager")
+	if input_manager and input_manager.has_signal("bindings_changed"):
+		input_manager.bindings_changed.connect(_refresh_prompt_label)
 	if prompt_label:
-		prompt_label.text = prompt_text
+		_refresh_prompt_label()
 		prompt_label.visible = false
 	_update_visual()
 
@@ -71,6 +74,7 @@ func _on_body_entered(body: Node) -> void:
 
 	_player = body
 	if prompt_label:
+		_refresh_prompt_label()
 		prompt_label.visible = true
 	if body.has_method("_on_interactable_entered"):
 		body._on_interactable_entered(self)
@@ -84,3 +88,10 @@ func _on_body_exited(body: Node) -> void:
 	if body.has_method("_on_interactable_exited"):
 		body._on_interactable_exited(self)
 	_player = null
+
+func _refresh_prompt_label() -> void:
+	if not prompt_label:
+		return
+
+	var action_text := InteractionPromptFormatter.prompt_action_from_text(prompt_text, "Activate")
+	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
