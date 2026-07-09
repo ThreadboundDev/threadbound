@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cswc8ndjakrv5"]
 
 [ext_resource type="Script" uid="uid://do6571xji8gg4" path="res://Src/Environment/SavePoints/base_save_point.gd" id="1_script"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="2_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="2_label_settings"]
 [ext_resource type="Texture2D" path="res://Assets/Environment/SavePoints/blossom_meditation_light.png" id="3_meditation_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_proximity"]

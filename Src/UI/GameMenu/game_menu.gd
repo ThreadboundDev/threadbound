@@ -2,9 +2,12 @@ extends CanvasLayer
 class_name GameMenu
 
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
+const BINDING_KIND_BUTTON: StringName = &"button"
+const BINDING_KIND_MOVE: StringName = &"move"
+const BINDING_KIND_AIM: StringName = &"aim"
 const CONTROL_BINDINGS := [
-	{"node": "Move", "label": "MOVE", "actions": [&"move_left", &"move_right"], "layout_nodes": {&"ps5": "LeftStick"}},
-	{"node": "Look", "label": "LOOK", "actions": [&"move_up", &"move_down"], "layout_nodes": {&"ps5": "RightStick"}},
+	{"node": "Move", "label": "MOVE", "actions": [&"move_left", &"move_right", &"move_up", &"move_down"], "kind": BINDING_KIND_MOVE, "layout_nodes": {&"ps5": "LeftStick"}},
+	{"node": "Aim", "label": "AIM", "actions": [&"aim_left", &"aim_right", &"aim_up", &"aim_down"], "kind": BINDING_KIND_AIM, "layout_nodes": {&"ps5": "RightStick", &"xbox": "Look", &"nintendo": "Look", &"steam": "Look"}},
 	{"node": "MoveLeft", "label": "MOVE LEFT", "actions": [&"move_left"], "keyboard_input": "A"},
 	{"node": "MoveRight", "label": "MOVE RIGHT", "actions": [&"move_right"], "keyboard_input": "D"},
 	{"node": "Interact", "label": "INTERACT", "actions": [&"interact"], "keyboard_input": "E"},
@@ -14,6 +17,7 @@ const CONTROL_BINDINGS := [
 	{"node": "Dash", "label": "DASH", "actions": [&"Dash"], "layout_nodes": {&"ps5": "CircleButton"}},
 	{"node": "Grapple", "label": "GRAPPLE", "actions": [&"Grapple"], "layout_nodes": {&"ps5": "R2Button"}},
 	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB", "layout_nodes": {&"ps5": "SquareButton"}},
+	{"node": "SpecialAttack", "label": "SPECIAL ATTACK", "actions": [&"SpecialAttack"], "keyboard_input": "RMB", "layout_nodes": {&"ps5": "TriangleButton"}},
 	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"], "layout_nodes": {&"ps5": "DPadUp"}},
 	{"node": "Map", "label": "MAP", "actions": [&"open_map"], "layout_nodes": {&"ps5": "DPadLeft"}},
 	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"], "layout_nodes": {&"ps5": "DPadDown"}},
@@ -32,6 +36,24 @@ const REBINDABLE_KEYBOARD_NODES := [
 	"Dash",
 	"Grapple",
 	"Attack",
+	"SpecialAttack",
+	"Inventory",
+	"Map",
+	"Lore",
+	"Controls",
+	"Pause",
+	"CycleLeft",
+	"CycleRight",
+]
+const REBINDABLE_CONTROLLER_NODES := [
+	"Move",
+	"Aim",
+	"Interact",
+	"Jump",
+	"Dash",
+	"Grapple",
+	"Attack",
+	"SpecialAttack",
 	"Inventory",
 	"Map",
 	"Lore",
@@ -72,6 +94,31 @@ const INVENTORY_ITEMS := [
 		"name": "BASE GLOVES",
 		"description": "Thread wraps and grapple needle. Current demo equipment.",
 		"icon_texture": "26_icon_grapple",
+		"equip_slot_idx": 0,
+	},
+	{
+		"id": &"hermit_gloves",
+		"category": &"equipment",
+		"name": "HERMIT GLOVES",
+		"description": "A long pendulum grapple built for swing timing and momentum.",
+		"icon_texture": "31_icon_blue_gloves",
+		"equip_slot_idx": 3,
+	},
+	{
+		"id": &"monarch_gloves",
+		"category": &"equipment",
+		"name": "MONARCH GLOVES",
+		"description": "A charged chain grapple built for aggressive movement.",
+		"icon_texture": "30_icon_red_gloves",
+		"equip_slot_idx": 6,
+	},
+	{
+		"id": &"sage_gloves",
+		"category": &"equipment",
+		"name": "SAGE GLOVES",
+		"description": "A short snap grapple built for fast repositioning.",
+		"icon_texture": "32_icon_yellow_gloves",
+		"equip_slot_idx": 9,
 	},
 	{
 		"id": &"weavers_shuttle",
@@ -103,6 +150,8 @@ const EQUIPPED_SLOT_ITEMS := {
 	"GlovesSlot": {
 		"name": "BASE GLOVES",
 		"description": "Thread wraps and grapple needle. Current demo equipment.",
+		"icon_texture": "26_icon_grapple",
+		"equip_slot_idx": 0,
 	},
 	"ChestSlot": {
 		"name": "BASE CHEST",
@@ -176,7 +225,9 @@ const EQUIPPED_SLOT_ITEMS := {
 	&"nintendo": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Nintendo,
 	&"steam": $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/Steam,
 }
+@onready var keyboard_binding_panel: Control = $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel as Control
 @onready var keyboard_bindings_root: Control = $MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings as Control
+@onready var controls_reset_defaults: Label = $MenuRoot/Pages/ControlsPage/ControlsLayout/ResetDefaults as Label
 @onready var rebind_prompt: Control = $MenuRoot/ControlsRebindPrompt as Control
 @onready var rebind_prompt_title: Label = $MenuRoot/ControlsRebindPrompt/Panel/Title as Label
 @onready var rebind_prompt_body: Label = $MenuRoot/ControlsRebindPrompt/Panel/Body as Label
@@ -187,11 +238,14 @@ var _closing := false
 var _controls_input_family: StringName = &"keyboard_mouse"
 var _hovered_tab_index := -1
 var _hovered_binding_node := ""
+var _selected_controller_binding_node := ""
 var _rebinding_node := ""
 var _rebinding_action: StringName = &""
 var _pending_rebind_event: InputEvent = null
 var _pending_conflict_action: StringName = &""
+var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
+var _controls_only := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -209,9 +263,17 @@ func _ready() -> void:
 		DemoProgress.threads_changed.connect(_update_inventory_threads)
 	if not InputBindingManager.bindings_changed.is_connected(_update_control_binding_labels):
 		InputBindingManager.bindings_changed.connect(_update_control_binding_labels)
+	if EquipManager and not EquipManager.equip_changed.is_connected(_on_equip_changed):
+		EquipManager.equip_changed.connect(_on_equip_changed)
+	if controls_reset_defaults:
+		controls_reset_defaults.mouse_filter = Control.MOUSE_FILTER_STOP
+		controls_reset_defaults.gui_input.connect(_on_controls_reset_defaults_gui_input)
+		controls_reset_defaults.mouse_entered.connect(_on_controls_reset_defaults_mouse_entered)
+		controls_reset_defaults.mouse_exited.connect(_on_controls_reset_defaults_mouse_exited)
 	_setup_keyboard_binding_rows()
 	_setup_inventory_ui()
 	_hide_rebind_prompt()
+	_update_equipped_slot_items()
 	_update_inventory_threads()
 	_update_map_tracker()
 
@@ -233,6 +295,14 @@ func open(initial_tab: StringName = &"Inventory", input_family: StringName = &"k
 	_set_controls_input_family(input_family)
 	_select_tab(TAB_ORDER.find(initial_tab) if TAB_ORDER.has(initial_tab) else 0, true)
 
+func open_controls_only(input_family: StringName = &"keyboard_mouse") -> void:
+	_controls_only = true
+	get_tree().paused = true
+	_set_player_flow_audio_suspended(true)
+	_set_controls_input_family(input_family)
+	_select_tab(TAB_ORDER.find(&"Controls"), true)
+	_update_controls_only_visibility()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if _closing:
 		return
@@ -241,6 +311,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	_update_controls_input_family_from_event(event)
+
+	if TAB_ORDER[_selected_index] == &"Controls" and _controls_input_family != &"keyboard_mouse":
+		if _handle_controller_controls_navigation(event):
+			get_viewport().set_input_as_handled()
+			return
 
 	if event.is_action_pressed("ui_cancel"):
 		_close()
@@ -280,14 +355,15 @@ func _setup_inventory_ui() -> void:
 		for slot in inventory_slots_root.get_children():
 			if slot is Control:
 				(slot as Control).mouse_filter = Control.MOUSE_FILTER_STOP
+				_set_children_mouse_filter(slot, Control.MOUSE_FILTER_IGNORE)
 				(slot as Control).mouse_entered.connect(_on_inventory_slot_mouse_entered.bind(slot))
 				(slot as Control).mouse_exited.connect(_on_inventory_slot_mouse_exited.bind(slot))
 				(slot as Control).gui_input.connect(_on_inventory_slot_gui_input.bind(slot))
 	if equipment_slots_root:
 		for slot in equipment_slots_root.get_children():
 			if slot is Control and EQUIPPED_SLOT_ITEMS.has(slot.name):
-				slot.set_meta("inventory_item", EQUIPPED_SLOT_ITEMS[slot.name])
 				(slot as Control).mouse_filter = Control.MOUSE_FILTER_STOP
+				_set_children_mouse_filter(slot, Control.MOUSE_FILTER_IGNORE)
 				(slot as Control).mouse_entered.connect(_on_inventory_slot_mouse_entered.bind(slot))
 				(slot as Control).mouse_exited.connect(_on_inventory_slot_mouse_exited.bind(slot))
 				(slot as Control).gui_input.connect(_on_inventory_slot_gui_input.bind(slot))
@@ -298,6 +374,15 @@ func _on_inventory_category_gui_input(event: InputEvent, index: int) -> void:
 
 func _on_inventory_category_mouse_entered(_index: int) -> void:
 	AudioManager.play_ui(&"ui_click")
+
+func _on_equip_changed(_slot_type: int, _new_equip_index: int) -> void:
+	_update_equipped_slot_items()
+
+func _set_children_mouse_filter(node: Node, filter: Control.MouseFilter) -> void:
+	for child in node.get_children():
+		if child is Control:
+			(child as Control).mouse_filter = filter
+		_set_children_mouse_filter(child, filter)
 
 func _select_inventory_category(category: StringName) -> void:
 	if not INVENTORY_CATEGORIES.has(category):
@@ -326,6 +411,7 @@ func _on_inventory_slot_gui_input(event: InputEvent, slot: Node) -> void:
 		var item: Dictionary = slot.get_meta("inventory_item", {})
 		if not item.is_empty():
 			_show_inventory_tooltip(item)
+			_try_equip_inventory_item(item)
 
 func _show_inventory_tooltip(item: Dictionary) -> void:
 	if not inventory_tooltip:
@@ -366,6 +452,8 @@ func _select_named_tab(tab_name: StringName) -> void:
 		_select_tab(index)
 
 func _select_tab(index: int, instant := false) -> void:
+	if _controls_only:
+		index = TAB_ORDER.find(&"Controls")
 	_selected_index = wrapi(index, 0, TAB_ORDER.size())
 	title_label.text = String(TAB_ORDER[_selected_index]).to_upper()
 	if TAB_ORDER[_selected_index] == &"Inventory":
@@ -382,6 +470,12 @@ func _select_tab(index: int, instant := false) -> void:
 
 	if not instant:
 		AudioManager.play_ui(&"ui_click")
+
+func _update_controls_only_visibility() -> void:
+	if title_label:
+		title_label.text = "CONTROLS"
+	for i in tab_labels.size():
+		tab_labels[i].visible = i == TAB_ORDER.find(&"Controls")
 
 func _update_tab_visuals() -> void:
 	for i in tab_labels.size():
@@ -409,6 +503,8 @@ func _refresh_controls_page() -> void:
 		var art := controls_device_art[family] as CanvasItem
 		if art:
 			art.visible = family == _controls_input_family
+	if keyboard_binding_panel:
+		keyboard_binding_panel.visible = _controls_input_family == &"keyboard_mouse"
 
 	var active_layout := controls_callout_layouts.get(_controls_input_family) as Control
 	var use_fallback_layout := (
@@ -423,7 +519,28 @@ func _refresh_controls_page() -> void:
 
 	if controls_device_label:
 		controls_device_label.text = _get_controls_device_display_name(_controls_input_family)
+	_setup_controller_binding_callouts(active_layout)
 	_update_control_binding_labels()
+	_update_controls_reset_defaults_visual(false)
+
+func _on_controls_reset_defaults_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		InputBindingManager.reset_to_defaults()
+		_update_control_binding_labels()
+		AudioManager.play_ui(&"menu_select")
+		get_viewport().set_input_as_handled()
+
+func _on_controls_reset_defaults_mouse_entered() -> void:
+	_update_controls_reset_defaults_visual(true)
+	AudioManager.play_ui(&"ui_click")
+
+func _on_controls_reset_defaults_mouse_exited() -> void:
+	_update_controls_reset_defaults_visual(false)
+
+func _update_controls_reset_defaults_visual(is_hovered: bool) -> void:
+	if not controls_reset_defaults:
+		return
+	controls_reset_defaults.modulate = hover_tab_color if is_hovered else normal_tab_color
 
 func _get_controller_family(device_id: int) -> StringName:
 	var joy_name := Input.get_joy_name(device_id).to_lower()
@@ -480,8 +597,58 @@ func _update_control_binding_labels() -> void:
 		if input_label:
 			input_label.text = input_text
 	_update_keyboard_binding_highlights()
+	_update_controller_binding_highlights()
 
 func _format_control_binding(binding: Dictionary, input_family: StringName) -> String:
+	if input_family != &"keyboard_mouse":
+		var directional_label := _format_directional_binding(binding, input_family)
+		if not directional_label.is_empty():
+			return directional_label
+
+	var labels: Array[String] = []
+	var actions: Array = binding["actions"]
+	for action in actions:
+		if not InputMap.has_action(action):
+			continue
+		for event in InputMap.action_get_events(action):
+			var label := _format_input_event(event, input_family)
+			if label != "" and not labels.has(label):
+				labels.append(label)
+	if labels.is_empty():
+		return "UNBOUND"
+	return " OR ".join(labels).to_upper()
+
+func _format_directional_binding(binding: Dictionary, input_family: StringName) -> String:
+	var kind := _get_binding_kind(binding)
+	if kind != BINDING_KIND_MOVE and kind != BINDING_KIND_AIM:
+		return ""
+
+	var groups: Array[StringName] = []
+	var actions: Array = binding["actions"]
+	for action in actions:
+		if not InputMap.has_action(action):
+			continue
+		for event in InputMap.action_get_events(action):
+			var group := _get_controller_directional_group(event, kind == BINDING_KIND_MOVE)
+			if group != &"" and not groups.has(group):
+				groups.append(group)
+
+	if groups.is_empty():
+		return ""
+	if groups.size() > 1:
+		return _format_control_binding_fallback(binding, input_family)
+
+	match groups[0]:
+		&"left_stick":
+			return "LEFT STICK"
+		&"right_stick":
+			return "RIGHT STICK"
+		&"dpad":
+			return "D PAD"
+		_:
+			return ""
+
+func _format_control_binding_fallback(binding: Dictionary, input_family: StringName) -> String:
 	var labels: Array[String] = []
 	var actions: Array = binding["actions"]
 	for action in actions:
@@ -627,6 +794,216 @@ func _setup_keyboard_binding_rows() -> void:
 		highlight.offset_right = 8.0
 		highlight.offset_bottom = 2.0
 
+func _setup_controller_binding_callouts(active_layout: Control) -> void:
+	if _controls_input_family == &"keyboard_mouse":
+		return
+	if not active_layout or active_layout.get_child_count() == 0:
+		active_layout = controls_callout_layouts.get(controller_callout_fallback_family) as Control
+	if not active_layout:
+		return
+
+	for node_name in REBINDABLE_CONTROLLER_NODES:
+		var binding := _get_binding_for_node(node_name)
+		if binding.is_empty():
+			continue
+		var binding_node_name := _get_control_binding_node_name(binding, _controls_input_family)
+		var callout := active_layout.find_child(binding_node_name, true, false) as Control
+		if not callout:
+			continue
+		var text_box := callout.get_node_or_null("TextBox") as Control
+		if not text_box:
+			continue
+		text_box.mouse_filter = Control.MOUSE_FILTER_STOP
+		var gui_callable := _on_controller_binding_gui_input.bind(node_name)
+		if not text_box.gui_input.is_connected(gui_callable):
+			text_box.gui_input.connect(gui_callable)
+		var entered_callable := _on_controller_binding_mouse_entered.bind(node_name)
+		if not text_box.mouse_entered.is_connected(entered_callable):
+			text_box.mouse_entered.connect(entered_callable)
+		var exited_callable := _on_controller_binding_mouse_exited.bind(node_name)
+		if not text_box.mouse_exited.is_connected(exited_callable):
+			text_box.mouse_exited.connect(exited_callable)
+		_ensure_callout_highlight(text_box)
+
+	if _selected_controller_binding_node.is_empty():
+		_selected_controller_binding_node = _get_first_controller_binding_node()
+
+func _ensure_callout_highlight(text_box: Control) -> void:
+	var highlight := text_box.get_node_or_null("Highlight") as ColorRect
+	if not highlight:
+		highlight = ColorRect.new()
+		highlight.name = "Highlight"
+		highlight.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		highlight.color = binding_hover_color
+		highlight.visible = false
+		text_box.add_child(highlight)
+		text_box.move_child(highlight, 0)
+	highlight.set_anchors_preset(Control.PRESET_FULL_RECT)
+	highlight.offset_left = -6.0
+	highlight.offset_top = -4.0
+	highlight.offset_right = 6.0
+	highlight.offset_bottom = 4.0
+
+func _on_controller_binding_mouse_entered(node_name: String) -> void:
+	_hovered_binding_node = node_name
+	_selected_controller_binding_node = node_name
+	_update_controller_binding_highlights()
+
+func _on_controller_binding_mouse_exited(node_name: String) -> void:
+	if _hovered_binding_node == node_name:
+		_hovered_binding_node = ""
+	_update_controller_binding_highlights()
+
+func _on_controller_binding_gui_input(event: InputEvent, node_name: String) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_selected_controller_binding_node = node_name
+		var binding := _get_binding_for_node(node_name)
+		if binding.is_empty():
+			return
+		var actions: Array = binding["actions"]
+		if actions.is_empty():
+			return
+		_start_rebind(node_name, actions[0])
+		get_viewport().set_input_as_handled()
+
+func _handle_controller_controls_navigation(event: InputEvent) -> bool:
+	if not _is_controller_navigation_event(event):
+		return false
+
+	if event.is_action_pressed("ui_cancel"):
+		return false
+	if event.is_action_pressed("interact") or event.is_action_pressed("Jump") or event.is_action_pressed("ui_accept"):
+		if _selected_controller_binding_node.is_empty():
+			_selected_controller_binding_node = _get_first_controller_binding_node()
+		var binding := _get_binding_for_node(_selected_controller_binding_node)
+		if binding.is_empty():
+			return true
+		var actions: Array = binding["actions"]
+		if actions.is_empty():
+			return true
+		_start_rebind(_selected_controller_binding_node, actions[0])
+		return true
+
+	var direction := Vector2.ZERO
+	if event.is_action_pressed("move_up"):
+		direction.y = -1.0
+	elif event.is_action_pressed("move_down"):
+		direction.y = 1.0
+	elif event.is_action_pressed("move_left"):
+		direction.x = -1.0
+	elif event.is_action_pressed("move_right"):
+		direction.x = 1.0
+
+	if direction == Vector2.ZERO:
+		return false
+
+	_select_controller_binding_in_direction(direction)
+	return true
+
+func _is_controller_navigation_event(event: InputEvent) -> bool:
+	if event is InputEventJoypadButton and event.pressed:
+		return true
+	if event is InputEventJoypadMotion and absf(event.axis_value) > 0.55:
+		return true
+	return false
+
+func _select_controller_binding_in_direction(direction: Vector2) -> void:
+	var entries := _get_controller_binding_entries()
+	if entries.is_empty():
+		return
+	if _selected_controller_binding_node.is_empty():
+		_selected_controller_binding_node = String(entries[0]["node"])
+		_update_controller_binding_highlights()
+		return
+
+	var current := {}
+	for entry in entries:
+		if String(entry["node"]) == _selected_controller_binding_node:
+			current = entry
+			break
+	if current.is_empty():
+		_selected_controller_binding_node = String(entries[0]["node"])
+		_update_controller_binding_highlights()
+		return
+
+	var best := {}
+	var best_score := INF
+	var current_y := float(current["y"])
+	var current_side := int(current["side"])
+
+	for entry in entries:
+		if String(entry["node"]) == _selected_controller_binding_node:
+			continue
+		var side := int(entry["side"])
+		var y := float(entry["y"])
+		var score := INF
+		if direction.y != 0.0 and side == current_side:
+			var dy := y - current_y
+			if signf(dy) == signf(direction.y):
+				score = absf(dy)
+		elif direction.x != 0.0 and side != current_side:
+			score = absf(y - current_y)
+		if score < best_score:
+			best_score = score
+			best = entry
+
+	if not best.is_empty():
+		_selected_controller_binding_node = String(best["node"])
+		_update_controller_binding_highlights()
+		AudioManager.play_ui(&"ui_click")
+
+func _get_controller_binding_entries() -> Array[Dictionary]:
+	var entries: Array[Dictionary] = []
+	var layout := _get_active_controller_layout()
+	if not layout:
+		return entries
+
+	var viewport_center_x := get_viewport().get_visible_rect().size.x * 0.5
+	for node_name in REBINDABLE_CONTROLLER_NODES:
+		var binding := _get_binding_for_node(node_name)
+		if binding.is_empty():
+			continue
+		var callout := _get_callout_for_binding(layout, binding)
+		if not callout:
+			continue
+		var text_box := callout.get_node_or_null("TextBox") as Control
+		if not text_box:
+			continue
+		var center := text_box.get_global_rect().get_center()
+		entries.append({
+			"node": node_name,
+			"text_box": text_box,
+			"side": -1 if center.x < viewport_center_x else 1,
+			"y": center.y,
+		})
+	return entries
+
+func _get_first_controller_binding_node() -> String:
+	var entries := _get_controller_binding_entries()
+	if entries.is_empty():
+		return ""
+	entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if int(a["side"]) == int(b["side"]):
+			return float(a["y"]) < float(b["y"])
+		return int(a["side"]) < int(b["side"])
+	)
+	return String(entries[0]["node"])
+
+func _get_active_controller_layout() -> Control:
+	var active_layout := controls_callout_layouts.get(_controls_input_family) as Control
+	if active_layout and active_layout.get_child_count() > 0:
+		return active_layout
+	return controls_callout_layouts.get(controller_callout_fallback_family) as Control
+
+func _get_callout_for_binding(layout: Control, binding: Dictionary) -> Control:
+	if not layout:
+		return null
+	var binding_node_name := _get_control_binding_node_name(binding, _controls_input_family)
+	var callout := layout.find_child(binding_node_name, true, false) as Control
+	if callout:
+		return callout
+	return layout.find_child(String(binding["node"]), true, false) as Control
+
 func _on_keyboard_binding_mouse_entered(node_name: String) -> void:
 	_hovered_binding_node = node_name
 	_update_keyboard_binding_highlights()
@@ -652,8 +1029,10 @@ func _start_rebind(node_name: String, action: StringName) -> void:
 	_rebinding_action = action
 	_pending_rebind_event = null
 	_pending_conflict_action = &""
-	_show_rebind_prompt("PRESS NEW INPUT", "CHOOSE A KEY OR MOUSE BUTTON FOR %s" % _get_binding_label(node_name), "ESC CANCELS")
+	_pending_rebind_group = {}
+	_show_rebind_prompt("PRESS NEW INPUT", _get_rebind_prompt_body(node_name), _get_rebind_prompt_footer(node_name))
 	_update_keyboard_binding_highlights()
+	_update_controller_binding_highlights()
 	AudioManager.play_ui(&"menu_select")
 
 func _handle_rebind_input(event: InputEvent) -> void:
@@ -662,12 +1041,16 @@ func _handle_rebind_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		_cancel_rebind()
 		return
-	if _pending_rebind_event and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		InputBindingManager.rebind_keyboard_action(_rebinding_action, _pending_rebind_event, true)
+	if _pending_rebind_event and _is_rebind_confirm_event(event):
+		_apply_pending_rebind(true)
 		_finish_rebind()
 		return
 
 	if not _is_rebind_event(event):
+		return
+
+	if _controls_input_family != &"keyboard_mouse":
+		_handle_controller_rebind_input(event)
 		return
 
 	var clean_event := event.duplicate()
@@ -691,15 +1074,198 @@ func _is_rebind_event(event: InputEvent) -> bool:
 		return event.pressed and not event.echo
 	if event is InputEventMouseButton:
 		return event.pressed
+	if event is InputEventJoypadButton:
+		return event.pressed
+	if event is InputEventJoypadMotion:
+		return absf(event.axis_value) > 0.55
 	return false
+
+func _is_rebind_confirm_event(event: InputEvent) -> bool:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		return true
+	if _controls_input_family != &"keyboard_mouse":
+		return event.is_action_pressed("interact") or event.is_action_pressed("Jump") or event.is_action_pressed("ui_accept")
+	return false
+
+func _handle_controller_rebind_input(event: InputEvent) -> void:
+	var binding := _get_binding_for_node(_rebinding_node)
+	if binding.is_empty():
+		return
+
+	var kind := _get_binding_kind(binding)
+	if kind == BINDING_KIND_MOVE or kind == BINDING_KIND_AIM:
+		var allow_dpad := kind == BINDING_KIND_MOVE
+		var group := _get_controller_directional_group(event, allow_dpad)
+		if group == &"":
+			_show_rebind_prompt("INPUT NOT ALLOWED", _get_rebind_rule_text(kind), "TRY ANOTHER INPUT OR ESC CANCELS")
+			AudioManager.play_ui(&"ui_click")
+			return
+		var action_events := _build_controller_directional_events(kind, group)
+		var conflict := _get_controller_group_conflict(action_events)
+		if conflict != &"":
+			_pending_rebind_event = event.duplicate()
+			_pending_rebind_group = action_events
+			_pending_conflict_action = conflict
+			_show_rebind_prompt(
+				"INPUT ALREADY USED",
+				"%s IS ASSIGNED TO %s" % [_format_controller_group_name(group), _format_action_name(conflict)],
+				"PRESS INTERACT TO OVERWRITE OR ESC TO CANCEL"
+			)
+			AudioManager.play_ui(&"ui_click")
+			return
+		InputBindingManager.rebind_controller_action_group(action_events, false)
+		_finish_rebind()
+		return
+
+	var clean_event := _clean_controller_button_event(event)
+	if not clean_event:
+		_show_rebind_prompt("INPUT NOT ALLOWED", "CHOOSE A CONTROLLER BUTTON FOR %s" % _get_binding_label(_rebinding_node), "TRY ANOTHER INPUT OR ESC CANCELS")
+		AudioManager.play_ui(&"ui_click")
+		return
+
+	var conflict := InputBindingManager.get_controller_conflict(clean_event, [_rebinding_action])
+	if conflict != &"":
+		_pending_rebind_event = clean_event
+		_pending_rebind_group = {}
+		_pending_conflict_action = conflict
+		_show_rebind_prompt(
+			"INPUT ALREADY USED",
+			"%s IS ASSIGNED TO %s" % [_format_input_event(clean_event, _controls_input_family), _format_action_name(conflict)],
+			"PRESS INTERACT TO OVERWRITE OR ESC TO CANCEL"
+		)
+		AudioManager.play_ui(&"ui_click")
+		return
+
+	InputBindingManager.rebind_controller_action(_rebinding_action, clean_event, false)
+	_finish_rebind()
+
+func _apply_pending_rebind(overwrite_conflict: bool) -> void:
+	if not _pending_rebind_group.is_empty():
+		InputBindingManager.rebind_controller_action_group(_pending_rebind_group, overwrite_conflict)
+	elif _controls_input_family == &"keyboard_mouse":
+		InputBindingManager.rebind_keyboard_action(_rebinding_action, _pending_rebind_event, overwrite_conflict)
+	else:
+		InputBindingManager.rebind_controller_action(_rebinding_action, _pending_rebind_event, overwrite_conflict)
+
+func _get_rebind_prompt_body(node_name: String) -> String:
+	var binding := _get_binding_for_node(node_name)
+	var label := _get_binding_label(node_name)
+	if _controls_input_family == &"keyboard_mouse":
+		return "CHOOSE A KEY OR MOUSE BUTTON FOR %s" % label
+	var kind := _get_binding_kind(binding)
+	if kind == BINDING_KIND_MOVE or kind == BINDING_KIND_AIM:
+		return _get_rebind_rule_text(kind)
+	return "CHOOSE A CONTROLLER BUTTON FOR %s" % label
+
+func _get_rebind_prompt_footer(node_name: String) -> String:
+	var binding := _get_binding_for_node(node_name)
+	var kind := _get_binding_kind(binding)
+	if _controls_input_family != &"keyboard_mouse" and (kind == BINDING_KIND_MOVE or kind == BINDING_KIND_AIM):
+		return "MOVE SELECTS A SIDE OR DIRECTION SET  ESC CANCELS"
+	return "ESC CANCELS"
+
+func _get_rebind_rule_text(kind: StringName) -> String:
+	match kind:
+		BINDING_KIND_AIM:
+			return "AIM MUST USE A CONTROLLER STICK"
+		BINDING_KIND_MOVE:
+			return "MOVE CAN USE A STICK OR D PAD"
+		_:
+			return "CHOOSE A VALID INPUT"
+
+func _get_binding_kind(binding: Dictionary) -> StringName:
+	if binding.has("kind"):
+		return binding["kind"]
+	return BINDING_KIND_BUTTON
+
+func _get_controller_directional_group(event: InputEvent, allow_dpad: bool) -> StringName:
+	if event is InputEventJoypadMotion and absf(event.axis_value) > 0.55:
+		match event.axis:
+			0, 1:
+				return &"left_stick"
+			2, 3:
+				return &"right_stick"
+	if allow_dpad and event is InputEventJoypadButton and event.pressed:
+		match event.button_index:
+			11, 12, 13, 14:
+				return &"dpad"
+	return &""
+
+func _build_controller_directional_events(kind: StringName, group: StringName) -> Dictionary:
+	var action_prefix := "move" if kind == BINDING_KIND_MOVE else "aim"
+	var action_events := {}
+	match group:
+		&"left_stick":
+			action_events[StringName("%s_left" % action_prefix)] = _make_joy_motion(0, -1.0)
+			action_events[StringName("%s_right" % action_prefix)] = _make_joy_motion(0, 1.0)
+			action_events[StringName("%s_up" % action_prefix)] = _make_joy_motion(1, -1.0)
+			action_events[StringName("%s_down" % action_prefix)] = _make_joy_motion(1, 1.0)
+		&"right_stick":
+			action_events[StringName("%s_left" % action_prefix)] = _make_joy_motion(2, -1.0)
+			action_events[StringName("%s_right" % action_prefix)] = _make_joy_motion(2, 1.0)
+			action_events[StringName("%s_up" % action_prefix)] = _make_joy_motion(3, -1.0)
+			action_events[StringName("%s_down" % action_prefix)] = _make_joy_motion(3, 1.0)
+		&"dpad":
+			if kind == BINDING_KIND_MOVE:
+				action_events[&"move_up"] = _make_joy_button(11)
+				action_events[&"move_down"] = _make_joy_button(12)
+				action_events[&"move_left"] = _make_joy_button(13)
+				action_events[&"move_right"] = _make_joy_button(14)
+	return action_events
+
+func _get_controller_group_conflict(action_events: Dictionary) -> StringName:
+	var ignored_actions: Array[StringName] = []
+	for action in action_events:
+		ignored_actions.append(StringName(action))
+	for action in action_events:
+		var event := action_events[action] as InputEvent
+		var conflict := InputBindingManager.get_controller_conflict(event, ignored_actions)
+		if conflict != &"":
+			return conflict
+	return &""
+
+func _clean_controller_button_event(event: InputEvent) -> InputEvent:
+	if event is InputEventJoypadButton and event.pressed:
+		return _make_joy_button(event.button_index)
+	if event is InputEventJoypadMotion and absf(event.axis_value) > 0.55:
+		var axis_event := InputEventJoypadMotion.new()
+		axis_event.axis = event.axis
+		axis_event.axis_value = signf(event.axis_value)
+		return axis_event
+	return null
+
+func _make_joy_button(button_index: int) -> InputEventJoypadButton:
+	var event := InputEventJoypadButton.new()
+	event.button_index = button_index
+	event.pressed = true
+	return event
+
+func _make_joy_motion(axis: int, axis_value: float) -> InputEventJoypadMotion:
+	var event := InputEventJoypadMotion.new()
+	event.axis = axis
+	event.axis_value = axis_value
+	return event
+
+func _format_controller_group_name(group: StringName) -> String:
+	match group:
+		&"left_stick":
+			return "LEFT STICK"
+		&"right_stick":
+			return "RIGHT STICK"
+		&"dpad":
+			return "D PAD"
+		_:
+			return "INPUT"
 
 func _cancel_rebind() -> void:
 	_rebinding_node = ""
 	_rebinding_action = &""
 	_pending_rebind_event = null
 	_pending_conflict_action = &""
+	_pending_rebind_group = {}
 	_hide_rebind_prompt()
 	_update_keyboard_binding_highlights()
+	_update_controller_binding_highlights()
 	AudioManager.play_ui(&"ui_click")
 
 func _finish_rebind() -> void:
@@ -707,6 +1273,7 @@ func _finish_rebind() -> void:
 	_rebinding_action = &""
 	_pending_rebind_event = null
 	_pending_conflict_action = &""
+	_pending_rebind_group = {}
 	_hide_rebind_prompt()
 	_update_control_binding_labels()
 	AudioManager.play_ui(&"menu_select")
@@ -738,10 +1305,38 @@ func _update_keyboard_binding_highlights() -> void:
 		highlight.visible = is_active or is_hovered
 		highlight.color = binding_edit_color if is_active else binding_hover_color
 
+func _update_controller_binding_highlights() -> void:
+	var layout := _get_active_controller_layout()
+	if not layout:
+		return
+
+	for node_name in REBINDABLE_CONTROLLER_NODES:
+		var binding := _get_binding_for_node(node_name)
+		if binding.is_empty():
+			continue
+		var callout := _get_callout_for_binding(layout, binding)
+		if not callout:
+			continue
+		var text_box := callout.get_node_or_null("TextBox") as Control
+		if not text_box:
+			continue
+		var highlight := text_box.get_node_or_null("Highlight") as ColorRect
+		if not highlight:
+			continue
+		var is_active: bool = node_name == _rebinding_node or node_name == _selected_controller_binding_node
+		var is_hovered: bool = node_name == _hovered_binding_node
+		highlight.visible = is_active or is_hovered
+		highlight.color = binding_edit_color if node_name == _rebinding_node else binding_hover_color
+
 func _get_binding_for_node(node_name: String) -> Dictionary:
 	for binding in CONTROL_BINDINGS:
 		if String(binding["node"]) == node_name:
 			return binding
+		if binding.has("layout_nodes"):
+			var layout_nodes := binding["layout_nodes"] as Dictionary
+			for layout_family in layout_nodes:
+				if String(layout_nodes[layout_family]) == node_name:
+					return binding
 	return {}
 
 func _get_binding_label(node_name: String) -> String:
@@ -846,8 +1441,87 @@ func _get_inventory_icon_texture(texture_id: String) -> Texture2D:
 			return preload("res://Assets/UI/Inventory/weaver_shuttle_icon.png")
 		"29_icon_chest":
 			return preload("res://Assets/UI/Inventory/base_chest_icon.png")
+		"30_icon_red_gloves":
+			return preload("res://Assets/Threadborne/Equipment/Red Gear/red_glove_icon.png")
+		"31_icon_blue_gloves":
+			return preload("res://Assets/Threadborne/Equipment/Blue Gear/blue_glove_icon.png")
+		"32_icon_yellow_gloves":
+			return preload("res://Assets/Threadborne/Equipment/Yellow Gear/yellow_glove_icon.png")
 		_:
 			return null
+
+func _try_equip_inventory_item(item: Dictionary) -> void:
+	if not item.has("equip_slot_idx"):
+		return
+	var slot_idx := int(item["equip_slot_idx"])
+	if not [0, 3, 6, 9].has(slot_idx):
+		return
+	if EquipManager:
+		AudioManager.play_ui(&"menu_select")
+		EquipManager.equip_item(slot_idx)
+		_update_equipped_slot_items()
+
+func _update_equipped_slot_items() -> void:
+	if not equipment_slots_root or not EquipManager:
+		return
+
+	_apply_equipped_slot_item("GlovesSlot", _get_equipped_gloves_item())
+	_apply_equipped_slot_item("BootsSlot", _get_equipped_static_item("BASE BOOTS", "Standard Threadborne footwork. Current demo equipment.", "27_icon_boots", -1))
+	_apply_equipped_slot_item("ChestSlot", _get_equipped_static_item("BASE CHEST", "The current Threadborne chest wrapping and cloth kit.", "29_icon_chest", -1))
+	_apply_equipped_slot_item("WeaponSlot", _get_equipped_static_item("WEAVER'S SHUTTLE", "A simple shuttle weapon for close-range attacks.", "28_icon_shuttle", -1))
+
+func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
+	var slot := equipment_slots_root.get_node_or_null(slot_name) as Control
+	if not slot:
+		return
+
+	slot.set_meta("inventory_item", item)
+	var icon := slot.get_node_or_null("Icon") as TextureRect
+	if icon:
+		icon.texture = _get_inventory_icon_texture(String(item.get("icon_texture", "")))
+	var value_label := slot.get_node_or_null("Value") as Label
+	if value_label:
+		value_label.text = String(item.get("name", ""))
+
+func _get_equipped_gloves_item() -> Dictionary:
+	var glove_idx := int(EquipManager.current_equip[0])
+	if glove_idx == 3:
+		return {
+			"name": "HERMIT GLOVES",
+			"description": "A long pendulum grapple built for swing timing and momentum.",
+			"icon_texture": "31_icon_blue_gloves",
+			"equip_slot_idx": 3,
+		}
+	if glove_idx == 6:
+		return {
+			"name": "MONARCH GLOVES",
+			"description": "A charged chain grapple built for aggressive movement.",
+			"icon_texture": "30_icon_red_gloves",
+			"equip_slot_idx": 6,
+		}
+	if glove_idx == 9:
+		return {
+			"name": "SAGE GLOVES",
+			"description": "A short snap grapple built for fast repositioning.",
+			"icon_texture": "32_icon_yellow_gloves",
+			"equip_slot_idx": 9,
+		}
+	return {
+		"name": "BASE GLOVES",
+		"description": "Thread wraps and grapple needle. Current demo equipment.",
+		"icon_texture": "26_icon_grapple",
+		"equip_slot_idx": 0,
+	}
+
+func _get_equipped_static_item(item_name: String, description: String, icon_texture: String, equip_slot_idx: int) -> Dictionary:
+	var item := {
+		"name": item_name,
+		"description": description,
+		"icon_texture": icon_texture,
+	}
+	if equip_slot_idx >= 0:
+		item["equip_slot_idx"] = equip_slot_idx
+	return item
 
 func _update_inventory_stats() -> void:
 	var player := get_tree().get_first_node_in_group("player")

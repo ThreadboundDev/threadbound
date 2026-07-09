@@ -1,0 +1,1745 @@
+﻿[
+    {
+        "path":  "Assets/Audio/Music/COTFW_background.wav",
+        "name":  "COTFW_background.wav",
+        "ext":  ".wav",
+        "bytes":  152010558,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Audio/Music/COTFW_background_loop.wav",
+        "name":  "COTFW_background_loop.wav",
+        "ext":  ".wav",
+        "bytes":  49881876,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/Music/exploration.wav",
+        "name":  "exploration.wav",
+        "ext":  ".wav",
+        "bytes":  14049434,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/Music/game_over.wav",
+        "name":  "game_over.wav",
+        "ext":  ".wav",
+        "bytes":  13266110,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/Music/pause_menu.wav",
+        "name":  "pause_menu.wav",
+        "ext":  ".wav",
+        "bytes":  13200654,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/Music/proto_weaver_fight.wav",
+        "name":  "proto_weaver_fight.wav",
+        "ext":  ".wav",
+        "bytes":  35875932,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/Music/title.wav",
+        "name":  "title.wav",
+        "ext":  ".wav",
+        "bytes":  12567926,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Enemy Sounds/enemy_death.wav",
+        "name":  "enemy_death.wav",
+        "ext":  ".wav",
+        "bytes":  245804,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Enemy Sounds/enemy_hit.wav",
+        "name":  "enemy_hit.wav",
+        "ext":  ".wav",
+        "bytes":  12088,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Enemy Sounds/enemy_laser_attack.wav",
+        "name":  "enemy_laser_attack.wav",
+        "ext":  ".wav",
+        "bytes":  195472,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Enemy Sounds/enemy_stomp_attack.wav",
+        "name":  "enemy_stomp_attack.wav",
+        "ext":  ".wav",
+        "bytes":  365484,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Enemy Sounds/enemy_sword_attack.wav",
+        "name":  "enemy_sword_attack.wav",
+        "ext":  ".wav",
+        "bytes":  833872,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/dash.wav",
+        "name":  "dash.wav",
+        "ext":  ".wav",
+        "bytes":  27386,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/enter_momentum.wav",
+        "name":  "enter_momentum.wav",
+        "ext":  ".wav",
+        "bytes":  518752,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/jump_1.wav",
+        "name":  "jump_1.wav",
+        "ext":  ".wav",
+        "bytes":  20724,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/jump_2.wav",
+        "name":  "jump_2.wav",
+        "ext":  ".wav",
+        "bytes":  21604,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/jump_3.wav",
+        "name":  "jump_3.wav",
+        "ext":  ".wav",
+        "bytes":  34364,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/land_1.wav",
+        "name":  "land_1.wav",
+        "ext":  ".wav",
+        "bytes":  31724,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/land_2.wav",
+        "name":  "land_2.wav",
+        "ext":  ".wav",
+        "bytes":  20724,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/land_3.wav",
+        "name":  "land_3.wav",
+        "ext":  ".wav",
+        "bytes":  21164,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/momentum_aura.wav",
+        "name":  "momentum_aura.wav",
+        "ext":  ".wav",
+        "bytes":  1445532,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/step_1.wav",
+        "name":  "step_1.wav",
+        "ext":  ".wav",
+        "bytes":  33484,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/step_2.wav",
+        "name":  "step_2.wav",
+        "ext":  ".wav",
+        "bytes":  18084,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/step_3.wav",
+        "name":  "step_3.wav",
+        "ext":  ".wav",
+        "bytes":  18524,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/threadborne_grapple_connect.wav",
+        "name":  "threadborne_grapple_connect.wav",
+        "ext":  ".wav",
+        "bytes":  35908,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/threadborne_grapple_hanging.wav",
+        "name":  "threadborne_grapple_hanging.wav",
+        "ext":  ".wav",
+        "bytes":  242952,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/threadborne_grapple_throw.wav",
+        "name":  "threadborne_grapple_throw.wav",
+        "ext":  ".wav",
+        "bytes":  21300,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/threadborne_take_damage(cloth_rip).wav",
+        "name":  "threadborne_take_damage(cloth_rip).wav",
+        "ext":  ".wav",
+        "bytes":  13568,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/Threadborne Sounds/threadborne_weapon_attack.wav",
+        "name":  "threadborne_weapon_attack.wav",
+        "ext":  ".wav",
+        "bytes":  27386,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/UI Sounds/coin_pickup.wav",
+        "name":  "coin_pickup.wav",
+        "ext":  ".wav",
+        "bytes":  48684,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/UI Sounds/enter_world.mp3",
+        "name":  "enter_world.mp3",
+        "ext":  ".mp3",
+        "bytes":  170425,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/UI Sounds/loot_special_item.wav",
+        "name":  "loot_special_item.wav",
+        "ext":  ".wav",
+        "bytes":  436078,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/UI Sounds/menu_select.wav",
+        "name":  "menu_select.wav",
+        "ext":  ".wav",
+        "bytes":  480468,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Audio/SFX/UI Sounds/ui_click.wav",
+        "name":  "ui_click.wav",
+        "ext":  ".wav",
+        "bytes":  784,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/COTFW MAP TEST.png",
+        "name":  "COTFW MAP TEST.png",
+        "ext":  ".png",
+        "bytes":  1980003,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/cotfw_chamber_atmosphere_bg_v2.png",
+        "name":  "cotfw_chamber_atmosphere_bg_v2.png",
+        "ext":  ".png",
+        "bytes":  2427750,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/cotfw_loom_shrine_clean.png",
+        "name":  "cotfw_loom_shrine_clean.png",
+        "ext":  ".png",
+        "bytes":  2124499,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Threads/614f92ce-238b-4637-a573-a6a816f7537b.png",
+        "name":  "614f92ce-238b-4637-a573-a6a816f7537b.png",
+        "ext":  ".png",
+        "bytes":  1732123,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Threads/thread_of_balance.png",
+        "name":  "thread_of_balance.png",
+        "ext":  ".png",
+        "bytes":  376902,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Threads/thread_of_essence.png",
+        "name":  "thread_of_essence.png",
+        "ext":  ".png",
+        "bytes":  425872,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Threads/thread_of_power.png",
+        "name":  "thread_of_power.png",
+        "ext":  ".png",
+        "bytes":  413821,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/cotfw_chamber_tileset_256_current.tres",
+        "name":  "cotfw_chamber_tileset_256_current.tres",
+        "ext":  ".tres",
+        "bytes":  5207,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/new_tiles_atlas.png",
+        "name":  "new_tiles_atlas.png",
+        "ext":  ".png",
+        "bytes":  1597800,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_far_background_atlas_128.png",
+        "name":  "cotfw_far_background_atlas_128.png",
+        "ext":  ".png",
+        "bytes":  1353003,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_far_background_tileset_128.tres",
+        "name":  "cotfw_far_background_tileset_128.tres",
+        "ext":  ".tres",
+        "bytes":  1448,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_atlas_128.png",
+        "name":  "cotfw_foreground_silhouettes_atlas_128.png",
+        "ext":  ".png",
+        "bytes":  1481317,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_tileset_128.tres",
+        "name":  "cotfw_foreground_silhouettes_tileset_128.tres",
+        "ext":  ".tres",
+        "bytes":  1492,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_midground_architecture_atlas_128.png",
+        "name":  "cotfw_midground_architecture_atlas_128.png",
+        "ext":  ".png",
+        "bytes":  1155488,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_midground_architecture_tileset_128.tres",
+        "name":  "cotfw_midground_architecture_tileset_128.tres",
+        "ext":  ".tres",
+        "bytes":  1732,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/diagnostics/cotfw_tileset_current_diagnostic.png",
+        "name":  "cotfw_tileset_current_diagnostic.png",
+        "ext":  ".png",
+        "bytes":  1140607,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/graphic_painterly_passes/cotfw_chamber_tileset_atlas_128_graphic_v1.png",
+        "name":  "cotfw_chamber_tileset_atlas_128_graphic_v1.png",
+        "ext":  ".png",
+        "bytes":  490396,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/graphic_painterly_passes/cotfw_chamber_tileset_atlas_256_graphic_v1.png",
+        "name":  "cotfw_chamber_tileset_atlas_256_graphic_v1.png",
+        "ext":  ".png",
+        "bytes":  1682462,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_128_readable_v1.tres",
+        "name":  "cotfw_chamber_tileset_128_readable_v1.tres",
+        "ext":  ".tres",
+        "bytes":  5786,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_128_readable_v2.tres",
+        "name":  "cotfw_chamber_tileset_128_readable_v2.tres",
+        "ext":  ".tres",
+        "bytes":  5811,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_256_readable_v1.tres",
+        "name":  "cotfw_chamber_tileset_256_readable_v1.tres",
+        "ext":  ".tres",
+        "bytes":  5980,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_256_readable_v2.tres",
+        "name":  "cotfw_chamber_tileset_256_readable_v2.tres",
+        "ext":  ".tres",
+        "bytes":  5944,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_atlas_128_readable_v1.png",
+        "name":  "cotfw_chamber_tileset_atlas_128_readable_v1.png",
+        "ext":  ".png",
+        "bytes":  695327,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_atlas_128_readable_v2.png",
+        "name":  "cotfw_chamber_tileset_atlas_128_readable_v2.png",
+        "ext":  ".png",
+        "bytes":  681798,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_atlas_256_readable_v1.png",
+        "name":  "cotfw_chamber_tileset_atlas_256_readable_v1.png",
+        "ext":  ".png",
+        "bytes":  2230021,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_atlas_256_readable_v2.png",
+        "name":  "cotfw_chamber_tileset_atlas_256_readable_v2.png",
+        "ext":  ".png",
+        "bytes":  1893786,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_readable_v1_compare.png",
+        "name":  "cotfw_chamber_tileset_readable_v1_compare.png",
+        "ext":  ".png",
+        "bytes":  1373726,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/chamber_of_first_weave/Tiles/_archive/generated_versions/readable_passes/cotfw_chamber_tileset_readable_v2_compare.png",
+        "name":  "cotfw_chamber_tileset_readable_v2_compare.png",
+        "ext":  ".png",
+        "bytes":  1365679,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/Loomkin/loomkin_attack.png",
+        "name":  "loomkin_attack.png",
+        "ext":  ".png",
+        "bytes":  19918743,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/Loomkin/loomkin_base.png",
+        "name":  "loomkin_base.png",
+        "ext":  ".png",
+        "bytes":  651700,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/Loomkin/loomkin_walk.png",
+        "name":  "loomkin_walk.png",
+        "ext":  ".png",
+        "bytes":  10736852,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/boss_hp_bar.png",
+        "name":  "boss_hp_bar.png",
+        "ext":  ".png",
+        "bytes":  2257480,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/boss_hp_bar_example.png",
+        "name":  "boss_hp_bar_example.png",
+        "ext":  ".png",
+        "bytes":  728213,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/prototype_weaver_base.png",
+        "name":  "prototype_weaver_base.png",
+        "ext":  ".png",
+        "bytes":  1443280,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/protoweaver_hang.png",
+        "name":  "protoweaver_hang.png",
+        "ext":  ".png",
+        "bytes":  21116611,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/proto_weaver_beam_texture.png",
+        "name":  "proto_weaver_beam_texture.png",
+        "ext":  ".png",
+        "bytes":  418062,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/proto_weaver_hang_thread.png",
+        "name":  "proto_weaver_hang_thread.png",
+        "ext":  ".png",
+        "bytes":  350436,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png",
+        "name":  "proto_weaver_stab_attack.png",
+        "ext":  ".png",
+        "bytes":  35544297,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/proto_weaver_threadburst.png",
+        "name":  "proto_weaver_threadburst.png",
+        "ext":  ".png",
+        "bytes":  43704833,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/proto_weaver_walk.png",
+        "name":  "proto_weaver_walk.png",
+        "ext":  ".png",
+        "bytes":  20242386,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/proto_weaver/thread_missile_vfx.png",
+        "name":  "thread_missile_vfx.png",
+        "ext":  ".png",
+        "bytes":  374481,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/Tensioner/Tensioner_Attack.png",
+        "name":  "Tensioner_Attack.png",
+        "ext":  ".png",
+        "bytes":  22192880,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/Tensioner/Tensioner_Base.png",
+        "name":  "Tensioner_Base.png",
+        "ext":  ".png",
+        "bytes":  1187944,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/Tensioner/Tensioner_Walk.png",
+        "name":  "Tensioner_Walk.png",
+        "ext":  ".png",
+        "bytes":  8663867,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/Threadling/threadling.png",
+        "name":  "threadling.png",
+        "ext":  ".png",
+        "bytes":  501039,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Enemys/Threadling/threadling_attackright.png",
+        "name":  "threadling_attackright.png",
+        "ext":  ".png",
+        "bytes":  14386772,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Enemys/Threadling/threadlin_idleright.png",
+        "name":  "threadlin_idleright.png",
+        "ext":  ".png",
+        "bytes":  6727859,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/blue_buttons.png",
+        "name":  "blue_buttons.png",
+        "ext":  ".png",
+        "bytes":  1184098,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/yellow_portal.png",
+        "name":  "yellow_portal.png",
+        "ext":  ".png",
+        "bytes":  1787229,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/yellow_portal_spritesheet.png",
+        "name":  "yellow_portal_spritesheet.png",
+        "ext":  ".png",
+        "bytes":  7187627,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Blossom of Eryndor/blossom_of_eryndor_spritesheet.png",
+        "name":  "blossom_of_eryndor_spritesheet.png",
+        "ext":  ".png",
+        "bytes":  18465496,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Blossom of Eryndor/BOE Sheet.png",
+        "name":  "BOE Sheet.png",
+        "ext":  ".png",
+        "bytes":  1263000,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Blossom of Eryndor/f507544c-5aa4-4589-8ec1-6b3f84cc0b7b.png",
+        "name":  "f507544c-5aa4-4589-8ec1-6b3f84cc0b7b.png",
+        "ext":  ".png",
+        "bytes":  1933909,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Blossom of Eryndor/Single.png",
+        "name":  "Single.png",
+        "ext":  ".png",
+        "bytes":  413420,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Doors/blue_door_open.png",
+        "name":  "blue_door_open.png",
+        "ext":  ".png",
+        "bytes":  37429650,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/blue_door_open_high.png",
+        "name":  "blue_door_open_high.png",
+        "ext":  ".png",
+        "bytes":  284994,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/blue_door_open_low.png",
+        "name":  "blue_door_open_low.png",
+        "ext":  ".png",
+        "bytes":  285029,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/blue_wing_door.png",
+        "name":  "blue_wing_door.png",
+        "ext":  ".png",
+        "bytes":  2535952,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Doors/boss_door_open.png",
+        "name":  "boss_door_open.png",
+        "ext":  ".png",
+        "bytes":  41466275,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/boss_door_open_high.png",
+        "name":  "boss_door_open_high.png",
+        "ext":  ".png",
+        "bytes":  344680,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/boss_door_open_low.png",
+        "name":  "boss_door_open_low.png",
+        "ext":  ".png",
+        "bytes":  420856,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/boss_wing_door.png",
+        "name":  "boss_wing_door.png",
+        "ext":  ".png",
+        "bytes":  2838852,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Doors/red_door_open.png",
+        "name":  "red_door_open.png",
+        "ext":  ".png",
+        "bytes":  37461366,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/red_door_open_high.png",
+        "name":  "red_door_open_high.png",
+        "ext":  ".png",
+        "bytes":  442369,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/red_door_open_low.png",
+        "name":  "red_door_open_low.png",
+        "ext":  ".png",
+        "bytes":  428437,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/red_wing_door.png",
+        "name":  "red_wing_door.png",
+        "ext":  ".png",
+        "bytes":  2360477,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Doors/threadbound_boss_door.svg",
+        "name":  "threadbound_boss_door.svg",
+        "ext":  ".svg",
+        "bytes":  860,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/Doors/threadbound_demo_door.svg",
+        "name":  "threadbound_demo_door.svg",
+        "ext":  ".svg",
+        "bytes":  818,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/yellow_door_open.png",
+        "name":  "yellow_door_open.png",
+        "ext":  ".png",
+        "bytes":  34397181,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/yellow_door_open_high.png",
+        "name":  "yellow_door_open_high.png",
+        "ext":  ".png",
+        "bytes":  211695,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/yellow_door_open_low.png",
+        "name":  "yellow_door_open_low.png",
+        "ext":  ".png",
+        "bytes":  221449,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Environment/Doors/yellow_wing_door.png",
+        "name":  "yellow_wing_door.png",
+        "ext":  ".png",
+        "bytes":  2843305,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Environment/SavePoints/blossom_meditation_light.png",
+        "name":  "blossom_meditation_light.png",
+        "ext":  ".png",
+        "bytes":  202987,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Follower/Base.png",
+        "name":  "Base.png",
+        "ext":  ".png",
+        "bytes":  771035,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Follower/follower_idle.png",
+        "name":  "follower_idle.png",
+        "ext":  ".png",
+        "bytes":  12002976,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Threadborne/sit.png",
+        "name":  "sit.png",
+        "ext":  ".png",
+        "bytes":  2536161,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Dash/dash_frame.png",
+        "name":  "dash_frame.png",
+        "ext":  ".png",
+        "bytes":  2254890,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/Threadborne/Dash/dash_frame_normalized.png",
+        "name":  "dash_frame_normalized.png",
+        "ext":  ".png",
+        "bytes":  229645,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Equipment/Base_Grapple_Needle.png",
+        "name":  "Base_Grapple_Needle.png",
+        "ext":  ".png",
+        "bytes":  83537,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Equipment/Base_Grapple_Rope_Horizontal.png",
+        "name":  "Base_Grapple_Rope_Horizontal.png",
+        "ext":  ".png",
+        "bytes":  143993,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Equipment/RopeCoilTest.png",
+        "name":  "RopeCoilTest.png",
+        "ext":  ".png",
+        "bytes":  582658,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Equipment/Weavers_Shuttle_Club_Smear.png",
+        "name":  "Weavers_Shuttle_Club_Smear.png",
+        "ext":  ".png",
+        "bytes":  33963,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Equipment/Weavers_Shuttle_Club_v2.png",
+        "name":  "Weavers_Shuttle_Club_v2.png",
+        "ext":  ".png",
+        "bytes":  484457,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Idle/Idleright.png",
+        "name":  "Idleright.png",
+        "ext":  ".png",
+        "bytes":  3672286,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Air_01.png",
+        "name":  "Attack_Air_01.png",
+        "ext":  ".png",
+        "bytes":  148453,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Air_02.png",
+        "name":  "Attack_Air_02.png",
+        "ext":  ".png",
+        "bytes":  115269,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Air_03.png",
+        "name":  "Attack_Air_03.png",
+        "ext":  ".png",
+        "bytes":  131241,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Ground_01.png",
+        "name":  "Attack_Ground_01.png",
+        "ext":  ".png",
+        "bytes":  116507,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Ground_02.png",
+        "name":  "Attack_Ground_02.png",
+        "ext":  ".png",
+        "bytes":  105537,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Attack_Ground_03.png",
+        "name":  "Attack_Ground_03.png",
+        "ext":  ".png",
+        "bytes":  113813,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Grapple_Toss_Diag_Right.png",
+        "name":  "Grapple_Toss_Diag_Right.png",
+        "ext":  ".png",
+        "bytes":  145465,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Grapple_Toss_Right.png",
+        "name":  "Grapple_Toss_Right.png",
+        "ext":  ".png",
+        "bytes":  150037,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Jump_Apex.png",
+        "name":  "Jump_Apex.png",
+        "ext":  ".png",
+        "bytes":  152801,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Jump_Ascent.png",
+        "name":  "Jump_Ascent.png",
+        "ext":  ".png",
+        "bytes":  130661,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Jump_Descent.png",
+        "name":  "Jump_Descent.png",
+        "ext":  ".png",
+        "bytes":  135476,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Jump_Land.png",
+        "name":  "Jump_Land.png",
+        "ext":  ".png",
+        "bytes":  196076,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Player_Normalized_V1/Wall_Cling.png",
+        "name":  "Wall_Cling.png",
+        "ext":  ".png",
+        "bytes":  85303,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-001.png",
+        "name":  "ezgif-frame-001.png",
+        "ext":  ".png",
+        "bytes":  148574,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-002.png",
+        "name":  "ezgif-frame-002.png",
+        "ext":  ".png",
+        "bytes":  151573,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-003.png",
+        "name":  "ezgif-frame-003.png",
+        "ext":  ".png",
+        "bytes":  155271,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-004.png",
+        "name":  "ezgif-frame-004.png",
+        "ext":  ".png",
+        "bytes":  146734,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-005.png",
+        "name":  "ezgif-frame-005.png",
+        "ext":  ".png",
+        "bytes":  116882,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-006.png",
+        "name":  "ezgif-frame-006.png",
+        "ext":  ".png",
+        "bytes":  144912,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-007.png",
+        "name":  "ezgif-frame-007.png",
+        "ext":  ".png",
+        "bytes":  144834,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-008.png",
+        "name":  "ezgif-frame-008.png",
+        "ext":  ".png",
+        "bytes":  130447,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-012.png",
+        "name":  "ezgif-frame-012.png",
+        "ext":  ".png",
+        "bytes":  155679,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-018.png",
+        "name":  "ezgif-frame-018.png",
+        "ext":  ".png",
+        "bytes":  129289,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/Threadborne/Run/ezgif-frame-020.png",
+        "name":  "ezgif-frame-020.png",
+        "ext":  ".png",
+        "bytes":  153499,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Momentum+Action Points.png",
+        "name":  "Momentum+Action Points.png",
+        "ext":  ".png",
+        "bytes":  1173045,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/mouse_pointer.png",
+        "name":  "mouse_pointer.png",
+        "ext":  ".png",
+        "bytes":  1068951,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/rough_map.png",
+        "name":  "rough_map.png",
+        "ext":  ".png",
+        "bytes":  2344592,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/threadbound_cursor.png",
+        "name":  "threadbound_cursor.png",
+        "ext":  ".png",
+        "bytes":  2150,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/threadbound_icon.png",
+        "name":  "threadbound_icon.png",
+        "ext":  ".png",
+        "bytes":  2790969,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/controller/controller_background.png",
+        "name":  "controller_background.png",
+        "ext":  ".png",
+        "bytes":  2220035,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/controller/end_point.png",
+        "name":  "end_point.png",
+        "ext":  ".png",
+        "bytes":  24170,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/line.png",
+        "name":  "line.png",
+        "ext":  ".png",
+        "bytes":  14046,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/mouse_and_keyboard.png",
+        "name":  "mouse_and_keyboard.png",
+        "ext":  ".png",
+        "bytes":  1267465,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/Nintendo.png",
+        "name":  "Nintendo.png",
+        "ext":  ".png",
+        "bytes":  1942739,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/PS5.png",
+        "name":  "PS5.png",
+        "ext":  ".png",
+        "bytes":  1953418,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/Steam.png",
+        "name":  "Steam.png",
+        "ext":  ".png",
+        "bytes":  2014949,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/controller/xbox.png",
+        "name":  "xbox.png",
+        "ext":  ".png",
+        "bytes":  1792548,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Examples/blossum_menu_example.png",
+        "name":  "blossum_menu_example.png",
+        "ext":  ".png",
+        "bytes":  1399826,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/heart_icon_example.png",
+        "name":  "heart_icon_example.png",
+        "ext":  ".png",
+        "bytes":  34877,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/inventory_example.png",
+        "name":  "inventory_example.png",
+        "ext":  ".png",
+        "bytes":  1756775,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_audio.png",
+        "name":  "main_menu_example_audio.png",
+        "ext":  ".png",
+        "bytes":  1880660,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_button.png",
+        "name":  "main_menu_example_button.png",
+        "ext":  ".png",
+        "bytes":  44755,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_check_mark.png",
+        "name":  "main_menu_example_check_mark.png",
+        "ext":  ".png",
+        "bytes":  1134,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_check_mark_box.png",
+        "name":  "main_menu_example_check_mark_box.png",
+        "ext":  ".png",
+        "bytes":  4701,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_divider.png",
+        "name":  "main_menu_example_divider.png",
+        "ext":  ".png",
+        "bytes":  2339,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_gameplay.png",
+        "name":  "main_menu_example_gameplay.png",
+        "ext":  ".png",
+        "bytes":  1939014,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/main_menu_example_graphics.png",
+        "name":  "main_menu_example_graphics.png",
+        "ext":  ".png",
+        "bytes":  2035920,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/text_box_example_weave_menu.png",
+        "name":  "text_box_example_weave_menu.png",
+        "ext":  ".png",
+        "bytes":  214460,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/weave_example.png",
+        "name":  "weave_example.png",
+        "ext":  ".png",
+        "bytes":  1946743,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Examples/weave_example_menu_only.png",
+        "name":  "weave_example_menu_only.png",
+        "ext":  ".png",
+        "bytes":  1458360,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/Almendra/Almendra-Bold.ttf",
+        "name":  "Almendra-Bold.ttf",
+        "ext":  ".ttf",
+        "bytes":  34732,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/Almendra/Almendra-BoldItalic.ttf",
+        "name":  "Almendra-BoldItalic.ttf",
+        "ext":  ".ttf",
+        "bytes":  33496,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/Almendra/Almendra-Italic.ttf",
+        "name":  "Almendra-Italic.ttf",
+        "ext":  ".ttf",
+        "bytes":  33384,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/Almendra/Almendra-Regular.ttf",
+        "name":  "Almendra-Regular.ttf",
+        "ext":  ".ttf",
+        "bytes":  57832,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_font.fnt",
+        "name":  "base_gold_font.fnt",
+        "ext":  ".fnt",
+        "bytes":  6149,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_font_atlas.png",
+        "name":  "base_gold_font_atlas.png",
+        "ext":  ".png",
+        "bytes":  720737,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_font_caps.png",
+        "name":  "base_gold_font_caps.png",
+        "ext":  ".png",
+        "bytes":  438559,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_font_lower_case.png",
+        "name":  "base_gold_font_lower_case.png",
+        "ext":  ".png",
+        "bytes":  313427,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_font_theme.tres",
+        "name":  "base_gold_font_theme.tres",
+        "ext":  ".tres",
+        "bytes":  270,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/base_gold_font/base_gold_label_settings.tres",
+        "name":  "base_gold_label_settings.tres",
+        "ext":  ".tres",
+        "bytes":  344,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_font.fnt",
+        "name":  "decorative_font.fnt",
+        "ext":  ".fnt",
+        "bytes":  6755,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_font_atlas.png",
+        "name":  "decorative_font_atlas.png",
+        "ext":  ".png",
+        "bytes":  746959,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_font_caps_source.png",
+        "name":  "decorative_font_caps_source.png",
+        "ext":  ".png",
+        "bytes":  563874,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_font_lower_case_source.png",
+        "name":  "decorative_font_lower_case_source.png",
+        "ext":  ".png",
+        "bytes":  383606,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_font_theme.tres",
+        "name":  "decorative_font_theme.tres",
+        "ext":  ".tres",
+        "bytes":  280,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_label_settings.tres",
+        "name":  "decorative_label_settings.tres",
+        "ext":  ".tres",
+        "bytes":  376,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Fonts/decorative_font/decorative_message_label_settings.tres",
+        "name":  "decorative_message_label_settings.tres",
+        "ext":  ".tres",
+        "bytes":  373,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Game Over Screen/game_over_end_frame.png",
+        "name":  "game_over_end_frame.png",
+        "ext":  ".png",
+        "bytes":  1548147,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Game Over Screen/game_over_sprite_sheet.png",
+        "name":  "game_over_sprite_sheet.png",
+        "ext":  ".png",
+        "bytes":  9672154,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Game Over Screen/game_over_start_frame.png",
+        "name":  "game_over_start_frame.png",
+        "ext":  ".png",
+        "bytes":  1075008,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Hud/action_point_orb_colorless.png",
+        "name":  "action_point_orb_colorless.png",
+        "ext":  ".png",
+        "bytes":  2608000,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/health_bar_game_asset.png",
+        "name":  "health_bar_game_asset.png",
+        "ext":  ".png",
+        "bytes":  347875,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_green.png",
+        "name":  "hp_bar_texture_green.png",
+        "ext":  ".png",
+        "bytes":  3320391,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_negative.png",
+        "name":  "hp_bar_texture_negative.png",
+        "ext":  ".png",
+        "bytes":  2127432,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_orange.png",
+        "name":  "hp_bar_texture_orange.png",
+        "ext":  ".png",
+        "bytes":  2342088,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_red.png",
+        "name":  "hp_bar_texture_red.png",
+        "ext":  ".png",
+        "bytes":  2567316,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_white.png",
+        "name":  "hp_bar_texture_white.png",
+        "ext":  ".png",
+        "bytes":  1964121,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Hud/hp_bar_texture_yellow.png",
+        "name":  "hp_bar_texture_yellow.png",
+        "ext":  ".png",
+        "bytes":  2561279,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/hud.png",
+        "name":  "hud.png",
+        "ext":  ".png",
+        "bytes":  562375,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Hud/hud_no_momentum.png",
+        "name":  "hud_no_momentum.png",
+        "ext":  ".png",
+        "bytes":  585550,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/momentum_bar_endcaps.png",
+        "name":  "momentum_bar_endcaps.png",
+        "ext":  ".png",
+        "bytes":  73134,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/momentum_bar_texture.png",
+        "name":  "momentum_bar_texture.png",
+        "ext":  ".png",
+        "bytes":  295542,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Hud/thread_knot_counter.png",
+        "name":  "thread_knot_counter.png",
+        "ext":  ".png",
+        "bytes":  1062693,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/base_boots_icon.png",
+        "name":  "base_boots_icon.png",
+        "ext":  ".png",
+        "bytes":  160938,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/base_chest_icon.png",
+        "name":  "base_chest_icon.png",
+        "ext":  ".png",
+        "bytes":  149185,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/base_grapple_icon.png",
+        "name":  "base_grapple_icon.png",
+        "ext":  ".png",
+        "bytes":  71771,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_currency_frame.png",
+        "name":  "inventory_currency_frame.png",
+        "ext":  ".png",
+        "bytes":  1100965,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_equipment_slot_frame.png",
+        "name":  "inventory_equipment_slot_frame.png",
+        "ext":  ".png",
+        "bytes":  1173669,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_icon_boots.png",
+        "name":  "inventory_icon_boots.png",
+        "ext":  ".png",
+        "bytes":  26773,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_icon_chest.png",
+        "name":  "inventory_icon_chest.png",
+        "ext":  ".png",
+        "bytes":  25600,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_icon_gloves.png",
+        "name":  "inventory_icon_gloves.png",
+        "ext":  ".png",
+        "bytes":  22991,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_icon_weapon.png",
+        "name":  "inventory_icon_weapon.png",
+        "ext":  ".png",
+        "bytes":  24319,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_identity_stats_frame.png",
+        "name":  "inventory_identity_stats_frame.png",
+        "ext":  ".png",
+        "bytes":  920099,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_item_slot_frame.png",
+        "name":  "inventory_item_slot_frame.png",
+        "ext":  ".png",
+        "bytes":  1595098,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/inventory_main_panel_frame.png",
+        "name":  "inventory_main_panel_frame.png",
+        "ext":  ".png",
+        "bytes":  1914562,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/thread_knot_icon.png",
+        "name":  "thread_knot_icon.png",
+        "ext":  ".png",
+        "bytes":  34207,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Inventory/weaver_shuttle_icon.png",
+        "name":  "weaver_shuttle_icon.png",
+        "ext":  ".png",
+        "bytes":  484457,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/blossom_of_eryndor_menu_buttons.png",
+        "name":  "blossom_of_eryndor_menu_buttons.png",
+        "ext":  ".png",
+        "bytes":  1520903,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/inventory_frame.png",
+        "name":  "inventory_frame.png",
+        "ext":  ".png",
+        "bytes":  1806011,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Main Menu/main_menu_buttons.png",
+        "name":  "main_menu_buttons.png",
+        "ext":  ".png",
+        "bytes":  1080655,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/main_menu_buttons_ref.png",
+        "name":  "main_menu_buttons_ref.png",
+        "ext":  ".png",
+        "bytes":  1653460,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Main Menu/menu_background.png",
+        "name":  "menu_background.png",
+        "ext":  ".png",
+        "bytes":  3230494,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/menu_selection_pointer.png",
+        "name":  "menu_selection_pointer.png",
+        "ext":  ".png",
+        "bytes":  336755,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/menu_separator.png",
+        "name":  "menu_separator.png",
+        "ext":  ".png",
+        "bytes":  118672,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/merchant_menu_buttons.png",
+        "name":  "merchant_menu_buttons.png",
+        "ext":  ".png",
+        "bytes":  1240973,
+        "referenced":  false
+    },
+    {
+        "path":  "Assets/UI/Main Menu/text_box.png",
+        "name":  "text_box.png",
+        "ext":  ".png",
+        "bytes":  382048,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/title screen.png",
+        "name":  "title screen.png",
+        "ext":  ".png",
+        "bytes":  4635765,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/volume_bar_empty.png",
+        "name":  "volume_bar_empty.png",
+        "ext":  ".png",
+        "bytes":  12571,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/volume_bar_filled.png",
+        "name":  "volume_bar_filled.png",
+        "ext":  ".png",
+        "bytes":  17757,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/volume_empty_bar_and_icons.png",
+        "name":  "volume_empty_bar_and_icons.png",
+        "ext":  ".png",
+        "bytes":  50999,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/Main Menu/volume_slider_button.png",
+        "name":  "volume_slider_button.png",
+        "ext":  ".png",
+        "bytes":  23135,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_ap_recharge.png",
+        "name":  "weave_icon_ap_recharge.png",
+        "ext":  ".png",
+        "bytes":  24294,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_attack.png",
+        "name":  "weave_icon_attack.png",
+        "ext":  ".png",
+        "bytes":  13356,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_health.png",
+        "name":  "weave_icon_health.png",
+        "ext":  ".png",
+        "bytes":  21518,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_momentum.png",
+        "name":  "weave_icon_momentum.png",
+        "ext":  ".png",
+        "bytes":  19276,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_resistance.png",
+        "name":  "weave_icon_resistance.png",
+        "ext":  ".png",
+        "bytes":  18443,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_icon_skill_damage.png",
+        "name":  "weave_icon_skill_damage.png",
+        "ext":  ".png",
+        "bytes":  22780,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_knot_panel.png",
+        "name":  "weave_knot_panel.png",
+        "ext":  ".png",
+        "bytes":  2918,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_meditation_emblem.png",
+        "name":  "weave_meditation_emblem.png",
+        "ext":  ".png",
+        "bytes":  1430734,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_prompt_panel.png",
+        "name":  "weave_prompt_panel.png",
+        "ext":  ".png",
+        "bytes":  5330,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_stat_ring_blue.png",
+        "name":  "weave_stat_ring_blue.png",
+        "ext":  ".png",
+        "bytes":  313972,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_stat_ring_gold.png",
+        "name":  "weave_stat_ring_gold.png",
+        "ext":  ".png",
+        "bytes":  308441,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/UI/WeaveMenu/weave_stat_ring_red.png",
+        "name":  "weave_stat_ring_red.png",
+        "ext":  ".png",
+        "bytes":  309679,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/enemy_damage_fray_VFX.png",
+        "name":  "enemy_damage_fray_VFX.png",
+        "ext":  ".png",
+        "bytes":  844268,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/enemy_death_unravel_VFX.png",
+        "name":  "enemy_death_unravel_VFX.png",
+        "ext":  ".png",
+        "bytes":  993912,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/thread_knots.png",
+        "name":  "thread_knots.png",
+        "ext":  ".png",
+        "bytes":  185112,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/thread_of_balance_beam.png",
+        "name":  "thread_of_balance_beam.png",
+        "ext":  ".png",
+        "bytes":  2126472,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/thread_of_essence_beam.png",
+        "name":  "thread_of_essence_beam.png",
+        "ext":  ".png",
+        "bytes":  2160268,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/thread_of_power_beam.png",
+        "name":  "thread_of_power_beam.png",
+        "ext":  ".png",
+        "bytes":  2083871,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/wall_cling_VFX.png",
+        "name":  "wall_cling_VFX.png",
+        "ext":  ".png",
+        "bytes":  267274,
+        "referenced":  true
+    },
+    {
+        "path":  "Assets/VFX/weapon_attack_arc_pop.png",
+        "name":  "weapon_attack_arc_pop.png",
+        "ext":  ".png",
+        "bytes":  101565,
+        "referenced":  true
+    }
+]

@@ -1,0 +1,165 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/MerchantMenu/merchant_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="3_knot"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="4_title_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="5_body_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("4_title_font")
+font_size = 58
+font_color = Color(0.94, 0.82, 0.54, 1)
+outline_size = 4
+outline_color = Color(0.025, 0.018, 0.012, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_body"]
+font = ExtResource("5_body_font")
+font_size = 27
+font_color = Color(0.86, 0.75, 0.55, 1)
+outline_size = 3
+outline_color = Color(0.025, 0.018, 0.012, 1)
+
+[node name="MerchantMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.58)
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -590.0
+offset_top = -420.0
+offset_right = 590.0
+offset_bottom = 420.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 110.0
+offset_right = 340.0
+offset_bottom = 184.0
+grow_horizontal = 2
+text = "FOLLOWER'S WARES"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ThreadKnots" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 290.0
+offset_top = 196.0
+offset_right = 520.0
+offset_bottom = 268.0
+grow_horizontal = 2
+
+[node name="KnotIcon" type="TextureRect" parent="Root/ThreadKnots"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 7.0
+offset_right = 72.0
+offset_bottom = 65.0
+texture = ExtResource("3_knot")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ThreadKnotLabel" type="Label" parent="Root/ThreadKnots"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 80.0
+offset_top = 0.0
+offset_right = 210.0
+offset_bottom = 72.0
+text = "0"
+label_settings = SubResource("LabelSettings_title")
+vertical_alignment = 1
+
+[node name="Rows" type="VBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -170.0
+offset_right = 380.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="DescriptionPanel" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 756.0
+offset_right = 380.0
+offset_bottom = 868.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.035, 0.028, 0.02, 0.88)
+
+[node name="DescriptionLabel" type="Label" parent="Root/DescriptionPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 736.0
+offset_bottom = 92.0
+text = "Choose an item."
+label_settings = SubResource("LabelSettings_body")
+autowrap_mode = 3
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 878.0
+offset_right = 380.0
+offset_bottom = 930.0
+grow_horizontal = 2
+text = "ENTER TO BUY    ESC TO LEAVE"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 1
+vertical_alignment = 1

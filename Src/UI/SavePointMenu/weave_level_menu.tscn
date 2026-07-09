@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d0fs8n726sc87" path="res://Assets/UI/WeaveMenu/weave_prompt_panel.png" id="6_prompt_panel"]
 [ext_resource type="Texture2D" uid="uid://3pamq7b06hkv" path="res://Assets/UI/WeaveMenu/weave_knot_panel.png" id="7_knot_panel"]
 [ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="8_thread_knot"]
-[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="9_decorative_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/AlmendraDisplay-Regular.ttf" id="9_display_font"]
 [ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="10_base_font"]
 [ext_resource type="Shader" uid="uid://bwvyn07b08cm1" path="res://Src/UI/SavePointMenu/weave_vignette.gdshader" id="11_vignette"]
 [ext_resource type="Texture2D" uid="uid://deirpb3ly77er" path="res://Assets/UI/WeaveMenu/weave_icon_health.png" id="12_icon_health"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://4dduumjtali0" path="res://Assets/UI/WeaveMenu/weave_icon_momentum.png" id="15_icon_momentum"]
 [ext_resource type="Texture2D" uid="uid://cssqrvv8khkeu" path="res://Assets/UI/WeaveMenu/weave_icon_ap_recharge.png" id="16_icon_ap"]
 [ext_resource type="Texture2D" uid="uid://iyjhrj1b2gm6" path="res://Assets/UI/WeaveMenu/weave_icon_resistance.png" id="17_icon_resistance"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="18_sc_font"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
 shader = ExtResource("11_vignette")
@@ -27,7 +28,7 @@ shader_parameter/inner_radius = 0.2
 shader_parameter/outer_radius = 0.78
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
-font = ExtResource("9_decorative_font")
+font = ExtResource("9_display_font")
 font_size = 58
 font_color = Color(0.9, 0.78, 0.52, 1)
 outline_size = 4
@@ -50,7 +51,7 @@ outline_size = 1
 outline_color = Color(0.025, 0.02, 0.015, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_stat"]
-font = ExtResource("10_base_font")
+font = ExtResource("18_sc_font")
 font_size = 30
 font_color = Color(0.96, 0.84, 0.58, 1)
 outline_size = 1

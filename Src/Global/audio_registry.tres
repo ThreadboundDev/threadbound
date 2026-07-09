@@ -149,6 +149,7 @@ bus = &"Music"
 script = ExtResource("2_sound")
 stream = ExtResource("26_music_title")
 bus = &"Music"
+volume_db = -4.0
 
 [sub_resource type="Resource" id="AudioSound_player_attack"]
 script = ExtResource("2_sound")

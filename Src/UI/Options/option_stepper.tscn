@@ -1,0 +1,131 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/Options/option_stepper.gd" id="1_script"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/settings_dropdown_button.png" id="3_plaque"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Examples/main_menu_example_check_mark_box.png" id="4_check_box"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Examples/main_menu_example_check_mark.png" id="5_check_mark"]
+[sub_resource type="LabelSettings" id="LabelSettings_stepper"]
+font = ExtResource("2_font")
+font_size = 46
+font_color = Color(0.968627, 0.788235, 0.458824, 1)
+outline_size = 2
+outline_color = Color(0.02, 0.018, 0.012, 0.95)
+
+[node name="OptionStepper" type="Control"]
+custom_minimum_size = Vector2(1050, 96)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1050.0
+offset_bottom = 96.0
+focus_mode = 2
+script = ExtResource("1_script")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.0
+anchor_right = 0.54
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "OPTION"
+label_settings = SubResource("LabelSettings_stepper")
+vertical_alignment = 1
+
+[node name="ValueBacking" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.60
+anchor_top = 0.08
+anchor_right = 0.96
+anchor_bottom = 0.92
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_plaque")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.64
+anchor_top = 0.0
+anchor_right = 0.91
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "VALUE"
+label_settings = SubResource("LabelSettings_stepper")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88
+anchor_top = 0.17
+anchor_right = 0.95
+anchor_bottom = 0.83
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_check_box")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CheckMark" type="TextureRect" parent="CheckBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_check_mark")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Divider" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.86
+anchor_right = 0.56
+anchor_bottom = 1.04
+grow_horizontal = 2
+grow_vertical = 2
+modulate = Color(0.9, 0.72, 0.42, 0.55)
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dropdown" type="Control" parent="."]
+visible = false
+z_index = 50
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.60
+anchor_top = 0.82
+anchor_right = 0.96
+anchor_bottom = 3.2
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Items" type="VBoxContainer" parent="Dropdown"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2

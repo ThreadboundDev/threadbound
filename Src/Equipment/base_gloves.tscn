@@ -32,86 +32,61 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-18, -15)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1.235, 1.235)]
-}
 
 [sub_resource type="Animation" id="Animation_ap6kl"]
 resource_name = "attack_air"
-length = 0.4286
+length = 0.429
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
-tracks/0/interp = 0
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857),
+"times": PackedFloat32Array(0, 0.143, 0.286),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [Vector2(26.000002, -34), Vector2(36, -23.000002), Vector2(28, -48)]
+"update": 0,
+"values": [Vector2(-14.999999, -60.999996), Vector2(-14.999999, -60.999996), Vector2(-39, -47)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
-tracks/1/interp = 0
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857),
+"times": PackedFloat32Array(0, 0.143, 0.286),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [1.3107423, 0.56548667, -2.0228367]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.2857),
-"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1.235, 1.235)]
+"values": [0.9442231, 1.2356931, 1.2356931]
 }
 
 [sub_resource type="Animation" id="Animation_bvg2p"]
 resource_name = "attack_ground"
-length = 0.4286
-loop_mode = 2
+length = 0.429
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857),
+"times": PackedFloat32Array(0, 0.143, 0.286),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [1.3578662, 0.38048178, -2.1554816]
+"values": [Vector2(-18, -47), Vector2(-14.999999, -42), Vector2(-34, -42)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857),
+"times": PackedFloat32Array(0, 0.143, 0.286),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-18.5, -15), Vector2(30.000002, -11.000001), Vector2(24, -43)]
+"values": [0.86917394, 1.3561208, 1.3561208]
 }
 
 [sub_resource type="Animation" id="Animation_ijk80"]
@@ -367,9 +342,10 @@ script = ExtResource("1_ijk80")
 [node name="RightHandAnchor" type="Marker2D" parent="Equipment" unique_id=1164032359]
 z_index = 1
 position = Vector2(-18, -15)
-rotation = -0.06981317
+scale = Vector2(0.885, 0.885)
 
 [node name="WristWrapPivot" type="Node2D" parent="Equipment/RightHandAnchor" unique_id=686102231]
+position = Vector2(2.319916, 0.1622243)
 rotation = -1.267109
 scale = Vector2(1.235, 1.235)
 

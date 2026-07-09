@@ -323,7 +323,7 @@ func _try_apply_doorway_depth(body: Node) -> void:
 	var equipment_mount := body.get_node_or_null("EquipmentMount")
 	_collect_player_depth_items(body, equipment_mount, records, seen)
 	_collect_equipment_depth_items(equipment_mount, records, seen)
-	_collect_runtime_equipment_depth_items(body, records, seen)
+	_collect_runtime_equipment_depth_items(body, equipment_mount, records, seen)
 	if records.is_empty():
 		return
 
@@ -351,13 +351,12 @@ func _collect_equipment_depth_items(root: Node, records: Array[Dictionary], seen
 	if root is CanvasItem:
 		_apply_depth_to_canvas_item(root as CanvasItem, doorway_equipment_z_index, records, seen)
 
-	for child in root.get_children():
-		_collect_equipment_depth_items(child, records, seen)
-
-func _collect_runtime_equipment_depth_items(body: Node, records: Array[Dictionary], seen: Dictionary) -> void:
+func _collect_runtime_equipment_depth_items(body: Node, equipment_mount: Node, records: Array[Dictionary], seen: Dictionary) -> void:
 	for property_name in [&"current_gloves", &"current_boots", &"current_chest"]:
 		var item = body.get(property_name)
 		if item is Node:
+			if equipment_mount and equipment_mount.is_ancestor_of(item):
+				continue
 			_collect_equipment_depth_items(item as Node, records, seen)
 
 func _apply_depth_to_canvas_item(item: CanvasItem, target_z_index: int, records: Array[Dictionary], seen: Dictionary) -> void:

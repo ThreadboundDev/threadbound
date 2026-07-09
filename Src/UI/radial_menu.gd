@@ -58,8 +58,9 @@ func _ready() -> void:
 	slow_bank = max_slow_bank
 	last_real_time = Time.get_ticks_msec() / 1000.0
 
-	# Indices match EquipManager: Sage=0-2, Hermit=3-5, Monarch=6-8
-	_connect_slot(sage_gloves_slot,    0)
+	# Glove indices match EquipManager. Other slots are connected for hover layout,
+	# but the manager currently only equips glove scenes.
+	_connect_slot(sage_gloves_slot,    9)
 	_connect_slot(sage_boots_slot,     1)
 	_connect_slot(sage_chest_slot,     2)
 	_connect_slot(hermit_gloves_slot,  3)
@@ -98,11 +99,11 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var local_mouse = _get_local_mouse()
-		for entry in slot_data:
-			if Geometry2D.is_point_in_polygon(local_mouse, entry.poly):
-				get_viewport().set_input_as_handled()
-				select_equip(entry.idx)
-				return
+		var entry := _get_slot_entry_at(local_mouse)
+		if not entry.is_empty():
+			get_viewport().set_input_as_handled()
+			select_equip(int(entry["idx"]))
+			return
 
 func _process(_delta: float) -> void:
 	var real_delta = _get_real_delta()
@@ -124,10 +125,9 @@ func _update_hover() -> void:
 	var local_mouse = _get_local_mouse()
 	var new_hover: Control = null
 
-	for entry in slot_data:
-		if Geometry2D.is_point_in_polygon(local_mouse, entry.poly):
-			new_hover = entry.slot
-			break
+	var entry := _get_slot_entry_at(local_mouse)
+	if not entry.is_empty():
+		new_hover = entry["slot"] as Control
 
 	if new_hover == hovered_slot:
 		return
@@ -138,6 +138,32 @@ func _update_hover() -> void:
 		AudioManager.play_ui(&"ui_click")
 		_on_slot_hover(new_hover)
 	hovered_slot = new_hover
+
+func _get_slot_entry_at(local_mouse: Vector2) -> Dictionary:
+	var best_entry: Dictionary = {}
+	var best_distance := INF
+
+	for entry in slot_data:
+		var poly: PackedVector2Array = entry["poly"]
+		if not Geometry2D.is_point_in_polygon(local_mouse, poly):
+			continue
+
+		var center := _get_polygon_center(poly)
+		var distance := local_mouse.distance_squared_to(center)
+		if distance < best_distance:
+			best_distance = distance
+			best_entry = entry
+
+	return best_entry
+
+func _get_polygon_center(poly: PackedVector2Array) -> Vector2:
+	if poly.is_empty():
+		return Vector2.ZERO
+
+	var total := Vector2.ZERO
+	for point in poly:
+		total += point
+	return total / float(poly.size())
 
 # === HOVER ===
 

@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://c5os2vg8reytn" path="res://Src/UI/GameMenu/game_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b1dyj5i1o528r" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
 [ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
-[ext_resource type="FontFile" uid="uid://ch50blhxndouc" path="res://Assets/UI/Fonts/decorative_font/decorative_font.fnt" id="4_decorative_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="4_title_font"]
 [ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="5_base_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Italic.ttf" id="6_italic_font"]
 [ext_resource type="Texture2D" uid="uid://ckvdkmt3s0pnj" path="res://Assets/chamber_of_first_weave/Threads/thread_of_power.png" id="7_thread_power"]
 [ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
 [ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
@@ -30,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="30_thread_knot_icon"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
-font = ExtResource("4_decorative_font")
+font = ExtResource("4_title_font")
 font_size = 70
 font_color = Color(0.94, 0.84, 0.58, 1)
 outline_size = 5
@@ -39,7 +40,7 @@ shadow_size = 3
 shadow_color = Color(0.7058824, 0.57254905, 0, 0.65882355)
 
 [sub_resource type="LabelSettings" id="LabelSettings_tab"]
-font = ExtResource("5_base_font")
+font = ExtResource("4_title_font")
 font_size = 30
 font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 3
@@ -60,7 +61,7 @@ outline_size = 2
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_inventory_name"]
-font = ExtResource("5_base_font")
+font = ExtResource("4_title_font")
 font_size = 24
 font_color = Color(0.94, 0.84, 0.58, 1)
 outline_size = 3
@@ -306,7 +307,7 @@ animations = [{
 }]
 
 [sub_resource type="LabelSettings" id="LabelSettings_inventory_description"]
-font = ExtResource("5_base_font")
+font = ExtResource("6_italic_font")
 font_size = 18
 font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 2
@@ -2417,6 +2418,25 @@ label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ResetDefaults" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -420.0
+offset_top = -94.0
+offset_right = -72.0
+offset_bottom = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 0
+text = "RESET TO DEFAULTS"
+label_settings = SubResource("LabelSettings_body")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DeviceArt" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=1602359410]
 layout_mode = 1
 anchors_preset = 8
@@ -4064,10 +4084,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 72.0
-offset_right = 40.0
-offset_bottom = 72.0
+offset_left = 22.0
+offset_top = 175.0
+offset_right = 22.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4079,7 +4099,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadUp" unique_id=1214648746]
-points = PackedVector2Array(610, 250, 500, 166, 330, 166)
+points = PackedVector2Array(619, 167, 500, 166, 330, 166)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4125,8 +4145,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 61.0
-offset_bottom = 61.0
+offset_left = 22.0
+offset_top = 151.0
+offset_right = 22.0
+offset_bottom = 151.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4138,7 +4160,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadLeft" unique_id=415234628]
-points = PackedVector2Array(610, 310, 500, 228, 330, 228)
+points = PackedVector2Array(585, 227, 500, 228, 330, 228)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4184,6 +4206,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 127.0
+offset_right = 22.0
+offset_bottom = 127.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4195,7 +4221,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadDown" unique_id=621049469]
-points = PackedVector2Array(610, 370, 500, 290, 330, 290)
+points = PackedVector2Array(621, 290, 499, 291, 330, 290)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4241,6 +4267,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 112.0
+offset_right = 21.0
+offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4252,7 +4282,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/DPadRight" unique_id=255838595]
-points = PackedVector2Array(650, 420, 500, 352, 330, 352)
+points = PackedVector2Array(680, 289, 631, 352, 330, 352)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4298,6 +4328,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = 151.0
+offset_right = 56.0
+offset_bottom = 151.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4309,7 +4343,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/LeftStick" unique_id=1334578488]
-points = PackedVector2Array(675, 475, 500, 414, 330, 414)
+points = PackedVector2Array(702, 319, 500, 414, 330, 414)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4355,6 +4389,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 85.0
+offset_top = -47.0
+offset_right = 85.0
+offset_bottom = -47.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4366,7 +4404,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=21186466]
-points = PackedVector2Array(865, 250, 1015, 166, 1200, 166)
+points = PackedVector2Array(941, 348, 1108, 346, 1360, 345)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4374,16 +4412,16 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=1097333287]
-position = Vector2(1200, 166)
+position = Vector2(1360, 345)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton" unique_id=917307393]
 anchors_preset = 0
-offset_left = 1228.0
-offset_top = 142.0
-offset_right = 1514.0
-offset_bottom = 190.0
+offset_left = 1388.0
+offset_top = 321.0
+offset_right = 1674.0
+offset_bottom = 369.0
 mouse_filter = 2
 
 [node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/OptionsButton/TextBox" unique_id=523431984]
@@ -4407,7 +4445,48 @@ text = "Pause"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
-[node name="L1Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=274053313]
+[node name="CreateButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1498071042]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -50.0
+offset_right = 21.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Unassigned"
+input_text = "Create"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CreateButton" unique_id=526686557]
+position = Vector2(0, -1)
+points = PackedVector2Array(677, 352, 500, 352, 330, 352)
+width = 4.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CreateButton" unique_id=653300003]
+position = Vector2(330, 352)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_endpoint")
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CreateButton" unique_id=1174653534]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 302.0
+offset_bottom = 376.0
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CreateButton/TextBox" unique_id=99641654]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4415,15 +4494,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CreateButton/TextBox" unique_id=1547391336]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Unassigned"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
+[node name="L1Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=274053313]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 33.0
+offset_right = 22.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("19_callout")
 action_text = "Cycle Left"
 input_text = "LB"
-text_box_offset = Vector2(28, -24)
+text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=338154969]
-points = PackedVector2Array(720, 190, 1015, 228, 1200, 228)
+points = PackedVector2Array(614, 227, 500, 228, 330, 228)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4431,15 +4535,15 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=1404485324]
-position = Vector2(1200, 228)
+position = Vector2(330, 228)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_endpoint")
 
 [node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L1Button" unique_id=2103815053]
 anchors_preset = 0
-offset_left = 1228.0
+offset_left = 16.0
 offset_top = 204.0
-offset_right = 1514.0
+offset_right = 302.0
 offset_bottom = 252.0
 mouse_filter = 2
 
@@ -4464,11 +4568,76 @@ text = "Cycle Left"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
+[node name="L2Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=135895320]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 54.0
+offset_right = 21.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Unassigned"
+input_text = "L2"
+text_box_offset = Vector2(-314, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L2Button" unique_id=2064972318]
+points = PackedVector2Array(615, 166, 500, 166, 330, 166)
+width = 4.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L2Button" unique_id=1743591288]
+position = Vector2(330, 166)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_endpoint")
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L2Button" unique_id=300407903]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 142.0
+offset_right = 302.0
+offset_bottom = 190.0
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L2Button/TextBox" unique_id=477914558]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/L2Button/TextBox" unique_id=864867303]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Unassigned"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
 [node name="R1Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=708352018]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 244.0
+offset_top = -28.0
+offset_right = 244.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4480,7 +4649,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R1Button" unique_id=154142247]
-points = PackedVector2Array(815, 190, 1015, 290, 1200, 290)
+points = PackedVector2Array(832, 292, 1015, 290, 1200, 290)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4526,6 +4695,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 246.0
+offset_top = -131.0
+offset_right = 246.0
+offset_bottom = -131.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4537,7 +4710,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/R2Button" unique_id=1534794492]
-points = PackedVector2Array(870, 335, 1015, 352, 1200, 352)
+points = PackedVector2Array(846, 354, 1015, 352, 1200, 352)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4578,11 +4751,76 @@ text = "Grapple"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
+[node name="TriangleButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=568569381]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 247.0
+offset_top = -82.0
+offset_right = 247.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("19_callout")
+action_text = "Unassigned"
+input_text = "Triangle"
+text_box_offset = Vector2(28, -24)
+line_texture = ExtResource("17_line")
+endpoint_texture = ExtResource("18_endpoint")
+
+[node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/TriangleButton" unique_id=1962415062]
+points = PackedVector2Array(840, 414, 1015, 414, 1200, 414)
+width = 4.0
+texture = ExtResource("17_line")
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="EndPoint" type="Sprite2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/TriangleButton" unique_id=690933481]
+position = Vector2(1200, 414)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_endpoint")
+
+[node name="TextBox" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/TriangleButton" unique_id=858064514]
+anchors_preset = 0
+offset_left = 1228.0
+offset_top = 390.0
+offset_right = 1514.0
+offset_bottom = 438.0
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/TriangleButton/TextBox" unique_id=1440256086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.025, 0.021, 0.016, 0.68)
+
+[node name="ActionLabel" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/TriangleButton/TextBox" unique_id=701615350]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Unassigned"
+label_settings = SubResource("LabelSettings_body")
+vertical_alignment = 1
+
 [node name="SquareButton" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1742425697]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 245.0
+offset_top = 56.0
+offset_right = 245.0
+offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4594,7 +4832,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/SquareButton" unique_id=425556602]
-points = PackedVector2Array(855, 410, 1015, 414, 1200, 414)
+points = PackedVector2Array(774, 346, 815, 414, 1200, 414)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4640,6 +4878,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 246.0
+offset_top = -91.0
+offset_right = 246.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4651,7 +4893,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CircleButton" unique_id=441457558]
-points = PackedVector2Array(900, 385, 1015, 476, 1200, 476)
+points = PackedVector2Array(884, 476, 1015, 476, 1200, 476)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4697,6 +4939,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 248.0
+offset_top = -114.0
+offset_right = 248.0
+offset_bottom = -114.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -4708,7 +4954,7 @@ line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
 
 [node name="Line" type="Line2D" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5/CrossButton" unique_id=433166212]
-points = PackedVector2Array(900, 450, 1015, 538, 1200, 538)
+points = PackedVector2Array(840, 537, 1015, 538, 1200, 538)
 width = 4.0
 texture = ExtResource("17_line")
 texture_mode = 1
@@ -4754,6 +5000,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 164.0
+offset_top = -17.0
+offset_right = 164.0
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

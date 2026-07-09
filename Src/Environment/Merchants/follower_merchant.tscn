@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://bj7tu1nyrfca"]
+
+[ext_resource type="Script" uid="uid://djrvyr2gxwbry" path="res://Src/Environment/Merchants/follower_merchant.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cr5crh28cyq3g" path="res://Assets/Follower/follower_idle.png" id="2_idle"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="3_prompt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcep1"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xpcc"]
+atlas = ExtResource("2_idle")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbocj"]
+atlas = ExtResource("2_idle")
+region = Rect2(3840, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wxec"]
+atlas = ExtResource("2_idle")
+region = Rect2(5760, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcx85"]
+atlas = ExtResource("2_idle")
+region = Rect2(7680, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxgfn"]
+atlas = ExtResource("2_idle")
+region = Rect2(9600, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xn4h0"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8el0"]
+atlas = ExtResource("2_idle")
+region = Rect2(1920, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5udi"]
+atlas = ExtResource("2_idle")
+region = Rect2(3840, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ojgw"]
+atlas = ExtResource("2_idle")
+region = Rect2(5760, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjnwd"]
+atlas = ExtResource("2_idle")
+region = Rect2(7680, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1vka"]
+atlas = ExtResource("2_idle")
+region = Rect2(9600, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7j7g"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfoph"]
+atlas = ExtResource("2_idle")
+region = Rect2(1920, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x68vx"]
+atlas = ExtResource("2_idle")
+region = Rect2(3840, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7vkk"]
+atlas = ExtResource("2_idle")
+region = Rect2(5760, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvtt3"]
+atlas = ExtResource("2_idle")
+region = Rect2(7680, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8l0d"]
+atlas = ExtResource("2_idle")
+region = Rect2(9600, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dddcb"]
+atlas = ExtResource("2_idle")
+region = Rect2(0, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0tmc"]
+atlas = ExtResource("2_idle")
+region = Rect2(1920, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g8vm"]
+atlas = ExtResource("2_idle")
+region = Rect2(3840, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uisyg"]
+atlas = ExtResource("2_idle")
+region = Rect2(5760, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8guek"]
+atlas = ExtResource("2_idle")
+region = Rect2(7680, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2nwa"]
+atlas = ExtResource("2_idle")
+region = Rect2(9600, 3240, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t33h8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcep1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xpcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbocj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wxec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcx85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxgfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xn4h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8el0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5udi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ojgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjnwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1vka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7j7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfoph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x68vx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7vkk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvtt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8l0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dddcb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0tmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g8vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uisyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8guek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2nwa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 24.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 170.0
+
+[node name="FollowerMerchant" type="Area2D" unique_id=1001505667]
+collision_layer = 0
+script = ExtResource("1_script")
+idle_sheet = ExtResource("2_idle")
+
+[node name="FollowerSprite" type="AnimatedSprite2D" parent="." unique_id=1700876868]
+position = Vector2(0, -112)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_t33h8")
+animation = &"idle"
+frame = 21
+
+[node name="InteractionShape" type="CollisionShape2D" parent="." unique_id=855816873]
+position = Vector2(0, -84)
+shape = SubResource("CircleShape2D_interaction")
+
+[node name="PromptLabel" type="Label" parent="." unique_id=383439906]
+visible = false
+z_index = 20
+offset_left = -110.0
+offset_top = -290.0
+offset_right = 110.0
+offset_bottom = -230.0
+text = "E - TALK"
+label_settings = ExtResource("3_prompt")
+horizontal_alignment = 1
+vertical_alignment = 1

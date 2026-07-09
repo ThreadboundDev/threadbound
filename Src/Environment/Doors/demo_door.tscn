@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bcdpwddbuuy26" path="res://Src/Environment/Doors/demo_door.gd" id="1_door_script"]
 [ext_resource type="Texture2D" uid="uid://bw0ff08xrns25" path="res://Assets/Environment/Doors/threadbound_demo_door.svg" id="2_door_texture"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="3_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="3_label_settings"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fog"]
 

@@ -10,6 +10,7 @@ extends Node2D
 @export var constraint_iterations := 8
 @export var damping := 0.985
 @export var flipped_attach_correction := Vector2(0, -6)
+@export var needle_rotation_offset := 0.0
 
 var points: Array[Vector2] = []
 var previous_points: Array[Vector2] = []
@@ -93,7 +94,7 @@ func _place_needle_at_rope_end(rope_end_global: Vector2) -> void:
 	needle.flip_v = false
 
 	# Rotate needle locally to match rope.
-	needle.rotation = rope_direction_local.angle() - PI / 2.0
+	needle.rotation = rope_direction_local.angle() - PI / 2.0 + needle_rotation_offset
 
 	# First place roughly at rope end.
 	needle.position = rope_end_local

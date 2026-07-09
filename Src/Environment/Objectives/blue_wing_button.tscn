@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ch4rr2ty171jo" path="res://Assets/Environment/blue_buttons.png" id="1_buttons"]
 [ext_resource type="Script" uid="uid://5xm8e0es51in" path="res://Src/Environment/Objectives/blue_wing_button.gd" id="2_script"]
 [ext_resource type="Script" uid="uid://d1svuo20lfx4e" path="res://Src/Components/hurtbox_component.gd" id="3_hurtbox"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/decorative_font/decorative_label_settings.tres" id="4_label_settings"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="4_label_settings"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_active"]
 atlas = ExtResource("1_buttons")

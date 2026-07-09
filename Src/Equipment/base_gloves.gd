@@ -153,7 +153,7 @@ func _play_grapple_fire_animation() -> void:
 
 func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> void:
 	action_anim_lock_timer = attack_follow_anim_lock_time
-	var attack_anim := "attack_ground" if body_anim == "Attack" else "attack_air"
+	var attack_anim := "attack_ground" if body_anim == "Attack" or body_anim == "Neutral_Special_Attack" else "attack_air"
 	if animation_player and animation_player.has_animation(attack_anim):
 		play_equipment_anim(attack_anim)
 
@@ -298,16 +298,7 @@ func _simulate_active_rope(delta: float, pin_end_to_tip: bool = true) -> void:
 	# Move thrown needle only while firing.
 	if grapple_state == GrappleState.FIRING:
 		grapple_tip_velocity += active_rope_gravity * delta
-
-		var proposed_tip := grapple_tip_position + grapple_tip_velocity * delta
-		var distance_from_start := proposed_tip.distance_to(grapple_start_position)
-
-		if distance_from_start > grapple_max_distance:
-			var direction := (proposed_tip - grapple_start_position).normalized()
-			grapple_tip_position = grapple_start_position + direction * grapple_max_distance
-			grapple_tip_velocity = Vector2.ZERO
-		else:
-			grapple_tip_position = proposed_tip
+		grapple_tip_position += grapple_tip_velocity * delta
 
 	# Pin rope start to hand.
 	active_rope_points[0] = origin
@@ -396,6 +387,7 @@ func _begin_grapple_retract() -> void:
 		AudioManager.stop_loop(&"grapple_hanging")
 		grapple_state = GrappleState.RETRACTING
 		grapple_attached = false
+		grapple_tip_velocity = Vector2.ZERO
 
 func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	if not grapple_raycast:
@@ -591,11 +583,6 @@ func thread_mechanic(delta: float) -> void:
 
 			_simulate_active_rope(delta, true)
 			_check_grapple_collision(previous_tip, grapple_tip_position)
-
-			var distance := grapple_tip_position.distance_to(grapple_start_position)
-			if distance >= grapple_max_distance and not grapple_attached:
-				grapple_tip_velocity = Vector2.ZERO
-				_begin_grapple_retract()
 
 			_update_active_grapple_visuals()
 

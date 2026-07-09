@@ -8,6 +8,7 @@ signal save_point_seated(player: CharacterBody2D)
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const PAUSE_MENU_SCENE := preload("res://Src/UI/PauseMenu/pause_menu.tscn")
 const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
+const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -97,6 +98,13 @@ const SIT_FPS := 12.0
 @export var momentum_gain_attack := 3.2
 @export var momentum_gain_pogo := 6.5
 @export var momentum_gain_utility := 2.4
+
+@export_group("Special Attacks")
+@export_range(1.0, 5.0, 0.05) var neutral_special_damage_multiplier := 1.65
+@export_range(0.25, 3.0, 0.05) var neutral_special_windup_multiplier := 1.25
+@export_range(0.25, 3.0, 0.05) var neutral_special_active_multiplier := 1.25
+@export_range(0.25, 3.0, 0.05) var neutral_special_recovery_multiplier := 1.45
+@export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
@@ -265,6 +273,7 @@ var attack_cooldown_timer := 0.0
 var hurt_timer := 0.0
 var attack_active_started := false
 var attack_active_finished := false
+var current_attack_is_special := false
 
 # Equipment slots
 var current_gloves: Node = null
@@ -429,7 +438,9 @@ func _physics_process(delta: float) -> void:
 		if current_chest:
 			current_chest.handle_secondary(delta, BaseEquipment.ActionState.PRESSED)
 
-	if Input.is_action_just_pressed("Attack"):
+	if Input.is_action_just_pressed("SpecialAttack"):
+		start_attack(true)
+	elif Input.is_action_just_pressed("Attack"):
 		start_attack()
 
 	# Gloves active mechanic
@@ -474,7 +485,7 @@ func _process(_delta: float) -> void:
 	if requested_game_menu_tab != &"" and not death_reset_started:
 		_open_game_menu(requested_game_menu_tab)
 
-	var menu = get_tree().get_first_node_in_group("radial_menu")
+	var menu = _get_or_create_radial_menu()
 	if menu:
 		menu.update_hold_state(Input.is_action_pressed("open_menu"))
 
@@ -491,6 +502,18 @@ func _open_pause_menu() -> void:
 
 	var pause_menu := PAUSE_MENU_SCENE.instantiate()
 	get_tree().current_scene.add_child(pause_menu)
+
+func _get_or_create_radial_menu() -> Node:
+	var menu := get_tree().get_first_node_in_group("radial_menu")
+	if menu:
+		return menu
+	if not get_tree().current_scene:
+		return null
+
+	menu = RADIAL_MENU_SCENE.instantiate()
+	get_tree().current_scene.add_child(menu)
+	menu.set("player_path", menu.get_path_to(self))
+	return menu
 
 func _get_requested_game_menu_tab() -> StringName:
 	if Input.is_action_just_pressed("open_inventory"):
@@ -759,6 +782,10 @@ func update_combat_timers(delta: float) -> void:
 	var windup := player_stats.attack_windup / attack_speed_multiplier
 	var active_time := player_stats.attack_active_time / attack_speed_multiplier
 	var recovery := player_stats.attack_recovery / attack_speed_multiplier
+	if current_attack_is_special:
+		windup *= neutral_special_windup_multiplier
+		active_time *= neutral_special_active_multiplier
+		recovery *= neutral_special_recovery_multiplier
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
@@ -772,28 +799,33 @@ func update_combat_timers(delta: float) -> void:
 
 	if attack_timer >= windup + active_time + recovery:
 		is_attacking = false
+		current_attack_is_special = false
 		attack_hitbox.disable()
 		_reset_weapon_visuals()
 
-func start_attack() -> void:
+func start_attack(is_special := false) -> void:
 	if not can_start_attack():
 		return
 
 	AudioManager.play_sfx(&"player_attack")
 	is_attacking = true
+	current_attack_is_special = is_special
 	attack_timer = 0.0
-	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
+	var cooldown := player_stats.attack_cooldown
+	if current_attack_is_special:
+		cooldown *= neutral_special_cooldown_multiplier
+	attack_cooldown_timer = cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
 	attack_active_started = false
 	attack_active_finished = false
 	attack_direction = _get_attack_input_direction()
-	current_attack_body_anim = _get_attack_body_animation()
+	current_attack_body_anim = _get_special_body_animation() if current_attack_is_special else _get_attack_body_animation()
 	update_equipment_facing()
 	_play_weapon_attack_anim()
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
-			current_gloves.play_attack_follow_pose(attack_direction, current_attack_body_anim)
+			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
 func can_start_attack() -> bool:
 	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
@@ -875,6 +907,16 @@ func _get_attack_body_animation() -> String:
 		return attack_anim
 	return "Attack"
 
+func _get_special_body_animation() -> String:
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Neutral_Special_Attack"):
+		return "Neutral_Special_Attack"
+	return "Attack"
+
+func _get_equipment_attack_follow_anim() -> String:
+	if current_attack_is_special:
+		return "Attack"
+	return current_attack_body_anim
+
 func _is_grapple_restricting() -> bool:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		return current_gloves.is_base_grapple_restricting()
@@ -900,12 +942,17 @@ func _sync_attack_hitbox_to_slash() -> void:
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
 	data.amount = player_stats.attack_damage
+	if current_attack_is_special:
+		data.amount = roundi(float(player_stats.attack_damage) * neutral_special_damage_multiplier * player_stats.skill_damage_multiplier)
 	data.hitstun = player_stats.hurt_time
 	data.hit_pause = player_stats.hit_pause
 	var knockback_direction := attack_direction
 	if knockback_direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		knockback_direction = Vector2(float(last_direction), 0.0)
 	data.knockback = knockback_direction.normalized() * player_stats.knockback_strength
+	if current_attack_is_special:
+		data.knockback *= 1.2
+		data.hit_pause *= 1.2
 	return data
 
 func set_action_points(current: int, maximum: int = max_action_points) -> void:
@@ -1374,6 +1421,7 @@ func _on_damaged(damage: DamageData) -> void:
 	is_hurt = true
 	hurt_timer = player_stats.hurt_time
 	is_attacking = false
+	current_attack_is_special = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
 	AudioManager.play_sfx(&"player_damage")
@@ -1400,6 +1448,7 @@ func _on_died(_damage: DamageData) -> void:
 	is_dead = true
 	death_reset_started = true
 	is_attacking = false
+	current_attack_is_special = false
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
 	call_deferred("_show_game_over_after_death")
@@ -1464,6 +1513,7 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	current_selector = null
 	is_attacking = false
 	is_hurt = false
+	current_attack_is_special = false
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 	attack_timer = 0.0

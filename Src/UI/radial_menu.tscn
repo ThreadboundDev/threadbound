@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bakc7wmje4ewq" path="res://Src/UI/radial_menu.gd" id="1_1o4se"]
 [ext_resource type="Texture2D" uid="uid://bfmmviee4xjnb" path="res://Assets/UI/Outline.png" id="2_5q6ol"]
-[ext_resource type="Texture2D" uid="uid://dj5ww28ibxqxu" path="res://Assets/UI/Equip Icons/Monarch Glove.png" id="3_xbj7m"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Red Gear/red_glove_icon.png" id="3_xbj7m"]
 [ext_resource type="Texture2D" uid="uid://blgc44pqeq118" path="res://Assets/UI/Equip Icons/Monarch Chest.png" id="4_8o5ol"]
 [ext_resource type="Texture2D" uid="uid://deygbla6xspyn" path="res://Assets/UI/Equip Icons/Monarch Boots.png" id="5_ump05"]
 [ext_resource type="Texture2D" uid="uid://drmdnxd8mertw" path="res://Assets/UI/Equip Icons/Hermit Glove.png" id="6_jv3iq"]
@@ -46,10 +46,14 @@ offset_bottom = 40.0
 
 [node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=1439107317]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 492.0
+offset_top = 492.0
+offset_right = 632.0
+offset_bottom = 632.0
 mouse_filter = 2
 texture = ExtResource("3_xbj7m")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=730982912]
 

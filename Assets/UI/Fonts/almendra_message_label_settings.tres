@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="1_message_font"]
+
+[resource]
+font = ExtResource("1_message_font")
+font_size = 32
+font_color = Color(0.92, 0.84, 0.66, 1)
+outline_size = 3
+outline_color = Color(0.04, 0.03, 0.025, 1)

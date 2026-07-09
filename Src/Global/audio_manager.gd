@@ -17,6 +17,7 @@ const BACKGROUND_AUDIO_BUS := AMBIENT_BUS
 const LEGACY_BACKGROUND_AUDIO_BUS := &"Background Audio"
 const AUDIO_SETTINGS_PATH := "user://audio_settings.cfg"
 const MIN_BUS_VOLUME_DB := -60.0
+const MASTER_OUTPUT_TRIM_DB := -18.0
 const DEFAULT_BUS_VOLUME := 1.0
 const DEFAULT_MUSIC_FADE_DURATION := 0.6
 const MUSIC_PLAYER_COUNT := 2
@@ -283,7 +284,10 @@ func set_bus_volume_linear(bus: StringName, volume: float) -> void:
 		AudioServer.set_bus_volume_db(bus_index, MIN_BUS_VOLUME_DB)
 		return
 
-	AudioServer.set_bus_volume_db(bus_index, linear_to_db(clamped_volume))
+	var volume_db := linear_to_db(clamped_volume)
+	if bus == MASTER_BUS:
+		volume_db += MASTER_OUTPUT_TRIM_DB
+	AudioServer.set_bus_volume_db(bus_index, volume_db)
 
 func get_bus_volume_linear(bus: StringName) -> float:
 	var bus_index := AudioServer.get_bus_index(String(bus))
@@ -294,7 +298,10 @@ func get_bus_volume_linear(bus: StringName) -> float:
 	if AudioServer.is_bus_mute(bus_index):
 		return 0.0
 
-	return clampf(db_to_linear(AudioServer.get_bus_volume_db(bus_index)), 0.0, 1.0)
+	var volume_db := AudioServer.get_bus_volume_db(bus_index)
+	if bus == MASTER_BUS:
+		volume_db -= MASTER_OUTPUT_TRIM_DB
+	return clampf(db_to_linear(volume_db), 0.0, 1.0)
 
 func save_audio_settings() -> void:
 	var config := ConfigFile.new()
