@@ -23,7 +23,6 @@ enum RedGrappleState {
 @export var tow_max_speed := 1180.0
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
-@export var missed_hook_retract_delay := 0.28
 @export var attached_rope_pull_strength := 80.0
 @export var attached_tangent_max_speed := 220.0
 @export var attached_tangent_damping := 0.90
@@ -46,7 +45,6 @@ var _released_charge_amount := 0.0
 var _released_charge_curve := 0.0
 var _tow_strength := 0.0
 var _tension_timer := 0.0
-var _miss_retract_timer := 0.0
 var _range_spent := false
 
 func _ready() -> void:
@@ -74,7 +72,6 @@ func on_equipped() -> void:
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
 	_tension_timer = 0.0
-	_miss_retract_timer = 0.0
 	_range_spent = false
 	_apply_red_raycast_settings()
 	_reset_charge_visuals()
@@ -150,7 +147,6 @@ func _begin_charge() -> void:
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
 	_tension_timer = 0.0
-	_miss_retract_timer = 0.0
 	_range_spent = false
 	AudioManager.play_sfx(&"grapple")
 
@@ -207,7 +203,6 @@ func _cancel_charge() -> void:
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
 	_tension_timer = 0.0
-	_miss_retract_timer = 0.0
 	_range_spent = false
 	_reset_charge_visuals()
 
@@ -274,7 +269,6 @@ func _begin_red_retract() -> void:
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
 	_tow_strength = 0.0
-	_miss_retract_timer = 0.0
 
 func _begin_red_tension(embedded: bool) -> void:
 	grapple_state = GrappleState.ATTACHED
@@ -289,7 +283,6 @@ func _begin_red_tension(embedded: bool) -> void:
 			grapple_max_distance
 		)
 	_tension_timer = tension_window
-	_miss_retract_timer = missed_hook_retract_delay if not embedded else 0.0
 	_tow_strength = 0.0
 	if embedded:
 		AudioManager.play_loop(&"grapple_hanging")
@@ -300,14 +293,9 @@ func _process_red_tension(delta: float) -> void:
 		_tension_timer = maxf(_tension_timer - delta, 0.0)
 	if grapple_attached:
 		grapple_tip_position = grapple_attach_position
-	elif _miss_retract_timer > 0.0:
-		_miss_retract_timer = maxf(_miss_retract_timer - delta, 0.0)
 	grapple_tip_velocity = Vector2.ZERO
 	_simulate_active_rope(delta, true)
 	_update_active_grapple_visuals()
-	if not grapple_attached and _miss_retract_timer <= 0.0:
-		_begin_red_retract()
-		return
 	if tension_window > 0.0 and _tension_timer <= 0.0:
 		_begin_red_retract()
 
