@@ -700,6 +700,8 @@ func update_animations(dir: float) -> void:
 	var is_dashing = false
 	if current_chest and "is_dashing" in current_chest:
 		is_dashing = current_chest.is_dashing
+	if current_gloves and current_gloves.has_method("forces_dash_animation") and current_gloves.forces_dash_animation():
+		is_dashing = true
 	
 	if is_dashing and player_animation.sprite_frames.has_animation("Dash"):
 		play_character_anim("Dash", "equip_idle")

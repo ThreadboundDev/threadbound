@@ -19,8 +19,8 @@ enum RedGrappleState {
 @export_range(0.0, 1.0, 0.01) var minimum_tow_charge := 0.22
 @export_range(0.1, 1.0, 0.05) var minimum_range_multiplier := 0.65
 @export var grapple_range_multiplier := 1.25
-@export var tow_acceleration := 3600.0
-@export var tow_max_speed := 1180.0
+@export var tow_acceleration := 6400.0
+@export var tow_max_speed := 1320.0
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var attached_rope_pull_strength := 80.0
@@ -86,6 +86,9 @@ func is_base_grapple_restricting() -> bool:
 	if red_grapple_state == RedGrappleState.TENSION:
 		return grapple_attached
 	return false
+
+func forces_dash_animation() -> bool:
+	return red_grapple_state == RedGrappleState.FIRING and _tow_strength > 0.0
 
 func jump_off_grapple() -> bool:
 	return false
@@ -254,7 +257,11 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 	grapple_raycast.force_raycast_update()
 
 	if grapple_raycast.is_colliding():
-		_notify_grapple_collider(grapple_raycast.get_collider())
+		var collider := grapple_raycast.get_collider()
+		if not _is_valid_red_anchor(collider):
+			return
+
+		_notify_grapple_collider(collider)
 		grapple_attached = true
 		grapple_attach_position = grapple_raycast.get_collision_point()
 		grapple_tip_position = grapple_attach_position
@@ -316,6 +323,12 @@ func _process_tow_pull(delta: float) -> void:
 	var input_direction := _read_pull_input_direction()
 	if input_direction.length() > 0.001:
 		pull_direction = hook_direction.lerp(input_direction, pull_input_blend).normalized()
+
+	if player.is_on_floor() and pull_direction.y > -0.2:
+		pull_direction.y = 0.0
+		if pull_direction.length() <= 0.001:
+			pull_direction = Vector2(signf(grapple_direction.x), 0.0)
+		pull_direction = pull_direction.normalized()
 
 	var force := tow_acceleration * _tow_strength * delta
 	var current_along_pull := player.velocity.dot(pull_direction)
@@ -382,6 +395,21 @@ func _apply_red_raycast_settings() -> void:
 	grapple_raycast.collide_with_bodies = true
 	grapple_raycast.collide_with_areas = false
 	grapple_raycast.collision_mask = grapple_collision_mask
+
+func _is_valid_red_anchor(collider: Object) -> bool:
+	if not collider:
+		return false
+	if collider is CharacterBody2D:
+		return false
+	if collider is RigidBody2D:
+		return false
+	if collider is StaticBody2D:
+		return true
+	if collider is AnimatableBody2D:
+		return true
+	if collider is TileMap:
+		return true
+	return collider.get_class() == "TileMapLayer"
 
 func _simulate_red_active_rope(delta: float) -> void:
 	if active_rope_points.size() < 2:
