@@ -24,9 +24,9 @@ enum RedGrappleState {
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var missed_hook_retract_delay := 0.28
-@export var attached_rope_pull_strength := 30.0
-@export var attached_tangent_max_speed := 620.0
-@export var attached_tangent_damping := 0.985
+@export var attached_rope_pull_strength := 80.0
+@export var attached_tangent_max_speed := 220.0
+@export var attached_tangent_damping := 0.90
 @export_range(0.1, 1.0, 0.05) var range_falloff_start_ratio := 0.72
 @export var range_falloff_drag := 8.5
 @export var range_drop_gravity_multiplier := 2.2
@@ -84,6 +84,10 @@ func on_unequipped() -> void:
 	super()
 
 func is_base_grapple_restricting() -> bool:
+	if red_grapple_state == RedGrappleState.FIRING:
+		return _tow_strength > 0.0
+	if red_grapple_state == RedGrappleState.TENSION:
+		return grapple_attached
 	return false
 
 func jump_off_grapple() -> bool:
