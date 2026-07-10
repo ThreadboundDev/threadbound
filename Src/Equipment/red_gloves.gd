@@ -30,6 +30,8 @@ enum RedGrappleState {
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var attached_rope_pull_strength := 80.0
+@export var attached_steer_acceleration := 360.0
+@export var attached_inward_steer_acceleration := 120.0
 @export var attached_tangent_max_speed := 220.0
 @export var attached_tangent_damping := 0.90
 @export_range(0.1, 1.0, 0.05) var range_falloff_start_ratio := 0.72
@@ -323,7 +325,7 @@ func _begin_red_tension(embedded: bool) -> void:
 			rope_min_length,
 			grapple_max_distance
 		)
-	_tension_timer = tension_window
+	_tension_timer = 0.0
 	_tow_strength = 0.0
 	_tow_active = false
 	if embedded:
@@ -337,15 +339,11 @@ func _process_red_spent(delta: float) -> void:
 	_update_active_grapple_visuals()
 
 func _process_red_tension(delta: float) -> void:
-	if tension_window > 0.0:
-		_tension_timer = maxf(_tension_timer - delta, 0.0)
 	if grapple_attached:
 		grapple_tip_position = grapple_attach_position
 	grapple_tip_velocity = Vector2.ZERO
 	_simulate_active_rope(delta, true)
 	_update_active_grapple_visuals()
-	if tension_window > 0.0 and _tension_timer <= 0.0:
-		_begin_red_retract()
 
 func _process_tow_pull(delta: float) -> void:
 	if not player:
@@ -409,10 +407,12 @@ func _apply_attached_rope_limit(delta: float) -> void:
 		return
 
 	var max_allowed := current_rope_length + rope_limit_slack
+	var rope_dir := from_anchor.normalized()
+	_apply_red_attached_steering(delta, rope_dir)
+
 	if distance <= max_allowed:
 		return
 
-	var rope_dir := from_anchor.normalized()
 	var outward_speed := player.velocity.dot(rope_dir)
 	if outward_speed > 0.0:
 		player.velocity -= rope_dir * outward_speed
@@ -427,6 +427,27 @@ func _apply_attached_rope_limit(delta: float) -> void:
 
 	var excess := distance - max_allowed
 	player.velocity -= rope_dir * excess * attached_rope_pull_strength * delta
+
+func _apply_red_attached_steering(delta: float, rope_dir: Vector2) -> void:
+	var input_direction := _read_pull_input_direction()
+	if input_direction.length() <= 0.001:
+		return
+
+	var tangent := Vector2(-rope_dir.y, rope_dir.x)
+	var tangent_input := input_direction.dot(tangent)
+	if absf(tangent_input) > 0.01:
+		var current_tangent_speed := player.velocity.dot(tangent)
+		var desired_tangent_speed := tangent_input * attached_tangent_max_speed
+		var next_tangent_speed := move_toward(
+			current_tangent_speed,
+			desired_tangent_speed,
+			attached_steer_acceleration * delta
+		)
+		player.velocity += tangent * (next_tangent_speed - current_tangent_speed)
+
+	var inward_input := maxf(input_direction.dot(-rope_dir), 0.0)
+	if inward_input > 0.01:
+		player.velocity += -rope_dir * attached_inward_steer_acceleration * inward_input * delta
 
 func _get_charge_curve() -> float:
 	return smoothstep(0.0, 1.0, _charge_amount)
