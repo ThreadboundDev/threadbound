@@ -694,6 +694,7 @@ func update_animations(dir: float) -> void:
 		return
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		player_animation.rotation = 0.0
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		return
 	
@@ -702,14 +703,24 @@ func update_animations(dir: float) -> void:
 		is_dashing = current_chest.is_dashing
 	if current_gloves and current_gloves.has_method("forces_dash_animation") and current_gloves.forces_dash_animation():
 		is_dashing = true
+	var forced_dash_direction := Vector2.ZERO
+	if current_gloves and current_gloves.has_method("get_forced_dash_direction"):
+		forced_dash_direction = current_gloves.get_forced_dash_direction()
 	
 	if is_dashing and player_animation.sprite_frames.has_animation("Dash"):
 		play_character_anim("Dash", "equip_idle")
+		if forced_dash_direction.length() > 0.001:
+			player_animation.rotation = forced_dash_direction.angle()
+			player_animation.flip_h = false
+		else:
+			player_animation.rotation = 0.0
 
 	elif is_wall_clinging and player_animation.sprite_frames.has_animation("Wall_Cling"):
+		player_animation.rotation = 0.0
 		play_character_anim("Wall_Cling", "equip_wall_cling")
 
 	elif not is_on_floor():
+		player_animation.rotation = 0.0
 		if velocity.y < -120.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent", "equip_jump_ascent")
 		elif velocity.y > 120.0 and player_animation.sprite_frames.has_animation("Jump_Descent"):
@@ -720,12 +731,14 @@ func update_animations(dir: float) -> void:
 			play_character_anim("Jump_Descent", "equip_jump_descent")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
+		player_animation.rotation = 0.0
 		play_character_anim("Run", "equip_run")
 
 	elif player_animation.sprite_frames.has_animation("Idle"):
+		player_animation.rotation = 0.0
 		play_character_anim("Idle", "equip_idle")
 
-	if velocity.x != 0:
+	if velocity.x != 0 and forced_dash_direction.length() <= 0.001:
 		player_animation.flip_h = velocity.x < 0
 		update_equipment_facing()
 

@@ -22,6 +22,8 @@ enum RedGrappleState {
 @export var grapple_range_multiplier := 1.25
 @export var tow_acceleration := 6400.0
 @export var tow_max_speed := 1320.0
+@export var tow_hook_min_lead_distance := 64.0
+@export var tow_hook_max_lead_distance := 150.0
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var attached_rope_pull_strength := 80.0
@@ -47,6 +49,7 @@ var _released_charge_curve := 0.0
 var _tow_strength := 0.0
 var _tension_timer := 0.0
 var _range_spent := false
+var _tow_visual_direction := Vector2.RIGHT
 
 func _ready() -> void:
 	super()
@@ -74,6 +77,7 @@ func on_equipped() -> void:
 	_tow_strength = 0.0
 	_tension_timer = 0.0
 	_range_spent = false
+	_tow_visual_direction = Vector2.RIGHT
 	_apply_red_raycast_settings()
 	_reset_charge_visuals()
 
@@ -90,6 +94,11 @@ func is_base_grapple_restricting() -> bool:
 
 func forces_dash_animation() -> bool:
 	return red_grapple_state == RedGrappleState.FIRING and _tow_strength > 0.0
+
+func get_forced_dash_direction() -> Vector2:
+	if not forces_dash_animation():
+		return Vector2.ZERO
+	return _tow_visual_direction
 
 func jump_off_grapple() -> bool:
 	return false
@@ -351,6 +360,7 @@ func _process_tow_pull(delta: float) -> void:
 			pull_direction = Vector2(signf(grapple_direction.x), 0.0)
 		pull_direction = pull_direction.normalized()
 
+	_tow_visual_direction = pull_direction
 	var force := tow_acceleration * _tow_strength * delta
 	var current_along_pull := player.velocity.dot(pull_direction)
 	var speed_cap := tow_max_speed * lerpf(0.35, 1.0, _tow_strength)
@@ -455,6 +465,7 @@ func _simulate_red_active_rope(delta: float) -> void:
 
 	grapple_tip_velocity += active_rope_gravity * lerpf(1.0, range_drop_gravity_multiplier, falloff_t) * delta
 	grapple_tip_position += grapple_tip_velocity * delta
+	_clamp_tip_to_red_tow_lead()
 
 	from_start = grapple_tip_position - grapple_start_position
 	forward_distance = from_start.dot(throw_direction)
@@ -468,6 +479,28 @@ func _simulate_red_active_rope(delta: float) -> void:
 
 	_clamp_tip_to_red_rope_length()
 	_simulate_active_rope_constraints(delta)
+
+func _clamp_tip_to_red_tow_lead() -> void:
+	if red_grapple_state != RedGrappleState.FIRING:
+		return
+	if _tow_strength <= 0.0:
+		return
+
+	var origin := get_grapple_origin_global_position()
+	var from_origin := grapple_tip_position - origin
+	var distance := from_origin.length()
+	if distance <= 0.001:
+		return
+
+	var max_lead := lerpf(tow_hook_min_lead_distance, tow_hook_max_lead_distance, _tow_strength)
+	if distance <= max_lead:
+		return
+
+	var lead_direction := from_origin / distance
+	grapple_tip_position = origin + lead_direction * max_lead
+	var outward_speed := grapple_tip_velocity.dot(lead_direction)
+	if outward_speed > 0.0:
+		grapple_tip_velocity -= lead_direction * outward_speed
 
 func _clamp_tip_to_red_rope_length() -> void:
 	var origin := get_grapple_origin_global_position()
