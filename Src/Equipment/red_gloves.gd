@@ -312,6 +312,7 @@ func _begin_red_tension(embedded: bool) -> void:
 
 func _process_red_spent(delta: float) -> void:
 	grapple_tip_velocity = Vector2.ZERO
+	_clamp_tip_to_red_rope_length()
 	_simulate_active_rope_constraints(delta)
 	_update_active_grapple_visuals()
 
@@ -465,7 +466,22 @@ func _simulate_red_active_rope(delta: float) -> void:
 			grapple_tip_velocity -= throw_direction * outward_speed
 		_range_spent = true
 
+	_clamp_tip_to_red_rope_length()
 	_simulate_active_rope_constraints(delta)
+
+func _clamp_tip_to_red_rope_length() -> void:
+	var origin := get_grapple_origin_global_position()
+	var from_origin := grapple_tip_position - origin
+	var distance := from_origin.length()
+	if distance <= grapple_max_distance or distance <= 0.001:
+		return
+
+	var rope_direction := from_origin / distance
+	grapple_tip_position = origin + rope_direction * grapple_max_distance
+	var outward_speed := grapple_tip_velocity.dot(rope_direction)
+	if outward_speed > 0.0:
+		grapple_tip_velocity -= rope_direction * outward_speed
+	_range_spent = true
 
 func _simulate_active_rope_constraints(delta: float) -> void:
 	if active_rope_points.size() < 2:
