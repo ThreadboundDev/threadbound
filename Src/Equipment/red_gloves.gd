@@ -374,6 +374,23 @@ func _process_tow_pull(delta: float) -> void:
 	var speed_cap := tow_max_speed * lerpf(0.45, 1.0, _tow_strength)
 	desired_velocity = desired_velocity.limit_length(speed_cap)
 
+	if player.is_on_floor():
+		var slide_direction := signf(engine_direction.x)
+		if slide_direction == 0.0:
+			slide_direction = signf(grapple_direction.x)
+		if slide_direction == 0.0:
+			slide_direction = 1.0
+
+		var horizontal_error := desired_position.x - player.global_position.x
+		var hook_horizontal_speed := maxf(absf(grapple_tip_velocity.x), speed_cap * 0.55)
+		var desired_slide_speed := slide_direction * hook_horizontal_speed + horizontal_error * tow_follow_stiffness
+		desired_slide_speed = clampf(desired_slide_speed, -speed_cap, speed_cap)
+
+		_tow_visual_direction = Vector2(slide_direction, 0.0)
+		player.velocity.x = move_toward(player.velocity.x, desired_slide_speed, tow_acceleration * _tow_strength * delta)
+		player.velocity.y = minf(player.velocity.y, 0.0)
+		return
+
 	_tow_visual_direction = desired_velocity.normalized() if desired_velocity.length() > 0.001 else engine_direction
 	player.velocity = player.velocity.move_toward(desired_velocity, tow_acceleration * _tow_strength * delta)
 
