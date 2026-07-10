@@ -24,6 +24,9 @@ enum RedGrappleState {
 @export var tow_max_speed := 1320.0
 @export var tow_hook_min_lead_distance := 64.0
 @export var tow_hook_max_lead_distance := 150.0
+@export_range(0.0, 1.0, 0.01) var tow_start_range_ratio := 0.30
+@export var tow_follow_stiffness := 8.0
+@export var tow_follow_max_error_speed := 720.0
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var attached_rope_pull_strength := 80.0
@@ -352,29 +355,27 @@ func _process_tow_pull(delta: float) -> void:
 	if _tow_strength <= 0.0 or not _tow_active:
 		return
 
-	var to_hook := grapple_tip_position - player.global_position
-	if to_hook.length() <= 0.001:
+	var engine_direction := grapple_tip_velocity.normalized()
+	if engine_direction.length() <= 0.001:
+		engine_direction = grapple_direction.normalized()
+	if engine_direction.length() <= 0.001:
 		return
 
-	var hook_direction := to_hook.normalized()
-	var pull_direction := hook_direction
+	var tow_spacing := _get_red_tow_spacing()
+	var desired_position := grapple_tip_position - engine_direction * tow_spacing
 	var input_direction := _read_pull_input_direction()
 	if input_direction.length() > 0.001:
-		pull_direction = hook_direction.lerp(input_direction, pull_input_blend).normalized()
+		desired_position += input_direction * tow_spacing * pull_input_blend
 
-	if player.is_on_floor() and pull_direction.y > -0.2:
-		pull_direction.y = 0.0
-		if pull_direction.length() <= 0.001:
-			pull_direction = Vector2(signf(grapple_direction.x), 0.0)
-		pull_direction = pull_direction.normalized()
+	var follow_error := desired_position - player.global_position
+	var error_velocity := follow_error * tow_follow_stiffness
+	error_velocity = error_velocity.limit_length(tow_follow_max_error_speed)
+	var desired_velocity := grapple_tip_velocity + error_velocity
+	var speed_cap := tow_max_speed * lerpf(0.45, 1.0, _tow_strength)
+	desired_velocity = desired_velocity.limit_length(speed_cap)
 
-	_tow_visual_direction = pull_direction
-	var force := tow_acceleration * _tow_strength * delta
-	var current_along_pull := player.velocity.dot(pull_direction)
-	var speed_cap := tow_max_speed * lerpf(0.35, 1.0, _tow_strength)
-	if current_along_pull < speed_cap:
-		var allowed_force := maxf(speed_cap - current_along_pull, 0.0)
-		player.velocity += pull_direction * minf(force, allowed_force)
+	_tow_visual_direction = desired_velocity.normalized() if desired_velocity.length() > 0.001 else engine_direction
+	player.velocity = player.velocity.move_toward(desired_velocity, tow_acceleration * _tow_strength * delta)
 
 func _apply_attached_rope_limit(delta: float) -> void:
 	if not player:
@@ -495,11 +496,18 @@ func _update_red_tow_activation() -> void:
 
 	var origin := get_grapple_origin_global_position()
 	var lead_distance := origin.distance_to(grapple_tip_position)
-	var tow_start_distance := lerpf(tow_hook_min_lead_distance, tow_hook_max_lead_distance, _tow_strength)
+	var tow_start_distance := _get_red_tow_spacing()
 	if lead_distance < tow_start_distance:
 		return
 
 	_tow_active = true
+
+func _get_red_tow_spacing() -> float:
+	var ratio_spacing := grapple_max_distance * tow_start_range_ratio
+	var min_spacing := minf(tow_hook_min_lead_distance, tow_hook_max_lead_distance)
+	var max_spacing := maxf(tow_hook_min_lead_distance, tow_hook_max_lead_distance)
+	var charge_spacing := lerpf(min_spacing, max_spacing, _tow_strength)
+	return maxf(ratio_spacing, charge_spacing)
 
 func _clamp_tip_to_red_rope_length() -> void:
 	var origin := get_grapple_origin_global_position()
