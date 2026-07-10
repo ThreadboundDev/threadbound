@@ -5,6 +5,7 @@ enum RedGrappleState {
 	STOWED,
 	CHARGING,
 	FIRING,
+	SPENT,
 	TENSION,
 	RETRACTING
 }
@@ -119,6 +120,12 @@ func thread_mechanic(delta: float) -> void:
 				_begin_red_retract()
 				return
 			_process_red_fire(delta)
+
+		RedGrappleState.SPENT:
+			if Input.is_action_just_pressed(grapple_input_action):
+				_begin_red_retract()
+				return
+			_process_red_spent(delta)
 
 		RedGrappleState.TENSION:
 			if Input.is_action_just_pressed(grapple_input_action):
@@ -246,7 +253,7 @@ func _process_red_fire(delta: float) -> void:
 
 	_update_active_grapple_visuals()
 	if _range_spent and red_grapple_state == RedGrappleState.FIRING:
-		_begin_red_tension(false)
+		_begin_red_spent()
 
 func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	if not grapple_raycast:
@@ -277,6 +284,14 @@ func _begin_red_retract() -> void:
 	grapple_tip_velocity = Vector2.ZERO
 	_tow_strength = 0.0
 
+func _begin_red_spent() -> void:
+	grapple_state = GrappleState.FIRING
+	red_grapple_state = RedGrappleState.SPENT
+	grapple_attached = false
+	grapple_tip_velocity = Vector2.ZERO
+	_tow_strength = 0.0
+	_update_active_grapple_visuals()
+
 func _begin_red_tension(embedded: bool) -> void:
 	grapple_state = GrappleState.ATTACHED
 	red_grapple_state = RedGrappleState.TENSION
@@ -293,6 +308,11 @@ func _begin_red_tension(embedded: bool) -> void:
 	_tow_strength = 0.0
 	if embedded:
 		AudioManager.play_loop(&"grapple_hanging")
+	_update_active_grapple_visuals()
+
+func _process_red_spent(delta: float) -> void:
+	grapple_tip_velocity = Vector2.ZERO
+	_simulate_active_rope_constraints(delta)
 	_update_active_grapple_visuals()
 
 func _process_red_tension(delta: float) -> void:
