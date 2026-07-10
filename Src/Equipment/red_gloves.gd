@@ -4,9 +4,10 @@ extends BaseGloves
 enum RedGrappleState {
 	STOWED,
 	CHARGING,
-	FIRING,
+	EXTENDING,
+	TOWING,
 	SPENT,
-	TENSION,
+	ATTACHED,
 	RETRACTING
 }
 
@@ -52,7 +53,6 @@ var _charge_spin_rotation := 0.0
 var _released_charge_amount := 0.0
 var _released_charge_curve := 0.0
 var _tow_strength := 0.0
-var _tow_active := false
 var _tension_timer := 0.0
 var _range_spent := false
 var _tow_visual_direction := Vector2.RIGHT
@@ -81,7 +81,6 @@ func on_equipped() -> void:
 	_released_charge_amount = 0.0
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
-	_tow_active = false
 	_tension_timer = 0.0
 	_range_spent = false
 	_tow_visual_direction = Vector2.RIGHT
@@ -93,14 +92,14 @@ func on_unequipped() -> void:
 	super()
 
 func is_base_grapple_restricting() -> bool:
-	if red_grapple_state == RedGrappleState.FIRING:
-		return _tow_active
-	if red_grapple_state == RedGrappleState.TENSION:
+	if red_grapple_state == RedGrappleState.TOWING:
+		return true
+	if red_grapple_state == RedGrappleState.ATTACHED:
 		return grapple_attached
 	return false
 
 func forces_dash_animation() -> bool:
-	return red_grapple_state == RedGrappleState.FIRING and _tow_active
+	return red_grapple_state == RedGrappleState.TOWING
 
 func get_forced_dash_direction() -> Vector2:
 	if not forces_dash_animation():
@@ -131,7 +130,13 @@ func thread_mechanic(delta: float) -> void:
 			if Input.is_action_just_released(grapple_input_action):
 				_release_charge()
 
-		RedGrappleState.FIRING:
+		RedGrappleState.EXTENDING:
+			if Input.is_action_just_pressed(grapple_input_action):
+				_begin_red_retract()
+				return
+			_process_red_fire(delta)
+
+		RedGrappleState.TOWING:
 			if Input.is_action_just_pressed(grapple_input_action):
 				_begin_red_retract()
 				return
@@ -143,11 +148,11 @@ func thread_mechanic(delta: float) -> void:
 				return
 			_process_red_spent(delta)
 
-		RedGrappleState.TENSION:
+		RedGrappleState.ATTACHED:
 			if Input.is_action_just_pressed(grapple_input_action):
 				_begin_red_retract()
 				return
-			_process_red_tension(delta)
+			_process_red_attached(delta)
 
 		RedGrappleState.RETRACTING:
 			_retract_active_rope(delta)
@@ -172,7 +177,6 @@ func _begin_charge() -> void:
 	_released_charge_amount = 0.0
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
-	_tow_active = false
 	_tension_timer = 0.0
 	_range_spent = false
 	AudioManager.play_sfx(&"grapple")
@@ -229,7 +233,6 @@ func _cancel_charge() -> void:
 	_released_charge_amount = 0.0
 	_released_charge_curve = 0.0
 	_tow_strength = 0.0
-	_tow_active = false
 	_tension_timer = 0.0
 	_range_spent = false
 	_reset_charge_visuals()
@@ -241,10 +244,9 @@ func _start_red_grapple_fire() -> void:
 	_reset_active_rope_physics()
 
 	grapple_state = GrappleState.FIRING
-	red_grapple_state = RedGrappleState.FIRING
+	red_grapple_state = RedGrappleState.EXTENDING
 	grapple_attached = false
 	_range_spent = false
-	_tow_active = false
 	_hide_stowed_rope()
 	_reset_charge_visuals()
 
@@ -271,7 +273,7 @@ func _process_red_fire(delta: float) -> void:
 	_check_red_grapple_collision(previous_tip, grapple_tip_position)
 
 	_update_active_grapple_visuals()
-	if _range_spent and red_grapple_state == RedGrappleState.FIRING:
+	if _range_spent and (red_grapple_state == RedGrappleState.EXTENDING or red_grapple_state == RedGrappleState.TOWING):
 		_begin_red_spent()
 
 func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
@@ -293,7 +295,7 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		AudioManager.play_sfx(&"grapple_connect")
-		_begin_red_tension(true)
+		_begin_red_attached(true)
 
 func _begin_red_retract() -> void:
 	AudioManager.stop_loop(&"grapple_hanging")
@@ -302,7 +304,6 @@ func _begin_red_retract() -> void:
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
 	_tow_strength = 0.0
-	_tow_active = false
 
 func _begin_red_spent() -> void:
 	grapple_state = GrappleState.FIRING
@@ -310,12 +311,11 @@ func _begin_red_spent() -> void:
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
 	_tow_strength = 0.0
-	_tow_active = false
 	_update_active_grapple_visuals()
 
-func _begin_red_tension(embedded: bool) -> void:
+func _begin_red_attached(embedded: bool) -> void:
 	grapple_state = GrappleState.ATTACHED
-	red_grapple_state = RedGrappleState.TENSION
+	red_grapple_state = RedGrappleState.ATTACHED
 	grapple_attached = embedded
 	grapple_tip_velocity = Vector2.ZERO
 	if embedded:
@@ -327,7 +327,6 @@ func _begin_red_tension(embedded: bool) -> void:
 		)
 	_tension_timer = 0.0
 	_tow_strength = 0.0
-	_tow_active = false
 	if embedded:
 		AudioManager.play_loop(&"grapple_hanging")
 	_update_active_grapple_visuals()
@@ -338,7 +337,7 @@ func _process_red_spent(delta: float) -> void:
 	_simulate_active_rope_constraints(delta)
 	_update_active_grapple_visuals()
 
-func _process_red_tension(delta: float) -> void:
+func _process_red_attached(delta: float) -> void:
 	if grapple_attached:
 		grapple_tip_position = grapple_attach_position
 	grapple_tip_velocity = Vector2.ZERO
@@ -348,9 +347,9 @@ func _process_red_tension(delta: float) -> void:
 func _process_tow_pull(delta: float) -> void:
 	if not player:
 		return
-	if red_grapple_state != RedGrappleState.FIRING:
+	if red_grapple_state != RedGrappleState.TOWING:
 		return
-	if _tow_strength <= 0.0 or not _tow_active:
+	if _tow_strength <= 0.0:
 		return
 
 	var engine_direction := grapple_tip_velocity.normalized()
@@ -395,7 +394,7 @@ func _process_tow_pull(delta: float) -> void:
 func _apply_attached_rope_limit(delta: float) -> void:
 	if not player:
 		return
-	if red_grapple_state != RedGrappleState.TENSION:
+	if red_grapple_state != RedGrappleState.ATTACHED:
 		return
 	if not grapple_attached:
 		return
@@ -527,9 +526,9 @@ func _simulate_red_active_rope(delta: float) -> void:
 	_simulate_active_rope_constraints(delta)
 
 func _update_red_tow_activation() -> void:
-	if red_grapple_state != RedGrappleState.FIRING:
+	if red_grapple_state != RedGrappleState.EXTENDING:
 		return
-	if _tow_active or _tow_strength <= 0.0:
+	if _tow_strength <= 0.0:
 		return
 
 	var origin := get_grapple_origin_global_position()
@@ -538,7 +537,7 @@ func _update_red_tow_activation() -> void:
 	if lead_distance < tow_start_distance:
 		return
 
-	_tow_active = true
+	red_grapple_state = RedGrappleState.TOWING
 
 func _get_red_tow_spacing() -> float:
 	var ratio_spacing := grapple_max_distance * tow_start_range_ratio
