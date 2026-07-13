@@ -709,11 +709,10 @@ func update_animations(dir: float) -> void:
 	
 	if is_dashing and player_animation.sprite_frames.has_animation("Dash"):
 		play_character_anim("Dash", "equip_idle")
+		player_animation.rotation = 0.0
 		if forced_dash_direction.length() > 0.001:
-			player_animation.rotation = forced_dash_direction.angle()
-			player_animation.flip_h = false
-		else:
-			player_animation.rotation = 0.0
+			player_animation.flip_h = forced_dash_direction.x < 0.0
+			update_equipment_facing()
 
 	elif is_wall_clinging and player_animation.sprite_frames.has_animation("Wall_Cling"):
 		player_animation.rotation = 0.0
