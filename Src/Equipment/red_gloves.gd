@@ -107,7 +107,42 @@ func get_forced_dash_direction() -> Vector2:
 	return _tow_visual_direction
 
 func jump_off_grapple() -> bool:
-	return false
+	if not player:
+		return false
+	if not _can_red_detach_jump():
+		return false
+
+	if player.is_on_floor():
+		_begin_red_retract()
+		return false
+
+	if not player.air_jump_available:
+		return false
+	if player.has_method("spend_action_points") and not player.spend_action_points(1):
+		return false
+
+	var jump_multiplier := player.get_momentum_jump_multiplier() if player.has_method("get_momentum_jump_multiplier") else 1.0
+	player.velocity.y = minf(player.velocity.y, -_get_red_detach_jump_force() * jump_multiplier)
+	player.air_jump_available = false
+	player.is_wall_clinging = false
+	player.wall_cling_timer = 0.0
+	AudioManager.play_sfx(&"player_jump")
+	if player.has_method("report_momentum_action"):
+		player.report_momentum_action(&"Jump", 1.35)
+	_begin_red_retract()
+	return true
+
+func _can_red_detach_jump() -> bool:
+	return (
+		red_grapple_state == RedGrappleState.TOWING
+		or red_grapple_state == RedGrappleState.SPENT
+		or red_grapple_state == RedGrappleState.ATTACHED
+	)
+
+func _get_red_detach_jump_force() -> float:
+	if "current_boots" in player and player.current_boots and "air_jump_force" in player.current_boots:
+		return player.current_boots.air_jump_force
+	return rope_jump_force
 
 func apply_grapple_velocity(delta: float) -> void:
 	_process_tow_pull(delta)
