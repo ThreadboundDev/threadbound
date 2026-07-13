@@ -486,7 +486,25 @@ func _is_valid_red_anchor(collider: Object) -> bool:
 		return true
 	if collider is TileMap:
 		return true
-	return collider.get_class() == "TileMapLayer"
+	if collider.get_class() == "TileMapLayer":
+		return _is_world_geometry_tilemap_layer(collider)
+	return false
+
+func _is_world_geometry_tilemap_layer(collider: Object) -> bool:
+	if not collider is Node:
+		return false
+
+	var node := collider as Node
+	var path_text := str(node.get_path())
+	if path_text.contains("/ParallaxBackground/") or path_text.contains("/ForegroundParallax/"):
+		return false
+
+	var current: Node = node
+	while current:
+		if current.name == "WorldArt":
+			return true
+		current = current.get_parent()
+	return false
 
 func _simulate_red_active_rope(delta: float) -> void:
 	if active_rope_points.size() < 2:
