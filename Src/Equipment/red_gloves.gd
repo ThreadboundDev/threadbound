@@ -121,7 +121,7 @@ func jump_off_grapple() -> bool:
 	if player.has_method("spend_action_points") and not player.spend_action_points(1):
 		return false
 
-	var jump_multiplier := player.get_momentum_jump_multiplier() if player.has_method("get_momentum_jump_multiplier") else 1.0
+	var jump_multiplier: float = player.get_momentum_jump_multiplier() if player.has_method("get_momentum_jump_multiplier") else 1.0
 	player.velocity.y = minf(player.velocity.y, -_get_red_detach_jump_force() * jump_multiplier)
 	player.air_jump_available = false
 	player.is_wall_clinging = false

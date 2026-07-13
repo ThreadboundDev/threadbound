@@ -39,6 +39,11 @@ func _ready() -> void:
 	_refresh_continue_state()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
+		get_viewport().set_input_as_handled()
+		_start_new_journey()
+		return
+
 	if _showing_options:
 		if event.is_action_pressed("ui_cancel"):
 			_hide_options()
@@ -108,16 +113,19 @@ func _activate_selected() -> void:
 			else:
 				_pulse_unavailable(rows[_selected_index])
 		&"NewJourney":
-			DemoProgress.clear_checkpoint()
-			DemoProgress.reset_demo_threads()
-			AudioManager.play_ui(&"enter_world")
-			get_tree().change_scene_to_file(DEMO_SCENE)
+			_start_new_journey()
 		&"Settings":
 			_show_options()
 		&"Quit":
 			get_tree().quit()
 		_:
 			_pulse_unavailable(rows[_selected_index])
+
+func _start_new_journey() -> void:
+	DemoProgress.clear_checkpoint()
+	DemoProgress.reset_demo_threads()
+	AudioManager.play_ui(&"enter_world")
+	get_tree().change_scene_to_file(DEMO_SCENE)
 
 func _pulse_unavailable(row: Control) -> void:
 	if _row_tweens.has(row):
