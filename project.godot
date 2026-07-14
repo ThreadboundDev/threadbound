@@ -44,7 +44,7 @@ project/assembly_name="Threadbound"
 
 [editor]
 
-movie_writer/movie_file="ThreadboundMovement.avi"
+movie_writer/movie_file="ThreadboundMenu.avi"
 
 [editor_plugins]
 
