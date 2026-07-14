@@ -298,7 +298,16 @@ func _simulate_active_rope(delta: float, pin_end_to_tip: bool = true) -> void:
 	# Move thrown needle only while firing.
 	if grapple_state == GrappleState.FIRING:
 		grapple_tip_velocity += active_rope_gravity * delta
-		grapple_tip_position += grapple_tip_velocity * delta
+
+		var proposed_tip := grapple_tip_position + grapple_tip_velocity * delta
+		var distance_from_start := proposed_tip.distance_to(grapple_start_position)
+
+		if distance_from_start > grapple_max_distance:
+			var direction := (proposed_tip - grapple_start_position).normalized()
+			grapple_tip_position = grapple_start_position + direction * grapple_max_distance
+			grapple_tip_velocity = Vector2.ZERO
+		else:
+			grapple_tip_position = proposed_tip
 
 	# Pin rope start to hand.
 	active_rope_points[0] = origin
@@ -583,6 +592,11 @@ func thread_mechanic(delta: float) -> void:
 
 			_simulate_active_rope(delta, true)
 			_check_grapple_collision(previous_tip, grapple_tip_position)
+
+			var distance := grapple_tip_position.distance_to(grapple_start_position)
+			if distance >= grapple_max_distance and not grapple_attached:
+				grapple_tip_velocity = Vector2.ZERO
+				_begin_grapple_retract()
 
 			_update_active_grapple_visuals()
 
