@@ -21,13 +21,13 @@ enum RedGrappleState {
 @export_range(0.0, 1.0, 0.01) var minimum_tow_charge := 0.22
 @export_range(0.1, 1.0, 0.05) var minimum_range_multiplier := 0.65
 @export var grapple_range_multiplier := 1.25
-@export var tow_acceleration := 6400.0
-@export var tow_max_speed := 1320.0
+@export var tow_acceleration := 9800.0
+@export var tow_max_speed := 1700.0
 @export var tow_hook_min_lead_distance := 64.0
 @export var tow_hook_max_lead_distance := 150.0
 @export_range(0.0, 1.0, 0.01) var tow_start_range_ratio := 0.30
-@export var tow_follow_stiffness := 8.0
-@export var tow_follow_max_error_speed := 720.0
+@export var tow_follow_stiffness := 13.0
+@export var tow_follow_max_error_speed := 1100.0
 @export_range(0.0, 0.45, 0.05) var pull_input_blend := 0.25
 @export var tension_window := 0.0
 @export var attached_rope_pull_strength := 80.0
@@ -344,7 +344,7 @@ func _begin_red_spent() -> void:
 	grapple_state = GrappleState.FIRING
 	red_grapple_state = RedGrappleState.SPENT
 	grapple_attached = false
-	grapple_tip_velocity = Vector2.ZERO
+	_remove_red_outward_velocity()
 	_tow_strength = 0.0
 	_update_active_grapple_visuals()
 
@@ -367,7 +367,8 @@ func _begin_red_attached(embedded: bool) -> void:
 	_update_active_grapple_visuals()
 
 func _process_red_spent(delta: float) -> void:
-	grapple_tip_velocity = Vector2.ZERO
+	grapple_tip_velocity += active_rope_gravity * range_drop_gravity_multiplier * delta
+	grapple_tip_position += grapple_tip_velocity * delta
 	_clamp_tip_to_red_rope_length()
 	_simulate_active_rope_constraints(delta)
 	_update_active_grapple_visuals()
@@ -414,7 +415,7 @@ func _process_tow_pull(delta: float) -> void:
 			slide_direction = 1.0
 
 		var horizontal_error := desired_position.x - player.global_position.x
-		var hook_horizontal_speed := maxf(absf(grapple_tip_velocity.x), speed_cap * 0.55)
+		var hook_horizontal_speed := maxf(absf(grapple_tip_velocity.x), speed_cap * 0.82)
 		var desired_slide_speed := slide_direction * hook_horizontal_speed + horizontal_error * tow_follow_stiffness
 		desired_slide_speed = clampf(desired_slide_speed, -speed_cap, speed_cap)
 
@@ -612,6 +613,15 @@ func _clamp_tip_to_red_rope_length() -> void:
 	if outward_speed > 0.0:
 		grapple_tip_velocity -= rope_direction * outward_speed
 	_range_spent = true
+
+func _remove_red_outward_velocity() -> void:
+	var throw_direction := grapple_direction.normalized()
+	if throw_direction.length() <= 0.001:
+		return
+
+	var outward_speed := grapple_tip_velocity.dot(throw_direction)
+	if outward_speed > 0.0:
+		grapple_tip_velocity -= throw_direction * outward_speed
 
 func _simulate_active_rope_constraints(delta: float) -> void:
 	if active_rope_points.size() < 2:
