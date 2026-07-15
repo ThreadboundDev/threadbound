@@ -39,6 +39,15 @@ var player: CharacterBody2D = null
 @export var active_rope_constraint_iterations := 8
 @export var active_rope_total_length := 360.0
 
+# Grapple attachment arming
+@export var grapple_arm_distance: float = 12.0
+@export var grapple_arm_delay: float = 0.04
+@export var grapple_min_active_speed: float = 40.0
+@export_range(0.0, 1.0) var grapple_active_speed_ratio: float = 0.15
+@export var grapple_low_speed_grace: float = 0.20
+@export var grapple_max_unattached_time: float = 1.25
+@export var grapple_spent_retract_delay: float = 0.20
+
 # Base grapple player limit
 @export var enforce_player_rope_limit := true
 @export var rope_limit_slack := 6.0
@@ -68,12 +77,24 @@ enum GrappleState {
 	RETRACTING
 }
 
+enum GrappleAttachmentState {
+	UNARMED,
+	ACTIVE,
+	SPENT
+}
+
 var grapple_state: GrappleState = GrappleState.STOWED
+var grapple_attachment_state: GrappleAttachmentState = GrappleAttachmentState.SPENT
 
 var grapple_direction := Vector2.RIGHT
 var grapple_start_position := Vector2.ZERO
 var grapple_tip_position := Vector2.ZERO
 var grapple_tip_velocity := Vector2.ZERO
+var grapple_initial_launch_speed := 0.0
+var grapple_active_speed_threshold := 0.0
+var grapple_release_timer := 0.0
+var grapple_low_speed_timer := 0.0
+var grapple_spent_timer := 0.0
 
 var grapple_attached := false
 var grapple_attach_position := Vector2.ZERO
@@ -243,8 +264,14 @@ func _show_stowed_rope() -> void:
 func _reset_active_grapple_visuals() -> void:
 	AudioManager.stop_loop(&"grapple_hanging")
 	grapple_state = GrappleState.STOWED
+	grapple_attachment_state = GrappleAttachmentState.SPENT
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
+	grapple_initial_launch_speed = 0.0
+	grapple_active_speed_threshold = 0.0
+	grapple_release_timer = 0.0
+	grapple_low_speed_timer = 0.0
+	grapple_spent_timer = 0.0
 	active_rope_points.clear()
 	active_rope_previous_points.clear()
 
@@ -369,6 +396,7 @@ func _start_grapple_fire() -> void:
 	if player and player.has_method("get_momentum_grapple_speed_multiplier"):
 		speed_multiplier = player.get_momentum_grapple_speed_multiplier()
 	grapple_tip_velocity = grapple_direction * grapple_speed * speed_multiplier
+	_start_grapple_attachment_tracking()
 	_reset_active_rope_physics()
 
 	grapple_state = GrappleState.FIRING
@@ -395,8 +423,71 @@ func _begin_grapple_retract() -> void:
 	if grapple_state != GrappleState.STOWED:
 		AudioManager.stop_loop(&"grapple_hanging")
 		grapple_state = GrappleState.RETRACTING
+		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attached = false
 		grapple_tip_velocity = Vector2.ZERO
+
+func _start_grapple_attachment_tracking() -> void:
+	grapple_attachment_state = GrappleAttachmentState.UNARMED
+	grapple_initial_launch_speed = grapple_tip_velocity.length()
+	grapple_active_speed_threshold = maxf(
+		grapple_min_active_speed,
+		grapple_initial_launch_speed * grapple_active_speed_ratio
+	)
+	grapple_release_timer = 0.0
+	grapple_low_speed_timer = 0.0
+	grapple_spent_timer = 0.0
+
+func _update_grapple_attachment_tracking(delta: float) -> void:
+	if grapple_state != GrappleState.FIRING or grapple_attached:
+		return
+
+	grapple_release_timer += delta
+
+	if grapple_attachment_state == GrappleAttachmentState.UNARMED:
+		var travel_distance := grapple_tip_position.distance_to(grapple_start_position)
+		if grapple_release_timer >= grapple_arm_delay or travel_distance >= grapple_arm_distance:
+			grapple_attachment_state = GrappleAttachmentState.ACTIVE
+
+	if grapple_attachment_state == GrappleAttachmentState.ACTIVE:
+		if grapple_tip_velocity.length() < grapple_active_speed_threshold:
+			grapple_low_speed_timer += delta
+		else:
+			grapple_low_speed_timer = 0.0
+
+		if grapple_low_speed_timer >= grapple_low_speed_grace:
+			_mark_grapple_spent()
+	elif grapple_attachment_state == GrappleAttachmentState.SPENT:
+		grapple_spent_timer += delta
+
+func _should_retract_unattached_grapple() -> bool:
+	if grapple_attached:
+		return false
+	if grapple_release_timer >= grapple_max_unattached_time:
+		return true
+	return (
+		grapple_attachment_state == GrappleAttachmentState.SPENT
+		and grapple_spent_timer >= grapple_spent_retract_delay
+	)
+
+func _can_attach_grapple() -> bool:
+	return grapple_attachment_state == GrappleAttachmentState.ACTIVE
+
+func _mark_grapple_spent() -> void:
+	if grapple_attachment_state == GrappleAttachmentState.SPENT:
+		return
+	grapple_attachment_state = GrappleAttachmentState.SPENT
+	grapple_spent_timer = 0.0
+
+func _handle_non_attaching_collision(collision_point: Vector2, collision_normal: Vector2 = Vector2.ZERO) -> void:
+	grapple_tip_position = collision_point
+	if collision_normal.length() > 0.001:
+		var into_surface_speed := grapple_tip_velocity.dot(-collision_normal)
+		if into_surface_speed > 0.0:
+			grapple_tip_velocity += collision_normal * into_surface_speed
+	else:
+		grapple_tip_velocity = Vector2.ZERO
+	_mark_grapple_spent()
 
 func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	if not grapple_raycast:
@@ -407,8 +498,17 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	grapple_raycast.force_raycast_update()
 
 	if grapple_raycast.is_colliding():
+		if not _can_attach_grapple():
+			_handle_non_attaching_collision(
+				grapple_raycast.get_collision_point(),
+				grapple_raycast.get_collision_normal()
+			)
+			_update_active_grapple_visuals()
+			return
+
 		_notify_grapple_collider(grapple_raycast.get_collider())
 		grapple_attached = true
+		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
 
 		grapple_tip_position = grapple_attach_position
@@ -591,10 +691,11 @@ func thread_mechanic(delta: float) -> void:
 			var previous_tip := grapple_tip_position
 
 			_simulate_active_rope(delta, true)
+			_update_grapple_attachment_tracking(delta)
 			_check_grapple_collision(previous_tip, grapple_tip_position)
 
 			var distance := grapple_tip_position.distance_to(grapple_start_position)
-			if distance >= grapple_max_distance and not grapple_attached:
+			if not grapple_attached and (_should_retract_unattached_grapple() or distance >= grapple_max_distance):
 				grapple_tip_velocity = Vector2.ZERO
 				_begin_grapple_retract()
 

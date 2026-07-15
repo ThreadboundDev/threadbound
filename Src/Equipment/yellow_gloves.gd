@@ -58,8 +58,17 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 	if not grapple_raycast.is_colliding():
 		return
 
+	if not _can_attach_grapple():
+		_handle_non_attaching_collision(
+			grapple_raycast.get_collision_point(),
+			grapple_raycast.get_collision_normal()
+		)
+		_update_active_grapple_visuals()
+		return
+
 	_notify_grapple_collider(grapple_raycast.get_collider())
 	grapple_attached = true
+	grapple_attachment_state = GrappleAttachmentState.SPENT
 	grapple_attach_position = grapple_raycast.get_collision_point()
 	_snap_collision_normal = grapple_raycast.get_collision_normal()
 	grapple_tip_position = grapple_attach_position

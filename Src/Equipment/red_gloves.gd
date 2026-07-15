@@ -276,6 +276,7 @@ func _start_red_grapple_fire() -> void:
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 	grapple_tip_velocity = grapple_direction * grapple_speed
+	_start_grapple_attachment_tracking()
 	_reset_active_rope_physics()
 
 	grapple_state = GrappleState.FIRING
@@ -321,9 +322,17 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 
 	if grapple_raycast.is_colliding():
 		var collider := grapple_raycast.get_collider()
+		if not _can_attach_grapple():
+			_handle_non_attaching_collision(
+				grapple_raycast.get_collision_point(),
+				grapple_raycast.get_collision_normal()
+			)
+			_begin_red_spent()
+			return
 
 		_notify_grapple_collider(collider)
 		grapple_attached = true
+		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
@@ -342,6 +351,7 @@ func _begin_red_spent() -> void:
 	grapple_state = GrappleState.FIRING
 	red_grapple_state = RedGrappleState.SPENT
 	grapple_attached = false
+	_mark_grapple_spent()
 	_remove_red_outward_velocity()
 	_tow_strength = 0.0
 	_update_active_grapple_visuals()
@@ -368,8 +378,11 @@ func _process_red_spent(delta: float) -> void:
 	grapple_tip_velocity += active_rope_gravity * range_drop_gravity_multiplier * delta
 	grapple_tip_position += grapple_tip_velocity * delta
 	_clamp_tip_to_red_rope_length()
+	_update_grapple_attachment_tracking(delta)
 	_simulate_active_rope_constraints(delta)
 	_update_active_grapple_visuals()
+	if _should_retract_unattached_grapple():
+		_begin_red_retract()
 
 func _process_red_attached(delta: float) -> void:
 	if grapple_attached:
@@ -530,6 +543,7 @@ func _simulate_red_active_rope(delta: float) -> void:
 
 	grapple_tip_velocity += active_rope_gravity * lerpf(1.0, range_drop_gravity_multiplier, falloff_t) * delta
 	grapple_tip_position += grapple_tip_velocity * delta
+	_update_grapple_attachment_tracking(delta)
 	_update_red_tow_activation()
 
 	from_start = grapple_tip_position - grapple_start_position
