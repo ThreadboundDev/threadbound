@@ -64,6 +64,7 @@ var _pre_weave_blur_state: Dictionary = {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 90
+	add_to_group("save_point_menu")
 	_configure_initial_state()
 	_ensure_row_count(WEAVE_OPTIONS.size())
 	for i in rows.size():

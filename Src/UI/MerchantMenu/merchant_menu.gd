@@ -58,6 +58,7 @@ var _closing := false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 108
+	add_to_group("merchant_menu")
 	get_tree().paused = true
 	_set_player_flow_audio_suspended(true)
 	_build_rows()

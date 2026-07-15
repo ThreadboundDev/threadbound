@@ -478,7 +478,7 @@ func _process(_delta: float) -> void:
 		_debug_force_open_demo_doors()
 	_debug_force_doors_was_pressed = debug_force_doors_pressed
 
-	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started:
+	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started and not _is_non_pause_menu_open():
 		_open_pause_menu()
 
 	var requested_game_menu_tab := _get_requested_game_menu_tab()
@@ -502,6 +502,13 @@ func _open_pause_menu() -> void:
 
 	var pause_menu := PAUSE_MENU_SCENE.instantiate()
 	get_tree().current_scene.add_child(pause_menu)
+
+func _is_non_pause_menu_open() -> bool:
+	return (
+		get_tree().get_first_node_in_group("game_menu") != null
+		or get_tree().get_first_node_in_group("save_point_menu") != null
+		or get_tree().get_first_node_in_group("merchant_menu") != null
+	)
 
 func _get_or_create_radial_menu() -> Node:
 	var menu := get_tree().get_first_node_in_group("radial_menu")
