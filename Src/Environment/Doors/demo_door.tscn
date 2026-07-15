@@ -27,6 +27,8 @@ size = Vector2(615, 699)
 size = Vector2(340, 640)
 
 [node name="DemoDoor" type="Area2D" unique_id=306576619]
+collision_layer = 0
+collision_mask = 1
 script = ExtResource("1_door_script")
 
 [node name="FogPanel" type="Polygon2D" parent="." unique_id=78285732]
@@ -60,6 +62,8 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_interact")
 
 [node name="DoorwayDepthArea" type="Area2D" parent="." unique_id=2024137364]
+collision_layer = 0
+collision_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorwayDepthArea" unique_id=195860213]
 position = Vector2(0, 18)
