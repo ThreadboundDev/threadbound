@@ -2,6 +2,9 @@ extends CanvasLayer
 
 signal closed
 
+const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
+const PAUSE_OPEN_BLOCK_MSEC := 180
+
 const ITEMS := [
 	{
 		"id": &"small_heal",
@@ -94,6 +97,7 @@ func close() -> void:
 
 	_closing = true
 	_set_player_flow_audio_suspended(false)
+	get_tree().set_meta(PAUSE_OPEN_BLOCK_UNTIL_META, Time.get_ticks_msec() + PAUSE_OPEN_BLOCK_MSEC)
 	get_tree().paused = false
 	closed.emit()
 	queue_free()

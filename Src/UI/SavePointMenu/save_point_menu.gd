@@ -3,6 +3,9 @@ extends CanvasLayer
 signal option_selected(option_name: StringName)
 signal rise_requested
 
+const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
+const PAUSE_OPEN_BLOCK_MSEC := 180
+
 const WEAVE_LEVEL_MENU_SCENE := preload("res://Src/UI/SavePointMenu/weave_level_menu.tscn")
 
 const MAIN_OPTIONS := [
@@ -99,6 +102,7 @@ func close() -> void:
 		return
 
 	_closing = true
+	get_tree().set_meta(PAUSE_OPEN_BLOCK_UNTIL_META, Time.get_ticks_msec() + PAUSE_OPEN_BLOCK_MSEC)
 	_close_weave_panel(false)
 	var tween := create_tween()
 	tween.set_parallel(true)

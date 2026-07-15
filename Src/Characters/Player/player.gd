@@ -9,6 +9,7 @@ const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const PAUSE_MENU_SCENE := preload("res://Src/UI/PauseMenu/pause_menu.tscn")
 const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
+const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -478,7 +479,7 @@ func _process(_delta: float) -> void:
 		_debug_force_open_demo_doors()
 	_debug_force_doors_was_pressed = debug_force_doors_pressed
 
-	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started and not _is_non_pause_menu_open():
+	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started and not _should_block_pause_open():
 		_open_pause_menu()
 
 	var requested_game_menu_tab := _get_requested_game_menu_tab()
@@ -509,6 +510,19 @@ func _is_non_pause_menu_open() -> bool:
 		or get_tree().get_first_node_in_group("save_point_menu") != null
 		or get_tree().get_first_node_in_group("merchant_menu") != null
 	)
+
+func _should_block_pause_open() -> bool:
+	if _is_non_pause_menu_open():
+		return true
+	if not get_tree().has_meta(PAUSE_OPEN_BLOCK_UNTIL_META):
+		return false
+
+	var block_until_msec := int(get_tree().get_meta(PAUSE_OPEN_BLOCK_UNTIL_META))
+	if Time.get_ticks_msec() <= block_until_msec:
+		return true
+
+	get_tree().remove_meta(PAUSE_OPEN_BLOCK_UNTIL_META)
+	return false
 
 func _get_or_create_radial_menu() -> Node:
 	var menu := get_tree().get_first_node_in_group("radial_menu")

@@ -1,6 +1,8 @@
 extends CanvasLayer
 class_name GameMenu
 
+const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
+const PAUSE_OPEN_BLOCK_MSEC := 180
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -1584,6 +1586,7 @@ func _close() -> void:
 	_closing = true
 	AudioManager.play_ui(&"menu_select")
 	_set_player_flow_audio_suspended(false)
+	get_tree().set_meta(PAUSE_OPEN_BLOCK_UNTIL_META, Time.get_ticks_msec() + PAUSE_OPEN_BLOCK_MSEC)
 	get_tree().paused = false
 	queue_free()
 
