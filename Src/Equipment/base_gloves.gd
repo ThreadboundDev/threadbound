@@ -695,7 +695,10 @@ func thread_mechanic(delta: float) -> void:
 			_check_grapple_collision(previous_tip, grapple_tip_position)
 
 			var distance := grapple_tip_position.distance_to(grapple_start_position)
-			if not grapple_attached and (_should_retract_unattached_grapple() or distance >= grapple_max_distance):
+			if not grapple_attached and distance >= grapple_max_distance:
+				_mark_grapple_spent()
+
+			if not grapple_attached and _should_retract_unattached_grapple():
 				grapple_tip_velocity = Vector2.ZERO
 				_begin_grapple_retract()
 
