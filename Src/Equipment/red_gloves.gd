@@ -321,8 +321,6 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 
 	if grapple_raycast.is_colliding():
 		var collider := grapple_raycast.get_collider()
-		if not _is_valid_red_anchor(collider):
-			return
 
 		_notify_grapple_collider(collider)
 		grapple_attached = true
@@ -506,41 +504,8 @@ func _apply_red_raycast_settings() -> void:
 		return
 
 	grapple_raycast.collide_with_bodies = true
-	grapple_raycast.collide_with_areas = false
+	grapple_raycast.collide_with_areas = true
 	grapple_raycast.collision_mask = grapple_collision_mask
-
-func _is_valid_red_anchor(collider: Object) -> bool:
-	if not collider:
-		return false
-	if collider is CharacterBody2D:
-		return false
-	if collider is RigidBody2D:
-		return false
-	if collider is StaticBody2D:
-		return true
-	if collider is AnimatableBody2D:
-		return true
-	if collider is TileMap:
-		return true
-	if collider.get_class() == "TileMapLayer":
-		return _is_world_geometry_tilemap_layer(collider)
-	return false
-
-func _is_world_geometry_tilemap_layer(collider: Object) -> bool:
-	if not collider is Node:
-		return false
-
-	var node := collider as Node
-	var path_text := str(node.get_path())
-	if path_text.contains("/ParallaxBackground/") or path_text.contains("/ForegroundParallax/"):
-		return false
-
-	var current: Node = node
-	while current:
-		if current.name == "WorldArt":
-			return true
-		current = current.get_parent()
-	return false
 
 func _simulate_red_active_rope(delta: float) -> void:
 	if active_rope_points.size() < 2:
