@@ -467,6 +467,9 @@ func _physics_process(delta: float) -> void:
 	handle_wall_cling(delta)
 	update_animations(horizontal_input)
 
+	if current_gloves and current_gloves.has_method("sync_grapple_origin_after_player_move"):
+		current_gloves.sync_grapple_origin_after_player_move()
+
 # ===============================
 # PROCESS
 # ===============================
@@ -729,7 +732,7 @@ func update_animations(dir: float) -> void:
 		forced_dash_direction = current_gloves.get_forced_dash_direction()
 	
 	if is_dashing and player_animation.sprite_frames.has_animation("Dash"):
-		play_character_anim("Dash", "equip_idle")
+		play_character_anim("Dash", "equip_dash")
 		player_animation.rotation = 0.0
 		if forced_dash_direction.length() > 0.001:
 			player_animation.flip_h = forced_dash_direction.x < 0.0

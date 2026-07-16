@@ -179,7 +179,7 @@ func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> voi
 		play_equipment_anim(attack_anim)
 
 func _is_action_equipment_anim(anim_name: String) -> bool:
-	return anim_name.begins_with("equip_grapple") or anim_name.begins_with("attack_")
+	return anim_name == "equip_dash" or anim_name.begins_with("equip_grapple") or anim_name.begins_with("attack_")
 
 func enter_save_point_pose() -> void:
 	action_anim_lock_timer = 999.0
@@ -577,6 +577,18 @@ func _update_active_grapple_visuals() -> void:
 		line_points.append(active_rope_line.to_local(tip_global))
 
 	active_rope_line.points = line_points
+
+func sync_grapple_origin_after_player_move() -> void:
+	if grapple_state == GrappleState.STOWED:
+		return
+
+	if active_rope_points.size() > 0:
+		var origin := get_grapple_origin_global_position()
+		active_rope_points[0] = origin
+		if active_rope_previous_points.size() > 0:
+			active_rope_previous_points[0] = origin
+
+	_update_active_grapple_visuals()
 	
 # ===============================
 # Handle Rope Climbing
