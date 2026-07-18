@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Src/UI/Options/option_stepper.gd" id="1_script"]
 [ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="2_font"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/settings_dropdown_button.png" id="3_plaque"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Examples/main_menu_example_check_mark_box.png" id="4_check_box"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Examples/main_menu_example_check_mark.png" id="5_check_mark"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/settings_check_box.png" id="4_check_box"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/settings_check_mark.png" id="5_check_mark"]
 [sub_resource type="LabelSettings" id="LabelSettings_stepper"]
 font = ExtResource("2_font")
 font_size = 46

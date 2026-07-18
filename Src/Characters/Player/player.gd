@@ -735,7 +735,7 @@ func update_animations(dir: float) -> void:
 		play_character_anim("Dash", "equip_dash")
 		player_animation.rotation = 0.0
 		if forced_dash_direction.length() > 0.001:
-			player_animation.flip_h = forced_dash_direction.x < 0.0
+			_apply_directional_dash_pose(forced_dash_direction)
 			update_equipment_facing()
 
 	elif is_wall_clinging and player_animation.sprite_frames.has_animation("Wall_Cling"):
@@ -766,6 +766,20 @@ func update_animations(dir: float) -> void:
 		update_equipment_facing()
 
 	_update_wall_cling_vfx()
+
+func _apply_directional_dash_pose(direction: Vector2) -> void:
+	if direction.length() <= 0.001:
+		player_animation.rotation = 0.0
+		return
+
+	var dash_direction := direction.normalized()
+	if absf(dash_direction.x) > 0.001:
+		player_animation.flip_h = dash_direction.x < 0.0
+
+	var source_angle := dash_direction.angle()
+	if player_animation.flip_h:
+		source_angle = wrapf(source_angle + PI, -PI, PI)
+	player_animation.rotation = source_angle
 
 func update_equipment_facing() -> void:
 	if not equipment_mount:
@@ -1481,6 +1495,12 @@ func _on_died(_damage: DamageData) -> void:
 	if death_reset_started:
 		return
 
+	var tutorial_controller: Node = get_tree().get_first_node_in_group("tutorial_controllers")
+	if tutorial_controller and tutorial_controller.has_method("handle_player_tutorial_death"):
+		var handled_by_tutorial: bool = tutorial_controller.call("handle_player_tutorial_death", self)
+		if handled_by_tutorial:
+			return
+
 	_exit_flow_state()
 	AudioManager.stop_loop(&"grapple_hanging")
 	is_dead = true
@@ -1513,6 +1533,38 @@ func _reload_scene_after_death() -> void:
 	var error := get_tree().reload_current_scene()
 	if error != OK:
 		push_warning("Player: Failed to reload current scene after death.")
+
+func revive_for_tutorial(respawn_position: Vector2) -> void:
+	is_dead = false
+	death_reset_started = false
+	is_hurt = false
+	hurt_timer = 0.0
+	is_attacking = false
+	current_attack_is_special = false
+	attack_timer = 0.0
+	attack_cooldown_timer = 0.0
+	attack_active_started = false
+	attack_active_finished = false
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+	velocity = Vector2.ZERO
+	global_position = respawn_position
+	_movement_momentum_last_position = global_position
+	_exit_flow_state()
+	AudioManager.stop_loop(&"grapple_hanging")
+	if current_gloves and current_gloves.has_method("_reset_active_grapple_visuals"):
+		current_gloves.call("_reset_active_grapple_visuals")
+	if attack_hitbox:
+		attack_hitbox.disable()
+	if health_component:
+		health_component.is_dead = false
+		health_component.current_health = health_component.max_health
+		health_component.health_changed.emit(health_component.current_health, health_component.max_health)
+	refill_action_points()
+	_reset_weapon_visuals()
+	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
+		play_character_anim("Idle", "equip_idle")
+	_sync_hud()
 
 # ===============================
 # CHARGE / COOLDOWN HELPERS

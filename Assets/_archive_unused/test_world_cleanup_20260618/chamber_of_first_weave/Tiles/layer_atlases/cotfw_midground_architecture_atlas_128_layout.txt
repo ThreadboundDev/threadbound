@@ -1,3 +1,0 @@
-source=C:/Users/chase/Documents/threadbound/Assets/chamber_of_first_weave/cotfw_chamber_mid_architecture_atlas_v2_clean.png
-source_size=2048x1500
-padded_size=2048x1536

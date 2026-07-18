@@ -54,6 +54,8 @@ var player: CharacterBody2D = null
 @export var rope_limit_pull_strength := 18.0
 @export var rope_tangent_max_speed := 380.0
 @export var rope_tangent_damping := 0.985
+@export var rope_idle_swing_lerp_speed := 5.5
+@export var rope_idle_swing_stop_speed := 8.0
 @export var rope_jump_force := 760.0
 
 # Climbing Variables
@@ -638,6 +640,7 @@ func apply_grapple_velocity(delta: float) -> void:
 
 	var max_allowed: float = current_rope_length + rope_limit_slack
 	var rope_dir: Vector2 = from_anchor.normalized()
+	var tangent: Vector2 = Vector2(-rope_dir.y, rope_dir.x)
 
 	# Grounded behavior:
 	# walk normally while slack exists, but rope becomes a wall at max length.
@@ -648,12 +651,12 @@ func apply_grapple_velocity(delta: float) -> void:
 				player.velocity -= rope_dir * outward_speed
 		return
 
+	_apply_base_idle_swing_resistance(delta, tangent)
+
 	# Airborne behavior:
 	# no constraint until rope is taut.
 	if distance <= max_allowed:
 		return
-
-	var tangent: Vector2 = Vector2(-rope_dir.y, rope_dir.x)
 
 	# Remove velocity moving farther away from anchor.
 	var outward_speed: float = player.velocity.dot(rope_dir)
@@ -674,6 +677,21 @@ func apply_grapple_velocity(delta: float) -> void:
 	if player.has_method("get_momentum_grapple_pull_multiplier"):
 		pull_multiplier = player.get_momentum_grapple_pull_multiplier()
 	player.velocity -= rope_dir * excess * rope_limit_pull_strength * pull_multiplier * delta
+
+func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
+	if absf(Input.get_axis("move_left", "move_right")) > 0.05:
+		return
+
+	var tangent_speed := player.velocity.dot(tangent)
+	if absf(tangent_speed) <= 0.001:
+		return
+
+	var decay_weight := 1.0 - exp(-rope_idle_swing_lerp_speed * delta)
+	var damped_speed := lerpf(tangent_speed, 0.0, decay_weight)
+	if absf(damped_speed) < rope_idle_swing_stop_speed:
+		damped_speed = 0.0
+
+	player.velocity += tangent * (damped_speed - tangent_speed)
 
 # ===============================
 # MAIN ABILITY LOOP

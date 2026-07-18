@@ -2,14 +2,8 @@ extends CanvasLayer
 
 # Slot Controls
 @onready var monarch_gloves_slot: Control = $MenuFadeContainer/Background/MonarchGlovesButton
-@onready var monarch_boots_slot: Control = $MenuFadeContainer/Background/MonarchBootsButton
-@onready var monarch_chest_slot: Control = $MenuFadeContainer/Background/MonarchChestButton
 @onready var hermit_gloves_slot: Control = $MenuFadeContainer/Background/HermitGlovesButton
-@onready var hermit_boots_slot: Control = $MenuFadeContainer/Background/HermitBootsButton
-@onready var hermit_chest_slot: Control = $MenuFadeContainer/Background/HermitChestButton
 @onready var sage_gloves_slot: Control = $MenuFadeContainer/Background/SageGlovesButton
-@onready var sage_boots_slot: Control = $MenuFadeContainer/Background/SageBootsButton
-@onready var sage_chest_slot: Control = $MenuFadeContainer/Background/SageChestButton
 
 @onready var menu_fade_container: Control = $MenuFadeContainer
 @onready var background: TextureRect = $MenuFadeContainer/Background
@@ -58,17 +52,10 @@ func _ready() -> void:
 	slow_bank = max_slow_bank
 	last_real_time = Time.get_ticks_msec() / 1000.0
 
-	# Glove indices match EquipManager. Other slots are connected for hover layout,
-	# but the manager currently only equips glove scenes.
-	_connect_slot(sage_gloves_slot,    9)
-	_connect_slot(sage_boots_slot,     1)
-	_connect_slot(sage_chest_slot,     2)
-	_connect_slot(hermit_gloves_slot,  3)
-	_connect_slot(hermit_boots_slot,   4)
-	_connect_slot(hermit_chest_slot,   5)
-	_connect_slot(monarch_gloves_slot, 6)
-	_connect_slot(monarch_boots_slot,  7)
-	_connect_slot(monarch_chest_slot,  8)
+	# Demo radial menu only exposes the three active glove swaps.
+	_connect_slot(hermit_gloves_slot, EquipManager.BLUE_GLOVES_SLOT)
+	_connect_slot(monarch_gloves_slot, EquipManager.RED_GLOVES_SLOT)
+	_connect_slot(sage_gloves_slot, EquipManager.YELLOW_GLOVES_SLOT)
 
 func _connect_slot(slot: Control, slot_idx: int) -> void:
 	if slot == null:

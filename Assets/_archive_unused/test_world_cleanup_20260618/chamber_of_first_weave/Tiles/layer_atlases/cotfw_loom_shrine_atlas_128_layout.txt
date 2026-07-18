@@ -1,3 +1,0 @@
-source=C:/Users/chase/Documents/threadbound/Assets/chamber_of_first_weave/cotfw_chamber_mid_loom_shrine_atlas_v2_alpha.png
-source_size=1536x1024
-padded_size=1536x1024

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bb8t87ipew0nu"]
 
-[ext_resource type="Script" path="res://Src/Equipment/blue_gloves.gd" id="1_ijk80"]
+[ext_resource type="Script" uid="uid://o3yjqml8sadj" path="res://Src/Equipment/blue_gloves.gd" id="1_ijk80"]
 [ext_resource type="Texture2D" uid="uid://b0anqet3q8w3l" path="res://Assets/Threadborne/Equipment/Blue Gear/blue_glove.png" id="2_f1fjg"]
 [ext_resource type="Script" uid="uid://di2x2e1vafd58" path="res://Src/Characters/Player/rope_hang_anchor.gd" id="3_ap6kl"]
 [ext_resource type="Texture2D" uid="uid://b8xsflpguyo6b" path="res://Assets/Threadborne/Equipment/Blue Gear/blue_hook.png" id="4_bvg2p"]
@@ -137,6 +137,33 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0.98, 0.98), Vector2(0.98, 0.98)]
+}
+
+[sub_resource type="Animation" id="Animation_k1udg"]
+resource_name = "equip_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, -36)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.20245819]
 }
 
 [sub_resource type="Animation" id="Animation_ijk80"]
@@ -303,7 +330,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Vector2(-27.645, -57.92), Vector2(-27.645, -57.92)]
+"values": [Vector2(-25, -56), Vector2(-27.645, -57.92)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -315,7 +342,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [-0.638791, -0.638791]
+"values": [-0.726057, -0.638791]
 }
 
 [sub_resource type="Animation" id="Animation_3lmiq"]
@@ -410,6 +437,7 @@ _data = {
 &"RESET": SubResource("Animation_tve83"),
 &"attack_air": SubResource("Animation_ap6kl"),
 &"attack_ground": SubResource("Animation_bvg2p"),
+&"equip_dash": SubResource("Animation_k1udg"),
 &"equip_grapple_fire_diagonal": SubResource("Animation_ijk80"),
 &"equip_grapple_fire_straight": SubResource("Animation_f1fjg"),
 &"equip_idle": SubResource("Animation_gwn7h"),
@@ -839,13 +867,13 @@ needle_rotation_offset = 0.0
 
 [node name="RightHandAnchor" type="Marker2D" parent="Equipment" unique_id=1164032359]
 z_index = 1
-position = Vector2(-18, -15)
+position = Vector2(-20, -32)
 scale = Vector2(0.885, 0.885)
 
 [node name="WristWrapPivot" type="Node2D" parent="Equipment/RightHandAnchor" unique_id=686102231]
 position = Vector2(2.319916, 0.1622243)
-rotation = -1.267109
-scale = Vector2(1.235, 1.235)
+rotation = -2.645919
+scale = Vector2(0.98, 0.98)
 
 [node name="WristWrapSprite" type="Sprite2D" parent="Equipment/RightHandAnchor/WristWrapPivot" unique_id=948017537]
 position = Vector2(-1.9073486e-06, 2)
@@ -907,6 +935,7 @@ scale = Vector2(13.333333, 13.333333)
 target_position = Vector2(0, 0)
 
 [node name="Player Animation" type="AnimatedSprite2D" parent="." unique_id=1005698990]
+visible = false
 position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_yv70g")

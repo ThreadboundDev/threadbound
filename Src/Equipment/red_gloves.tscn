@@ -904,7 +904,7 @@ position = Vector2(-120.469, 1.876)
 scale = Vector2(38.40123, 38.931286)
 
 [node name="DanglingRopeLine" type="Line2D" parent="Equipment/RightHandAnchor/RopeHangAnchor" unique_id=1070539106]
-z_index = -2
+z_index = -1
 position = Vector2(12.275, 1.39)
 rotation = 1.5707964
 scale = Vector2(1.585, 1.585)
@@ -949,4 +949,4 @@ visible = false
 position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_cees4")
-animation = &"Jump_Ascent"
+animation = &"Dash"

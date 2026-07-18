@@ -1,3 +1,0 @@
-source=C:/Users/chase/Documents/threadbound/Assets/chamber_of_first_weave/cotfw_chamber_far_architecture_atlas_v3_alpha.png
-source_size=1536x1024
-padded_size=1536x1024
