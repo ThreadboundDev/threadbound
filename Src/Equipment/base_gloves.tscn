@@ -156,7 +156,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(20.315, -60.925)]
+"values": [Vector2(36, -57.999996)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -882,4 +882,4 @@ visible = false
 position = Vector2(4, -2)
 scale = Vector2(0.31398362, 0.3485)
 sprite_frames = SubResource("SpriteFrames_8pwdc")
-animation = &"Jump_Descent"
+animation = &"Grapple_Diagonal"

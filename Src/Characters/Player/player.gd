@@ -4,11 +4,13 @@ signal action_points_changed(current: int, maximum: int)
 signal momentum_changed(value: float)
 signal momentum_state_changed(state: StringName, flow_active: bool)
 signal save_point_seated(player: CharacterBody2D)
+signal stat_upgraded(stat_id: StringName)
 
 const GAME_OVER_OVERLAY_SCENE := preload("res://Src/UI/game_over_overlay.tscn")
 const PAUSE_MENU_SCENE := preload("res://Src/UI/PauseMenu/pause_menu.tscn")
 const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
+const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
@@ -188,8 +190,8 @@ const SIT_FPS := 12.0
 @export var wall_slide_max_speed: float = 620.0
 
 # Debug testing helpers
-@export var god_mode_fly_speed: float = 620.0
-@export var god_mode_fly_acceleration: float = 2600.0
+@export var god_mode_fly_speed: float = 1100.0
+@export var god_mode_fly_acceleration: float = 5200.0
 
 @export_group("Save Point Interaction")
 @export var save_point_auto_run_speed := 420.0
@@ -201,6 +203,9 @@ const SIT_FPS := 12.0
 @export var footstep_interval := 0.28
 @export var footstep_min_speed := 80.0
 @export var coin_pickup_audio_cooldown := 0.045
+
+@export_group("Tutorial Messages")
+@export_multiline var first_thread_knot_message := "These are Thread Knots. They are used to purchase items and level up."
 
 # Glow configuration
 @export var idle_glow_width: float = 1.2
@@ -255,8 +260,13 @@ var _dash_iframe_timer := 0.0
 var _debug_momentum_was_pressed := false
 var _debug_force_doors_was_pressed := false
 var _debug_thread_knots_was_pressed := false
+var _debug_no_clip_was_pressed := false
 var _footstep_timer := 0.0
 var _coin_pickup_audio_timer := 0.0
+var _thread_knot_tutorial_shown := false
+var _debug_no_clip_enabled := false
+var _debug_original_collision_layer := 0
+var _debug_original_collision_mask := 0
 
 var current_body_anim := ""
 var current_equip_anim := ""
@@ -299,6 +309,9 @@ var _save_point_breath_tween: Tween
 func _ready() -> void:
 	if not player_stats:
 		player_stats = PlayerStats.new()
+
+	_debug_original_collision_layer = collision_layer
+	_debug_original_collision_mask = collision_mask
 
 	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
@@ -371,6 +384,7 @@ func unequip_gloves() -> void:
 # ===============================
 func _physics_process(delta: float) -> void:
 	_update_god_mode_toggle()
+	_update_debug_no_clip_toggle()
 	_update_debug_momentum_fill()
 	_update_debug_thread_knots()
 	_process_audio_timers(delta)
@@ -620,10 +634,34 @@ func _get_connected_controller_family(device_id := -1) -> StringName:
 func _update_god_mode_toggle() -> void:
 	if Input.is_action_just_pressed("debug_god_mode"):
 		god_mode_enabled = not god_mode_enabled
-		if god_mode_enabled and health_component:
-			health_component.heal(health_component.max_health)
+		if god_mode_enabled:
+			if health_component:
+				health_component.heal(health_component.max_health)
+			_complete_tutorial_for_debug()
 		_sync_hud()
 		print("God mode: ", "ON" if god_mode_enabled else "OFF")
+
+func _update_debug_no_clip_toggle() -> void:
+	var pressed: bool = Input.is_key_pressed(KEY_F6)
+	if pressed and not _debug_no_clip_was_pressed:
+		_debug_no_clip_enabled = not _debug_no_clip_enabled
+		_apply_debug_no_clip()
+		print("No clip: ", "ON" if _debug_no_clip_enabled else "OFF")
+	_debug_no_clip_was_pressed = pressed
+
+func _apply_debug_no_clip() -> void:
+	if _debug_no_clip_enabled:
+		collision_layer = 0
+		collision_mask = 0
+	else:
+		collision_layer = _debug_original_collision_layer
+		collision_mask = _debug_original_collision_mask
+
+func _complete_tutorial_for_debug() -> void:
+	_thread_knot_tutorial_shown = true
+	for controller in get_tree().get_nodes_in_group("tutorial_controllers"):
+		if controller.has_method("debug_complete_tutorial"):
+			controller.call("debug_complete_tutorial")
 
 func _update_debug_momentum_fill() -> void:
 	var pressed := Input.is_key_pressed(KEY_F8)
@@ -1060,10 +1098,36 @@ func set_momentum(value: float) -> void:
 		_exit_flow_state()
 
 func collect_thread_knots(amount: int) -> void:
-	thread_knot_count += maxi(0, amount)
+	var gained_amount := maxi(0, amount)
+	var previous_thread_knots := thread_knot_count
+	thread_knot_count += gained_amount
 	if _coin_pickup_audio_timer <= 0.0:
 		AudioManager.play_ui(&"coin_pickup")
 		_coin_pickup_audio_timer = coin_pickup_audio_cooldown
+	if gained_amount > 0 and previous_thread_knots <= 0 and not _thread_knot_tutorial_shown:
+		_thread_knot_tutorial_shown = true
+		if not _try_show_tutorial_thread_knot_prompt():
+			_show_first_thread_knot_message()
+
+func _try_show_tutorial_thread_knot_prompt() -> bool:
+	for controller in get_tree().get_nodes_in_group("tutorial_controllers"):
+		if controller.has_method("handle_first_thread_knot_tutorial"):
+			var handled: bool = controller.handle_first_thread_knot_tutorial()
+			if handled:
+				return true
+	return false
+
+func _show_first_thread_knot_message() -> void:
+	if first_thread_knot_message.is_empty():
+		return
+
+	var box: Node = get_tree().get_first_node_in_group("demo_message_box")
+	if not box:
+		box = DEMO_MESSAGE_BOX_SCENE.instantiate()
+		var parent: Node = get_tree().current_scene if get_tree().current_scene else get_tree().root
+		parent.add_child(box)
+	if box.has_method("show_message"):
+		box.call("show_message", first_thread_knot_message)
 
 func can_weave_stat_upgrade(cost: int) -> bool:
 	return thread_knot_count >= maxi(0, cost)
@@ -1082,6 +1146,7 @@ func weave_stat_upgrade(stat_id: StringName, cost: int = 0) -> bool:
 
 	_apply_player_stats_after_upgrade(previous_max_health)
 	AudioManager.play_ui(&"loot_special_item")
+	stat_upgraded.emit(stat_id)
 	return true
 
 func get_weave_stat_display(stat_id: StringName) -> String:

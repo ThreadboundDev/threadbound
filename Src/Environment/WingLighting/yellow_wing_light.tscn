@@ -1,29 +1,29 @@
-[gd_scene load_steps=5 format=4]
+[gd_scene load_steps=4 format=4]
 
 [ext_resource type="Script" path="res://Src/Environment/WingLighting/wing_light_pulse.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Yellow Wing/astro_globe_spritesheet.png" id="2_globe_sheet"]
 [ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="3_shrine_light"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
-blend_mode = 1
-
 [node name="YellowWingLight" type="Node2D"]
-z_index = 6
+z_index = 0
 script = ExtResource("1_script")
-light_paths = Array[NodePath]([NodePath("GlobeCoreLight"), NodePath("OuterHaloLight")])
+light_paths = Array[NodePath]([NodePath("GlobeCoreLight")])
 sprite_paths = Array[NodePath]([NodePath("AstroGlobeGlow")])
 animated_sprite_paths = Array[NodePath]([NodePath("AstroGlobeGlow")])
 base_energy = 1.05
 pulse_energy = 0.26
 pulse_speed = 0.62
-base_alpha = 0.55
-pulse_alpha = 0.15
-sprite_fps = 10.0
+base_alpha = 1.0
+pulse_alpha = 0.0
+sprite_fps = 14.0
+animation_ping_pong = true
+drift_enabled = true
+drift_radius = Vector2(72, 36)
+drift_velocity = Vector2(18, -10)
 
 [node name="AstroGlobeGlow" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_add")
-modulate = Color(1, 0.82, 0.18, 0.62)
-scale = Vector2(0.74, 0.74)
+modulate = Color(1, 1, 1, 1)
+scale = Vector2(0.52, 0.52)
 texture = ExtResource("2_globe_sheet")
 hframes = 6
 vframes = 8
@@ -37,11 +37,3 @@ shadow_enabled = true
 shadow_filter_smooth = 3.0
 texture = ExtResource("3_shrine_light")
 texture_scale = 2.1
-
-[node name="OuterHaloLight" type="PointLight2D" parent="."]
-color = Color(1, 0.7, 0.12, 1)
-energy = 1.05
-range_z_min = -4096
-range_z_max = 4096
-texture = ExtResource("3_shrine_light")
-texture_scale = 4.1

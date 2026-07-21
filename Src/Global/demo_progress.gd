@@ -9,6 +9,8 @@ var _claimed_threads: Dictionary = {}
 var _checkpoint_scene_path := ""
 var _checkpoint_id: StringName = &""
 var _checkpoint_position := Vector2.ZERO
+var _tutorial_completed := false
+var _tutorial_completion_recorded := false
 
 func _ready() -> void:
 	load_checkpoint()
@@ -49,6 +51,8 @@ func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_posit
 	config.set_value("checkpoint", "scene_path", scene_path)
 	config.set_value("checkpoint", "position_x", player_position.x)
 	config.set_value("checkpoint", "position_y", player_position.y)
+	config.set_value("progress", "tutorial_completed", _tutorial_completed)
+	_tutorial_completion_recorded = true
 	var error := config.save(SAVE_PATH)
 	if error != OK:
 		push_warning("DemoProgress could not save checkpoint: %s." % error_string(error))
@@ -66,6 +70,8 @@ func load_checkpoint() -> bool:
 		float(config.get_value("checkpoint", "position_x", 0.0)),
 		float(config.get_value("checkpoint", "position_y", 0.0))
 	)
+	_tutorial_completion_recorded = config.has_section_key("progress", "tutorial_completed")
+	_tutorial_completed = bool(config.get_value("progress", "tutorial_completed", false))
 	checkpoint_changed.emit()
 	return has_checkpoint()
 
@@ -73,6 +79,8 @@ func clear_checkpoint() -> void:
 	_checkpoint_id = &""
 	_checkpoint_scene_path = ""
 	_checkpoint_position = Vector2.ZERO
+	_tutorial_completed = false
+	_tutorial_completion_recorded = false
 	var dir := DirAccess.open("user://")
 	if dir and dir.file_exists(SAVE_PATH.get_file()):
 		dir.remove(SAVE_PATH.get_file())
@@ -89,3 +97,27 @@ func get_checkpoint_position() -> Vector2:
 
 func get_checkpoint_id() -> StringName:
 	return _checkpoint_id
+
+func mark_tutorial_completed() -> void:
+	if _tutorial_completed:
+		return
+	_tutorial_completed = true
+	_tutorial_completion_recorded = true
+	_write_progress()
+
+func is_tutorial_completed() -> bool:
+	return _tutorial_completed
+
+func has_tutorial_completion_record() -> bool:
+	return _tutorial_completion_recorded
+
+func _write_progress() -> void:
+	var config := ConfigFile.new()
+	config.set_value("checkpoint", "id", String(_checkpoint_id))
+	config.set_value("checkpoint", "scene_path", _checkpoint_scene_path)
+	config.set_value("checkpoint", "position_x", _checkpoint_position.x)
+	config.set_value("checkpoint", "position_y", _checkpoint_position.y)
+	config.set_value("progress", "tutorial_completed", _tutorial_completed)
+	var error := config.save(SAVE_PATH)
+	if error != OK:
+		push_warning("DemoProgress could not save progress: %s." % error_string(error))

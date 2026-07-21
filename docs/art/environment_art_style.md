@@ -25,7 +25,7 @@ Threadbound environments follow a:
 Not:
 - photoreal
 - matte painting
-- blurry painterly fantasy
+- blurry, brush-led fantasy rendering
 - texture-heavy realism
 
 Instead:
@@ -294,7 +294,7 @@ Human controls:
 
 # 10. Prompt Formula
 
-"Graphic illustration 2.5D Threadbound environment matching Threadborne silhouette and contour readability. Shape-first rendering, clean black outline hierarchy, controlled shading, readable gameplay forms, cave plus architecture integration, atmospheric but restrained lighting, no photorealism, no painterly brushwork, no matte-painting softness."
+"Graphic illustration 2.5D Threadbound environment matching Threadborne silhouette and contour readability. Shape-first rendering, clean black outline hierarchy, controlled shading, readable gameplay forms, cave plus architecture integration, atmospheric but restrained lighting, no photorealism, no brush-led rendering, no matte-painting softness."
 
 Then append:
 - region identity

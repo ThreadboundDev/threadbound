@@ -70,6 +70,9 @@ func _ready() -> void:
 	var input_manager := get_node_or_null("/root/InputBindingManager")
 	if input_manager and input_manager.has_signal("bindings_changed"):
 		input_manager.bindings_changed.connect(_refresh_prompt_label)
+	if prompt_label:
+		prompt_label.z_as_relative = false
+		prompt_label.z_index = 1000
 	_configure_doorway_depth_area()
 	_configure_opened_split_layers()
 	_apply_visual_state()

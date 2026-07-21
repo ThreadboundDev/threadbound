@@ -275,6 +275,7 @@ func _activate_selected() -> void:
 		rise_requested.emit()
 		return
 	if selected_name == &"Weave":
+		option_selected.emit(selected_name)
 		_open_weave_panel()
 		return
 

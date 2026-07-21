@@ -1,55 +1,51 @@
-[gd_scene load_steps=5 format=4]
+[gd_scene format=3 uid="uid://ppyljssst4fl"]
 
-[ext_resource type="Script" path="res://Src/Environment/WingLighting/wing_light_pulse.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Blue Wing/waterfall_shrine_spritesheet.png" id="2_waterfall_sheet"]
+[ext_resource type="Script" uid="uid://c2th7kmuxmc2q" path="res://Src/Environment/WingLighting/wing_light_pulse.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://mihcey13j4q7" path="res://Assets/chamber_of_first_weave/Blue Wing/waterfall_shrine_spritesheet.png" id="2_waterfall_sheet"]
 [ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="3_shrine_light"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
-blend_mode = 1
-
-[node name="BlueWingLight" type="Node2D"]
-z_index = 6
+[node name="BlueWingLight" type="Node2D" unique_id=149442964]
 script = ExtResource("1_script")
 light_paths = Array[NodePath]([NodePath("WaterBasinLight"), NodePath("LeftLanternLight"), NodePath("RightLanternLight")])
 sprite_paths = Array[NodePath]([NodePath("WaterfallShrineGlow")])
 animated_sprite_paths = Array[NodePath]([NodePath("WaterfallShrineGlow")])
 base_energy = 0.82
-pulse_energy = 0.18
 pulse_speed = 0.48
-base_alpha = 0.46
-pulse_alpha = 0.12
-sprite_fps = 9.0
+base_alpha = 1.0
+pulse_alpha = 0.0
+sprite_fps = 24.0
+animation_start_frame = 12
+animation_frame_count = 36
 
-[node name="WaterfallShrineGlow" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_add")
-modulate = Color(0.3, 0.78, 1, 0.52)
+[node name="WaterfallShrineGlow" type="Sprite2D" parent="." unique_id=1237246719]
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("2_waterfall_sheet")
 hframes = 6
 vframes = 8
+frame = 13
 
-[node name="WaterBasinLight" type="PointLight2D" parent="."]
+[node name="WaterBasinLight" type="PointLight2D" parent="." unique_id=1906340069]
 position = Vector2(0, 184)
 color = Color(0.32, 0.82, 1, 1)
-energy = 0.82
+energy = 0.8576269
 range_z_min = -4096
 range_z_max = 4096
 texture = ExtResource("3_shrine_light")
 texture_scale = 3.7
 
-[node name="LeftLanternLight" type="PointLight2D" parent="."]
-position = Vector2(-210, -90)
-color = Color(0.4, 0.88, 1, 1)
-energy = 0.82
+[node name="LeftLanternLight" type="PointLight2D" parent="." unique_id=1987453546]
+position = Vector2(-120, 124)
+color = Color(0.7810748, 0.9256289, 0.9999997, 1)
+energy = 0.8576269
 range_z_min = -4096
 range_z_max = 4096
 texture = ExtResource("3_shrine_light")
 texture_scale = 1.35
 
-[node name="RightLanternLight" type="PointLight2D" parent="."]
-position = Vector2(210, -90)
-color = Color(0.4, 0.88, 1, 1)
-energy = 0.82
+[node name="RightLanternLight" type="PointLight2D" parent="." unique_id=1880137214]
+position = Vector2(105, 116)
+color = Color(0.78039217, 0.9254902, 1, 1)
+energy = 0.8576269
 range_z_min = -4096
 range_z_max = 4096
 texture = ExtResource("3_shrine_light")

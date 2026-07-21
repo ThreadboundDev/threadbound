@@ -3,6 +3,8 @@ extends Area2D
 signal opened(save_point: Area2D)
 signal closed(save_point: Area2D)
 signal activated(save_point: Area2D, player: Node)
+signal menu_opened(menu: Node)
+signal rested(save_point: Area2D, player: Node)
 
 const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_menu.tscn")
 
@@ -25,6 +27,9 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 @export var player_sit_offset := Vector2(-32.0, -56.0)
 @export_range(0.0, 4.0, 0.05) var meditation_light_energy := 1.65
 @export_range(0.0, 2.0, 0.05) var meditation_light_fade_duration := 0.45
+@export_group("Tutorial Refresh")
+@export var tutorial_refresh_proximity_distance := 760.0
+@export var tutorial_refresh_interaction_distance := 460.0
 
 @onready var save_point_sprite: AnimatedSprite2D = $SavePointSprite as AnimatedSprite2D
 @onready var meditation_light: PointLight2D = get_node_or_null("MeditationLight") as PointLight2D
@@ -47,6 +52,9 @@ var _remote_path := NodePath("")
 func _ready() -> void:
 	if editor_preview_sprite:
 		editor_preview_sprite.visible = false
+	if prompt_label:
+		prompt_label.z_as_relative = false
+		prompt_label.z_index = 1000
 	if meditation_light:
 		meditation_light.visible = false
 		meditation_light.energy = 0.0
@@ -60,6 +68,46 @@ func _ready() -> void:
 	if input_manager and input_manager.has_signal("bindings_changed"):
 		input_manager.bindings_changed.connect(_refresh_prompt_label)
 	_build_sprite_frames_from_sheet()
+	_apply_initial_state()
+
+func refresh_current_player_overlap(preferred_player: Node = null) -> void:
+	await get_tree().physics_frame
+	if not is_inside_tree():
+		return
+
+	var found_proximity := false
+	var found_interaction := false
+	for body in get_overlapping_bodies():
+		if body.is_in_group("player"):
+			_on_body_entered(body)
+			found_proximity = true
+			break
+
+	if interaction_area:
+		for body in interaction_area.get_overlapping_bodies():
+			if body.is_in_group("player"):
+				_on_interaction_body_entered(body)
+				found_interaction = true
+				break
+
+	var player_node: Node = preferred_player
+	if not player_node:
+		player_node = get_tree().get_first_node_in_group("player")
+	var player_2d: Node2D = player_node as Node2D
+	if not player_2d:
+		return
+
+	var distance_to_player := global_position.distance_to(player_2d.global_position)
+	if not found_proximity and distance_to_player <= tutorial_refresh_proximity_distance:
+		_on_body_entered(player_node)
+	if not found_interaction and distance_to_player <= tutorial_refresh_interaction_distance:
+		_on_interaction_body_entered(player_node)
+
+func prepare_for_tutorial_reveal() -> void:
+	_nearby_player = null
+	_interactable_player = null
+	_active_player = null
+	_disable_prompt()
 	_apply_initial_state()
 
 func interact(interacting_player: Node) -> void:
@@ -241,6 +289,7 @@ func _present_camera_and_menu(player: Node) -> void:
 		_menu.rise_requested.connect(_on_rise_requested)
 	if _menu.has_signal("option_selected"):
 		_menu.option_selected.connect(_on_menu_option_selected)
+	menu_opened.emit(_menu)
 
 func _on_menu_option_selected(option_name: StringName) -> void:
 	if option_name == &"Reflect":
@@ -318,6 +367,7 @@ func _rest_at_save_point() -> void:
 		DemoProgress.save_checkpoint(checkpoint_id, scene_path, (_active_player as Node2D).global_position)
 
 	_reset_regular_enemies()
+	rested.emit(self, _active_player)
 
 func _refresh_prompt_label() -> void:
 	if not prompt_label:

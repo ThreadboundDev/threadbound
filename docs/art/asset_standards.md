@@ -43,11 +43,11 @@ The silhouette should communicate the object before any internal detail is visib
 
 ---
 
-## Graphic Illustration, Not Painterly Rendering
+## Graphic Illustration and Shape-Based Rendering
 
 Threadbound uses a graphic illustration style.
 
-Threadbound is not a painterly game. It uses clean, graphic shapes first, with controlled shading and lighting accents where they support form, material, mood, and readability.
+Threadbound uses clean, graphic shapes first, with controlled shading and lighting accents where they support form, material, mood, and readability.
 
 Avoid:
 
@@ -119,7 +119,7 @@ Lightest outlines.
 
 Backgrounds should remain graphic and readable without competing with gameplay.
 
-Never use blurry or painterly backgrounds.
+Backgrounds must retain crisp shape separation and edge clarity.
 
 ---
 
@@ -371,7 +371,7 @@ Avoid:
 
 * smoke clouds
 * particle spam
-* painterly magic effects
+* soft, texture-led magic effects
 * blurry glows
 
 ---
@@ -399,8 +399,8 @@ Use:
 
 Do not use:
 
-* painterly
-* painterly rendering
+* brush-led rendering
+* texture-led rendering
 * concept art
 * digital painting
 * oil painting

@@ -9,7 +9,10 @@
 [ext_resource type="Script" uid="uid://xhrp7dgd2iuq" path="res://Src/Environment/World/weave_threads.gd" id="8_rfiv0"]
 [ext_resource type="TileSet" uid="uid://c24nhxa22rnjp" path="res://Assets/chamber_of_first_weave/Tiles/cotfw_chamber_tileset_256_current.tres" id="9_n6a6r"]
 [ext_resource type="PackedScene" uid="uid://clcrpas7q7s00" path="res://Src/Enemies/Loomkin/loomkin.tscn" id="10_4fmyt"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_foliage_tall.tscn" id="10_q1pcl"]
 [ext_resource type="PackedScene" uid="uid://bbuxvfd44htht" path="res://Src/Enemies/Threadling/threadling.tscn" id="11_be3p8"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bamboo_short.tscn" id="11_yw6d4"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bamboo_tall.tscn" id="12_ojaqx"]
 [ext_resource type="PackedScene" uid="uid://chjbc1kgc3esj" path="res://Src/Enemies/Tensioner/tensioner.tscn" id="12_un15s"]
 [ext_resource type="TileSet" uid="uid://ejgfpekpqd7o" path="res://Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_tileset_128.tres" id="13_541qs"]
 [ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="14_yhgke"]
@@ -26,16 +29,39 @@
 [ext_resource type="PackedScene" uid="uid://cju2v2tgjwr5y" path="res://Src/Environment/Doors/blue_wing_door.tscn" id="22_blue_door"]
 [ext_resource type="PackedScene" uid="uid://c0v5jygnf0ot7" path="res://Src/Environment/Doors/yellow_wing_door.tscn" id="23_yellow_door"]
 [ext_resource type="PackedScene" uid="uid://biqmejdjtgpcp" path="res://Src/Environment/Doors/boss_wing_door.tscn" id="24_boss_door"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_rock_blocks.tscn" id="25_1eutx"]
 [ext_resource type="PackedScene" uid="uid://c1hxr2mg4bjmm" path="res://Src/Environment/SavePoints/blossom_of_eryndor.tscn" id="25_blossom"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/red_wing_thread_objective.tscn" id="26_red_objective"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_reeds_tall.tscn" id="26_vr0sk"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Objectives/balance_wing_objective.tscn" id="27_balance_objective"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_root_small.tscn" id="27_itxst"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bellflowers.tscn" id="28_7tq32"]
 [ext_resource type="PackedScene" uid="uid://q8mvp2yr11to" path="res://Src/Environment/Objectives/blue_wing_button.tscn" id="28_blue_button"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_rock_ledge.tscn" id="29_formb"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Portals/yellow_portal.tscn" id="29_yellow_portal"]
-[ext_resource type="Script" path="res://Src/Environment/World/boss_arena_lock.gd" id="30_boss_arena_lock"]
+[ext_resource type="Script" uid="uid://bgqmey6m0e52b" path="res://Src/Environment/World/boss_arena_lock.gd" id="30_boss_arena_lock"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_rock_monolith.tscn" id="30_v7b5a"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_foliage_broad.tscn" id="31_bgprh"]
 [ext_resource type="Script" uid="uid://dh6kawn2tif4j" path="res://Src/Environment/Tutorial/tutorial_controller.gd" id="31_tutorial"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_foliage_lotus.tscn" id="32_2xdfl"]
 [ext_resource type="PackedScene" path="res://Src/Environment/WingLighting/red_wing_light.tscn" id="32_red_wing_light"]
-[ext_resource type="PackedScene" path="res://Src/Environment/WingLighting/blue_wing_light.tscn" id="33_blue_wing_light"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_foliage_low.tscn" id="33_bap7i"]
+[ext_resource type="PackedScene" uid="uid://ppyljssst4fl" path="res://Src/Environment/WingLighting/blue_wing_light.tscn" id="33_blue_wing_light"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_large.tscn" id="34_6qoua"]
 [ext_resource type="PackedScene" path="res://Src/Environment/WingLighting/yellow_wing_light.tscn" id="34_yellow_wing_light"]
+[ext_resource type="TileSet" uid="uid://j2n0apxbm8lp" path="res://Assets/chamber_of_first_weave/Blue Wing/blue_wing_decor_tileset.tres" id="35_blue_decor_tiles"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bamboo_medium.tscn" id="35_c7jmu"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_shrine_fragment_lotus.tscn" id="36_o6k00"]
+[ext_resource type="TileSet" uid="uid://bxf3qd3jw6r2w" path="res://Assets/chamber_of_first_weave/Red Wing/red_wing_decor_tileset.tres" id="36_red_decor_tiles"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_shrine_fragment_round.tscn" id="37_j0qjx"]
+[ext_resource type="TileSet" uid="uid://0ju2iq0h6t6p" path="res://Assets/chamber_of_first_weave/Yellow Wing/yellow_wing_decor_tileset.tres" id="37_yellow_decor_tiles"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_small.tscn" id="38_3u36k"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_medium.tscn" id="39_q1gkd"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_lotus_small.tscn" id="40_odp4f"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_reeds_short.tscn" id="41_muunk"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_rock_cluster.tscn" id="42_s1861"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_rock_spire.tscn" id="43_7m08u"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_root_large.tscn" id="44_7djcl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -53,8 +79,8 @@ shader_parameter/grain_strength = 0.014
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_room_hue_grade"]
 shader = ExtResource("19_room_hue_shader")
-shader_parameter/hue_color = Color(1, 1, 1, 1)
-shader_parameter/hue_strength = 0.0
+shader_parameter/hue_color = Color(0.9996572, 0.9997497, 0.9999545, 1)
+shader_parameter/hue_strength = 6.395813297900614e-05
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_far_depth_grade"]
 shader = ExtResource("15_depth")
@@ -129,7 +155,8 @@ shader_parameter/rim_strength = 0.02
 color = Color(0.55, 0.52, 0.44, 1)
 
 [node name="CaveOpeningLight" type="PointLight2D" parent="." unique_id=1294032634]
-position = Vector2(0, -3372)
+position = Vector2(0, -2917)
+scale = Vector2(1, 1.1421875)
 color = Color(1, 0.83, 0.52, 1)
 energy = 1.85
 range_z_min = -4096
@@ -140,7 +167,8 @@ texture = ExtResource("16_cave_light")
 texture_scale = 12.5
 
 [node name="CaveOpeningSoftFill" type="PointLight2D" parent="." unique_id=2067136995]
-position = Vector2(0, -2090)
+position = Vector2(0, -2032.5)
+scale = Vector2(1, 1.3955759)
 color = Color(0.64, 0.73, 0.9, 1)
 energy = 0.58
 range_z_min = -4096
@@ -154,17 +182,17 @@ z_index = -55
 [node name="CenterShaft" type="Polygon2D" parent="SunShafts" unique_id=2024653915]
 position = Vector2(0, -1450)
 color = Color(1, 0.83, 0.52, 0.13)
-polygon = PackedVector2Array(-210, -3419, 214, -3421, 842, 5950, -719, 5957)
+polygon = PackedVector2Array(-235, -3759, 211, -3763, 842, 5950, -719, 5957)
 
 [node name="LeftShaft" type="Polygon2D" parent="SunShafts" unique_id=1831595408]
 position = Vector2(0, -1450)
 color = Color(1, 0.78, 0.42, 0.07)
-polygon = PackedVector2Array(-497, -3415, -137, -3415, -1661, 5964, -2643, 5977)
+polygon = PackedVector2Array(-436, -3843, -100, -3738, -1661, 5964, -2643, 5977)
 
 [node name="RightShaft" type="Polygon2D" parent="SunShafts" unique_id=831578316]
 position = Vector2(0, -1450)
 color = Color(0.86, 0.9, 1, 0.065)
-polygon = PackedVector2Array(150, -3415, 474, -3415, 2261, 6091, 1151, 6071)
+polygon = PackedVector2Array(30, -3781, 472, -3777, 2261, 6091, 1151, 6071)
 
 [node name="AtmosphereGrade" type="CanvasLayer" parent="." unique_id=68169695]
 layer = 30
@@ -274,7 +302,7 @@ thread_width = 10.0
 glow_width = 72.0
 motion_speed = 0.9
 loom_origin = Vector2(0, 475)
-conduit_top = Vector2(0, -7860)
+conduit_top = Vector2(0, -8100)
 endpoint_light_energy = 1.12
 endpoint_light_scale = 10.5
 endpoint_blend_light_energy = 0.72
@@ -328,13 +356,302 @@ texture_scale = 8.8
 z_index = 6
 
 [node name="RedWingObeliskLight" parent="WorldArt/WingLighting" unique_id=444743891 instance=ExtResource("32_red_wing_light")]
-position = Vector2(-6150, -2050)
-
-[node name="BlueWingShrineLight" parent="WorldArt/WingLighting" unique_id=732064824 instance=ExtResource("33_blue_wing_light")]
-position = Vector2(5150, -2050)
+position = Vector2(-2749, -3567)
+rotation = 3.1415927
 
 [node name="YellowWingGlobeLight" parent="WorldArt/WingLighting" unique_id=1608171077 instance=ExtResource("34_yellow_wing_light")]
-position = Vector2(-5850, 2550)
+position = Vector2(-4171, 2406)
+
+[node name="YellowWingGlobeLight2" parent="WorldArt/WingLighting" unique_id=249867159 instance=ExtResource("34_yellow_wing_light")]
+position = Vector2(-6478, 1442)
+
+[node name="YellowWingGlobeLight3" parent="WorldArt/WingLighting" unique_id=511251566 instance=ExtResource("34_yellow_wing_light")]
+position = Vector2(-5994, 3967)
+
+[node name="RedWingObeliskLight2" parent="WorldArt/WingLighting" unique_id=1210616538 instance=ExtResource("32_red_wing_light")]
+position = Vector2(-4936, -2835)
+
+[node name="RedWingObeliskLight3" parent="WorldArt/WingLighting" unique_id=727415812 instance=ExtResource("32_red_wing_light")]
+position = Vector2(-6212, -2872)
+
+[node name="RedWingObeliskLight4" parent="WorldArt/WingLighting" unique_id=1770531670 instance=ExtResource("32_red_wing_light")]
+position = Vector2(-6391, -825)
+
+[node name="RedWingObeliskLight5" parent="WorldArt/WingLighting" unique_id=2037453842 instance=ExtResource("32_red_wing_light")]
+position = Vector2(3558, 3892)
+
+[node name="YellowWingGlobeLight4" parent="WorldArt/WingLighting" unique_id=33970174 instance=ExtResource("34_yellow_wing_light")]
+position = Vector2(5471, 3312)
+
+[node name="Blue Wing Lighting" type="Node2D" parent="WorldArt/WingLighting" unique_id=1567353813]
+
+[node name="BlueWingShrineLight" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=732064824 instance=ExtResource("33_blue_wing_light")]
+position = Vector2(5862, -1698)
+
+[node name="BlueWingShrineLight2" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=1764653900 instance=ExtResource("33_blue_wing_light")]
+position = Vector2(7027, -412)
+
+[node name="BlueWingShrineLight3" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=1793935362 instance=ExtResource("33_blue_wing_light")]
+position = Vector2(5380, -3492)
+
+[node name="BlueWingShrineLight4" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=1178528400 instance=ExtResource("33_blue_wing_light")]
+position = Vector2(6655, 4070)
+
+[node name="BlueWingShrineLight5" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=149442964 instance=ExtResource("33_blue_wing_light")]
+position = Vector2(4229, -2451)
+
+[node name="DecorationTileMaps" type="Node2D" parent="WorldArt" unique_id=1139834868]
+
+[node name="BlueWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=1923015786]
+z_index = 9
+tile_set = ExtResource("35_blue_decor_tiles")
+
+[node name="RedWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=581529875]
+z_index = 9
+tile_set = ExtResource("36_red_decor_tiles")
+
+[node name="YellowWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=1735858757]
+z_index = 9
+tile_set = ExtResource("37_yellow_decor_tiles")
+
+[node name="DecorationProps" type="Node2D" parent="WorldArt" unique_id=1175476986]
+
+[node name="BlueWingProps" type="Node2D" parent="WorldArt/DecorationProps" unique_id=2051200035]
+z_index = 9
+
+[node name="BlueRockBlocks" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=892544650 instance=ExtResource("25_1eutx")]
+position = Vector2(5392, -2615)
+
+[node name="BlueReedsTall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=864024419 instance=ExtResource("26_vr0sk")]
+position = Vector2(5392, -1330)
+
+[node name="BlueReedsTall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1270747376 instance=ExtResource("26_vr0sk")]
+position = Vector2(5303, -2620)
+
+[node name="BlueRootSmall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1922201108 instance=ExtResource("27_itxst")]
+position = Vector2(5424, -2561)
+
+[node name="BlueBellflowers" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1211439794 instance=ExtResource("28_7tq32")]
+position = Vector2(5023, -2560)
+
+[node name="BlueRockLedge" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=730749161 instance=ExtResource("29_formb")]
+position = Vector2(5062, -3372)
+
+[node name="BlueRockMonolith" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=907980191 instance=ExtResource("30_v7b5a")]
+position = Vector2(3077, -3395)
+
+[node name="BlueRootSmall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1795743515 instance=ExtResource("27_itxst")]
+position = Vector2(3170, -3319)
+
+[node name="BlueFoliageBroad" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1099896168 instance=ExtResource("31_bgprh")]
+position = Vector2(3136, -3370)
+
+[node name="BlueFoliageLotus" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=831871553 instance=ExtResource("32_2xdfl")]
+position = Vector2(3412, -3386)
+
+[node name="BlueFoliageLotus2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=706229727 instance=ExtResource("32_2xdfl")]
+position = Vector2(5207, -2598)
+
+[node name="BlueFoliageLotus3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=797804437 instance=ExtResource("32_2xdfl")]
+position = Vector2(5110, -3388)
+
+[node name="BlueFoliageLow" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=186424059 instance=ExtResource("33_bap7i")]
+position = Vector2(5604, -3388)
+
+[node name="BlueFoliageLow2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1516070286 instance=ExtResource("33_bap7i")]
+position = Vector2(5585, -1590)
+
+[node name="BlueFoliageLow3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1132882294 instance=ExtResource("33_bap7i")]
+position = Vector2(7184, -316)
+
+[node name="BlueFoliageLow4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1745265218 instance=ExtResource("33_bap7i")]
+position = Vector2(6610, -310)
+
+[node name="BlueFoliageLotus4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1341317606 instance=ExtResource("32_2xdfl")]
+position = Vector2(6447, -574)
+
+[node name="BlueFoliageLow5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=641182283 instance=ExtResource("33_bap7i")]
+position = Vector2(6082, -828)
+
+[node name="BlueFoliageBroad2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=406792352 instance=ExtResource("31_bgprh")]
+position = Vector2(6865, -1065)
+
+[node name="BlueFoliageLotus5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=883778333 instance=ExtResource("32_2xdfl")]
+position = Vector2(5107.5, -1358)
+scale = Vector2(1.2773438, 1.1875)
+
+[node name="BlueFoliageLow6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=417507295 instance=ExtResource("33_bap7i")]
+position = Vector2(3648, -1078)
+
+[node name="BlueBonsaiLarge" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1913149923 instance=ExtResource("34_6qoua")]
+position = Vector2(4006, -2406)
+scale = Vector2(1, 1.4492188)
+flip_h = true
+
+[node name="BlueBambooShort" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=2098097112 instance=ExtResource("11_yw6d4")]
+position = Vector2(2920, -554)
+
+[node name="BlueBambooTall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=290923973 instance=ExtResource("12_ojaqx")]
+position = Vector2(3806, -578)
+
+[node name="BlueBambooMedium" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=925837915 instance=ExtResource("35_c7jmu")]
+position = Vector2(3753, -530)
+
+[node name="BlueBellflowers2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1768694299 instance=ExtResource("28_7tq32")]
+position = Vector2(2827, -473)
+
+[node name="BlueBonsaiLarge2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=15261633 instance=ExtResource("34_6qoua")]
+position = Vector2(3495, -1077)
+
+[node name="BlueBambooTall3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=352973115 instance=ExtResource("12_ojaqx")]
+position = Vector2(5842, -832)
+
+[node name="BlueBambooShort2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=825590012 instance=ExtResource("11_yw6d4")]
+position = Vector2(5955, -789)
+
+[node name="BlueRootSmall3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=606927486 instance=ExtResource("27_itxst")]
+position = Vector2(6674, -258)
+
+[node name="BlueShrineFragmentLotus" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=146386557 instance=ExtResource("36_o6k00")]
+position = Vector2(5904, -805)
+
+[node name="BlueShrineFragmentRound" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=975992032 instance=ExtResource("37_j0qjx")]
+position = Vector2(7414, -300)
+flip_h = true
+
+[node name="BlueBambooMedium2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1113498587 instance=ExtResource("35_c7jmu")]
+position = Vector2(7350, -327)
+
+[node name="BlueBambooShort3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1950071297 instance=ExtResource("11_yw6d4")]
+position = Vector2(7500, -333)
+
+[node name="BlueBellflowers3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=2010180341 instance=ExtResource("28_7tq32")]
+position = Vector2(6708, -288)
+
+[node name="BlueBambooTall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=553134729 instance=ExtResource("12_ojaqx")]
+position = Vector2(4305, -43)
+
+[node name="BlueBonsaiSmall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=222007800 instance=ExtResource("38_3u36k")]
+position = Vector2(4609, -17)
+
+[node name="BlueFoliageBroad3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1876754638 instance=ExtResource("31_bgprh")]
+position = Vector2(4481, -41)
+
+[node name="BlueFoliageLotus6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1034856969 instance=ExtResource("32_2xdfl")]
+position = Vector2(5265, -65)
+
+[node name="BlueFoliageLotus7" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1699863807 instance=ExtResource("32_2xdfl")]
+position = Vector2(6148, -1614)
+
+[node name="BlueFoliageBroad4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1455263817 instance=ExtResource("31_bgprh")]
+position = Vector2(5700, -1603)
+
+[node name="BlueBonsaiMedium" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1301154745 instance=ExtResource("39_q1gkd")]
+position = Vector2(5986, -1603)
+
+[node name="BlueBonsaiLarge3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1985601814 instance=ExtResource("34_6qoua")]
+position = Vector2(3425, -3386)
+
+[node name="BlueBellflowers4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1678463431 instance=ExtResource("28_7tq32")]
+position = Vector2(5300, -1267)
+
+[node name="BlueBellflowers5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=143010647 instance=ExtResource("28_7tq32")]
+position = Vector2(5124, 65)
+
+[node name="BlueBellflowers6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1886515743 instance=ExtResource("28_7tq32")]
+position = Vector2(3859, -474)
+
+[node name="BlueBambooTall4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=392391407 instance=ExtResource("12_ojaqx")]
+position = Vector2(5412, -45)
+
+[node name="BlueBambooShort4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1458630315 instance=ExtResource("11_yw6d4")]
+position = Vector2(4780, -1803)
+
+[node name="BlueBonsaiMedium2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1919458122 instance=ExtResource("39_q1gkd")]
+position = Vector2(4478, -71)
+
+[node name="BlueBonsaiSmall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=245701446 instance=ExtResource("38_3u36k")]
+position = Vector2(5003, -1853)
+
+[node name="BlueFoliageBroad5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1747790098 instance=ExtResource("31_bgprh")]
+position = Vector2(3103, -575)
+
+[node name="BlueFoliageBroad6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1542089636 instance=ExtResource("31_bgprh")]
+position = Vector2(3537.6123, -595.5516)
+scale = Vector2(1.1994877, 1.223239)
+skew = 0.040142573
+flip_h = true
+
+[node name="BlueLotusSmall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=243700915 instance=ExtResource("40_odp4f")]
+position = Vector2(5093, -35)
+
+[node name="BlueReedsShort" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=419267500 instance=ExtResource("41_muunk")]
+position = Vector2(4539, -51)
+
+[node name="BlueReedsTall3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=2091600068 instance=ExtResource("26_vr0sk")]
+position = Vector2(4454, -37)
+
+[node name="BlueRockBlocks2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1801390294 instance=ExtResource("25_1eutx")]
+position = Vector2(5353, -63)
+
+[node name="BlueRockCluster" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1037218342 instance=ExtResource("42_s1861")]
+position = Vector2(5346, -1348)
+
+[node name="BlueRockLedge2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=2014295896 instance=ExtResource("29_formb")]
+position = Vector2(6220, -1591)
+
+[node name="BlueRockMonolith2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=448710930 instance=ExtResource("30_v7b5a")]
+position = Vector2(7016, -1088)
+
+[node name="BlueRockSpire" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1084188361 instance=ExtResource("43_7m08u")]
+position = Vector2(6760, -318)
+
+[node name="BlueRootLarge" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=713804958 instance=ExtResource("44_7djcl")]
+position = Vector2(6937, -1056)
+
+[node name="BlueRootLarge2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1728455432 instance=ExtResource("44_7djcl")]
+position = Vector2(6852, -288)
+flip_h = true
+
+[node name="BlueBambooMedium3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=678121333 instance=ExtResource("35_c7jmu")]
+position = Vector2(2802, -575)
+
+[node name="BlueFoliageBroad7" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1516836373 instance=ExtResource("31_bgprh")]
+position = Vector2(4396, -2371)
+
+[node name="BlueFoliageTall" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1662110103 instance=ExtResource("10_q1pcl")]
+position = Vector2(4454, -3654)
+
+[node name="BlueBambooShort5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1586950876 instance=ExtResource("11_yw6d4")]
+position = Vector2(4119, -3644)
+
+[node name="BlueBambooTall5" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1472040391 instance=ExtResource("12_ojaqx")]
+position = Vector2(4306, -3629)
+
+[node name="BlueBambooShort6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=307850038 instance=ExtResource("11_yw6d4")]
+position = Vector2(4622, -3609)
+
+[node name="BlueBambooMedium" parent="WorldArt/DecorationProps" unique_id=1824406616 instance=ExtResource("35_c7jmu")]
+position = Vector2(4467, -2361)
+
+[node name="BlueFoliageTall" parent="WorldArt/DecorationProps" unique_id=1934069813 instance=ExtResource("10_q1pcl")]
+position = Vector2(4880, -1811)
+
+[node name="BlueRockLedge" parent="WorldArt/DecorationProps" unique_id=1756430274 instance=ExtResource("29_formb")]
+position = Vector2(3267, -1582)
+
+[node name="BlueRockCluster" parent="WorldArt/DecorationProps" unique_id=2022234142 instance=ExtResource("42_s1861")]
+position = Vector2(3819, -3644)
+
+[node name="BlueRockSpire" parent="WorldArt/DecorationProps" unique_id=1960120305 instance=ExtResource("43_7m08u")]
+position = Vector2(5683, -3390)
+
+[node name="BlueLotusSmall" parent="WorldArt/DecorationProps" unique_id=98937256 instance=ExtResource("40_odp4f")]
+position = Vector2(3898, -3575)
+
+[node name="BlueFoliageLotus" parent="WorldArt/DecorationProps" unique_id=468867608 instance=ExtResource("32_2xdfl")]
+position = Vector2(4238.5, -3647)
+scale = Vector2(1.5273438, 1)
 
 [node name="ChamberTileMap" type="TileMapLayer" parent="WorldArt" unique_id=1000527789]
 z_index = 12
@@ -647,7 +964,7 @@ position = Vector2(768, 4381)
 position = Vector2(3337, -473)
 
 [node name="BlossomOfEryndor3" parent="SavePoints" unique_id=561739876 instance=ExtResource("25_blossom")]
-position = Vector2(-4179, -468)
+position = Vector2(0, -4577)
 
 [node name="BlossomOfEryndor4" parent="SavePoints" unique_id=1414417200 instance=ExtResource("25_blossom")]
 position = Vector2(-3707, 4397)
@@ -665,7 +982,7 @@ tile_set = ExtResource("13_541qs")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(-18, -3702)
+position = Vector2(1937, -844)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -673,7 +990,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(-18, -3702)
+position = Vector2(1937, -844)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200

@@ -52,6 +52,7 @@ enum TutorialStep {
 	ATTACK,
 	MENUS,
 	COMBAT,
+	THREAD_KNOTS,
 	SAVE_POINT,
 	COMPLETE,
 	DONE,
@@ -68,6 +69,7 @@ enum TutorialStep {
 @export var tutorial_enemy_spawn_marker_path: NodePath
 @export var tutorial_enemy_spawn_position := Vector2(-2800.0, -520.0)
 @export var hide_save_point_until_combat_complete := true
+@export var move_save_point_to_marker_on_reveal := false
 
 @export_group("Prompt Layout")
 @export var prompt_position := Vector2(86.0, 748.0)
@@ -84,6 +86,11 @@ enum TutorialStep {
 @export var momentum_spotlight_rect := Rect2(196.0, 86.0, 350.0, 74.0)
 @export var momentum_pointer_start := Vector2(610.0, 188.0)
 @export var momentum_pointer_end := Vector2(385.0, 118.0)
+@export var thread_knot_spotlight_rect := Rect2(1496.0, 792.0, 384.0, 256.0)
+@export var thread_knot_pointer_start := Vector2(1040.0, 810.0)
+@export var thread_knot_pointer_end := Vector2(1648.0, 916.0)
+@export var save_menu_prompt_position := Vector2(220.0, 822.0)
+@export var save_menu_prompt_size := Vector2(620.0, 116.0)
 
 @export_group("Step Text")
 @export_multiline var hp_text := "This is your health. If it empties, your Threadborne falls. Click or press {interact} to continue."
@@ -97,7 +104,10 @@ enum TutorialStep {
 @export_multiline var attack_text := "Press {attack} to attack with the shuttle {attack_goal} times. {attack_progress}/{attack_goal}"
 @export_multiline var menu_text := "Press {inventory}, {map}, {controls}, or {pause} to open your menus."
 @export_multiline var combat_text := "Press {attack} to defeat the Threadling. Movement and attacks both build momentum."
+@export_multiline var thread_knot_text := "These are Thread Knots. They are used to purchase items and level up. Click or press {interact} to continue."
 @export_multiline var save_point_text := "Press {interact} near the Blossom to rest, recover, save, and reset the world."
+@export_multiline var save_point_weave_text := "Choose WEAVE to spend a Thread Knot and strengthen your Threadborne."
+@export_multiline var save_point_reflect_text := "Now choose REFLECT to rest, recover, save, and reset the world."
 @export_multiline var complete_text := "The first weave opens. Continue into the chamber below."
 
 @export_group("Step Requirements")
@@ -111,6 +121,7 @@ enum TutorialStep {
 @export_range(1, 5, 1) var required_grapples := 2
 @export_range(1, 5, 1) var required_attacks := 3
 @export var jump_count_cooldown := 0.18
+@export var jump_leave_floor_buffer := 0.25
 @export var dash_count_cooldown := 0.45
 @export var grapple_count_cooldown := 1.25
 @export var attack_count_cooldown := 0.35
@@ -144,15 +155,21 @@ var _current_prompt_text := ""
 var _current_prompt_pointer := false
 var _current_prompt_position := Vector2.ZERO
 var _current_prompt_size := Vector2.ZERO
+var _current_world_pointer_target: Node2D
 var _current_input_family := &"keyboard_mouse"
 var _click_advance_requested := false
 var _jump_count_ready_at := 0.0
+var _jump_press_buffer_until := 0.0
 var _air_jump_count_ready_at := 0.0
 var _dash_count_ready_at := 0.0
 var _grapple_count_ready_at := 0.0
 var _attack_count_ready_at := 0.0
 var _tutorial_floor_opened := false
+var _jump_was_on_floor := false
 var _air_jump_was_available := false
+var _thread_knot_prompt_seen := false
+var _tutorial_weave_spent := false
+var _tutorial_rest_completed := false
 
 func _ready() -> void:
 	if not tutorial_enabled:
@@ -165,11 +182,53 @@ func _ready() -> void:
 	if not _player:
 		push_warning("TutorialController: player_path is not assigned.")
 		return
+	if _player.has_signal("stat_upgraded"):
+		var stat_upgraded_callback := Callable(self, "_on_player_stat_upgraded")
+		if not _player.is_connected("stat_upgraded", stat_upgraded_callback):
+			_player.connect("stat_upgraded", stat_upgraded_callback)
+
+	var has_scene_checkpoint := _has_checkpoint_in_current_scene()
+	if has_scene_checkpoint and not DemoProgress.has_tutorial_completion_record():
+		# Saves created before tutorial completion was persisted came from players
+		# who had already reached the tutorial Blossom.
+		DemoProgress.mark_tutorial_completed()
+	if DemoProgress.is_tutorial_completed():
+		_restore_completed_tutorial_state()
+		return
 
 	_prompt = TutorialPromptOverlayScene.new()
 	get_tree().current_scene.call_deferred("add_child", _prompt)
 	_connect_input_binding_updates()
-	call_deferred("_begin_tutorial")
+	if has_scene_checkpoint:
+		call_deferred("_resume_tutorial_at_save_point")
+	else:
+		call_deferred("_begin_tutorial")
+
+func _has_checkpoint_in_current_scene() -> bool:
+	var current_scene := get_tree().current_scene
+	return (
+		DemoProgress.has_checkpoint()
+		and current_scene
+		and current_scene.scene_file_path == DemoProgress.get_checkpoint_scene_path()
+	)
+
+func _resume_tutorial_at_save_point() -> void:
+	_set_tutorial_floor_open(false)
+	for path in disable_until_complete_paths:
+		_set_node_enabled(get_node_or_null(path), false)
+	for path in reveal_on_complete_paths:
+		_set_revealed(get_node_or_null(path), false, true)
+	_set_step(TutorialStep.SAVE_POINT)
+
+func _restore_completed_tutorial_state() -> void:
+	if move_save_point_to_marker_on_reveal:
+		_move_save_point_to_tutorial_marker()
+	_set_revealed(_save_point, true, true)
+	if tutorial_floor_opens_after_save_point:
+		_open_tutorial_floor()
+	_unlock_completion_targets()
+	_step = TutorialStep.DONE
+	tutorial_enabled = false
 
 func _input(event: InputEvent) -> void:
 	if not tutorial_enabled:
@@ -192,6 +251,7 @@ func _process(delta: float) -> void:
 	_step_timer += delta
 	_update_move_progress()
 	_count_inputs()
+	_update_world_pointer()
 
 	match _step:
 		TutorialStep.HUD_HP, TutorialStep.HUD_ACTION_POINTS, TutorialStep.HUD_MOMENTUM:
@@ -220,6 +280,9 @@ func _process(delta: float) -> void:
 				_advance_step()
 		TutorialStep.COMBAT:
 			pass
+		TutorialStep.THREAD_KNOTS:
+			if _hud_advance_pressed():
+				_advance_step()
 		TutorialStep.SAVE_POINT:
 			pass
 		TutorialStep.COMPLETE:
@@ -252,6 +315,7 @@ func _set_step(step: TutorialStep) -> void:
 	if step == TutorialStep.COMBAT:
 		_combat_completion_handled = false
 	_jump_count_ready_at = 0.0
+	_jump_press_buffer_until = 0.0
 	_air_jump_count_ready_at = 0.0
 	_dash_count_ready_at = 0.0
 	_grapple_count_ready_at = 0.0
@@ -260,6 +324,8 @@ func _set_step(step: TutorialStep) -> void:
 	if _prompt:
 		_prompt.set_prompt_layout(_bottom_center_position(prompt_size), prompt_size)
 		_prompt.set_spotlight(false)
+
+	_jump_was_on_floor = _player.is_on_floor() if _player and _player.has_method("is_on_floor") else false
 
 	match _step:
 		TutorialStep.HUD_HP:
@@ -286,9 +352,12 @@ func _set_step(step: TutorialStep) -> void:
 		TutorialStep.COMBAT:
 			_show_prompt(combat_text)
 			_spawn_tutorial_enemy()
+		TutorialStep.THREAD_KNOTS:
+			_thread_knot_prompt_seen = true
+			_show_hud_prompt(thread_knot_text, thread_knot_spotlight_rect, thread_knot_pointer_start, thread_knot_pointer_end)
 		TutorialStep.SAVE_POINT:
 			_reveal_save_point()
-			_show_prompt(save_point_text)
+			_show_save_point_prompt()
 		TutorialStep.COMPLETE:
 			_show_prompt(complete_text)
 			_unlock_completion_targets()
@@ -300,11 +369,41 @@ func _set_step(step: TutorialStep) -> void:
 func _advance_step() -> void:
 	_set_step(_step + 1)
 
+func debug_complete_tutorial() -> void:
+	if _step == TutorialStep.DONE:
+		return
+
+	_combat_completion_handled = true
+	_thread_knot_prompt_seen = true
+	_tutorial_weave_spent = true
+	_tutorial_rest_completed = true
+
+	if _tutorial_enemy and is_instance_valid(_tutorial_enemy):
+		_tutorial_enemy.queue_free()
+		_tutorial_enemy = null
+
+	_set_revealed(_save_point, true, true)
+	if tutorial_floor_opens_after_save_point:
+		_open_tutorial_floor()
+	_unlock_completion_targets()
+
+	_current_world_pointer_target = null
+	_current_prompt_text = ""
+	_current_prompt_pointer = false
+	if _prompt:
+		_prompt.set_spotlight(false)
+		_prompt.hide_prompt()
+
+	_step = TutorialStep.DONE
+	tutorial_enabled = false
+	tutorial_completed.emit()
+
 func _show_prompt(text: String, pointer := false, _position := prompt_position, size := prompt_size) -> void:
 	if not _prompt:
 		return
 
-	var layout_position: Vector2 = _bottom_center_position(size)
+	_current_world_pointer_target = null
+	var layout_position: Vector2 = _position if _position != prompt_position else _bottom_center_position(size)
 	_prompt.set_spotlight(false)
 	_current_prompt_text = text
 	_current_prompt_pointer = pointer
@@ -317,6 +416,7 @@ func _show_hud_prompt(text: String, focus_rect: Rect2, _pointer_start: Vector2, 
 	if not _prompt:
 		return
 
+	_current_world_pointer_target = null
 	var layout_position: Vector2 = _bottom_center_position(hud_prompt_size)
 	var layout_pointer_start: Vector2 = layout_position + Vector2(hud_prompt_size.x * 0.5, 0.0)
 	_current_prompt_text = text
@@ -327,6 +427,22 @@ func _show_hud_prompt(text: String, focus_rect: Rect2, _pointer_start: Vector2, 
 	_prompt.set_pointer(layout_pointer_start, pointer_end)
 	_prompt.set_spotlight(true, focus_rect)
 	_prompt.show_prompt(_format_prompt_text(text), true)
+
+func _show_save_point_prompt() -> void:
+	_show_prompt(save_point_text, true)
+	_current_world_pointer_target = _save_point as Node2D
+	_update_world_pointer()
+
+func _update_world_pointer() -> void:
+	if not _prompt or not _current_world_pointer_target:
+		return
+
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var screen_position: Vector2 = get_viewport().get_canvas_transform() * _current_world_pointer_target.global_position
+	screen_position.x = clampf(screen_position.x, 36.0, viewport_size.x - 36.0)
+	screen_position.y = clampf(screen_position.y, 36.0, viewport_size.y - 36.0)
+	var pointer_start_position := _current_prompt_position + Vector2(_current_prompt_size.x * 0.5, 0.0)
+	_prompt.set_pointer(pointer_start_position, screen_position)
 
 func _bottom_center_position(size: Vector2) -> Vector2:
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
@@ -403,10 +519,19 @@ func _count_jump_attempt() -> void:
 		return
 
 	var on_floor: bool = _player.is_on_floor() if _player.has_method("is_on_floor") else false
-	if on_floor and _step_timer >= _jump_count_ready_at and Input.is_action_just_pressed("Jump"):
+	if Input.is_action_just_pressed("Jump") and _step_timer >= _jump_count_ready_at:
+		_jump_press_buffer_until = _step_timer + jump_leave_floor_buffer
+	if (
+		_jump_was_on_floor
+		and not on_floor
+		and _step_timer <= _jump_press_buffer_until
+		and _step_timer >= _jump_count_ready_at
+	):
 		_jump_count += 1
 		_jump_count_ready_at = _step_timer + jump_count_cooldown
+		_jump_press_buffer_until = 0.0
 		_refresh_current_prompt()
+	_jump_was_on_floor = on_floor
 
 func _count_air_jump_attempt() -> void:
 	if not _player:
@@ -505,27 +630,53 @@ func _complete_tutorial_combat() -> void:
 	if _combat_completion_handled or _step != TutorialStep.COMBAT:
 		return
 	_combat_completion_handled = true
-	_advance_step()
+	if _thread_knot_prompt_seen:
+		_set_step(TutorialStep.SAVE_POINT)
+	else:
+		_set_step(TutorialStep.THREAD_KNOTS)
+
+func handle_first_thread_knot_tutorial() -> bool:
+	if not tutorial_enabled:
+		return false
+	if _thread_knot_prompt_seen:
+		return _step >= TutorialStep.THREAD_KNOTS and _step <= TutorialStep.SAVE_POINT
+	if _step < TutorialStep.COMBAT or _step > TutorialStep.SAVE_POINT:
+		return false
+
+	_thread_knot_prompt_seen = true
+	call_deferred("_set_step", TutorialStep.THREAD_KNOTS)
+	return true
 
 func _reveal_save_point() -> void:
 	if _save_point_revealed:
 		return
 	_save_point_revealed = true
-	_move_save_point_to_tutorial_marker()
+	if move_save_point_to_marker_on_reveal:
+		_move_save_point_to_tutorial_marker()
+	if _save_point and _save_point.has_method("prepare_for_tutorial_reveal"):
+		_save_point.call("prepare_for_tutorial_reveal")
 	_set_revealed(_save_point, true)
-	_open_save_point_for_tutorial()
+	_refresh_save_point_overlap_for_tutorial()
 	if _save_point and _save_point.has_signal("activated"):
 		_save_point.activated.connect(_on_save_point_activated)
+	if _save_point and _save_point.has_signal("menu_opened"):
+		_save_point.menu_opened.connect(_on_tutorial_save_point_menu_opened)
+	if _save_point and _save_point.has_signal("rested"):
+		_save_point.rested.connect(_on_tutorial_save_point_rested)
 	if _player and _player.has_signal("save_point_seated"):
 		var seated_callback := Callable(self, "_on_tutorial_player_seated")
 		if not _player.is_connected("save_point_seated", seated_callback):
 			_player.connect("save_point_seated", seated_callback)
 
-func _open_save_point_for_tutorial() -> void:
+func _refresh_save_point_overlap_for_tutorial() -> void:
 	if not _save_point:
 		return
-	if _save_point.has_method("_open"):
-		_save_point.call_deferred("_open")
+	if _save_point.has_method("refresh_current_player_overlap"):
+		_save_point.call_deferred("refresh_current_player_overlap", _player)
+		await get_tree().physics_frame
+		_save_point.call_deferred("refresh_current_player_overlap", _player)
+		await get_tree().create_timer(0.15).timeout
+		_save_point.call_deferred("refresh_current_player_overlap", _player)
 
 func _move_save_point_to_tutorial_marker() -> void:
 	if not _save_point or not (_save_point is Node2D):
@@ -556,16 +707,42 @@ func _reset_player_after_tutorial_death(player: Node) -> void:
 		_spawn_tutorial_enemy()
 
 func _on_save_point_activated(_save_point_node: Area2D, _player_node: Node) -> void:
-	if _step == TutorialStep.SAVE_POINT:
-		if _player and _player.has_signal("save_point_seated"):
-			return
-		_complete_save_point_tutorial()
+	pass
 
 func _on_tutorial_player_seated(_player_node: CharacterBody2D) -> void:
 	if _step == TutorialStep.SAVE_POINT:
-		_complete_save_point_tutorial()
+		_show_prompt(save_point_weave_text, false, save_menu_prompt_position, save_menu_prompt_size)
+
+func _on_tutorial_save_point_menu_opened(menu: Node) -> void:
+	if _step != TutorialStep.SAVE_POINT:
+		return
+	if menu.has_signal("option_selected"):
+		menu.option_selected.connect(_on_tutorial_save_point_option_selected)
+	_show_prompt(save_point_weave_text, false, save_menu_prompt_position, save_menu_prompt_size)
+
+func _on_tutorial_save_point_option_selected(option_name: StringName) -> void:
+	if _step != TutorialStep.SAVE_POINT:
+		return
+	if option_name == &"Weave" and not _tutorial_weave_spent:
+		_show_prompt("Spend one Thread Knot on any stat, then return to the Blossom menu.", false, save_menu_prompt_position, save_menu_prompt_size)
+
+func _on_player_stat_upgraded(_stat_id: StringName) -> void:
+	if _step != TutorialStep.SAVE_POINT:
+		return
+	_tutorial_weave_spent = true
+	_show_prompt(save_point_reflect_text, false, save_menu_prompt_position, save_menu_prompt_size)
+
+func _on_tutorial_save_point_rested(_save_point_node: Area2D, _player_node: Node) -> void:
+	if _step != TutorialStep.SAVE_POINT or _tutorial_rest_completed:
+		return
+	if not _tutorial_weave_spent:
+		_show_prompt(save_point_weave_text, false, save_menu_prompt_position, save_menu_prompt_size)
+		return
+	_tutorial_rest_completed = true
+	_complete_save_point_tutorial()
 
 func _complete_save_point_tutorial() -> void:
+	DemoProgress.mark_tutorial_completed()
 	if tutorial_floor_opens_after_save_point:
 		_open_tutorial_floor()
 	_advance_step()

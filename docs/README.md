@@ -22,6 +22,11 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `design/` - broad design principles and systems direction
 - `gameplay/` - mechanics, combat, equipment, bosses, and endings
 - `narrative/` - canon, cosmology, story, character, and voice documents
+- `upload_versions/` - generated category bundles for uploading to chat tools with attachment limits
+
+## Upload Versions
+
+Use `docs/upload_versions/README.md` to choose a compact set of category master documents. These files reproduce the maintained source docs without summarizing them and can be refreshed with `tools/build_upload_docs.ps1`.
 
 ## Archive Habit
 
