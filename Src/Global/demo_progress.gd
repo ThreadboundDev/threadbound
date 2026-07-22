@@ -22,6 +22,7 @@ func claim_thread(thread_id: StringName) -> void:
 		return
 
 	_claimed_threads[thread_id] = true
+	_write_progress()
 	threads_changed.emit()
 
 func has_thread(thread_id: StringName) -> bool:
@@ -39,6 +40,7 @@ func claimed_count(required_threads: Array[StringName]) -> int:
 
 func reset_demo_threads() -> void:
 	_claimed_threads.clear()
+	_write_progress()
 	threads_changed.emit()
 
 func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_position: Vector2) -> void:
@@ -52,6 +54,7 @@ func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_posit
 	config.set_value("checkpoint", "position_x", player_position.x)
 	config.set_value("checkpoint", "position_y", player_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)
+	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
 	_tutorial_completion_recorded = true
 	var error := config.save(SAVE_PATH)
 	if error != OK:
@@ -72,6 +75,9 @@ func load_checkpoint() -> bool:
 	)
 	_tutorial_completion_recorded = config.has_section_key("progress", "tutorial_completed")
 	_tutorial_completed = bool(config.get_value("progress", "tutorial_completed", false))
+	_claimed_threads.clear()
+	for thread_id in config.get_value("progress", "claimed_threads", PackedStringArray()):
+		_claimed_threads[StringName(str(thread_id))] = true
 	checkpoint_changed.emit()
 	return has_checkpoint()
 
@@ -81,6 +87,7 @@ func clear_checkpoint() -> void:
 	_checkpoint_position = Vector2.ZERO
 	_tutorial_completed = false
 	_tutorial_completion_recorded = false
+	_claimed_threads.clear()
 	var dir := DirAccess.open("user://")
 	if dir and dir.file_exists(SAVE_PATH.get_file()):
 		dir.remove(SAVE_PATH.get_file())
@@ -118,6 +125,13 @@ func _write_progress() -> void:
 	config.set_value("checkpoint", "position_x", _checkpoint_position.x)
 	config.set_value("checkpoint", "position_y", _checkpoint_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)
+	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
 	var error := config.save(SAVE_PATH)
 	if error != OK:
 		push_warning("DemoProgress could not save progress: %s." % error_string(error))
+
+func _get_claimed_thread_strings() -> PackedStringArray:
+	var claimed := PackedStringArray()
+	for thread_id in _claimed_threads:
+		claimed.append(String(thread_id))
+	return claimed

@@ -104,10 +104,12 @@ const SIT_FPS := 12.0
 
 @export_group("Special Attacks")
 @export_range(1.0, 5.0, 0.05) var neutral_special_damage_multiplier := 1.65
-@export_range(0.25, 3.0, 0.05) var neutral_special_windup_multiplier := 1.25
-@export_range(0.25, 3.0, 0.05) var neutral_special_active_multiplier := 1.25
-@export_range(0.25, 3.0, 0.05) var neutral_special_recovery_multiplier := 1.45
+@export_range(0.0, 3.0, 0.01) var neutral_special_windup := 0.425
+@export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
+@export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.625
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
+@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 0.75
+@export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
@@ -283,7 +285,9 @@ var attack_timer := 0.0
 var attack_cooldown_timer := 0.0
 var hurt_timer := 0.0
 var attack_active_started := false
+var attack_vfx_started := false
 var attack_active_finished := false
+var _player_default_visual_scale := Vector2.ONE
 var current_attack_is_special := false
 
 # Equipment slots
@@ -312,6 +316,7 @@ func _ready() -> void:
 
 	_debug_original_collision_layer = collision_layer
 	_debug_original_collision_mask = collision_mask
+	_player_default_visual_scale = player_animation.scale
 
 	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
@@ -659,6 +664,10 @@ func _apply_debug_no_clip() -> void:
 
 func _complete_tutorial_for_debug() -> void:
 	_thread_knot_tutorial_shown = true
+	DemoProgress.claim_thread(&"power")
+	DemoProgress.claim_thread(&"balance")
+	DemoProgress.claim_thread(&"essence")
+	DemoProgress.mark_tutorial_completed()
 	for controller in get_tree().get_nodes_in_group("tutorial_controllers"):
 		if controller.has_method("debug_complete_tutorial"):
 			controller.call("debug_complete_tutorial")
@@ -873,9 +882,14 @@ func update_combat_timers(delta: float) -> void:
 	var active_time := player_stats.attack_active_time / attack_speed_multiplier
 	var recovery := player_stats.attack_recovery / attack_speed_multiplier
 	if current_attack_is_special:
-		windup *= neutral_special_windup_multiplier
-		active_time *= neutral_special_active_multiplier
-		recovery *= neutral_special_recovery_multiplier
+		# The authored neutral-special animation is 48 frames at 40 FPS (1.2 s).
+		# Keep its combat phases on that same timeline so it cannot be cut short.
+		windup = neutral_special_windup
+		active_time = neutral_special_active_time
+		recovery = neutral_special_recovery
+		if not attack_vfx_started and attack_timer >= maxf(0.0, windup - neutral_special_vfx_lead_time):
+			attack_vfx_started = true
+			_play_weapon_attack_anim()
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
@@ -896,6 +910,8 @@ func update_combat_timers(delta: float) -> void:
 func start_attack(is_special := false) -> void:
 	if not can_start_attack():
 		return
+	if is_special and not spend_action_points(1):
+		return
 
 	AudioManager.play_sfx(&"player_attack")
 	is_attacking = true
@@ -906,13 +922,17 @@ func start_attack(is_special := false) -> void:
 		cooldown *= neutral_special_cooldown_multiplier
 	attack_cooldown_timer = cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
 	attack_active_started = false
+	attack_vfx_started = not current_attack_is_special
 	attack_active_finished = false
 	attack_direction = _get_attack_input_direction()
 	current_attack_body_anim = _get_special_body_animation() if current_attack_is_special else _get_attack_body_animation()
 	update_equipment_facing()
-	_play_weapon_attack_anim()
+	if not current_attack_is_special:
+		_play_weapon_attack_anim()
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		if current_attack_is_special:
+			player_animation.scale = _player_default_visual_scale * neutral_special_visual_scale_multiplier
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
@@ -947,6 +967,8 @@ func _play_weapon_pose_anim(body_anim: String) -> void:
 	weapon_animation_player.play(pose_anim)
 
 func _reset_weapon_visuals() -> void:
+	if player_animation:
+		player_animation.scale = _player_default_visual_scale
 	if attack_swing_root:
 		attack_swing_root.rotation = 0.0
 

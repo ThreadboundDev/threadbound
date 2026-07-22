@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bcd3f07u0kh4v" path="res://Assets/chamber_of_first_weave/Yellow Wing/yellow_wing_decor_atlas.png" id="1_atlas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prop"]
+atlas = ExtResource("1_atlas")
+region = Rect2(512, 256, 256, 256)
+filter_clip = true
+
+[node name="YellowGrassTall" type="Sprite2D"]
+texture = SubResource("AtlasTexture_prop")

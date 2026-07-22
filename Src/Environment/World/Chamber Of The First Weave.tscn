@@ -49,12 +49,9 @@
 [ext_resource type="PackedScene" uid="uid://ppyljssst4fl" path="res://Src/Environment/WingLighting/blue_wing_light.tscn" id="33_blue_wing_light"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_large.tscn" id="34_6qoua"]
 [ext_resource type="PackedScene" path="res://Src/Environment/WingLighting/yellow_wing_light.tscn" id="34_yellow_wing_light"]
-[ext_resource type="TileSet" uid="uid://j2n0apxbm8lp" path="res://Assets/chamber_of_first_weave/Blue Wing/blue_wing_decor_tileset.tres" id="35_blue_decor_tiles"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bamboo_medium.tscn" id="35_c7jmu"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_shrine_fragment_lotus.tscn" id="36_o6k00"]
-[ext_resource type="TileSet" uid="uid://bxf3qd3jw6r2w" path="res://Assets/chamber_of_first_weave/Red Wing/red_wing_decor_tileset.tres" id="36_red_decor_tiles"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_shrine_fragment_round.tscn" id="37_j0qjx"]
-[ext_resource type="TileSet" uid="uid://0ju2iq0h6t6p" path="res://Assets/chamber_of_first_weave/Yellow Wing/yellow_wing_decor_tileset.tres" id="37_yellow_decor_tiles"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_small.tscn" id="38_3u36k"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bonsai_medium.tscn" id="39_q1gkd"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_lotus_small.tscn" id="40_odp4f"]
@@ -79,8 +76,8 @@ shader_parameter/grain_strength = 0.014
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_room_hue_grade"]
 shader = ExtResource("19_room_hue_shader")
-shader_parameter/hue_color = Color(0.9996572, 0.9997497, 0.9999545, 1)
-shader_parameter/hue_strength = 6.395813297900614e-05
+shader_parameter/hue_color = Color(1, 1, 1, 1)
+shader_parameter/hue_strength = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_far_depth_grade"]
 shader = ExtResource("15_depth")
@@ -400,20 +397,6 @@ position = Vector2(6655, 4070)
 [node name="BlueWingShrineLight5" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=149442964 instance=ExtResource("33_blue_wing_light")]
 position = Vector2(4229, -2451)
 
-[node name="DecorationTileMaps" type="Node2D" parent="WorldArt" unique_id=1139834868]
-
-[node name="BlueWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=1923015786]
-z_index = 9
-tile_set = ExtResource("35_blue_decor_tiles")
-
-[node name="RedWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=581529875]
-z_index = 9
-tile_set = ExtResource("36_red_decor_tiles")
-
-[node name="YellowWingDecorTileMap" type="TileMapLayer" parent="WorldArt/DecorationTileMaps" unique_id=1735858757]
-z_index = 9
-tile_set = ExtResource("37_yellow_decor_tiles")
-
 [node name="DecorationProps" type="Node2D" parent="WorldArt" unique_id=1175476986]
 
 [node name="BlueWingProps" type="Node2D" parent="WorldArt/DecorationProps" unique_id=2051200035]
@@ -631,27 +614,33 @@ position = Vector2(4306, -3629)
 [node name="BlueBambooShort6" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=307850038 instance=ExtResource("11_yw6d4")]
 position = Vector2(4622, -3609)
 
-[node name="BlueBambooMedium" parent="WorldArt/DecorationProps" unique_id=1824406616 instance=ExtResource("35_c7jmu")]
+[node name="BlueBambooMedium4" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1824406616 instance=ExtResource("35_c7jmu")]
 position = Vector2(4467, -2361)
 
-[node name="BlueFoliageTall" parent="WorldArt/DecorationProps" unique_id=1934069813 instance=ExtResource("10_q1pcl")]
+[node name="BlueFoliageTall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1934069813 instance=ExtResource("10_q1pcl")]
 position = Vector2(4880, -1811)
 
-[node name="BlueRockLedge" parent="WorldArt/DecorationProps" unique_id=1756430274 instance=ExtResource("29_formb")]
+[node name="BlueRockLedge3" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1756430274 instance=ExtResource("29_formb")]
 position = Vector2(3267, -1582)
 
-[node name="BlueRockCluster" parent="WorldArt/DecorationProps" unique_id=2022234142 instance=ExtResource("42_s1861")]
+[node name="BlueRockCluster2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=2022234142 instance=ExtResource("42_s1861")]
 position = Vector2(3819, -3644)
 
-[node name="BlueRockSpire" parent="WorldArt/DecorationProps" unique_id=1960120305 instance=ExtResource("43_7m08u")]
+[node name="BlueRockSpire2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=1960120305 instance=ExtResource("43_7m08u")]
 position = Vector2(5683, -3390)
 
-[node name="BlueLotusSmall" parent="WorldArt/DecorationProps" unique_id=98937256 instance=ExtResource("40_odp4f")]
+[node name="BlueLotusSmall2" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=98937256 instance=ExtResource("40_odp4f")]
 position = Vector2(3898, -3575)
 
-[node name="BlueFoliageLotus" parent="WorldArt/DecorationProps" unique_id=468867608 instance=ExtResource("32_2xdfl")]
+[node name="BlueFoliageLotus8" parent="WorldArt/DecorationProps/BlueWingProps" unique_id=468867608 instance=ExtResource("32_2xdfl")]
 position = Vector2(4238.5, -3647)
 scale = Vector2(1.5273438, 1)
+
+[node name="RedWingProps" type="Node2D" parent="WorldArt/DecorationProps" unique_id=1867374890]
+z_index = 9
+
+[node name="YellowWingProps" type="Node2D" parent="WorldArt/DecorationProps" unique_id=1772765278]
+z_index = 9
 
 [node name="ChamberTileMap" type="TileMapLayer" parent="WorldArt" unique_id=1000527789]
 z_index = 12

@@ -1,6 +1,6 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3]
+[gd_resource type="LabelSettings" format=3 uid="uid://mls663s1lcyu"]
 
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="1_title_font"]
+[ext_resource type="FontFile" uid="uid://cu5ywem1gvg6p" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="1_title_font"]
 
 [resource]
 font = ExtResource("1_title_font")

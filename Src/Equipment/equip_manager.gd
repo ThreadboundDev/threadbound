@@ -26,6 +26,9 @@ func equip_item(slot_idx: int) -> void:
 		return
 	if not ALLOWED_GLOVE_SLOTS.has(slot_idx):
 		return
+	if not is_slot_unlocked(slot_idx):
+		push_warning("EquipManager: %s is still locked." % get_equip_name(slot_idx))
+		return
 
 	var slot_type := slot_idx % 3
 	if current_equip[slot_type] == slot_idx and slot_idx != slot_type:
@@ -37,6 +40,19 @@ func equip_item(slot_idx: int) -> void:
 
 	_create_and_attach_equipment(slot_idx)
 	equip_changed.emit(slot_type, slot_idx)
+
+func is_slot_unlocked(slot_idx: int) -> bool:
+	match slot_idx:
+		0:
+			return true
+		BLUE_GLOVES_SLOT:
+			return DemoProgress.has_thread(&"balance")
+		RED_GLOVES_SLOT:
+			return DemoProgress.has_thread(&"power")
+		YELLOW_GLOVES_SLOT:
+			return DemoProgress.has_thread(&"essence")
+		_:
+			return false
 
 func _create_and_attach_equipment(slot_idx: int) -> void:
 	var player = get_tree().get_first_node_in_group("player") as CharacterBody2D

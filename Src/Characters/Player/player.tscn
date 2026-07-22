@@ -750,7 +750,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Neutral_Special_Attack",
-"speed": 20.0
+"speed": 40.0
 }, {
 "frames": [{
 "duration": 1.0,

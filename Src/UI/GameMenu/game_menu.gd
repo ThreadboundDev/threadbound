@@ -105,6 +105,7 @@ const INVENTORY_ITEMS := [
 		"description": "A long pendulum grapple built for swing timing and momentum.",
 		"icon_texture": "31_icon_blue_gloves",
 		"equip_slot_idx": 3,
+		"unlock_thread": &"balance",
 	},
 	{
 		"id": &"monarch_gloves",
@@ -113,6 +114,7 @@ const INVENTORY_ITEMS := [
 		"description": "A charged chain grapple built for aggressive movement.",
 		"icon_texture": "30_icon_red_gloves",
 		"equip_slot_idx": 6,
+		"unlock_thread": &"power",
 	},
 	{
 		"id": &"sage_gloves",
@@ -121,6 +123,7 @@ const INVENTORY_ITEMS := [
 		"description": "A short snap grapple built for fast repositioning.",
 		"icon_texture": "32_icon_yellow_gloves",
 		"equip_slot_idx": 9,
+		"unlock_thread": &"essence",
 	},
 	{
 		"id": &"weavers_shuttle",
@@ -1397,6 +1400,8 @@ func _get_visible_inventory_items() -> Array[Dictionary]:
 			continue
 		if item.has("thread_id") and not DemoProgress.has_thread(item["thread_id"]):
 			continue
+		if item.has("unlock_thread") and not DemoProgress.has_thread(item["unlock_thread"]):
+			continue
 		visible_items.append(item)
 	return visible_items
 
@@ -1457,6 +1462,8 @@ func _try_equip_inventory_item(item: Dictionary) -> void:
 		return
 	var slot_idx := int(item["equip_slot_idx"])
 	if not [0, 3, 6, 9].has(slot_idx):
+		return
+	if not EquipManager.is_slot_unlocked(slot_idx):
 		return
 	if EquipManager:
 		AudioManager.play_ui(&"menu_select")

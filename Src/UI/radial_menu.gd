@@ -6,7 +6,8 @@ extends CanvasLayer
 @onready var sage_gloves_slot: Control = $MenuFadeContainer/Background/SageGlovesButton
 
 @onready var menu_fade_container: Control = $MenuFadeContainer
-@onready var background: TextureRect = $MenuFadeContainer/Background
+@onready var background: Control = $MenuFadeContainer/Background
+@onready var empty_message: Label = $MenuFadeContainer/Background/EmptyMessage
 @onready var blur_layer: CanvasLayer = get_tree().get_first_node_in_group("blur_layer")
 @onready var blur_rect: ColorRect = get_tree().get_first_node_in_group("blur_rect")
 
@@ -31,7 +32,7 @@ var menu_tween: Tween
 # Polygon hit data — read from CollisionPolygon2D nodes once on _ready.
 # Hit testing runs in _input / _process, never through the physics engine.
 # This ensures immediate response regardless of Engine.time_scale.
-var slot_data: Array = []  # [{slot: Control, idx: int, poly: PackedVector2Array}]
+var slot_data: Array = []  # [{slot: Control, idx: int}]
 var hovered_slot: Control = null
 var pulse_tweens: Dictionary = {}
 
@@ -52,10 +53,25 @@ func _ready() -> void:
 	slow_bank = max_slow_bank
 	last_real_time = Time.get_ticks_msec() / 1000.0
 
-	# Demo radial menu only exposes the three active glove swaps.
-	_connect_slot(hermit_gloves_slot, EquipManager.BLUE_GLOVES_SLOT)
-	_connect_slot(monarch_gloves_slot, EquipManager.RED_GLOVES_SLOT)
-	_connect_slot(sage_gloves_slot, EquipManager.YELLOW_GLOVES_SLOT)
+	_refresh_unlocked_slots()
+	if DemoProgress and not DemoProgress.threads_changed.is_connected(_refresh_unlocked_slots):
+		DemoProgress.threads_changed.connect(_refresh_unlocked_slots)
+	if EquipManager and not EquipManager.equip_changed.is_connected(_on_equip_changed):
+		EquipManager.equip_changed.connect(_on_equip_changed)
+
+func _refresh_unlocked_slots() -> void:
+	slot_data.clear()
+	_configure_slot(hermit_gloves_slot, EquipManager.BLUE_GLOVES_SLOT)
+	_configure_slot(monarch_gloves_slot, EquipManager.RED_GLOVES_SLOT)
+	_configure_slot(sage_gloves_slot, EquipManager.YELLOW_GLOVES_SLOT)
+	empty_message.visible = slot_data.is_empty()
+	_refresh_selected_slot()
+
+func _configure_slot(slot: Control, slot_idx: int) -> void:
+	var unlocked := EquipManager.is_slot_unlocked(slot_idx)
+	slot.visible = unlocked
+	if unlocked:
+		_connect_slot(slot, slot_idx)
 
 func _connect_slot(slot: Control, slot_idx: int) -> void:
 	if slot == null:
@@ -63,21 +79,11 @@ func _connect_slot(slot: Control, slot_idx: int) -> void:
 		return
 
 	var icon = slot.get_node_or_null("Icon") as TextureRect
-	var area = slot.get_node_or_null("HitArea") as Area2D
-
-	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	slot.mouse_filter = Control.MOUSE_FILTER_STOP
 	if icon:
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		icon.pivot_offset = icon.size / 2.0
-
-	if area:
-		var collision = area.get_node_or_null("CollisionPolygon2D") as CollisionPolygon2D
-		if collision and collision.polygon.size() >= 3:
-			slot_data.append({"slot": slot, "idx": slot_idx, "poly": collision.polygon})
-		else:
-			push_warning("RadialMenu: missing/empty CollisionPolygon2D on %s" % slot.name)
-	else:
-		push_warning("RadialMenu: no HitArea on %s" % slot.name)
+	slot_data.append({"slot": slot, "idx": slot_idx})
 
 # === INPUT — runs every frame, unaffected by Engine.time_scale ===
 
@@ -85,8 +91,7 @@ func _input(event: InputEvent) -> void:
 	if not menu_fade_container.visible:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var local_mouse = _get_local_mouse()
-		var entry := _get_slot_entry_at(local_mouse)
+		var entry := _get_slot_entry_at(event.position)
 		if not entry.is_empty():
 			get_viewport().set_input_as_handled()
 			select_equip(int(entry["idx"]))
@@ -105,14 +110,11 @@ func _process(_delta: float) -> void:
 # where the CollisionPolygon2D vertices are defined.
 # get_local_mouse_position() handles anchors and canvas transforms correctly —
 # background.global_position is unreliable for FULL_RECT anchored Controls.
-func _get_local_mouse() -> Vector2:
-	return background.get_local_mouse_position()
-
 func _update_hover() -> void:
-	var local_mouse = _get_local_mouse()
+	var mouse_position := get_viewport().get_mouse_position()
 	var new_hover: Control = null
 
-	var entry := _get_slot_entry_at(local_mouse)
+	var entry := _get_slot_entry_at(mouse_position)
 	if not entry.is_empty():
 		new_hover = entry["slot"] as Control
 
@@ -126,31 +128,12 @@ func _update_hover() -> void:
 		_on_slot_hover(new_hover)
 	hovered_slot = new_hover
 
-func _get_slot_entry_at(local_mouse: Vector2) -> Dictionary:
-	var best_entry: Dictionary = {}
-	var best_distance := INF
-
+func _get_slot_entry_at(mouse_position: Vector2) -> Dictionary:
 	for entry in slot_data:
-		var poly: PackedVector2Array = entry["poly"]
-		if not Geometry2D.is_point_in_polygon(local_mouse, poly):
-			continue
-
-		var center := _get_polygon_center(poly)
-		var distance := local_mouse.distance_squared_to(center)
-		if distance < best_distance:
-			best_distance = distance
-			best_entry = entry
-
-	return best_entry
-
-func _get_polygon_center(poly: PackedVector2Array) -> Vector2:
-	if poly.is_empty():
-		return Vector2.ZERO
-
-	var total := Vector2.ZERO
-	for point in poly:
-		total += point
-	return total / float(poly.size())
+		var slot := entry["slot"] as Control
+		if slot.visible and slot.get_global_rect().has_point(mouse_position):
+			return entry
+	return {}
 
 # === HOVER ===
 
@@ -191,11 +174,23 @@ func _on_slot_unhover(slot: Control) -> void:
 	icon.modulate.a = 1.0
 
 func select_equip(slot_idx: int) -> void:
+	if not EquipManager.is_slot_unlocked(slot_idx):
+		return
 	AudioManager.play_ui(&"menu_select")
 	if EquipManager:
 		EquipManager.equip_item(slot_idx)
 	slow_bank = max_slow_bank
 	_close_menu()
+
+func _on_equip_changed(_slot_type: int, _slot_idx: int) -> void:
+	_refresh_selected_slot()
+
+func _refresh_selected_slot() -> void:
+	for entry in slot_data:
+		var slot := entry["slot"] as Control
+		var panel := slot.get_node_or_null("Panel") as Panel
+		if panel:
+			panel.modulate = Color(1.22, 1.14, 0.72, 1.0) if int(entry["idx"]) == EquipManager.current_equip[0] else Color.WHITE
 
 # === TIME SYSTEM ===
 

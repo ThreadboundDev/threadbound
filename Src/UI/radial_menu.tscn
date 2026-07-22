@@ -1,27 +1,86 @@
-[gd_scene format=3 uid="uid://drraly7lxsapf"]
+[gd_scene load_steps=10 format=3 uid="uid://drraly7lxsapf"]
 
-[ext_resource type="Script" uid="uid://bakc7wmje4ewq" path="res://Src/UI/radial_menu.gd" id="1_1o4se"]
-[ext_resource type="Texture2D" uid="uid://bfmmviee4xjnb" path="res://Assets/UI/radial_menu_background.png" id="2_5q6ol"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Red Gear/red_glove_icon.png" id="3_xbj7m"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Blue Gear/blue_glove_icon.png" id="6_jv3iq"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Yellow Gear/yellow_glove_icon.png" id="9_ptgr4"]
+[ext_resource type="Script" uid="uid://bakc7wmje4ewq" path="res://Src/UI/radial_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Red Gear/red_glove_icon.png" id="2_red"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Blue Gear/blue_glove_icon.png" id="3_blue"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Equipment/Yellow Gear/yellow_glove_icon.png" id="4_yellow"]
 
-[node name="RadialMenu" type="CanvasLayer" unique_id=1856064506]
-script = ExtResource("1_1o4se")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plate"]
+bg_color = Color(0.025, 0.035, 0.055, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.3, 0.42, 0.58, 0.8)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 18
 
-[node name="MenuFadeContainer" type="Control" parent="." unique_id=1544961797]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_red"]
+bg_color = Color(0.2, 0.035, 0.04, 0.94)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.78, 0.2, 0.16, 0.95)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yellow"]
+bg_color = Color(0.18, 0.13, 0.025, 0.94)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.92, 0.7, 0.18, 0.95)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blue"]
+bg_color = Color(0.025, 0.09, 0.18, 0.94)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.18, 0.58, 0.92, 0.95)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 28
+font_color = Color(0.9, 0.86, 0.72, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 0.85)
+
+[sub_resource type="LabelSettings" id="LabelSettings_item"]
+font_size = 19
+font_color = Color(0.96, 0.94, 0.86, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 0.9)
+
+[node name="RadialMenu" type="CanvasLayer"]
+layer = 90
+script = ExtResource("1_script")
+
+[node name="MenuFadeContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Background" type="TextureRect" parent="MenuFadeContainer" unique_id=344855998]
-z_as_relative = false
+[node name="Background" type="Control" parent="MenuFadeContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,61 +88,222 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_5q6ol")
+
+[node name="Plate" type="Panel" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -300.0
+offset_right = 330.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_plate")
+
+[node name="Title" type="Label" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -270.0
+offset_right = 220.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "SELECT GRAPPLE"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="EmptyMessage" type="Label" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -40.0
+offset_right = 230.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "Clear a wing to unlock its grapple."
+label_settings = SubResource("LabelSettings_item")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MonarchGlovesButton" type="Control" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -190.0
+offset_right = -70.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MenuFadeContainer/Background/MonarchGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_red")
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 22.0
+offset_right = -32.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_red")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="MonarchGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=2126023387]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=1439107317]
-layout_mode = 0
-offset_left = 492.0
-offset_top = 492.0
-offset_right = 632.0
-offset_bottom = 632.0
+[node name="Label" type="Label" parent="MenuFadeContainer/Background/MonarchGlovesButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
-texture = ExtResource("3_xbj7m")
+text = "MONARCH"
+label_settings = SubResource("LabelSettings_item")
+horizontal_alignment = 1
+
+[node name="SageGlovesButton" type="Control" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -190.0
+offset_right = 270.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MenuFadeContainer/Background/SageGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yellow")
+
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/SageGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 22.0
+offset_right = -32.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_yellow")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/MonarchGlovesButton" unique_id=730982912]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/MonarchGlovesButton/HitArea" unique_id=72562624]
-polygon = PackedVector2Array(460, 431, 647, 466, 647, 532, 653, 589, 678, 653, 505, 743, 458, 605, 452, 522)
-
-[node name="SageGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=132697487]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/SageGlovesButton" unique_id=1384219139]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Label" type="Label" parent="MenuFadeContainer/Background/SageGlovesButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
-texture = ExtResource("9_ptgr4")
+text = "SAGE"
+label_settings = SubResource("LabelSettings_item")
+horizontal_alignment = 1
 
-[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/SageGlovesButton" unique_id=1906063279]
+[node name="HermitGlovesButton" type="Control" parent="MenuFadeContainer/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 70.0
+offset_right = 100.0
+offset_bottom = 290.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/SageGlovesButton/HitArea" unique_id=1824738782]
-polygon = PackedVector2Array(951, 217, 951, 15, 1066, 30, 1161, 62, 1250, 118, 1130, 276, 1060, 236)
-
-[node name="HermitGlovesButton" type="Control" parent="MenuFadeContainer/Background" unique_id=792028815]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/HermitGlovesButton" unique_id=1179384808]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Panel" type="Panel" parent="MenuFadeContainer/Background/HermitGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("6_jv3iq")
+theme_override_styles/panel = SubResource("StyleBoxFlat_blue")
 
-[node name="HitArea" type="Area2D" parent="MenuFadeContainer/Background/HermitGlovesButton" unique_id=269374013]
+[node name="Icon" type="TextureRect" parent="MenuFadeContainer/Background/HermitGlovesButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 22.0
+offset_right = -32.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_blue")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MenuFadeContainer/Background/HermitGlovesButton/HitArea" unique_id=1817646800]
-polygon = PackedVector2Array(749, 978, 833, 791, 755, 746, 723, 711, 685, 652, 506, 746, 574, 855, 653, 924)
+[node name="Label" type="Label" parent="MenuFadeContainer/Background/HermitGlovesButton"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+text = "HERMIT"
+label_settings = SubResource("LabelSettings_item")
+horizontal_alignment = 1
