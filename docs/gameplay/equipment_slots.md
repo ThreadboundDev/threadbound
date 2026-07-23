@@ -34,7 +34,11 @@
 
 ##### \- Players are encouraged to \*\*swap gear dynamically\*\* using the radial system
 
-##### \- There are \*\*no hybrid bonuses\*\* — power comes from execution, not combinations
+##### \- Equipment-combination bonuses are governed by the \*\*Pattern system\*\*
+
+##### \- Patterns may reward single-Thread sets, hybrid sets, Neutral/Base equipment, balanced sets, or other mixed arrangements
+
+##### \- Pattern bonuses should create distinct playstyles without making any loadout mandatory for progression
 
 ##### 
 
@@ -513,4 +517,3 @@
 ##### > Your power is not what you equip.
 
 ##### > It’s how you use it.
-
