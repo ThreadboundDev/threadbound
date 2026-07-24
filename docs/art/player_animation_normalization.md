@@ -34,7 +34,7 @@ transparent sheet cells:
 | --- | ---: | ---: |
 | Ground forward | 0.75 | 512 px |
 | Neutral special | 0.675 | 512 px |
-| Ground combo 1/2 | 0.90 | 320 px |
+| Ground combo 1/2 | 0.90 effective | 320 px |
 | Up combo 1/2 | 1.10 | 384 px |
 | Air double attack | 1.20 | 416 px |
 
@@ -42,6 +42,11 @@ Up attacks retain a 16 px runtime transparent gutter around their scaled source
 cells. The air double attack uses a 416 px runtime cell, leaving a 16 px gutter
 around its 384 px rendered source. All runtime visual scale multipliers remain `1.0`,
 which gives future wrist-mounted grapple art a stable coordinate system.
+
+The `ground_combo_01` authoring sheet now uses 896 px padded cells so repaired
+weapon and smear pixels cannot cross an atlas boundary. Its normalizer scale is
+`0.6428571`, which renders the original 640 px content at the same effective
+`0.90` scale and preserves its existing screen size.
 
 ### Runtime memory budget
 
@@ -88,6 +93,36 @@ Pressing attack again during the opener or within the 0.45-second reset window
 plays the two-hit finisher, creating a three-hit sequence. Waiting beyond that
 window restarts at the one-hit opener. The forward finisher caps and resets the
 chain instead of wrapping immediately back to the opener.
+
+### Stationary ground attacks
+
+All four ground combo clips have one-to-one stationary variants:
+
+- `Ground_Attack_Combo_1_Stationary` (14 frames)
+- `Ground_Attack_Combo_2_Stationary` (19 frames)
+- `Ground_Up_Combo_1_Stationary` (10 frames)
+- `Ground_Up_Combo_2_Stationary` (12 frames)
+
+Each stationary frame retains the corresponding moving frame's upper body,
+weapon, and slash effect. Only the running lower body is replaced with a braced,
+planted stance. The player uses the moving variant only when horizontal input
+and real horizontal velocity are both present. Releasing input or pushing into
+a wall selects the stationary variant. Switching in either direction preserves
+the exact frame index and intra-frame progress; combat timing, strike windows,
+combo state, and attack duration continue to use the original logical clip.
+
+The stationary animations are registered from the four normalized stationary
+sheets when the player initializes. Their atlas regions, frame durations,
+playback speeds, and loop settings are copied one-to-one from the moving clips.
+
+### Ground finisher edge repair
+
+Source files `frame_06.png`, `frame_07.png`, `frame_14.png`, `frame_15.png`, and
+`frame_16.png` in `grounded_double_attack_01` were expanded from 640 px to
+896 px canvases. The original 640 px content remains centered, while recovered
+weapon tips and swing-smear pixels occupy the added padding. The assembled
+`grounded_double_attack_01_sheet.png` uses the same 896 px cell layout, so none
+of the recovered pixels can bleed into an adjacent frame.
 
 ### Atlas, opacity, and registration corrections
 
@@ -175,6 +210,19 @@ VFX, proportions, placement, scale, and lighting; add no scarf or other cloth;
 render on flat green for local alpha removal. The study establishes the intended
 read, while the live sheets use a repeatable 18-degree local head treatment.
 
+The stationary lower-body studies also used the built-in ImageGen edit workflow.
+Prompt direction: preserve the approved player identity and attack-ready
+silhouette; use an athletic, grounded stance with both feet planted; retain only
+subtle cloth and weight motion; add no foot travel; render on flat green for
+local alpha removal. The normalizer composites only the lower-body study beneath
+the exact source upper body.
+
+The five edge repairs used per-frame ImageGen outpainting. Prompt direction:
+preserve every visible in-frame detail and recover only the clipped bronze
+shuttle tip and/or broad translucent swing arc outside the old boundary; add
+generous padding; avoid thin spikes or extra effects; render on flat green for
+local alpha removal. Generated pixels are used only in the padded edge region.
+
 ## Regeneration
 
 From the project root:
@@ -198,15 +246,22 @@ cells are reduced to 320 px by the final runtime-raster pass. Pass
 `-UpwardHeadChromaSource <path>` only when replacing the transparent upward-head
 pose study.
 
+Pass both `-StationaryForwardChromaSource <path>` and
+`-StationaryUpChromaSource <path>` to rebuild the four stationary authoring
+sheets from new flat-green lower-body studies. Omitting them keeps the checked-in
+stationary authoring sheets and only regenerates normalized runtime rasters.
+
 Run the focused scene-level verification after importing:
 
 ```powershell
 godot --headless --path . res://tools/player_animation/verify_player_animation.tscn
 ```
 
-It checks the seven motion clips plus both upward combos and the air double
-attack: frame counts, frame textures, atlas cell sizes, playback speeds, loop
-modes, and the player's uniform runtime scale.
+It checks the seven motion clips, all moving and stationary ground combos, and
+the air double attack: frame counts, frame textures, atlas cell sizes, playback
+speeds, loop modes, and the player's uniform runtime scale. It also verifies
+that stationary/moving selection uses both input and real velocity and preserves
+the frame plus intra-frame progress through each switch.
 
 ## Deliberate limits
 

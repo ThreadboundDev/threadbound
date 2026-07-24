@@ -2,6 +2,8 @@ param(
     [string]$WeaponChromaSource = "",
     [string]$MotionChromaSourceDirectory = "",
     [string]$UpwardHeadChromaSource = "",
+    [string]$StationaryForwardChromaSource = "",
+    [string]$StationaryUpChromaSource = "",
     [switch]$RegisterExistingMotion
 )
 
@@ -948,6 +950,572 @@ public static class ThreadboundAnimationNormalizer
             output.Save(outputPath, ImageFormat.Png);
         }
     }
+
+    private static Rectangle FindHeadBounds(Bitmap bitmap)
+    {
+        bool[] skinMask = new bool[bitmap.Width * bitmap.Height];
+        for (int y = 0; y < bitmap.Height; y++)
+        {
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                Color color = bitmap.GetPixel(x, y);
+                skinMask[y * bitmap.Width + x] =
+                    color.A >= 48 &&
+                    color.R >= 155 &&
+                    color.G >= 105 &&
+                    color.B >= 80 &&
+                    color.R >= color.G + 12 &&
+                    color.G >= color.B + 5;
+            }
+        }
+
+        List<Component> components = FindComponents(bitmap, skinMask);
+        Component head = null;
+        foreach (Component component in components)
+        {
+            int width = component.MaxX - component.MinX + 1;
+            int height = component.MaxY - component.MinY + 1;
+            float centerX = (component.MinX + component.MaxX) * 0.5f;
+            float centerY = (component.MinY + component.MaxY) * 0.5f;
+            if (
+                component.Pixels.Count < 120 ||
+                width < 18 ||
+                height < 18 ||
+                width > bitmap.Width * 0.16f ||
+                height > bitmap.Height * 0.16f ||
+                centerX < bitmap.Width * 0.28f ||
+                centerY > bitmap.Height * 0.55f)
+            {
+                continue;
+            }
+
+            if (head == null || component.Pixels.Count > head.Pixels.Count)
+            {
+                head = component;
+            }
+        }
+
+        return head == null
+            ? Rectangle.Empty
+            : Rectangle.FromLTRB(
+                head.MinX,
+                head.MinY,
+                head.MaxX + 1,
+                head.MaxY + 1);
+    }
+
+    private static bool IsBeltBrown(Color color)
+    {
+        return
+            color.A >= 72 &&
+            color.R >= 48 &&
+            color.R <= 205 &&
+            color.G >= 24 &&
+            color.G <= 145 &&
+            color.B >= 12 &&
+            color.B <= 115 &&
+            color.R >= color.G + 10 &&
+            color.G >= color.B;
+    }
+
+    private static PointF FindBeltAnchor(Bitmap bitmap, Rectangle headBounds)
+    {
+        if (headBounds.IsEmpty)
+        {
+            Rectangle bounds = FindAlphaBounds(bitmap, 48);
+            return bounds.IsEmpty
+                ? new PointF(bitmap.Width * 0.5f, bitmap.Height * 0.55f)
+                : new PointF(
+                    bounds.Left + bounds.Width * 0.5f,
+                    bounds.Top + bounds.Height * 0.48f);
+        }
+
+        float headCenterX = headBounds.Left + headBounds.Width * 0.5f;
+        int minX = Math.Max(0, (int)Math.Floor(headCenterX - bitmap.Width * 0.24f));
+        int maxX = Math.Min(bitmap.Width - 1, (int)Math.Ceiling(headCenterX + bitmap.Width * 0.24f));
+        float expectedY = headBounds.Bottom + bitmap.Height * 0.11f;
+        int minY = Math.Max(
+            headBounds.Bottom + 4,
+            (int)Math.Floor(expectedY - bitmap.Height * 0.04f));
+        int maxY = Math.Min(
+            bitmap.Height - 1,
+            (int)Math.Ceiling(expectedY + bitmap.Height * 0.07f));
+
+        int bestY = Math.Min(bitmap.Height - 1, (int)Math.Round(expectedY));
+        double bestScore = double.MinValue;
+        for (int y = minY; y <= maxY; y++)
+        {
+            int count = 0;
+            for (int x = minX; x <= maxX; x++)
+            {
+                if (IsBeltBrown(bitmap.GetPixel(x, y)))
+                {
+                    count++;
+                }
+            }
+
+            double score = count - Math.Abs(y - expectedY) * 1.5;
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestY = y;
+            }
+        }
+
+        long sumX = 0;
+        long countX = 0;
+        for (int y = Math.Max(minY, bestY - 5); y <= Math.Min(maxY, bestY + 5); y++)
+        {
+            for (int x = minX; x <= maxX; x++)
+            {
+                if (!IsBeltBrown(bitmap.GetPixel(x, y)))
+                {
+                    continue;
+                }
+
+                sumX += x;
+                countX++;
+            }
+        }
+
+        float beltX = countX > 0 ? (float)sumX / countX : headCenterX;
+        return new PointF(beltX, bestY);
+    }
+
+    private static bool[] FindLowerBodyMask(
+        Bitmap cell,
+        PointF beltAnchor,
+        float scale,
+        float hipHalfWidth)
+    {
+        int width = cell.Width;
+        int height = cell.Height;
+        int cutY = Math.Max(0, (int)Math.Round(beltAnchor.Y + Math.Max(1.0f, 2.0f * scale)));
+        bool[] candidate = new bool[width * height];
+        for (int y = cutY; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                candidate[y * width + x] = cell.GetPixel(x, y).A > 0;
+            }
+        }
+
+        bool[] mask = new bool[width * height];
+        int hipDepth = Math.Max(6, (int)Math.Round(28.0f * scale));
+        float scaledHipHalfWidth = hipHalfWidth * scale;
+        List<Component> components = FindComponents(cell, candidate);
+        foreach (Component component in components)
+        {
+            bool joinsWaist = false;
+            foreach (int index in component.Pixels)
+            {
+                int x = index % width;
+                int y = index / width;
+                if (
+                    y <= cutY + hipDepth &&
+                    Math.Abs(x - beltAnchor.X) <= scaledHipHalfWidth)
+                {
+                    joinsWaist = true;
+                    break;
+                }
+            }
+
+            if (!joinsWaist)
+            {
+                continue;
+            }
+
+            foreach (int index in component.Pixels)
+            {
+                mask[index] = true;
+            }
+        }
+
+        bool[] expanded = (bool[])mask.Clone();
+        int fringeRadius = Math.Max(1, (int)Math.Ceiling(3.0f * scale));
+        for (int y = cutY; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (!mask[y * width + x])
+                {
+                    continue;
+                }
+
+                for (int offsetY = -fringeRadius; offsetY <= fringeRadius; offsetY++)
+                {
+                    int fringeY = y + offsetY;
+                    if (fringeY < cutY || fringeY >= height)
+                    {
+                        continue;
+                    }
+
+                    for (int offsetX = -fringeRadius; offsetX <= fringeRadius; offsetX++)
+                    {
+                        int fringeX = x + offsetX;
+                        if (fringeX < 0 || fringeX >= width)
+                        {
+                            continue;
+                        }
+
+                        if (cell.GetPixel(fringeX, fringeY).A > 0)
+                        {
+                            expanded[fringeY * width + fringeX] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return expanded;
+    }
+
+    private static bool[] FindWeaponPreserveMask(
+        Bitmap cell,
+        PointF beltAnchor,
+        float scale)
+    {
+        int width = cell.Width;
+        int height = cell.Height;
+        bool[] bronzeMask = new bool[width * height];
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                bronzeMask[y * width + x] = IsBeltBrown(cell.GetPixel(x, y));
+            }
+        }
+
+        Component weapon = null;
+        double bestScore = double.MinValue;
+        foreach (Component component in FindComponents(cell, bronzeMask))
+        {
+            int componentWidth = component.MaxX - component.MinX + 1;
+            int componentHeight = component.MaxY - component.MinY + 1;
+            int span = Math.Max(componentWidth, componentHeight);
+            if (
+                component.Pixels.Count < Math.Max(12, 36 * scale * scale) ||
+                span < 55.0f * scale)
+            {
+                continue;
+            }
+
+            float centerX = (component.MinX + component.MaxX) * 0.5f;
+            float centerY = (component.MinY + component.MaxY) * 0.5f;
+            bool compactLowerCostume =
+                centerY > beltAnchor.Y + 65.0f * scale &&
+                Math.Abs(centerX - beltAnchor.X) < 175.0f * scale;
+            if (compactLowerCostume)
+            {
+                continue;
+            }
+
+            double distanceFromBelt = Math.Sqrt(
+                Math.Pow(centerX - beltAnchor.X, 2) +
+                Math.Pow(centerY - beltAnchor.Y, 2));
+            double score =
+                span +
+                distanceFromBelt * 0.20 +
+                component.Pixels.Count * 0.01;
+            if (score > bestScore)
+            {
+                weapon = component;
+                bestScore = score;
+            }
+        }
+
+        bool[] preserve = new bool[width * height];
+        if (weapon == null)
+        {
+            return preserve;
+        }
+
+        int padding = Math.Max(3, (int)Math.Round(12.0f * scale));
+        foreach (int index in weapon.Pixels)
+        {
+            int weaponX = index % width;
+            int weaponY = index / width;
+            for (int offsetY = -padding; offsetY <= padding; offsetY++)
+            {
+                int preserveY = weaponY + offsetY;
+                if (preserveY < 0 || preserveY >= height)
+                {
+                    continue;
+                }
+
+                for (int offsetX = -padding; offsetX <= padding; offsetX++)
+                {
+                    int preserveX = weaponX + offsetX;
+                    if (
+                        preserveX < 0 ||
+                        preserveX >= width ||
+                        offsetX * offsetX + offsetY * offsetY > padding * padding)
+                    {
+                        continue;
+                    }
+
+                    if (cell.GetPixel(preserveX, preserveY).A > 0)
+                    {
+                        preserve[preserveY * width + preserveX] = true;
+                    }
+                }
+            }
+        }
+
+        return preserve;
+    }
+
+    private static Rectangle FindStationaryHeadBounds(
+        string inputPath,
+        int frameIndex,
+        Bitmap cell)
+    {
+        if (inputPath.EndsWith(
+            "grounded_double_attack_03_sheet.png",
+            StringComparison.OrdinalIgnoreCase))
+        {
+            if (frameIndex == 10)
+            {
+                return new Rectangle(340, 160, 60, 70);
+            }
+        }
+        else if (inputPath.EndsWith(
+            "grounded_double_attack_04_sheet.png",
+            StringComparison.OrdinalIgnoreCase))
+        {
+            if (frameIndex == 10)
+            {
+                return new Rectangle(345, 155, 60, 70);
+            }
+            if (frameIndex == 12)
+            {
+                return new Rectangle(330, 150, 65, 70);
+            }
+            if (frameIndex == 14)
+            {
+                return new Rectangle(370, 190, 60, 70);
+            }
+        }
+
+        return FindHeadBounds(cell);
+    }
+
+    private static void RemoveStationaryFragments(Bitmap bitmap)
+    {
+        int width = bitmap.Width;
+        int height = bitmap.Height;
+        bool[] alphaMask = new bool[width * height];
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                alphaMask[y * width + x] = bitmap.GetPixel(x, y).A > 0;
+            }
+        }
+
+        int fragmentLimit = Math.Max(
+            256,
+            (int)Math.Round(width * height * 0.004));
+        foreach (Component component in FindComponents(bitmap, alphaMask))
+        {
+            if (component.Pixels.Count >= fragmentLimit)
+            {
+                continue;
+            }
+
+            bool preserve = false;
+            foreach (int index in component.Pixels)
+            {
+                int x = index % width;
+                int y = index / width;
+                Color color = bitmap.GetPixel(x, y);
+                int maximum = Math.Max(color.R, Math.Max(color.G, color.B));
+                int minimum = Math.Min(color.R, Math.Min(color.G, color.B));
+                bool paleEffect =
+                    color.A >= 24 &&
+                    minimum >= 105 &&
+                    maximum - minimum <= 62;
+                bool skin =
+                    color.A >= 48 &&
+                    color.R >= 155 &&
+                    color.G >= 105 &&
+                    color.B >= 80 &&
+                    color.R >= color.G + 12 &&
+                    color.G >= color.B + 5;
+                if (paleEffect || skin)
+                {
+                    preserve = true;
+                    break;
+                }
+            }
+
+            if (preserve)
+            {
+                continue;
+            }
+
+            foreach (int index in component.Pixels)
+            {
+                bitmap.SetPixel(
+                    index % width,
+                    index / width,
+                    Color.Transparent);
+            }
+        }
+    }
+
+    public static void BuildStationaryGrid(
+        string inputPath,
+        string stancePath,
+        string outputPath,
+        int columns,
+        int rows)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var stance = new Bitmap(stancePath))
+        using (var stanceLower = new Bitmap(
+            stance.Width,
+            stance.Height,
+            PixelFormat.Format32bppArgb))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            Rectangle stanceHead = FindHeadBounds(stance);
+            PointF stanceBelt = FindBeltAnchor(stance, stanceHead);
+            bool[] stanceLowerMask = FindLowerBodyMask(
+                stance,
+                stanceBelt,
+                1.0f,
+                155.0f);
+            for (int y = 0; y < stance.Height; y++)
+            {
+                for (int x = 0; x < stance.Width; x++)
+                {
+                    if (stanceLowerMask[y * stance.Width + x])
+                    {
+                        stanceLower.SetPixel(x, y, stance.GetPixel(x, y));
+                    }
+                }
+            }
+
+            using (var outputGraphics = Graphics.FromImage(output))
+            {
+                outputGraphics.Clear(Color.Transparent);
+            }
+
+            for (int row = 0; row < rows; row++)
+            {
+                for (int column = 0; column < columns; column++)
+                {
+                    var sourceRect = new Rectangle(
+                        column * cellWidth,
+                        row * cellHeight,
+                        cellWidth,
+                        cellHeight);
+                    using (var cell = source.Clone(sourceRect, PixelFormat.Format32bppArgb))
+                    using (var upper = new Bitmap(cellWidth, cellHeight, PixelFormat.Format32bppArgb))
+                    using (var composed = new Bitmap(cellWidth, cellHeight, PixelFormat.Format32bppArgb))
+                    {
+                        int frameIndex = row * columns + column;
+                        Rectangle cellHead = FindStationaryHeadBounds(
+                            inputPath,
+                            frameIndex,
+                            cell);
+                        PointF cellBelt = FindBeltAnchor(cell, cellHead);
+                        float scale = stanceHead.IsEmpty || cellHead.IsEmpty
+                            ? (float)cellHeight / stance.Height
+                            : (float)cellHead.Height / stanceHead.Height;
+                        scale = Math.Max(0.25f, Math.Min(0.85f, scale));
+                        bool[] lowerMask = FindLowerBodyMask(
+                            cell,
+                            cellBelt,
+                            scale,
+                            180.0f);
+                        bool isBronzeWeaponSheet =
+                            inputPath.EndsWith(
+                                "grounded_double_attack_01_sheet.png",
+                                StringComparison.OrdinalIgnoreCase) ||
+                            inputPath.EndsWith(
+                                "grounded_double_attack_02_sheet.png",
+                                StringComparison.OrdinalIgnoreCase);
+                        bool[] weaponPreserveMask = isBronzeWeaponSheet
+                            ? FindWeaponPreserveMask(cell, cellBelt, scale)
+                            : new bool[cellWidth * cellHeight];
+                        for (int y = 0; y < cellHeight; y++)
+                        {
+                            for (int x = 0; x < cellWidth; x++)
+                            {
+                                Color original = cell.GetPixel(x, y);
+                                int maximum = Math.Max(
+                                    original.R,
+                                    Math.Max(original.G, original.B));
+                                int minimum = Math.Min(
+                                    original.R,
+                                    Math.Min(original.G, original.B));
+                                bool paleEffect =
+                                    original.A >= 24 &&
+                                    minimum >= 105 &&
+                                    maximum - minimum <= 62;
+                                if (
+                                    !lowerMask[y * cellWidth + x] ||
+                                    paleEffect ||
+                                    weaponPreserveMask[y * cellWidth + x])
+                                {
+                                    upper.SetPixel(x, y, original);
+                                }
+                            }
+                        }
+
+                        using (var graphics = Graphics.FromImage(composed))
+                        {
+                            graphics.Clear(Color.Transparent);
+                            graphics.CompositingMode = CompositingMode.SourceOver;
+                            graphics.CompositingQuality = CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                            int destinationX = (int)Math.Round(
+                                cellBelt.X - stanceBelt.X * scale);
+                            int destinationY = (int)Math.Round(
+                                cellBelt.Y - stanceBelt.Y * scale);
+                            var destination = new Rectangle(
+                                destinationX,
+                                destinationY,
+                                (int)Math.Round(stance.Width * scale),
+                                (int)Math.Round(stance.Height * scale));
+                            var stanceSource = new Rectangle(
+                                0,
+                                0,
+                                stance.Width,
+                                stance.Height);
+                            graphics.DrawImage(
+                                stanceLower,
+                                destination,
+                                stanceSource,
+                                GraphicsUnit.Pixel);
+                            graphics.DrawImageUnscaled(upper, 0, 0);
+                        }
+
+                        RemoveStationaryFragments(composed);
+                        using (var graphics = Graphics.FromImage(output))
+                        {
+                            graphics.CompositingMode = CompositingMode.SourceCopy;
+                            graphics.DrawImageUnscaled(
+                                composed,
+                                column * cellWidth,
+                                row * cellHeight);
+                        }
+                    }
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
 }
 '@
 
@@ -988,13 +1556,77 @@ foreach ($source in $copyMap.Keys) {
     Copy-NormalizedAsset $source $copyMap[$source]
 }
 
+if ($StationaryForwardChromaSource -or $StationaryUpChromaSource) {
+    if (-not $StationaryForwardChromaSource -or -not $StationaryUpChromaSource) {
+        throw "Both stationary stance chroma sources are required."
+    }
+
+    $resolvedForwardStance = (Resolve-Path $StationaryForwardChromaSource).Path
+    $resolvedUpStance = (Resolve-Path $StationaryUpChromaSource).Path
+    $temporaryForwardAlpha = Join-Path $outputRoot "attacks\stationary_forward_stance.alpha.png"
+    $temporaryUpAlpha = Join-Path $outputRoot "attacks\stationary_up_stance.alpha.png"
+    [ThreadboundAnimationNormalizer]::RemoveGreenKey(
+        $resolvedForwardStance,
+        $temporaryForwardAlpha)
+    [ThreadboundAnimationNormalizer]::RemoveGreenKey(
+        $resolvedUpStance,
+        $temporaryUpAlpha)
+
+    $stationaryAuthoringJobs = @(
+        @(
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png",
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_stationary_sheet.png",
+            6,
+            4,
+            $temporaryForwardAlpha
+        ),
+        @(
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png",
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_stationary_sheet.png",
+            5,
+            5,
+            $temporaryForwardAlpha
+        ),
+        @(
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_sheet.png",
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_stationary_sheet.png",
+            6,
+            4,
+            $temporaryUpAlpha
+        ),
+        @(
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_sheet.png",
+            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_stationary_sheet.png",
+            5,
+            5,
+            $temporaryUpAlpha
+        )
+    )
+
+    foreach ($job in $stationaryAuthoringJobs) {
+        [ThreadboundAnimationNormalizer]::BuildStationaryGrid(
+            (Join-Path $projectRoot ([string]$job[0])),
+            ([string]$job[4]),
+            (Join-Path $projectRoot ([string]$job[1])),
+            ([int]$job[2]),
+            ([int]$job[3]))
+    }
+
+    Remove-Item -LiteralPath $temporaryForwardAlpha -Force
+    Remove-Item -LiteralPath $temporaryUpAlpha -Force
+}
+
 $attackJobs = @(
     @("Assets\Threadborne\New Attack\threadborn_grounded_attack.png", "attacks\ground_forward.png", 6, 8, 1024, 0.75),
     @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.9),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.6428571),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png", "attacks\ground_combo_02.png", 5, 5, 640, 0.9),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_sheet.png", "attacks\ground_combo_03.png", 6, 4, 768, 1.1),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_sheet.png", "attacks\ground_combo_04.png", 5, 5, 768, 1.1),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_stationary_sheet.png", "attacks\ground_combo_01_stationary.png", 6, 4, 640, 0.6428571),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_stationary_sheet.png", "attacks\ground_combo_02_stationary.png", 5, 5, 640, 0.9),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_stationary_sheet.png", "attacks\ground_combo_03_stationary.png", 6, 4, 768, 1.1),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_stationary_sheet.png", "attacks\ground_combo_04_stationary.png", 5, 5, 768, 1.1),
     @("Assets\Threadborne\New Attack\Video Attacks\air_double_attack_01_candidate_sheet.png", "attacks\air_double_attack.png", 6, 5, 832, 1.2)
 )
 
@@ -1090,6 +1722,10 @@ $bronzeWeaponSheets = @(
     @("attacks\ground_combo_02.png", 5, 5, $true),
     @("attacks\ground_combo_03.png", 6, 4, $true),
     @("attacks\ground_combo_04.png", 5, 5, $true),
+    @("attacks\ground_combo_01_stationary.png", 6, 4, $true),
+    @("attacks\ground_combo_02_stationary.png", 5, 5, $true),
+    @("attacks\ground_combo_03_stationary.png", 6, 4, $true),
+    @("attacks\ground_combo_04_stationary.png", 5, 5, $true),
     @("attacks\air_double_attack.png", 6, 5, $false)
 )
 
@@ -1112,7 +1748,9 @@ foreach ($sheet in $bronzeWeaponSheets) {
 
 $upwardHeadJobs = @(
     @("attacks\ground_combo_03.png", 6, 4, [int[]]@(9, 11, 12, 13)),
-    @("attacks\ground_combo_04.png", 5, 5, [int[]]@(9, 13))
+    @("attacks\ground_combo_04.png", 5, 5, [int[]]@(9, 13)),
+    @("attacks\ground_combo_03_stationary.png", 6, 4, [int[]]@(9, 11, 12, 13)),
+    @("attacks\ground_combo_04_stationary.png", 5, 5, [int[]]@(9, 13))
 )
 
 foreach ($headJob in $upwardHeadJobs) {
@@ -1222,6 +1860,10 @@ $runtimeRasterAssets = @(
     @("attacks\ground_combo_02.png", 3200, 3200),
     @("attacks\ground_combo_03.png", 4608, 3072),
     @("attacks\ground_combo_04.png", 3840, 3840),
+    @("attacks\ground_combo_01_stationary.png", 3840, 2560),
+    @("attacks\ground_combo_02_stationary.png", 3200, 3200),
+    @("attacks\ground_combo_03_stationary.png", 4608, 3072),
+    @("attacks\ground_combo_04_stationary.png", 3840, 3840),
     @("attacks\air_double_attack.png", 4992, 4160)
 )
 

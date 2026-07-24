@@ -20,6 +20,22 @@ const SIT_COLUMNS := 5
 const SIT_ROWS := 10
 const SIT_FRAME_COUNT := 48
 const SIT_FPS := 12.0
+const STATIONARY_ATTACK_SUFFIX := "_Stationary"
+const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
+const STATIONARY_ATTACK_TEXTURES := {
+	&"Ground_Attack_Combo_1": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02_stationary.png"
+	),
+	&"Ground_Attack_Combo_2": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01_stationary.png"
+	),
+	&"Ground_Up_Combo_1": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03_stationary.png"
+	),
+	&"Ground_Up_Combo_2": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04_stationary.png"
+	),
+}
 
 # ===============================
 # NODES
@@ -403,6 +419,7 @@ func _ready() -> void:
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
 	_set_flow_state_visuals(_flow_state_active)
+	_ensure_stationary_attack_animations()
 	_ensure_sit_animation()
 	update_equipment_facing()
 	_update_wall_cling_vfx()
@@ -825,7 +842,7 @@ func update_animations(dir: float) -> void:
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		player_animation.rotation = 0.0
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		_play_attack_visual_animation(_get_ground_combo_visual_animation(dir))
 		return
 	
 	var is_dashing = false
@@ -1067,7 +1084,9 @@ func _begin_ground_combo_attack(family: StringName) -> void:
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		_play_attack_visual_animation(
+			_get_ground_combo_visual_animation(Input.get_axis("move_left", "move_right"))
+		)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
@@ -1296,8 +1315,11 @@ func _reset_weapon_visuals() -> void:
 	if not weapon_animation_player:
 		return
 
-	if weapon_animation_player.has_animation("weapon_%s" % current_body_anim.to_lower()):
-		_play_weapon_pose_anim(current_body_anim)
+	var weapon_pose_body_anim := current_body_anim
+	if current_body_anim.ends_with(STATIONARY_ATTACK_SUFFIX):
+		weapon_pose_body_anim = current_attack_body_anim
+	if weapon_animation_player.has_animation("weapon_%s" % weapon_pose_body_anim.to_lower()):
+		_play_weapon_pose_anim(weapon_pose_body_anim)
 		return
 
 	if not weapon_animation_player.has_animation("RESET"):
@@ -1328,6 +1350,47 @@ func _apply_attack_visual_tuning() -> void:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
 	player_animation.position = _player_default_visual_position + visual_offset
+
+func _get_ground_combo_visual_animation(dir: float) -> StringName:
+	var moving_animation := StringName(current_attack_body_anim)
+	if not current_attack_uses_ground_combo:
+		return moving_animation
+
+	var stationary_animation := StringName(
+		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
+	)
+	if not player_animation.sprite_frames.has_animation(stationary_animation):
+		return moving_animation
+
+	var has_horizontal_input := absf(dir) > 0.01
+	var has_horizontal_motion := (
+		absf(velocity.x) >= STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED
+	)
+	return moving_animation if has_horizontal_input and has_horizontal_motion else stationary_animation
+
+func _play_attack_visual_animation(body_anim: StringName) -> void:
+	var moving_animation := StringName(current_attack_body_anim)
+	var stationary_animation := StringName(
+		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
+	)
+	var preserve_progress := (
+		StringName(current_body_anim) == moving_animation
+		or StringName(current_body_anim) == stationary_animation
+	)
+	var previous_frame := player_animation.frame
+	var previous_progress := player_animation.frame_progress
+
+	play_character_anim(String(body_anim), "equip_idle")
+	if not preserve_progress:
+		return
+
+	var frame_count := player_animation.sprite_frames.get_frame_count(body_anim)
+	if frame_count <= 0:
+		return
+	player_animation.set_frame_and_progress(
+		mini(previous_frame, frame_count - 1),
+		previous_progress
+	)
 
 func _get_attack_input_direction() -> Vector2:
 	var direction := AimHelperScript.get_aim_direction(
@@ -2192,6 +2255,54 @@ func _hide_save_point_equipment() -> void:
 func _restore_save_point_equipment() -> void:
 	if equipment_mount:
 		equipment_mount.visible = _save_point_equipment_was_visible
+
+func _ensure_stationary_attack_animations() -> void:
+	if not player_animation or not player_animation.sprite_frames:
+		return
+
+	var frames := player_animation.sprite_frames
+	for moving_animation: StringName in STATIONARY_ATTACK_TEXTURES:
+		var stationary_animation := StringName(
+			"%s%s" % [moving_animation, STATIONARY_ATTACK_SUFFIX]
+		)
+		if frames.has_animation(stationary_animation):
+			continue
+		if not frames.has_animation(moving_animation):
+			push_warning("Missing moving attack animation: %s" % moving_animation)
+			continue
+
+		frames.add_animation(stationary_animation)
+		frames.set_animation_loop(
+			stationary_animation,
+			frames.get_animation_loop(moving_animation)
+		)
+		frames.set_animation_speed(
+			stationary_animation,
+			frames.get_animation_speed(moving_animation)
+		)
+
+		var stationary_sheet: Texture2D = STATIONARY_ATTACK_TEXTURES[moving_animation]
+		for frame_index in frames.get_frame_count(moving_animation):
+			var moving_texture := (
+				frames.get_frame_texture(moving_animation, frame_index) as AtlasTexture
+			)
+			if moving_texture == null:
+				push_warning(
+					"%s frame %d is not an AtlasTexture." %
+					[moving_animation, frame_index]
+				)
+				continue
+
+			var stationary_texture := AtlasTexture.new()
+			stationary_texture.atlas = stationary_sheet
+			stationary_texture.region = moving_texture.region
+			stationary_texture.margin = moving_texture.margin
+			stationary_texture.filter_clip = moving_texture.filter_clip
+			frames.add_frame(
+				stationary_animation,
+				stationary_texture,
+				frames.get_frame_duration(moving_animation, frame_index)
+			)
 
 func _ensure_sit_animation() -> void:
 	if not player_animation or not player_animation.sprite_frames:

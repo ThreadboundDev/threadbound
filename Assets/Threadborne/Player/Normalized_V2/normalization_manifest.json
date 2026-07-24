@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -113,11 +113,19 @@
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
         "grid": [6, 4],
         "cell_size": 320,
-        "baked_source_scale": 0.9,
+        "authored_cell_size": 896,
+        "baked_source_scale": 0.6428571,
+        "unpadded_equivalent_scale": 0.9,
         "runtime_animation": "Ground_Attack_Combo_2",
         "runtime_source_frames": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         "strike_windows": [[2, 4], [9, 11]],
-        "character_alpha_hardened": true
+        "character_alpha_hardened": true,
+        "repaired_source_frames": [5, 6, 13, 14, 15],
+        "stationary_variant": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01_stationary.png",
+          "runtime_animation": "Ground_Attack_Combo_2_Stationary",
+          "frame_mapping": "one_to_one"
+        }
       },
       "ground_combo_02": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
@@ -127,7 +135,12 @@
         "runtime_animation": "Ground_Attack_Combo_1",
         "runtime_source_frames": [0, 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         "strike_windows": [[3, 5]],
-        "character_alpha_hardened": true
+        "character_alpha_hardened": true,
+        "stationary_variant": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02_stationary.png",
+          "runtime_animation": "Ground_Attack_Combo_1_Stationary",
+          "frame_mapping": "one_to_one"
+        }
       },
       "ground_combo_03_up": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03.png",
@@ -139,7 +152,12 @@
         "strike_windows": [[1, 4], [6, 9]],
         "head_tilt_degrees": -18.0,
         "head_tilt_source_frames": [9, 11, 12, 13],
-        "character_alpha_hardened": true
+        "character_alpha_hardened": true,
+        "stationary_variant": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03_stationary.png",
+          "runtime_animation": "Ground_Up_Combo_1_Stationary",
+          "frame_mapping": "one_to_one"
+        }
       },
       "ground_combo_04_up": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04.png",
@@ -151,7 +169,12 @@
         "strike_windows": [[1, 5], [7, 11]],
         "head_tilt_degrees": -18.0,
         "head_tilt_source_frames": [9, 13],
-        "character_alpha_hardened": true
+        "character_alpha_hardened": true,
+        "stationary_variant": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04_stationary.png",
+          "runtime_animation": "Ground_Up_Combo_2_Stationary",
+          "frame_mapping": "one_to_one"
+        }
       },
       "air_double_attack": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png",

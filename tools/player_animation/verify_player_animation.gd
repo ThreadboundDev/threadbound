@@ -7,9 +7,13 @@ const EXPECTED_ANIMATIONS := {
 	&"Grapple_Diagonal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Horizontal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Ground_Attack_Combo_1_Stationary": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Ground_Attack_Combo_2_Stationary": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Up_Combo_1": {"frames": 10, "fps": 12.5, "loop": false, "cell": Vector2(384, 384)},
+	&"Ground_Up_Combo_1_Stationary": {"frames": 10, "fps": 12.5, "loop": false, "cell": Vector2(384, 384)},
 	&"Ground_Up_Combo_2": {"frames": 12, "fps": 14.4, "loop": false, "cell": Vector2(384, 384)},
+	&"Ground_Up_Combo_2_Stationary": {"frames": 12, "fps": 14.4, "loop": false, "cell": Vector2(384, 384)},
 	&"Jump_Apex": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Ascent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
@@ -27,6 +31,7 @@ func _ready() -> void:
 		failures.append("Player Animation node is missing or is not an AnimatedSprite2D.")
 	else:
 		_verify_sprite(sprite, failures)
+		_verify_stationary_attack_switching(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 
 	player.free()
@@ -100,6 +105,46 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 					"%s frame %d uses atlas cell %s; expected %s." %
 					[animation_name, frame_index, texture.region.size, expected.cell]
 				)
+
+func _verify_stationary_attack_switching(
+	player: Node,
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	const MOVING_ANIMATION := &"Ground_Attack_Combo_1"
+	const STATIONARY_ANIMATION := &"Ground_Attack_Combo_1_Stationary"
+	const TEST_FRAME := 6
+	const TEST_PROGRESS := 0.42
+
+	player.set("current_attack_body_anim", String(MOVING_ANIMATION))
+	player.set("current_attack_uses_ground_combo", true)
+	player.set("is_attacking", true)
+	player.set("current_body_anim", String(MOVING_ANIMATION))
+	player.set("velocity", Vector2.ZERO)
+	sprite.play(MOVING_ANIMATION)
+	sprite.set_frame_and_progress(TEST_FRAME, TEST_PROGRESS)
+	player.call("update_animations", 1.0)
+	if sprite.animation != STATIONARY_ANIMATION:
+		failures.append("Blocked movement input did not select the stationary attack.")
+	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
+		failures.append("Moving-to-stationary attack switching did not preserve frame progress.")
+
+	player.set("velocity", Vector2(120.0, 0.0))
+	player.call("update_animations", 1.0)
+	if sprite.animation != MOVING_ANIMATION:
+		failures.append("Real horizontal movement did not select the moving attack.")
+	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
+		failures.append("Stationary-to-moving attack switching did not preserve frame progress.")
+
+	sprite.set_frame_and_progress(TEST_FRAME + 1, 0.25)
+	player.call("update_animations", 0.0)
+	if sprite.animation != STATIONARY_ANIMATION:
+		failures.append("Released movement input did not select the stationary attack.")
+	if sprite.frame != TEST_FRAME + 1 or not is_equal_approx(sprite.frame_progress, 0.25):
+		failures.append("Input-release attack switching did not preserve frame progress.")
+
+	player.set("is_attacking", false)
+	player.set("current_attack_uses_ground_combo", false)
 
 func _verify_forward_combo_chain(player: Node, failures: Array[String]) -> void:
 	if player.get("ground_combo_1_first_strike_frames") != Vector2i(3, 5):
