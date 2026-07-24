@@ -1,0 +1,173 @@
+{
+  "version": 5,
+  "canonical_model": {
+    "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
+    "palette_reference": "res://docs/art/concept_art/Idle right first.png",
+    "weapon_reference": "res://docs/art/concept_art/Weapon Model Bronze Long Handle.png",
+    "runtime_raster_scale": 0.5,
+    "in_game_visual_scale": [0.7, 0.7],
+    "target_character_height_pixels": 175
+  },
+  "assets": {
+    "idle": {
+      "path": "res://Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png",
+      "grid": [6, 6],
+      "cell_size": 256
+    },
+    "run": {
+      "directory": "res://Assets/Threadborne/Player/Normalized_V2/run",
+      "frames": [1, 2, 3, 4, 5, 6, 7, 8, 12, 18, 20],
+      "frame_size": [548, 548]
+    },
+    "jump": {
+      "directory": "res://Assets/Threadborne/Player/Normalized_V2/jump",
+      "animations": {
+        "ascent": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/jump/ascent_cycle.png",
+          "grid": [2, 2],
+          "cell_size": 320,
+          "registration_anchor": "head",
+          "playback_fps": 8.0,
+          "loop": true
+        },
+        "apex": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png",
+          "grid": [2, 2],
+          "cell_size": 320,
+          "registration_anchor": "head",
+          "playback_fps": 8.0,
+          "loop": true
+        },
+        "descent": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/jump/descent_cycle.png",
+          "grid": [2, 2],
+          "cell_size": 320,
+          "registration_anchor": "head",
+          "playback_fps": 8.0,
+          "loop": true
+        },
+        "land": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/jump/land_cycle.png",
+          "grid": [2, 2],
+          "cell_size": 320,
+          "registration_anchor": "feet",
+          "playback_fps": 12.0,
+          "loop": false
+        }
+      }
+    },
+    "grapple": {
+      "directory": "res://Assets/Threadborne/Player/Normalized_V2/grapple",
+      "animations": {
+        "toss_horizontal": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal_cycle.png",
+          "grid": [3, 2],
+          "cell_size": 320,
+          "registration_anchor": "feet",
+          "playback_fps": 18.0,
+          "loop": false
+        },
+        "toss_diagonal": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png",
+          "grid": [3, 2],
+          "cell_size": 320,
+          "registration_anchor": "feet",
+          "playback_fps": 18.0,
+          "loop": false
+        }
+      }
+    },
+    "movement": {
+      "directory": "res://Assets/Threadborne/Player/Normalized_V2/movement",
+      "animations": {
+        "dash": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/movement/dash.png",
+          "frames": 1
+        },
+        "wall_cling": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png",
+          "grid": [2, 2],
+          "cell_size": 320,
+          "registration_anchor": "head",
+          "playback_fps": 6.0,
+          "loop": true
+        }
+      }
+    },
+    "attacks": {
+      "ground_forward": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png",
+        "grid": [6, 8],
+        "cell_size": 512,
+        "baked_source_scale": 0.75,
+        "playback_source_frames": [31, 32, 33],
+        "playback_fps": 6.0
+      },
+      "neutral_special": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png",
+        "grid": [6, 8],
+        "cell_size": 512,
+        "baked_source_scale": 0.675
+      },
+      "ground_combo_01": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
+        "grid": [6, 4],
+        "cell_size": 320,
+        "baked_source_scale": 0.9,
+        "runtime_animation": "Ground_Attack_Combo_2",
+        "runtime_source_frames": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        "strike_windows": [[2, 4], [9, 11]],
+        "character_alpha_hardened": true
+      },
+      "ground_combo_02": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
+        "grid": [5, 5],
+        "cell_size": 320,
+        "baked_source_scale": 0.9,
+        "runtime_animation": "Ground_Attack_Combo_1",
+        "runtime_source_frames": [0, 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        "strike_windows": [[3, 5]],
+        "character_alpha_hardened": true
+      },
+      "ground_combo_03_up": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03.png",
+        "grid": [6, 4],
+        "cell_size": 384,
+        "baked_source_scale": 1.1,
+        "playback_source_frames": [8, 9, 10, 11, 12, 8, 9, 10, 11, 12],
+        "playback_fps": 12.5,
+        "strike_windows": [[1, 4], [6, 9]],
+        "head_tilt_degrees": -18.0,
+        "head_tilt_source_frames": [9, 11, 12, 13],
+        "character_alpha_hardened": true
+      },
+      "ground_combo_04_up": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04.png",
+        "grid": [5, 5],
+        "cell_size": 384,
+        "baked_source_scale": 1.1,
+        "playback_source_frames": [8, 9, 10, 11, 12, 13, 8, 9, 10, 11, 12, 13],
+        "playback_fps": 14.4,
+        "strike_windows": [[1, 5], [7, 11]],
+        "head_tilt_degrees": -18.0,
+        "head_tilt_source_frames": [9, 13],
+        "character_alpha_hardened": true
+      },
+      "air_double_attack": {
+        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png",
+        "grid": [6, 5],
+        "cell_size": 416,
+        "baked_source_scale": 1.2,
+        "weapon_palette": "bronze",
+        "vfx_palette_preserved": true,
+        "character_alpha_hardened": true,
+        "transparent_gutter_pixels": 16
+      }
+    },
+    "weapon": {
+      "path": "res://Assets/Threadborne/Player/Normalized_V2/weapon/weavers_shuttle_v3.png",
+      "canvas_size": [1536, 1024],
+      "pose_compatible_with": "BackSheathedWeaverShuttle"
+    }
+  }
+}

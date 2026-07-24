@@ -75,3 +75,6 @@ shape = SubResource("RectangleShape2D_body")
 
 [node name="HitFlashComponent" parent="." index="8"]
 target_path = NodePath("../Visuals/Sprite2D")
+
+[node name="GrappleTargetComponent" parent="." index="9"]
+weight_class = 1

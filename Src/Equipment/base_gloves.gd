@@ -58,6 +58,15 @@ var player: CharacterBody2D = null
 @export var rope_idle_swing_stop_speed := 8.0
 @export var rope_jump_force := 760.0
 
+# Base hookshot behavior (enabled only by base_gloves.tscn).
+@export var hookshot_enabled := false
+@export var hookshot_pull_speed := 900.0
+@export var hookshot_surface_offset := 18.0
+@export var hookshot_arrival_distance := 8.0
+@export var hookshot_stall_time := 0.18
+@export var hookshot_arrival_damage := 10
+@export var hookshot_hitstun := 0.10
+
 # Climbing Variables
 @export var rope_climb_speed := 220.0
 @export var rope_min_length := 48.0
@@ -101,6 +110,12 @@ var grapple_spent_timer := 0.0
 var grapple_attached := false
 var grapple_attach_position := Vector2.ZERO
 var current_rope_length := 0.0
+var grapple_target: Node2D = null
+var grapple_target_local_position := Vector2.ZERO
+var grapple_collision_normal := Vector2.ZERO
+var hookshot_enemy_hurtbox: HurtboxComponent = null
+var hookshot_previous_distance := INF
+var hookshot_stall_timer := 0.0
 
 var active_rope_points: Array[Vector2] = []
 var active_rope_previous_points: Array[Vector2] = []
@@ -220,6 +235,9 @@ func is_base_grapple_restricting() -> bool:
 	if not player:
 		return false
 
+	if hookshot_enabled:
+		return true
+
 	if player.is_on_floor():
 		return false
 
@@ -234,6 +252,11 @@ func jump_off_grapple() -> bool:
 
 	if not player:
 		return false
+
+	if hookshot_enabled:
+		player.velocity = Vector2.ZERO
+		_begin_grapple_retract()
+		return true
 
 	var origin := get_grapple_origin_global_position()
 	var from_anchor := origin - grapple_attach_position
@@ -274,6 +297,12 @@ func _reset_active_grapple_visuals() -> void:
 	grapple_release_timer = 0.0
 	grapple_low_speed_timer = 0.0
 	grapple_spent_timer = 0.0
+	grapple_target = null
+	grapple_target_local_position = Vector2.ZERO
+	grapple_collision_normal = Vector2.ZERO
+	hookshot_enemy_hurtbox = null
+	hookshot_previous_distance = INF
+	hookshot_stall_timer = 0.0
 	active_rope_points.clear()
 	active_rope_previous_points.clear()
 
@@ -512,12 +541,15 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
+		grapple_collision_normal = grapple_raycast.get_collision_normal()
+		_capture_grapple_target(grapple_raycast.get_collider())
 
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		grapple_state = GrappleState.ATTACHED
 		AudioManager.play_sfx(&"grapple_connect")
-		AudioManager.play_loop(&"grapple_hanging")
+		if not hookshot_enabled:
+			AudioManager.play_loop(&"grapple_hanging")
 
 		current_rope_length = clamp(
 			get_grapple_origin_global_position().distance_to(grapple_attach_position),
@@ -526,6 +558,28 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		)
 
 		_update_active_grapple_visuals()
+
+func _capture_grapple_target(collider: Object) -> void:
+	grapple_target = collider as Node2D
+	if grapple_target:
+		grapple_target_local_position = grapple_target.to_local(grapple_attach_position)
+
+	hookshot_enemy_hurtbox = collider as HurtboxComponent
+	if not hookshot_enemy_hurtbox and collider is Node:
+		var collider_node := collider as Node
+		if collider_node.is_in_group("enemies"):
+			hookshot_enemy_hurtbox = collider_node.get_node_or_null("Hurtbox") as HurtboxComponent
+		elif collider_node.get_parent() and collider_node.get_parent().is_in_group("enemies"):
+			hookshot_enemy_hurtbox = collider_node.get_parent().get_node_or_null("Hurtbox") as HurtboxComponent
+
+	hookshot_previous_distance = INF
+	hookshot_stall_timer = 0.0
+
+func _update_moving_grapple_target() -> void:
+	if grapple_target and is_instance_valid(grapple_target):
+		grapple_attach_position = grapple_target.to_global(grapple_target_local_position)
+	else:
+		grapple_target = null
 
 func _notify_grapple_collider(collider: Object) -> void:
 	if not collider:
@@ -631,6 +685,10 @@ func apply_grapple_velocity(delta: float) -> void:
 	if grapple_state != GrappleState.ATTACHED:
 		return
 
+	if hookshot_enabled:
+		_apply_hookshot_pull(delta)
+		return
+
 	var origin: Vector2 = get_grapple_origin_global_position()
 	var from_anchor: Vector2 = origin - grapple_attach_position
 	var distance: float = from_anchor.length()
@@ -677,6 +735,48 @@ func apply_grapple_velocity(delta: float) -> void:
 	if player.has_method("get_momentum_grapple_pull_multiplier"):
 		pull_multiplier = player.get_momentum_grapple_pull_multiplier()
 	player.velocity -= rope_dir * excess * rope_limit_pull_strength * pull_multiplier * delta
+
+func _apply_hookshot_pull(delta: float) -> void:
+	_update_moving_grapple_target()
+
+	var destination := grapple_attach_position
+	if grapple_collision_normal.length_squared() > 0.001:
+		destination += grapple_collision_normal.normalized() * hookshot_surface_offset
+
+	var to_destination := destination - player.global_position
+	var distance := to_destination.length()
+	if distance <= hookshot_arrival_distance:
+		_finish_hookshot_pull()
+		return
+
+	if hookshot_previous_distance < INF and distance >= hookshot_previous_distance - 0.5:
+		hookshot_stall_timer += delta
+	else:
+		hookshot_stall_timer = 0.0
+	hookshot_previous_distance = distance
+
+	if hookshot_stall_timer >= hookshot_stall_time:
+		_finish_hookshot_pull()
+		return
+
+	player.velocity = to_destination.normalized() * minf(hookshot_pull_speed, distance / maxf(delta, 0.001))
+
+func _finish_hookshot_pull() -> void:
+	player.velocity = Vector2.ZERO
+	_apply_hookshot_arrival_hit()
+	_begin_grapple_retract()
+
+func _apply_hookshot_arrival_hit() -> void:
+	if not hookshot_enemy_hurtbox or not is_instance_valid(hookshot_enemy_hurtbox):
+		return
+
+	var damage := DamageData.new()
+	damage.amount = hookshot_arrival_damage
+	damage.hitstun = hookshot_hitstun
+	damage.hit_pause = 0.03
+	damage.source = player
+	damage.hit_position = grapple_attach_position
+	hookshot_enemy_hurtbox.receive_hit(damage)
 
 func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 	if absf(Input.get_axis("move_left", "move_right")) > 0.05:
@@ -735,6 +835,7 @@ func thread_mechanic(delta: float) -> void:
 			_update_active_grapple_visuals()
 
 		GrappleState.ATTACHED:
+			_update_moving_grapple_target()
 			grapple_tip_position = grapple_attach_position
 			grapple_tip_velocity = Vector2.ZERO
 

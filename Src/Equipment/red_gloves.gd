@@ -8,6 +8,8 @@ enum RedGrappleState {
 	TOWING,
 	SPENT,
 	ATTACHED,
+	PULLING_TARGET,
+	PULLING_PLAYER,
 	RETRACTING
 }
 
@@ -40,6 +42,19 @@ enum RedGrappleState {
 @export var range_drop_gravity_multiplier := 2.2
 @export var charged_modulate := Color(1.6, 0.48, 0.36, 1.0)
 
+@export_group("Red Grapple Combat")
+@export var minimum_grapple_damage := 12
+@export var maximum_grapple_damage := 55
+@export var grapple_damage_curve_power := 1.35
+@export var light_target_min_pull_speed := 500.0
+@export var light_target_max_pull_speed := 1250.0
+@export var light_target_arrival_distance := 54.0
+@export var player_pull_min_speed := 700.0
+@export var player_pull_max_speed := 1400.0
+@export var player_pull_surface_offset := 18.0
+@export var player_pull_arrival_distance := 8.0
+@export var red_pull_stall_time := 0.20
+
 var red_grapple_state: RedGrappleState = RedGrappleState.STOWED
 var _charge_amount := 0.0
 var _base_grapple_max_distance := 0.0
@@ -56,6 +71,9 @@ var _tow_strength := 0.0
 var _tension_timer := 0.0
 var _range_spent := false
 var _tow_visual_direction := Vector2.RIGHT
+var _red_grapple_target: GrappleTargetComponent = null
+var _red_pull_previous_distance := INF
+var _red_pull_stall_timer := 0.0
 
 func _ready() -> void:
 	super()
@@ -84,6 +102,7 @@ func on_equipped() -> void:
 	_tension_timer = 0.0
 	_range_spent = false
 	_tow_visual_direction = Vector2.RIGHT
+	_reset_red_combat_target()
 	_apply_red_raycast_settings()
 	_reset_charge_visuals()
 
@@ -96,10 +115,15 @@ func is_base_grapple_restricting() -> bool:
 		return true
 	if red_grapple_state == RedGrappleState.ATTACHED:
 		return grapple_attached
+	if red_grapple_state == RedGrappleState.PULLING_PLAYER:
+		return true
 	return false
 
 func forces_dash_animation() -> bool:
-	return red_grapple_state == RedGrappleState.TOWING
+	return (
+		red_grapple_state == RedGrappleState.TOWING
+		or red_grapple_state == RedGrappleState.PULLING_PLAYER
+	)
 
 func get_forced_dash_direction() -> Vector2:
 	if not forces_dash_animation():
@@ -137,6 +161,7 @@ func _can_red_detach_jump() -> bool:
 		red_grapple_state == RedGrappleState.TOWING
 		or red_grapple_state == RedGrappleState.SPENT
 		or red_grapple_state == RedGrappleState.ATTACHED
+		or red_grapple_state == RedGrappleState.PULLING_PLAYER
 	)
 
 func _get_red_detach_jump_force() -> float:
@@ -146,6 +171,7 @@ func _get_red_detach_jump_force() -> float:
 
 func apply_grapple_velocity(delta: float) -> void:
 	_process_tow_pull(delta)
+	_process_red_player_pull(delta)
 	_apply_attached_rope_limit(delta)
 
 func thread_mechanic(delta: float) -> void:
@@ -184,6 +210,18 @@ func thread_mechanic(delta: float) -> void:
 			_process_red_spent(delta)
 
 		RedGrappleState.ATTACHED:
+			if Input.is_action_just_pressed(grapple_input_action):
+				_begin_red_retract()
+				return
+			_process_red_attached(delta)
+
+		RedGrappleState.PULLING_TARGET:
+			if Input.is_action_just_pressed(grapple_input_action):
+				_begin_red_retract()
+				return
+			_process_red_target_pull(delta)
+
+		RedGrappleState.PULLING_PLAYER:
 			if Input.is_action_just_pressed(grapple_input_action):
 				_begin_red_retract()
 				return
@@ -334,10 +372,17 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
+		grapple_collision_normal = grapple_raycast.get_collision_normal()
+		_capture_grapple_target(collider)
+		_red_grapple_target = _find_grapple_target_component(collider)
+		_apply_red_grapple_damage(collider)
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		AudioManager.play_sfx(&"grapple_connect")
-		_begin_red_attached(true)
+		if _red_grapple_target and _red_grapple_target.is_pullable():
+			_begin_red_target_pull()
+		else:
+			_begin_red_player_pull()
 
 func _begin_red_retract() -> void:
 	AudioManager.stop_loop(&"grapple_hanging")
@@ -346,6 +391,7 @@ func _begin_red_retract() -> void:
 	grapple_attached = false
 	grapple_tip_velocity = Vector2.ZERO
 	_tow_strength = 0.0
+	_reset_red_combat_target()
 
 func _begin_red_spent() -> void:
 	grapple_state = GrappleState.FIRING
@@ -386,10 +432,105 @@ func _process_red_spent(delta: float) -> void:
 
 func _process_red_attached(delta: float) -> void:
 	if grapple_attached:
+		_update_moving_grapple_target()
 		grapple_tip_position = grapple_attach_position
 	grapple_tip_velocity = Vector2.ZERO
 	_simulate_active_rope(delta, true)
 	_update_active_grapple_visuals()
+
+func _begin_red_target_pull() -> void:
+	grapple_state = GrappleState.ATTACHED
+	red_grapple_state = RedGrappleState.PULLING_TARGET
+	grapple_attached = true
+	_red_pull_previous_distance = INF
+	_red_pull_stall_timer = 0.0
+
+func _begin_red_player_pull() -> void:
+	grapple_state = GrappleState.ATTACHED
+	red_grapple_state = RedGrappleState.PULLING_PLAYER
+	grapple_attached = true
+	_red_pull_previous_distance = INF
+	_red_pull_stall_timer = 0.0
+
+func _process_red_target_pull(delta: float) -> void:
+	if not player or not _red_grapple_target or not is_instance_valid(_red_grapple_target):
+		_begin_red_retract()
+		return
+
+	var pull_speed := lerpf(light_target_min_pull_speed, light_target_max_pull_speed, _released_charge_curve)
+	var distance := _red_grapple_target.pull_toward(player.global_position, pull_speed, delta)
+	_update_moving_grapple_target()
+	grapple_tip_position = grapple_attach_position
+	_simulate_active_rope(delta, true)
+	_update_active_grapple_visuals()
+
+	if distance <= light_target_arrival_distance or _red_pull_has_stalled(distance, delta):
+		_begin_red_retract()
+
+func _process_red_player_pull(delta: float) -> void:
+	if not player or red_grapple_state != RedGrappleState.PULLING_PLAYER:
+		return
+
+	_update_moving_grapple_target()
+	var destination := grapple_attach_position
+	if grapple_collision_normal.length_squared() > 0.001:
+		destination += grapple_collision_normal.normalized() * player_pull_surface_offset
+
+	var to_destination := destination - player.global_position
+	var distance := to_destination.length()
+	if distance <= player_pull_arrival_distance or _red_pull_has_stalled(distance, delta):
+		player.velocity = Vector2.ZERO
+		_begin_red_retract()
+		return
+
+	var pull_speed := lerpf(player_pull_min_speed, player_pull_max_speed, _released_charge_curve)
+	player.velocity = to_destination.normalized() * minf(pull_speed, distance / maxf(delta, 0.001))
+	_tow_visual_direction = to_destination.normalized()
+
+func _red_pull_has_stalled(distance: float, delta: float) -> bool:
+	if _red_pull_previous_distance < INF and distance >= _red_pull_previous_distance - 0.5:
+		_red_pull_stall_timer += delta
+	else:
+		_red_pull_stall_timer = 0.0
+	_red_pull_previous_distance = distance
+	return _red_pull_stall_timer >= red_pull_stall_time
+
+func _find_grapple_target_component(collider: Object) -> GrappleTargetComponent:
+	var node := collider as Node
+	if not node:
+		return null
+
+	if node is GrappleTargetComponent:
+		return node as GrappleTargetComponent
+
+	var owner_node := node
+	if node is HurtboxComponent and (node as HurtboxComponent).hurtbox_owner:
+		owner_node = (node as HurtboxComponent).hurtbox_owner
+	elif node.get_parent() and node.get_parent().is_in_group("enemies"):
+		owner_node = node.get_parent()
+
+	return owner_node.get_node_or_null("GrappleTargetComponent") as GrappleTargetComponent
+
+func _apply_red_grapple_damage(collider: Object) -> void:
+	var hurtbox := collider as HurtboxComponent
+	if not hurtbox and _red_grapple_target:
+		hurtbox = _red_grapple_target.get_hurtbox()
+	if not hurtbox:
+		return
+
+	var damage := DamageData.new()
+	var damage_weight := pow(_released_charge_curve, grapple_damage_curve_power)
+	damage.amount = roundi(lerpf(float(minimum_grapple_damage), float(maximum_grapple_damage), damage_weight))
+	damage.hitstun = lerpf(0.10, 0.28, _released_charge_curve)
+	damage.hit_pause = lerpf(0.03, 0.08, _released_charge_curve)
+	damage.source = player
+	damage.hit_position = grapple_attach_position
+	hurtbox.receive_hit(damage)
+
+func _reset_red_combat_target() -> void:
+	_red_grapple_target = null
+	_red_pull_previous_distance = INF
+	_red_pull_stall_timer = 0.0
 
 func _process_tow_pull(delta: float) -> void:
 	if not player:

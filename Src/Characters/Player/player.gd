@@ -88,7 +88,12 @@ const SIT_FPS := 12.0
 @export var max_fall_speed: float = 1500.0
 @export var coyote_time: float = 0.1
 
+@export_group("Movement Animation")
+@export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
+@export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
+
 # Base grapple movement while rope is taut.
+@export_group("Base Grapple Movement")
 @export var base_grapple_steer_speed: float = 120.0
 @export var base_grapple_steer_accel: float = 500.0
 
@@ -109,29 +114,29 @@ const SIT_FPS := 12.0
 @export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
 @export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.625
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
-@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 0.675
+@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 1.0
 @export var neutral_special_visual_offset := Vector2(0.0, -20.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
 @export_group("Attack Animation Visuals")
-@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 0.75
+@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
-@export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 0.9
-@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.1
-@export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.2
+@export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
 @export_group("Ground Attack Combo")
 @export_range(0.05, 1.0, 0.01) var ground_combo_reset_window := 0.45
-@export var ground_combo_1_first_strike_frames := Vector2i(4, 6)
-@export var ground_combo_1_second_strike_frames := Vector2i(11, 13)
-@export var ground_combo_2_first_strike_frames := Vector2i(3, 5)
-@export var ground_combo_2_second_strike_frames := Vector2i(8, 10)
-@export var ground_up_combo_1_first_strike_frames := Vector2i(8, 11)
-@export var ground_up_combo_1_second_strike_frames := Vector2i(19, 22)
-@export var ground_up_combo_2_first_strike_frames := Vector2i(9, 12)
-@export var ground_up_combo_2_second_strike_frames := Vector2i(15, 17)
+@export var ground_combo_1_first_strike_frames := Vector2i(3, 5)
+@export var ground_combo_1_second_strike_frames := Vector2i(-1, -1)
+@export var ground_combo_2_first_strike_frames := Vector2i(2, 4)
+@export var ground_combo_2_second_strike_frames := Vector2i(9, 11)
+@export var ground_up_combo_1_first_strike_frames := Vector2i(1, 4)
+@export var ground_up_combo_1_second_strike_frames := Vector2i(6, 9)
+@export var ground_up_combo_2_first_strike_frames := Vector2i(1, 5)
+@export var ground_up_combo_2_second_strike_frames := Vector2i(7, 11)
 @export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 90.0
 @export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 145.0
 @export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 128.0
@@ -305,6 +310,7 @@ var current_body_anim := ""
 var current_equip_anim := ""
 var current_weapon_pose_anim := ""
 var current_attack_body_anim := "Attack"
+var landing_animation_timer := 0.0
 
 var is_attacking := false
 var is_hurt := false
@@ -526,6 +532,12 @@ func _physics_process(delta: float) -> void:
 		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
+	if is_on_floor() and not was_on_floor and not god_mode_enabled:
+		landing_animation_timer = landing_animation_duration
+	elif not is_on_floor():
+		landing_animation_timer = 0.0
+	elif landing_animation_timer > 0.0:
+		landing_animation_timer = maxf(landing_animation_timer - delta, 0.0)
 	_process_movement_audio(delta, was_on_floor)
 	_process_movement_momentum(delta)
 
@@ -838,14 +850,16 @@ func update_animations(dir: float) -> void:
 
 	elif not is_on_floor():
 		player_animation.rotation = 0.0
-		if velocity.y < -120.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
-			play_character_anim("Jump_Ascent", "equip_jump_ascent")
-		elif velocity.y > 120.0 and player_animation.sprite_frames.has_animation("Jump_Descent"):
-			play_character_anim("Jump_Descent", "equip_jump_descent")
-		elif velocity.y <= 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
+		if absf(velocity.y) <= jump_apex_velocity_threshold and player_animation.sprite_frames.has_animation("Jump_Apex"):
+			play_character_anim("Jump_Apex", "equip_jump_ascent")
+		elif velocity.y < 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent", "equip_jump_ascent")
 		else:
 			play_character_anim("Jump_Descent", "equip_jump_descent")
+
+	elif landing_animation_timer > 0.0 and absf(dir) < 0.01 and player_animation.sprite_frames.has_animation("Jump_Land"):
+		player_animation.rotation = 0.0
+		play_character_anim("Jump_Land", "equip_idle")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
 		player_animation.rotation = 0.0
@@ -1012,6 +1026,8 @@ func start_attack(is_special := false) -> void:
 func _begin_ground_combo_attack(family: StringName) -> void:
 	if family != ground_combo_family or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo:
 		ground_combo_step = 0
+	elif family == &"forward":
+		ground_combo_step = mini(ground_combo_step + 1, 1)
 	else:
 		ground_combo_step = (ground_combo_step + 1) % 2
 
@@ -1077,6 +1093,9 @@ func _update_ground_combo_attack() -> void:
 func _finish_ground_combo_attack() -> void:
 	var queued_family := ground_combo_queued_family
 	var should_chain := ground_combo_queued and queued_family != &""
+	var completed_forward_finisher := (
+		ground_combo_family == &"forward" and ground_combo_step >= 1
+	)
 	attack_hitbox.disable()
 	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 	is_attacking = false
@@ -1084,10 +1103,13 @@ func _finish_ground_combo_attack() -> void:
 	ground_combo_active_strike = -1
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
-	ground_combo_reset_timer = ground_combo_reset_window
+	if completed_forward_finisher:
+		_reset_ground_combo_chain()
+	else:
+		ground_combo_reset_timer = ground_combo_reset_window
 	_reset_weapon_visuals()
 
-	if should_chain and not is_dead and not is_hurt:
+	if should_chain and not completed_forward_finisher and not is_dead and not is_hurt:
 		attack_cooldown_timer = 0.0
 		_begin_ground_combo_attack(queued_family)
 
