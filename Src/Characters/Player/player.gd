@@ -33,10 +33,11 @@ const SIT_FPS := 12.0
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
 @onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
 @onready var attack_hitbox: HitboxComponent = $AttackHitbox as HitboxComponent
+@onready var attack_collision_polygon: CollisionPolygon2D = $AttackHitbox/SlashCollisionPolygon
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
 @onready var weapon_animation_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
-@onready var attack_slash_sprite: Sprite2D = $EquipmentMount/AttackSwingRoot/AttackSlashVFX/SlashSprite
+@onready var attack_hitbox_anchor: Node2D = $EquipmentMount/AttackSwingRoot/AttackHitboxAnchor/HitboxTransform
 @onready var wall_cling_vfx: AnimatedSprite2D = $WallClingVFX as AnimatedSprite2D
 
 # ===============================
@@ -108,10 +109,40 @@ const SIT_FPS := 12.0
 @export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
 @export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.625
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
-@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 0.75
+@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 0.675
+@export var neutral_special_visual_offset := Vector2(0.0, -20.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
+
+@export_group("Attack Animation Visuals")
+@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 0.75
+@export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
+@export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 0.9
+@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.1
+@export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.2
+
+@export_group("Ground Attack Combo")
+@export_range(0.05, 1.0, 0.01) var ground_combo_reset_window := 0.45
+@export var ground_combo_1_first_strike_frames := Vector2i(4, 6)
+@export var ground_combo_1_second_strike_frames := Vector2i(11, 13)
+@export var ground_combo_2_first_strike_frames := Vector2i(3, 5)
+@export var ground_combo_2_second_strike_frames := Vector2i(8, 10)
+@export var ground_up_combo_1_first_strike_frames := Vector2i(8, 11)
+@export var ground_up_combo_1_second_strike_frames := Vector2i(19, 22)
+@export var ground_up_combo_2_first_strike_frames := Vector2i(9, 12)
+@export var ground_up_combo_2_second_strike_frames := Vector2i(15, 17)
+@export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 90.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 145.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 128.0
+
+@export_group("Air Double Attack")
+@export var air_attack_first_strike_frames := Vector2i(5, 7)
+@export var air_attack_second_strike_frames := Vector2i(16, 18)
+@export_range(45.0, 180.0, 1.0) var air_attack_hitbox_arc_degrees := 90.0
+@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 128.0
+@export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
+@export_range(0.5, 1.5, 0.01) var double_attack_second_strike_pitch := 1.08
 
 @export_group("Momentum Rules")
 @export var momentum_movement_report_interval := 0.16
@@ -288,7 +319,20 @@ var attack_active_started := false
 var attack_vfx_started := false
 var attack_active_finished := false
 var _player_default_visual_scale := Vector2.ONE
+var _player_default_visual_position := Vector2.ZERO
 var current_attack_is_special := false
+var current_attack_uses_ground_combo := false
+var current_attack_uses_air_double := false
+var ground_combo_family: StringName = &""
+var ground_combo_step := -1
+var ground_combo_reset_timer := 0.0
+var ground_combo_attack_duration := 0.0
+var ground_combo_active_strike := -1
+var ground_combo_queued := false
+var ground_combo_queued_family: StringName = &""
+var air_attack_duration := 0.0
+var air_attack_active_strike := -1
+var _default_attack_hitbox_polygon := PackedVector2Array()
 
 # Equipment slots
 var current_gloves: Node = null
@@ -317,6 +361,8 @@ func _ready() -> void:
 	_debug_original_collision_layer = collision_layer
 	_debug_original_collision_mask = collision_mask
 	_player_default_visual_scale = player_animation.scale
+	_player_default_visual_position = player_animation.position
+	_default_attack_hitbox_polygon = attack_collision_polygon.polygon
 
 	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
@@ -766,6 +812,7 @@ func update_animations(dir: float) -> void:
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		player_animation.rotation = 0.0
+		_apply_attack_visual_tuning()
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		return
 	
@@ -867,6 +914,11 @@ func update_combat_timers(delta: float) -> void:
 	if attack_cooldown_timer > 0.0:
 		attack_cooldown_timer -= delta
 
+	if not is_attacking and ground_combo_reset_timer > 0.0:
+		ground_combo_reset_timer -= delta
+		if ground_combo_reset_timer <= 0.0:
+			_reset_ground_combo_chain()
+
 	if hurt_timer > 0.0:
 		hurt_timer -= delta
 		if hurt_timer <= 0.0:
@@ -876,7 +928,14 @@ func update_combat_timers(delta: float) -> void:
 		return
 
 	attack_timer += delta
-	_sync_attack_hitbox_to_slash()
+	_sync_attack_hitbox_to_anchor()
+	if current_attack_uses_ground_combo:
+		_update_ground_combo_attack()
+		return
+	if current_attack_uses_air_double:
+		_update_air_double_attack()
+		return
+
 	var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
 	var windup := player_stats.attack_windup / attack_speed_multiplier
 	var active_time := player_stats.attack_active_time / attack_speed_multiplier
@@ -893,7 +952,7 @@ func update_combat_timers(delta: float) -> void:
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
-		_sync_attack_hitbox_to_slash()
+		_sync_attack_hitbox_to_anchor()
 		attack_hitbox.damage = _build_attack_damage()
 		attack_hitbox.enable()
 
@@ -908,14 +967,29 @@ func update_combat_timers(delta: float) -> void:
 		_reset_weapon_visuals()
 
 func start_attack(is_special := false) -> void:
+	if not is_special and is_attacking and current_attack_uses_ground_combo:
+		ground_combo_queued = true
+		ground_combo_queued_family = _get_ground_combo_family(_get_attack_input_direction())
+		return
+
 	if not can_start_attack():
 		return
 	if is_special and not spend_action_points(1):
 		return
 
+	attack_direction = _get_attack_input_direction()
+	if not is_special and is_on_floor() and not _is_grapple_restricting():
+		_begin_ground_combo_attack(_get_ground_combo_family(attack_direction))
+		return
+	if not is_special and not is_on_floor():
+		_begin_air_double_attack(attack_direction)
+		return
+
 	AudioManager.play_sfx(&"player_attack")
 	is_attacking = true
 	current_attack_is_special = is_special
+	current_attack_uses_ground_combo = false
+	current_attack_uses_air_double = false
 	attack_timer = 0.0
 	var cooldown := player_stats.attack_cooldown
 	if current_attack_is_special:
@@ -924,18 +998,241 @@ func start_attack(is_special := false) -> void:
 	attack_active_started = false
 	attack_vfx_started = not current_attack_is_special
 	attack_active_finished = false
-	attack_direction = _get_attack_input_direction()
 	current_attack_body_anim = _get_special_body_animation() if current_attack_is_special else _get_attack_body_animation()
 	update_equipment_facing()
 	if not current_attack_is_special:
 		_play_weapon_attack_anim()
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
-		if current_attack_is_special:
-			player_animation.scale = _player_default_visual_scale * neutral_special_visual_scale_multiplier
+		_apply_attack_visual_tuning()
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+
+func _begin_ground_combo_attack(family: StringName) -> void:
+	if family != ground_combo_family or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo:
+		ground_combo_step = 0
+	else:
+		ground_combo_step = (ground_combo_step + 1) % 2
+
+	ground_combo_family = family
+	ground_combo_reset_timer = 0.0
+	ground_combo_queued = false
+	ground_combo_queued_family = &""
+	ground_combo_active_strike = -1
+	current_attack_uses_ground_combo = true
+	current_attack_is_special = false
+	is_attacking = true
+	attack_timer = 0.0
+	attack_active_started = false
+	attack_active_finished = false
+
+	if family == &"up":
+		attack_direction = Vector2.UP
+		current_attack_body_anim = "Ground_Up_Combo_%d" % (ground_combo_step + 1)
+	else:
+		attack_direction = Vector2(float(last_direction), 0.0)
+		current_attack_body_anim = "Ground_Attack_Combo_%d" % (ground_combo_step + 1)
+
+	if player_animation:
+		player_animation.flip_h = last_direction < 0
+		var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
+		var frame_count := player_animation.sprite_frames.get_frame_count(current_attack_body_anim)
+		var animation_fps := player_animation.sprite_frames.get_animation_speed(current_attack_body_anim)
+		ground_combo_attack_duration = float(frame_count) / maxf(animation_fps * attack_speed_multiplier, 0.1)
+		player_animation.speed_scale = attack_speed_multiplier
+
+	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
+	attack_collision_polygon.polygon = _build_ground_combo_sector_polygon()
+	attack_hitbox.damage = _build_attack_damage()
+	attack_hitbox.disable()
+	_sync_attack_hitbox_to_anchor()
+	_play_weapon_attack_anim()
+
+	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		_apply_attack_visual_tuning()
+		play_character_anim(current_attack_body_anim, "equip_idle")
+		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
+			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+
+func _update_ground_combo_attack() -> void:
+	var strike_frames := _get_ground_combo_strike_frames()
+	var next_strike := _get_strike_for_frame(
+		player_animation.frame,
+		strike_frames[0],
+		strike_frames[1]
+	)
+
+	if next_strike != ground_combo_active_strike:
+		attack_hitbox.disable()
+		ground_combo_active_strike = next_strike
+		if ground_combo_active_strike >= 0:
+			attack_hitbox.damage = _build_attack_damage()
+			attack_hitbox.enable()
+			_play_double_attack_strike_audio(ground_combo_active_strike)
+
+	if attack_timer >= ground_combo_attack_duration:
+		_finish_ground_combo_attack()
+
+func _finish_ground_combo_attack() -> void:
+	var queued_family := ground_combo_queued_family
+	var should_chain := ground_combo_queued and queued_family != &""
+	attack_hitbox.disable()
+	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+	is_attacking = false
+	current_attack_uses_ground_combo = false
+	ground_combo_active_strike = -1
+	ground_combo_queued = false
+	ground_combo_queued_family = &""
+	ground_combo_reset_timer = ground_combo_reset_window
+	_reset_weapon_visuals()
+
+	if should_chain and not is_dead and not is_hurt:
+		attack_cooldown_timer = 0.0
+		_begin_ground_combo_attack(queued_family)
+
+func _begin_air_double_attack(direction: Vector2) -> void:
+	current_attack_is_special = false
+	current_attack_uses_ground_combo = false
+	current_attack_uses_air_double = true
+	is_attacking = true
+	attack_timer = 0.0
+	attack_active_started = false
+	attack_active_finished = false
+	air_attack_active_strike = -1
+	current_attack_body_anim = "Air_Double_Attack"
+
+	if direction.length() <= ATTACK_DIRECTION_DEADZONE:
+		direction = Vector2(float(last_direction), 0.0)
+	attack_direction = direction.normalized()
+	if abs(attack_direction.x) > ATTACK_DIRECTION_DEADZONE:
+		last_direction = int(sign(attack_direction.x))
+
+	if player_animation:
+		player_animation.flip_h = last_direction < 0
+		var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
+		var frame_count := player_animation.sprite_frames.get_frame_count(current_attack_body_anim)
+		var animation_fps := player_animation.sprite_frames.get_animation_speed(current_attack_body_anim)
+		air_attack_duration = float(frame_count) / maxf(animation_fps * attack_speed_multiplier, 0.1)
+		player_animation.speed_scale = attack_speed_multiplier
+
+	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
+	attack_collision_polygon.polygon = _build_attack_sector_polygon(
+		air_attack_hitbox_arc_degrees,
+		air_attack_hitbox_radius
+	)
+	attack_hitbox.damage = _build_attack_damage()
+	attack_hitbox.disable()
+	_sync_attack_hitbox_to_anchor()
+	_play_weapon_attack_anim()
+
+	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		_apply_attack_visual_tuning()
+		play_character_anim(current_attack_body_anim, "equip_idle")
+		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
+			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+
+func _update_air_double_attack() -> void:
+	var next_strike := _get_strike_for_frame(
+		player_animation.frame,
+		air_attack_first_strike_frames,
+		air_attack_second_strike_frames
+	)
+
+	if next_strike != air_attack_active_strike:
+		attack_hitbox.disable()
+		air_attack_active_strike = next_strike
+		if air_attack_active_strike >= 0:
+			attack_hitbox.damage = _build_attack_damage()
+			attack_hitbox.enable()
+			_play_double_attack_strike_audio(air_attack_active_strike)
+
+	if attack_timer >= air_attack_duration:
+		_finish_air_double_attack()
+
+func _finish_air_double_attack() -> void:
+	attack_hitbox.disable()
+	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+	is_attacking = false
+	current_attack_uses_air_double = false
+	air_attack_active_strike = -1
+	_reset_weapon_visuals()
+
+func _get_ground_combo_strike_frames() -> Array[Vector2i]:
+	match current_attack_body_anim:
+		"Ground_Attack_Combo_1":
+			return [ground_combo_1_first_strike_frames, ground_combo_1_second_strike_frames]
+		"Ground_Attack_Combo_2":
+			return [ground_combo_2_first_strike_frames, ground_combo_2_second_strike_frames]
+		"Ground_Up_Combo_1":
+			return [ground_up_combo_1_first_strike_frames, ground_up_combo_1_second_strike_frames]
+		"Ground_Up_Combo_2":
+			return [ground_up_combo_2_first_strike_frames, ground_up_combo_2_second_strike_frames]
+		_:
+			return [Vector2i(-1, -1), Vector2i(-1, -1)]
+
+func _get_strike_for_frame(frame: int, first_frames: Vector2i, second_frames: Vector2i) -> int:
+	if frame >= first_frames.x and frame <= first_frames.y:
+		return 0
+	if frame >= second_frames.x and frame <= second_frames.y:
+		return 1
+	return -1
+
+func _play_double_attack_strike_audio(strike_index: int) -> void:
+	var strike_audio := AudioManager.play_sfx(&"player_attack", 0.0, 0.0)
+	if not strike_audio:
+		return
+	strike_audio.pitch_scale *= (
+		double_attack_first_strike_pitch
+		if strike_index == 0
+		else double_attack_second_strike_pitch
+	)
+
+func _reset_ground_combo_chain() -> void:
+	ground_combo_family = &""
+	ground_combo_step = -1
+	ground_combo_reset_timer = 0.0
+	ground_combo_queued = false
+	ground_combo_queued_family = &""
+
+func _cancel_ground_combo_attack() -> void:
+	current_attack_uses_ground_combo = false
+	ground_combo_active_strike = -1
+	if attack_collision_polygon:
+		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+	_reset_ground_combo_chain()
+
+func _cancel_air_double_attack() -> void:
+	current_attack_uses_air_double = false
+	air_attack_active_strike = -1
+	if attack_collision_polygon:
+		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+
+func _get_ground_combo_family(direction: Vector2) -> StringName:
+	if direction.y < -0.6 and abs(direction.y) >= abs(direction.x):
+		return &"up"
+	return &"forward"
+
+func _build_ground_combo_sector_polygon() -> PackedVector2Array:
+	var hitbox_radius := (
+		ground_combo_up_hitbox_radius
+		if ground_combo_family == &"up"
+		else ground_combo_forward_hitbox_radius
+	)
+	return _build_attack_sector_polygon(
+		ground_combo_hitbox_arc_degrees,
+		hitbox_radius
+	)
+
+func _build_attack_sector_polygon(arc_degrees: float, radius: float) -> PackedVector2Array:
+	var points := PackedVector2Array([Vector2.ZERO])
+	var half_arc := deg_to_rad(arc_degrees * 0.5)
+	const ARC_SEGMENTS := 6
+	for index in range(ARC_SEGMENTS + 1):
+		var weight := float(index) / float(ARC_SEGMENTS)
+		var angle := lerpf(-half_arc, half_arc, weight)
+		points.append(Vector2.from_angle(angle) * radius)
+	return points
 
 func can_start_attack() -> bool:
 	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
@@ -969,6 +1266,8 @@ func _play_weapon_pose_anim(body_anim: String) -> void:
 func _reset_weapon_visuals() -> void:
 	if player_animation:
 		player_animation.scale = _player_default_visual_scale
+		player_animation.position = _player_default_visual_position
+		player_animation.speed_scale = 1.0
 	if attack_swing_root:
 		attack_swing_root.rotation = 0.0
 
@@ -984,6 +1283,29 @@ func _reset_weapon_visuals() -> void:
 
 	weapon_animation_player.play("RESET")
 	weapon_animation_player.seek(0.0, true)
+
+func _apply_attack_visual_tuning() -> void:
+	if not player_animation:
+		return
+
+	var scale_multiplier := 1.0
+	var visual_offset := Vector2.ZERO
+	if current_attack_is_special:
+		scale_multiplier = neutral_special_visual_scale_multiplier
+		visual_offset = neutral_special_visual_offset
+	elif current_attack_body_anim == "Attack":
+		scale_multiplier = grounded_forward_visual_scale_multiplier
+		visual_offset = grounded_forward_visual_offset
+	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
+		scale_multiplier = ground_combo_forward_visual_scale_multiplier
+	elif current_attack_body_anim.begins_with("Ground_Up_Combo_"):
+		scale_multiplier = ground_combo_up_visual_scale_multiplier
+	elif current_attack_body_anim == "Air_Double_Attack":
+		scale_multiplier = air_attack_visual_scale_multiplier
+	if player_animation.flip_h:
+		visual_offset.x = -visual_offset.x
+	player_animation.scale = _player_default_visual_scale * scale_multiplier
+	player_animation.position = _player_default_visual_position + visual_offset
 
 func _get_attack_input_direction() -> Vector2:
 	var direction := AimHelperScript.get_aim_direction(
@@ -1043,13 +1365,19 @@ func _apply_attack_direction() -> void:
 	if attack_swing_root and equipment_mount:
 		var local_direction := equipment_mount.global_transform.basis_xform_inv(direction).normalized()
 		attack_swing_root.rotation = local_direction.angle()
-		_sync_attack_hitbox_to_slash()
+		_sync_attack_hitbox_to_anchor()
 
-func _sync_attack_hitbox_to_slash() -> void:
-	if not attack_hitbox or not attack_slash_sprite:
+func _sync_attack_hitbox_to_anchor() -> void:
+	if not attack_hitbox:
+		return
+	if current_attack_uses_ground_combo or current_attack_uses_air_double:
+		attack_hitbox.global_transform = global_transform
+		attack_hitbox.global_rotation = attack_direction.angle()
+		return
+	if not attack_hitbox_anchor:
 		return
 
-	attack_hitbox.global_transform = attack_slash_sprite.global_transform
+	attack_hitbox.global_transform = attack_hitbox_anchor.global_transform
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
@@ -1561,6 +1889,8 @@ func _on_damaged(damage: DamageData) -> void:
 	hurt_timer = player_stats.hurt_time
 	is_attacking = false
 	current_attack_is_special = false
+	_cancel_ground_combo_attack()
+	_cancel_air_double_attack()
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
 	AudioManager.play_sfx(&"player_damage")
@@ -1594,6 +1924,8 @@ func _on_died(_damage: DamageData) -> void:
 	death_reset_started = true
 	is_attacking = false
 	current_attack_is_special = false
+	_cancel_ground_combo_attack()
+	_cancel_air_double_attack()
 	attack_hitbox.disable()
 	_reset_weapon_visuals()
 	call_deferred("_show_game_over_after_death")
@@ -1628,6 +1960,8 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	hurt_timer = 0.0
 	is_attacking = false
 	current_attack_is_special = false
+	_cancel_ground_combo_attack()
+	_cancel_air_double_attack()
 	attack_timer = 0.0
 	attack_cooldown_timer = 0.0
 	attack_active_started = false
@@ -1691,6 +2025,8 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	is_attacking = false
 	is_hurt = false
 	current_attack_is_special = false
+	_cancel_ground_combo_attack()
+	_cancel_air_double_attack()
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 	attack_timer = 0.0
