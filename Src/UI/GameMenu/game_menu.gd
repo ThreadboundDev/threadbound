@@ -19,7 +19,8 @@ const CONTROL_BINDINGS := [
 	{"node": "Dash", "label": "DASH", "actions": [&"Dash"], "layout_nodes": {&"ps5": "CircleButton"}},
 	{"node": "Grapple", "label": "GRAPPLE", "actions": [&"Grapple"], "keyboard_input": "RMB", "layout_nodes": {&"ps5": "R2Button"}},
 	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB", "layout_nodes": {&"ps5": "SquareButton"}},
-	{"node": "SpecialAttack", "label": "SPECIAL ATTACK", "actions": [&"SpecialAttack"], "keyboard_input": "Q", "layout_nodes": {&"ps5": "TriangleButton"}},
+	{"node": "SpecialAttack", "label": "SPECIAL + DIRECTION", "actions": [&"SpecialAttack"], "keyboard_input": "Q", "layout_nodes": {&"ps5": "TriangleButton"}},
+	{"node": "Meditate", "label": "MEDITATE (HOLD)", "actions": [&"Meditate"], "keyboard_input": "V"},
 	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"], "layout_nodes": {&"ps5": "DPadUp"}},
 	{"node": "Map", "label": "MAP", "actions": [&"open_map"], "layout_nodes": {&"ps5": "DPadLeft"}},
 	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"], "layout_nodes": {&"ps5": "DPadDown"}},
@@ -256,6 +257,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 108
 	add_to_group("game_menu")
+	_ensure_keyboard_binding_row("SpecialAttack", "Attack", Vector2(1040.0, 84.0))
+	_ensure_keyboard_binding_row("Meditate", "Attack", Vector2(1040.0, 126.0))
 
 	for i in tab_labels.size():
 		var tab := tab_labels[i]
@@ -281,6 +284,18 @@ func _ready() -> void:
 	_update_equipped_slot_items()
 	_update_inventory_threads()
 	_update_map_tracker()
+
+func _ensure_keyboard_binding_row(node_name: String, template_name: String, row_position: Vector2) -> void:
+	var bindings := get_node_or_null("MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings")
+	if not bindings or bindings.has_node(node_name):
+		return
+	var template := bindings.get_node_or_null(template_name) as Control
+	if not template:
+		return
+	var row := template.duplicate() as Control
+	row.name = node_name
+	row.position = row_position
+	bindings.add_child(row)
 
 func _process(_delta: float) -> void:
 	if TAB_ORDER[_selected_index] == &"Map":
