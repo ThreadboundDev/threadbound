@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/grapple/verify_base_grapple.gd" id="1_verify"]
+
+[node name="VerifyBaseGrapple" type="Node"]
+script = ExtResource("1_verify")
