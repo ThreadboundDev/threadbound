@@ -142,6 +142,7 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
 @export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var ground_combo_forward_finisher_visual_scale_multiplier := 1.15
 @export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.0
 @export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
@@ -844,12 +845,16 @@ func _try_grab_ledge() -> bool:
 			direction = int(-signf(normal_x))
 	var space := get_world_2d().direct_space_state
 	var wall_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -12.0), global_position + Vector2(direction * ledge_forward_reach, -12.0), collision_mask, [get_rid()])
-	if space.intersect_ray(wall_query).is_empty():
+	var wall_hit := space.intersect_ray(wall_query)
+	if wall_hit.is_empty():
 		return false
 	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * ledge_forward_reach, -ledge_head_height), collision_mask, [get_rid()])
 	if not space.intersect_ray(clearance_query).is_empty():
 		return false
-	var top_x := global_position.x + direction * ledge_forward_reach
+	# Sample just beyond the wall face. Using the full reach places the vertical
+	# ray deep inside wide platforms, where a ray that starts inside collision
+	# reports no surface and makes ledge grab impossible.
+	var top_x: float = (wall_hit.position as Vector2).x + direction * 2.0
 	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, global_position.y - ledge_head_height - 30.0), Vector2(top_x, global_position.y + 12.0), collision_mask, [get_rid()])
 	var top_hit := space.intersect_ray(top_query)
 	if top_hit.is_empty():
@@ -1446,6 +1451,8 @@ func _apply_attack_visual_tuning() -> void:
 	elif current_attack_body_anim == "Attack":
 		scale_multiplier = grounded_forward_visual_scale_multiplier
 		visual_offset = grounded_forward_visual_offset
+	elif current_attack_body_anim == "Ground_Attack_Combo_2":
+		scale_multiplier = ground_combo_forward_finisher_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
 		scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Up_Combo_"):
