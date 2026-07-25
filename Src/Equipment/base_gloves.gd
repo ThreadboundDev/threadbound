@@ -62,8 +62,10 @@ var player: CharacterBody2D = null
 @export var hookshot_enabled := false
 @export var hookshot_pull_speed := 900.0
 @export var hookshot_surface_offset := 18.0
+@export var hookshot_surface_padding := 2.0
 @export var hookshot_arrival_distance := 8.0
 @export var hookshot_stall_time := 0.18
+@export var hookshot_min_progress := 1.0
 @export var hookshot_arrival_damage := 10
 @export var hookshot_hitstun := 0.10
 
@@ -325,10 +327,22 @@ func _configure_grapple_raycast() -> void:
 	grapple_raycast.collide_with_bodies = true
 	grapple_raycast.collide_with_areas = true
 	grapple_raycast.collision_mask = grapple_collision_mask
+	_reset_grapple_raycast_exceptions()
+
+func _reset_grapple_raycast_exceptions() -> void:
+	if not grapple_raycast:
+		return
+
 	grapple_raycast.clear_exceptions()
 
 	if player:
 		grapple_raycast.add_exception(player)
+		# RayCast exceptions do not cascade to child collision objects. The
+		# player's layer-two Hurtbox must be excluded separately or an airborne
+		# throw can attach to the player itself near the wrist.
+		var player_hurtbox := player.get_node_or_null("Hurtbox") as CollisionObject2D
+		if player_hurtbox:
+			grapple_raycast.add_exception(player_hurtbox)
 
 # ===============================
 # ROPE PHYSICS
@@ -414,6 +428,9 @@ func _simulate_active_rope(delta: float, pin_end_to_tip: bool = true) -> void:
 # GRAPPLE FIRING / COLLISION
 # ===============================
 func _start_grapple_fire() -> void:
+	# Rebuild exceptions every throw so temporary hitboxes and replaced player
+	# collision areas can never be mistaken for a grapple target.
+	_reset_grapple_raycast_exceptions()
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 
@@ -526,9 +543,22 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 
 	grapple_raycast.global_position = previous_tip
 	grapple_raycast.target_position = new_tip - previous_tip
-	grapple_raycast.force_raycast_update()
 
-	if grapple_raycast.is_colliding():
+	# A shot can cross an interaction Area2D before reaching level geometry.
+	# Skip those volumes within the same cast instead of attaching to invisible
+	# prompts or allowing them to hide a valid surface behind them.
+	for _skipped_collider in range(8):
+		grapple_raycast.force_raycast_update()
+		if not grapple_raycast.is_colliding():
+			return
+
+		var collider := grapple_raycast.get_collider()
+		if hookshot_enabled and not _is_valid_hookshot_collider(collider):
+			if collider is CollisionObject2D:
+				grapple_raycast.add_exception(collider as CollisionObject2D)
+				continue
+			return
+
 		if not _can_attach_grapple():
 			_handle_non_attaching_collision(
 				grapple_raycast.get_collision_point(),
@@ -537,12 +567,12 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 			_update_active_grapple_visuals()
 			return
 
-		_notify_grapple_collider(grapple_raycast.get_collider())
+		_notify_grapple_collider(collider)
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
 		grapple_collision_normal = grapple_raycast.get_collision_normal()
-		_capture_grapple_target(grapple_raycast.get_collider())
+		_capture_grapple_target(collider)
 
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
@@ -558,6 +588,38 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		)
 
 		_update_active_grapple_visuals()
+		return
+
+func _is_valid_hookshot_collider(collider: Object) -> bool:
+	var collider_node := collider as Node
+	if not collider_node:
+		return false
+
+	var target_owner := collider_node
+	if collider_node is HurtboxComponent and (collider_node as HurtboxComponent).hurtbox_owner:
+		target_owner = (collider_node as HurtboxComponent).hurtbox_owner
+	elif collider_node.get_parent() and collider_node.get_parent().is_in_group("enemies"):
+		target_owner = collider_node.get_parent()
+
+	if target_owner.is_in_group("enemies"):
+		return true
+
+	# TileMapLayer owns the chamber's tile collision without inheriting
+	# CollisionObject2D, so it must be recognized explicitly as level geometry.
+	if collider_node is TileMapLayer:
+		return true
+
+	# Solid layer-one bodies are traversable level geometry. Areas are excluded
+	# unless they explicitly advertise grapple behavior below.
+	if collider_node is CollisionObject2D and not collider_node is Area2D:
+		if (collider_node as CollisionObject2D).get_collision_layer_value(1):
+			return true
+
+	if collider_node.has_method("activate_from_grapple"):
+		return true
+
+	var parent := collider_node.get_parent()
+	return parent != null and parent.has_method("activate_from_grapple")
 
 func _capture_grapple_target(collider: Object) -> void:
 	grapple_target = collider as Node2D
@@ -741,7 +803,8 @@ func _apply_hookshot_pull(delta: float) -> void:
 
 	var destination := grapple_attach_position
 	if grapple_collision_normal.length_squared() > 0.001:
-		destination += grapple_collision_normal.normalized() * hookshot_surface_offset
+		var surface_normal := grapple_collision_normal.normalized()
+		destination += surface_normal * _get_hookshot_surface_clearance(surface_normal)
 
 	var to_destination := destination - player.global_position
 	var distance := to_destination.length()
@@ -749,17 +812,42 @@ func _apply_hookshot_pull(delta: float) -> void:
 		_finish_hookshot_pull()
 		return
 
-	if hookshot_previous_distance < INF and distance >= hookshot_previous_distance - 0.5:
-		hookshot_stall_timer += delta
-	else:
+	if hookshot_previous_distance == INF or distance <= hookshot_previous_distance - hookshot_min_progress:
+		hookshot_previous_distance = distance
 		hookshot_stall_timer = 0.0
-	hookshot_previous_distance = distance
+	else:
+		hookshot_stall_timer += delta
 
 	if hookshot_stall_timer >= hookshot_stall_time:
 		_finish_hookshot_pull()
 		return
 
 	player.velocity = to_destination.normalized() * minf(hookshot_pull_speed, distance / maxf(delta, 0.001))
+
+func _get_hookshot_surface_clearance(surface_normal: Vector2) -> float:
+	var clearance := hookshot_surface_offset
+	if not player:
+		return clearance
+
+	var player_shape := player.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if not player_shape or not player_shape.shape:
+		return clearance
+
+	var shape_rect := player_shape.shape.get_rect()
+	var corners := [
+		shape_rect.position,
+		shape_rect.position + Vector2(shape_rect.size.x, 0.0),
+		shape_rect.position + Vector2(0.0, shape_rect.size.y),
+		shape_rect.end,
+	]
+	var minimum_projection := INF
+	for corner in corners:
+		var corner_from_player := player_shape.to_global(corner) - player.global_position
+		minimum_projection = minf(minimum_projection, corner_from_player.dot(surface_normal))
+
+	if minimum_projection < INF:
+		clearance = maxf(clearance, -minimum_projection + hookshot_surface_padding)
+	return clearance
 
 func _finish_hookshot_pull() -> void:
 	player.velocity = Vector2.ZERO
