@@ -111,6 +111,12 @@ a wall selects the stationary variant. Switching in either direction preserves
 the exact frame index and intra-frame progress; combat timing, strike windows,
 combo state, and attack duration continue to use the original logical clip.
 
+The stationary compositor deliberately keeps a narrow overlap around the belt:
+the planted lower-body mask begins 12 source pixels above the detected belt,
+while removal of the moving lower body begins 18 source pixels below it. This
+shared 30-pixel source band prevents transparent or antialiased seams from
+separating the torso from the hips after runtime downscaling.
+
 The stationary animations are registered from the four normalized stationary
 sheets when the player initializes. Their atlas regions, frame durations,
 playback speeds, and loop settings are copied one-to-one from the moving clips.
