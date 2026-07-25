@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -43,6 +43,7 @@
           "grid": [2, 2],
           "cell_size": 320,
           "registration_anchor": "head",
+          "cleanup": "Loose scarf tails are removed against the clean first-frame silhouette.",
           "playback_fps": 8.0,
           "loop": true
         },
@@ -64,6 +65,7 @@
           "grid": [3, 2],
           "cell_size": 320,
           "registration_anchor": "feet",
+          "cleanup": "The retract beat reuses the clean matching extension pose to avoid the malformed dangling hand.",
           "playback_fps": 18.0,
           "loop": false
         },

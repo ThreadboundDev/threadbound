@@ -140,6 +140,106 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void ClearPixelsOutsideReference(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        int referenceFrame,
+        int targetFrame,
+        int regionX,
+        int regionY,
+        int regionWidth,
+        int regionHeight)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            using (var graphics = Graphics.FromImage(output))
+            {
+                graphics.Clear(Color.Transparent);
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.DrawImageUnscaled(source, 0, 0);
+            }
+
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            int referenceColumn = referenceFrame % columns;
+            int referenceRow = referenceFrame / columns;
+            int targetColumn = targetFrame % columns;
+            int targetRow = targetFrame / columns;
+            int right = Math.Min(cellWidth, regionX + regionWidth);
+            int bottom = Math.Min(cellHeight, regionY + regionHeight);
+
+            for (int y = Math.Max(0, regionY); y < bottom; y++)
+            {
+                for (int x = Math.Max(0, regionX); x < right; x++)
+                {
+                    Color reference = source.GetPixel(
+                        referenceColumn * cellWidth + x,
+                        referenceRow * cellHeight + y);
+                    if (reference.A > 2)
+                    {
+                        continue;
+                    }
+
+                    output.SetPixel(
+                        targetColumn * cellWidth + x,
+                        targetRow * cellHeight + y,
+                        Color.FromArgb(0, 0, 0, 0));
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
+    public static void CopyAnimationFrame(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        int sourceFrame,
+        int targetFrame)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            using (var graphics = Graphics.FromImage(output))
+            {
+                graphics.Clear(Color.Transparent);
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.DrawImageUnscaled(source, 0, 0);
+
+                int cellWidth = source.Width / columns;
+                int cellHeight = source.Height / rows;
+                var sourceRect = new Rectangle(
+                    (sourceFrame % columns) * cellWidth,
+                    (sourceFrame / columns) * cellHeight,
+                    cellWidth,
+                    cellHeight);
+                var targetRect = new Rectangle(
+                    (targetFrame % columns) * cellWidth,
+                    (targetFrame / columns) * cellHeight,
+                    cellWidth,
+                    cellHeight);
+                graphics.DrawImage(
+                    source,
+                    targetRect,
+                    sourceRect,
+                    GraphicsUnit.Pixel);
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     private static Rectangle FindAlphaBounds(Bitmap bitmap, byte threshold)
     {
         int minX = bitmap.Width;
@@ -1888,5 +1988,58 @@ foreach ($runtimeAsset in $runtimeRasterAssets) {
         -NormalizedWidth ([int]$runtimeAsset[1]) `
         -NormalizedHeight ([int]$runtimeAsset[2])
 }
+
+# Keep intermittent loose cloth out of the jump/grapple silhouettes. Each
+# cleanup compares only the shoulder region with a nearby clean reference
+# frame, preserving pose-specific pixels everywhere else.
+$descentCyclePath = Join-Path $outputRoot "jump\descent_cycle.png"
+foreach ($targetFrame in @(1, 2, 3)) {
+    $cleanedPath = "$descentCyclePath.cleaned.png"
+    [ThreadboundAnimationNormalizer]::ClearPixelsOutsideReference(
+        $descentCyclePath,
+        $cleanedPath,
+        2,
+        2,
+        0,
+        $targetFrame,
+        120,
+        35,
+        95,
+        95)
+    Move-Item -LiteralPath $cleanedPath -Destination $descentCyclePath -Force
+}
+
+# The second descent frame has one additional short tail on the far side of
+# the mask, outside the shared shoulder cleanup region above.
+$cleanedPath = "$descentCyclePath.cleaned.png"
+[ThreadboundAnimationNormalizer]::ClearPixelsOutsideReference(
+    $descentCyclePath,
+    $cleanedPath,
+    2,
+    2,
+    0,
+    1,
+    210,
+    35,
+    50,
+    85)
+Move-Item -LiteralPath $cleanedPath -Destination $descentCyclePath -Force
+
+# The horizontal follow-through previously ended on a limp, malformed hand.
+# Reusing the matching extension pose on the retract beat makes the six-frame
+# toss read cleanly in both directions without inventing a new body pose.
+$horizontalGrapplePath = Join-Path $outputRoot "grapple\toss_horizontal_cycle.png"
+$cleanedHorizontalPath = "$horizontalGrapplePath.cleaned.png"
+[ThreadboundAnimationNormalizer]::CopyAnimationFrame(
+    $horizontalGrapplePath,
+    $cleanedHorizontalPath,
+    3,
+    2,
+    1,
+    4)
+Move-Item `
+    -LiteralPath $cleanedHorizontalPath `
+    -Destination $horizontalGrapplePath `
+    -Force
 
 Write-Host "Normalized player animation assets written to $outputRoot"

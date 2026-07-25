@@ -157,14 +157,14 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var ground_up_combo_2_first_strike_frames := Vector2i(1, 5)
 @export var ground_up_combo_2_second_strike_frames := Vector2i(7, 11)
 @export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 168.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 150.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 156.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 142.0
 
 @export_group("Air Double Attack")
 @export var air_attack_first_strike_frames := Vector2i(5, 7)
 @export var air_attack_second_strike_frames := Vector2i(16, 18)
 @export_range(45.0, 180.0, 1.0) var air_attack_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 150.0
+@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 160.0
 @export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
 @export_range(0.5, 1.5, 0.01) var double_attack_second_strike_pitch := 1.08
 

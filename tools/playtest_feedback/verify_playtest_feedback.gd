@@ -61,6 +61,12 @@ func _verify_player_feedback() -> void:
 	var expected_finisher_scale: Vector2 = Vector2(0.7, 0.7) * player.ground_combo_forward_finisher_visual_scale_multiplier
 	if not sprite.scale.is_equal_approx(expected_finisher_scale):
 		failures.append("Forward combo finisher did not receive its larger visual scale.")
+	if not is_equal_approx(player.ground_combo_forward_hitbox_radius, 156.0):
+		failures.append("Ground-forward attack reach is not tuned to 156 pixels.")
+	if not is_equal_approx(player.ground_combo_up_hitbox_radius, 142.0):
+		failures.append("Ground-up attack reach is not tuned to 142 pixels.")
+	if not is_equal_approx(player.air_attack_hitbox_radius, 160.0):
+		failures.append("Air attack reach is not tuned to 160 pixels.")
 
 	var gloves: Node = player.current_gloves
 	if not gloves:
