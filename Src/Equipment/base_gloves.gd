@@ -175,6 +175,13 @@ func _play_grapple_fire_animation() -> void:
 	action_anim_lock_timer = grapple_fire_anim_lock_time
 
 	var use_diagonal: bool = abs(grapple_direction.y) > 0.35
+	if player and absf(grapple_direction.x) > 0.05:
+		player.last_direction = -1 if grapple_direction.x < 0.0 else 1
+		if player.has_node("Player Animation"):
+			var facing_animation := player.get_node("Player Animation") as AnimatedSprite2D
+			facing_animation.flip_h = grapple_direction.x < 0.0
+		if player.has_method("update_equipment_facing"):
+			player.update_equipment_facing()
 
 	if use_diagonal:
 		play_equipment_anim("equip_grapple_fire_diagonal")
@@ -811,6 +818,9 @@ func _apply_hookshot_pull(delta: float) -> void:
 	if distance <= hookshot_arrival_distance:
 		_finish_hookshot_pull()
 		return
+	if _is_hookshot_pull_blocked(to_destination.normalized()):
+		_finish_hookshot_pull()
+		return
 
 	if hookshot_previous_distance == INF or distance <= hookshot_previous_distance - hookshot_min_progress:
 		hookshot_previous_distance = distance
@@ -823,6 +833,20 @@ func _apply_hookshot_pull(delta: float) -> void:
 		return
 
 	player.velocity = to_destination.normalized() * minf(hookshot_pull_speed, distance / maxf(delta, 0.001))
+
+func _is_hookshot_pull_blocked(pull_direction: Vector2) -> bool:
+	if not player or pull_direction.length_squared() <= 0.001:
+		return false
+
+	# Slide collisions describe the movement attempted on the previous physics
+	# step. Release as soon as the hookshot is still pulling into one of those
+	# surfaces; otherwise platform seams can alternate normals and gutter the
+	# player indefinitely.
+	for collision_index in player.get_slide_collision_count():
+		var collision := player.get_slide_collision(collision_index)
+		if collision and pull_direction.dot(collision.get_normal()) < -0.2:
+			return true
+	return false
 
 func _get_hookshot_surface_clearance(surface_normal: Vector2) -> float:
 	var clearance := hookshot_surface_offset
