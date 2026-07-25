@@ -1086,11 +1086,16 @@ public static class ThreadboundAnimationNormalizer
         Bitmap cell,
         PointF beltAnchor,
         float scale,
-        float hipHalfWidth)
+        float hipHalfWidth,
+        float beltOffset)
     {
         int width = cell.Width;
         int height = cell.Height;
-        int cutY = Math.Max(0, (int)Math.Round(beltAnchor.Y + Math.Max(1.0f, 2.0f * scale)));
+        int cutY = Math.Max(
+            0,
+            Math.Min(
+                height - 1,
+                (int)Math.Round(beltAnchor.Y + beltOffset * scale)));
         bool[] candidate = new bool[width * height];
         for (int y = cutY; y < height; y++)
         {
@@ -1390,7 +1395,8 @@ public static class ThreadboundAnimationNormalizer
                 stance,
                 stanceBelt,
                 1.0f,
-                155.0f);
+                155.0f,
+                -12.0f);
             for (int y = 0; y < stance.Height; y++)
             {
                 for (int x = 0; x < stance.Width; x++)
@@ -1434,7 +1440,8 @@ public static class ThreadboundAnimationNormalizer
                             cell,
                             cellBelt,
                             scale,
-                            180.0f);
+                            180.0f,
+                            18.0f);
                         bool isBronzeWeaponSheet =
                             inputPath.EndsWith(
                                 "grounded_double_attack_01_sheet.png",

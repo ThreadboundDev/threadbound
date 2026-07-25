@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 7,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -95,6 +95,12 @@
       }
     },
     "attacks": {
+      "stationary_compositor": {
+        "stance_lower_body_cut_from_belt": -12,
+        "moving_lower_body_cut_from_belt": 18,
+        "waist_overlap_pixels_at_source_scale": 30,
+        "purpose": "Preserve a continuous antialiased waist seam between the original upper body and planted lower body."
+      },
       "ground_forward": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png",
         "grid": [6, 8],
