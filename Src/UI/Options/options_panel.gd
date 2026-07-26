@@ -335,10 +335,19 @@ func _mark_graphics_dirty() -> void:
 func _open_controls_overlay(input_family: StringName) -> void:
 	var controls_menu := GAME_MENU_SCENE.instantiate()
 	get_tree().root.add_child(controls_menu)
+	visible = false
+	controls_menu.tree_exited.connect(_on_controls_overlay_closed)
 	if controls_menu.has_method("open_controls_only"):
 		controls_menu.open_controls_only(input_family)
 	else:
 		controls_menu.open(&"Controls", input_family)
+
+func _on_controls_overlay_closed() -> void:
+	get_tree().paused = true
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_flow_state_audio_suspended"):
+		player.set_flow_state_audio_suspended(true)
+	visible = true
 
 func _update_input_family_from_event(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton or event is InputEventMouseMotion:

@@ -14,12 +14,30 @@ const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
+const LEDGE_HANG_TEXTURE := preload("res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
 const SIT_ANIMATION := &"Sit"
 const SIT_COLUMNS := 5
 const SIT_ROWS := 10
 const SIT_FRAME_COUNT := 48
 const SIT_FPS := 12.0
+const STATIONARY_ATTACK_SUFFIX := "_Stationary"
+const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
+const STATIONARY_ATTACK_TEXTURES := {
+	&"Ground_Attack_Combo_1": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02_stationary.png"
+	),
+	&"Ground_Attack_Combo_2": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01_stationary.png"
+	),
+	&"Ground_Up_Combo_1": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03_stationary.png"
+	),
+	&"Ground_Up_Combo_2": preload(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04_stationary.png"
+	),
+}
+const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
 # ===============================
 # NODES
@@ -88,7 +106,12 @@ const SIT_FPS := 12.0
 @export var max_fall_speed: float = 1500.0
 @export var coyote_time: float = 0.1
 
+@export_group("Movement Animation")
+@export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
+@export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
+
 # Base grapple movement while rope is taut.
+@export_group("Base Grapple Movement")
 @export var base_grapple_steer_speed: float = 120.0
 @export var base_grapple_steer_accel: float = 500.0
 
@@ -109,38 +132,39 @@ const SIT_FPS := 12.0
 @export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
 @export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.625
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
-@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 0.675
+@export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 1.0
 @export var neutral_special_visual_offset := Vector2(0.0, -20.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
 @export_group("Attack Animation Visuals")
-@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 0.75
+@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
-@export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 0.9
-@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.1
-@export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.2
+@export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var ground_combo_forward_finisher_visual_scale_multiplier := 1.15
+@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
 @export_group("Ground Attack Combo")
 @export_range(0.05, 1.0, 0.01) var ground_combo_reset_window := 0.45
-@export var ground_combo_1_first_strike_frames := Vector2i(4, 6)
-@export var ground_combo_1_second_strike_frames := Vector2i(11, 13)
-@export var ground_combo_2_first_strike_frames := Vector2i(3, 5)
-@export var ground_combo_2_second_strike_frames := Vector2i(8, 10)
-@export var ground_up_combo_1_first_strike_frames := Vector2i(8, 11)
-@export var ground_up_combo_1_second_strike_frames := Vector2i(19, 22)
-@export var ground_up_combo_2_first_strike_frames := Vector2i(9, 12)
-@export var ground_up_combo_2_second_strike_frames := Vector2i(15, 17)
+@export var ground_combo_1_first_strike_frames := Vector2i(3, 5)
+@export var ground_combo_1_second_strike_frames := Vector2i(-1, -1)
+@export var ground_combo_2_first_strike_frames := Vector2i(2, 4)
+@export var ground_combo_2_second_strike_frames := Vector2i(9, 11)
+@export var ground_up_combo_1_first_strike_frames := Vector2i(1, 4)
+@export var ground_up_combo_1_second_strike_frames := Vector2i(6, 9)
+@export var ground_up_combo_2_first_strike_frames := Vector2i(1, 5)
+@export var ground_up_combo_2_second_strike_frames := Vector2i(7, 11)
 @export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 145.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 128.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 156.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 142.0
 
 @export_group("Air Double Attack")
 @export var air_attack_first_strike_frames := Vector2i(5, 7)
 @export var air_attack_second_strike_frames := Vector2i(16, 18)
 @export_range(45.0, 180.0, 1.0) var air_attack_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 128.0
+@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 160.0
 @export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
 @export_range(0.5, 1.5, 0.01) var double_attack_second_strike_pitch := 1.08
 
@@ -221,6 +245,19 @@ const SIT_FPS := 12.0
 @export var wall_jump_up_force: float = 680.0
 @export var wall_cling_stall_time: float = 0.32
 @export var wall_slide_max_speed: float = 620.0
+@export_group("Ledge Grab")
+@export var ledge_forward_reach := 42.0
+@export var ledge_head_height := 72.0
+@export var ledge_hang_offset := Vector2(28.0, 66.0)
+@export var ledge_climb_horizontal_offset := 40.0
+@export var ledge_climb_vertical_offset := 48.0
+@export var ledge_jump_force := 720.0
+
+@export_group("Meditation")
+@export var meditation_ap_recharge_multiplier := 4.0
+@export var meditation_flow_per_second := 8.0
+@export_range(0.0, 100.0, 1.0) var meditation_flow_cap := 50.0
+@export var meditation_hold_delay := 0.3
 
 # Debug testing helpers
 @export var god_mode_fly_speed: float = 1100.0
@@ -229,7 +266,7 @@ const SIT_FPS := 12.0
 @export_group("Save Point Interaction")
 @export var save_point_auto_run_speed := 420.0
 @export var save_point_arrive_distance := 10.0
-@export var save_point_sit_visual_scale := Vector2(1.4, 1.4)
+@export var save_point_sit_visual_scale := Vector2(0.28, 0.28)
 @export var save_point_stand_up_speed_scale: float = 2.0
 
 @export_group("Audio")
@@ -273,6 +310,11 @@ var is_wall_clinging: bool = false
 var wall_cling_timer: float = 0.0
 var has_wall_jumped: bool = false
 var air_jump_available: bool = true
+var is_ledge_hanging := false
+var _ledge_direction := 0
+var _ledge_top := Vector2.ZERO
+var is_meditating := false
+var _meditation_hold_timer := 0.0
 
 var jump_charge_ratio: float = 0.0
 var dash_charge_ratio: float = 0.0
@@ -305,6 +347,7 @@ var current_body_anim := ""
 var current_equip_anim := ""
 var current_weapon_pose_anim := ""
 var current_attack_body_anim := "Attack"
+var landing_animation_timer := 0.0
 
 var is_attacking := false
 var is_hurt := false
@@ -397,7 +440,9 @@ func _ready() -> void:
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
 	_set_flow_state_visuals(_flow_state_active)
+	_ensure_stationary_attack_animations()
 	_ensure_sit_animation()
+	_ensure_ledge_animation()
 	update_equipment_facing()
 	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
@@ -453,6 +498,13 @@ func _physics_process(delta: float) -> void:
 
 	if save_point_interaction_active:
 		_process_save_point_interaction(delta)
+		return
+	if _process_ledge_hang():
+		update_animations(0.0)
+		return
+	_process_meditation(delta)
+	if is_meditating:
+		update_animations(0.0)
 		return
 
 	var was_on_floor := is_on_floor()
@@ -526,10 +578,17 @@ func _physics_process(delta: float) -> void:
 		current_gloves.apply_grapple_velocity(delta)
 
 	move_and_slide()
+	if is_on_floor() and not was_on_floor and not god_mode_enabled:
+		landing_animation_timer = landing_animation_duration
+	elif not is_on_floor():
+		landing_animation_timer = 0.0
+	elif landing_animation_timer > 0.0:
+		landing_animation_timer = maxf(landing_animation_timer - delta, 0.0)
 	_process_movement_audio(delta, was_on_floor)
 	_process_movement_momentum(delta)
 
-	handle_wall_cling(delta)
+	if not _try_grab_ledge():
+		handle_wall_cling(delta)
 	update_animations(horizontal_input)
 
 	if current_gloves and current_gloves.has_method("sync_grapple_origin_after_player_move"):
@@ -776,6 +835,75 @@ func handle_wall_cling(delta: float) -> void:
 		is_wall_clinging = false
 		wall_cling_timer = 0.0
 
+func _try_grab_ledge() -> bool:
+	if is_on_floor() or is_ledge_hanging or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0:
+		return false
+	var direction := last_direction
+	if is_on_wall():
+		var normal_x := get_wall_normal().x
+		if absf(normal_x) > 0.1:
+			direction = int(-signf(normal_x))
+	var space := get_world_2d().direct_space_state
+	var wall_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -12.0), global_position + Vector2(direction * ledge_forward_reach, -12.0), collision_mask, [get_rid()])
+	var wall_hit := space.intersect_ray(wall_query)
+	if wall_hit.is_empty():
+		return false
+	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * ledge_forward_reach, -ledge_head_height), collision_mask, [get_rid()])
+	if not space.intersect_ray(clearance_query).is_empty():
+		return false
+	# Sample just beyond the wall face. Using the full reach places the vertical
+	# ray deep inside wide platforms, where a ray that starts inside collision
+	# reports no surface and makes ledge grab impossible.
+	var top_x: float = (wall_hit.position as Vector2).x + direction * 2.0
+	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, global_position.y - ledge_head_height - 30.0), Vector2(top_x, global_position.y + 12.0), collision_mask, [get_rid()])
+	var top_hit := space.intersect_ray(top_query)
+	if top_hit.is_empty():
+		return false
+	_ledge_direction = direction
+	_ledge_top = top_hit.position
+	is_ledge_hanging = true
+	is_wall_clinging = false
+	velocity = Vector2.ZERO
+	global_position = _ledge_top + Vector2(-direction * ledge_hang_offset.x, ledge_hang_offset.y)
+	player_animation.flip_h = direction < 0
+	return true
+
+func _process_ledge_hang() -> bool:
+	if not is_ledge_hanging:
+		return false
+	velocity = Vector2.ZERO
+	global_position = _ledge_top + Vector2(-_ledge_direction * ledge_hang_offset.x, ledge_hang_offset.y)
+	if Input.is_action_just_pressed("move_down"):
+		is_ledge_hanging = false
+	elif Input.is_action_just_pressed("Jump"):
+		_climb_from_ledge(true)
+	elif Input.is_action_just_pressed("move_up"):
+		_climb_from_ledge(false)
+	return is_ledge_hanging
+
+func _climb_from_ledge(jump_after: bool) -> void:
+	global_position = _ledge_top + Vector2(_ledge_direction * ledge_climb_horizontal_offset, -ledge_climb_vertical_offset)
+	is_ledge_hanging = false
+	velocity = Vector2(_ledge_direction * 120.0, -ledge_jump_force if jump_after else 0.0)
+	if jump_after:
+		report_momentum_action(MOMENTUM_CATEGORY_JUMP)
+
+func _process_meditation(delta: float) -> void:
+	var was_meditating := is_meditating
+	var can_meditate := is_on_floor() and not is_hurt and not is_attacking and not is_dead
+	if Input.is_action_pressed("Meditate") and can_meditate:
+		_meditation_hold_timer += delta
+		if _meditation_hold_timer >= meditation_hold_delay:
+			is_meditating = true
+			velocity = Vector2.ZERO
+			if momentum < meditation_flow_cap:
+				_change_momentum(minf(meditation_flow_per_second * delta, meditation_flow_cap - momentum))
+	else:
+		_meditation_hold_timer = 0.0
+		is_meditating = false
+	if is_meditating != was_meditating:
+		_set_flow_state_visuals(is_meditating or _flow_state_active)
+
 func _get_current_gravity() -> float:
 	if velocity.y < 0.0:
 		if not Input.is_action_pressed("Jump"):
@@ -809,11 +937,23 @@ func update_animations(dir: float) -> void:
 
 	if save_point_interaction_active:
 		return
+	if is_meditating and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		player_animation.rotation = 0.0
+		player_animation.scale = save_point_sit_visual_scale
+		play_character_anim(SIT_ANIMATION, "equip_idle")
+		return
+	if is_ledge_hanging and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
+		player_animation.rotation = 0.0
+		player_animation.scale = _player_default_visual_scale
+		play_character_anim(LEDGE_HANG_ANIMATION, "equip_wall_cling")
+		return
+	if player_animation.scale != _player_default_visual_scale:
+		player_animation.scale = _player_default_visual_scale
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		player_animation.rotation = 0.0
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		_play_attack_visual_animation(_get_ground_combo_visual_animation(dir))
 		return
 	
 	var is_dashing = false
@@ -838,14 +978,16 @@ func update_animations(dir: float) -> void:
 
 	elif not is_on_floor():
 		player_animation.rotation = 0.0
-		if velocity.y < -120.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
-			play_character_anim("Jump_Ascent", "equip_jump_ascent")
-		elif velocity.y > 120.0 and player_animation.sprite_frames.has_animation("Jump_Descent"):
-			play_character_anim("Jump_Descent", "equip_jump_descent")
-		elif velocity.y <= 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
+		if absf(velocity.y) <= jump_apex_velocity_threshold and player_animation.sprite_frames.has_animation("Jump_Apex"):
+			play_character_anim("Jump_Apex", "equip_jump_ascent")
+		elif velocity.y < 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent", "equip_jump_ascent")
 		else:
 			play_character_anim("Jump_Descent", "equip_jump_descent")
+
+	elif landing_animation_timer > 0.0 and absf(dir) < 0.01 and player_animation.sprite_frames.has_animation("Jump_Land"):
+		player_animation.rotation = 0.0
+		play_character_anim("Jump_Land", "equip_idle")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
 		player_animation.rotation = 0.0
@@ -1012,6 +1154,8 @@ func start_attack(is_special := false) -> void:
 func _begin_ground_combo_attack(family: StringName) -> void:
 	if family != ground_combo_family or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo:
 		ground_combo_step = 0
+	elif family == &"forward":
+		ground_combo_step = mini(ground_combo_step + 1, 1)
 	else:
 		ground_combo_step = (ground_combo_step + 1) % 2
 
@@ -1051,7 +1195,9 @@ func _begin_ground_combo_attack(family: StringName) -> void:
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		_play_attack_visual_animation(
+			_get_ground_combo_visual_animation(Input.get_axis("move_left", "move_right"))
+		)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
@@ -1077,6 +1223,9 @@ func _update_ground_combo_attack() -> void:
 func _finish_ground_combo_attack() -> void:
 	var queued_family := ground_combo_queued_family
 	var should_chain := ground_combo_queued and queued_family != &""
+	var completed_forward_finisher := (
+		ground_combo_family == &"forward" and ground_combo_step >= 1
+	)
 	attack_hitbox.disable()
 	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 	is_attacking = false
@@ -1084,10 +1233,13 @@ func _finish_ground_combo_attack() -> void:
 	ground_combo_active_strike = -1
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
-	ground_combo_reset_timer = ground_combo_reset_window
+	if completed_forward_finisher:
+		_reset_ground_combo_chain()
+	else:
+		ground_combo_reset_timer = ground_combo_reset_window
 	_reset_weapon_visuals()
 
-	if should_chain and not is_dead and not is_hurt:
+	if should_chain and not completed_forward_finisher and not is_dead and not is_hurt:
 		attack_cooldown_timer = 0.0
 		_begin_ground_combo_attack(queued_family)
 
@@ -1274,8 +1426,11 @@ func _reset_weapon_visuals() -> void:
 	if not weapon_animation_player:
 		return
 
-	if weapon_animation_player.has_animation("weapon_%s" % current_body_anim.to_lower()):
-		_play_weapon_pose_anim(current_body_anim)
+	var weapon_pose_body_anim := current_body_anim
+	if current_body_anim.ends_with(STATIONARY_ATTACK_SUFFIX):
+		weapon_pose_body_anim = current_attack_body_anim
+	if weapon_animation_player.has_animation("weapon_%s" % weapon_pose_body_anim.to_lower()):
+		_play_weapon_pose_anim(weapon_pose_body_anim)
 		return
 
 	if not weapon_animation_player.has_animation("RESET"):
@@ -1296,6 +1451,8 @@ func _apply_attack_visual_tuning() -> void:
 	elif current_attack_body_anim == "Attack":
 		scale_multiplier = grounded_forward_visual_scale_multiplier
 		visual_offset = grounded_forward_visual_offset
+	elif current_attack_body_anim == "Ground_Attack_Combo_2":
+		scale_multiplier = ground_combo_forward_finisher_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
 		scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Up_Combo_"):
@@ -1306,6 +1463,47 @@ func _apply_attack_visual_tuning() -> void:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
 	player_animation.position = _player_default_visual_position + visual_offset
+
+func _get_ground_combo_visual_animation(dir: float) -> StringName:
+	var moving_animation := StringName(current_attack_body_anim)
+	if not current_attack_uses_ground_combo:
+		return moving_animation
+
+	var stationary_animation := StringName(
+		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
+	)
+	if not player_animation.sprite_frames.has_animation(stationary_animation):
+		return moving_animation
+
+	var has_horizontal_input := absf(dir) > 0.01
+	var has_horizontal_motion := (
+		absf(velocity.x) >= STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED
+	)
+	return moving_animation if has_horizontal_input and has_horizontal_motion else stationary_animation
+
+func _play_attack_visual_animation(body_anim: StringName) -> void:
+	var moving_animation := StringName(current_attack_body_anim)
+	var stationary_animation := StringName(
+		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
+	)
+	var preserve_progress := (
+		StringName(current_body_anim) == moving_animation
+		or StringName(current_body_anim) == stationary_animation
+	)
+	var previous_frame := player_animation.frame
+	var previous_progress := player_animation.frame_progress
+
+	play_character_anim(String(body_anim), "equip_idle")
+	if not preserve_progress:
+		return
+
+	var frame_count := player_animation.sprite_frames.get_frame_count(body_anim)
+	if frame_count <= 0:
+		return
+	player_animation.set_frame_and_progress(
+		mini(previous_frame, frame_count - 1),
+		previous_progress
+	)
 
 func _get_attack_input_direction() -> Vector2:
 	var direction := AimHelperScript.get_aim_direction(
@@ -1546,7 +1744,8 @@ func _sync_hud() -> void:
 
 func _process_action_point_recharge(delta: float) -> void:
 	_ensure_action_point_timers()
-	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier
+	var meditation_multiplier := meditation_ap_recharge_multiplier if is_meditating else 1.0
+	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier * meditation_multiplier
 	var changed := false
 	for i in _action_point_recharge_timers.size():
 		if _action_point_recharge_timers[i] <= 0.0:
@@ -2171,6 +2370,54 @@ func _restore_save_point_equipment() -> void:
 	if equipment_mount:
 		equipment_mount.visible = _save_point_equipment_was_visible
 
+func _ensure_stationary_attack_animations() -> void:
+	if not player_animation or not player_animation.sprite_frames:
+		return
+
+	var frames := player_animation.sprite_frames
+	for moving_animation: StringName in STATIONARY_ATTACK_TEXTURES:
+		var stationary_animation := StringName(
+			"%s%s" % [moving_animation, STATIONARY_ATTACK_SUFFIX]
+		)
+		if frames.has_animation(stationary_animation):
+			continue
+		if not frames.has_animation(moving_animation):
+			push_warning("Missing moving attack animation: %s" % moving_animation)
+			continue
+
+		frames.add_animation(stationary_animation)
+		frames.set_animation_loop(
+			stationary_animation,
+			frames.get_animation_loop(moving_animation)
+		)
+		frames.set_animation_speed(
+			stationary_animation,
+			frames.get_animation_speed(moving_animation)
+		)
+
+		var stationary_sheet: Texture2D = STATIONARY_ATTACK_TEXTURES[moving_animation]
+		for frame_index in frames.get_frame_count(moving_animation):
+			var moving_texture := (
+				frames.get_frame_texture(moving_animation, frame_index) as AtlasTexture
+			)
+			if moving_texture == null:
+				push_warning(
+					"%s frame %d is not an AtlasTexture." %
+					[moving_animation, frame_index]
+				)
+				continue
+
+			var stationary_texture := AtlasTexture.new()
+			stationary_texture.atlas = stationary_sheet
+			stationary_texture.region = moving_texture.region
+			stationary_texture.margin = moving_texture.margin
+			stationary_texture.filter_clip = moving_texture.filter_clip
+			frames.add_frame(
+				stationary_animation,
+				stationary_texture,
+				frames.get_frame_duration(moving_animation, frame_index)
+			)
+
 func _ensure_sit_animation() -> void:
 	if not player_animation or not player_animation.sprite_frames:
 		return
@@ -2192,6 +2439,22 @@ func _ensure_sit_animation() -> void:
 			frame_height
 		)
 		player_animation.sprite_frames.add_frame(SIT_ANIMATION, atlas_texture)
+
+func _ensure_ledge_animation() -> void:
+	if not player_animation or not player_animation.sprite_frames:
+		return
+	if player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
+		return
+	player_animation.sprite_frames.add_animation(LEDGE_HANG_ANIMATION)
+	player_animation.sprite_frames.set_animation_loop(LEDGE_HANG_ANIMATION, true)
+	player_animation.sprite_frames.set_animation_speed(LEDGE_HANG_ANIMATION, 5.0)
+	var frame_width := LEDGE_HANG_TEXTURE.get_width() / 2
+	var frame_height := LEDGE_HANG_TEXTURE.get_height() / 2
+	for frame_index in 4:
+		var atlas_texture := AtlasTexture.new()
+		atlas_texture.atlas = LEDGE_HANG_TEXTURE
+		atlas_texture.region = Rect2((frame_index % 2) * frame_width, (frame_index / 2) * frame_height, frame_width, frame_height)
+		player_animation.sprite_frames.add_frame(LEDGE_HANG_ANIMATION, atlas_texture)
 
 # ===============================
 # INTERACTABLES

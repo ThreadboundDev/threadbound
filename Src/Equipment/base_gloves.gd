@@ -58,6 +58,17 @@ var player: CharacterBody2D = null
 @export var rope_idle_swing_stop_speed := 8.0
 @export var rope_jump_force := 760.0
 
+# Base hookshot behavior (enabled only by base_gloves.tscn).
+@export var hookshot_enabled := false
+@export var hookshot_pull_speed := 900.0
+@export var hookshot_surface_offset := 18.0
+@export var hookshot_surface_padding := 2.0
+@export var hookshot_arrival_distance := 8.0
+@export var hookshot_stall_time := 0.18
+@export var hookshot_min_progress := 1.0
+@export var hookshot_arrival_damage := 10
+@export var hookshot_hitstun := 0.10
+
 # Climbing Variables
 @export var rope_climb_speed := 220.0
 @export var rope_min_length := 48.0
@@ -101,6 +112,12 @@ var grapple_spent_timer := 0.0
 var grapple_attached := false
 var grapple_attach_position := Vector2.ZERO
 var current_rope_length := 0.0
+var grapple_target: Node2D = null
+var grapple_target_local_position := Vector2.ZERO
+var grapple_collision_normal := Vector2.ZERO
+var hookshot_enemy_hurtbox: HurtboxComponent = null
+var hookshot_previous_distance := INF
+var hookshot_stall_timer := 0.0
 
 var active_rope_points: Array[Vector2] = []
 var active_rope_previous_points: Array[Vector2] = []
@@ -158,6 +175,13 @@ func _play_grapple_fire_animation() -> void:
 	action_anim_lock_timer = grapple_fire_anim_lock_time
 
 	var use_diagonal: bool = abs(grapple_direction.y) > 0.35
+	if player and absf(grapple_direction.x) > 0.05:
+		player.last_direction = -1 if grapple_direction.x < 0.0 else 1
+		if player.has_node("Player Animation"):
+			var facing_animation := player.get_node("Player Animation") as AnimatedSprite2D
+			facing_animation.flip_h = grapple_direction.x < 0.0
+		if player.has_method("update_equipment_facing"):
+			player.update_equipment_facing()
 
 	if use_diagonal:
 		play_equipment_anim("equip_grapple_fire_diagonal")
@@ -220,6 +244,9 @@ func is_base_grapple_restricting() -> bool:
 	if not player:
 		return false
 
+	if hookshot_enabled:
+		return true
+
 	if player.is_on_floor():
 		return false
 
@@ -234,6 +261,11 @@ func jump_off_grapple() -> bool:
 
 	if not player:
 		return false
+
+	if hookshot_enabled:
+		player.velocity = Vector2.ZERO
+		_begin_grapple_retract()
+		return true
 
 	var origin := get_grapple_origin_global_position()
 	var from_anchor := origin - grapple_attach_position
@@ -274,6 +306,12 @@ func _reset_active_grapple_visuals() -> void:
 	grapple_release_timer = 0.0
 	grapple_low_speed_timer = 0.0
 	grapple_spent_timer = 0.0
+	grapple_target = null
+	grapple_target_local_position = Vector2.ZERO
+	grapple_collision_normal = Vector2.ZERO
+	hookshot_enemy_hurtbox = null
+	hookshot_previous_distance = INF
+	hookshot_stall_timer = 0.0
 	active_rope_points.clear()
 	active_rope_previous_points.clear()
 
@@ -296,10 +334,22 @@ func _configure_grapple_raycast() -> void:
 	grapple_raycast.collide_with_bodies = true
 	grapple_raycast.collide_with_areas = true
 	grapple_raycast.collision_mask = grapple_collision_mask
+	_reset_grapple_raycast_exceptions()
+
+func _reset_grapple_raycast_exceptions() -> void:
+	if not grapple_raycast:
+		return
+
 	grapple_raycast.clear_exceptions()
 
 	if player:
 		grapple_raycast.add_exception(player)
+		# RayCast exceptions do not cascade to child collision objects. The
+		# player's layer-two Hurtbox must be excluded separately or an airborne
+		# throw can attach to the player itself near the wrist.
+		var player_hurtbox := player.get_node_or_null("Hurtbox") as CollisionObject2D
+		if player_hurtbox:
+			grapple_raycast.add_exception(player_hurtbox)
 
 # ===============================
 # ROPE PHYSICS
@@ -385,6 +435,9 @@ func _simulate_active_rope(delta: float, pin_end_to_tip: bool = true) -> void:
 # GRAPPLE FIRING / COLLISION
 # ===============================
 func _start_grapple_fire() -> void:
+	# Rebuild exceptions every throw so temporary hitboxes and replaced player
+	# collision areas can never be mistaken for a grapple target.
+	_reset_grapple_raycast_exceptions()
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 
@@ -497,9 +550,22 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 
 	grapple_raycast.global_position = previous_tip
 	grapple_raycast.target_position = new_tip - previous_tip
-	grapple_raycast.force_raycast_update()
 
-	if grapple_raycast.is_colliding():
+	# A shot can cross an interaction Area2D before reaching level geometry.
+	# Skip those volumes within the same cast instead of attaching to invisible
+	# prompts or allowing them to hide a valid surface behind them.
+	for _skipped_collider in range(8):
+		grapple_raycast.force_raycast_update()
+		if not grapple_raycast.is_colliding():
+			return
+
+		var collider := grapple_raycast.get_collider()
+		if hookshot_enabled and not _is_valid_hookshot_collider(collider):
+			if collider is CollisionObject2D:
+				grapple_raycast.add_exception(collider as CollisionObject2D)
+				continue
+			return
+
 		if not _can_attach_grapple():
 			_handle_non_attaching_collision(
 				grapple_raycast.get_collision_point(),
@@ -508,16 +574,19 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 			_update_active_grapple_visuals()
 			return
 
-		_notify_grapple_collider(grapple_raycast.get_collider())
+		_notify_grapple_collider(collider)
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = grapple_raycast.get_collision_point()
+		grapple_collision_normal = grapple_raycast.get_collision_normal()
+		_capture_grapple_target(collider)
 
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		grapple_state = GrappleState.ATTACHED
 		AudioManager.play_sfx(&"grapple_connect")
-		AudioManager.play_loop(&"grapple_hanging")
+		if not hookshot_enabled:
+			AudioManager.play_loop(&"grapple_hanging")
 
 		current_rope_length = clamp(
 			get_grapple_origin_global_position().distance_to(grapple_attach_position),
@@ -526,6 +595,60 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		)
 
 		_update_active_grapple_visuals()
+		return
+
+func _is_valid_hookshot_collider(collider: Object) -> bool:
+	var collider_node := collider as Node
+	if not collider_node:
+		return false
+
+	var target_owner := collider_node
+	if collider_node is HurtboxComponent and (collider_node as HurtboxComponent).hurtbox_owner:
+		target_owner = (collider_node as HurtboxComponent).hurtbox_owner
+	elif collider_node.get_parent() and collider_node.get_parent().is_in_group("enemies"):
+		target_owner = collider_node.get_parent()
+
+	if target_owner.is_in_group("enemies"):
+		return true
+
+	# TileMapLayer owns the chamber's tile collision without inheriting
+	# CollisionObject2D, so it must be recognized explicitly as level geometry.
+	if collider_node is TileMapLayer:
+		return true
+
+	# Solid layer-one bodies are traversable level geometry. Areas are excluded
+	# unless they explicitly advertise grapple behavior below.
+	if collider_node is CollisionObject2D and not collider_node is Area2D:
+		if (collider_node as CollisionObject2D).get_collision_layer_value(1):
+			return true
+
+	if collider_node.has_method("activate_from_grapple"):
+		return true
+
+	var parent := collider_node.get_parent()
+	return parent != null and parent.has_method("activate_from_grapple")
+
+func _capture_grapple_target(collider: Object) -> void:
+	grapple_target = collider as Node2D
+	if grapple_target:
+		grapple_target_local_position = grapple_target.to_local(grapple_attach_position)
+
+	hookshot_enemy_hurtbox = collider as HurtboxComponent
+	if not hookshot_enemy_hurtbox and collider is Node:
+		var collider_node := collider as Node
+		if collider_node.is_in_group("enemies"):
+			hookshot_enemy_hurtbox = collider_node.get_node_or_null("Hurtbox") as HurtboxComponent
+		elif collider_node.get_parent() and collider_node.get_parent().is_in_group("enemies"):
+			hookshot_enemy_hurtbox = collider_node.get_parent().get_node_or_null("Hurtbox") as HurtboxComponent
+
+	hookshot_previous_distance = INF
+	hookshot_stall_timer = 0.0
+
+func _update_moving_grapple_target() -> void:
+	if grapple_target and is_instance_valid(grapple_target):
+		grapple_attach_position = grapple_target.to_global(grapple_target_local_position)
+	else:
+		grapple_target = null
 
 func _notify_grapple_collider(collider: Object) -> void:
 	if not collider:
@@ -631,6 +754,10 @@ func apply_grapple_velocity(delta: float) -> void:
 	if grapple_state != GrappleState.ATTACHED:
 		return
 
+	if hookshot_enabled:
+		_apply_hookshot_pull(delta)
+		return
+
 	var origin: Vector2 = get_grapple_origin_global_position()
 	var from_anchor: Vector2 = origin - grapple_attach_position
 	var distance: float = from_anchor.length()
@@ -677,6 +804,91 @@ func apply_grapple_velocity(delta: float) -> void:
 	if player.has_method("get_momentum_grapple_pull_multiplier"):
 		pull_multiplier = player.get_momentum_grapple_pull_multiplier()
 	player.velocity -= rope_dir * excess * rope_limit_pull_strength * pull_multiplier * delta
+
+func _apply_hookshot_pull(delta: float) -> void:
+	_update_moving_grapple_target()
+
+	var destination := grapple_attach_position
+	if grapple_collision_normal.length_squared() > 0.001:
+		var surface_normal := grapple_collision_normal.normalized()
+		destination += surface_normal * _get_hookshot_surface_clearance(surface_normal)
+
+	var to_destination := destination - player.global_position
+	var distance := to_destination.length()
+	if distance <= hookshot_arrival_distance:
+		_finish_hookshot_pull()
+		return
+	if _is_hookshot_pull_blocked(to_destination.normalized()):
+		_finish_hookshot_pull()
+		return
+
+	if hookshot_previous_distance == INF or distance <= hookshot_previous_distance - hookshot_min_progress:
+		hookshot_previous_distance = distance
+		hookshot_stall_timer = 0.0
+	else:
+		hookshot_stall_timer += delta
+
+	if hookshot_stall_timer >= hookshot_stall_time:
+		_finish_hookshot_pull()
+		return
+
+	player.velocity = to_destination.normalized() * minf(hookshot_pull_speed, distance / maxf(delta, 0.001))
+
+func _is_hookshot_pull_blocked(pull_direction: Vector2) -> bool:
+	if not player or pull_direction.length_squared() <= 0.001:
+		return false
+
+	# Slide collisions describe the movement attempted on the previous physics
+	# step. Release as soon as the hookshot is still pulling into one of those
+	# surfaces; otherwise platform seams can alternate normals and gutter the
+	# player indefinitely.
+	for collision_index in player.get_slide_collision_count():
+		var collision := player.get_slide_collision(collision_index)
+		if collision and pull_direction.dot(collision.get_normal()) < -0.2:
+			return true
+	return false
+
+func _get_hookshot_surface_clearance(surface_normal: Vector2) -> float:
+	var clearance := hookshot_surface_offset
+	if not player:
+		return clearance
+
+	var player_shape := player.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if not player_shape or not player_shape.shape:
+		return clearance
+
+	var shape_rect := player_shape.shape.get_rect()
+	var corners := [
+		shape_rect.position,
+		shape_rect.position + Vector2(shape_rect.size.x, 0.0),
+		shape_rect.position + Vector2(0.0, shape_rect.size.y),
+		shape_rect.end,
+	]
+	var minimum_projection := INF
+	for corner in corners:
+		var corner_from_player := player_shape.to_global(corner) - player.global_position
+		minimum_projection = minf(minimum_projection, corner_from_player.dot(surface_normal))
+
+	if minimum_projection < INF:
+		clearance = maxf(clearance, -minimum_projection + hookshot_surface_padding)
+	return clearance
+
+func _finish_hookshot_pull() -> void:
+	player.velocity = Vector2.ZERO
+	_apply_hookshot_arrival_hit()
+	_begin_grapple_retract()
+
+func _apply_hookshot_arrival_hit() -> void:
+	if not hookshot_enemy_hurtbox or not is_instance_valid(hookshot_enemy_hurtbox):
+		return
+
+	var damage := DamageData.new()
+	damage.amount = hookshot_arrival_damage
+	damage.hitstun = hookshot_hitstun
+	damage.hit_pause = 0.03
+	damage.source = player
+	damage.hit_position = grapple_attach_position
+	hookshot_enemy_hurtbox.receive_hit(damage)
 
 func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 	if absf(Input.get_axis("move_left", "move_right")) > 0.05:
@@ -735,6 +947,7 @@ func thread_mechanic(delta: float) -> void:
 			_update_active_grapple_visuals()
 
 		GrappleState.ATTACHED:
+			_update_moving_grapple_target()
 			grapple_tip_position = grapple_attach_position
 			grapple_tip_velocity = Vector2.ZERO
 

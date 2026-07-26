@@ -57,7 +57,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mode == "dropdown":
 			changed.emit(self, -1)
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_right") or event.is_action_pressed("move_right") or event.is_action_pressed("interact") or event.is_action_pressed("Jump"):
+	elif event.is_action_pressed("ui_right") or event.is_action_pressed("move_right") or event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or event.is_action_pressed("Jump"):
 		_activate_primary()
 		get_viewport().set_input_as_handled()
 

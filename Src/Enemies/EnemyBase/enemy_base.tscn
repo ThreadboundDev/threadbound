@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7c0wckm4o8vi"]
+[gd_scene load_steps=17 format=3 uid="uid://b7c0wckm4o8vi"]
 
 [ext_resource type="Script" path="res://Src/Enemies/EnemyBase/enemy_base.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://Src/Components/health_component.gd" id="2_health"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Src/Enemies/States/enemy_attack_state.gd" id="10_attack"]
 [ext_resource type="Script" path="res://Src/Enemies/States/enemy_hurt_state.gd" id="11_hurt"]
 [ext_resource type="Script" path="res://Src/Enemies/States/enemy_dead_state.gd" id="12_dead"]
+[ext_resource type="Script" path="res://Src/Components/grapple_target_component.gd" id="13_grapple_target"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(34, 42)
@@ -86,6 +87,9 @@ shape = SubResource("RectangleShape2D_body")
 [node name="HitFlashComponent" type="Node" parent="."]
 script = ExtResource("5_flash")
 target_path = NodePath("../Visuals/Body")
+
+[node name="GrappleTargetComponent" type="Node" parent="."]
+script = ExtResource("13_grapple_target")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("6_machine")
