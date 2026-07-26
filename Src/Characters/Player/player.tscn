@@ -36,8 +36,6 @@
 [ext_resource type="Texture2D" uid="uid://cusgwtlgk67cf" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png" id="103_attack_forward_new"]
 [ext_resource type="Texture2D" uid="uid://c26xax2s7fid8" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png" id="105_video_attack_01"]
 [ext_resource type="Texture2D" uid="uid://b8b4gnm2ky5ho" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png" id="106_video_attack_02"]
-[ext_resource type="Texture2D" uid="uid://c6yeav8hw8maw" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03.png" id="107_video_attack_03"]
-[ext_resource type="Texture2D" uid="uid://byclhfb6g78vm" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04.png" id="108_video_attack_04"]
 [ext_resource type="Texture2D" uid="uid://885f7jiibwkb" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png" id="109_air_attack_01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
@@ -345,50 +343,6 @@ region = Rect2(320, 960, 320, 320)
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_20"]
 atlas = ExtResource("105_video_attack_01")
 region = Rect2(640, 960, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_03_8"]
-atlas = ExtResource("107_video_attack_03")
-region = Rect2(768, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_03_9"]
-atlas = ExtResource("107_video_attack_03")
-region = Rect2(1152, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_03_10"]
-atlas = ExtResource("107_video_attack_03")
-region = Rect2(1536, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_03_11"]
-atlas = ExtResource("107_video_attack_03")
-region = Rect2(1920, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_03_12"]
-atlas = ExtResource("107_video_attack_03")
-region = Rect2(0, 768, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_8"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(1152, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_9"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(1536, 384, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_10"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(0, 768, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_11"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(384, 768, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_12"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(768, 768, 384, 384)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_04_13"]
-atlas = ExtResource("108_video_attack_04")
-region = Rect2(1152, 768, 384, 384)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6acp"]
 atlas = ExtResource("2_jr15c")
@@ -1058,82 +1012,6 @@ animations = [{
 "loop": false,
 "name": &"Ground_Attack_Combo_2",
 "speed": 30.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_03_12")
-}],
-"loop": false,
-"name": &"Ground_Up_Combo_1",
-"speed": 12.5
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_13")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_video_attack_04_13")
-}],
-"loop": false,
-"name": &"Ground_Up_Combo_2",
-"speed": 14.4
 }, {
 "frames": [{
 "duration": 1.0,

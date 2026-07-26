@@ -22,20 +22,25 @@ const SIT_ROWS := 10
 const SIT_FRAME_COUNT := 48
 const SIT_FPS := 12.0
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
+const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
-const STATIONARY_ATTACK_TEXTURES := {
-	&"Ground_Attack_Combo_1": preload(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02_stationary.png"
-	),
-	&"Ground_Attack_Combo_2": preload(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01_stationary.png"
-	),
-	&"Ground_Up_Combo_1": preload(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03_stationary.png"
-	),
-	&"Ground_Up_Combo_2": preload(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04_stationary.png"
-	),
+const GROUND_ATTACK_VARIANT_TEXTURES := {
+	&"stationary": {
+		&"Ground_Attack_Combo_1": preload(
+			"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png"
+		),
+		&"Ground_Attack_Combo_2": preload(
+			"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png"
+		),
+	},
+	&"backpedal": {
+		&"Ground_Attack_Combo_1": preload(
+			"res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png"
+		),
+		&"Ground_Attack_Combo_2": preload(
+			"res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png"
+		),
+	},
 }
 const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
@@ -142,8 +147,6 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
 @export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
-@export_range(0.1, 2.0, 0.05) var ground_combo_forward_finisher_visual_scale_multiplier := 1.15
-@export_range(0.1, 2.0, 0.05) var ground_combo_up_visual_scale_multiplier := 1.0
 @export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
 @export_group("Ground Attack Combo")
@@ -152,13 +155,16 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var ground_combo_1_second_strike_frames := Vector2i(-1, -1)
 @export var ground_combo_2_first_strike_frames := Vector2i(2, 4)
 @export var ground_combo_2_second_strike_frames := Vector2i(9, 11)
-@export var ground_up_combo_1_first_strike_frames := Vector2i(1, 4)
-@export var ground_up_combo_1_second_strike_frames := Vector2i(6, 9)
-@export var ground_up_combo_2_first_strike_frames := Vector2i(1, 5)
-@export var ground_up_combo_2_second_strike_frames := Vector2i(7, 11)
-@export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 156.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_up_hitbox_radius := 142.0
+@export var stationary_combo_1_first_strike_frames := Vector2i(4, 11)
+@export var stationary_combo_1_second_strike_frames := Vector2i(-1, -1)
+@export var stationary_combo_2_first_strike_frames := Vector2i(5, 9)
+@export var stationary_combo_2_second_strike_frames := Vector2i(10, 15)
+@export var backpedal_combo_1_first_strike_frames := Vector2i(3, 11)
+@export var backpedal_combo_1_second_strike_frames := Vector2i(-1, -1)
+@export var backpedal_combo_2_first_strike_frames := Vector2i(5, 12)
+@export var backpedal_combo_2_second_strike_frames := Vector2i(13, 16)
+@export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 130.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 145.0
 
 @export_group("Air Double Attack")
 @export var air_attack_first_strike_frames := Vector2i(5, 7)
@@ -373,6 +379,7 @@ var ground_combo_attack_duration := 0.0
 var ground_combo_active_strike := -1
 var ground_combo_queued := false
 var ground_combo_queued_family: StringName = &""
+var ground_attack_visual_mode: StringName = &"stationary"
 var air_attack_duration := 0.0
 var air_attack_active_strike := -1
 var _default_attack_hitbox_polygon := PackedVector2Array()
@@ -440,7 +447,7 @@ func _ready() -> void:
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
 	_set_flow_state_visuals(_flow_state_active)
-	_ensure_stationary_attack_animations()
+	_ensure_ground_attack_variant_animations()
 	_ensure_sit_animation()
 	_ensure_ledge_animation()
 	update_equipment_facing()
@@ -1154,16 +1161,17 @@ func start_attack(is_special := false) -> void:
 func _begin_ground_combo_attack(family: StringName) -> void:
 	if family != ground_combo_family or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo:
 		ground_combo_step = 0
-	elif family == &"forward":
-		ground_combo_step = mini(ground_combo_step + 1, 1)
 	else:
-		ground_combo_step = (ground_combo_step + 1) % 2
+		ground_combo_step = mini(ground_combo_step + 1, 1)
 
-	ground_combo_family = family
+	ground_combo_family = &"forward"
 	ground_combo_reset_timer = 0.0
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
 	ground_combo_active_strike = -1
+	ground_attack_visual_mode = _select_ground_attack_visual_mode(
+		Input.get_axis("move_left", "move_right")
+	)
 	current_attack_uses_ground_combo = true
 	current_attack_is_special = false
 	is_attacking = true
@@ -1171,12 +1179,8 @@ func _begin_ground_combo_attack(family: StringName) -> void:
 	attack_active_started = false
 	attack_active_finished = false
 
-	if family == &"up":
-		attack_direction = Vector2.UP
-		current_attack_body_anim = "Ground_Up_Combo_%d" % (ground_combo_step + 1)
-	else:
-		attack_direction = Vector2(float(last_direction), 0.0)
-		current_attack_body_anim = "Ground_Attack_Combo_%d" % (ground_combo_step + 1)
+	attack_direction = Vector2(float(last_direction), 0.0)
+	current_attack_body_anim = "Ground_Attack_Combo_%d" % (ground_combo_step + 1)
 
 	if player_animation:
 		player_animation.flip_h = last_direction < 0
@@ -1311,15 +1315,32 @@ func _finish_air_double_attack() -> void:
 	_reset_weapon_visuals()
 
 func _get_ground_combo_strike_frames() -> Array[Vector2i]:
+	if ground_attack_visual_mode == &"stationary":
+		if ground_combo_step == 0:
+			return [
+				stationary_combo_1_first_strike_frames,
+				stationary_combo_1_second_strike_frames
+			]
+		return [
+			stationary_combo_2_first_strike_frames,
+			stationary_combo_2_second_strike_frames
+		]
+	if ground_attack_visual_mode == &"backpedal":
+		if ground_combo_step == 0:
+			return [
+				backpedal_combo_1_first_strike_frames,
+				backpedal_combo_1_second_strike_frames
+			]
+		return [
+			backpedal_combo_2_first_strike_frames,
+			backpedal_combo_2_second_strike_frames
+		]
+
 	match current_attack_body_anim:
 		"Ground_Attack_Combo_1":
 			return [ground_combo_1_first_strike_frames, ground_combo_1_second_strike_frames]
 		"Ground_Attack_Combo_2":
 			return [ground_combo_2_first_strike_frames, ground_combo_2_second_strike_frames]
-		"Ground_Up_Combo_1":
-			return [ground_up_combo_1_first_strike_frames, ground_up_combo_1_second_strike_frames]
-		"Ground_Up_Combo_2":
-			return [ground_up_combo_2_first_strike_frames, ground_up_combo_2_second_strike_frames]
 		_:
 			return [Vector2i(-1, -1), Vector2i(-1, -1)]
 
@@ -1360,20 +1381,13 @@ func _cancel_air_double_attack() -> void:
 	if attack_collision_polygon:
 		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 
-func _get_ground_combo_family(direction: Vector2) -> StringName:
-	if direction.y < -0.6 and abs(direction.y) >= abs(direction.x):
-		return &"up"
+func _get_ground_combo_family(_direction: Vector2) -> StringName:
 	return &"forward"
 
 func _build_ground_combo_sector_polygon() -> PackedVector2Array:
-	var hitbox_radius := (
-		ground_combo_up_hitbox_radius
-		if ground_combo_family == &"up"
-		else ground_combo_forward_hitbox_radius
-	)
 	return _build_attack_sector_polygon(
 		ground_combo_hitbox_arc_degrees,
-		hitbox_radius
+		ground_combo_forward_hitbox_radius
 	)
 
 func _build_attack_sector_polygon(arc_degrees: float, radius: float) -> PackedVector2Array:
@@ -1427,7 +1441,10 @@ func _reset_weapon_visuals() -> void:
 		return
 
 	var weapon_pose_body_anim := current_body_anim
-	if current_body_anim.ends_with(STATIONARY_ATTACK_SUFFIX):
+	if (
+		current_body_anim.ends_with(STATIONARY_ATTACK_SUFFIX)
+		or current_body_anim.ends_with(BACKPEDAL_ATTACK_SUFFIX)
+	):
 		weapon_pose_body_anim = current_attack_body_anim
 	if weapon_animation_player.has_animation("weapon_%s" % weapon_pose_body_anim.to_lower()):
 		_play_weapon_pose_anim(weapon_pose_body_anim)
@@ -1451,12 +1468,8 @@ func _apply_attack_visual_tuning() -> void:
 	elif current_attack_body_anim == "Attack":
 		scale_multiplier = grounded_forward_visual_scale_multiplier
 		visual_offset = grounded_forward_visual_offset
-	elif current_attack_body_anim == "Ground_Attack_Combo_2":
-		scale_multiplier = ground_combo_forward_finisher_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
 		scale_multiplier = ground_combo_forward_visual_scale_multiplier
-	elif current_attack_body_anim.begins_with("Ground_Up_Combo_"):
-		scale_multiplier = ground_combo_up_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":
 		scale_multiplier = air_attack_visual_scale_multiplier
 	if player_animation.flip_h:
@@ -1464,31 +1477,47 @@ func _apply_attack_visual_tuning() -> void:
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
 	player_animation.position = _player_default_visual_position + visual_offset
 
-func _get_ground_combo_visual_animation(dir: float) -> StringName:
+func _select_ground_attack_visual_mode(dir: float) -> StringName:
+	if absf(dir) <= 0.01 or absf(velocity.x) < STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED:
+		return &"stationary"
+	if dir * float(last_direction) < 0.0 and velocity.x * float(last_direction) < 0.0:
+		return &"backpedal"
+	return &"moving"
+
+func _get_ground_combo_visual_animation(_dir: float) -> StringName:
 	var moving_animation := StringName(current_attack_body_anim)
 	if not current_attack_uses_ground_combo:
 		return moving_animation
 
-	var stationary_animation := StringName(
-		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
+	var suffix := (
+		BACKPEDAL_ATTACK_SUFFIX
+		if ground_attack_visual_mode == &"backpedal"
+		else STATIONARY_ATTACK_SUFFIX
 	)
-	if not player_animation.sprite_frames.has_animation(stationary_animation):
+	if ground_attack_visual_mode == &"moving":
 		return moving_animation
 
-	var has_horizontal_input := absf(dir) > 0.01
-	var has_horizontal_motion := (
-		absf(velocity.x) >= STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED
+	var variant_animation := StringName(
+		"%s%s" % [current_attack_body_anim, suffix]
 	)
-	return moving_animation if has_horizontal_input and has_horizontal_motion else stationary_animation
+	return (
+		variant_animation
+		if player_animation.sprite_frames.has_animation(variant_animation)
+		else moving_animation
+	)
 
 func _play_attack_visual_animation(body_anim: StringName) -> void:
 	var moving_animation := StringName(current_attack_body_anim)
 	var stationary_animation := StringName(
 		"%s%s" % [current_attack_body_anim, STATIONARY_ATTACK_SUFFIX]
 	)
+	var backpedal_animation := StringName(
+		"%s%s" % [current_attack_body_anim, BACKPEDAL_ATTACK_SUFFIX]
+	)
 	var preserve_progress := (
 		StringName(current_body_anim) == moving_animation
 		or StringName(current_body_anim) == stationary_animation
+		or StringName(current_body_anim) == backpedal_animation
 	)
 	var previous_frame := player_animation.frame
 	var previous_progress := player_animation.frame_progress
@@ -2370,53 +2399,60 @@ func _restore_save_point_equipment() -> void:
 	if equipment_mount:
 		equipment_mount.visible = _save_point_equipment_was_visible
 
-func _ensure_stationary_attack_animations() -> void:
+func _ensure_ground_attack_variant_animations() -> void:
 	if not player_animation or not player_animation.sprite_frames:
 		return
 
 	var frames := player_animation.sprite_frames
-	for moving_animation: StringName in STATIONARY_ATTACK_TEXTURES:
-		var stationary_animation := StringName(
-			"%s%s" % [moving_animation, STATIONARY_ATTACK_SUFFIX]
+	for visual_mode: StringName in GROUND_ATTACK_VARIANT_TEXTURES:
+		var suffix := (
+			BACKPEDAL_ATTACK_SUFFIX
+			if visual_mode == &"backpedal"
+			else STATIONARY_ATTACK_SUFFIX
 		)
-		if frames.has_animation(stationary_animation):
-			continue
-		if not frames.has_animation(moving_animation):
-			push_warning("Missing moving attack animation: %s" % moving_animation)
-			continue
-
-		frames.add_animation(stationary_animation)
-		frames.set_animation_loop(
-			stationary_animation,
-			frames.get_animation_loop(moving_animation)
-		)
-		frames.set_animation_speed(
-			stationary_animation,
-			frames.get_animation_speed(moving_animation)
-		)
-
-		var stationary_sheet: Texture2D = STATIONARY_ATTACK_TEXTURES[moving_animation]
-		for frame_index in frames.get_frame_count(moving_animation):
-			var moving_texture := (
-				frames.get_frame_texture(moving_animation, frame_index) as AtlasTexture
+		var variant_textures: Dictionary = GROUND_ATTACK_VARIANT_TEXTURES[visual_mode]
+		for moving_animation: StringName in variant_textures:
+			var variant_animation := StringName(
+				"%s%s" % [moving_animation, suffix]
 			)
-			if moving_texture == null:
-				push_warning(
-					"%s frame %d is not an AtlasTexture." %
-					[moving_animation, frame_index]
-				)
+			if frames.has_animation(variant_animation):
+				continue
+			if not frames.has_animation(moving_animation):
+				push_warning("Missing moving attack animation: %s" % moving_animation)
 				continue
 
-			var stationary_texture := AtlasTexture.new()
-			stationary_texture.atlas = stationary_sheet
-			stationary_texture.region = moving_texture.region
-			stationary_texture.margin = moving_texture.margin
-			stationary_texture.filter_clip = moving_texture.filter_clip
-			frames.add_frame(
-				stationary_animation,
-				stationary_texture,
-				frames.get_frame_duration(moving_animation, frame_index)
+			frames.add_animation(variant_animation)
+			frames.set_animation_loop(
+				variant_animation,
+				frames.get_animation_loop(moving_animation)
 			)
+			frames.set_animation_speed(
+				variant_animation,
+				frames.get_animation_speed(moving_animation)
+			)
+
+			var variant_sheet: Texture2D = variant_textures[moving_animation]
+			for frame_index in frames.get_frame_count(moving_animation):
+				var moving_texture := (
+					frames.get_frame_texture(moving_animation, frame_index) as AtlasTexture
+				)
+				if moving_texture == null:
+					push_warning(
+						"%s frame %d is not an AtlasTexture." %
+						[moving_animation, frame_index]
+					)
+					continue
+
+				var variant_texture := AtlasTexture.new()
+				variant_texture.atlas = variant_sheet
+				variant_texture.region = moving_texture.region
+				variant_texture.margin = moving_texture.margin
+				variant_texture.filter_clip = moving_texture.filter_clip
+				frames.add_frame(
+					variant_animation,
+					variant_texture,
+					frames.get_frame_duration(moving_animation, frame_index)
+				)
 
 func _ensure_sit_animation() -> void:
 	if not player_animation or not player_animation.sprite_frames:
