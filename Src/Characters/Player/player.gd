@@ -13,35 +13,11 @@ const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
 const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
-const SIT_TEXTURE := preload("res://Assets/Threadborne/sit.png")
-const LEDGE_HANG_TEXTURE := preload("res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
 const SIT_ANIMATION := &"Sit"
-const SIT_COLUMNS := 5
-const SIT_ROWS := 10
-const SIT_FRAME_COUNT := 48
-const SIT_FPS := 12.0
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
-const GROUND_ATTACK_VARIANT_TEXTURES := {
-	&"stationary": {
-		&"Ground_Attack_Combo_1": preload(
-			"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png"
-		),
-		&"Ground_Attack_Combo_2": preload(
-			"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png"
-		),
-	},
-	&"backpedal": {
-		&"Ground_Attack_Combo_1": preload(
-			"res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png"
-		),
-		&"Ground_Attack_Combo_2": preload(
-			"res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png"
-		),
-	},
-}
 const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
 # ===============================
@@ -447,9 +423,6 @@ func _ready() -> void:
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
 	_set_flow_state_visuals(_flow_state_active)
-	_ensure_ground_attack_variant_animations()
-	_ensure_sit_animation()
-	_ensure_ledge_animation()
 	update_equipment_facing()
 	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
@@ -2398,99 +2371,6 @@ func _hide_save_point_equipment() -> void:
 func _restore_save_point_equipment() -> void:
 	if equipment_mount:
 		equipment_mount.visible = _save_point_equipment_was_visible
-
-func _ensure_ground_attack_variant_animations() -> void:
-	if not player_animation or not player_animation.sprite_frames:
-		return
-
-	var frames := player_animation.sprite_frames
-	for visual_mode: StringName in GROUND_ATTACK_VARIANT_TEXTURES:
-		var suffix := (
-			BACKPEDAL_ATTACK_SUFFIX
-			if visual_mode == &"backpedal"
-			else STATIONARY_ATTACK_SUFFIX
-		)
-		var variant_textures: Dictionary = GROUND_ATTACK_VARIANT_TEXTURES[visual_mode]
-		for moving_animation: StringName in variant_textures:
-			var variant_animation := StringName(
-				"%s%s" % [moving_animation, suffix]
-			)
-			if frames.has_animation(variant_animation):
-				continue
-			if not frames.has_animation(moving_animation):
-				push_warning("Missing moving attack animation: %s" % moving_animation)
-				continue
-
-			frames.add_animation(variant_animation)
-			frames.set_animation_loop(
-				variant_animation,
-				frames.get_animation_loop(moving_animation)
-			)
-			frames.set_animation_speed(
-				variant_animation,
-				frames.get_animation_speed(moving_animation)
-			)
-
-			var variant_sheet: Texture2D = variant_textures[moving_animation]
-			for frame_index in frames.get_frame_count(moving_animation):
-				var moving_texture := (
-					frames.get_frame_texture(moving_animation, frame_index) as AtlasTexture
-				)
-				if moving_texture == null:
-					push_warning(
-						"%s frame %d is not an AtlasTexture." %
-						[moving_animation, frame_index]
-					)
-					continue
-
-				var variant_texture := AtlasTexture.new()
-				variant_texture.atlas = variant_sheet
-				variant_texture.region = moving_texture.region
-				variant_texture.margin = moving_texture.margin
-				variant_texture.filter_clip = moving_texture.filter_clip
-				frames.add_frame(
-					variant_animation,
-					variant_texture,
-					frames.get_frame_duration(moving_animation, frame_index)
-				)
-
-func _ensure_sit_animation() -> void:
-	if not player_animation or not player_animation.sprite_frames:
-		return
-	if player_animation.sprite_frames.has_animation(SIT_ANIMATION):
-		return
-
-	player_animation.sprite_frames.add_animation(SIT_ANIMATION)
-	player_animation.sprite_frames.set_animation_loop(SIT_ANIMATION, false)
-	player_animation.sprite_frames.set_animation_speed(SIT_ANIMATION, SIT_FPS)
-	var frame_width := SIT_TEXTURE.get_width() / SIT_COLUMNS
-	var frame_height := SIT_TEXTURE.get_height() / SIT_ROWS
-	for frame_index in SIT_FRAME_COUNT:
-		var atlas_texture := AtlasTexture.new()
-		atlas_texture.atlas = SIT_TEXTURE
-		atlas_texture.region = Rect2(
-			(frame_index % SIT_COLUMNS) * frame_width,
-			(frame_index / SIT_COLUMNS) * frame_height,
-			frame_width,
-			frame_height
-		)
-		player_animation.sprite_frames.add_frame(SIT_ANIMATION, atlas_texture)
-
-func _ensure_ledge_animation() -> void:
-	if not player_animation or not player_animation.sprite_frames:
-		return
-	if player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
-		return
-	player_animation.sprite_frames.add_animation(LEDGE_HANG_ANIMATION)
-	player_animation.sprite_frames.set_animation_loop(LEDGE_HANG_ANIMATION, true)
-	player_animation.sprite_frames.set_animation_speed(LEDGE_HANG_ANIMATION, 5.0)
-	var frame_width := LEDGE_HANG_TEXTURE.get_width() / 2
-	var frame_height := LEDGE_HANG_TEXTURE.get_height() / 2
-	for frame_index in 4:
-		var atlas_texture := AtlasTexture.new()
-		atlas_texture.atlas = LEDGE_HANG_TEXTURE
-		atlas_texture.region = Rect2((frame_index % 2) * frame_width, (frame_index / 2) * frame_height, frame_width, frame_height)
-		player_animation.sprite_frames.add_frame(LEDGE_HANG_ANIMATION, atlas_texture)
 
 # ===============================
 # INTERACTABLES

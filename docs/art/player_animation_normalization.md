@@ -34,18 +34,20 @@ transparent sheet cells:
 | --- | ---: | ---: |
 | Ground forward | 0.75 | 512 px |
 | Neutral special | 0.675 | 512 px |
-| Ground combo 1/2 | 0.90 effective | 320 px |
-| Stationary and backpedal combo variants | 1.15 | 320 px |
+| Ground combo opener | 0.90 | 320 px |
+| Ground combo finisher | 0.90 | 448 px |
+| Stationary combo variants | 0.90 | 320 px |
+| Backpedal combo variants | 1.15 | 320 px |
 | Air double attack | 1.20 | 416 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
 its 384 px rendered source. All runtime visual scale multipliers remain `1.0`,
 which gives future wrist-mounted grapple art a stable coordinate system.
 
-The `ground_combo_01` authoring sheet now uses 896 px padded cells so repaired
-weapon and smear pixels cannot cross an atlas boundary. Its normalizer scale is
-`0.6428571`, which renders the original 640 px content at the same effective
-`0.90` scale and preserves its existing screen size.
+The `ground_combo_01` authoring sheet uses 896 px padded cells so repaired
+weapon and smear pixels cannot cross an atlas boundary. It now retains a
+448 px runtime cell at the standard `0.90` content scale. This corrects the
+finisher's undersized presentation without sacrificing the repaired padding.
 
 ### Runtime memory budget
 
@@ -100,11 +102,14 @@ The supplied backpedal recording also has two cuts:
   source frame 40 as a 19-frame finisher.
 
 All four sheets are green-keyed while preserving the recordings' shared 640 px
-camera origin and ground line, then scaled at 1.15 and reduced to 320 px runtime
-cells. Preserving the fixed source canvas prevents a low slash trail from being
-mistaken for a foot anchor and shifting the body between frames. Broad white
-slash effects are protected during the selective bronze weapon recolor so the
-VFX does not inherit the weapon palette.
+camera origin and ground line, then reduced to 320 px runtime cells. Stationary
+clips use a `0.90` content scale, leaving at least 16 transparent pixels around
+every occupied frame so slash effects cannot bleed into adjacent atlas cells.
+Backpedal clips retain their `1.15` source scale because their recorded framing
+already provides safe gutters. Preserving the fixed source canvas prevents a
+low slash trail from being mistaken for a foot anchor and shifting the body
+between frames. Broad white slash effects are protected during the selective
+bronze weapon recolor so the VFX does not inherit the weapon palette.
 
 The logical moving opener and finisher remain unchanged at 14 and 19 frames.
 When a swing begins, the player selects and locks one visual mode for its full
@@ -152,9 +157,19 @@ Secondary-motion sheets now use padded 320 px runtime cells:
   frame's head anchor.
 - Landing and both grapple tosses register to the first frame's foot/ground
   anchor.
+- Ledge hang uses a transparent 2x2 sheet; the connected opaque-black source
+  background is removed without keying dark pixels enclosed by the character.
 
 The padding allows corrective translation without cropping an extended hand,
 weapon pose, foot, or billowing cloth.
+
+## Editor-visible animation ownership
+
+All playable clips are serialized directly into the `Player Animation`
+node's `SpriteFrames` resource. Stationary and backpedal attacks, ledge hang,
+wall cling, and the save-point sit sequence can therefore be previewed and
+edited in the Godot inspector without running the game. `player.gd` selects
+among those authored clips but no longer creates animation frames in `_ready()`.
 
 ### Secondary motion and grapple tosses
 
@@ -252,12 +267,12 @@ Run the focused scene-level verification after importing:
 godot --headless --path . res://tools/player_animation/verify_player_animation.tscn
 ```
 
-It checks the seven motion clips, moving, stationary, and backpedal ground
-combos, and the air double attack: frame counts, frame textures, atlas cell
-sizes, playback speeds, loop modes, and the player's uniform runtime scale. It
-also verifies that ground variant selection locks for a complete swing, upward
-ground input routes forward, the frontal arc is 130 degrees, and the retired
-upward clips are absent from the active player scene.
+It checks the motion clips, editor-authored sit and ledge clips, moving,
+stationary, and backpedal ground combos, and the air double attack: frame
+counts, frame textures, atlas cell sizes, playback speeds, loop modes, and the
+player's uniform runtime scale. It also verifies ledge alpha, stationary atlas
+gutters, ground variant locking, upward input routing, the 130-degree frontal
+arc, and absence of the retired upward clips.
 
 ## Deliberate limits
 

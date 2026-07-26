@@ -9,29 +9,48 @@ const EXPECTED_ANIMATIONS := {
 	&"Ground_Attack_Combo_1": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1_Stationary": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1_Backpedal": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
-	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(448, 448)},
 	&"Ground_Attack_Combo_2_Stationary": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2_Backpedal": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Jump_Apex": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Ascent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Land": {"frames": 4, "fps": 12.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Ledge_Hang": {"frames": 4, "fps": 5.0, "loop": true, "cell": Vector2(320, 320)},
+	&"Sit": {"frames": 48, "fps": 12.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
 }
 
 func _ready() -> void:
 	var player := PLAYER_SCENE.instantiate()
-	add_child(player)
-
 	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
 	var failures: Array[String] = []
 	if sprite == null:
 		failures.append("Player Animation node is missing or is not an AnimatedSprite2D.")
 	else:
+		_verify_editor_authored_animations(sprite, failures)
+
+	add_child(player)
+	if sprite != null:
 		_verify_sprite(sprite, failures)
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
+	_verify_ledge_transparency(failures)
+	_verify_sheet_cell_gutters(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png",
+		Vector2i(5, 5),
+		14,
+		16,
+		failures
+	)
+	_verify_sheet_cell_gutters(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
+		Vector2i(6, 4),
+		19,
+		16,
+		failures
+	)
 
 	player.free()
 	if failures.is_empty():
@@ -48,6 +67,16 @@ func _ready() -> void:
 	for failure in failures:
 		push_error(failure)
 	get_tree().quit(1)
+
+func _verify_editor_authored_animations(
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	for animation_name: StringName in EXPECTED_ANIMATIONS:
+		if not sprite.sprite_frames.has_animation(animation_name):
+			failures.append(
+				"%s is not serialized in the Player SpriteFrames resource." % animation_name
+			)
 
 func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 	if not sprite.scale.is_equal_approx(Vector2(0.7, 0.7)):
@@ -107,6 +136,79 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 					"%s frame %d uses atlas cell %s; expected %s." %
 					[animation_name, frame_index, texture.region.size, expected.cell]
 				)
+
+func _verify_ledge_transparency(failures: Array[String]) -> void:
+	var path := "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png"
+	var image := _load_imported_image(path)
+	if image == null or image.is_empty():
+		failures.append("Could not load the ledge hang sheet for alpha verification.")
+		return
+
+	var transparent_pixels := 0
+	var total_pixels := image.get_width() * image.get_height()
+	for y in image.get_height():
+		for x in image.get_width():
+			if image.get_pixel(x, y).a <= 0.01:
+				transparent_pixels += 1
+
+	if transparent_pixels < int(total_pixels * 0.8):
+		failures.append(
+			"Ledge hang background is not transparent enough: %d/%d pixels are transparent." %
+			[transparent_pixels, total_pixels]
+		)
+
+func _verify_sheet_cell_gutters(
+	path: String,
+	grid: Vector2i,
+	used_frames: int,
+	minimum_gutter: int,
+	failures: Array[String]
+) -> void:
+	var image := _load_imported_image(path)
+	if image == null or image.is_empty():
+		failures.append("Could not load %s for atlas gutter verification." % path)
+		return
+
+	var cell_size := Vector2i(image.get_width() / grid.x, image.get_height() / grid.y)
+	for frame_index in used_frames:
+		var frame_origin := Vector2i(
+			(frame_index % grid.x) * cell_size.x,
+			(frame_index / grid.x) * cell_size.y
+		)
+		var min_x := cell_size.x
+		var min_y := cell_size.y
+		var max_x := -1
+		var max_y := -1
+		for y in cell_size.y:
+			for x in cell_size.x:
+				if image.get_pixel(frame_origin.x + x, frame_origin.y + y).a <= 0.03:
+					continue
+				min_x = mini(min_x, x)
+				min_y = mini(min_y, y)
+				max_x = maxi(max_x, x)
+				max_y = maxi(max_y, y)
+
+		if max_x < 0:
+			failures.append("%s frame %d is empty." % [path, frame_index])
+			continue
+
+		var gutters := [
+			min_x,
+			min_y,
+			cell_size.x - 1 - max_x,
+			cell_size.y - 1 - max_y,
+		]
+		if gutters.min() < minimum_gutter:
+			failures.append(
+				"%s frame %d has clipped padding %s; expected at least %d px." %
+				[path, frame_index, gutters, minimum_gutter]
+			)
+
+func _load_imported_image(path: String) -> Image:
+	var texture := load(path) as Texture2D
+	if texture == null:
+		return null
+	return texture.get_image()
 
 func _verify_ground_attack_variant_locking(
 	player: Node,

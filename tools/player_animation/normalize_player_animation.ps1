@@ -706,6 +706,86 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void RemoveConnectedDarkBackground(
+        string inputPath,
+        string outputPath,
+        int threshold)
+    {
+        using (var sourceFile = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            sourceFile.Width,
+            sourceFile.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            using (var graphics = Graphics.FromImage(output))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.DrawImageUnscaled(sourceFile, 0, 0);
+            }
+
+            int width = output.Width;
+            int height = output.Height;
+            bool[] visited = new bool[width * height];
+            var queue = new Queue<int>();
+
+            Action<int, int> enqueueDark = (x, y) =>
+            {
+                int index = y * width + x;
+                if (visited[index])
+                {
+                    return;
+                }
+
+                Color color = output.GetPixel(x, y);
+                if (
+                    color.A == 0 ||
+                    Math.Max(color.R, Math.Max(color.G, color.B)) <= threshold)
+                {
+                    visited[index] = true;
+                    queue.Enqueue(index);
+                }
+            };
+
+            for (int x = 0; x < width; x++)
+            {
+                enqueueDark(x, 0);
+                enqueueDark(x, height - 1);
+            }
+            for (int y = 0; y < height; y++)
+            {
+                enqueueDark(0, y);
+                enqueueDark(width - 1, y);
+            }
+
+            while (queue.Count > 0)
+            {
+                int index = queue.Dequeue();
+                int x = index % width;
+                int y = index / width;
+                output.SetPixel(x, y, Color.Transparent);
+
+                if (x > 0)
+                {
+                    enqueueDark(x - 1, y);
+                }
+                if (x + 1 < width)
+                {
+                    enqueueDark(x + 1, y);
+                }
+                if (y > 0)
+                {
+                    enqueueDark(x, y - 1);
+                }
+                if (y + 1 < height)
+                {
+                    enqueueDark(x, y + 1);
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     public static void BuildGameWeapon(string inputPath, string outputPath)
     {
         using (var source = new Bitmap(inputPath))
@@ -1745,6 +1825,20 @@ foreach ($source in $copyMap.Keys) {
     Copy-NormalizedAsset $source $copyMap[$source]
 }
 
+$ledgeHangPath = Join-Path $outputRoot "movement\ledge_hang.png"
+if (-not (Test-Path -LiteralPath $ledgeHangPath)) {
+    throw "Missing ledge hang sheet: $ledgeHangPath"
+}
+$transparentLedgeHangPath = "$ledgeHangPath.transparent.png"
+[ThreadboundAnimationNormalizer]::RemoveConnectedDarkBackground(
+    $ledgeHangPath,
+    $transparentLedgeHangPath,
+    3)
+Move-Item `
+    -LiteralPath $transparentLedgeHangPath `
+    -Destination $ledgeHangPath `
+    -Force
+
 function Resolve-FfmpegExecutable {
     if ($FfmpegPath) {
         return (Resolve-Path -LiteralPath $FfmpegPath).Path
@@ -1873,10 +1967,10 @@ if ($BackpedalAttackVideo) {
 $attackJobs = @(
     @("Assets\Threadborne\New Attack\threadborn_grounded_attack.png", "attacks\ground_forward.png", 6, 8, 1024, 0.75),
     @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.6428571),
+    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 896, 0.9),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png", "attacks\ground_combo_02.png", 5, 5, 640, 0.9),
-    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_01_sheet.png", "attacks\stationary_combo_01.png", 5, 5, 640, 1.15),
-    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png", "attacks\stationary_combo_02.png", 6, 4, 640, 1.15),
+    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_01_sheet.png", "attacks\stationary_combo_01.png", 5, 5, 640, 0.9),
+    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png", "attacks\stationary_combo_02.png", 6, 4, 640, 0.9),
     @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_01_sheet.png", "attacks\backpedal_combo_01.png", 5, 5, 640, 1.15),
     @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_02_sheet.png", "attacks\backpedal_combo_02.png", 6, 4, 640, 1.15),
     @("Assets\Threadborne\New Attack\Video Attacks\air_double_attack_01_candidate_sheet.png", "attacks\air_double_attack.png", 6, 5, 832, 1.2)
@@ -2079,7 +2173,7 @@ $runtimeRasterAssets = @(
     @("grapple\toss_diagonal_cycle.png", 1920, 1280),
     @("attacks\ground_forward.png", 6144, 8192),
     @("attacks\neutral_special.png", 6144, 8192),
-    @("attacks\ground_combo_01.png", 3840, 2560),
+    @("attacks\ground_combo_01.png", 5376, 3584),
     @("attacks\ground_combo_02.png", 3200, 3200),
     @("attacks\stationary_combo_01.png", 3200, 3200),
     @("attacks\stationary_combo_02.png", 3840, 2560),
