@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -95,12 +95,6 @@
       }
     },
     "attacks": {
-      "stationary_compositor": {
-        "stance_lower_body_cut_from_belt": -12,
-        "moving_lower_body_cut_from_belt": 18,
-        "waist_overlap_pixels_at_source_scale": 30,
-        "purpose": "Preserve a continuous antialiased waist seam between the original upper body and planted lower body."
-      },
       "ground_forward": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png",
         "grid": [6, 8],
@@ -126,12 +120,7 @@
         "runtime_source_frames": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         "strike_windows": [[2, 4], [9, 11]],
         "character_alpha_hardened": true,
-        "repaired_source_frames": [5, 6, 13, 14, 15],
-        "stationary_variant": {
-          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01_stationary.png",
-          "runtime_animation": "Ground_Attack_Combo_2_Stationary",
-          "frame_mapping": "one_to_one"
-        }
+        "repaired_source_frames": [5, 6, 13, 14, 15]
       },
       "ground_combo_02": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
@@ -141,45 +130,54 @@
         "runtime_animation": "Ground_Attack_Combo_1",
         "runtime_source_frames": [0, 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         "strike_windows": [[3, 5]],
-        "character_alpha_hardened": true,
-        "stationary_variant": {
-          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02_stationary.png",
-          "runtime_animation": "Ground_Attack_Combo_1_Stationary",
-          "frame_mapping": "one_to_one"
-        }
+        "character_alpha_hardened": true
       },
-      "ground_combo_03_up": {
-        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03.png",
-        "grid": [6, 4],
-        "cell_size": 384,
-        "baked_source_scale": 1.1,
-        "playback_source_frames": [8, 9, 10, 11, 12, 8, 9, 10, 11, 12],
-        "playback_fps": 12.5,
-        "strike_windows": [[1, 4], [6, 9]],
-        "head_tilt_degrees": -18.0,
-        "head_tilt_source_frames": [9, 11, 12, 13],
-        "character_alpha_hardened": true,
-        "stationary_variant": {
-          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_03_stationary.png",
-          "runtime_animation": "Ground_Up_Combo_1_Stationary",
-          "frame_mapping": "one_to_one"
-        }
-      },
-      "ground_combo_04_up": {
-        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04.png",
-        "grid": [5, 5],
-        "cell_size": 384,
-        "baked_source_scale": 1.1,
-        "playback_source_frames": [8, 9, 10, 11, 12, 13, 8, 9, 10, 11, 12, 13],
-        "playback_fps": 14.4,
-        "strike_windows": [[1, 5], [7, 11]],
-        "head_tilt_degrees": -18.0,
-        "head_tilt_source_frames": [9, 13],
-        "character_alpha_hardened": true,
-        "stationary_variant": {
-          "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_04_stationary.png",
-          "runtime_animation": "Ground_Up_Combo_2_Stationary",
-          "frame_mapping": "one_to_one"
+      "ground_attack_variants": {
+        "playback_fps": 30.0,
+        "cell_size": 320,
+        "authored_cell_size": 640,
+        "baked_source_scale": 1.15,
+        "registration_anchor": "fixed_video_canvas",
+        "selection_is_locked_per_swing": true,
+        "forward_hitbox_arc_degrees": 130.0,
+        "upward_ground_input_routes_to": "forward",
+        "stationary": {
+          "source_video": "trimmed_1d53ad91-c434-4729-a508-ab33cc927433.mp4",
+          "opener": {
+            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/stationary_video_combo_01_sheet.png",
+            "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png",
+            "runtime_animation": "Ground_Attack_Combo_1_Stationary",
+            "grid": [5, 5],
+            "source_frames": [48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, 80],
+            "strike_windows": [[4, 11]]
+          },
+          "finisher": {
+            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/stationary_video_combo_02_sheet.png",
+            "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
+            "runtime_animation": "Ground_Attack_Combo_2_Stationary",
+            "grid": [6, 4],
+            "source_frames": [0, 2, 4, 6, 8, 10, 11, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27, 28, 29],
+            "strike_windows": [[5, 9], [10, 15]]
+          }
+        },
+        "backpedal": {
+          "source_video": "trimmed_f362d63f-1e7c-490f-af8f-5c1280ac4393.mp4",
+          "opener": {
+            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/backpedal_video_combo_01_sheet.png",
+            "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png",
+            "runtime_animation": "Ground_Attack_Combo_1_Backpedal",
+            "grid": [5, 5],
+            "source_frames": [0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 40],
+            "strike_windows": [[3, 11]]
+          },
+          "finisher": {
+            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/backpedal_video_combo_02_sheet.png",
+            "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png",
+            "runtime_animation": "Ground_Attack_Combo_2_Backpedal",
+            "grid": [6, 4],
+            "source_frames": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40],
+            "strike_windows": [[5, 12], [13, 16]]
+          }
         }
       },
       "air_double_attack": {

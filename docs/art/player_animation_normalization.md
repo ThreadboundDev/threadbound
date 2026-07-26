@@ -35,12 +35,11 @@ transparent sheet cells:
 | Ground forward | 0.75 | 512 px |
 | Neutral special | 0.675 | 512 px |
 | Ground combo 1/2 | 0.90 effective | 320 px |
-| Up combo 1/2 | 1.10 | 384 px |
+| Stationary and backpedal combo variants | 1.15 | 320 px |
 | Air double attack | 1.20 | 416 px |
 
-Up attacks retain a 16 px runtime transparent gutter around their scaled source
-cells. The air double attack uses a 416 px runtime cell, leaving a 16 px gutter
-around its 384 px rendered source. All runtime visual scale multipliers remain `1.0`,
+The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
+its 384 px rendered source. All runtime visual scale multipliers remain `1.0`,
 which gives future wrist-mounted grapple art a stable coordinate system.
 
 The `ground_combo_01` authoring sheet now uses 896 px padded cells so repaired
@@ -66,20 +65,6 @@ run-and-attack sheet at 90.566 fps. V2 plays the three planted strike poses in
 source frames 31–33 at 6 fps: a readable 0.5-second overhead cut without the
 repeated sprinting foot cycle.
 
-The upward combo clips repeat their vertical swing rather than transitioning
-into the horizontal part of the source sheets:
-
-- Up combo 1 plays source frames 8–12 twice at 12.5 fps. Its active windows
-  are frames 1–4 and 6–9 in the ten-frame curated clip.
-- Up combo 2 plays source frames 8–13 twice at 14.4 fps. Its active windows
-  are frames 1–5 and 7–11 in the twelve-frame curated clip.
-
-Both clips keep approximately their previous duration, show two distinct upward
-swings, and retain two matching strike windows. Key readable poses tilt the mask
-18 degrees toward the overhead weapon. The generated upward-head study is stored
-at `docs/art/concept_art/Upward Attack Head Reference.png`; final sheet changes
-remain deterministic so pose placement does not drift between frames.
-
 ### Forward pseudo three-hit chain
 
 The forward chain uses the authored sheets in reverse numerical order:
@@ -94,32 +79,51 @@ plays the two-hit finisher, creating a three-hit sequence. Waiting beyond that
 window restarts at the one-hit opener. The forward finisher caps and resets the
 chain instead of wrapping immediately back to the opener.
 
-### Stationary ground attacks
+### Video-derived ground attack variants
 
-All four ground combo clips have one-to-one stationary variants:
+The supplied stationary recording replaces the synthesized stationary art with
+two authored attacks:
 
-- `Ground_Attack_Combo_1_Stationary` (14 frames)
-- `Ground_Attack_Combo_2_Stationary` (19 frames)
-- `Ground_Up_Combo_1_Stationary` (10 frames)
-- `Ground_Up_Combo_2_Stationary` (12 frames)
+- `Ground_Attack_Combo_1_Stationary` uses the second, single-sweep take and
+  keeps source frames 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, and
+  80 as a 14-frame opener.
+- `Ground_Attack_Combo_2_Stationary` uses the first double-sweep take and keeps
+  source frames 0, 2, 4, 6, 8, 10, 11, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27,
+  28, and 29 as a 19-frame finisher.
 
-Each stationary frame retains the corresponding moving frame's upper body,
-weapon, and slash effect. Only the running lower body is replaced with a braced,
-planted stance. The player uses the moving variant only when horizontal input
-and real horizontal velocity are both present. Releasing input or pushing into
-a wall selects the stationary variant. Switching in either direction preserves
-the exact frame index and intra-frame progress; combat timing, strike windows,
-combo state, and attack duration continue to use the original logical clip.
+The supplied backpedal recording also has two cuts:
 
-The stationary compositor deliberately keeps a narrow overlap around the belt:
-the planted lower-body mask begins 12 source pixels above the detected belt,
-while removal of the moving lower body begins 18 source pixels below it. This
-shared 30-pixel source band prevents transparent or antialiased seams from
-separating the torso from the hips after runtime downscaling.
+- `Ground_Attack_Combo_1_Backpedal` compresses the complete source motion
+  through frame 40 into a quick 14-frame opener so it still returns to its
+  recovery pose before a chained attack begins.
+- `Ground_Attack_Combo_2_Backpedal` carries the full two-sweep motion through
+  source frame 40 as a 19-frame finisher.
 
-The stationary animations are registered from the four normalized stationary
-sheets when the player initializes. Their atlas regions, frame durations,
-playback speeds, and loop settings are copied one-to-one from the moving clips.
+All four sheets are green-keyed while preserving the recordings' shared 640 px
+camera origin and ground line, then scaled at 1.15 and reduced to 320 px runtime
+cells. Preserving the fixed source canvas prevents a low slash trail from being
+mistaken for a foot anchor and shifting the body between frames. Broad white
+slash effects are protected during the selective bronze weapon recolor so the
+VFX does not inherit the weapon palette.
+
+The logical moving opener and finisher remain unchanged at 14 and 19 frames.
+When a swing begins, the player selects and locks one visual mode for its full
+duration:
+
+- no usable horizontal motion selects stationary;
+- input and motion opposite the attack facing select backpedal;
+- forward input and motion select the original moving animation.
+
+Locking the selection at swing start prevents input release, acceleration, or a
+collision from changing atlases mid-animation and causing a visible jitter.
+Every variant keeps the logical clip's frame count, playback speed, and duration,
+while its strike windows follow the visible slash poses in that specific take.
+
+The old upward ground attack remains as unreferenced legacy source art, but it is
+no longer present in the active player `SpriteFrames`. Upward ground input now
+uses the frontal combo and its hit sector is widened from 90 to 130 degrees,
+reaching slightly above the mask without covering directly overhead. Targets
+farther above the player require an air attack.
 
 ### Ground finisher edge repair
 
@@ -209,20 +213,6 @@ poses in a 3x2 grid moving from ready through a quick horizontal or diagonal
 throw and recovery; do not draw the grapple device, rope, hook, projectile,
 effects, text, or shadows.
 
-The upward-head pose study used the built-in ImageGen edit workflow. Prompt
-direction: change only the stitched mask/head so it looks 20–25 degrees upward
-toward the raised weapon; preserve the exact body, hands, bronze weapon, slash
-VFX, proportions, placement, scale, and lighting; add no scarf or other cloth;
-render on flat green for local alpha removal. The study establishes the intended
-read, while the live sheets use a repeatable 18-degree local head treatment.
-
-The stationary lower-body studies also used the built-in ImageGen edit workflow.
-Prompt direction: preserve the approved player identity and attack-ready
-silhouette; use an athletic, grounded stance with both feet planted; retain only
-subtle cloth and weight motion; add no foot travel; render on flat green for
-local alpha removal. The normalizer composites only the lower-body study beneath
-the exact source upper body.
-
 The five edge repairs used per-frame ImageGen outpainting. Prompt direction:
 preserve every visible in-frame detail and recover only the clipped bronze
 shuttle tip and/or broad translucent swing arc outside the old boundary; add
@@ -248,14 +238,13 @@ script completes.
 
 Use `-RegisterExistingMotion` once when migrating an older 512 px generated
 motion sheet to the padded, anchor-registered layout. The full 640 px registered
-cells are reduced to 320 px by the final runtime-raster pass. Pass
-`-UpwardHeadChromaSource <path>` only when replacing the transparent upward-head
-pose study.
+cells are reduced to 320 px by the final runtime-raster pass.
 
-Pass both `-StationaryForwardChromaSource <path>` and
-`-StationaryUpChromaSource <path>` to rebuild the four stationary authoring
-sheets from new flat-green lower-body studies. Omitting them keeps the checked-in
-stationary authoring sheets and only regenerates normalized runtime rasters.
+Pass `-StationaryAttackVideo <path>` and `-BackpedalAttackVideo <path>` to
+re-extract the four checked-in video attack authoring sheets. The frame maps are
+defined in the script. Pass `-FfmpegPath <path>` if FFmpeg is not on `PATH` or in
+one of the known install locations. Omitting the video arguments keeps the
+checked-in authoring sheets and regenerates only the normalized runtime rasters.
 
 Run the focused scene-level verification after importing:
 
@@ -263,16 +252,19 @@ Run the focused scene-level verification after importing:
 godot --headless --path . res://tools/player_animation/verify_player_animation.tscn
 ```
 
-It checks the seven motion clips, all moving and stationary ground combos, and
-the air double attack: frame counts, frame textures, atlas cell sizes, playback
-speeds, loop modes, and the player's uniform runtime scale. It also verifies
-that stationary/moving selection uses both input and real velocity and preserves
-the frame plus intra-frame progress through each switch.
+It checks the seven motion clips, moving, stationary, and backpedal ground
+combos, and the air double attack: frame counts, frame textures, atlas cell
+sizes, playback speeds, loop modes, and the player's uniform runtime scale. It
+also verifies that ground variant selection locks for a complete swing, upward
+ground input routes forward, the frontal arc is 130 degrees, and the retired
+upward clips are absent from the active player scene.
 
 ## Deliberate limits
 
 - No legacy art was deleted.
 - No scene tree was restructured.
+- Retired upward attack sheets remain available as source art but are not loaded
+  by the active player scene.
 - Grapple physics, range, collision, and hit behavior were not changed by this
   adjacent art pass.
 - A true per-frame V3 weapon silhouette replacement would be a separate authored

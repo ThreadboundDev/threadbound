@@ -1,9 +1,9 @@
 param(
     [string]$WeaponChromaSource = "",
     [string]$MotionChromaSourceDirectory = "",
-    [string]$UpwardHeadChromaSource = "",
-    [string]$StationaryForwardChromaSource = "",
-    [string]$StationaryUpChromaSource = "",
+    [string]$StationaryAttackVideo = "",
+    [string]$BackpedalAttackVideo = "",
+    [string]$FfmpegPath = "",
     [switch]$RegisterExistingMotion
 )
 
@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 
 public static class ThreadboundAnimationNormalizer
 {
@@ -105,6 +106,62 @@ public static class ThreadboundAnimationNormalizer
                         drawWidth,
                         drawHeight);
                     graphics.DrawImage(source, targetRect, sourceRect, GraphicsUnit.Pixel);
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
+    public static void BuildSelectedFrameGrid(
+        string frameDirectory,
+        string outputPath,
+        int[] frameIndices,
+        int columns,
+        int rows,
+        int cellSize)
+    {
+        if (frameIndices.Length > columns * rows)
+        {
+            throw new ArgumentException("Selected frames exceed the target grid capacity.");
+        }
+
+        using (var output = new Bitmap(
+            columns * cellSize,
+            rows * cellSize,
+            PixelFormat.Format32bppArgb))
+        using (var graphics = Graphics.FromImage(output))
+        {
+            graphics.Clear(Color.Transparent);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            for (int index = 0; index < frameIndices.Length; index++)
+            {
+                string framePath = Path.Combine(
+                    frameDirectory,
+                    String.Format("frame_{0:D3}.png", frameIndices[index]));
+                if (!File.Exists(framePath))
+                {
+                    throw new FileNotFoundException("Missing extracted video frame.", framePath);
+                }
+
+                using (var frame = new Bitmap(framePath))
+                {
+                    int column = index % columns;
+                    int row = index / columns;
+                    var targetRect = new Rectangle(
+                        column * cellSize,
+                        row * cellSize,
+                        cellSize,
+                        cellSize);
+                    graphics.DrawImage(
+                        frame,
+                        targetRect,
+                        new Rectangle(0, 0, frame.Width, frame.Height),
+                        GraphicsUnit.Pixel);
                 }
             }
 
@@ -698,6 +755,23 @@ public static class ThreadboundAnimationNormalizer
         int rows,
         bool useHandFallback)
     {
+        RecolorAirWeapon(
+            inputPath,
+            outputPath,
+            columns,
+            rows,
+            useHandFallback,
+            false);
+    }
+
+    public static void RecolorAirWeapon(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        bool useHandFallback,
+        bool preserveBroadVfx)
+    {
         using (var sourceFile = new Bitmap(inputPath))
         using (var output = new Bitmap(sourceFile.Width, sourceFile.Height, PixelFormat.Format32bppArgb))
         {
@@ -821,12 +895,19 @@ public static class ThreadboundAnimationNormalizer
 
                         if (strongestPurpleComponent != null)
                         {
-                            for (int y = Math.Max(0, strongestPurpleComponent.MinY - 90);
-                                y <= Math.Min(cellHeight - 1, strongestPurpleComponent.MaxY + 90);
+                            int metalSearchRadius = preserveBroadVfx ? 18 : 90;
+                            for (int y = Math.Max(0, strongestPurpleComponent.MinY - metalSearchRadius);
+                                y <= Math.Min(
+                                    cellHeight - 1,
+                                    strongestPurpleComponent.MaxY + metalSearchRadius);
                                 y++)
                             {
-                                for (int x = Math.Max(0, strongestPurpleComponent.MinX - 90);
-                                    x <= Math.Min(cellWidth - 1, strongestPurpleComponent.MaxX + 90);
+                                for (int x = Math.Max(
+                                        0,
+                                        strongestPurpleComponent.MinX - metalSearchRadius);
+                                    x <= Math.Min(
+                                        cellWidth - 1,
+                                        strongestPurpleComponent.MaxX + metalSearchRadius);
                                     x++)
                                 {
                                     int index = y * cellWidth + x;
@@ -868,7 +949,8 @@ public static class ThreadboundAnimationNormalizer
                         // costume component. Their compact seed regions recolor only
                         // cool/lavender metal pixels, leaving the neutral white arc
                         // behind the weapon untouched.
-                        if (!useHandFallback &&
+                        if (!preserveBroadVfx &&
+                            !useHandFallback &&
                             ((row == 1 && column == 3) || (row == 2 && column == 5)))
                         {
                             int[] bladePolygon = row == 1
@@ -911,7 +993,7 @@ public static class ThreadboundAnimationNormalizer
                         // The final recovery pose places the enlarged blade against the
                         // sleeve, merging its purple rim into the costume component.
                         // Keep a bounded fallback for that one known frame.
-                        if (row == 4 && column == 5)
+                        if (!preserveBroadVfx && row == 4 && column == 5)
                         {
                             for (int y = 245; y <= Math.Min(cellHeight - 1, 535); y++)
                             {
@@ -1563,64 +1645,129 @@ foreach ($source in $copyMap.Keys) {
     Copy-NormalizedAsset $source $copyMap[$source]
 }
 
-if ($StationaryForwardChromaSource -or $StationaryUpChromaSource) {
-    if (-not $StationaryForwardChromaSource -or -not $StationaryUpChromaSource) {
-        throw "Both stationary stance chroma sources are required."
+function Resolve-FfmpegExecutable {
+    if ($FfmpegPath) {
+        return (Resolve-Path -LiteralPath $FfmpegPath).Path
     }
 
-    $resolvedForwardStance = (Resolve-Path $StationaryForwardChromaSource).Path
-    $resolvedUpStance = (Resolve-Path $StationaryUpChromaSource).Path
-    $temporaryForwardAlpha = Join-Path $outputRoot "attacks\stationary_forward_stance.alpha.png"
-    $temporaryUpAlpha = Join-Path $outputRoot "attacks\stationary_up_stance.alpha.png"
-    [ThreadboundAnimationNormalizer]::RemoveGreenKey(
-        $resolvedForwardStance,
-        $temporaryForwardAlpha)
-    [ThreadboundAnimationNormalizer]::RemoveGreenKey(
-        $resolvedUpStance,
-        $temporaryUpAlpha)
+    $ffmpegCommand = Get-Command ffmpeg -ErrorAction SilentlyContinue
+    if ($ffmpegCommand) {
+        return $ffmpegCommand.Source
+    }
 
-    $stationaryAuthoringJobs = @(
-        @(
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png",
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_stationary_sheet.png",
-            6,
-            4,
-            $temporaryForwardAlpha
-        ),
-        @(
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png",
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_stationary_sheet.png",
-            5,
-            5,
-            $temporaryForwardAlpha
-        ),
-        @(
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_sheet.png",
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_stationary_sheet.png",
-            6,
-            4,
-            $temporaryUpAlpha
-        ),
-        @(
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_sheet.png",
-            "Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_stationary_sheet.png",
-            5,
-            5,
-            $temporaryUpAlpha
-        )
+    $knownFfmpegPaths = @(
+        "C:\Program Files\Krita (x64)\bin\ffmpeg.exe",
+        "C:\Program Files\ffmpeg\bin\ffmpeg.exe"
+    )
+    foreach ($knownPath in $knownFfmpegPaths) {
+        if (Test-Path -LiteralPath $knownPath) {
+            return $knownPath
+        }
+    }
+
+    throw "FFmpeg was not found. Pass -FfmpegPath when rebuilding video attack sheets."
+}
+
+function New-VideoAttackSheets {
+    param(
+        [Parameter(Mandatory = $true)][string]$VideoPath,
+        [Parameter(Mandatory = $true)][array]$SheetJobs
     )
 
-    foreach ($job in $stationaryAuthoringJobs) {
-        [ThreadboundAnimationNormalizer]::BuildStationaryGrid(
-            (Join-Path $projectRoot ([string]$job[0])),
-            ([string]$job[4]),
-            (Join-Path $projectRoot ([string]$job[1])),
-            ([int]$job[2]),
-            ([int]$job[3]))
-    }
+    $resolvedVideoPath = (Resolve-Path -LiteralPath $VideoPath).Path
+    $resolvedFfmpeg = Resolve-FfmpegExecutable
+    $temporaryRoot = Join-Path (
+        [System.IO.Path]::GetTempPath()
+    ) ("threadbound-video-attack-" + [Guid]::NewGuid().ToString("N"))
+    New-Item -ItemType Directory -Path $temporaryRoot | Out-Null
 
-    Remove-Item -LiteralPath $temporaryForwardAlpha -Force
-    Remove-Item -LiteralPath $temporaryUpAlpha -Force
+    try {
+        $framePattern = Join-Path $temporaryRoot "frame_%03d.png"
+        & $resolvedFfmpeg `
+            -hide_banner `
+            -loglevel error `
+            -i $resolvedVideoPath `
+            -fps_mode passthrough `
+            -start_number 0 `
+            $framePattern
+        if ($LASTEXITCODE -ne 0) {
+            throw "FFmpeg failed to extract frames from $resolvedVideoPath."
+        }
+
+        foreach ($job in $SheetJobs) {
+            $rawGrid = Join-Path $temporaryRoot ("raw_" + [string]$job[0])
+            $alphaGrid = Join-Path $temporaryRoot ("alpha_" + [string]$job[0])
+            $authoringPath = Join-Path $projectRoot ([string]$job[1])
+            [ThreadboundAnimationNormalizer]::BuildSelectedFrameGrid(
+                $temporaryRoot,
+                $rawGrid,
+                [int[]]$job[4],
+                [int]$job[2],
+                [int]$job[3],
+                640)
+            [ThreadboundAnimationNormalizer]::RemoveGreenKey($rawGrid, $alphaGrid)
+            # The generated attack videos already use one fixed 640 px camera
+            # and ground line. Preserve that shared origin so slash VFX cannot
+            # be mistaken for a foot anchor and shift the body between frames.
+            [ThreadboundAnimationNormalizer]::NormalizeGrid(
+                $alphaGrid,
+                $authoringPath,
+                [int]$job[2],
+                [int]$job[3],
+                640,
+                1.0)
+        }
+    }
+    finally {
+        if (Test-Path -LiteralPath $temporaryRoot) {
+            Remove-Item -LiteralPath $temporaryRoot -Recurse -Force
+        }
+    }
+}
+
+$stationaryVideoSheetJobs = @(
+    @(
+        "stationary_combo_01.png",
+        "Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_01_sheet.png",
+        5,
+        5,
+        [int[]]@(48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, 80)
+    ),
+    @(
+        "stationary_combo_02.png",
+        "Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png",
+        6,
+        4,
+        [int[]]@(0, 2, 4, 6, 8, 10, 11, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27, 28, 29)
+    )
+)
+
+$backpedalVideoSheetJobs = @(
+    @(
+        "backpedal_combo_01.png",
+        "Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_01_sheet.png",
+        5,
+        5,
+        [int[]]@(0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 40)
+    ),
+    @(
+        "backpedal_combo_02.png",
+        "Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_02_sheet.png",
+        6,
+        4,
+        [int[]]@(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40)
+    )
+)
+
+if ($StationaryAttackVideo) {
+    New-VideoAttackSheets `
+        -VideoPath $StationaryAttackVideo `
+        -SheetJobs $stationaryVideoSheetJobs
+}
+if ($BackpedalAttackVideo) {
+    New-VideoAttackSheets `
+        -VideoPath $BackpedalAttackVideo `
+        -SheetJobs $backpedalVideoSheetJobs
 }
 
 $attackJobs = @(
@@ -1628,12 +1775,10 @@ $attackJobs = @(
     @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.6428571),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png", "attacks\ground_combo_02.png", 5, 5, 640, 0.9),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_sheet.png", "attacks\ground_combo_03.png", 6, 4, 768, 1.1),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_sheet.png", "attacks\ground_combo_04.png", 5, 5, 768, 1.1),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_stationary_sheet.png", "attacks\ground_combo_01_stationary.png", 6, 4, 640, 0.6428571),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_stationary_sheet.png", "attacks\ground_combo_02_stationary.png", 5, 5, 640, 0.9),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_03_stationary_sheet.png", "attacks\ground_combo_03_stationary.png", 6, 4, 768, 1.1),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_04_stationary_sheet.png", "attacks\ground_combo_04_stationary.png", 5, 5, 768, 1.1),
+    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_01_sheet.png", "attacks\stationary_combo_01.png", 5, 5, 640, 1.15),
+    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png", "attacks\stationary_combo_02.png", 6, 4, 640, 1.15),
+    @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_01_sheet.png", "attacks\backpedal_combo_01.png", 5, 5, 640, 1.15),
+    @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_02_sheet.png", "attacks\backpedal_combo_02.png", 6, 4, 640, 1.15),
     @("Assets\Threadborne\New Attack\Video Attacks\air_double_attack_01_candidate_sheet.png", "attacks\air_double_attack.png", 6, 5, 832, 1.2)
 )
 
@@ -1725,15 +1870,13 @@ if ($RegisterExistingMotion) {
 }
 
 $bronzeWeaponSheets = @(
-    @("attacks\ground_combo_01.png", 6, 4, $true),
-    @("attacks\ground_combo_02.png", 5, 5, $true),
-    @("attacks\ground_combo_03.png", 6, 4, $true),
-    @("attacks\ground_combo_04.png", 5, 5, $true),
-    @("attacks\ground_combo_01_stationary.png", 6, 4, $true),
-    @("attacks\ground_combo_02_stationary.png", 5, 5, $true),
-    @("attacks\ground_combo_03_stationary.png", 6, 4, $true),
-    @("attacks\ground_combo_04_stationary.png", 5, 5, $true),
-    @("attacks\air_double_attack.png", 6, 5, $false)
+    @("attacks\ground_combo_01.png", 6, 4, $true, $false),
+    @("attacks\ground_combo_02.png", 5, 5, $true, $false),
+    @("attacks\stationary_combo_01.png", 5, 5, $false, $true),
+    @("attacks\stationary_combo_02.png", 6, 4, $false, $true),
+    @("attacks\backpedal_combo_01.png", 5, 5, $false, $true),
+    @("attacks\backpedal_combo_02.png", 6, 4, $false, $true),
+    @("attacks\air_double_attack.png", 6, 5, $false, $false)
 )
 
 foreach ($sheet in $bronzeWeaponSheets) {
@@ -1745,40 +1888,13 @@ foreach ($sheet in $bronzeWeaponSheets) {
         $bronzePath,
         [int]$sheet[1],
         [int]$sheet[2],
-        [bool]$sheet[3])
+        [bool]$sheet[3],
+        [bool]$sheet[4])
     Move-Item -LiteralPath $bronzePath -Destination $sheetPath -Force
     [ThreadboundAnimationNormalizer]::SolidifyCharacterAlpha(
         $sheetPath,
         $opaquePath)
     Move-Item -LiteralPath $opaquePath -Destination $sheetPath -Force
-}
-
-$upwardHeadJobs = @(
-    @("attacks\ground_combo_03.png", 6, 4, [int[]]@(9, 11, 12, 13)),
-    @("attacks\ground_combo_04.png", 5, 5, [int[]]@(9, 13)),
-    @("attacks\ground_combo_03_stationary.png", 6, 4, [int[]]@(9, 11, 12, 13)),
-    @("attacks\ground_combo_04_stationary.png", 5, 5, [int[]]@(9, 13))
-)
-
-foreach ($headJob in $upwardHeadJobs) {
-    $sheetPath = Join-Path $outputRoot $headJob[0]
-    $tiltedPath = "$sheetPath.head-tilted.png"
-    [ThreadboundAnimationNormalizer]::TiltHeadsUp(
-        $sheetPath,
-        $tiltedPath,
-        [int]$headJob[1],
-        [int]$headJob[2],
-        [int[]]$headJob[3],
-        -18.0)
-    Move-Item -LiteralPath $tiltedPath -Destination $sheetPath -Force
-}
-
-if ($UpwardHeadChromaSource) {
-    $resolvedUpwardHeadSource = (Resolve-Path $UpwardHeadChromaSource).Path
-    $upwardHeadReference = Join-Path $projectRoot "docs\art\concept_art\Upward Attack Head Reference.png"
-    [ThreadboundAnimationNormalizer]::RemoveGreenKey(
-        $resolvedUpwardHeadSource,
-        $upwardHeadReference)
 }
 
 if ($WeaponChromaSource) {
@@ -1865,12 +1981,10 @@ $runtimeRasterAssets = @(
     @("attacks\neutral_special.png", 6144, 8192),
     @("attacks\ground_combo_01.png", 3840, 2560),
     @("attacks\ground_combo_02.png", 3200, 3200),
-    @("attacks\ground_combo_03.png", 4608, 3072),
-    @("attacks\ground_combo_04.png", 3840, 3840),
-    @("attacks\ground_combo_01_stationary.png", 3840, 2560),
-    @("attacks\ground_combo_02_stationary.png", 3200, 3200),
-    @("attacks\ground_combo_03_stationary.png", 4608, 3072),
-    @("attacks\ground_combo_04_stationary.png", 3840, 3840),
+    @("attacks\stationary_combo_01.png", 3200, 3200),
+    @("attacks\stationary_combo_02.png", 3840, 2560),
+    @("attacks\backpedal_combo_01.png", 3200, 3200),
+    @("attacks\backpedal_combo_02.png", 3840, 2560),
     @("attacks\air_double_attack.png", 4992, 4160)
 )
 
