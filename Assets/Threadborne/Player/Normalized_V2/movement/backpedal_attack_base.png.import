@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://buieinsdf31lt"
-path="res://.godot/imported/backpedal_attack_base.png-6e2aa42763cdee70ac01942807a55e34.ctex"
+path="res://.godot/imported/backpedal_attack_base.png-049a34662c6d97c1ebb36d321b0c0f40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Threadborne/References/Attack Base Frames/backpedal_attack_base.png"
-dest_files=["res://.godot/imported/backpedal_attack_base.png-6e2aa42763cdee70ac01942807a55e34.ctex"]
+source_file="res://Assets/Threadborne/Player/Normalized_V2/movement/backpedal_attack_base.png"
+dest_files=["res://.godot/imported/backpedal_attack_base.png-049a34662c6d97c1ebb36d321b0c0f40.ctex"]
 
 [params]
 

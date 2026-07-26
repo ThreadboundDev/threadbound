@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://fty8gdt4p3tn"
-path="res://.godot/imported/stationary_attack_base.png-94e90f005eaac529dbd21be6aa4e71fb.ctex"
+path="res://.godot/imported/stationary_attack_base.png-951d744bd136bddfb4f5110c95acedbb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Threadborne/References/Attack Base Frames/stationary_attack_base.png"
-dest_files=["res://.godot/imported/stationary_attack_base.png-94e90f005eaac529dbd21be6aa4e71fb.ctex"]
+source_file="res://Assets/Threadborne/Player/Normalized_V2/movement/stationary_attack_base.png"
+dest_files=["res://.godot/imported/stationary_attack_base.png-951d744bd136bddfb4f5110c95acedbb.ctex"]
 
 [params]
 
