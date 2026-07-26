@@ -7,9 +7,23 @@ signal momentum_changed(value: float)
 signal momentum_stage_changed(stage: int)
 signal momentum_state_changed(state: StringName, flow_active: bool)
 signal rune_changed(index: int, color: Color, available: bool)
+signal identity_visual_changed(identity_color: Color, pattern_visible: bool)
+
+const ACTION_POINT_RED := &"red"
+const ACTION_POINT_BLUE := &"blue"
+const ACTION_POINT_YELLOW := &"yellow"
+const ACTION_POINT_COLORLESS := &"colorless"
+const VALID_ACTION_POINT_TYPES := [
+	ACTION_POINT_RED,
+	ACTION_POINT_BLUE,
+	ACTION_POINT_YELLOW,
+	ACTION_POINT_COLORLESS,
+]
 
 @onready var health_bar: CombatHealthBar = $HUDRoot/HealthBar as CombatHealthBar
-@onready var momentum_bar: Control = $HUDRoot/MomentumBar as Control
+@onready var momentum_bar: CombatMomentumBar = $HUDRoot/MomentumBar as CombatMomentumBar
+@onready var identity_base: TextureRect = $HUDRoot/IdentityLayers/IdentityBase as TextureRect
+@onready var pattern_overlay: TextureRect = $HUDRoot/IdentityLayers/PatternOverlay as TextureRect
 @onready var action_point_orbs: Array[TextureRect] = [
 	$HUDRoot/ActionPointOrbs/ActionPointOrb1 as TextureRect,
 	$HUDRoot/ActionPointOrbs/ActionPointOrb2 as TextureRect,
@@ -21,20 +35,30 @@ signal rune_changed(index: int, color: Color, available: bool)
 @onready var thread_knot_label: Label = $ThreadKnotCounter/CountLabel as Label
 @onready var thread_knot_counter: Control = $ThreadKnotCounter as Control
 
-@export var action_point_cooldown_shade := Color(0.08, 0.08, 0.09, 0.58)
-@export var momentum_low_color := Color(0.72, 0.78, 0.9, 0.88)
-@export var momentum_mid_color := Color.WHITE
-@export var momentum_high_color := Color(1.12, 1.06, 0.88, 1.0)
-@export var momentum_flow_color := Color(1.22, 1.18, 1.0, 1.0)
+@export_group("Identity and Pattern")
+@export var default_identity_color := Color(0.72, 0.73, 0.72, 1.0)
+
+@export_group("Action Points")
+@export var action_point_red_texture: Texture2D
+@export var action_point_blue_texture: Texture2D
+@export var action_point_yellow_texture: Texture2D
+@export var action_point_colorless_texture: Texture2D
+@export var action_point_cooldown_shade := Color(0.04, 0.035, 0.035, 0.7)
+
+@export_group("Thread Knots")
+@export var thread_knot_visible_seconds := 3.5
+@export var thread_knot_fade_seconds := 0.4
 
 var _rune_colors: Array[Color] = []
 var _rune_available: Array[bool] = []
+var _action_point_types: Array[StringName] = []
 var _action_point_cooldown_ratios: Array[float] = []
 var _action_point_cooldown_overlay: Control
 var _last_momentum_stage := 0
 var _momentum_state: StringName = &"Low"
 var _momentum_flow_active := false
 var _thread_knot_counter_tween: Tween
+var _thread_knot_reveal_armed := false
 
 @export var max_health := 100:
 	set(value):
@@ -80,21 +104,23 @@ var _thread_knot_counter_tween: Tween
 
 @export var thread_knot_count := 0:
 	set(value):
-		var previous_count := thread_knot_count
 		thread_knot_count = maxi(0, value)
 		_sync_thread_knot_counter()
-		if thread_knot_count > previous_count:
-			_pulse_thread_knot_counter()
 
 func _ready() -> void:
 	add_to_group("combat_hud")
 	if thread_knot_counter:
 		thread_knot_counter.pivot_offset = thread_knot_counter.size * 0.5
+		thread_knot_counter.visible = false
+		thread_knot_counter.modulate.a = 0.0
+	if identity_base:
+		identity_base.modulate = default_identity_color
 	_create_action_point_cooldown_overlay()
-	_configure_default_runes()
+	_configure_default_action_points()
 	_sync_hud_visuals()
 	_sync_health()
 	_sync_thread_knot_counter()
+	call_deferred("_arm_thread_knot_reveal")
 
 func set_health(current: int, maximum: int = max_health) -> void:
 	max_health = maximum
@@ -141,7 +167,48 @@ func set_momentum_state(state: StringName, flow_active: bool) -> void:
 	momentum_state_changed.emit(_momentum_state, _momentum_flow_active)
 
 func set_thread_knots(count: int) -> void:
+	var previous_count := thread_knot_count
 	thread_knot_count = count
+	if _thread_knot_reveal_armed and thread_knot_count > previous_count:
+		_reveal_thread_knot_counter()
+
+func set_identity_color(color: Color) -> void:
+	default_identity_color = color
+	if identity_base:
+		identity_base.modulate = color
+	identity_visual_changed.emit(color, pattern_overlay.visible if pattern_overlay else false)
+
+func set_pattern_texture(texture: Texture2D, show_pattern := true) -> void:
+	if not pattern_overlay:
+		return
+	pattern_overlay.texture = texture
+	pattern_overlay.visible = show_pattern and texture != null
+	identity_visual_changed.emit(default_identity_color, pattern_overlay.visible)
+
+func set_pattern_visible(show_pattern: bool) -> void:
+	if not pattern_overlay:
+		return
+	pattern_overlay.visible = show_pattern and pattern_overlay.texture != null
+	identity_visual_changed.emit(default_identity_color, pattern_overlay.visible)
+
+func set_action_point_type(index: int, point_type: StringName, available := true) -> void:
+	if index < 0 or index >= 6:
+		push_warning("CombatHUD.set_action_point_type index must be between 0 and 5.")
+		return
+	if point_type not in VALID_ACTION_POINT_TYPES:
+		push_warning("CombatHUD.set_action_point_type received unknown type: %s" % point_type)
+		point_type = ACTION_POINT_COLORLESS
+
+	_configure_default_action_points()
+	_action_point_types[index] = point_type
+	_rune_available[index] = available
+	_sync_hud_visuals()
+
+func get_action_point_type(index: int) -> StringName:
+	_configure_default_action_points()
+	if index < 0 or index >= _action_point_types.size():
+		return ACTION_POINT_COLORLESS
+	return _action_point_types[index]
 
 func get_momentum_stage() -> int:
 	var clamped_momentum := clampf(momentum, 0.0, 100.0)
@@ -156,9 +223,10 @@ func set_rune(index: int, color: Color, available: bool) -> void:
 		push_warning("CombatHUD.set_rune index must be between 0 and 5.")
 		return
 
-	_configure_default_runes()
+	_configure_default_action_points()
 	_rune_colors[index] = color
 	_rune_available[index] = available
+	_action_point_types[index] = _action_point_type_from_color(color)
 	_sync_hud_visuals()
 	rune_changed.emit(index, color, available)
 
@@ -166,8 +234,8 @@ func _sync_hud_visuals() -> void:
 	if not is_node_ready():
 		return
 
-	if momentum_bar and momentum_bar.has_method("set_momentum"):
-		momentum_bar.call("set_momentum", momentum / 100.0)
+	if momentum_bar:
+		momentum_bar.set_momentum(momentum / 100.0)
 	_sync_momentum_state_visuals()
 	_sync_action_point_orbs()
 
@@ -183,49 +251,51 @@ func _sync_thread_knot_counter() -> void:
 		return
 
 	if thread_knot_label:
-		thread_knot_label.text = str(thread_knot_count)
+		thread_knot_label.text = "× " + _format_thread_knot_count(thread_knot_count)
 
 func _sync_momentum_state_visuals() -> void:
 	if not is_node_ready() or not momentum_bar:
 		return
 
-	match _momentum_state:
-		&"Flow":
-			momentum_bar.modulate = momentum_flow_color
-		&"High":
-			momentum_bar.modulate = momentum_high_color
-		&"Low":
-			momentum_bar.modulate = momentum_low_color
-		_:
-			momentum_bar.modulate = momentum_mid_color
+	momentum_bar.set_momentum_state(_momentum_state, _momentum_flow_active)
 
-func _pulse_thread_knot_counter() -> void:
+func _reveal_thread_knot_counter() -> void:
 	if not is_node_ready() or not thread_knot_counter:
 		return
 
 	if _thread_knot_counter_tween:
 		_thread_knot_counter_tween.kill()
 
+	thread_knot_counter.visible = true
+	thread_knot_counter.modulate.a = 1.0
 	thread_knot_counter.scale = Vector2.ONE
 	_thread_knot_counter_tween = create_tween()
-	_thread_knot_counter_tween.tween_property(thread_knot_counter, "scale", Vector2(1.06, 1.06), 0.06)
+	_thread_knot_counter_tween.tween_property(thread_knot_counter, "scale", Vector2(1.045, 1.045), 0.06)
 	_thread_knot_counter_tween.tween_property(thread_knot_counter, "scale", Vector2.ONE, 0.12)
+	_thread_knot_counter_tween.tween_interval(thread_knot_visible_seconds)
+	_thread_knot_counter_tween.tween_property(thread_knot_counter, "modulate:a", 0.0, thread_knot_fade_seconds)
+	_thread_knot_counter_tween.tween_callback(func() -> void:
+		if thread_knot_counter:
+			thread_knot_counter.visible = false
+	)
 
 func _sync_action_point_orbs() -> void:
+	_configure_default_action_points()
 	for i in action_point_orbs.size():
 		var orb := action_point_orbs[i]
 		if not orb:
 			continue
 
 		orb.visible = i < max_action_points
+		orb.texture = _get_action_point_texture(_action_point_types[i])
 		var cooldown_driven := _action_point_cooldown_ratios.size() > 0
 		var available := false
 		if cooldown_driven:
 			available = _get_action_point_cooldown_ratio(i) <= 0.0
 		else:
 			available = i < current_action_points
-			available = available and i < _rune_available.size() and _rune_available[i]
-		orb.modulate = Color.WHITE if available else Color(0.55, 0.57, 0.62, 0.42)
+			available = available and _rune_available[i]
+		orb.modulate = Color.WHITE if available else Color(0.45, 0.46, 0.47, 0.38)
 
 func _create_action_point_cooldown_overlay() -> void:
 	if action_point_orbs.is_empty() or not action_point_orbs[0]:
@@ -269,15 +339,58 @@ func _get_action_point_cooldown_ratio(index: int) -> float:
 		return 0.0
 	return clampf(_action_point_cooldown_ratios[index], 0.0, 1.0)
 
-func _configure_default_runes() -> void:
-	if _rune_colors.size() == 6 and _rune_available.size() == 6:
+func _configure_default_action_points() -> void:
+	if (
+		_rune_colors.size() == 6
+		and _rune_available.size() == 6
+		and _action_point_types.size() == 6
+	):
 		return
 
 	_rune_colors.clear()
 	_rune_available.clear()
+	_action_point_types = [
+		ACTION_POINT_RED,
+		ACTION_POINT_BLUE,
+		ACTION_POINT_YELLOW,
+		ACTION_POINT_COLORLESS,
+		ACTION_POINT_COLORLESS,
+		ACTION_POINT_COLORLESS,
+	]
 	for i in 6:
 		_rune_colors.append(Color.WHITE)
 		_rune_available.append(i < current_action_points)
+
+func _get_action_point_texture(point_type: StringName) -> Texture2D:
+	match point_type:
+		ACTION_POINT_RED:
+			return action_point_red_texture
+		ACTION_POINT_BLUE:
+			return action_point_blue_texture
+		ACTION_POINT_YELLOW:
+			return action_point_yellow_texture
+		_:
+			return action_point_colorless_texture
+
+func _action_point_type_from_color(color: Color) -> StringName:
+	if color.s < 0.18:
+		return ACTION_POINT_COLORLESS
+	if color.r > color.b * 1.15 and color.g > color.b * 1.15:
+		return ACTION_POINT_YELLOW
+	if color.b > color.r and color.b > color.g:
+		return ACTION_POINT_BLUE
+	return ACTION_POINT_RED
+
+func _format_thread_knot_count(count: int) -> String:
+	var digits := str(maxi(0, count))
+	var formatted := ""
+	while digits.length() > 3:
+		formatted = "," + digits.substr(digits.length() - 3) + formatted
+		digits = digits.substr(0, digits.length() - 3)
+	return digits + formatted
+
+func _arm_thread_knot_reveal() -> void:
+	_thread_knot_reveal_armed = true
 
 func _emit_stage_if_changed() -> void:
 	var new_stage := get_momentum_stage()

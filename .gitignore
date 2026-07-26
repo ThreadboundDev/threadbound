@@ -32,3 +32,6 @@ Assets/UI/Main Menu/*.mp4
 
 # Local IDE/editor folders
 .idea/
+
+# Local linked worktrees and generated task scratch space
+/tmp/

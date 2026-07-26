@@ -8,6 +8,7 @@ const PCAM_2D: String = "PhantomCamera2D"
 const PCAM_3D: String = "PhantomCamera3D"
 const PCAM_NOISE_EMITTER_2D: String = "PhantomCameraNoiseEmitter2D"
 const PCAM_NOISE_EMITTER_3D: String = "PhantomCameraNoiseEmitter3D"
+const PCAM_TWEEN_DIRECTOR: String = "PhantomCameraTweenDirector"
 
 const PCam3DPlugin: Script = preload("res://addons/phantom_camera/scripts/gizmos/phantom_camera_3d_gizmo_plugin.gd")
 const PCam3DNoiseEmitterPlugin: Script = preload("res://addons/phantom_camera/scripts/gizmos/phantom_camera_noise_emitter_gizmo_plugin_3d.gd")
@@ -30,13 +31,12 @@ var _settings_editor_shortcut: String = "phantom_camera/general/editor_shortcut"
 
 #region Public Variables
 
-var pcam_3d_gizmo_plugin = PCam3DPlugin.new()
-var pcam_3d_noise_emitter_gizmo_plugin = PCam3DNoiseEmitterPlugin.new()
+var pcam_3d_gizmo_plugin: EditorNode3DGizmoPlugin = PCam3DPlugin.new() as EditorNode3DGizmoPlugin
+var pcam_3d_noise_emitter_gizmo_plugin: EditorNode3DGizmoPlugin = PCam3DNoiseEmitterPlugin.new() as EditorNode3DGizmoPlugin
 
 var editor_panel_instance: Control
 var panel_button: Button
 #var viewfinder_panel_instance
-
 
 #endregion
 
@@ -44,23 +44,23 @@ var panel_button: Button
 
 func _enable_plugin() -> void:
 	print_rich("Phantom Camera documentation can be found at: [url=https://phantom-camera.dev]https://phantom-camera.dev[/url]")
-	if not Engine.has_singleton(PHANTOM_CAMERA_MANAGER):
-		add_autoload_singleton(PHANTOM_CAMERA_MANAGER, "res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd")
+	add_autoload_singleton(PHANTOM_CAMERA_MANAGER, "res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd")
 
+	EditorInterface.restart_editor()
 
 func _disable_plugin() -> void:
-	remove_autoload_singleton(PHANTOM_CAMERA_MANAGER)
+	if Engine.has_singleton(PHANTOM_CAMERA_MANAGER):
+		remove_autoload_singleton(PHANTOM_CAMERA_MANAGER)
 
 
 func _enter_tree() -> void:
-	add_autoload_singleton(PHANTOM_CAMERA_MANAGER, "res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd")
-
 	# Phantom Camera Nodes
 	add_custom_type(PCAM_2D, "Node2D", preload("res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd"), preload("res://addons/phantom_camera/icons/phantom_camera_2d.svg"))
 	add_custom_type(PCAM_3D, "Node3D", preload("res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd"), preload("res://addons/phantom_camera/icons/phantom_camera_2d.svg"))
 	add_custom_type(PCAM_HOST, "Node", preload("res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd"), preload("res://addons/phantom_camera/icons/phantom_camera_2d.svg"))
 	add_custom_type(PCAM_NOISE_EMITTER_2D, "Node2D", preload("res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd"),  preload("res://addons/phantom_camera/icons/phantom_camera_noise_emitter_2d.svg"))
 	add_custom_type(PCAM_NOISE_EMITTER_3D, "Node3D", preload("res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_3d.gd"),  preload("res://addons/phantom_camera/icons/phantom_camera_noise_emitter_3d.svg"))
+	add_custom_type(PCAM_TWEEN_DIRECTOR, "Node", preload("res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_tween_director.gd"),  preload("res://addons/phantom_camera/icons/phantom_camera_tween_director.svg"))
 
 	# Phantom Camera 3D Gizmo
 	add_node_3d_gizmo_plugin(pcam_3d_gizmo_plugin)
@@ -120,13 +120,11 @@ func _enter_tree() -> void:
 	if panel_button.toggle_mode: _btn_toggled(true)
 
 	scene_changed.connect(editor_panel_instance.viewfinder.scene_changed)
-	scene_changed.connect(_scene_changed)
 
 
 func _exit_tree() -> void:
 	panel_button.toggled.disconnect(_btn_toggled)
 	scene_changed.disconnect(editor_panel_instance.viewfinder.scene_changed)
-	scene_changed.disconnect(_scene_changed)
 
 	remove_control_from_bottom_panel(editor_panel_instance)
 	editor_panel_instance.queue_free()
@@ -139,10 +137,7 @@ func _exit_tree() -> void:
 	remove_custom_type(PCAM_HOST)
 	remove_custom_type(PCAM_NOISE_EMITTER_2D)
 	remove_custom_type(PCAM_NOISE_EMITTER_3D)
-
-	remove_autoload_singleton(PHANTOM_CAMERA_MANAGER)
-#	if get_tree().root.get_node_or_null(String(PHANTOM_CAMERA_MANAGER)):
-#		remove_autoload_singleton(PHANTOM_CAMERA_MANAGER)
+	remove_custom_type(PCAM_TWEEN_DIRECTOR)
 
 
 func _btn_toggled(toggled_on: bool):
@@ -156,10 +151,6 @@ func _btn_toggled(toggled_on: bool):
 func _make_visible(visible):
 	if editor_panel_instance:
 		editor_panel_instance.set_visible(visible)
-
-## TODO - Signal can be added directly to the editor_panel with the changes in Godot 4.5 (https://github.com/godotengine/godot/pull/102986)
-func _scene_changed(scene_root: Node) -> void:
-	editor_panel_instance.viewfinder.scene_changed(scene_root)
 
 #	TODO - Pending merge of https://github.com/godotengine/godot/pull/102889 - Should only support Godot version after this release
 #func _set_editor_shortcut() -> InputEventKey:

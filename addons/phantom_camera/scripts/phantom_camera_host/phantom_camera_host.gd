@@ -44,6 +44,7 @@ enum InterpolationMode {
 	AUTO    = 0, ## Automatically sets the [param Camera]'s logic to run in either physics or idle (process) frames depending on its active [param PhantomCamera]'s [param Follow] / [param Look At] Target
 	IDLE    = 1, ## Always run the [param Camera] logic in idle (process) frames
 	PHYSICS = 2, ## Always run the [param Camera] logic in physics frames
+	MANUAL  = 3, ## Only update the camera when the [method process] is called from this [param PhantomCameraHost] node. [b]Note:[/b] Only use this if you need manual control over the tick rate.
 }
 
 #endregion
@@ -77,10 +78,12 @@ var _follow_target_physics_based: bool = false
 var _prev_active_pcam_2d_transform: Transform2D = Transform2D()
 var _prev_active_pcam_3d_transform: Transform3D = Transform3D()
 
-var _trigger_pcam_tween: bool = false
-var _tween_elapsed_time: float = 0
-var _tween_duration: float = 0
-var _tween_is_instant: bool = false
+var _trigger_pcam_tween: bool   = false
+var _tween_elapsed_time: float  = 0.0
+var _tween_duration: float      = 0.0
+var _tween_transition: int      = 0
+var _tween_ease: int            = 0
+var _tween_is_instant: bool     = false
 
 var _multiple_pcam_hosts: bool = false
 
@@ -88,7 +91,6 @@ var _is_child_of_camera: bool = false
 var _is_2d: bool = false
 
 var _viewfinder_node: Control = null
-var _viewfinder_needed_check: bool = true
 
 var _camera_zoom: Vector2 = Vector2.ONE
 
@@ -100,6 +102,7 @@ var _cam_attribute_changed: bool = false
 var _cam_attribute_assigned: bool = false
 
 #region CameraAttributes
+
 var _prev_cam_auto_exposure_scale: float = 0.4
 var _cam_auto_exposure_scale_changed: bool = false
 
@@ -122,24 +125,26 @@ var _cam_exposure_max_sensitivity_changed: bool = false
 var _prev_cam_dof_blur_amount: float = 0.1
 var _cam_dof_blur_amount_changed: bool = false
 
-var _cam_dof_blur_far_distance_default: float = 10
+var _cam_dof_blur_far_distance_default: float = 10.0
 var _prev_cam_dof_blur_far_distance: float = _cam_dof_blur_far_distance_default
 var _cam_dof_blur_far_distance_changed: bool = false
 
-var _cam_dof_blur_far_transition_default: float = 5
+var _cam_dof_blur_far_transition_default: float = 5.0
 var _prev_cam_dof_blur_far_transition: float = _cam_dof_blur_far_transition_default
 var _cam_dof_blur_far_transition_changed: bool = false
 
-var _cam_dof_blur_near_distance_default: float = 2
+var _cam_dof_blur_near_distance_default: float = 2.0
 var _prev_cam_dof_blur_near_distance: float = _cam_dof_blur_near_distance_default
 var _cam_dof_blur_near_distance_changed: bool = false
 
-var _cam_dof_blur_near_transition_default: float = 1
+var _cam_dof_blur_near_transition_default: float = 1.0
 var _prev_cam_dof_blur_near_transition: float = _cam_dof_blur_near_transition_default
 var _cam_dof_blur_near_transition_changed: bool = false
+
 #endregion
 
 #region CameraAttributesPhysical
+
 var _prev_cam_exposure_min_exposure_value: float = 10.0
 var _cam_exposure_min_exposure_value_changed: bool = false
 
@@ -166,16 +171,16 @@ var _cam_frustum_focus_distance_changed: bool = false
 
 #endregion
 
-var _prev_cam_h_offset: float = 0
+var _prev_cam_h_offset: float = 0.0
 var _cam_h_offset_changed: bool = false
 
-var _prev_cam_v_offset: float = 0
+var _prev_cam_v_offset: float = 0.0
 var _cam_v_offset_changed: bool = false
 
-var _prev_cam_fov: float = 75
+var _prev_cam_fov: float = 75.0
 var _cam_fov_changed: bool = false
 
-var _prev_cam_size: float = 1
+var _prev_cam_size: float = 1.0
 var _cam_size_changed: bool = false
 
 var _prev_cam_frustum_offset: Vector2 = Vector2.ZERO
@@ -184,7 +189,7 @@ var _cam_frustum_offset_changed: bool = false
 var _prev_cam_near: float = 0.05
 var _cam_near_changed: bool = false
 
-var _prev_cam_far: float = 4000
+var _prev_cam_far: float = 4000.0
 var _cam_far_changed: bool = false
 
 #endregion
@@ -269,6 +274,8 @@ func _enter_tree() -> void:
 		else:
 			_is_2d = false
 			camera_3d = parent
+
+		if not is_node_ready():	return
 
 		if _is_2d:
 			if not _phantom_camera_manager.get_phantom_camera_2ds().is_empty():
@@ -366,18 +373,35 @@ func _find_pcam_with_highest_priority() -> void:
 	else:
 		pcam_list = _phantom_camera_manager.phantom_camera_3ds
 
+	var pcam_with_highest_priority: Node = null
+	var pcam_priority: int = -1
+
 	for pcam in pcam_list:
-		_check_pcam_priority(pcam)
+		#_check_pcam_priority(pcam)
+		if not _pcam_is_in_host_layer(pcam): continue
+		if not pcam.visible: continue # Prevents hidden PCams from becoming active
+		if pcam.priority >= pcam_priority:
+			pcam_priority = pcam.priority
+			pcam_with_highest_priority = pcam
+
+	if pcam_with_highest_priority == null: return
+	_check_pcam_priority(pcam_with_highest_priority)
+
+	for pcam in pcam_list:
+		pcam.set_tween_skip(self, false)
 
 
 func _check_pcam_priority(pcam: Node) -> void:
 	if not _pcam_is_in_host_layer(pcam): return
 	if not pcam.visible: return # Prevents hidden PCams from becoming active
-	if pcam.get_priority() > _active_pcam_priority:
+	if pcam.get_priority() >= _active_pcam_priority:
 		_assign_new_active_pcam(pcam)
 		_active_pcam_missing = false
-	else:
-		pcam.set_tween_skip(self, false)
+		if _is_2d:
+			camera_2d.top_level = true
+		else:
+			camera_3d.top_level = true
+	pcam.set_tween_skip(self, false)
 
 
 func _assign_new_active_pcam(pcam: Node) -> void:
@@ -482,10 +506,10 @@ func _assign_new_active_pcam(pcam: Node) -> void:
 
 	## Assign newly active pcam
 	if _is_2d:
+		_tween_value_checker(_active_pcam_2d, pcam)
 		_active_pcam_2d = pcam
 		_active_pcam_priority = _active_pcam_2d.priority
 		_active_pcam_has_damping = _active_pcam_2d.follow_damping
-		_tween_duration = _active_pcam_2d.tween_duration
 
 		if not _active_pcam_2d.physics_target_changed.is_connected(_check_pcam_physics):
 			_active_pcam_2d.physics_target_changed.connect(_check_pcam_physics)
@@ -493,21 +517,32 @@ func _assign_new_active_pcam(pcam: Node) -> void:
 		if not _active_pcam_2d.noise_emitted.is_connected(_noise_emitted_2d):
 			_active_pcam_2d.noise_emitted.connect(_noise_emitted_2d)
 	else:
+		_tween_value_checker(_active_pcam_3d, pcam)
 		_active_pcam_3d = pcam
 		_active_pcam_priority = _active_pcam_3d.priority
 		_active_pcam_has_damping = _active_pcam_3d.follow_damping
-		_tween_duration = _active_pcam_3d.tween_duration
 
 		if not Engine.is_editor_hint():
 			# Assigns a default shape to SpringArm3D node is none is supplied
 			if _active_pcam_3d.follow_mode == _active_pcam_3d.FollowMode.THIRD_PERSON:
 				if not _active_pcam_3d.shape:
 
-					var pyramid_shape_data = Engine.get_singleton("PhysicsServer3D").call("shape_get_data",
+					var pyramid_shape_data = Engine.get_singleton(&"PhysicsServer3D").call("shape_get_data",
 						camera_3d.get_pyramid_shape_rid()
 					)
-					var shape = ClassDB.instantiate("ConvexPolygonShape3D")
-					shape.points = pyramid_shape_data
+
+					# Scale up the pyramid shape to avoid clipping issues
+					var expanded_points := PackedVector3Array()
+					for point in pyramid_shape_data:
+						var expanded_point := Vector3(
+							point.x + (0.02 if point.x >= 0 else -0.02),
+							point.y + (0.02 if point.y >= 0 else -0.02),
+							point.z + (0.02 if point.z >= 0 else -0.02)
+						)
+						expanded_points.append(expanded_point)
+
+					var shape = ClassDB.instantiate(&"ConvexPolygonShape3D")
+					shape.points = expanded_points
 					_active_pcam_3d.shape = shape
 
 		if not _active_pcam_3d.physics_target_changed.is_connected(_check_pcam_physics):
@@ -635,17 +670,11 @@ func _assign_new_active_pcam(pcam: Node) -> void:
 		viewfinder_update.emit(false)
 
 	if _is_2d:
-		if _active_pcam_2d.show_viewfinder_in_play:
-			_viewfinder_needed_check = true
-
 		_active_pcam_2d.set_is_active(self, true)
 		_active_pcam_2d.became_active.emit()
 		pcam_became_active.emit(_active_pcam_2d)
 		_camera_zoom = camera_2d.zoom
 	else:
-		if _active_pcam_3d.show_viewfinder_in_play:
-			_viewfinder_needed_check = true
-
 		_active_pcam_3d.set_is_active(self, true)
 		_active_pcam_3d.became_active.emit()
 		pcam_became_active.emit(_active_pcam_3d)
@@ -654,26 +683,122 @@ func _assign_new_active_pcam(pcam: Node) -> void:
 			camera_3d.cull_mask = _active_pcam_3d.cull_mask
 			camera_3d.projection = _active_pcam_3d.projection
 
+	_check_viewfinder_in_play()
+
 	if no_previous_pcam:
 		if _is_2d:
 			_prev_active_pcam_2d_transform = _active_pcam_2d.get_transform_output()
 		else:
 			_prev_active_pcam_3d_transform = _active_pcam_3d.get_transform_output()
 
-	if pcam.get_tween_skip() or pcam.tween_duration == 0:
-		_tween_elapsed_time = pcam.tween_duration
+	if pcam.get_tween_skip() or _tween_duration == 0:
+		_tween_elapsed_time = _tween_duration
 		if Engine.get_version_info().major == 4 and \
 		Engine.get_version_info().minor >= 3:
 			_tween_is_instant = true
 	else:
-		_tween_elapsed_time = 0
+		_tween_elapsed_time = 0.0
 
 	_check_pcam_physics()
 
 	_trigger_pcam_tween = true
 
 
+func _tween_value_checker(current_pcam: Node, new_pcam: Node) -> void:
+	# Use Tween defined in newly active PCam
+	_tween_duration = new_pcam.tween_duration
+	_tween_transition = new_pcam.tween_transition
+	_tween_ease = new_pcam.tween_ease
+
+	# Check for conditional Tween Director properties
+	if current_pcam == null: return
+	if _phantom_camera_manager.phantom_camera_tween_directors.size() == 0: return
+
+	## PCam Tween Director(s) in current scene
+	var pcam_tween_directors: Array[PhantomCameraTweenDirector] = _phantom_camera_manager.phantom_camera_tween_directors
+	for pcam_tween_director in pcam_tween_directors:
+		_tween_director_resource_checker(pcam_tween_director, current_pcam, new_pcam)
+
+func _tween_director_resource_checker(pcam_tween_director: PhantomCameraTweenDirector, current_pcam: Node, new_pcam: Node) -> void:
+	for tween_director_resource: TweenDirectorResource in pcam_tween_director.tween_director:
+		## Checks if any of the required values are missing or isn't inherit
+		if tween_director_resource == null: continue
+		if tween_director_resource.tween_resource == null: continue
+
+		## From Target
+		match tween_director_resource.from_type:
+			TweenDirectorResource.Type.PHANTOM_CAMERA:
+				var has_valid_pcam: bool = false
+				for pcam_path: NodePath in tween_director_resource.from_phantom_cameras:
+					var from_pcam: Node = pcam_tween_director.get_node_or_null(pcam_path)
+					if current_pcam != from_pcam:
+						has_valid_pcam = false
+						continue
+					match from_pcam:
+						null:
+							has_valid_pcam = false
+						current_pcam:
+							has_valid_pcam = true
+							break
+						_:
+							has_valid_pcam = false
+				if not has_valid_pcam: continue
+			TweenDirectorResource.Type.TWEEN_RESOURCE:
+				var has_valid_resource: bool = false
+				for tween_resource: PhantomCameraTween in tween_director_resource.from_tween_resources:
+					match tween_resource:
+						null:
+							has_valid_resource = false
+						current_pcam.tween_resource:
+							has_valid_resource = true
+							break
+						_:
+							has_valid_resource = false
+				if has_valid_resource: pass
+				else: continue
+			TweenDirectorResource.Type.ANY: pass
+
+		## To Target
+		match tween_director_resource.to_type:
+			TweenDirectorResource.Type.PHANTOM_CAMERA:
+				var has_valid_pcam: bool = false
+				for pcam_path: NodePath in tween_director_resource.to_phantom_cameras:
+					var to_pcam: Node = pcam_tween_director.get_node_or_null(pcam_path)
+					if current_pcam == to_pcam:
+						has_valid_pcam = false
+						continue
+					match to_pcam:
+						null:
+							has_valid_pcam = false
+						new_pcam:
+							has_valid_pcam = true
+							break
+						_:
+							has_valid_pcam = false
+				if not has_valid_pcam: continue
+			TweenDirectorResource.Type.TWEEN_RESOURCE:
+				var has_valid_resource: bool = false
+				for tween_resource: PhantomCameraTween in tween_director_resource.to_tween_resources:
+					match tween_resource:
+						null:
+							has_valid_resource = false
+						new_pcam.tween_resource:
+							has_valid_resource = true
+							break
+						_:
+							has_valid_resource = false
+				if has_valid_resource: pass
+				else: continue
+			TweenDirectorResource.Type.ANY: pass
+
+		_tween_duration = tween_director_resource.tween_resource.duration
+		_tween_transition = tween_director_resource.tween_resource.transition
+		_tween_ease = tween_director_resource.tween_resource.ease
+
+
 func _check_pcam_physics() -> void:
+	if interpolation_mode == InterpolationMode.MANUAL: return
+
 	if _is_2d:
 		if _active_pcam_2d.get_follow_target_physics_based() and interpolation_mode != InterpolationMode.IDLE:
 			_follow_target_physics_based = true
@@ -792,10 +917,6 @@ func _pcam_follow(_delta: float) -> void:
 	else:
 		camera_3d.global_transform = _active_pcam_3d_glob_transform
 
-	if _viewfinder_needed_check:
-		_show_viewfinder_in_play()
-		_viewfinder_needed_check = false
-
 	if Engine.is_editor_hint():
 		if not _is_2d:
 			# TODO - Signal-based solution pending merge of: https://github.com/godotengine/godot/pull/99729
@@ -837,7 +958,7 @@ func _camera_3d_resource_changed() -> void:
 			if Engine.get_singleton(&"EditorInterface").get_inspector().property_edited.is_connected(_camera_3d_edited):
 				Engine.get_singleton(&"EditorInterface").get_inspector().property_edited.disconnect(_camera_3d_edited)
 
-func _camera_3d_edited(value: String) -> void:
+func _camera_3d_edited(value: StringName) -> void:
 	if not Engine.get_singleton(&"EditorInterface").get_inspector().get_edited_object() == camera_3d: return
 	camera_3d.set(value, _active_pcam_3d.camera_3d_resource.get(value))
 	push_warning("Camera3D properties are being overridden by ", _active_pcam_3d.name, "'s Camera3DResource")
@@ -863,9 +984,6 @@ func _pcam_tween(delta: float) -> void:
 		var interpolation_destination: Vector2 = _tween_interpolate_value(
 			_prev_active_pcam_2d_transform.origin,
 			_active_pcam_2d_glob_transform.origin,
-			_active_pcam_2d.tween_duration,
-			_active_pcam_2d.tween_transition,
-			_active_pcam_2d.tween_ease
 		)
 
 		if _active_pcam_2d.snap_to_pixel:
@@ -876,25 +994,16 @@ func _pcam_tween(delta: float) -> void:
 		camera_2d.rotation = _tween_interpolate_value(
 			_prev_active_pcam_2d_transform.get_rotation(),
 			_active_pcam_2d_glob_transform.get_rotation(),
-			_active_pcam_2d.tween_duration,
-			_active_pcam_2d.tween_transition,
-			_active_pcam_2d.tween_ease
 		)
 		camera_2d.zoom = _tween_interpolate_value(
 			_camera_zoom,
 			_active_pcam_2d.zoom,
-			_active_pcam_2d.tween_duration,
-			_active_pcam_2d.tween_transition,
-			_active_pcam_2d.tween_ease
 		)
 	else:
 		_active_pcam_3d.is_tweening.emit()
 		camera_3d.global_position = _tween_interpolate_value(
 			_prev_active_pcam_3d_transform.origin,
 			_active_pcam_3d_glob_transform.origin,
-			_active_pcam_3d.tween_duration,
-			_active_pcam_3d.tween_transition,
-			_active_pcam_3d.tween_ease
 		)
 
 		var prev_active_pcam_3d_quat: Quaternion = Quaternion(_prev_active_pcam_3d_transform.basis.orthonormalized())
@@ -903,9 +1012,9 @@ func _pcam_tween(delta: float) -> void:
 				prev_active_pcam_3d_quat, \
 				prev_active_pcam_3d_quat.inverse() * Quaternion(_active_pcam_3d_glob_transform.basis.orthonormalized()),
 				_tween_elapsed_time, \
-				_active_pcam_3d.tween_duration, \
-				_active_pcam_3d.tween_transition,
-				_active_pcam_3d.tween_ease
+				_tween_duration,
+				_tween_transition,
+				_tween_ease
 			)
 
 		if _cam_attribute_changed:
@@ -915,18 +1024,12 @@ func _pcam_tween(delta: float) -> void:
 						_tween_interpolate_value(
 						_prev_cam_auto_exposure_scale,
 						_active_pcam_3d.attributes.auto_exposure_scale,
-						_active_pcam_3d.tween_duration,
-						_active_pcam_3d.tween_transition,
-						_active_pcam_3d.tween_ease
 					)
 				if _cam_auto_exposure_speed_changed:
 					camera_3d.attributes.auto_exposure_speed = \
 						_tween_interpolate_value(
 						_prev_cam_auto_exposure_scale,
 						_active_pcam_3d.attributes.auto_exposure_scale,
-						_active_pcam_3d.tween_duration,
-						_active_pcam_3d.tween_transition,
-						_active_pcam_3d.tween_ease
 					)
 
 			if _cam_attribute_type == 0: # CameraAttributePractical
@@ -936,63 +1039,42 @@ func _pcam_tween(delta: float) -> void:
 							_tween_interpolate_value(
 							_prev_cam_exposure_min_sensitivity,
 							_active_pcam_3d.attributes.auto_exposure_min_sensitivity,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 					if _cam_exposure_max_sensitivity_changed:
 						camera_3d.attributes.auto_exposure_max_sensitivity = \
 							_tween_interpolate_value(
 							_prev_cam_exposure_max_sensitivity,
 							_active_pcam_3d.attributes.auto_exposure_max_sensitivity,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_dof_blur_amount_changed:
 					camera_3d.attributes.dof_blur_amount = \
 						_tween_interpolate_value(
 							_prev_cam_dof_blur_amount,
 							_active_pcam_3d.attributes.dof_blur_amount,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_dof_blur_far_distance_changed:
 					camera_3d.attributes.dof_blur_far_distance = \
 						_tween_interpolate_value(
 							_prev_cam_dof_blur_far_distance,
 							_active_pcam_3d.attributes.dof_blur_far_distance,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_dof_blur_far_transition_changed:
 					camera_3d.attributes.dof_blur_far_transition = \
 						_tween_interpolate_value(
 							_prev_cam_dof_blur_far_transition,
 							_active_pcam_3d.attributes.dof_blur_far_transition,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_dof_blur_near_distance_changed:
 					camera_3d.attributes.dof_blur_near_distance = \
 						_tween_interpolate_value(
 							_prev_cam_dof_blur_near_distance,
 							_active_pcam_3d.attributes.dof_blur_near_distance,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_dof_blur_near_transition_changed:
 					camera_3d.attributes.dof_blur_near_transition = \
 						_tween_interpolate_value(
 							_prev_cam_dof_blur_near_transition,
 							_active_pcam_3d.attributes.dof_blur_near_transition,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 			elif _cam_attribute_type == 1: # CameraAttributePhysical
 				if _cam_dof_blur_near_transition_changed:
@@ -1000,72 +1082,48 @@ func _pcam_tween(delta: float) -> void:
 						_tween_interpolate_value(
 							_prev_cam_exposure_max_exposure_value,
 							_active_pcam_3d.attributes.auto_exposure_max_exposure_value,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_exposure_min_exposure_value_changed:
 					camera_3d.attributes.auto_exposure_min_exposure_value = \
 						_tween_interpolate_value(
 							_prev_cam_exposure_min_exposure_value,
 							_active_pcam_3d.attributes.auto_exposure_min_exposure_value,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_exposure_aperture_changed:
 					camera_3d.attributes.exposure_aperture = \
 						_tween_interpolate_value(
 							_prev_cam_exposure_aperture,
 							_active_pcam_3d.attributes.exposure_aperture,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_exposure_shutter_speed_changed:
 					camera_3d.attributes.exposure_shutter_speed = \
 						_tween_interpolate_value(
 							_prev_cam_exposure_shutter_speed,
 							_active_pcam_3d.attributes.exposure_shutter_speed,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_frustum_far_changed:
 					camera_3d.attributes.frustum_far = \
 						_tween_interpolate_value(
 							_prev_cam_frustum_far,
 							_active_pcam_3d.attributes.frustum_far,
-							_active_pcam_3d.tween_duration(),
-							_active_pcam_3d.tween_transition(),
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_frustum_near_changed:
 					camera_3d.attributes.frustum_near = \
 						_tween_interpolate_value(
 							_prev_cam_frustum_far,
 							_active_pcam_3d.attributes.frustum_near,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_frustum_focal_length_changed:
 					camera_3d.attributes.frustum_focal_length = \
 						_tween_interpolate_value(
 							_prev_cam_frustum_focal_length,
 							_active_pcam_3d.attributes.frustum_focal_length,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 				if _cam_frustum_focus_distance_changed:
 					camera_3d.attributes.frustum_focus_distance = \
 						_tween_interpolate_value(
 							_prev_cam_frustum_focus_distance,
 							_active_pcam_3d.attributes.frustum_focus_distance,
-							_active_pcam_3d.tween_duration,
-							_active_pcam_3d.tween_transition,
-							_active_pcam_3d.tween_ease
 						)
 
 		if _cam_h_offset_changed:
@@ -1073,9 +1131,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_h_offset,
 					_active_pcam_3d.h_offset,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_v_offset_changed:
@@ -1083,9 +1138,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_v_offset,
 					_active_pcam_3d.v_offset,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_fov_changed:
@@ -1093,9 +1145,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_fov,
 					_active_pcam_3d.fov,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_size_changed:
@@ -1103,9 +1152,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_size,
 					_active_pcam_3d.size,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_frustum_offset_changed:
@@ -1113,9 +1159,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_frustum_offset,
 					_active_pcam_3d.frustum_offset,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_near_changed:
@@ -1123,9 +1166,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_near,
 					_active_pcam_3d.near,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 		if _cam_far_changed:
@@ -1133,9 +1173,6 @@ func _pcam_tween(delta: float) -> void:
 				_tween_interpolate_value(
 					_prev_cam_far,
 					_active_pcam_3d.far,
-					_active_pcam_3d.tween_duration,
-					_active_pcam_3d.tween_transition,
-					_active_pcam_3d.tween_ease
 				)
 
 	# Forcefully disables physics interpolation when tweens are instant
@@ -1152,7 +1189,7 @@ func _pcam_tween(delta: float) -> void:
 	if _tween_elapsed_time < _tween_duration: return
 
 	_trigger_pcam_tween = false
-	_tween_elapsed_time = 0
+	_tween_elapsed_time = 0.0
 	viewfinder_update.emit(true)
 
 	if _is_2d:
@@ -1181,24 +1218,24 @@ func _pcam_tween(delta: float) -> void:
 		_active_pcam_3d.tween_completed.emit()
 
 
-func _tween_interpolate_value(from: Variant, to: Variant, duration: float, transition_type: int, ease_type: int) -> Variant:
+func _tween_interpolate_value(from: Variant, to: Variant) -> Variant:
 	return Tween.interpolate_value(
 		from, \
 		to - from,
 		_tween_elapsed_time, \
-		duration, \
-		transition_type,
-		ease_type,
+		_tween_duration, \
+		_tween_transition,
+		_tween_ease,
 	)
 
 
-func _show_viewfinder_in_play() -> void:
+func _check_viewfinder_in_play() -> void:
 	# Don't show the viewfinder in the actual editor or project builds
-	if Engine.is_editor_hint() or !OS.has_feature("editor"): return
+	if Engine.is_editor_hint() or not OS.has_feature("editor"): return
 
 	# Default the viewfinder node to be hidden
-	if is_instance_valid(_viewfinder_node):
-		_viewfinder_node.visible = false
+	if is_instance_valid(_phantom_camera_manager.get_viewfinder()):
+		_phantom_camera_manager.get_viewfinder().visible = false
 
 	if _is_2d:
 		if not _active_pcam_2d.show_viewfinder_in_play: return
@@ -1211,13 +1248,14 @@ func _show_viewfinder_in_play() -> void:
 	get_tree().get_root().add_child(canvas_layer)
 
 	# Instantiate the viewfinder scene if it isn't already
-	if not is_instance_valid(_viewfinder_node):
-		var _viewfinder_scene := load("res://addons/phantom_camera/panel/viewfinder/viewfinder_panel.tscn")
-		_viewfinder_node = _viewfinder_scene.instantiate()
-		canvas_layer.add_child(_viewfinder_node)
+	if not is_instance_valid(_phantom_camera_manager.get_viewfinder()):
+		var _viewfinder_scene: PackedScene = load("res://addons/phantom_camera/panel/viewfinder/viewfinder_panel.tscn")
+		_phantom_camera_manager.set_viewfinder(self, _viewfinder_scene.instantiate())
+		canvas_layer.add_child(_phantom_camera_manager.get_viewfinder())
+#		_phantom_camera_manager.viewfinder = _viewfinder_node
 
-	_viewfinder_node.visible = true
-	_viewfinder_node.update_dead_zone()
+	_phantom_camera_manager.get_viewfinder().visible = true
+	_phantom_camera_manager.get_viewfinder().update_dead_zone()
 
 
 func _update_limit_2d(side: int, limit: int) -> void:
@@ -1243,12 +1281,14 @@ func _pcam_removed_from_scene(pcam: Node) -> void:
 		if pcam == _active_pcam_2d:
 			_active_pcam_2d = null
 			_active_pcam_missing = true
+			camera_2d.top_level = false
 			_active_pcam_priority = -1
 			_find_pcam_with_highest_priority()
 	else:
 		if pcam == _active_pcam_3d:
 			_active_pcam_3d = null
 			_active_pcam_missing = true
+			camera_3d.top_level = false
 			_active_pcam_priority = -1
 			_find_pcam_with_highest_priority()
 
@@ -1292,41 +1332,43 @@ func _set_layer(current_layers: int, layer_number: int, value: bool) -> int:
 
 #region Public Functions
 
-## Triggers a recalculation to determine which PhantomCamera has the highest priority.
 func pcam_priority_updated(pcam: Node) -> void:
 	if not is_instance_valid(pcam): return
 	if not _pcam_is_in_host_layer(pcam): return
 
-	if pcam == _active_pcam_2d or pcam == _active_pcam_3d:
-		if not pcam.visible:
-			refresh_pcam_list_priorty()
-
 	if Engine.is_editor_hint():
 		if _is_2d:
-			if not is_instance_valid(_active_pcam_2d): return
+			if not _active_pcam_2d: return
 			if _active_pcam_2d.priority_override: return
+			if not is_instance_valid(_active_pcam_2d): return
 		else:
-			if not is_instance_valid(_active_pcam_3d): return
+			if not _active_pcam_3d: return
 			if _active_pcam_3d.priority_override: return
+			if not is_instance_valid(_active_pcam_3d): return
 
-	var current_pcam_priority: int = pcam.priority
-
-	if current_pcam_priority >= _active_pcam_priority:
-		if _is_2d:
-			if pcam != _active_pcam_2d:
-				_assign_new_active_pcam(pcam)
-		else:
-			if pcam != _active_pcam_3d:
-				_assign_new_active_pcam(pcam)
-		pcam.set_tween_skip(self, false)
-		_active_pcam_missing = false
-
+	## Currently active PCam changed Priority
 	if pcam == _active_pcam_2d or pcam == _active_pcam_3d:
-		if current_pcam_priority <= _active_pcam_priority:
-			_active_pcam_priority = current_pcam_priority
+		## If PCam Node has become invisible / disabled
+		if not pcam.visible:
+			refresh_pcam_list_priorty()
+		## If currently active PCam has a reduced Priority
+		elif pcam.priority < _active_pcam_priority:
+			_active_pcam_priority = pcam.priority
 			_find_pcam_with_highest_priority()
-		else:
-			_active_pcam_priority = current_pcam_priority
+	## Another PCam changed Priority
+	else:
+		## Make new PCam active if Priority is higher or equal to the currently active
+		if pcam.priority >= _active_pcam_priority:
+			if _is_2d:
+				if pcam != _active_pcam_2d:
+					camera_2d.top_level = true
+					_assign_new_active_pcam(pcam)
+			else:
+				if pcam != _active_pcam_3d:
+					camera_3d.top_level = true
+					_assign_new_active_pcam(pcam)
+			_active_pcam_missing = false
+			pcam.set_tween_skip(self, false)
 
 
 ## Updates the viewfinder when a [param PhantomCamera] has its
@@ -1380,14 +1422,26 @@ func refresh_pcam_list_priorty() -> void:
 	_active_pcam_priority = -1
 	_find_pcam_with_highest_priority()
 
+## Manually updates the process for this [param PhantomCameraHost].[br]
+## [b][color=yellow]Note:[/color][/b] This function should only be needed if [member InterpolationMode] is set to [member InterpolationMode.MANUAL].
+func process(delta: float) -> void:
+	_tween_follow_checker(delta)
+
 #endregion
 
 #region Setters / Getters
 
 func set_interpolation_mode(value: int) -> void:
 	interpolation_mode = value
-	if is_inside_tree():
-		_check_pcam_physics()
+
+	if interpolation_mode == InterpolationMode.MANUAL:
+		process_mode = PROCESS_MODE_DISABLED
+		return
+	else:
+		process_mode = PROCESS_MODE_INHERIT
+		if is_inside_tree():
+			_check_pcam_physics()
+
 func get_interpolation_mode() -> int:
 	return interpolation_mode
 
@@ -1412,5 +1466,8 @@ func set_host_layers_value(layer: int, value: bool) -> void:
 ## Returns the [member host_layers] value.
 func get_host_layers() -> int:
 	return host_layers
+
+func is_physics_based() -> bool:
+	return _follow_target_physics_based
 
 #endregion
