@@ -2523,7 +2523,7 @@ $groundedAttackJobs = @(
         RelativePath = "attacks\ground_combo_02.png"
         Columns = 5
         Rows = 5
-        FrameIndices = [int[]](@(0, 1) + (7..18))
+        FrameIndices = [int[]](0..16)
     }
 )
 foreach ($groundedAttack in $groundedAttackJobs) {

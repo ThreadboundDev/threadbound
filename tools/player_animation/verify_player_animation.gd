@@ -32,6 +32,7 @@ func _ready() -> void:
 	add_child(player)
 	if sprite != null:
 		_verify_sprite(sprite, failures)
+		_verify_moving_combo_atlas_maps(sprite, failures)
 		_verify_movement_visual_tuning(player, failures)
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
@@ -134,6 +135,50 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 				failures.append(
 					"%s frame %d uses atlas cell %s; expected %s." %
 					[animation_name, frame_index, texture.region.size, expected.cell]
+				)
+
+func _verify_moving_combo_atlas_maps(
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	var expected_maps := {
+		&"Ground_Attack_Combo_1": PackedInt32Array([
+			0, 1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+		]),
+		&"Ground_Attack_Combo_2": PackedInt32Array([
+			0, 1, 3, 4, 4, 5, 6, 7, 8, 8, 9, 9, 10, 11, 12, 13, 14, 15, 16,
+		]),
+	}
+	var frames := sprite.sprite_frames
+	for animation_name: StringName in expected_maps:
+		var expected_indices: PackedInt32Array = expected_maps[animation_name]
+		for frame_index in expected_indices.size():
+			var texture := frames.get_frame_texture(animation_name, frame_index) as AtlasTexture
+			if texture == null or texture.atlas == null:
+				failures.append(
+					"%s frame %d is not backed by the moving combo atlas." %
+					[animation_name, frame_index]
+				)
+				continue
+			if not texture.atlas.resource_path.ends_with("/ground_combo_02.png"):
+				failures.append(
+					"%s frame %d uses %s instead of the clean moving combo atlas." %
+					[animation_name, frame_index, texture.atlas.resource_path]
+				)
+				continue
+			var atlas_index := (
+				int(texture.region.position.y / 320.0) * 5
+				+ int(texture.region.position.x / 320.0)
+			)
+			if atlas_index != expected_indices[frame_index]:
+				failures.append(
+					"%s frame %d maps to atlas cell %d; expected %d." %
+					[
+						animation_name,
+						frame_index,
+						atlas_index,
+						expected_indices[frame_index],
+					]
 				)
 
 func _verify_ledge_transparency(failures: Array[String]) -> void:
@@ -292,7 +337,8 @@ func _verify_grounded_attack_registration(failures: Array[String]) -> void:
 			"path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
 			"grid": Vector2i(5, 5),
 			"frames": PackedInt32Array([
-				0, 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+				0, 1, 2, 3, 4, 5, 6, 7, 8,
+				9, 10, 11, 12, 13, 14, 15, 16,
 			]),
 		},
 	]:
@@ -495,9 +541,9 @@ func _verify_forward_combo_chain(player: Node, failures: Array[String]) -> void:
 		failures.append("Backpedal finisher second strike window must be frames 13-16.")
 	if not is_equal_approx(
 		float(player.get("ground_combo_2_moving_visual_scale_multiplier")),
-		1.4
+		1.0
 	):
-		failures.append("Moving ground finisher must use the approved 1.4 visual scale.")
+		failures.append("Moving ground finisher must use the atlas-native 1.0 visual scale.")
 
 	player.call("_reset_ground_combo_chain")
 	player.set("velocity", Vector2(120.0, 0.0))

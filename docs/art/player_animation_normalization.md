@@ -35,20 +35,19 @@ transparent sheet cells:
 | Ground forward | 0.75 | 512 px |
 | Neutral special | 0.675 | 512 px |
 | Ground combo opener | 0.90 | 320 px |
-| Ground combo finisher | 0.6428571, rendered at 1.40 | 320 px |
+| Ground combo finisher | 0.90 | 320 px |
 | Stationary double hit | 0.90, rendered at 1.40 | 320 px |
 | Backpedal combo variants | 1.15, rendered at 1.25 | 320 px |
 | Air double attack | 1.20 | 416 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
-its 384 px rendered source. The moving finisher, stationary double hit, and
-backpedal variants use the runtime presentation multipliers listed above; other
-animation families retain a `1.0` visual multiplier.
+its 384 px rendered source. The stationary double hit and backpedal variants use
+the runtime presentation multipliers listed above; the moving combo family and
+other animation families retain a `1.0` visual multiplier.
 
-The `ground_combo_01` sheet is restored to the established 320 px runtime atlas.
-Its content is baked at `0.6428571`, then displayed at a `1.40` visual
-multiplier during the moving finisher. This produces the approved larger
-screen-space character without changing Godot's atlas cell format.
+Both moving combo steps use the consistently scaled `ground_combo_02` atlas.
+The older `ground_combo_01` atlas remains as authoring reference, but is no
+longer active in the player `SpriteFrames`.
 
 ### Runtime memory budget
 
@@ -70,12 +69,16 @@ repeated sprinting foot cycle.
 
 ### Forward pseudo three-hit chain
 
-The forward chain uses the authored sheets in reverse numerical order:
+The forward chain uses two cuts from the cleaner `ground_combo_02.png` atlas:
 
-- `ground_combo_02.png` is the logical `Ground_Attack_Combo_1` opener. It has
-  14 curated frames and one damaging strike on runtime frames 3-5.
-- `ground_combo_01.png` is the logical `Ground_Attack_Combo_2` finisher. It has
-  19 curated frames and damaging strikes on runtime frames 2-4 and 9-11.
+- `Ground_Attack_Combo_1` is a 14-frame overhead cut using source cells 0, 1,
+  2, and 5-15. Restoring cells 2, 5, and 6 supplies the missing run
+  anticipation and weapon lift before its damaging strike on runtime frames
+  3-5.
+- `Ground_Attack_Combo_2` is a 19-frame double sweep using source cells 0, 1,
+  3, 4, 4, 5, 6, 7, 8, 8, 9, 9, and 10-16. The repeated cells are intentional
+  two-frame impact holds aligned with the existing damaging windows on runtime
+  frames 2-4 and 9-11.
 
 Pressing attack again during the opener or within the 0.45-second reset window
 plays the two-hit finisher, creating a three-hit sequence. Waiting beyond that
