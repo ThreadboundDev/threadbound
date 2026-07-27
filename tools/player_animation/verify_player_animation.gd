@@ -15,7 +15,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Jump_Ascent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Land": {"frames": 4, "fps": 12.0, "loop": false, "cell": Vector2(320, 320)},
-	&"Ledge_Hang": {"frames": 4, "fps": 5.0, "loop": true, "cell": Vector2(320, 320)},
+	&"Ledge_Climb": {"frames": 4, "fps": 20.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Run": {"frames": 11, "fps": 24.0, "loop": true, "cell": Vector2(548, 548)},
 	&"Sit": {"frames": 48, "fps": 18.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
@@ -38,7 +38,7 @@ func _ready() -> void:
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
-	_verify_ledge_transparency(failures)
+	_verify_ledge_climb_sheet(failures)
 	_verify_run_registration(failures)
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
@@ -183,11 +183,14 @@ func _verify_moving_combo_atlas_maps(
 					]
 				)
 
-func _verify_ledge_transparency(failures: Array[String]) -> void:
-	var path := "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png"
+func _verify_ledge_climb_sheet(failures: Array[String]) -> void:
+	var path := "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png"
 	var image := _load_imported_image(path)
 	if image == null or image.is_empty():
-		failures.append("Could not load the ledge hang sheet for alpha verification.")
+		failures.append("Could not load the ledge climb sheet for alpha verification.")
+		return
+	if image.get_size() != Vector2i(640, 640):
+		failures.append("Ledge climb sheet is %s; expected 640x640." % image.get_size())
 		return
 
 	var transparent_pixels := 0
@@ -199,12 +202,11 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 
 	if transparent_pixels < int(total_pixels * 0.8):
 		failures.append(
-			"Ledge hang background is not transparent enough: %d/%d pixels are transparent." %
+			"Ledge climb background is not transparent enough: %d/%d pixels are transparent." %
 			[transparent_pixels, total_pixels]
 		)
 
 	var cell_size := Vector2i(image.get_width() / 2, image.get_height() / 2)
-	var reference_bounds := Rect2i()
 	for frame_index in 4:
 		var origin := Vector2i(
 			(frame_index % 2) * cell_size.x,
@@ -222,27 +224,28 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 				maximum.y = maxi(maximum.y, y)
 
 		if maximum.x < 0:
-			failures.append("Ledge hang frame %d is empty." % frame_index)
+			failures.append("Ledge climb frame %d is empty." % frame_index)
 			continue
-		if maximum.x < 198 or maximum.x > 204:
+		var gutters := [
+			minimum.x,
+			minimum.y,
+			cell_size.x - 1 - maximum.x,
+			cell_size.y - 1 - maximum.y,
+		]
+		if gutters.min() < 7:
 			failures.append(
-				"Ledge hang frame %d grip reaches x=%d; expected the wall-contact band 198-204." %
-				[frame_index, maximum.x]
+				"Ledge climb frame %d has clipped padding %s." %
+				[frame_index, gutters]
 			)
-		var bounds := Rect2i(minimum, maximum - minimum + Vector2i.ONE)
-		if frame_index == 0:
-			reference_bounds = bounds
-			continue
-		if (
-			abs(bounds.position.x - reference_bounds.position.x) > 2
-			or abs(bounds.position.y - reference_bounds.position.y) > 2
-			or abs(bounds.end.x - reference_bounds.end.x) > 2
-			or abs(bounds.end.y - reference_bounds.end.y) > 2
-		):
-			failures.append(
-				"Ledge hang frame %d bounds %s jitter beyond the registered reference %s." %
-				[frame_index, bounds, reference_bounds]
-			)
+
+	# The player never wears a scarf. This known upper-back exterior band
+	# must remain empty so generated neck cloth cannot enter the active sheet.
+	var crest_origin := Vector2i(0, 320)
+	for y in range(70, 94):
+		for x in range(115, 191):
+			if image.get_pixel(crest_origin.x + x, crest_origin.y + y).a > 0.03:
+				failures.append("Ledge climb crest contains a forbidden scarf-tail silhouette.")
+				return
 
 func _verify_run_registration(failures: Array[String]) -> void:
 	var playback_order := [1, 2, 3, 4, 5, 6, 12, 20, 7, 18, 8]
@@ -313,16 +316,32 @@ func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> vo
 		failures.append("Backpedal ground attacks must use the corrected 1.25 visual scale.")
 
 	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	player.set("is_ledge_hanging", true)
+	player.set("is_ledge_climbing", false)
+	player.call("update_animations", 0.0)
+	if sprite.animation != &"Wall_Cling" or sprite.frame != 0:
+		failures.append("Ledge hold must use the stable first Wall Cling pose.")
+
 	player.set("is_ledge_hanging", false)
 	player.set("is_ledge_climbing", true)
-	player.set("_ledge_climb_elapsed", float(player.get("ledge_climb_duration")) * 0.55)
-	player.call("update_animations", 0.0)
-	if sprite.animation != &"Wall_Cling":
-		failures.append("Ledge climb midpoint does not use the planted wall-contact pose.")
-	player.set("_ledge_climb_elapsed", float(player.get("ledge_climb_duration")) * 0.86)
-	player.call("update_animations", 0.0)
-	if sprite.animation != &"Jump_Land":
-		failures.append("Ledge climb finish does not blend into the crouched landing pose.")
+	for sample in [
+		{"progress": 0.1, "frame": 0},
+		{"progress": 0.35, "frame": 1},
+		{"progress": 0.6, "frame": 2},
+		{"progress": 0.9, "frame": 3},
+	]:
+		var expected_progress := float(sample["progress"])
+		var expected_frame := int(sample["frame"])
+		player.set(
+			"_ledge_climb_elapsed",
+			float(player.get("ledge_climb_duration")) * expected_progress
+		)
+		player.call("update_animations", 0.0)
+		if sprite.animation != &"Ledge_Climb" or sprite.frame != expected_frame:
+			failures.append(
+				"Ledge climb progress %.2f selected %s frame %d; expected frame %d." %
+					[expected_progress, sprite.animation, sprite.frame, expected_frame]
+			)
 	player.set("is_ledge_climbing", false)
 
 	var start := Vector2(0.0, 100.0)

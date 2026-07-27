@@ -133,6 +133,50 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void BuildFrameGrid(
+        string[] inputPaths,
+        string outputPath,
+        int columns,
+        int rows,
+        int cellSize)
+    {
+        if (inputPaths.Length > columns * rows)
+        {
+            throw new ArgumentException("Frame count exceeds grid capacity.");
+        }
+
+        using (var output = new Bitmap(
+            columns * cellSize,
+            rows * cellSize,
+            PixelFormat.Format32bppArgb))
+        using (var graphics = Graphics.FromImage(output))
+        {
+            graphics.Clear(Color.Transparent);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            for (int index = 0; index < inputPaths.Length; index++)
+            {
+                using (var source = new Bitmap(inputPaths[index]))
+                {
+                    if (source.Width != cellSize || source.Height != cellSize)
+                    {
+                        throw new InvalidDataException(
+                            String.Format(
+                                "{0} is {1}x{2}; expected {3}x{3}.",
+                                inputPaths[index],
+                                source.Width,
+                                source.Height,
+                                cellSize));
+                    }
+                    graphics.DrawImageUnscaled(
+                        source,
+                        (index % columns) * cellSize,
+                        (index / columns) * cellSize);
+                }
+            }
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     public static void BuildSelectedFrameGrid(
         string frameDirectory,
         string outputPath,
@@ -2187,19 +2231,24 @@ foreach ($source in $copyMap.Keys) {
     Copy-NormalizedAsset $source $copyMap[$source]
 }
 
-$ledgeHangPath = Join-Path $outputRoot "movement\ledge_hang.png"
-if (-not (Test-Path -LiteralPath $ledgeHangPath)) {
-    throw "Missing ledge hang sheet: $ledgeHangPath"
+$ledgeClimbSourceRoot = Join-Path $outputRoot "movement\ledge_climb_sources"
+[string[]]$ledgeClimbFrames = @(
+    (Join-Path $ledgeClimbSourceRoot "frame_00.png"),
+    (Join-Path $ledgeClimbSourceRoot "frame_01.png"),
+    (Join-Path $ledgeClimbSourceRoot "frame_02.png"),
+    (Join-Path $ledgeClimbSourceRoot "frame_03.png")
+)
+foreach ($ledgeClimbFrame in $ledgeClimbFrames) {
+    if (-not (Test-Path -LiteralPath $ledgeClimbFrame)) {
+        throw "Missing ledge climb source frame: $ledgeClimbFrame"
+    }
 }
-$transparentLedgeHangPath = "$ledgeHangPath.transparent.png"
-[ThreadboundAnimationNormalizer]::RemoveConnectedDarkBackground(
-    $ledgeHangPath,
-    $transparentLedgeHangPath,
-    3)
-Move-Item `
-    -LiteralPath $transparentLedgeHangPath `
-    -Destination $ledgeHangPath `
-    -Force
+[ThreadboundAnimationNormalizer]::BuildFrameGrid(
+    $ledgeClimbFrames,
+    (Join-Path $outputRoot "movement\ledge_climb.png"),
+    2,
+    2,
+    320)
 
 function Resolve-FfmpegExecutable {
     if ($FfmpegPath) {

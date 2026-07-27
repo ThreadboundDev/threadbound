@@ -18,7 +18,7 @@ const SIT_ANIMATION := &"Sit"
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
-const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
+const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
 
 # ===============================
 # NODES
@@ -1074,11 +1074,13 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = save_point_sit_visual_scale
 		play_character_anim(SIT_ANIMATION, "equip_idle")
 		return
-	if is_ledge_hanging and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
+	if is_ledge_hanging and player_animation.sprite_frames.has_animation(&"Wall_Cling"):
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
 		player_animation.position = _player_default_visual_position
-		play_character_anim(LEDGE_HANG_ANIMATION, "equip_wall_cling")
+		play_character_anim("Wall_Cling", "equip_wall_cling")
+		player_animation.pause()
+		player_animation.set_frame_and_progress(0, 0.0)
 		return
 	if is_ledge_climbing:
 		_play_ledge_climb_pose()
@@ -1196,29 +1198,23 @@ func _play_ledge_climb_pose() -> void:
 	player_animation.rotation = 0.0
 	player_animation.scale = _player_default_visual_scale
 	player_animation.position = _player_default_visual_position
+	if not player_animation.sprite_frames.has_animation(LEDGE_CLIMB_ANIMATION):
+		return
 
 	var progress := clampf(
 		_ledge_climb_elapsed / maxf(ledge_climb_duration, 0.001),
 		0.0,
 		1.0
 	)
-	var pose := LEDGE_HANG_ANIMATION
-	var phase_progress := progress / 0.38
-	var equipment_pose := "equip_wall_cling"
-	if progress >= 0.72 and player_animation.sprite_frames.has_animation(&"Jump_Land"):
-		pose = &"Jump_Land"
-		phase_progress = (progress - 0.72) / 0.28
-		equipment_pose = "equip_idle"
-	elif progress >= 0.38 and player_animation.sprite_frames.has_animation(&"Wall_Cling"):
-		pose = &"Wall_Cling"
-		phase_progress = (progress - 0.38) / 0.34
-
-	play_character_anim(String(pose), equipment_pose)
-	var frame_count := player_animation.sprite_frames.get_frame_count(pose)
+	var equipment_pose := "equip_idle" if progress >= 0.75 else "equip_wall_cling"
+	play_character_anim(String(LEDGE_CLIMB_ANIMATION), equipment_pose)
+	var frame_count := player_animation.sprite_frames.get_frame_count(
+		LEDGE_CLIMB_ANIMATION
+	)
 	if frame_count <= 0:
 		return
 	var pose_frame := clampi(
-		floori(clampf(phase_progress, 0.0, 0.999) * float(frame_count)),
+		floori(clampf(progress, 0.0, 0.999) * float(frame_count)),
 		0,
 		frame_count - 1
 	)

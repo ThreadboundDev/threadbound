@@ -1,12 +1,15 @@
 {
-  "version": 11,
+  "version": 12,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
     "weapon_reference": "res://docs/art/concept_art/Weapon Model Bronze Long Handle.png",
     "runtime_raster_scale": 0.5,
     "in_game_visual_scale": [0.7, 0.7],
-    "target_character_height_pixels": 175
+    "target_character_height_pixels": 175,
+    "character_invariants": {
+      "scarf": false
+    }
   },
   "assets": {
     "idle": {
@@ -48,7 +51,7 @@
           "grid": [2, 2],
           "cell_size": 320,
           "registration_anchor": "head",
-          "cleanup": "Loose scarf tails are removed against the clean first-frame silhouette.",
+          "cleanup": "Generated trailing neck-cloth artifacts are removed; the character does not wear a scarf.",
           "playback_fps": 8.0,
           "loop": true
         },
@@ -99,13 +102,18 @@
           "playback_fps": 6.0,
           "loop": true
         },
-        "ledge_hang": {
-          "path": "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png",
+        "ledge_climb": {
+          "path": "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png",
           "grid": [2, 2],
           "cell_size": 320,
           "background": "transparent",
-          "playback_fps": 5.0,
-          "loop": true
+          "playback_fps": 20.0,
+          "loop": false,
+          "poses": ["wall_cling_hold", "two_hand_pull", "ledge_crest", "jump_land"],
+          "character_invariants": {
+            "scarf": false
+          },
+          "archived_rejected_directory": "res://Assets/Threadborne/Player/Normalized_V2/movement/old_ledge_hang"
         }
       }
     },

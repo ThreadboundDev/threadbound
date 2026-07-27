@@ -19,6 +19,8 @@ now references `Assets/Threadborne/Player/Normalized_V2`.
 - Runtime raster scale: 50% of the normalized authoring output
 - Runtime `AnimatedSprite2D` scale: uniform `Vector2(0.70, 0.70)`
 - Intended standing presentation: approximately 175 screen pixels tall
+- Character invariant: the player does not wear a scarf, cape, or trailing
+  neck cloth. Generated frames containing one must be rejected or corrected.
 
 The idle sheet remains the calibration baseline. Run poses are naturally more
 crouched, so they were not enlarged merely to force every silhouette to the same
@@ -185,8 +187,10 @@ Secondary-motion sheets now use padded 320 px runtime cells:
 - The runtime wall-cling sheet receives a final contact registration pass after
   downscaling. Its occupied wall and ground edges are locked to frame zero so
   rounding cannot introduce a one-pixel fidget.
-- Ledge hang uses a transparent 2x2 sheet; the connected opaque-black source
-  background is removed without keying dark pixels enclosed by the character.
+- Ledge hold reuses the first registered wall-cling frame, preventing the
+  dangling pose from fidgeting while the player waits for input.
+- Ledge climb uses a transparent 2x2 bridge sheet: wall-cling hold, two-hand
+  pull, ledge crest, and the first jump-landing pose.
 - The diagonal grapple toss clears only tiny detached components in the known
   lower-right atlas gutter, eliminating the one-frame screen-corner speck while
   preserving the authored body and cloth motion.
@@ -197,12 +201,12 @@ Secondary-motion sheets now use padded 320 px runtime cells:
 Runtime presentation applies two small movement-only corrections without
 changing collision: landing uses a `0.88` visual multiplier with a 5 px downward
 offset, while wall cling shifts the sprite 22 px away from the collision wall.
-Wall cling and ledge hang keep their wall-side hand and foot rows fixed while
-bowing the torso away from the collision edge. The cling contact VFX remains at
-the collision surface, but is smaller and more transparent so it cannot cover
-the pose. Pulling onto a ledge follows a 0.2-second eased quadratic arc and
-progresses through hang, planted wall-brace, and landing poses instead of
-teleporting or sliding one rigid frame to the platform top.
+Wall cling keeps its wall-side hand and foot rows fixed while bowing the torso
+away from the collision edge. The cling contact VFX remains at the collision
+surface, but is smaller and more transparent so it cannot cover the pose.
+Pulling onto a ledge follows a 0.2-second eased quadratic arc while the four
+bridge poses move from cling through a two-hand pull and crest into the existing
+landing pose.
 
 The padding allows corrective translation without cropping an extended hand,
 weapon pose, foot, or billowing cloth.
@@ -210,18 +214,19 @@ weapon pose, foot, or billowing cloth.
 ## Editor-visible animation ownership
 
 All playable clips are serialized directly into the `Player Animation`
-node's `SpriteFrames` resource. Stationary and backpedal attacks, ledge hang,
+node's `SpriteFrames` resource. Stationary and backpedal attacks, ledge climb,
 wall cling, and the save-point sit sequence can therefore be previewed and
 edited in the Godot inspector without running the game. `player.gd` selects
 among those authored clips but no longer creates animation frames in `_ready()`.
 
-The ledge-hang sheet is a separately authored four-frame contact pose. Its upper
-hand, overall bounds, and foot line are registered within two pixels across the
-loop. The gripping arm reaches the x=198-204 contact band in each 320 px cell,
-letting the hand meet thin floating-platform edges while the arched torso remains
-clear of thick wall foliage. The restored waist sash is preserved directly in
-the artwork. The normalizer removes any connected dark background but does not
-apply the wall-cling procedural warp to this sheet.
+The active ledge hold is the exact first `Wall_Cling` pose. The separately
+authored `Ledge_Climb` clip contains four 320 px frames and plays once over the
+existing 0.2-second movement arc. Its endpoints are exact copies of the active
+wall-cling and jump-landing frames, so entering and leaving the transition
+cannot pop between unrelated silhouettes. The two bridge poses were generated
+with the built-in ImageGen workflow, chroma-keyed locally, and corrected to
+remove an invented scarf before entering the runtime sheet. The rejected
+ledge-hang artwork remains archived under `movement/old_ledge_hang`.
 
 ### Secondary motion and grapple tosses
 
@@ -237,6 +242,7 @@ looking frozen.
 | Jump descent | 4 | 8 fps | Loops while falling |
 | Jump land | 4 | 12 fps | One-shot, held for 0.28 seconds when landing at rest |
 | Wall cling | 4 | 6 fps | Slow loop with stronger tunic/waist-cloth billow |
+| Ledge climb | 4 | 20 fps | One-shot bridge from wall cling to jump landing |
 | Grapple horizontal | 6 | 18 fps | 0.33-second one-shot throw |
 | Grapple diagonal | 6 | 18 fps | 0.33-second one-shot throw |
 
@@ -303,6 +309,10 @@ sheets from matching `ascent.chroma.png`, `apex.chroma.png`,
 `.import` companions are generated by opening/importing the project after the
 script completes.
 
+The ledge-climb runtime sheet is rebuilt from the four checked-in transparent
+files under `movement/ledge_climb_sources`. Regeneration deliberately does not
+call an image model; it only assembles those reviewed source frames in order.
+
 Use `-RegisterExistingMotion` once when migrating an older 512 px generated
 motion sheet to the padded, anchor-registered layout. The full 640 px registered
 cells are reduced to 320 px by the final runtime-raster pass.
@@ -319,10 +329,11 @@ Run the focused scene-level verification after importing:
 godot --headless --path . res://tools/player_animation/verify_player_animation.tscn
 ```
 
-It checks the motion clips, editor-authored sit and ledge clips, moving,
+It checks the motion clips, editor-authored sit and ledge-climb clips, moving,
 stationary, and backpedal ground combos, and the air double attack: frame
 counts, frame textures, atlas cell sizes, playback speeds, loop modes, and the
-player's animation-specific visual scale. It also verifies ledge alpha,
+player's animation-specific visual scale. It also verifies ledge alpha and the
+known scarf-free crest silhouette,
 wall-cling contact registration, grounded attack baselines, diagonal grapple
 gutter cleanup, landing and wall visual tuning, the phased ledge climb,
 stationary atlas gutters and frame-scale correction, standalone stationary
@@ -331,8 +342,7 @@ frontal arc, and absence of the retired upward clips.
 
 ## Deliberate limits
 
-- No authoring source art was deleted; only the rejected stationary runtime
-  derivative was removed.
+- Replaced runtime art remains available under its named `old_*` archive.
 - No scene tree was restructured.
 - Retired upward attack sheets remain available as source art but are not loaded
   by the active player scene.

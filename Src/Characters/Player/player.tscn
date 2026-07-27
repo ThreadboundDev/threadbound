@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://djqbhb6nvbbro" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png" id="111_stationary_combo_02"]
 [ext_resource type="Texture2D" uid="uid://cxpvotgaiojrn" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png" id="112_backpedal_combo_01"]
 [ext_resource type="Texture2D" uid="uid://bgb0imhrnad4l" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png" id="113_backpedal_combo_02"]
-[ext_resource type="Texture2D" uid="uid://baofhtnig7xun" path="res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_hang.png" id="114_ledge_hang"]
+[ext_resource type="Texture2D" uid="uid://baofhtnig7xun" path="res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png" id="114_ledge_climb"]
 [ext_resource type="Texture2D" uid="uid://cjie8wsp1aqxu" path="res://Assets/Threadborne/sit.png" id="115_sit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
@@ -773,20 +773,20 @@ region = Rect2(0, 320, 320, 320)
 atlas = ExtResource("7_vrurm")
 region = Rect2(320, 320, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_0"]
-atlas = ExtResource("114_ledge_hang")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_climb_0"]
+atlas = ExtResource("114_ledge_climb")
 region = Rect2(0, 0, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_1"]
-atlas = ExtResource("114_ledge_hang")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_climb_1"]
+atlas = ExtResource("114_ledge_climb")
 region = Rect2(320, 0, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_2"]
-atlas = ExtResource("114_ledge_hang")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_climb_2"]
+atlas = ExtResource("114_ledge_climb")
 region = Rect2(0, 320, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_3"]
-atlas = ExtResource("114_ledge_hang")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_climb_3"]
+atlas = ExtResource("114_ledge_climb")
 region = Rect2(320, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ta1i"]
@@ -1799,20 +1799,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_0")
+"texture": SubResource("AtlasTexture_ledge_climb_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_1")
+"texture": SubResource("AtlasTexture_ledge_climb_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_2")
+"texture": SubResource("AtlasTexture_ledge_climb_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_3")
+"texture": SubResource("AtlasTexture_ledge_climb_3")
 }],
-"loop": 1,
-"name": &"Ledge_Hang",
-"speed": 5.0
+"loop": 0,
+"name": &"Ledge_Climb",
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
