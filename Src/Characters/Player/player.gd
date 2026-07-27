@@ -123,6 +123,7 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
 @export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var ground_combo_2_moving_visual_scale_multiplier := 1.4
 @export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
 @export_group("Ground Attack Combo")
@@ -131,8 +132,6 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var ground_combo_1_second_strike_frames := Vector2i(-1, -1)
 @export var ground_combo_2_first_strike_frames := Vector2i(2, 4)
 @export var ground_combo_2_second_strike_frames := Vector2i(9, 11)
-@export var stationary_combo_1_first_strike_frames := Vector2i(4, 11)
-@export var stationary_combo_1_second_strike_frames := Vector2i(-1, -1)
 @export var stationary_combo_2_first_strike_frames := Vector2i(5, 9)
 @export var stationary_combo_2_second_strike_frames := Vector2i(10, 15)
 @export var backpedal_combo_1_first_strike_frames := Vector2i(3, 11)
@@ -1131,8 +1130,24 @@ func start_attack(is_special := false) -> void:
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
-func _begin_ground_combo_attack(family: StringName) -> void:
-	if family != ground_combo_family or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo:
+func _begin_ground_combo_attack(
+	family: StringName,
+	visual_mode_override: StringName = &""
+) -> void:
+	var requested_visual_mode := visual_mode_override
+	if requested_visual_mode == &"":
+		requested_visual_mode = _select_ground_attack_visual_mode(
+			Input.get_axis("move_left", "move_right")
+		)
+
+	if requested_visual_mode == &"stationary":
+		# Stationary combat uses its good double-hit clip as one complete move,
+		# rather than chaining through the discarded stationary opener.
+		ground_combo_step = 1
+	elif (
+		family != ground_combo_family
+		or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo
+	):
 		ground_combo_step = 0
 	else:
 		ground_combo_step = mini(ground_combo_step + 1, 1)
@@ -1142,9 +1157,7 @@ func _begin_ground_combo_attack(family: StringName) -> void:
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
 	ground_combo_active_strike = -1
-	ground_attack_visual_mode = _select_ground_attack_visual_mode(
-		Input.get_axis("move_left", "move_right")
-	)
+	ground_attack_visual_mode = requested_visual_mode
 	current_attack_uses_ground_combo = true
 	current_attack_is_special = false
 	is_attacking = true
@@ -1289,11 +1302,6 @@ func _finish_air_double_attack() -> void:
 
 func _get_ground_combo_strike_frames() -> Array[Vector2i]:
 	if ground_attack_visual_mode == &"stationary":
-		if ground_combo_step == 0:
-			return [
-				stationary_combo_1_first_strike_frames,
-				stationary_combo_1_second_strike_frames
-			]
 		return [
 			stationary_combo_2_first_strike_frames,
 			stationary_combo_2_second_strike_frames
@@ -1441,6 +1449,11 @@ func _apply_attack_visual_tuning() -> void:
 	elif current_attack_body_anim == "Attack":
 		scale_multiplier = grounded_forward_visual_scale_multiplier
 		visual_offset = grounded_forward_visual_offset
+	elif (
+		current_attack_body_anim == "Ground_Attack_Combo_2"
+		and ground_attack_visual_mode == &"moving"
+	):
+		scale_multiplier = ground_combo_2_moving_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
 		scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":

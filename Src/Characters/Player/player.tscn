@@ -1,43 +1,42 @@
-[gd_scene format=3 uid="uid://i5nchltxvo31"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://rw8rhi7ev0wh" path="res://Src/Characters/Player/player.gd" id="1_cvnsp"]
-[ext_resource type="PackedScene" uid="uid://buxb8jonbu5wu" path="res://Src/Equipment/base_gloves.tscn" id="2_8cvsi"]
-[ext_resource type="Texture2D" uid="uid://cq16hn8cqgyb5" path="res://Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png" id="2_jr15c"]
-[ext_resource type="Texture2D" uid="uid://xiytrkrfbr6v" path="res://Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png" id="3_5pixu"]
-[ext_resource type="Texture2D" uid="uid://dggrahtvrjx0i" path="res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png" id="3_puhm8"]
-[ext_resource type="Texture2D" uid="uid://58jxulbqqpyu" path="res://Assets/Threadborne/Player/Normalized_V2/jump/ascent_cycle.png" id="4_4x0hb"]
-[ext_resource type="Texture2D" uid="uid://brfj3fhnbykhy" path="res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal_cycle.png" id="4_87wcq"]
-[ext_resource type="Texture2D" uid="uid://dd1vsylakit46" path="res://Assets/Threadborne/Player/Normalized_V2/jump/descent_cycle.png" id="6_84may"]
-[ext_resource type="Texture2D" uid="uid://devc0w4iuesrk" path="res://Assets/Threadborne/Player/Normalized_V2/jump/land_cycle.png" id="7_vrurm"]
-[ext_resource type="Texture2D" uid="uid://b5ayskpjlxy8e" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_001.png" id="8_vi5rm"]
-[ext_resource type="Texture2D" uid="uid://16vcxax31at" path="res://Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png" id="9_4x0hb"]
-[ext_resource type="Texture2D" uid="uid://d1o3x4iw5cs3x" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_012.png" id="14_5csg4"]
-[ext_resource type="Texture2D" uid="uid://da5n0dvj3x486" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_007.png" id="14_puhm8"]
-[ext_resource type="Texture2D" uid="uid://coue5raeny2g8" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_008.png" id="15_87wcq"]
-[ext_resource type="Texture2D" uid="uid://cf7rwjjg0m0o2" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_020.png" id="15_ptc5w"]
-[ext_resource type="Texture2D" uid="uid://caw3isll32uoy" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_018.png" id="17_myam6"]
-[ext_resource type="Texture2D" uid="uid://nl22lgh11p5d" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_002.png" id="21_farm2"]
-[ext_resource type="Texture2D" uid="uid://3ivehhv71bly" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_003.png" id="22_x0e30"]
-[ext_resource type="Texture2D" uid="uid://c1nylbixdnv2g" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_004.png" id="23_tf72v"]
-[ext_resource type="Texture2D" uid="uid://cfiqsmofyy3i0" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_005.png" id="24_soka2"]
-[ext_resource type="Texture2D" uid="uid://shqm7emflvcc" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_006.png" id="25_5qgfs"]
-[ext_resource type="Shader" uid="uid://bhtpk5ysdxkqy" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
-[ext_resource type="Resource" uid="uid://bjxayisrhlyr0" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
-[ext_resource type="Script" uid="uid://6cp7uurvooma" path="res://Src/Components/health_component.gd" id="84_health"]
-[ext_resource type="Script" uid="uid://d1svuo20lfx4e" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
-[ext_resource type="Script" uid="uid://br8r048uv1yqv" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
-[ext_resource type="Script" uid="uid://dnsl0nd3gwkof" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
-[ext_resource type="Texture2D" uid="uid://c13in7vb1ljyq" path="res://Assets/Threadborne/Player/Normalized_V2/weapon/weavers_shuttle_v3.png" id="88_shuttle"]
-[ext_resource type="Texture2D" uid="uid://ceqax8suqqvk6" path="res://Src/Environment/World/lighting/player_light.png" id="98_player_light"]
-[ext_resource type="Texture2D" uid="uid://du8myywknpx8t" path="res://Assets/Threadborne/Player/Normalized_V2/movement/dash.png" id="99_dash"]
-[ext_resource type="Texture2D" uid="uid://brwaxrjpcjgfj" path="res://Assets/VFX/wall_cling_VFX.png" id="100_wall_cling_vfx"]
-[ext_resource type="Script" uid="uid://dnqxqnrmch1uj" path="res://Src/Characters/Player/flow_state_aura.gd" id="101_flow_aura"]
-[ext_resource type="Texture2D" uid="uid://byaf0fqi4v452" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png" id="102_smash_attack"]
-[ext_resource type="Texture2D" uid="uid://cusgwtlgk67cf" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png" id="103_attack_forward_new"]
-[ext_resource type="Texture2D" uid="uid://c26xax2s7fid8" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png" id="105_video_attack_01"]
-[ext_resource type="Texture2D" uid="uid://b8b4gnm2ky5ho" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png" id="106_video_attack_02"]
-[ext_resource type="Texture2D" uid="uid://885f7jiibwkb" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png" id="109_air_attack_01"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png" id="110_stationary_combo_01"]
+[ext_resource type="Script" path="res://Src/Characters/Player/player.gd" id="1_cvnsp"]
+[ext_resource type="PackedScene" path="res://Src/Equipment/base_gloves.tscn" id="2_8cvsi"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png" id="2_jr15c"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png" id="3_5pixu"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png" id="3_puhm8"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/jump/ascent_cycle.png" id="4_4x0hb"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal_cycle.png" id="4_87wcq"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/jump/descent_cycle.png" id="6_84may"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/jump/land_cycle.png" id="7_vrurm"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_001.png" id="8_vi5rm"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png" id="9_4x0hb"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_012.png" id="14_5csg4"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_007.png" id="14_puhm8"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_008.png" id="15_87wcq"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_020.png" id="15_ptc5w"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_018.png" id="17_myam6"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_002.png" id="21_farm2"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_003.png" id="22_x0e30"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_004.png" id="23_tf72v"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_005.png" id="24_soka2"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/run/run_006.png" id="25_5qgfs"]
+[ext_resource type="Shader" path="res://Src/Characters/Player/player_glow.gdshader" id="82_dj0x0"]
+[ext_resource type="Resource" path="res://Src/Characters/Player/player_stats.tres" id="83_stats"]
+[ext_resource type="Script" path="res://Src/Components/health_component.gd" id="84_health"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="85_hurtbox"]
+[ext_resource type="Script" path="res://Src/Components/hitbox_component.gd" id="86_hitbox"]
+[ext_resource type="Script" path="res://Src/Components/hit_flash_component.gd" id="87_flash"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/weapon/weavers_shuttle_v3.png" id="88_shuttle"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="98_player_light"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/movement/dash.png" id="99_dash"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/wall_cling_VFX.png" id="100_wall_cling_vfx"]
+[ext_resource type="Script" path="res://Src/Characters/Player/flow_state_aura.gd" id="101_flow_aura"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png" id="102_smash_attack"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png" id="103_attack_forward_new"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png" id="105_video_attack_01"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png" id="106_video_attack_02"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png" id="109_air_attack_01"]
 [ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png" id="111_stationary_combo_02"]
 [ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png" id="112_backpedal_combo_01"]
 [ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png" id="113_backpedal_combo_02"]
@@ -274,81 +273,289 @@ region = Rect2(640, 960, 320, 320)
 atlas = ExtResource("106_video_attack_02")
 region = Rect2(960, 960, 320, 320)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_0"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_1"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_2"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(640, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_3"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(960, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_4"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(1280, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_5"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_6"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(320, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_7"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(640, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_8"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(960, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_9"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(1280, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_10"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(0, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_11"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(320, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_12"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(640, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_01_13"]
+atlas = ExtResource("112_backpedal_combo_01")
+region = Rect2(960, 640, 320, 320)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_2"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(896, 0, 448, 448)
+region = Rect2(640, 0, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_3"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1344, 0, 448, 448)
+region = Rect2(960, 0, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_4"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1792, 0, 448, 448)
+region = Rect2(1280, 0, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_5"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(2240, 0, 448, 448)
+region = Rect2(1600, 0, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_6"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(0, 448, 448, 448)
+region = Rect2(0, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_7"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(448, 448, 448, 448)
+region = Rect2(320, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_8"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(896, 448, 448, 448)
+region = Rect2(640, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_9"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1344, 448, 448, 448)
+region = Rect2(960, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_10"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1792, 448, 448, 448)
+region = Rect2(1280, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_11"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(2240, 448, 448, 448)
+region = Rect2(1600, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_12"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(0, 896, 448, 448)
+region = Rect2(0, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_13"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(448, 896, 448, 448)
+region = Rect2(320, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_14"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(896, 896, 448, 448)
+region = Rect2(640, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_15"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1344, 896, 448, 448)
+region = Rect2(960, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_16"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(1792, 896, 448, 448)
+region = Rect2(1280, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_17"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(2240, 896, 448, 448)
+region = Rect2(1600, 640, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_18"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(0, 1344, 448, 448)
+region = Rect2(0, 960, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_19"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(448, 1344, 448, 448)
+region = Rect2(320, 960, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_video_attack_01_20"]
 atlas = ExtResource("105_video_attack_01")
-region = Rect2(896, 1344, 448, 448)
+region = Rect2(640, 960, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_0"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_1"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_2"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(640, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_3"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(960, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_4"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1280, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_5"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1600, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_6"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_7"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(320, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_8"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(640, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_9"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(960, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_10"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1280, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_11"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1600, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_12"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(0, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_13"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(320, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_14"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(640, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_15"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(960, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_16"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1280, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_17"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(1600, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_backpedal_02_18"]
+atlas = ExtResource("113_backpedal_combo_02")
+region = Rect2(0, 960, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_0"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_1"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_2"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(640, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_3"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(960, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_4"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1280, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_5"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1600, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_6"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_7"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(320, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_8"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(640, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_9"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(960, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_10"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1280, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_11"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1600, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_12"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(0, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_13"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(320, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_14"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(640, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_15"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(960, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_16"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1280, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_17"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(1600, 640, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb_stationary_02_18"]
+atlas = ExtResource("111_stationary_combo_02")
+region = Rect2(0, 960, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6acp"]
 atlas = ExtResource("2_jr15c")
@@ -546,6 +753,22 @@ region = Rect2(0, 320, 320, 320)
 atlas = ExtResource("7_vrurm")
 region = Rect2(320, 320, 320, 320)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_0"]
+atlas = ExtResource("114_ledge_hang")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_1"]
+atlas = ExtResource("114_ledge_hang")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_2"]
+atlas = ExtResource("114_ledge_hang")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_3"]
+atlas = ExtResource("114_ledge_hang")
+region = Rect2(320, 320, 320, 320)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ta1i"]
 atlas = ExtResource("102_smash_attack")
 region = Rect2(0, 0, 512, 512)
@@ -737,302 +960,6 @@ region = Rect2(2048, 3584, 512, 512)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mld3g"]
 atlas = ExtResource("102_smash_attack")
 region = Rect2(2560, 3584, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_0"]
-atlas = ExtResource("9_4x0hb")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_1"]
-atlas = ExtResource("9_4x0hb")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_2"]
-atlas = ExtResource("9_4x0hb")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_3"]
-atlas = ExtResource("9_4x0hb")
-region = Rect2(320, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_0"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_1"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_2"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_3"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_4"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_5"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_6"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(320, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_7"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(640, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_8"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(960, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_9"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(1280, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_10"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(0, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_11"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(320, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_12"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(640, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_01_13"]
-atlas = ExtResource("110_stationary_combo_01")
-region = Rect2(960, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_0"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_1"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_2"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_3"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_4"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_5"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1600, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_6"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_7"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(320, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_8"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(640, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_9"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(960, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_10"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1280, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_11"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1600, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_12"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(0, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_13"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(320, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_14"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(640, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_15"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(960, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_16"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1280, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_17"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(1600, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_stationary_combo_02_18"]
-atlas = ExtResource("111_stationary_combo_02")
-region = Rect2(0, 960, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_0"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_1"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_2"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_3"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_4"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_5"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_6"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(320, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_7"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(640, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_8"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(960, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_9"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(1280, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_10"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(0, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_11"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(320, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_12"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(640, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_01_13"]
-atlas = ExtResource("112_backpedal_combo_01")
-region = Rect2(960, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_0"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_1"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_2"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_3"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_4"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_5"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1600, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_6"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_7"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(320, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_8"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(640, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_9"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(960, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_10"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1280, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_11"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1600, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_12"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(0, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_13"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(320, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_14"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(640, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_15"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(960, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_16"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1280, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_17"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(1600, 640, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_backpedal_combo_02_18"]
-atlas = ExtResource("113_backpedal_combo_02")
-region = Rect2(0, 960, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_0"]
-atlas = ExtResource("114_ledge_hang")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_1"]
-atlas = ExtResource("114_ledge_hang")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_2"]
-atlas = ExtResource("114_ledge_hang")
-region = Rect2(0, 320, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ledge_hang_3"]
-atlas = ExtResource("114_ledge_hang")
-region = Rect2(320, 320, 320, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sit_0"]
 atlas = ExtResource("115_sit")
@@ -1226,6 +1153,22 @@ region = Rect2(512, 4608, 512, 512)
 atlas = ExtResource("115_sit")
 region = Rect2(1024, 4608, 512, 512)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_0"]
+atlas = ExtResource("9_4x0hb")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_1"]
+atlas = ExtResource("9_4x0hb")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_2"]
+atlas = ExtResource("9_4x0hb")
+region = Rect2(0, 320, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_3"]
+atlas = ExtResource("9_4x0hb")
+region = Rect2(320, 320, 320, 320)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_wf5ty"]
 animations = [{
 "frames": [{
@@ -1310,7 +1253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_air_attack_01_26")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Air_Double_Attack",
 "speed": 40.0
 }, {
@@ -1324,7 +1267,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_forward_new_33")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack",
 "speed": 6.0
 }, {
@@ -1332,7 +1275,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("99_dash")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Dash",
 "speed": 5.0
 }, {
@@ -1355,7 +1298,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_grapple_diagonal_cycle_5")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Grapple_Diagonal",
 "speed": 18.0
 }, {
@@ -1378,7 +1321,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_grapple_horizontal_cycle_5")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Grapple_Horizontal",
 "speed": 18.0
 }, {
@@ -1425,8 +1368,55 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_video_attack_02_18")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Ground_Attack_Combo_1",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_01_13")
+}],
+"loop": 0,
+"name": &"Ground_Attack_Combo_1_Backpedal",
 "speed": 30.0
 }, {
 "frames": [{
@@ -1487,8 +1477,132 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_video_attack_01_20")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Ground_Attack_Combo_2",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_backpedal_02_18")
+}],
+"loop": 0,
+"name": &"Ground_Attack_Combo_2_Backpedal",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb_stationary_02_18")
+}],
+"loop": 0,
+"name": &"Ground_Attack_Combo_2_Stationary",
 "speed": 30.0
 }, {
 "frames": [{
@@ -1591,7 +1705,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_amnk0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 24.0
 }, {
@@ -1608,7 +1722,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jump_apex_cycle_3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump_Apex",
 "speed": 8.0
 }, {
@@ -1625,7 +1739,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jump_ascent_cycle_3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump_Ascent",
 "speed": 8.0
 }, {
@@ -1642,7 +1756,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jump_descent_cycle_3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump_Descent",
 "speed": 8.0
 }, {
@@ -1659,9 +1773,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jump_land_cycle_3")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Jump_Land",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ledge_hang_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ledge_hang_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ledge_hang_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ledge_hang_3")
+}],
+"loop": 1,
+"name": &"Ledge_Hang",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1808,7 +1939,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mld3g")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Neutral_Special_Attack",
 "speed": 40.0
 }, {
@@ -1846,261 +1977,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("15_87wcq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Run",
 "speed": 24.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wall_cling_cycle_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wall_cling_cycle_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wall_cling_cycle_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wall_cling_cycle_3")
-}],
-"loop": true,
-"name": &"Wall_Cling",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_01_13")
-}],
-"loop": false,
-"name": &"Ground_Attack_Combo_1_Stationary",
-"speed": 30.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_13")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_14")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_15")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_16")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_17")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_stationary_combo_02_18")
-}],
-"loop": false,
-"name": &"Ground_Attack_Combo_2_Stationary",
-"speed": 30.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_01_13")
-}],
-"loop": false,
-"name": &"Ground_Attack_Combo_1_Backpedal",
-"speed": 30.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_9")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_10")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_12")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_13")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_14")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_15")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_16")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_17")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_backpedal_combo_02_18")
-}],
-"loop": false,
-"name": &"Ground_Attack_Combo_2_Backpedal",
-"speed": 30.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ledge_hang_3")
-}],
-"loop": true,
-"name": &"Ledge_Hang",
-"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -2247,9 +2126,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sit_47")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Sit",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_cycle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_cycle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_cycle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wall_cling_cycle_3")
+}],
+"loop": 1,
+"name": &"Wall_Cling",
+"speed": 6.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_vfx_0"]
@@ -2283,7 +2179,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wall_cling_vfx_3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"cling",
 "speed": 12.0
 }]
@@ -2868,9 +2764,7 @@ target_path = NodePath("../Player Animation")
 position = Vector2(4, -2)
 scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_wf5ty")
-animation = &"Ground_Attack_Combo_1"
-frame = 13
-frame_progress = 1.0
+animation = &"Ground_Attack_Combo_2"
 
 [node name="FlowStateAura" type="Node2D" parent="." unique_id=1696995547]
 visible = false

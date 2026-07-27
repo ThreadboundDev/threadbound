@@ -7,9 +7,8 @@ const EXPECTED_ANIMATIONS := {
 	&"Grapple_Diagonal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Horizontal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
-	&"Ground_Attack_Combo_1_Stationary": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1_Backpedal": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
-	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(448, 448)},
+	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2_Stationary": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2_Backpedal": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Jump_Apex": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
@@ -38,13 +37,6 @@ func _ready() -> void:
 		_verify_retired_up_attack(player, sprite, failures)
 	_verify_ledge_transparency(failures)
 	_verify_sheet_cell_gutters(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png",
-		Vector2i(5, 5),
-		14,
-		16,
-		failures
-	)
-	_verify_sheet_cell_gutters(
 		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
 		Vector2i(6, 4),
 		19,
@@ -57,8 +49,8 @@ func _ready() -> void:
 		print(
 			(
 				"Player animation verification passed: %d corrected clips, atlas cells, "
-				+ "normalized scale, locked ground variants, widened forward coverage, "
-				+ "and the capped three-hit forward chain are valid."
+				+ "moving-finisher scale, standalone stationary double hit, locked ground "
+				+ "variants, and the capped three-hit moving chain are valid."
 			) % EXPECTED_ANIMATIONS.size()
 		)
 		get_tree().quit(0)
@@ -83,6 +75,8 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 		failures.append("Player Animation scale is %s; expected (0.7, 0.7)." % sprite.scale)
 
 	var frames := sprite.sprite_frames
+	if frames.has_animation(&"Ground_Attack_Combo_1_Stationary"):
+		failures.append("Discarded stationary opener is still present in Player SpriteFrames.")
 	for animation_name: StringName in frames.get_animation_names():
 		if String(animation_name).begins_with("Ground_Up_Combo_"):
 			failures.append("Retired upward ground animation is still active: %s." % animation_name)
@@ -215,9 +209,9 @@ func _verify_ground_attack_variant_locking(
 	sprite: AnimatedSprite2D,
 	failures: Array[String]
 ) -> void:
-	const MOVING_ANIMATION := &"Ground_Attack_Combo_1"
-	const STATIONARY_ANIMATION := &"Ground_Attack_Combo_1_Stationary"
-	const BACKPEDAL_ANIMATION := &"Ground_Attack_Combo_1_Backpedal"
+	const MOVING_ANIMATION := &"Ground_Attack_Combo_2"
+	const STATIONARY_ANIMATION := &"Ground_Attack_Combo_2_Stationary"
+	const BACKPEDAL_ANIMATION := &"Ground_Attack_Combo_2_Backpedal"
 	const TEST_FRAME := 6
 	const TEST_PROGRESS := 0.42
 
@@ -232,11 +226,13 @@ func _verify_ground_attack_variant_locking(
 	if player.call("_select_ground_attack_visual_mode", -1.0) != &"backpedal":
 		failures.append("Movement opposite the attack facing did not select the backpedal attack.")
 
-	player.set("current_attack_body_anim", String(MOVING_ANIMATION))
-	player.set("current_attack_uses_ground_combo", true)
-	player.set("is_attacking", true)
+	player.call("_reset_ground_combo_chain")
+	player.call("_begin_ground_combo_attack", &"forward", &"stationary")
+	if player.get("ground_combo_step") != 1:
+		failures.append("Stationary attack did not go directly to the standalone double hit.")
+	if player.get("current_attack_body_anim") != String(MOVING_ANIMATION):
+		failures.append("Stationary attack did not use the logical two-hit finisher.")
 	player.set("current_body_anim", String(MOVING_ANIMATION))
-	player.set("ground_attack_visual_mode", &"stationary")
 	player.set("velocity", Vector2(120.0, 0.0))
 	sprite.play(MOVING_ANIMATION)
 	sprite.set_frame_and_progress(TEST_FRAME, TEST_PROGRESS)
@@ -262,6 +258,7 @@ func _verify_ground_attack_variant_locking(
 
 	player.set("is_attacking", false)
 	player.set("current_attack_uses_ground_combo", false)
+	player.call("_reset_ground_combo_chain")
 
 func _verify_forward_combo_chain(player: Node, failures: Array[String]) -> void:
 	if player.get("ground_combo_1_first_strike_frames") != Vector2i(3, 5):
@@ -272,21 +269,26 @@ func _verify_forward_combo_chain(player: Node, failures: Array[String]) -> void:
 		failures.append("Forward finisher first strike window must be frames 2-4.")
 	if player.get("ground_combo_2_second_strike_frames") != Vector2i(9, 11):
 		failures.append("Forward finisher second strike window must be frames 9-11.")
-	if player.get("stationary_combo_1_first_strike_frames") != Vector2i(4, 11):
-		failures.append("Stationary opener strike window must be frames 4-11.")
 	if player.get("stationary_combo_2_first_strike_frames") != Vector2i(5, 9):
-		failures.append("Stationary finisher first strike window must be frames 5-9.")
+		failures.append("Stationary double hit first strike window must be frames 5-9.")
 	if player.get("stationary_combo_2_second_strike_frames") != Vector2i(10, 15):
-		failures.append("Stationary finisher second strike window must be frames 10-15.")
+		failures.append("Stationary double hit second strike window must be frames 10-15.")
 	if player.get("backpedal_combo_1_first_strike_frames") != Vector2i(3, 11):
 		failures.append("Backpedal opener strike window must be frames 3-11.")
 	if player.get("backpedal_combo_2_first_strike_frames") != Vector2i(5, 12):
 		failures.append("Backpedal finisher first strike window must be frames 5-12.")
 	if player.get("backpedal_combo_2_second_strike_frames") != Vector2i(13, 16):
 		failures.append("Backpedal finisher second strike window must be frames 13-16.")
+	if not is_equal_approx(
+		float(player.get("ground_combo_2_moving_visual_scale_multiplier")),
+		1.4
+	):
+		failures.append("Moving ground finisher must use the approved 1.4 visual scale.")
 
 	player.call("_reset_ground_combo_chain")
-	player.call("_begin_ground_combo_attack", &"forward")
+	player.set("velocity", Vector2(120.0, 0.0))
+	Input.action_press("move_right")
+	player.call("_begin_ground_combo_attack", &"forward", &"moving")
 	if player.get("ground_combo_step") != 0:
 		failures.append("Forward chain did not begin at step 0.")
 	if player.get("current_attack_body_anim") != "Ground_Attack_Combo_1":
@@ -313,6 +315,18 @@ func _verify_forward_combo_chain(player: Node, failures: Array[String]) -> void:
 		failures.append("A reset forward chain did not return to the one-hit opener.")
 	player.call("_cancel_ground_combo_attack")
 	player.set("is_attacking", false)
+	Input.action_release("move_right")
+
+	player.call("_begin_ground_combo_attack", &"forward", &"stationary")
+	if player.get("ground_combo_step") != 1:
+		failures.append("Standalone stationary attack did not begin at the double-hit step.")
+	player.set("ground_combo_queued", true)
+	player.set("ground_combo_queued_family", &"forward")
+	player.call("_finish_ground_combo_attack")
+	if player.get("ground_combo_step") != -1 or player.get("ground_combo_family") != &"":
+		failures.append("Standalone stationary double hit did not reset after completion.")
+	if player.get("is_attacking"):
+		failures.append("Standalone stationary double hit incorrectly chained into another attack.")
 
 func _verify_retired_up_attack(
 	player: Node,

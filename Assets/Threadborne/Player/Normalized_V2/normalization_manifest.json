@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 10,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -122,9 +122,11 @@
       "ground_combo_01": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
         "grid": [6, 4],
-        "cell_size": 448,
+        "cell_size": 320,
         "authored_cell_size": 896,
-        "baked_source_scale": 0.9,
+        "normalized_pre_runtime_cell_size": 640,
+        "baked_source_scale": 0.6428571,
+        "runtime_visual_scale_multiplier": 1.4,
         "runtime_animation": "Ground_Attack_Combo_2",
         "runtime_source_frames": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         "strike_windows": [[2, 4], [9, 11]],
@@ -153,15 +155,8 @@
           "source_video": "trimmed_1d53ad91-c434-4729-a508-ab33cc927433.mp4",
           "baked_source_scale": 0.9,
           "minimum_runtime_gutter": 16,
-          "opener": {
-            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/stationary_video_combo_01_sheet.png",
-            "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png",
-            "runtime_animation": "Ground_Attack_Combo_1_Stationary",
-            "grid": [5, 5],
-            "source_frames": [48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, 80],
-            "strike_windows": [[4, 11]]
-          },
-          "finisher": {
+          "behavior": "standalone_double_hit",
+          "double_hit": {
             "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/stationary_video_combo_02_sheet.png",
             "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
             "runtime_animation": "Ground_Attack_Combo_2_Stationary",

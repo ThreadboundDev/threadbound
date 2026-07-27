@@ -35,19 +35,19 @@ transparent sheet cells:
 | Ground forward | 0.75 | 512 px |
 | Neutral special | 0.675 | 512 px |
 | Ground combo opener | 0.90 | 320 px |
-| Ground combo finisher | 0.90 | 448 px |
-| Stationary combo variants | 0.90 | 320 px |
+| Ground combo finisher | 0.6428571, rendered at 1.40 | 320 px |
+| Stationary double hit | 0.90 | 320 px |
 | Backpedal combo variants | 1.15 | 320 px |
 | Air double attack | 1.20 | 416 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
-its 384 px rendered source. All runtime visual scale multipliers remain `1.0`,
-which gives future wrist-mounted grapple art a stable coordinate system.
+its 384 px rendered source. Other animation families retain a `1.0` visual
+multiplier except the moving ground finisher described below.
 
-The `ground_combo_01` authoring sheet uses 896 px padded cells so repaired
-weapon and smear pixels cannot cross an atlas boundary. It now retains a
-448 px runtime cell at the standard `0.90` content scale. This corrects the
-finisher's undersized presentation without sacrificing the repaired padding.
+The `ground_combo_01` sheet is restored to the established 320 px runtime atlas.
+Its content is baked at `0.6428571`, then displayed at a `1.40` visual
+multiplier during the moving finisher. This produces the approved larger
+screen-space character without changing Godot's atlas cell format.
 
 ### Runtime memory budget
 
@@ -83,15 +83,12 @@ chain instead of wrapping immediately back to the opener.
 
 ### Video-derived ground attack variants
 
-The supplied stationary recording replaces the synthesized stationary art with
-two authored attacks:
+The supplied stationary recording provides one standalone authored attack:
 
-- `Ground_Attack_Combo_1_Stationary` uses the second, single-sweep take and
-  keeps source frames 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, and
-  80 as a 14-frame opener.
 - `Ground_Attack_Combo_2_Stationary` uses the first double-sweep take and keeps
   source frames 0, 2, 4, 6, 8, 10, 11, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27,
-  28, and 29 as a 19-frame finisher.
+  28, and 29 as a 19-frame double hit. The discarded single-sweep take remains
+  only as authoring reference and has no runtime sheet or animation.
 
 The supplied backpedal recording also has two cuts:
 
@@ -101,19 +98,21 @@ The supplied backpedal recording also has two cuts:
 - `Ground_Attack_Combo_2_Backpedal` carries the full two-sweep motion through
   source frame 40 as a 19-frame finisher.
 
-All four sheets are green-keyed while preserving the recordings' shared 640 px
-camera origin and ground line, then reduced to 320 px runtime cells. Stationary
-clips use a `0.90` content scale, leaving at least 16 transparent pixels around
-every occupied frame so slash effects cannot bleed into adjacent atlas cells.
+All three active variant sheets are green-keyed while preserving the
+recordings' shared 640 px camera origin and ground line, then reduced to 320 px
+runtime cells. The stationary animation uses a `0.90` content scale, leaving at
+least 16 transparent pixels around every occupied frame so slash effects cannot
+bleed into adjacent atlas cells.
 Backpedal clips retain their `1.15` source scale because their recorded framing
 already provides safe gutters. Preserving the fixed source canvas prevents a
 low slash trail from being mistaken for a foot anchor and shifting the body
 between frames. Broad white slash effects are protected during the selective
 bronze weapon recolor so the VFX does not inherit the weapon palette.
 
-The logical moving opener and finisher remain unchanged at 14 and 19 frames.
-When a swing begins, the player selects and locks one visual mode for its full
-duration:
+The logical moving and backpedal opener/finisher chains remain at 14 and 19
+frames. A stationary input bypasses the opener, plays the approved double-hit
+animation as one complete move, and resets instead of chaining into a repeat.
+When a swing begins, the player locks its visual mode for the full duration:
 
 - no usable horizontal motion selects stationary;
 - input and motion opposite the attack facing select backpedal;
@@ -270,13 +269,15 @@ godot --headless --path . res://tools/player_animation/verify_player_animation.t
 It checks the motion clips, editor-authored sit and ledge clips, moving,
 stationary, and backpedal ground combos, and the air double attack: frame
 counts, frame textures, atlas cell sizes, playback speeds, loop modes, and the
-player's uniform runtime scale. It also verifies ledge alpha, stationary atlas
-gutters, ground variant locking, upward input routing, the 130-degree frontal
-arc, and absence of the retired upward clips.
+player's animation-specific visual scale. It also verifies ledge alpha,
+stationary atlas gutters, standalone stationary reset behavior, ground variant
+locking, upward input routing, the 130-degree frontal arc, and absence of the
+retired upward clips.
 
 ## Deliberate limits
 
-- No legacy art was deleted.
+- No authoring source art was deleted; only the rejected stationary runtime
+  derivative was removed.
 - No scene tree was restructured.
 - Retired upward attack sheets remain available as source art but are not loaded
   by the active player scene.
