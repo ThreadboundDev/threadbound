@@ -435,6 +435,13 @@ func _simulate_active_rope(delta: float, pin_end_to_tip: bool = true) -> void:
 # GRAPPLE FIRING / COLLISION
 # ===============================
 func _start_grapple_fire() -> void:
+	if active_grapple_root:
+		active_grapple_root.visible = false
+	if active_needle_sprite:
+		active_needle_sprite.visible = false
+	if active_rope_line:
+		active_rope_line.points = PackedVector2Array()
+
 	# Rebuild exceptions every throw so temporary hitboxes and replaced player
 	# collision areas can never be mistaken for a grapple target.
 	_reset_grapple_raycast_exceptions()
@@ -464,15 +471,18 @@ func _start_grapple_fire() -> void:
 		active_grapple_root.global_position = Vector2.ZERO
 		active_grapple_root.global_rotation = 0.0
 		active_grapple_root.global_scale = Vector2.ONE
-		active_grapple_root.visible = true
 
 	if active_needle_sprite:
-		active_needle_sprite.visible = true
 		active_needle_sprite.global_position = grapple_tip_position
+
+	_update_active_grapple_visuals()
+	if active_grapple_root:
+		active_grapple_root.visible = true
+	if active_needle_sprite:
+		active_needle_sprite.visible = true
 
 	AudioManager.play_sfx(&"grapple")
 	_play_grapple_fire_animation()
-	_update_active_grapple_visuals()
 
 func _begin_grapple_retract() -> void:
 	if grapple_state != GrappleState.STOWED:
@@ -672,6 +682,11 @@ func _update_active_grapple_visuals() -> void:
 
 	var origin_global := get_grapple_origin_global_position()
 	var tip_global := grapple_tip_position
+	if not origin_global.is_finite() or not tip_global.is_finite():
+		active_rope_line.points = PackedVector2Array()
+		active_grapple_root.visible = false
+		active_needle_sprite.visible = false
+		return
 
 	var origin_local := active_grapple_root.to_local(origin_global)
 	var tip_local := active_grapple_root.to_local(tip_global)
@@ -694,7 +709,14 @@ func _update_active_grapple_visuals() -> void:
 
 	var line_points := PackedVector2Array()
 
-	if active_rope_points.size() > 1:
+	# While the needle is still flying, render only the distance it has
+	# actually travelled. The simulation keeps a full slack-rope chain ready
+	# for attachment, but exposing that chain here flashes a 360 px line on
+	# the first launch frame.
+	if grapple_state == GrappleState.FIRING:
+		line_points.append(active_rope_line.to_local(origin_global))
+		line_points.append(active_rope_line.to_local(tip_global))
+	elif active_rope_points.size() > 1:
 		for p in active_rope_points:
 			line_points.append(active_rope_line.to_local(p))
 	else:

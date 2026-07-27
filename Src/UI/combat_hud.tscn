@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://bk6sithumcg8y"]
 
 [ext_resource type="Script" path="res://Src/UI/combat_hud.gd" id="1_hud"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/hud_frame_v2.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/hud_frame_v4.png" id="2_frame"]
 [ext_resource type="Script" path="res://Src/UI/combat_health_bar.gd" id="3_health_bar"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/bar_track_v3.png" id="4_bar_track"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/health_fill_v3.png" id="5_health_fill"]
@@ -9,10 +9,10 @@
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/momentum_fill_v3.png" id="10_momentum_fill"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/identity_base_weave_v2.png" id="11_identity_base"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png" id="12_pattern_overlay"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/action_point_crescent_red_v3.png" id="13_action_red"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/action_point_crescent_blue_v3.png" id="14_action_blue"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/action_point_crescent_yellow_v3.png" id="15_action_yellow"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/action_point_crescent_colorless_v3.png" id="16_action_colorless"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_red_v4.png" id="13_action_red"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_blue_v4.png" id="14_action_blue"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_yellow_v4.png" id="15_action_yellow"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_grey_v4.png" id="16_action_colorless"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/thread_knot_counter_frame_v2.png" id="17_counter_frame"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="18_knot_icon"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="19_label_settings"]
@@ -86,8 +86,8 @@ mouse_filter = 2
 script = ExtResource("3_health_bar")
 track_texture = ExtResource("4_bar_track")
 fill_texture = ExtResource("5_health_fill")
-fill_rect = Rect2(240, 106, 369, 15)
-corner_radius = 7.5
+fill_rect = Rect2(236, 105, 390, 16)
+corner_radius = 8.0
 corner_segments = 12
 
 [node name="MomentumBar" type="Control" parent="HUDRoot"]
@@ -102,7 +102,7 @@ mouse_filter = 2
 script = ExtResource("9_momentum_bar")
 track_texture = ExtResource("4_bar_track")
 fill_texture = ExtResource("10_momentum_fill")
-fill_rect = Rect2(240, 146, 361, 10)
+fill_rect = Rect2(236, 132, 374, 11)
 
 [node name="ActionPointOrbs" type="Control" parent="HUDRoot"]
 layout_mode = 1
@@ -120,7 +120,7 @@ offset_top = 15.0
 offset_right = 112.0
 offset_bottom = 51.0
 mouse_filter = 2
-texture = ExtResource("13_action_red")
+texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
@@ -131,7 +131,7 @@ offset_top = 52.0
 offset_right = 62.0
 offset_bottom = 88.0
 mouse_filter = 2
-texture = ExtResource("14_action_blue")
+texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
@@ -142,7 +142,7 @@ offset_top = 108.0
 offset_right = 43.0
 offset_bottom = 144.0
 mouse_filter = 2
-texture = ExtResource("15_action_yellow")
+texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
@@ -200,9 +200,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -376.0
+offset_left = -360.0
 offset_top = -116.0
-offset_right = -24.0
+offset_right = -8.0
 offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 0

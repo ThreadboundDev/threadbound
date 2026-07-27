@@ -9,15 +9,44 @@ func _ready() -> void:
 	add_child(player)
 
 	var gloves := BASE_GLOVES_SCENE.instantiate() as BaseGloves
+	var serialized_active_root := gloves.get_node("Equipment/ActiveGrappleRoot") as Node2D
+	var serialized_active_needle := gloves.get_node(
+		"Equipment/ActiveGrappleRoot/ActiveNeedleSprite"
+	) as Sprite2D
+	if serialized_active_root.visible:
+		failures.append("Active grapple root is visible before its endpoints are initialized.")
+	if serialized_active_needle.visible:
+		failures.append("Active grapple needle is visible before its endpoints are initialized.")
 	player.add_child(gloves)
 	gloves.player = player
 	gloves.on_equipped()
+	if gloves.active_grapple_root.visible:
+		failures.append("Active grapple root became visible during equipment startup.")
+	if not gloves.active_rope_line.points.is_empty():
+		failures.append("Active grapple rope retained stale points during equipment startup.")
 
 	var ignored_interaction_area := _create_area(Vector2(70.0, 0.0), 2)
 	add_child(ignored_interaction_area)
 	var wall := _create_body(Vector2(120.0, 0.0), 1)
 	add_child(wall)
 	await get_tree().physics_frame
+
+	_prepare_active_shot(gloves)
+	var launch_origin := gloves.get_grapple_origin_global_position()
+	gloves.grapple_tip_position = launch_origin + Vector2(24.0, 0.0)
+	var preextended_rope: Array[Vector2] = [
+		launch_origin,
+		launch_origin + Vector2(gloves.active_rope_total_length, 0.0),
+	]
+	gloves.active_rope_points = preextended_rope
+	gloves.call("_update_active_grapple_visuals")
+	if gloves.active_rope_line.points.size() != 2:
+		failures.append("A firing grapple exposed its pre-extended simulation chain.")
+	elif not is_equal_approx(
+		gloves.active_rope_line.points[0].distance_to(gloves.active_rope_line.points[1]),
+		24.0
+	):
+		failures.append("A firing grapple line extended beyond the needle's travelled distance.")
 
 	_prepare_active_shot(gloves)
 	gloves.call("_check_grapple_collision", Vector2.ZERO, Vector2(160.0, 0.0))
@@ -63,8 +92,9 @@ func _ready() -> void:
 
 	if failures.is_empty():
 		print(
-			"Base grapple verification passed: self/trigger filtering, collider-sized "
-			+ "surface clearance, and deterministic stalled-pull release are valid."
+			"Base grapple verification passed: hidden startup visuals, travelled-distance "
+			+ "firing line, self/trigger filtering, collider-sized surface clearance, "
+			+ "and deterministic stalled-pull release are valid."
 		)
 		get_tree().quit(0)
 		return

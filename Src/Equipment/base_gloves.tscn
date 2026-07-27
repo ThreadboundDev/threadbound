@@ -2372,6 +2372,7 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_gtq23")
 
 [node name="ActiveGrappleRoot" type="Node2D" parent="Equipment" unique_id=1410459337]
+visible = false
 
 [node name="ActiveRopeLine" type="Line2D" parent="Equipment/ActiveGrappleRoot" unique_id=775964206]
 z_index = -1
@@ -2380,6 +2381,7 @@ texture = ExtResource("5_pl50a")
 texture_mode = 1
 
 [node name="ActiveNeedleSprite" type="Sprite2D" parent="Equipment/ActiveGrappleRoot" unique_id=722727145]
+visible = false
 z_index = 1
 position = Vector2(4.665, 12.065)
 scale = Vector2(0.075, 0.075)

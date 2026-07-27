@@ -177,19 +177,35 @@ Pass direction:
 - Use thread colors only for active state accents.
 - Create a simpler health bar with stronger silhouette and less ornamental surface detail.
 
-Implemented V3 readability pass:
+Implemented V4 readability pass:
 
-- The approved bronze HUD frame and full identity/pattern field remain
-  unchanged.
-- Six 36 px crescent tokens use one bold silhouette with red, blue, yellow, and
-  muted-ivory colorless variants.
+- The approved bronze HUD frame and full identity/pattern field remain intact;
+  the lower rail is raised so health and momentum read as one compact group.
+- Six 36 px full-disc woven seals fill their sockets with red, blue, yellow, and
+  neutral-grey variants. The opening Base loadout displays six grey points;
+  the existing runtime color API remains ready for the eventual approved
+  equipment-to-point mapping.
 - Health is a fixed crimson thread ribbon over a visibly recessed dark track;
-  a narrow light edge makes the current value unambiguous.
+  a narrow light edge makes the current value unambiguous, and both resource
+  rails use the wider concept proportions.
 - Momentum is a thin ivory-to-gold ribbon over the same recessed track. It has
   no end knob or special cap, retains the animated Flow treatment, and uses a
   narrow leading edge instead of a bulky endpoint.
-- The V3 raster sources were generated against a flat green key, converted to
-  transparent PNGs, and reduced to their runtime dimensions before import.
+- The V4 woven seal was generated against a flat green key, converted to
+  transparent PNG, reduced to its 64 px runtime source, and recolored into four
+  silhouette-identical variants so color never changes the point's readability.
+
+### Combat VFX alpha correction
+
+The damage-fray and death-unravel sources previously contained a baked
+checkerboard inside fully opaque PNG sheets. A white-key shader hid the light
+squares but left darker background tiles visible as a faint rectangle during
+slow-motion playback.
+
+The runtime now uses versioned true-alpha 2x2 sheets in `Assets/VFX/V2`.
+Each hit advances through the four authored cells; transparent atlas corners
+remain empty and no color-key material is applied. The original files remain
+available as source references.
 
 ### Medium Priority: Background Architecture
 

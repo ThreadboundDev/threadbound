@@ -38,6 +38,8 @@ func _ready() -> void:
 		_verify_retired_up_attack(player, sprite, failures)
 	_verify_ledge_transparency(failures)
 	_verify_wall_cling_contact_registration(failures)
+	_verify_grounded_attack_registration(failures)
+	_verify_grapple_gutter_cleanup(failures)
 	_verify_sheet_cell_gutters(
 		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
 		Vector2i(6, 4),
@@ -155,14 +157,37 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 		)
 
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
-	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.92):
-		failures.append("Jump landing must use the approved 0.92 visual scale.")
+	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.88):
+		failures.append("Jump landing must use the corrected 0.88 visual scale.")
 	if not (player.get("landing_visual_offset") as Vector2).is_equal_approx(Vector2(0.0, 5.0)):
 		failures.append("Jump landing must retain its ground contact with a 5 px visual offset.")
 	if not is_equal_approx(float(player.get("wall_cling_visual_standoff")), 22.0):
 		failures.append("Wall cling visual must sit 22 px away from the collision wall.")
 	if not is_equal_approx(float(player.get("ledge_climb_duration")), 0.2):
 		failures.append("Ledge climb transition must use the approved 0.2 second duration.")
+	if not is_equal_approx(
+		float(player.get("ground_combo_stationary_visual_scale_multiplier")),
+		1.4
+	):
+		failures.append("Stationary ground attacks must use the corrected 1.4 visual scale.")
+	if not is_equal_approx(
+		float(player.get("ground_combo_backpedal_visual_scale_multiplier")),
+		1.25
+	):
+		failures.append("Backpedal ground attacks must use the corrected 1.25 visual scale.")
+
+	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	player.set("is_ledge_hanging", false)
+	player.set("is_ledge_climbing", true)
+	player.set("_ledge_climb_elapsed", float(player.get("ledge_climb_duration")) * 0.55)
+	player.call("update_animations", 0.0)
+	if sprite.animation != &"Wall_Cling":
+		failures.append("Ledge climb midpoint does not use the planted wall-contact pose.")
+	player.set("_ledge_climb_elapsed", float(player.get("ledge_climb_duration")) * 0.86)
+	player.call("update_animations", 0.0)
+	if sprite.animation != &"Jump_Land":
+		failures.append("Ledge climb finish does not blend into the crouched landing pose.")
+	player.set("is_ledge_climbing", false)
 
 	var start := Vector2(0.0, 100.0)
 	var target := Vector2(68.0, -14.0)
@@ -211,6 +236,71 @@ func _verify_wall_cling_contact_registration(failures: Array[String]) -> void:
 				"Wall cling frame %d contact is (%d, %d); expected (%d, %d)." %
 				[frame_index, right, bottom, reference_right, reference_bottom]
 			)
+
+func _verify_grounded_attack_registration(failures: Array[String]) -> void:
+	for sheet in [
+		{
+			"path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
+			"grid": Vector2i(6, 4),
+			"frames": 19,
+		},
+		{
+			"path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
+			"grid": Vector2i(5, 5),
+			"frames": 14,
+		},
+	]:
+		var path: String = sheet["path"]
+		var image := _load_imported_image(path)
+		if image == null or image.is_empty():
+			failures.append("Could not load grounded attack sheet: %s." % path)
+			continue
+		var grid: Vector2i = sheet["grid"]
+		var cell_size := Vector2i(image.get_width() / grid.x, image.get_height() / grid.y)
+		var reference_bottom := -1
+		for frame_index in int(sheet["frames"]):
+			var origin := Vector2i(
+				(frame_index % grid.x) * cell_size.x,
+				(frame_index / grid.x) * cell_size.y
+			)
+			var bottom := -1
+			for y in cell_size.y:
+				for x in cell_size.x:
+					if image.get_pixel(origin.x + x, origin.y + y).a >= 0.18:
+						bottom = maxi(bottom, y)
+			if frame_index == 0:
+				reference_bottom = bottom
+			elif abs(bottom - reference_bottom) > 1:
+					failures.append(
+						"%s frame %d foot baseline is %d; expected %d±1." %
+						[path, frame_index, bottom, reference_bottom]
+					)
+
+func _verify_grapple_gutter_cleanup(failures: Array[String]) -> void:
+	var path := "res://Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png"
+	var image := _load_imported_image(path)
+	if image == null or image.is_empty():
+		failures.append("Could not load diagonal grapple sheet for gutter verification.")
+		return
+	var cell_size := Vector2i(image.get_width() / 3, image.get_height() / 2)
+	for cleanup in [
+		{"frame": 1, "rect": Rect2i(294, 240, 11, 21)},
+		{"frame": 4, "rect": Rect2i(305, 244, 9, 16)},
+	]:
+		var frame_index := int(cleanup.frame)
+		var frame_origin := Vector2i(
+			(frame_index % 3) * cell_size.x,
+			(frame_index / 3) * cell_size.y
+		)
+		var rect: Rect2i = cleanup["rect"]
+		for y in range(rect.position.y, rect.end.y):
+			for x in range(rect.position.x, rect.end.x):
+				if image.get_pixel(frame_origin.x + x, frame_origin.y + y).a > 0.03:
+					failures.append(
+						"Diagonal grapple frame %d retains a detached gutter speck." %
+						frame_index
+					)
+					return
 
 func _verify_sheet_cell_gutters(
 	path: String,
@@ -302,6 +392,12 @@ func _verify_ground_attack_variant_locking(
 		failures.append("A stationary swing did not use its locked visual variant.")
 	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
 		failures.append("Moving-to-stationary visual selection did not preserve frame progress.")
+	var expected_stationary_scale := Vector2(0.7, 0.7) * 1.4 * 1.16
+	if not sprite.scale.is_equal_approx(expected_stationary_scale):
+		failures.append(
+			"Stationary frame 6 scale is %s; expected corrected scale %s." %
+			[sprite.scale, expected_stationary_scale]
+		)
 
 	player.set("velocity", Vector2(-120.0, 0.0))
 	player.call("update_animations", -1.0)

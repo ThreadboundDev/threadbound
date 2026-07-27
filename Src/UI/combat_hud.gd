@@ -350,9 +350,9 @@ func _configure_default_action_points() -> void:
 	_rune_colors.clear()
 	_rune_available.clear()
 	_action_point_types = [
-		ACTION_POINT_RED,
-		ACTION_POINT_BLUE,
-		ACTION_POINT_YELLOW,
+		ACTION_POINT_COLORLESS,
+		ACTION_POINT_COLORLESS,
+		ACTION_POINT_COLORLESS,
 		ACTION_POINT_COLORLESS,
 		ACTION_POINT_COLORLESS,
 		ACTION_POINT_COLORLESS,

@@ -6,10 +6,9 @@ signal target_lost()
 signal attack_started()
 signal attack_finished()
 
-const ENEMY_DAMAGE_FRAY_TEXTURE := preload("res://Assets/VFX/enemy_damage_fray_VFX.png")
-const ENEMY_DEATH_UNRAVEL_TEXTURE := preload("res://Assets/VFX/enemy_death_unravel_VFX.png")
+const ENEMY_DAMAGE_FRAY_TEXTURE := preload("res://Assets/VFX/V2/enemy_damage_fray_v2.png")
+const ENEMY_DEATH_UNRAVEL_TEXTURE := preload("res://Assets/VFX/V2/enemy_death_unravel_v2.png")
 const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.tscn")
-const WHITE_KEY_VFX_SHADER := preload("res://Src/VFX/white_key_vfx.gdshader")
 
 @export var stats: EnemyStats
 @export var patrol_distance: float = 160.0
@@ -353,6 +352,7 @@ func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> vo
 func _spawn_enemy_damage_vfx(damage: DamageData) -> void:
 	var direction := _get_hit_direction(damage)
 	var sprite := _make_one_shot_vfx_sprite(ENEMY_DAMAGE_FRAY_TEXTURE, 0.085)
+	_animate_one_shot_vfx_frames(sprite, 0.04)
 	sprite.global_position = _get_vfx_origin(damage) + direction * 16.0
 	sprite.rotation = direction.angle()
 	sprite.modulate = Color(1.0, 1.0, 1.0, 0.88)
@@ -368,6 +368,7 @@ func _spawn_enemy_damage_vfx(damage: DamageData) -> void:
 func _spawn_enemy_death_vfx(damage: DamageData) -> void:
 	var direction := _get_hit_direction(damage)
 	var sprite := _make_one_shot_vfx_sprite(ENEMY_DEATH_UNRAVEL_TEXTURE, 0.12)
+	_animate_one_shot_vfx_frames(sprite, 0.075)
 	sprite.global_position = global_position + Vector2(0.0, -24.0)
 	sprite.rotation = direction.angle() * 0.2
 	sprite.modulate = Color(1.0, 1.0, 1.0, 0.0)
@@ -416,9 +417,11 @@ func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite
 	var sprite := Sprite2D.new()
 	sprite.texture = texture
 	sprite.centered = true
+	sprite.hframes = 2
+	sprite.vframes = 2
+	sprite.frame = 0
 	sprite.scale = Vector2(start_scale, start_scale)
 	sprite.z_index = 80
-	sprite.material = _make_white_key_material()
 
 	var parent := get_parent()
 	if parent:
@@ -427,12 +430,14 @@ func _make_one_shot_vfx_sprite(texture: Texture2D, start_scale: float) -> Sprite
 		add_child(sprite)
 	return sprite
 
-func _make_white_key_material() -> ShaderMaterial:
-	var shader_material := ShaderMaterial.new()
-	shader_material.shader = WHITE_KEY_VFX_SHADER
-	shader_material.set_shader_parameter("key_threshold", 0.93)
-	shader_material.set_shader_parameter("key_softness", 0.08)
-	return shader_material
+func _animate_one_shot_vfx_frames(sprite: Sprite2D, seconds_per_frame: float) -> void:
+	var frame_tween := sprite.create_tween()
+	frame_tween.tween_property(
+		sprite,
+		"frame",
+		3,
+		maxf(0.01, seconds_per_frame) * 3.0
+	).from(0)
 
 func _get_vfx_origin(damage: DamageData) -> Vector2:
 	if damage.hit_position != Vector2.ZERO:

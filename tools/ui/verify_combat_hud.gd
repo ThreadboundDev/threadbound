@@ -42,9 +42,9 @@ func _verify_scene_layers(hud: CombatHUD) -> void:
 
 func _verify_action_point_variants(hud: CombatHUD) -> void:
 	var expected_types: Array[StringName] = [
-		CombatHUD.ACTION_POINT_RED,
-		CombatHUD.ACTION_POINT_BLUE,
-		CombatHUD.ACTION_POINT_YELLOW,
+		CombatHUD.ACTION_POINT_COLORLESS,
+		CombatHUD.ACTION_POINT_COLORLESS,
+		CombatHUD.ACTION_POINT_COLORLESS,
 		CombatHUD.ACTION_POINT_COLORLESS,
 		CombatHUD.ACTION_POINT_COLORLESS,
 		CombatHUD.ACTION_POINT_COLORLESS,
@@ -83,8 +83,12 @@ func _verify_action_point_variants(hud: CombatHUD) -> void:
 		hud.action_point_colorless_texture,
 	]:
 		_expect(
-			texture.resource_path.contains("/Hud/V3/action_point_crescent_"),
-			"Action point asset uses the V3 crescent silhouette."
+			texture.resource_path.contains("/Hud/V4/action_point_disc_"),
+			"Action point asset uses the V4 full-disc silhouette."
+		)
+		_expect(
+			_texture_alpha_coverage(texture) >= 0.68,
+			"Action point full-disc silhouette fills its gameplay socket."
 		)
 
 func _verify_identity_and_pattern_hooks(hud: CombatHUD) -> void:
@@ -104,6 +108,10 @@ func _verify_momentum_flow(hud: CombatHUD) -> void:
 	_expect(hud.momentum_bar.is_flow_active(), "Flow state enables momentum animation.")
 	_expect(hud.momentum_bar.fill_rect.size.y <= 12.0, "Momentum remains a thin rail.")
 	_expect(hud.momentum_bar.fill_rect.size.y >= 10.0, "Momentum fill remains clearly visible.")
+	_expect(hud.health_bar.fill_rect.size.x >= 390.0, "Health rail uses the wider V4 layout.")
+	_expect(hud.momentum_bar.fill_rect.size.x >= 374.0, "Momentum rail uses the wider V4 layout.")
+	var rail_gap := hud.momentum_bar.fill_rect.position.y - hud.health_bar.fill_rect.end.y
+	_expect(rail_gap <= 12.0, "Health and momentum rails remain visually grouped.")
 
 func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 	hud.thread_knot_visible_seconds = 0.05
@@ -115,6 +123,24 @@ func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 	_expect(hud.thread_knot_label.size.x >= 240.0, "Thread Knot label has room for high exact counts.")
 	await get_tree().create_timer(0.4).timeout
 	_expect(not hud.thread_knot_counter.visible, "Thread Knot counter hides after its pickup display window.")
+	_expect(
+		is_equal_approx(hud.thread_knot_counter.offset_right, -8.0),
+		"Thread Knot counter uses the approved right-edge placement."
+	)
+
+func _texture_alpha_coverage(texture: Texture2D) -> float:
+	if not texture:
+		return 0.0
+	var image := texture.get_image()
+	if image == null or image.is_empty():
+		return 0.0
+	var visible_pixels := 0
+	var total_pixels := image.get_width() * image.get_height()
+	for y in image.get_height():
+		for x in image.get_width():
+			if image.get_pixel(x, y).a > 0.03:
+				visible_pixels += 1
+	return float(visible_pixels) / float(maxi(1, total_pixels))
 
 func _expect(condition: bool, message: String) -> void:
 	if condition:

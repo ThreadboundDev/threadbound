@@ -556,6 +556,236 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void RegisterGroundedGrid(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        int usedFrames)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        using (var graphics = Graphics.FromImage(output))
+        {
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            var cells = new List<Bitmap>();
+            var bottoms = new List<int>();
+
+            for (int frameIndex = 0; frameIndex < usedFrames; frameIndex++)
+            {
+                int column = frameIndex % columns;
+                int row = frameIndex / columns;
+                var sourceRect = new Rectangle(
+                    column * cellWidth,
+                    row * cellHeight,
+                    cellWidth,
+                    cellHeight);
+                Bitmap cell = source.Clone(sourceRect, PixelFormat.Format32bppArgb);
+                Rectangle bounds = FindAlphaBounds(cell, 48);
+                cells.Add(cell);
+                if (!bounds.IsEmpty)
+                {
+                    bottoms.Add(bounds.Bottom);
+                }
+            }
+
+            if (bottoms.Count == 0)
+            {
+                throw new InvalidOperationException("Grounded attack sheet contains no visible frames.");
+            }
+
+            bottoms.Sort();
+            int middle = bottoms.Count / 2;
+            int targetBottom = bottoms.Count % 2 == 0
+                ? (int)Math.Round((bottoms[middle - 1] + bottoms[middle]) * 0.5)
+                : bottoms[middle];
+
+            graphics.Clear(Color.Transparent);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            for (int frameIndex = 0; frameIndex < cells.Count; frameIndex++)
+            {
+                Bitmap cell = cells[frameIndex];
+                Rectangle bounds = FindAlphaBounds(cell, 48);
+                int column = frameIndex % columns;
+                int row = frameIndex / columns;
+                var targetCell = new Rectangle(
+                    column * cellWidth,
+                    row * cellHeight,
+                    cellWidth,
+                    cellHeight);
+                int shiftY = bounds.IsEmpty ? 0 : targetBottom - bounds.Bottom;
+
+                graphics.SetClip(targetCell);
+                graphics.DrawImageUnscaled(
+                    cell,
+                    targetCell.X,
+                    targetCell.Y + shiftY);
+                graphics.ResetClip();
+                cell.Dispose();
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
+    public static void ArcWallContactGrid(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        int maximumInset)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int column = 0; column < columns; column++)
+                {
+                    var sourceRect = new Rectangle(
+                        column * cellWidth,
+                        row * cellHeight,
+                        cellWidth,
+                        cellHeight);
+                    using (var cell = source.Clone(
+                        sourceRect,
+                        PixelFormat.Format32bppArgb))
+                    {
+                        Rectangle bounds = FindAlphaBounds(cell, 24);
+                        if (bounds.IsEmpty)
+                        {
+                            continue;
+                        }
+
+                        double height = Math.Max(1.0, bounds.Height - 1.0);
+                        for (int y = bounds.Top; y < bounds.Bottom; y++)
+                        {
+                            double progress = (y - bounds.Top) / height;
+                            int inset = (int)Math.Round(
+                                maximumInset * Math.Sin(Math.PI * progress));
+                            for (int x = bounds.Left; x < bounds.Right; x++)
+                            {
+                                Color color = cell.GetPixel(x, y);
+                                if (color.A == 0)
+                                {
+                                    continue;
+                                }
+
+                                int targetX = x - inset;
+                                if (targetX < 0 || targetX >= cellWidth)
+                                {
+                                    continue;
+                                }
+
+                                output.SetPixel(
+                                    column * cellWidth + targetX,
+                                    row * cellHeight + y,
+                                    color);
+                            }
+                        }
+                    }
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
+    public static void RemoveSmallDetachedGutterComponents(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows,
+        int maximumPixels,
+        int minimumX,
+        int minimumY)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        {
+            using (var graphics = Graphics.FromImage(output))
+            {
+                graphics.Clear(Color.Transparent);
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.DrawImageUnscaled(source, 0, 0);
+            }
+
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int column = 0; column < columns; column++)
+                {
+                    var cellRect = new Rectangle(
+                        column * cellWidth,
+                        row * cellHeight,
+                        cellWidth,
+                        cellHeight);
+                    using (var cell = output.Clone(
+                        cellRect,
+                        PixelFormat.Format32bppArgb))
+                    {
+                        bool[] alphaMask = new bool[cellWidth * cellHeight];
+                        for (int y = 0; y < cellHeight; y++)
+                        {
+                            for (int x = 0; x < cellWidth; x++)
+                            {
+                                alphaMask[y * cellWidth + x] =
+                                    cell.GetPixel(x, y).A > 8;
+                            }
+                        }
+
+                        foreach (Component component in FindComponents(cell, alphaMask))
+                        {
+                            if (
+                                component.Pixels.Count > maximumPixels ||
+                                component.MinX < minimumX ||
+                                component.MinY < minimumY)
+                            {
+                                continue;
+                            }
+
+                            int left = Math.Max(0, component.MinX - 2);
+                            int top = Math.Max(0, component.MinY - 2);
+                            int right = Math.Min(cellWidth - 1, component.MaxX + 2);
+                            int bottom = Math.Min(cellHeight - 1, component.MaxY + 2);
+                            for (int y = top; y <= bottom; y++)
+                            {
+                                for (int x = left; x <= right; x++)
+                                {
+                                    cell.SetPixel(x, y, Color.Transparent);
+                                }
+                            }
+                        }
+
+                        using (var graphics = Graphics.FromImage(output))
+                        {
+                            graphics.CompositingMode = CompositingMode.SourceCopy;
+                            graphics.DrawImageUnscaled(cell, cellRect.X, cellRect.Y);
+                        }
+                    }
+                }
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     public static void SolidifyCharacterAlpha(string inputPath, string outputPath)
     {
         using (var sourceFile = new Bitmap(inputPath))
@@ -2270,6 +2500,48 @@ foreach ($runtimeAsset in $runtimeRasterAssets) {
         -NormalizedHeight ([int]$runtimeAsset[2])
 }
 
+# Grounded attack frames are authored from video sources whose subject origin
+# drifts vertically. Lock both moving combo sheets to their median visible foot
+# baseline before the runtime scene slices them into AtlasTextures.
+foreach ($groundedAttack in @(
+    @("attacks\ground_combo_01.png", 6, 4, 19),
+    @("attacks\ground_combo_02.png", 5, 5, 14)
+)) {
+    $groundedAttackPath = Join-Path $outputRoot ([string]$groundedAttack[0])
+    $registeredGroundedAttackPath = "$groundedAttackPath.registered.png"
+    [ThreadboundAnimationNormalizer]::RegisterGroundedGrid(
+        $groundedAttackPath,
+        $registeredGroundedAttackPath,
+        [int]$groundedAttack[1],
+        [int]$groundedAttack[2],
+        [int]$groundedAttack[3])
+    Move-Item `
+        -LiteralPath $registeredGroundedAttackPath `
+        -Destination $groundedAttackPath `
+        -Force
+}
+
+# Keep the wall-side hand and foot rows in place while lifting the torso away
+# from the collision silhouette. The ledge pose gets a slightly stronger arc
+# because it previously read as a straight body buried in the platform edge.
+foreach ($wallPose in @(
+    @("movement\wall_cling_cycle.png", 2, 2, 8),
+    @("movement\ledge_hang.png", 2, 2, 14)
+)) {
+    $wallPosePath = Join-Path $outputRoot ([string]$wallPose[0])
+    $archedWallPosePath = "$wallPosePath.arched.png"
+    [ThreadboundAnimationNormalizer]::ArcWallContactGrid(
+        $wallPosePath,
+        $archedWallPosePath,
+        [int]$wallPose[1],
+        [int]$wallPose[2],
+        [int]$wallPose[3])
+    Move-Item `
+        -LiteralPath $archedWallPosePath `
+        -Destination $wallPosePath `
+        -Force
+}
+
 # The runtime downscale can round otherwise registered cling frames one pixel
 # apart. Lock the occupied right and bottom edges to frame zero after resizing,
 # keeping the wall contact and grounded leg origin still through the loop.
@@ -2333,6 +2605,23 @@ $cleanedHorizontalPath = "$horizontalGrapplePath.cleaned.png"
 Move-Item `
     -LiteralPath $cleanedHorizontalPath `
     -Destination $horizontalGrapplePath `
+    -Force
+
+# Two diagonal toss cells contain tiny detached islands in the lower-right
+# gutter. They render as a single-frame screen-corner speck in slow motion.
+$diagonalGrapplePath = Join-Path $outputRoot "grapple\toss_diagonal_cycle.png"
+$cleanedDiagonalPath = "$diagonalGrapplePath.cleaned.png"
+[ThreadboundAnimationNormalizer]::RemoveSmallDetachedGutterComponents(
+    $diagonalGrapplePath,
+    $cleanedDiagonalPath,
+    3,
+    2,
+    120,
+    288,
+    230)
+Move-Item `
+    -LiteralPath $cleanedDiagonalPath `
+    -Destination $diagonalGrapplePath `
     -Force
 
 Write-Host "Normalized player animation assets written to $outputRoot"

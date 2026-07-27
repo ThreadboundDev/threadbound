@@ -18,6 +18,12 @@ const SIT_ANIMATION := &"Sit"
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
+const STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS := [
+	1.0, 1.0, 1.0, 1.0, 1.0,
+	1.08, 1.16, 1.21, 1.21, 1.16,
+	1.0, 1.0, 1.0, 1.0, 1.0,
+	1.0, 1.0, 1.0, 1.0,
+]
 const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
 # ===============================
@@ -90,7 +96,7 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_group("Movement Animation")
 @export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
 @export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
-@export_range(0.5, 1.0, 0.01) var landing_visual_scale_multiplier := 0.92
+@export_range(0.5, 1.0, 0.01) var landing_visual_scale_multiplier := 0.88
 @export var landing_visual_offset := Vector2(0.0, 5.0)
 
 # Base grapple movement while rope is taut.
@@ -126,6 +132,8 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
 @export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
 @export_range(0.1, 2.0, 0.05) var ground_combo_2_moving_visual_scale_multiplier := 1.4
+@export_range(0.1, 2.0, 0.05) var ground_combo_stationary_visual_scale_multiplier := 1.4
+@export_range(0.1, 2.0, 0.05) var ground_combo_backpedal_visual_scale_multiplier := 1.25
 @export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
 
 @export_group("Ground Attack Combo")
@@ -398,6 +406,8 @@ func _ready() -> void:
 	_player_default_visual_scale = player_animation.scale
 	_player_default_visual_position = player_animation.position
 	_default_attack_hitbox_polygon = attack_collision_polygon.polygon
+	if not player_animation.frame_changed.is_connected(_on_player_animation_frame_changed):
+		player_animation.frame_changed.connect(_on_player_animation_frame_changed)
 
 	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
@@ -982,11 +992,14 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = save_point_sit_visual_scale
 		play_character_anim(SIT_ANIMATION, "equip_idle")
 		return
-	if (is_ledge_hanging or is_ledge_climbing) and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
+	if is_ledge_hanging and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
 		player_animation.position = _player_default_visual_position
 		play_character_anim(LEDGE_HANG_ANIMATION, "equip_wall_cling")
+		return
+	if is_ledge_climbing:
+		_play_ledge_climb_pose()
 		return
 	if player_animation.scale != _player_default_visual_scale:
 		player_animation.scale = _player_default_visual_scale
@@ -1096,6 +1109,38 @@ func _update_wall_cling_vfx() -> void:
 	wall_cling_vfx.flip_h = wall_direction > 0
 	if not wall_cling_vfx.is_playing():
 		wall_cling_vfx.play("cling")
+
+func _play_ledge_climb_pose() -> void:
+	player_animation.rotation = 0.0
+	player_animation.scale = _player_default_visual_scale
+	player_animation.position = _player_default_visual_position
+
+	var progress := clampf(
+		_ledge_climb_elapsed / maxf(ledge_climb_duration, 0.001),
+		0.0,
+		1.0
+	)
+	var pose := LEDGE_HANG_ANIMATION
+	var phase_progress := progress / 0.38
+	var equipment_pose := "equip_wall_cling"
+	if progress >= 0.72 and player_animation.sprite_frames.has_animation(&"Jump_Land"):
+		pose = &"Jump_Land"
+		phase_progress = (progress - 0.72) / 0.28
+		equipment_pose = "equip_idle"
+	elif progress >= 0.38 and player_animation.sprite_frames.has_animation(&"Wall_Cling"):
+		pose = &"Wall_Cling"
+		phase_progress = (progress - 0.38) / 0.34
+
+	play_character_anim(String(pose), equipment_pose)
+	var frame_count := player_animation.sprite_frames.get_frame_count(pose)
+	if frame_count <= 0:
+		return
+	var pose_frame := clampi(
+		floori(clampf(phase_progress, 0.0, 0.999) * float(frame_count)),
+		0,
+		frame_count - 1
+	)
+	player_animation.set_frame_and_progress(pose_frame, 0.0)
 
 func _get_wall_visual_direction() -> int:
 	var wall_direction := int(-signf(get_wall_normal().x))
@@ -1524,19 +1569,39 @@ func _apply_attack_visual_tuning() -> void:
 	elif current_attack_body_anim == "Attack":
 		scale_multiplier = grounded_forward_visual_scale_multiplier
 		visual_offset = grounded_forward_visual_offset
-	elif (
-		current_attack_body_anim == "Ground_Attack_Combo_2"
-		and ground_attack_visual_mode == &"moving"
-	):
-		scale_multiplier = ground_combo_2_moving_visual_scale_multiplier
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
-		scale_multiplier = ground_combo_forward_visual_scale_multiplier
+		if ground_attack_visual_mode == &"stationary":
+			scale_multiplier = ground_combo_stationary_visual_scale_multiplier
+		elif ground_attack_visual_mode == &"backpedal":
+			scale_multiplier = ground_combo_backpedal_visual_scale_multiplier
+		elif current_attack_body_anim == "Ground_Attack_Combo_2":
+			scale_multiplier = ground_combo_2_moving_visual_scale_multiplier
+		else:
+			scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":
 		scale_multiplier = air_attack_visual_scale_multiplier
+	scale_multiplier *= _get_attack_frame_scale_multiplier()
 	if player_animation.flip_h:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
 	player_animation.position = _player_default_visual_position + visual_offset
+
+func _on_player_animation_frame_changed() -> void:
+	if is_attacking:
+		_apply_attack_visual_tuning()
+
+func _get_attack_frame_scale_multiplier() -> float:
+	if (
+		ground_attack_visual_mode != &"stationary"
+		or current_attack_body_anim != "Ground_Attack_Combo_2"
+	):
+		return 1.0
+	var frame_index := clampi(
+		player_animation.frame,
+		0,
+		STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS.size() - 1
+	)
+	return float(STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS[frame_index])
 
 func _select_ground_attack_visual_mode(dir: float) -> StringName:
 	if absf(dir) <= 0.01 or absf(velocity.x) < STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED:

@@ -36,13 +36,14 @@ transparent sheet cells:
 | Neutral special | 0.675 | 512 px |
 | Ground combo opener | 0.90 | 320 px |
 | Ground combo finisher | 0.6428571, rendered at 1.40 | 320 px |
-| Stationary double hit | 0.90 | 320 px |
-| Backpedal combo variants | 1.15 | 320 px |
+| Stationary double hit | 0.90, rendered at 1.40 | 320 px |
+| Backpedal combo variants | 1.15, rendered at 1.25 | 320 px |
 | Air double attack | 1.20 | 416 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
-its 384 px rendered source. Other animation families retain a `1.0` visual
-multiplier except the moving ground finisher described below.
+its 384 px rendered source. The moving finisher, stationary double hit, and
+backpedal variants use the runtime presentation multipliers listed above; other
+animation families retain a `1.0` visual multiplier.
 
 The `ground_combo_01` sheet is restored to the established 320 px runtime atlas.
 Its content is baked at `0.6428571`, then displayed at a `1.40` visual
@@ -109,6 +110,12 @@ low slash trail from being mistaken for a foot anchor and shifting the body
 between frames. Broad white slash effects are protected during the selective
 bronze weapon recolor so the VFX does not inherit the weapon palette.
 
+The stationary-derived frames change apparent character scale during the middle
+of the first sweep. Runtime frames 5-9 therefore receive conservative per-frame presentation
+multipliers between `1.08` and `1.21`. This corrects the visible character-size
+pulse without resampling the shared atlas cells or clipping their large slash
+arcs.
+
 The logical moving and backpedal opener/finisher chains remain at 14 and 19
 frames. A stationary input bypasses the opener, plays the approved double-hit
 animation as one complete move, and resets instead of chaining into a repeat.
@@ -156,18 +163,29 @@ Secondary-motion sheets now use padded 320 px runtime cells:
   frame's head anchor.
 - Landing and both grapple tosses register to the first frame's foot/ground
   anchor.
+- Both moving ground-combo sheets receive a final median-baseline registration
+  pass so the video-derived foot line does not bob between frames.
 - The runtime wall-cling sheet receives a final contact registration pass after
   downscaling. Its occupied wall and ground edges are locked to frame zero so
   rounding cannot introduce a one-pixel fidget.
 - Ledge hang uses a transparent 2x2 sheet; the connected opaque-black source
   background is removed without keying dark pixels enclosed by the character.
+- The diagonal grapple toss clears only tiny detached components in the known
+  lower-right atlas gutter, eliminating the one-frame screen-corner speck while
+  preserving the authored body and cloth motion.
+- The active grapple root and needle serialize hidden. During launch, the line
+  renders only from the hand to the needle's travelled position; the full
+  slack-rope simulation chain does not appear until attachment.
 
 Runtime presentation applies two small movement-only corrections without
-changing collision: landing uses a `0.92` visual multiplier with a 5 px downward
+changing collision: landing uses a `0.88` visual multiplier with a 5 px downward
 offset, while wall cling shifts the sprite 22 px away from the collision wall.
-The cling contact VFX remains at the collision surface. Pulling onto a ledge now
-follows a 0.2-second eased quadratic arc instead of teleporting from the hang
-point to the platform top.
+Wall cling and ledge hang keep their wall-side hand and foot rows fixed while
+bowing the torso away from the collision edge. The cling contact VFX remains at
+the collision surface, but is smaller and more transparent so it cannot cover
+the pose. Pulling onto a ledge follows a 0.2-second eased quadratic arc and
+progresses through hang, planted wall-brace, and landing poses instead of
+teleporting or sliding one rigid frame to the platform top.
 
 The padding allows corrective translation without cropping an extended hand,
 weapon pose, foot, or billowing cloth.
@@ -280,10 +298,11 @@ It checks the motion clips, editor-authored sit and ledge clips, moving,
 stationary, and backpedal ground combos, and the air double attack: frame
 counts, frame textures, atlas cell sizes, playback speeds, loop modes, and the
 player's animation-specific visual scale. It also verifies ledge alpha,
-wall-cling contact registration, landing and wall visual tuning, the ledge
-climb arc, stationary atlas gutters, standalone stationary reset behavior,
-ground variant locking, upward input routing, the 130-degree frontal arc, and
-absence of the retired upward clips.
+wall-cling contact registration, grounded attack baselines, diagonal grapple
+gutter cleanup, landing and wall visual tuning, the phased ledge climb,
+stationary atlas gutters and frame-scale correction, standalone stationary
+reset behavior, ground variant locking, upward input routing, the 130-degree
+frontal arc, and absence of the retired upward clips.
 
 ## Deliberate limits
 
