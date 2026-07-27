@@ -27,14 +27,12 @@ crouched, so they were not enlarged merely to force every silhouette to the same
 bounding-box height.
 
 The run cycle retains the hand-selected playback order
-`001, 002, 003, 004, 005, 006, 012, 020, 007, 018, 008`. Each active frame is
-registered to runtime ground row 369 so the foot line no longer floats by as
-much as 12 source pixels between poses. Frame `005` uses one identity-matched
-bridge pose to replace the unusually compressed silhouette between the long
-strides in `004` and `006`; the other ten frames retain their original pixels
-apart from transparent-canvas translation. The exact pre-cleanup runtime files
-and their playback order are preserved under
-`Normalized_V2/run/old_run`.
+`001, 002, 003, 004, 005, 006, 012, 020, 007, 018, 008`. The July registration
+pass and generated bridge pose were rejected in playtesting because the result
+jittered. Every active run frame is now an exact pixel-for-pixel restoration of
+the previously hand-selected and hand-adjusted animation under
+`Normalized_V2/run/old_run`. Its intentional pose-height and foot-placement
+variation is preserved rather than forced onto a uniform baseline.
 
 ## Scale normalization
 

@@ -2183,37 +2183,25 @@ function Copy-NormalizedAsset {
 Copy-NormalizedAsset "Assets\Threadborne\Idle\Idleright.png" "Assets\Threadborne\Player\Normalized_V2\idle\idle_right.png"
 
 $runFrames = @(1, 2, 3, 4, 5, 6, 7, 8, 12, 18, 20)
-$runRegistrationOffsets = @{
-    1 = @(0, 14)
-    2 = @(0, 22)
-    3 = @(0, 8)
-    4 = @(0, 2)
-    5 = @(0, -5)
-    6 = @(0, 18)
-    7 = @(0, 1)
-    8 = @(0, 6)
-    12 = @(0, 9)
-    18 = @(0, -2)
-    20 = @(0, 0)
+$restoredRunSources = @{
+    1 = "frame_00_run_001.png"
+    2 = "frame_01_run_002.png"
+    3 = "frame_02_run_003.png"
+    4 = "frame_03_run_004.png"
+    5 = "frame_04_run_005.png"
+    6 = "frame_05_run_006.png"
+    12 = "frame_06_run_012.png"
+    20 = "frame_07_run_020.png"
+    7 = "frame_08_run_007.png"
+    18 = "frame_09_run_018.png"
+    8 = "frame_10_run_008.png"
 }
 foreach ($frame in $runFrames) {
-    $sourceName =
-        if ($frame -eq 5) {
-            "Assets\Threadborne\Run\Cleaned\run_005_bridge.png"
-        } else {
-            "Assets\Threadborne\Run\ezgif-frame-{0:D3}.png" -f $frame
-        }
+    $sourceName = Join-Path `
+        "Assets\Threadborne\Player\Normalized_V2\run\old_run" `
+        $restoredRunSources[$frame]
     $destinationName = "Assets\Threadborne\Player\Normalized_V2\run\run_{0:D3}.png" -f $frame
     Copy-NormalizedAsset $sourceName $destinationName
-    $destinationPath = Join-Path $projectRoot $destinationName
-    $registeredPath = "$destinationPath.registered.png"
-    $offset = $runRegistrationOffsets[$frame]
-    [ThreadboundAnimationNormalizer]::ShiftImage(
-        $destinationPath,
-        $registeredPath,
-        [int]$offset[0],
-        [int]$offset[1])
-    Move-Item -LiteralPath $registeredPath -Destination $destinationPath -Force
 }
 
 $copyMap = @{

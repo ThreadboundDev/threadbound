@@ -39,7 +39,7 @@ func _ready() -> void:
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
 	_verify_ledge_climb_sheet(failures)
-	_verify_run_registration(failures)
+	_verify_restored_run_frames(failures)
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
 	_verify_grapple_gutter_cleanup(failures)
@@ -247,31 +247,51 @@ func _verify_ledge_climb_sheet(failures: Array[String]) -> void:
 				failures.append("Ledge climb crest contains a forbidden scarf-tail silhouette.")
 				return
 
-func _verify_run_registration(failures: Array[String]) -> void:
-	var playback_order := [1, 2, 3, 4, 5, 6, 12, 20, 7, 18, 8]
-	var expected_bottom := 369
-	for frame_number in playback_order:
+func _verify_restored_run_frames(failures: Array[String]) -> void:
+	var archive_names := {
+		1: "frame_00_run_001.png",
+		2: "frame_01_run_002.png",
+		3: "frame_02_run_003.png",
+		4: "frame_03_run_004.png",
+		5: "frame_04_run_005.png",
+		6: "frame_05_run_006.png",
+		12: "frame_06_run_012.png",
+		20: "frame_07_run_020.png",
+		7: "frame_08_run_007.png",
+		18: "frame_09_run_018.png",
+		8: "frame_10_run_008.png",
+	}
+	for frame_number in archive_names:
 		var path := (
 			"res://Assets/Threadborne/Player/Normalized_V2/run/run_%03d.png" %
 			frame_number
 		)
+		var archive_path := (
+			"res://Assets/Threadborne/Player/Normalized_V2/run/old_run/%s" %
+			archive_names[frame_number]
+		)
 		var image := _load_imported_image(path)
 		if image == null or image.is_empty():
-			failures.append("Could not load registered run frame: %s." % path)
+			failures.append("Could not load restored run frame: %s." % path)
 			continue
 		if image.get_size() != Vector2i(548, 548):
 			failures.append("%s is %s; expected the 548 px runtime canvas." % [path, image.get_size()])
 			continue
 
-		var bottom := -1
-		for y in image.get_height():
-			for x in image.get_width():
-				if image.get_pixel(x, y).a >= 0.18:
-					bottom = maxi(bottom, y)
-		if bottom != expected_bottom:
+		var archived_image := Image.load_from_file(archive_path)
+		if archived_image == null or archived_image.is_empty():
+			failures.append("Could not load archived run source: %s." % archive_path)
+			continue
+		if image.get_size() != archived_image.get_size():
 			failures.append(
-				"%s ground contact is %d; expected %d." %
-				[path, bottom, expected_bottom]
+				"%s size %s does not match archived source size %s." %
+				[path, image.get_size(), archived_image.get_size()]
+			)
+			continue
+		if image.get_data() != archived_image.get_data():
+			failures.append(
+				"%s no longer matches the approved archived original %s." %
+				[path, archive_names[frame_number]]
 			)
 
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:

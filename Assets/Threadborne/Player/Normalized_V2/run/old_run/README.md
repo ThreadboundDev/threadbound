@@ -1,8 +1,9 @@
 # Archived run animation
 
-This folder preserves the exact runtime PNGs and playback order that were active
-before the July 2026 run cleanup. The numbered `frame_00` through `frame_10`
-prefixes are the original Godot playback order:
+This folder is the canonical source for the exact runtime PNGs and playback
+order restored after the July 2026 run cleanup was rejected as jittery. The
+numbered `frame_00` through `frame_10` prefixes are the original Godot playback
+order:
 
 1. `run_001`
 2. `run_002`
@@ -16,5 +17,7 @@ prefixes are the original Godot playback order:
 10. `run_018`
 11. `run_008`
 
-These files are intentionally not referenced by the player scene. They are a
-lossless rollback copy of the hand-selected and hand-adjusted animation.
+The player scene references matching copies in the parent `run` directory.
+The normalizer copies these files without registration, scaling, generated
+bridge poses, or other pixel changes. This folder remains ignored by Godot so
+it acts as a stable, lossless source archive.
