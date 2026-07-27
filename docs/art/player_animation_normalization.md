@@ -24,6 +24,16 @@ The idle sheet remains the calibration baseline. Run poses are naturally more
 crouched, so they were not enlarged merely to force every silhouette to the same
 bounding-box height.
 
+The run cycle retains the hand-selected playback order
+`001, 002, 003, 004, 005, 006, 012, 020, 007, 018, 008`. Each active frame is
+registered to runtime ground row 369 so the foot line no longer floats by as
+much as 12 source pixels between poses. Frame `005` uses one identity-matched
+bridge pose to replace the unusually compressed silhouette between the long
+strides in `004` and `006`; the other ten frames retain their original pixels
+apart from transparent-canvas translation. The exact pre-cleanup runtime files
+and their playback order are preserved under
+`Normalized_V2/run/old_run`.
+
 ## Scale normalization
 
 The old scene compensated for differently authored attack sheets by changing the

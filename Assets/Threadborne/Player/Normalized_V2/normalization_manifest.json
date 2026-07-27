@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -17,7 +17,12 @@
     "run": {
       "directory": "res://Assets/Threadborne/Player/Normalized_V2/run",
       "frames": [1, 2, 3, 4, 5, 6, 7, 8, 12, 18, 20],
-      "frame_size": [548, 548]
+      "playback_order": [1, 2, 3, 4, 5, 6, 12, 20, 7, 18, 8],
+      "frame_size": [548, 548],
+      "registration_anchor": "ground_contact",
+      "registered_runtime_bottom": 369,
+      "generated_bridge_frame": 5,
+      "archived_original_directory": "res://Assets/Threadborne/Player/Normalized_V2/run/old_run"
     },
     "jump": {
       "directory": "res://Assets/Threadborne/Player/Normalized_V2/jump",

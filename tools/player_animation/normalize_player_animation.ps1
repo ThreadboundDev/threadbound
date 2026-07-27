@@ -113,6 +113,26 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void ShiftImage(
+        string inputPath,
+        string outputPath,
+        int offsetX,
+        int offsetY)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        using (var graphics = Graphics.FromImage(output))
+        {
+            graphics.Clear(Color.Transparent);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.DrawImageUnscaled(source, offsetX, offsetY);
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     public static void BuildSelectedFrameGrid(
         string frameDirectory,
         string outputPath,
@@ -2119,10 +2139,37 @@ function Copy-NormalizedAsset {
 Copy-NormalizedAsset "Assets\Threadborne\Idle\Idleright.png" "Assets\Threadborne\Player\Normalized_V2\idle\idle_right.png"
 
 $runFrames = @(1, 2, 3, 4, 5, 6, 7, 8, 12, 18, 20)
+$runRegistrationOffsets = @{
+    1 = @(0, 14)
+    2 = @(0, 22)
+    3 = @(0, 8)
+    4 = @(0, 2)
+    5 = @(0, -5)
+    6 = @(0, 18)
+    7 = @(0, 1)
+    8 = @(0, 6)
+    12 = @(0, 9)
+    18 = @(0, -2)
+    20 = @(0, 0)
+}
 foreach ($frame in $runFrames) {
-    $sourceName = "Assets\Threadborne\Run\ezgif-frame-{0:D3}.png" -f $frame
+    $sourceName =
+        if ($frame -eq 5) {
+            "Assets\Threadborne\Run\Cleaned\run_005_bridge.png"
+        } else {
+            "Assets\Threadborne\Run\ezgif-frame-{0:D3}.png" -f $frame
+        }
     $destinationName = "Assets\Threadborne\Player\Normalized_V2\run\run_{0:D3}.png" -f $frame
     Copy-NormalizedAsset $sourceName $destinationName
+    $destinationPath = Join-Path $projectRoot $destinationName
+    $registeredPath = "$destinationPath.registered.png"
+    $offset = $runRegistrationOffsets[$frame]
+    [ThreadboundAnimationNormalizer]::ShiftImage(
+        $destinationPath,
+        $registeredPath,
+        [int]$offset[0],
+        [int]$offset[1])
+    Move-Item -LiteralPath $registeredPath -Destination $destinationPath -Force
 }
 
 $copyMap = @{

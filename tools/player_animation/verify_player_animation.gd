@@ -16,6 +16,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Land": {"frames": 4, "fps": 12.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ledge_Hang": {"frames": 4, "fps": 5.0, "loop": true, "cell": Vector2(320, 320)},
+	&"Run": {"frames": 11, "fps": 24.0, "loop": true, "cell": Vector2(548, 548)},
 	&"Sit": {"frames": 48, "fps": 18.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
 }
@@ -38,6 +39,7 @@ func _ready() -> void:
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
 	_verify_ledge_transparency(failures)
+	_verify_run_registration(failures)
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
 	_verify_grapple_gutter_cleanup(failures)
@@ -240,6 +242,33 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 			failures.append(
 				"Ledge hang frame %d bounds %s jitter beyond the registered reference %s." %
 				[frame_index, bounds, reference_bounds]
+			)
+
+func _verify_run_registration(failures: Array[String]) -> void:
+	var playback_order := [1, 2, 3, 4, 5, 6, 12, 20, 7, 18, 8]
+	var expected_bottom := 369
+	for frame_number in playback_order:
+		var path := (
+			"res://Assets/Threadborne/Player/Normalized_V2/run/run_%03d.png" %
+			frame_number
+		)
+		var image := _load_imported_image(path)
+		if image == null or image.is_empty():
+			failures.append("Could not load registered run frame: %s." % path)
+			continue
+		if image.get_size() != Vector2i(548, 548):
+			failures.append("%s is %s; expected the 548 px runtime canvas." % [path, image.get_size()])
+			continue
+
+		var bottom := -1
+		for y in image.get_height():
+			for x in image.get_width():
+				if image.get_pixel(x, y).a >= 0.18:
+					bottom = maxi(bottom, y)
+		if bottom != expected_bottom:
+			failures.append(
+				"%s ground contact is %d; expected %d." %
+				[path, bottom, expected_bottom]
 			)
 
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
