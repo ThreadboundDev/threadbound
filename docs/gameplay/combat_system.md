@@ -254,6 +254,30 @@ These encounters push the player to:
 
 ---
 
+## Meditation Recovery
+
+Meditation is an intentional pause in combat rather than a source of free
+momentum. After a short hold, the player enters a one-shot sitting transition
+and remains in the final seated pose until the input is released or another
+action interrupts it.
+
+- Spent action points recharge one at a time while meditating, beginning with
+  the point closest to being restored.
+- Meditation doubles AP recharge speed; ordinary combat recharge remains
+  parallel across all spent points.
+- Once fully seated, healing pulses every 0.8 seconds and consumes 10 momentum
+  per pulse.
+- Healing has diminishing returns: each pulse restores 5% of maximum health
+  below 35% health, 4% from 35% to 55%, and 3% from 55% to 75%.
+- Meditation cannot restore health above 75%; save points remain the full-heal
+  recovery option.
+- Entering meditation during Flow shortens the pulse interval to 0.6 seconds
+  without improving total momentum efficiency.
+- Movement, jumping, dashing, attacking, taking damage, leaving the ground, or
+  releasing the meditation input interrupts the state.
+
+---
+
 ## 🧠 Summary
 
 Threadbound combat is not about memorizing combos.

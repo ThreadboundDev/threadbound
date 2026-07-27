@@ -53,7 +53,9 @@ longer active in the player `SpriteFrames`.
 The meditation sheet uses a `0.50` sprite scale in both free meditation and
 save-point interactions. Its 342 px standing transition therefore matches the
 approximately 169 px idle presentation, while its 207 px seated silhouette
-settles to approximately 104 px without moving the shared foot line.
+settles to approximately 104 px without moving the shared foot line. The
+48-frame transition plays once at 18 FPS (about 2.7 seconds), then holds its
+final seated frame for as long as meditation continues.
 
 ### Runtime memory budget
 

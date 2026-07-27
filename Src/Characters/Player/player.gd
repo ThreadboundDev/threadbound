@@ -242,10 +242,17 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var ledge_jump_force := 720.0
 
 @export_group("Meditation")
-@export var meditation_ap_recharge_multiplier := 4.0
-@export var meditation_flow_per_second := 8.0
-@export_range(0.0, 100.0, 1.0) var meditation_flow_cap := 50.0
+@export var meditation_ap_recharge_multiplier := 2.0
 @export var meditation_hold_delay := 0.3
+@export_range(0.1, 3.0, 0.05) var meditation_heal_interval := 0.8
+@export_range(1.0, 100.0, 1.0) var meditation_momentum_cost_per_pulse := 10.0
+@export_range(0.0, 1.0, 0.01) var meditation_health_ceiling_ratio := 0.75
+@export_range(0.0, 1.0, 0.01) var meditation_critical_health_ratio := 0.35
+@export_range(0.0, 1.0, 0.01) var meditation_wounded_health_ratio := 0.55
+@export_range(0.0, 1.0, 0.01) var meditation_critical_heal_ratio := 0.05
+@export_range(0.0, 1.0, 0.01) var meditation_wounded_heal_ratio := 0.04
+@export_range(0.0, 1.0, 0.01) var meditation_upper_heal_ratio := 0.03
+@export_range(0.1, 1.0, 0.05) var meditation_flow_interval_multiplier := 0.75
 
 # Debug testing helpers
 @export var god_mode_fly_speed: float = 1100.0
@@ -308,6 +315,8 @@ var _ledge_climb_target := Vector2.ZERO
 var _ledge_climb_jump_after := false
 var is_meditating := false
 var _meditation_hold_timer := 0.0
+var _meditation_heal_timer := 0.0
+var _meditation_started_in_flow := false
 
 var jump_charge_ratio: float = 0.0
 var dash_charge_ratio: float = 0.0
@@ -934,19 +943,98 @@ func _sample_ledge_climb_arc(
 
 func _process_meditation(delta: float) -> void:
 	var was_meditating := is_meditating
-	var can_meditate := is_on_floor() and not is_hurt and not is_attacking and not is_dead
+	var interruption_requested := (
+		absf(Input.get_axis("move_left", "move_right")) > 0.01
+		or Input.is_action_pressed("Jump")
+		or Input.is_action_pressed("Dash")
+		or Input.is_action_pressed("Attack")
+		or Input.is_action_pressed("SpecialAttack")
+	)
+	var can_meditate := (
+		is_on_floor()
+		and not is_hurt
+		and not is_attacking
+		and not is_dead
+		and not interruption_requested
+	)
 	if Input.is_action_pressed("Meditate") and can_meditate:
 		_meditation_hold_timer += delta
 		if _meditation_hold_timer >= meditation_hold_delay:
 			is_meditating = true
 			velocity = Vector2.ZERO
-			if momentum < meditation_flow_cap:
-				_change_momentum(minf(meditation_flow_per_second * delta, meditation_flow_cap - momentum))
 	else:
 		_meditation_hold_timer = 0.0
 		is_meditating = false
+
+	if is_meditating and not was_meditating:
+		_meditation_heal_timer = 0.0
+		_meditation_started_in_flow = _flow_state_active
+	elif not is_meditating and was_meditating:
+		_meditation_heal_timer = 0.0
+		_meditation_started_in_flow = false
+
+	if is_meditating:
+		_process_meditation_healing(delta)
 	if is_meditating != was_meditating:
 		_set_flow_state_visuals(is_meditating or _flow_state_active)
+
+func _process_meditation_healing(delta: float) -> void:
+	if not _is_meditation_seated() or not _can_apply_meditation_heal_pulse():
+		_meditation_heal_timer = 0.0
+		return
+
+	var interval := meditation_heal_interval
+	if _meditation_started_in_flow:
+		interval *= meditation_flow_interval_multiplier
+	_meditation_heal_timer += delta
+	if _meditation_heal_timer < interval:
+		return
+
+	_meditation_heal_timer -= interval
+	_apply_meditation_heal_pulse()
+
+func _is_meditation_seated() -> bool:
+	if not player_animation or not player_animation.sprite_frames:
+		return false
+	if player_animation.animation != SIT_ANIMATION:
+		return false
+	var final_frame := player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1
+	return final_frame >= 0 and player_animation.frame >= final_frame
+
+func _can_apply_meditation_heal_pulse() -> bool:
+	if not health_component or health_component.max_health <= 0:
+		return false
+	var health_ceiling := floori(
+		float(health_component.max_health) * meditation_health_ceiling_ratio
+	)
+	return (
+		health_component.current_health < health_ceiling
+		and momentum >= meditation_momentum_cost_per_pulse
+	)
+
+func _apply_meditation_heal_pulse() -> bool:
+	if not _can_apply_meditation_heal_pulse():
+		return false
+
+	var health_ratio := (
+		float(health_component.current_health) / float(health_component.max_health)
+	)
+	var heal_ratio := meditation_upper_heal_ratio
+	if health_ratio < meditation_critical_health_ratio:
+		heal_ratio = meditation_critical_heal_ratio
+	elif health_ratio < meditation_wounded_health_ratio:
+		heal_ratio = meditation_wounded_heal_ratio
+
+	var health_ceiling := floori(
+		float(health_component.max_health) * meditation_health_ceiling_ratio
+	)
+	var heal_amount := mini(
+		maxi(1, roundi(float(health_component.max_health) * heal_ratio)),
+		health_ceiling - health_component.current_health
+	)
+	_change_momentum(-meditation_momentum_cost_per_pulse)
+	health_component.heal(heal_amount)
+	return true
 
 func _get_current_gravity() -> float:
 	if velocity.y < 0.0:
@@ -1882,16 +1970,37 @@ func _process_action_point_recharge(delta: float) -> void:
 	var meditation_multiplier := meditation_ap_recharge_multiplier if is_meditating else 1.0
 	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier * meditation_multiplier
 	var changed := false
-	for i in _action_point_recharge_timers.size():
-		if _action_point_recharge_timers[i] <= 0.0:
-			continue
+	if is_meditating:
+		var target_index := _get_meditation_action_point_target_index()
+		if target_index >= 0:
+			_action_point_recharge_timers[target_index] = maxf(
+				0.0,
+				_action_point_recharge_timers[target_index] - recharge_delta
+			)
+			changed = true
+	else:
+		for i in _action_point_recharge_timers.size():
+			if _action_point_recharge_timers[i] <= 0.0:
+				continue
 
-		_action_point_recharge_timers[i] = maxf(0.0, _action_point_recharge_timers[i] - recharge_delta)
-		changed = true
+			_action_point_recharge_timers[i] = maxf(0.0, _action_point_recharge_timers[i] - recharge_delta)
+			changed = true
 
 	if changed:
 		current_action_points = _count_available_action_points()
 		_sync_hud()
+
+func _get_meditation_action_point_target_index() -> int:
+	var target_index := -1
+	var shortest_remaining_time := INF
+	for i in _action_point_recharge_timers.size():
+		var remaining_time := _action_point_recharge_timers[i]
+		if remaining_time <= 0.0 or remaining_time >= shortest_remaining_time:
+			continue
+
+		target_index = i
+		shortest_remaining_time = remaining_time
+	return target_index
 
 func _ensure_action_point_timers() -> void:
 	while _action_point_recharge_timers.size() < max_action_points:

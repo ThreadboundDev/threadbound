@@ -16,7 +16,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Land": {"frames": 4, "fps": 12.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ledge_Hang": {"frames": 4, "fps": 5.0, "loop": true, "cell": Vector2(320, 320)},
-	&"Sit": {"frames": 48, "fps": 12.0, "loop": false, "cell": Vector2(512, 512)},
+	&"Sit": {"frames": 48, "fps": 18.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
 }
 
@@ -249,6 +249,23 @@ func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> vo
 		Vector2(0.5, 0.5)
 	):
 		failures.append("Meditation must use the atlas-matched 0.50 visual scale.")
+	if not is_equal_approx(float(player.get("meditation_ap_recharge_multiplier")), 2.0):
+		failures.append("Meditation AP recovery must use the approved 2x multiplier.")
+	if not is_equal_approx(float(player.get("meditation_heal_interval")), 0.8):
+		failures.append("Meditation healing must pulse every 0.8 seconds.")
+	if not is_equal_approx(float(player.get("meditation_momentum_cost_per_pulse")), 10.0):
+		failures.append("Meditation healing must consume 10 momentum per pulse.")
+	if not is_equal_approx(float(player.get("meditation_health_ceiling_ratio")), 0.75):
+		failures.append("Meditation healing must stop at 75% health.")
+	if not is_equal_approx(float(player.get("meditation_flow_interval_multiplier")), 0.75):
+		failures.append("Flow meditation must use the approved 25% faster pulse cadence.")
+
+	var meditation_timers: Array[float] = [8.0, 3.0, 6.0, 0.0, 0.0, 0.0]
+	player.set("_action_point_recharge_timers", meditation_timers)
+	if int(player.call("_get_meditation_action_point_target_index")) != 1:
+		failures.append("Meditation AP recovery must target the spent point closest to full.")
+	var restored_timers: Array[float] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+	player.set("_action_point_recharge_timers", restored_timers)
 	if not (player.get("landing_visual_offset") as Vector2).is_equal_approx(Vector2(0.0, 5.0)):
 		failures.append("Jump landing must retain its ground contact with a 5 px visual offset.")
 	if not is_equal_approx(float(player.get("wall_cling_visual_standoff")), 22.0):
