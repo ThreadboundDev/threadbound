@@ -177,6 +177,20 @@ Pass direction:
 - Use thread colors only for active state accents.
 - Create a simpler health bar with stronger silhouette and less ornamental surface detail.
 
+Implemented V3 readability pass:
+
+- The approved bronze HUD frame and full identity/pattern field remain
+  unchanged.
+- Six 36 px crescent tokens use one bold silhouette with red, blue, yellow, and
+  muted-ivory colorless variants.
+- Health is a fixed crimson thread ribbon over a visibly recessed dark track;
+  a narrow light edge makes the current value unambiguous.
+- Momentum is a thin ivory-to-gold ribbon over the same recessed track. It has
+  no end knob or special cap, retains the animated Flow treatment, and uses a
+  narrow leading edge instead of a bulky endpoint.
+- The V3 raster sources were generated against a flat green key, converted to
+  transparent PNGs, and reduced to their runtime dimensions before import.
+
 ### Medium Priority: Background Architecture
 
 Files:

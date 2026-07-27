@@ -32,10 +32,12 @@ func _ready() -> void:
 	add_child(player)
 	if sprite != null:
 		_verify_sprite(sprite, failures)
+		_verify_movement_visual_tuning(player, failures)
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
 	_verify_ledge_transparency(failures)
+	_verify_wall_cling_contact_registration(failures)
 	_verify_sheet_cell_gutters(
 		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
 		Vector2i(6, 4),
@@ -50,7 +52,8 @@ func _ready() -> void:
 			(
 				"Player animation verification passed: %d corrected clips, atlas cells, "
 				+ "moving-finisher scale, standalone stationary double hit, locked ground "
-				+ "variants, and the capped three-hit moving chain are valid."
+				+ "variants, wall-contact registration, ledge climb easing, and the capped "
+				+ "three-hit moving chain are valid."
 			) % EXPECTED_ANIMATIONS.size()
 		)
 		get_tree().quit(0)
@@ -150,6 +153,64 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 			"Ledge hang background is not transparent enough: %d/%d pixels are transparent." %
 			[transparent_pixels, total_pixels]
 		)
+
+func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
+	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.92):
+		failures.append("Jump landing must use the approved 0.92 visual scale.")
+	if not (player.get("landing_visual_offset") as Vector2).is_equal_approx(Vector2(0.0, 5.0)):
+		failures.append("Jump landing must retain its ground contact with a 5 px visual offset.")
+	if not is_equal_approx(float(player.get("wall_cling_visual_standoff")), 22.0):
+		failures.append("Wall cling visual must sit 22 px away from the collision wall.")
+	if not is_equal_approx(float(player.get("ledge_climb_duration")), 0.2):
+		failures.append("Ledge climb transition must use the approved 0.2 second duration.")
+
+	var start := Vector2(0.0, 100.0)
+	var target := Vector2(68.0, -14.0)
+	var midpoint := player.call("_sample_ledge_climb_arc", start, target, 1, 0.5) as Vector2
+	var linear_midpoint := start.lerp(target, 0.5)
+	if midpoint.y >= linear_midpoint.y:
+		failures.append("Ledge climb midpoint does not rise above the direct teleport path.")
+	if not (player.call("_sample_ledge_climb_arc", start, target, 1, 0.0) as Vector2).is_equal_approx(start):
+		failures.append("Ledge climb arc does not begin at the hang position.")
+	if not (player.call("_sample_ledge_climb_arc", start, target, 1, 1.0) as Vector2).is_equal_approx(target):
+		failures.append("Ledge climb arc does not finish on the ledge.")
+
+func _verify_wall_cling_contact_registration(failures: Array[String]) -> void:
+	var path := "res://Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png"
+	var image := _load_imported_image(path)
+	if image == null or image.is_empty():
+		failures.append("Could not load the wall cling sheet for contact registration.")
+		return
+
+	var cell_size := Vector2i(image.get_width() / 2, image.get_height() / 2)
+	var reference_right := -1
+	var reference_bottom := -1
+	for frame_index in 4:
+		var origin := Vector2i(
+			(frame_index % 2) * cell_size.x,
+			(frame_index / 2) * cell_size.y
+		)
+		var right := -1
+		var bottom := -1
+		for y in cell_size.y:
+			for x in cell_size.x:
+				if image.get_pixel(origin.x + x, origin.y + y).a < 0.18:
+					continue
+				right = maxi(right, x)
+				bottom = maxi(bottom, y)
+
+		if right < 0:
+			failures.append("Wall cling frame %d is empty." % frame_index)
+			continue
+		if frame_index == 0:
+			reference_right = right
+			reference_bottom = bottom
+			continue
+		if right != reference_right or bottom != reference_bottom:
+			failures.append(
+				"Wall cling frame %d contact is (%d, %d); expected (%d, %d)." %
+				[frame_index, right, bottom, reference_right, reference_bottom]
+			)
 
 func _verify_sheet_cell_gutters(
 	path: String,

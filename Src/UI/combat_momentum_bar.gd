@@ -1,6 +1,10 @@
 extends Control
 class_name CombatMomentumBar
 
+@export var track_texture: Texture2D:
+	set(value):
+		track_texture = value
+		queue_redraw()
 @export var fill_texture: Texture2D:
 	set(value):
 		fill_texture = value
@@ -17,6 +21,8 @@ class_name CombatMomentumBar
 @export var smooth_fill_speed := 5.5
 @export var flow_scroll_speed := 0.34
 @export var flow_pulse_speed := 5.5
+@export var track_tint := Color(0.72, 0.68, 0.61, 0.9)
+@export var leading_edge_color := Color(1.0, 0.9, 0.58, 0.96)
 
 @export_group("State Tints")
 @export var low_tint := Color(0.78, 0.76, 0.7, 0.84)
@@ -53,6 +59,9 @@ func is_flow_active() -> bool:
 	return _flow_active
 
 func _draw() -> void:
+	if track_texture:
+		draw_texture_rect(track_texture, fill_rect, false, track_tint)
+
 	if not fill_texture or _display_value <= 0.0:
 		return
 
@@ -70,6 +79,15 @@ func _draw() -> void:
 		tint = tint.lerp(Color(1.34, 1.24, 0.9, 1.0), pulse * 0.34)
 
 	_draw_wrapped_texture(active_rect, source_offset, source_span, texture_size.y, tint)
+	if _display_value < 1.0 and active_rect.size.x > 4.0:
+		var edge_x := active_rect.end.x - 0.75
+		draw_line(
+			Vector2(edge_x, active_rect.position.y + 1.5),
+			Vector2(edge_x, active_rect.end.y - 1.5),
+			leading_edge_color,
+			1.5,
+			true
+		)
 
 func _draw_wrapped_texture(
 	destination: Rect2,

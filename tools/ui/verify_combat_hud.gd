@@ -30,7 +30,11 @@ func _verify_scene_layers(hud: CombatHUD) -> void:
 		"Pattern overlay covers the full identity field."
 	)
 	_expect(hud.action_point_orbs.size() == 6, "Exactly six action-point controls exist.")
+	_expect(hud.health_bar.track_texture != null, "Health has a visible empty track.")
+	_expect(hud.health_bar.fill_texture != null, "Health uses the dedicated crimson fill.")
 	_expect(hud.momentum_bar != null, "Momentum bar exists.")
+	_expect(hud.momentum_bar.track_texture != null, "Momentum has a visible empty track.")
+	_expect(hud.momentum_bar.fill_texture != null, "Momentum uses the ivory-to-gold fill.")
 	_expect(hud.thread_knot_counter != null, "Thread Knot counter exists.")
 	var frame := hud.get_node("HUDRoot/Frame") as TextureRect
 	_expect(hud.health_bar.z_index > frame.z_index, "Health fill renders above the frame rail interior.")
@@ -52,7 +56,7 @@ func _verify_action_point_variants(hud: CombatHUD) -> void:
 		)
 		_expect(hud.action_point_orbs[index].texture != null, "Action point %d has a texture." % (index + 1))
 		_expect(
-			hud.action_point_orbs[index].size.x >= 24.0,
+			hud.action_point_orbs[index].size.x >= 34.0,
 			"Action point %d remains readable at HUD scale." % (index + 1)
 		)
 
@@ -72,6 +76,16 @@ func _verify_action_point_variants(hud: CombatHUD) -> void:
 		if texture:
 			texture_paths[texture.resource_path] = true
 	_expect(texture_paths.size() == 4, "Red, blue, yellow, and colorless use distinct assets.")
+	for texture in [
+		hud.action_point_red_texture,
+		hud.action_point_blue_texture,
+		hud.action_point_yellow_texture,
+		hud.action_point_colorless_texture,
+	]:
+		_expect(
+			texture.resource_path.contains("/Hud/V3/action_point_crescent_"),
+			"Action point asset uses the V3 crescent silhouette."
+		)
 
 func _verify_identity_and_pattern_hooks(hud: CombatHUD) -> void:
 	var test_identity_color := Color(0.35, 0.2, 0.62, 1.0)
@@ -89,6 +103,7 @@ func _verify_momentum_flow(hud: CombatHUD) -> void:
 	hud.set_momentum_state(&"Flow", true)
 	_expect(hud.momentum_bar.is_flow_active(), "Flow state enables momentum animation.")
 	_expect(hud.momentum_bar.fill_rect.size.y <= 12.0, "Momentum remains a thin rail.")
+	_expect(hud.momentum_bar.fill_rect.size.y >= 10.0, "Momentum fill remains clearly visible.")
 
 func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 	hud.thread_knot_visible_seconds = 0.05

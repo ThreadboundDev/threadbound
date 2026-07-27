@@ -90,6 +90,8 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_group("Movement Animation")
 @export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
 @export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
+@export_range(0.5, 1.0, 0.01) var landing_visual_scale_multiplier := 0.92
+@export var landing_visual_offset := Vector2(0.0, 5.0)
 
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
@@ -226,12 +228,15 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export var wall_jump_up_force: float = 680.0
 @export var wall_cling_stall_time: float = 0.32
 @export var wall_slide_max_speed: float = 620.0
+@export_range(0.0, 48.0, 1.0) var wall_cling_visual_standoff := 22.0
 @export_group("Ledge Grab")
 @export var ledge_forward_reach := 42.0
 @export var ledge_head_height := 72.0
 @export var ledge_hang_offset := Vector2(28.0, 66.0)
 @export var ledge_climb_horizontal_offset := 40.0
 @export var ledge_climb_vertical_offset := 48.0
+@export_range(0.05, 0.5, 0.01) var ledge_climb_duration := 0.2
+@export_range(0.0, 64.0, 1.0) var ledge_climb_arc_height := 18.0
 @export var ledge_jump_force := 720.0
 
 @export_group("Meditation")
@@ -292,8 +297,13 @@ var wall_cling_timer: float = 0.0
 var has_wall_jumped: bool = false
 var air_jump_available: bool = true
 var is_ledge_hanging := false
+var is_ledge_climbing := false
 var _ledge_direction := 0
 var _ledge_top := Vector2.ZERO
+var _ledge_climb_elapsed := 0.0
+var _ledge_climb_start := Vector2.ZERO
+var _ledge_climb_target := Vector2.ZERO
+var _ledge_climb_jump_after := false
 var is_meditating := false
 var _meditation_hold_timer := 0.0
 
@@ -477,6 +487,9 @@ func _physics_process(delta: float) -> void:
 
 	if save_point_interaction_active:
 		_process_save_point_interaction(delta)
+		return
+	if _process_ledge_climb(delta):
+		update_animations(0.0)
 		return
 	if _process_ledge_hang():
 		update_animations(0.0)
@@ -815,7 +828,7 @@ func handle_wall_cling(delta: float) -> void:
 		wall_cling_timer = 0.0
 
 func _try_grab_ledge() -> bool:
-	if is_on_floor() or is_ledge_hanging or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0:
+	if is_on_floor() or is_ledge_hanging or is_ledge_climbing or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0:
 		return false
 	var direction := last_direction
 	if is_on_wall():
@@ -855,17 +868,65 @@ func _process_ledge_hang() -> bool:
 	if Input.is_action_just_pressed("move_down"):
 		is_ledge_hanging = false
 	elif Input.is_action_just_pressed("Jump"):
-		_climb_from_ledge(true)
+		_start_ledge_climb(true)
 	elif Input.is_action_just_pressed("move_up"):
-		_climb_from_ledge(false)
+		_start_ledge_climb(false)
 	return is_ledge_hanging
 
-func _climb_from_ledge(jump_after: bool) -> void:
-	global_position = _ledge_top + Vector2(_ledge_direction * ledge_climb_horizontal_offset, -ledge_climb_vertical_offset)
+func _start_ledge_climb(jump_after: bool) -> void:
+	_ledge_climb_start = global_position
+	_ledge_climb_target = _ledge_top + Vector2(
+		_ledge_direction * ledge_climb_horizontal_offset,
+		-ledge_climb_vertical_offset
+	)
+	_ledge_climb_elapsed = 0.0
+	_ledge_climb_jump_after = jump_after
 	is_ledge_hanging = false
-	velocity = Vector2(_ledge_direction * 120.0, -ledge_jump_force if jump_after else 0.0)
-	if jump_after:
+	is_ledge_climbing = true
+	velocity = Vector2.ZERO
+
+func _process_ledge_climb(delta: float) -> bool:
+	if not is_ledge_climbing:
+		return false
+
+	velocity = Vector2.ZERO
+	_ledge_climb_elapsed = minf(_ledge_climb_elapsed + delta, ledge_climb_duration)
+	var progress := clampf(_ledge_climb_elapsed / maxf(ledge_climb_duration, 0.001), 0.0, 1.0)
+	var eased_progress := smoothstep(0.0, 1.0, progress)
+	global_position = _sample_ledge_climb_arc(
+		_ledge_climb_start,
+		_ledge_climb_target,
+		_ledge_direction,
+		eased_progress
+	)
+
+	if progress < 1.0:
+		return true
+
+	global_position = _ledge_climb_target
+	is_ledge_climbing = false
+	velocity = Vector2(
+		_ledge_direction * 120.0,
+		-ledge_jump_force if _ledge_climb_jump_after else 0.0
+	)
+	if _ledge_climb_jump_after:
 		report_momentum_action(MOMENTUM_CATEGORY_JUMP)
+	_ledge_climb_jump_after = false
+	return true
+
+func _sample_ledge_climb_arc(
+	start: Vector2,
+	target: Vector2,
+	direction: int,
+	progress: float
+) -> Vector2:
+	var t := clampf(progress, 0.0, 1.0)
+	var control := Vector2(
+		start.x + float(direction) * 8.0,
+		target.y - ledge_climb_arc_height
+	)
+	var inverse := 1.0 - t
+	return inverse * inverse * start + 2.0 * inverse * t * control + t * t * target
 
 func _process_meditation(delta: float) -> void:
 	var was_meditating := is_meditating
@@ -921,13 +982,16 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = save_point_sit_visual_scale
 		play_character_anim(SIT_ANIMATION, "equip_idle")
 		return
-	if is_ledge_hanging and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
+	if (is_ledge_hanging or is_ledge_climbing) and player_animation.sprite_frames.has_animation(LEDGE_HANG_ANIMATION):
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
+		player_animation.position = _player_default_visual_position
 		play_character_anim(LEDGE_HANG_ANIMATION, "equip_wall_cling")
 		return
 	if player_animation.scale != _player_default_visual_scale:
 		player_animation.scale = _player_default_visual_scale
+	if player_animation.position != _player_default_visual_position:
+		player_animation.position = _player_default_visual_position
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		player_animation.rotation = 0.0
@@ -953,6 +1017,11 @@ func update_animations(dir: float) -> void:
 
 	elif is_wall_clinging and player_animation.sprite_frames.has_animation("Wall_Cling"):
 		player_animation.rotation = 0.0
+		var wall_direction := _get_wall_visual_direction()
+		player_animation.position = _player_default_visual_position - Vector2(
+			float(wall_direction) * wall_cling_visual_standoff,
+			0.0
+		)
 		play_character_anim("Wall_Cling", "equip_wall_cling")
 
 	elif not is_on_floor():
@@ -966,6 +1035,8 @@ func update_animations(dir: float) -> void:
 
 	elif landing_animation_timer > 0.0 and absf(dir) < 0.01 and player_animation.sprite_frames.has_animation("Jump_Land"):
 		player_animation.rotation = 0.0
+		player_animation.scale = _player_default_visual_scale * landing_visual_scale_multiplier
+		player_animation.position = _player_default_visual_position + landing_visual_offset
 		play_character_anim("Jump_Land", "equip_idle")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
@@ -1019,14 +1090,18 @@ func _update_wall_cling_vfx() -> void:
 		wall_cling_vfx.stop()
 		return
 
-	var wall_direction: float = -signf(get_wall_normal().x)
-	if wall_direction == 0.0:
-		wall_direction = -1 if player_animation.flip_h else 1
+	var wall_direction := _get_wall_visual_direction()
 
-	wall_cling_vfx.position = Vector2(32.0 * wall_direction, -54.0)
+	wall_cling_vfx.position = Vector2(20.0 * float(wall_direction), -54.0)
 	wall_cling_vfx.flip_h = wall_direction > 0
 	if not wall_cling_vfx.is_playing():
 		wall_cling_vfx.play("cling")
+
+func _get_wall_visual_direction() -> int:
+	var wall_direction := int(-signf(get_wall_normal().x))
+	if wall_direction == 0:
+		wall_direction = -1 if player_animation.flip_h else 1
+	return wall_direction
 
 # ===============================
 # COMBAT
@@ -2182,6 +2257,8 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	attack_active_finished = false
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
+	is_ledge_hanging = false
+	is_ledge_climbing = false
 	velocity = Vector2.ZERO
 	global_position = respawn_position
 	_movement_momentum_last_position = global_position
@@ -2243,6 +2320,8 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	_cancel_air_double_attack()
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
+	is_ledge_hanging = false
+	is_ledge_climbing = false
 	attack_timer = 0.0
 	attack_cooldown_timer = 0.0
 	velocity = Vector2.ZERO

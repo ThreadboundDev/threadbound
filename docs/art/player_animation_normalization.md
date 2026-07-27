@@ -156,8 +156,18 @@ Secondary-motion sheets now use padded 320 px runtime cells:
   frame's head anchor.
 - Landing and both grapple tosses register to the first frame's foot/ground
   anchor.
+- The runtime wall-cling sheet receives a final contact registration pass after
+  downscaling. Its occupied wall and ground edges are locked to frame zero so
+  rounding cannot introduce a one-pixel fidget.
 - Ledge hang uses a transparent 2x2 sheet; the connected opaque-black source
   background is removed without keying dark pixels enclosed by the character.
+
+Runtime presentation applies two small movement-only corrections without
+changing collision: landing uses a `0.92` visual multiplier with a 5 px downward
+offset, while wall cling shifts the sprite 22 px away from the collision wall.
+The cling contact VFX remains at the collision surface. Pulling onto a ledge now
+follows a 0.2-second eased quadratic arc instead of teleporting from the hang
+point to the platform top.
 
 The padding allows corrective translation without cropping an extended hand,
 weapon pose, foot, or billowing cloth.
@@ -270,9 +280,10 @@ It checks the motion clips, editor-authored sit and ledge clips, moving,
 stationary, and backpedal ground combos, and the air double attack: frame
 counts, frame textures, atlas cell sizes, playback speeds, loop modes, and the
 player's animation-specific visual scale. It also verifies ledge alpha,
-stationary atlas gutters, standalone stationary reset behavior, ground variant
-locking, upward input routing, the 130-degree frontal arc, and absence of the
-retired upward clips.
+wall-cling contact registration, landing and wall visual tuning, the ledge
+climb arc, stationary atlas gutters, standalone stationary reset behavior,
+ground variant locking, upward input routing, the 130-degree frontal arc, and
+absence of the retired upward clips.
 
 ## Deliberate limits
 

@@ -480,6 +480,82 @@ public static class ThreadboundAnimationNormalizer
         }
     }
 
+    public static void StabilizeWallContactGrid(
+        string inputPath,
+        string outputPath,
+        int columns,
+        int rows)
+    {
+        using (var source = new Bitmap(inputPath))
+        using (var output = new Bitmap(
+            source.Width,
+            source.Height,
+            PixelFormat.Format32bppArgb))
+        using (var graphics = Graphics.FromImage(output))
+        {
+            int cellWidth = source.Width / columns;
+            int cellHeight = source.Height / rows;
+            var cells = new List<Bitmap>();
+            var bounds = new List<Rectangle>();
+
+            for (int row = 0; row < rows; row++)
+            {
+                for (int column = 0; column < columns; column++)
+                {
+                    var sourceRect = new Rectangle(
+                        column * cellWidth,
+                        row * cellHeight,
+                        cellWidth,
+                        cellHeight);
+                    Bitmap cell = source.Clone(sourceRect, PixelFormat.Format32bppArgb);
+                    cells.Add(cell);
+                    bounds.Add(FindAlphaBounds(cell, 48));
+                }
+            }
+
+            Rectangle reference = bounds[0];
+            if (reference.IsEmpty)
+            {
+                throw new InvalidOperationException("Wall cling reference frame is empty.");
+            }
+
+            graphics.Clear(Color.Transparent);
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            for (int index = 0; index < cells.Count; index++)
+            {
+                Rectangle frameBounds = bounds[index];
+                if (frameBounds.IsEmpty)
+                {
+                    cells[index].Dispose();
+                    continue;
+                }
+
+                int row = index / columns;
+                int column = index % columns;
+                int shiftX = reference.Right - frameBounds.Right;
+                int shiftY = reference.Bottom - frameBounds.Bottom;
+                var targetCell = new Rectangle(
+                    column * cellWidth,
+                    row * cellHeight,
+                    cellWidth,
+                    cellHeight);
+
+                graphics.SetClip(targetCell);
+                graphics.DrawImageUnscaled(
+                    cells[index],
+                    targetCell.X + shiftX,
+                    targetCell.Y + shiftY);
+                graphics.ResetClip();
+                cells[index].Dispose();
+            }
+
+            output.Save(outputPath, ImageFormat.Png);
+        }
+    }
+
     public static void SolidifyCharacterAlpha(string inputPath, string outputPath)
     {
         using (var sourceFile = new Bitmap(inputPath))
@@ -2193,6 +2269,18 @@ foreach ($runtimeAsset in $runtimeRasterAssets) {
         -NormalizedWidth ([int]$runtimeAsset[1]) `
         -NormalizedHeight ([int]$runtimeAsset[2])
 }
+
+# The runtime downscale can round otherwise registered cling frames one pixel
+# apart. Lock the occupied right and bottom edges to frame zero after resizing,
+# keeping the wall contact and grounded leg origin still through the loop.
+$wallClingCyclePath = Join-Path $outputRoot "movement\wall_cling_cycle.png"
+$stabilizedWallClingCyclePath = "$wallClingCyclePath.stabilized.png"
+[ThreadboundAnimationNormalizer]::StabilizeWallContactGrid(
+    $wallClingCyclePath,
+    $stabilizedWallClingCyclePath,
+    2,
+    2)
+Move-Item -LiteralPath $stabilizedWallClingCyclePath -Destination $wallClingCyclePath -Force
 
 # Keep intermittent loose cloth out of the jump/grapple silhouettes. Each
 # cleanup compares only the shoulder region with a nearby clean reference
