@@ -311,3 +311,23 @@ They are about:
 > You do not break the boss.  
 
 > You out-weave it.
+
+---
+
+## Boss presentation
+
+Boss encounters announce their larger combat scale through presentation without
+changing the underlying combat rules:
+
+- The boss health rail uses the same near-black weave, aged bronze, muted ivory,
+  and crimson fill language as the player HUD.
+- The centered boss title is an editable scene property. The demo encounter
+  displays `PROTO-WEAVER`.
+- A circular socket at each end of the rail represents one armor-link add. A
+  bright portrait means the add is alive; a grey portrait and radial countdown
+  communicate its respawn.
+- Crossing the arena lock smoothly changes the world camera zoom from `1.0` to
+  `0.84` over `0.75` seconds. This reveals more of the boss, adds, and attack
+  lanes while keeping the player readable.
+- Boss defeat restores the camera zoom that was active before the encounter.
+  HUD elements remain unaffected because they render in a `CanvasLayer`.

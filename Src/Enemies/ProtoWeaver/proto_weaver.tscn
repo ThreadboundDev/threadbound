@@ -165,11 +165,6 @@ texture_mode = 1
 layer = 20
 
 [node name="BossHealthBar" parent="BossHealthLayer" index="0" unique_id=632084359 instance=ExtResource("10_boss_bar")]
-custom_minimum_size = Vector2(768, 190)
-offset_top = 16.0
-offset_bottom = 206.0
-fill_texture = null
-threadling_icon_texture = null
 
 [node name="BossMusicArea" type="Area2D" parent="." index="14" unique_id=61703702]
 collision_layer = 0

@@ -1,6 +1,10 @@
 extends Node
 
 const COMBAT_HUD_SCENE := preload("res://Src/UI/combat_hud.tscn")
+const BOSS_HEALTH_BAR_SCENE := preload("res://Src/UI/boss_health_bar.tscn")
+const BOSS_ARENA_LOCK_SCRIPT := preload(
+	"res://Src/Environment/World/boss_arena_lock.gd"
+)
 
 var _failures := PackedStringArray()
 
@@ -20,6 +24,8 @@ func _ready() -> void:
 	_verify_identity_and_pattern_hooks(hud)
 	_verify_momentum_flow(hud)
 	await _verify_thread_knot_counter(hud)
+	_verify_boss_health_bar()
+	await _verify_boss_camera_zoom()
 	_finish()
 
 func _verify_scene_layers(hud: CombatHUD) -> void:
@@ -132,6 +138,86 @@ func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 		is_equal_approx(knot_icon.offset_left, 36.0),
 		"Thread Knot icon sits completely inside the counter frame."
 	)
+
+func _verify_boss_health_bar() -> void:
+	var boss_bar := BOSS_HEALTH_BAR_SCENE.instantiate() as BossHealthBar
+	_expect(boss_bar != null, "Boss health bar scene instantiates as BossHealthBar.")
+	if not boss_bar:
+		return
+
+	add_child(boss_bar)
+	boss_bar.size = Vector2(1100.0, 300.0)
+	var title := boss_bar.get_node_or_null("BossTitle") as Label
+	_expect(title != null, "Boss health bar includes an editable title label.")
+	_expect(title.text == "PROTO-WEAVER", "Proto-Weaver title is visible above the boss rail.")
+	_expect(
+		boss_bar.frame_texture.resource_path.ends_with("boss_health_frame_v4.png"),
+		"Boss frame uses the player-HUD-matched V4 asset."
+	)
+	_expect(
+		boss_bar.fill_texture.resource_path.ends_with("health_fill_v3.png"),
+		"Boss health uses the same woven crimson fill as the player HUD."
+	)
+	_expect(
+		boss_bar.health_fill_rect.size.x >= 900.0,
+		"Boss health rail remains broad and readable."
+	)
+	_expect(
+		boss_bar.left_orb_center.x < boss_bar.health_fill_rect.position.x,
+		"Left add socket remains outside the health rail."
+	)
+	_expect(
+		boss_bar.right_orb_center.x > boss_bar.health_fill_rect.end.x,
+		"Right add socket remains outside the health rail."
+	)
+	_expect(
+		boss_bar.title_rect.end.y < 96.0,
+		"Boss title stays above the center ornament instead of overlapping it."
+	)
+	boss_bar.set_armor_link_state(0, true, 0.0, 26.0, 3.0)
+	boss_bar.set_armor_link_state(1, false, 13.0, 26.0, 3.0)
+	_expect(
+		bool(boss_bar.call("_is_armored")),
+		"A living add still communicates the boss's armored state."
+	)
+	boss_bar.queue_free()
+
+func _verify_boss_camera_zoom() -> void:
+	var camera := Camera2D.new()
+	camera.name = "BossTestCamera"
+	camera.enabled = false
+	add_child(camera)
+
+	var arena_lock := Area2D.new()
+	arena_lock.name = "BossTestArenaLock"
+	arena_lock.set_script(BOSS_ARENA_LOCK_SCRIPT)
+	arena_lock.set("boss_path", NodePath("../MissingBoss"))
+	arena_lock.set("entrance_door_path", NodePath("../MissingDoor"))
+	arena_lock.set("camera_path", NodePath("../BossTestCamera"))
+	arena_lock.set("boss_camera_zoom", Vector2(0.84, 0.84))
+	arena_lock.set("boss_zoom_duration", 0.05)
+	add_child(arena_lock)
+	await get_tree().process_frame
+
+	var test_player := Node2D.new()
+	test_player.add_to_group("player")
+	add_child(test_player)
+	arena_lock.call("_on_body_entered", test_player)
+	await get_tree().create_timer(0.12).timeout
+	_expect(
+		camera.zoom.is_equal_approx(Vector2(0.84, 0.84)),
+		"Entering the boss arena smoothly selects the approved 0.84 camera zoom."
+	)
+
+	arena_lock.call("_on_boss_died", null)
+	await get_tree().create_timer(0.12).timeout
+	_expect(
+		camera.zoom.is_equal_approx(Vector2.ONE),
+		"Boss defeat restores the camera's original zoom."
+	)
+	test_player.queue_free()
+	arena_lock.queue_free()
+	camera.queue_free()
 
 func _texture_alpha_coverage(texture: Texture2D) -> float:
 	if not texture:
