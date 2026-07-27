@@ -196,9 +196,11 @@ among those authored clips but no longer creates animation frames in `_ready()`.
 
 The ledge-hang sheet is a separately authored four-frame contact pose. Its upper
 hand, overall bounds, and foot line are registered within two pixels across the
-loop; the arched torso and restored waist sash are preserved directly in the
-artwork. The normalizer removes any connected dark background but does not apply
-the wall-cling procedural warp to this sheet.
+loop. The gripping arm reaches the x=198-204 contact band in each 320 px cell,
+letting the hand meet thin floating-platform edges while the arched torso remains
+clear of thick wall foliage. The restored waist sash is preserved directly in
+the artwork. The normalizer removes any connected dark background but does not
+apply the wall-cling procedural warp to this sheet.
 
 ### Secondary motion and grapple tosses
 

@@ -177,6 +177,11 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 		if maximum.x < 0:
 			failures.append("Ledge hang frame %d is empty." % frame_index)
 			continue
+		if maximum.x < 198 or maximum.x > 204:
+			failures.append(
+				"Ledge hang frame %d grip reaches x=%d; expected the wall-contact band 198-204." %
+				[frame_index, maximum.x]
+			)
 		var bounds := Rect2i(minimum, maximum - minimum + Vector2i.ONE)
 		if frame_index == 0:
 			reference_bounds = bounds
