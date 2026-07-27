@@ -475,10 +475,10 @@ func _start_grapple_fire() -> void:
 	if active_needle_sprite:
 		active_needle_sprite.global_position = grapple_tip_position
 
-	_update_active_grapple_visuals()
-	if active_grapple_root:
+	var grapple_visuals_valid := _update_active_grapple_visuals()
+	if grapple_visuals_valid and active_grapple_root:
 		active_grapple_root.visible = true
-	if active_needle_sprite:
+	if grapple_visuals_valid and active_needle_sprite:
 		active_needle_sprite.visible = true
 
 	AudioManager.play_sfx(&"grapple")
@@ -676,9 +676,9 @@ func _notify_grapple_collider(collider: Object) -> void:
 # ===============================
 # ACTIVE GRAPPLE VISUAL UPDATE
 # ===============================
-func _update_active_grapple_visuals() -> void:
+func _update_active_grapple_visuals() -> bool:
 	if not active_rope_line or not active_needle_sprite or not active_grapple_root:
-		return
+		return false
 
 	var origin_global := get_grapple_origin_global_position()
 	var tip_global := grapple_tip_position
@@ -686,7 +686,7 @@ func _update_active_grapple_visuals() -> void:
 		active_rope_line.points = PackedVector2Array()
 		active_grapple_root.visible = false
 		active_needle_sprite.visible = false
-		return
+		return false
 
 	var origin_local := active_grapple_root.to_local(origin_global)
 	var tip_local := active_grapple_root.to_local(tip_global)
@@ -724,6 +724,7 @@ func _update_active_grapple_visuals() -> void:
 		line_points.append(active_rope_line.to_local(tip_global))
 
 	active_rope_line.points = line_points
+	return true
 
 func sync_grapple_origin_after_player_move() -> void:
 	if grapple_state == GrappleState.STOWED:

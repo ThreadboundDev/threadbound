@@ -1,6 +1,12 @@
 extends Node
 
 const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
+const GRAPPLE_EQUIPMENT_SCENES := [
+	{"label": "base", "scene": BASE_GLOVES_SCENE},
+	{"label": "blue", "scene": preload("res://Src/Equipment/blue_gloves.tscn")},
+	{"label": "red", "scene": preload("res://Src/Equipment/red_gloves.tscn")},
+	{"label": "yellow", "scene": preload("res://Src/Equipment/yellow_gloves.tscn")},
+]
 
 var failures: Array[String] = []
 
@@ -8,15 +14,13 @@ func _ready() -> void:
 	var player := _create_player()
 	add_child(player)
 
+	for equipment in GRAPPLE_EQUIPMENT_SCENES:
+		_verify_serialized_grapple_visibility(
+			equipment["scene"] as PackedScene,
+			String(equipment["label"])
+		)
+
 	var gloves := BASE_GLOVES_SCENE.instantiate() as BaseGloves
-	var serialized_active_root := gloves.get_node("Equipment/ActiveGrappleRoot") as Node2D
-	var serialized_active_needle := gloves.get_node(
-		"Equipment/ActiveGrappleRoot/ActiveNeedleSprite"
-	) as Sprite2D
-	if serialized_active_root.visible:
-		failures.append("Active grapple root is visible before its endpoints are initialized.")
-	if serialized_active_needle.visible:
-		failures.append("Active grapple needle is visible before its endpoints are initialized.")
 	player.add_child(gloves)
 	gloves.player = player
 	gloves.on_equipped()
@@ -24,6 +28,17 @@ func _ready() -> void:
 		failures.append("Active grapple root became visible during equipment startup.")
 	if not gloves.active_rope_line.points.is_empty():
 		failures.append("Active grapple rope retained stale points during equipment startup.")
+	gloves.active_grapple_root.visible = true
+	gloves.active_needle_sprite.visible = true
+	gloves.grapple_tip_position = Vector2(INF, 0.0)
+	var invalid_visuals_accepted := bool(gloves.call("_update_active_grapple_visuals"))
+	if (
+		invalid_visuals_accepted
+		or gloves.active_grapple_root.visible
+		or gloves.active_needle_sprite.visible
+		or not gloves.active_rope_line.points.is_empty()
+	):
+		failures.append("Invalid grapple endpoints exposed startup visuals.")
 
 	var ignored_interaction_area := _create_area(Vector2(70.0, 0.0), 2)
 	add_child(ignored_interaction_area)
@@ -102,6 +117,18 @@ func _ready() -> void:
 	for failure in failures:
 		push_error(failure)
 	get_tree().quit(1)
+
+func _verify_serialized_grapple_visibility(scene: PackedScene, label: String) -> void:
+	var equipment := scene.instantiate()
+	var active_root := equipment.get_node("Equipment/ActiveGrappleRoot") as Node2D
+	var active_needle := equipment.get_node(
+		"Equipment/ActiveGrappleRoot/ActiveNeedleSprite"
+	) as Sprite2D
+	if active_root.visible:
+		failures.append("%s grapple root is visible before initialization." % label)
+	if active_needle.visible:
+		failures.append("%s grapple needle is visible before initialization." % label)
+	equipment.free()
 
 func _create_player() -> CharacterBody2D:
 	var player := CharacterBody2D.new()

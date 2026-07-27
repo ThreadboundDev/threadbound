@@ -24,6 +24,7 @@ const STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS := [
 	1.0, 1.0, 1.0, 1.0, 1.0,
 	1.0, 1.0, 1.0, 1.0,
 ]
+const STATIONARY_ATTACK_FOOT_ANCHOR_Y := 69.0
 const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
 # ===============================
@@ -1580,7 +1581,15 @@ func _apply_attack_visual_tuning() -> void:
 			scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":
 		scale_multiplier = air_attack_visual_scale_multiplier
-	scale_multiplier *= _get_attack_frame_scale_multiplier()
+	var frame_scale_multiplier := _get_attack_frame_scale_multiplier()
+	if frame_scale_multiplier != 1.0:
+		visual_offset.y -= (
+			_player_default_visual_scale.y
+			* scale_multiplier
+			* STATIONARY_ATTACK_FOOT_ANCHOR_Y
+			* (frame_scale_multiplier - 1.0)
+		)
+	scale_multiplier *= frame_scale_multiplier
 	if player_animation.flip_h:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier

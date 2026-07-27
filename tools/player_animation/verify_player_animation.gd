@@ -242,12 +242,17 @@ func _verify_grounded_attack_registration(failures: Array[String]) -> void:
 		{
 			"path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
 			"grid": Vector2i(6, 4),
-			"frames": 19,
+			"frames": PackedInt32Array([
+				2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+				12, 13, 14, 15, 16, 17, 18, 19, 20,
+			]),
 		},
 		{
 			"path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
 			"grid": Vector2i(5, 5),
-			"frames": 14,
+			"frames": PackedInt32Array([
+				0, 1, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+			]),
 		},
 	]:
 		var path: String = sheet["path"]
@@ -258,17 +263,23 @@ func _verify_grounded_attack_registration(failures: Array[String]) -> void:
 		var grid: Vector2i = sheet["grid"]
 		var cell_size := Vector2i(image.get_width() / grid.x, image.get_height() / grid.y)
 		var reference_bottom := -1
-		for frame_index in int(sheet["frames"]):
+		for frame_value in sheet["frames"]:
+			var frame_index := int(frame_value)
 			var origin := Vector2i(
 				(frame_index % grid.x) * cell_size.x,
 				(frame_index / grid.x) * cell_size.y
 			)
 			var bottom := -1
+			var visible_pixels := 0
 			for y in cell_size.y:
 				for x in cell_size.x:
 					if image.get_pixel(origin.x + x, origin.y + y).a >= 0.18:
 						bottom = maxi(bottom, y)
-			if frame_index == 0:
+						visible_pixels += 1
+			if visible_pixels == 0:
+				failures.append("%s runtime frame cell %d is empty." % [path, frame_index])
+				continue
+			if reference_bottom < 0:
 				reference_bottom = bottom
 			elif abs(bottom - reference_bottom) > 1:
 					failures.append(
@@ -397,6 +408,12 @@ func _verify_ground_attack_variant_locking(
 		failures.append(
 			"Stationary frame 6 scale is %s; expected corrected scale %s." %
 			[sprite.scale, expected_stationary_scale]
+		)
+	var expected_stationary_y := -2.0 - 0.7 * 1.4 * 69.0 * 0.16
+	if not is_equal_approx(sprite.position.y, expected_stationary_y):
+		failures.append(
+			"Stationary frame 6 foot anchor is %s; expected corrected y %s." %
+			[sprite.position.y, expected_stationary_y]
 		)
 
 	player.set("velocity", Vector2(-120.0, 0.0))

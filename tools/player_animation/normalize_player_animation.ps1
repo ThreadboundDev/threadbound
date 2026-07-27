@@ -561,12 +561,11 @@ public static class ThreadboundAnimationNormalizer
         string outputPath,
         int columns,
         int rows,
-        int usedFrames)
+        int[] frameIndices)
     {
         using (var source = new Bitmap(inputPath))
-        using (var output = new Bitmap(
-            source.Width,
-            source.Height,
+        using (var output = source.Clone(
+            new Rectangle(0, 0, source.Width, source.Height),
             PixelFormat.Format32bppArgb))
         using (var graphics = Graphics.FromImage(output))
         {
@@ -575,8 +574,14 @@ public static class ThreadboundAnimationNormalizer
             var cells = new List<Bitmap>();
             var bottoms = new List<int>();
 
-            for (int frameIndex = 0; frameIndex < usedFrames; frameIndex++)
+            foreach (int frameIndex in frameIndices)
             {
+                if (frameIndex < 0 || frameIndex >= columns * rows)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        "frameIndices",
+                        "Grounded attack frame index is outside the atlas grid.");
+                }
                 int column = frameIndex % columns;
                 int row = frameIndex / columns;
                 var sourceRect = new Rectangle(
@@ -604,7 +609,6 @@ public static class ThreadboundAnimationNormalizer
                 ? (int)Math.Round((bottoms[middle - 1] + bottoms[middle]) * 0.5)
                 : bottoms[middle];
 
-            graphics.Clear(Color.Transparent);
             graphics.CompositingMode = CompositingMode.SourceCopy;
             graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
             graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -613,8 +617,9 @@ public static class ThreadboundAnimationNormalizer
             {
                 Bitmap cell = cells[frameIndex];
                 Rectangle bounds = FindAlphaBounds(cell, 48);
-                int column = frameIndex % columns;
-                int row = frameIndex / columns;
+                int atlasFrameIndex = frameIndices[frameIndex];
+                int column = atlasFrameIndex % columns;
+                int row = atlasFrameIndex / columns;
                 var targetCell = new Rectangle(
                     column * cellWidth,
                     row * cellHeight,
@@ -623,6 +628,10 @@ public static class ThreadboundAnimationNormalizer
                 int shiftY = bounds.IsEmpty ? 0 : targetBottom - bounds.Bottom;
 
                 graphics.SetClip(targetCell);
+                using (var transparentBrush = new SolidBrush(Color.Transparent))
+                {
+                    graphics.FillRectangle(transparentBrush, targetCell);
+                }
                 graphics.DrawImageUnscaled(
                     cell,
                     targetCell.X,
@@ -2503,18 +2512,29 @@ foreach ($runtimeAsset in $runtimeRasterAssets) {
 # Grounded attack frames are authored from video sources whose subject origin
 # drifts vertically. Lock both moving combo sheets to their median visible foot
 # baseline before the runtime scene slices them into AtlasTextures.
-foreach ($groundedAttack in @(
-    @("attacks\ground_combo_01.png", 6, 4, 19),
-    @("attacks\ground_combo_02.png", 5, 5, 14)
-)) {
-    $groundedAttackPath = Join-Path $outputRoot ([string]$groundedAttack[0])
+$groundedAttackJobs = @(
+    [pscustomobject]@{
+        RelativePath = "attacks\ground_combo_01.png"
+        Columns = 6
+        Rows = 4
+        FrameIndices = [int[]](2..20)
+    },
+    [pscustomobject]@{
+        RelativePath = "attacks\ground_combo_02.png"
+        Columns = 5
+        Rows = 5
+        FrameIndices = [int[]](@(0, 1) + (7..18))
+    }
+)
+foreach ($groundedAttack in $groundedAttackJobs) {
+    $groundedAttackPath = Join-Path $outputRoot $groundedAttack.RelativePath
     $registeredGroundedAttackPath = "$groundedAttackPath.registered.png"
     [ThreadboundAnimationNormalizer]::RegisterGroundedGrid(
         $groundedAttackPath,
         $registeredGroundedAttackPath,
-        [int]$groundedAttack[1],
-        [int]$groundedAttack[2],
-        [int]$groundedAttack[3])
+        $groundedAttack.Columns,
+        $groundedAttack.Rows,
+        $groundedAttack.FrameIndices)
     Move-Item `
         -LiteralPath $registeredGroundedAttackPath `
         -Destination $groundedAttackPath `

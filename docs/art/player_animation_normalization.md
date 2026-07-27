@@ -111,10 +111,11 @@ between frames. Broad white slash effects are protected during the selective
 bronze weapon recolor so the VFX does not inherit the weapon palette.
 
 The stationary-derived frames change apparent character scale during the middle
-of the first sweep. Runtime frames 5-9 therefore receive conservative per-frame presentation
-multipliers between `1.08` and `1.21`. This corrects the visible character-size
-pulse without resampling the shared atlas cells or clipping their large slash
-arcs.
+of the first sweep. Runtime frames 5-9 therefore receive conservative per-frame
+presentation multipliers between `1.08` and `1.21`, with an equal upward
+foot-anchor correction. This corrects the visible character-size pulse without
+resampling the shared atlas cells, clipping their large slash arcs, or making
+the feet bob against the floor.
 
 The logical moving and backpedal opener/finisher chains remain at 14 and 19
 frames. A stationary input bypasses the opener, plays the approved double-hit
