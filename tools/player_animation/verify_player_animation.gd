@@ -245,6 +245,10 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
 	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.88):
 		failures.append("Jump landing must use the corrected 0.88 visual scale.")
+	if not (player.get("save_point_sit_visual_scale") as Vector2).is_equal_approx(
+		Vector2(0.5, 0.5)
+	):
+		failures.append("Meditation must use the atlas-matched 0.50 visual scale.")
 	if not (player.get("landing_visual_offset") as Vector2).is_equal_approx(Vector2(0.0, 5.0)):
 		failures.append("Jump landing must retain its ground contact with a 5 px visual offset.")
 	if not is_equal_approx(float(player.get("wall_cling_visual_standoff")), 22.0):

@@ -39,6 +39,7 @@ transparent sheet cells:
 | Stationary double hit | 0.90, rendered at 1.40 | 320 px |
 | Backpedal combo variants | 1.15, rendered at 1.25 | 320 px |
 | Air double attack | 1.20 | 416 px |
+| Meditation sit | 0.50 | 512 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
 its 384 px rendered source. The stationary double hit and backpedal variants use
@@ -48,6 +49,11 @@ other animation families retain a `1.0` visual multiplier.
 Both moving combo steps use the consistently scaled `ground_combo_02` atlas.
 The older `ground_combo_01` atlas remains as authoring reference, but is no
 longer active in the player `SpriteFrames`.
+
+The meditation sheet uses a `0.50` sprite scale in both free meditation and
+save-point interactions. Its 342 px standing transition therefore matches the
+approximately 169 px idle presentation, while its 207 px seated silhouette
+settles to approximately 104 px without moving the shared foot line.
 
 ### Runtime memory budget
 

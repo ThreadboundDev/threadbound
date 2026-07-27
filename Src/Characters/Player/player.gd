@@ -254,7 +254,7 @@ const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 @export_group("Save Point Interaction")
 @export var save_point_auto_run_speed := 420.0
 @export var save_point_arrive_distance := 10.0
-@export var save_point_sit_visual_scale := Vector2(0.28, 0.28)
+@export var save_point_sit_visual_scale := Vector2(0.5, 0.5)
 @export var save_point_stand_up_speed_scale: float = 2.0
 
 @export_group("Audio")
@@ -2450,7 +2450,7 @@ func _process_save_point_interaction(delta: float) -> void:
 	velocity = Vector2.ZERO
 	_save_point_sitting_down = true
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
-		player_animation.scale = _save_point_original_scale * save_point_sit_visual_scale
+		player_animation.scale = save_point_sit_visual_scale
 		_hide_save_point_equipment()
 		play_character_anim(String(SIT_ANIMATION), "equip_idle")
 		if current_gloves and current_gloves.has_method("enter_save_point_pose"):

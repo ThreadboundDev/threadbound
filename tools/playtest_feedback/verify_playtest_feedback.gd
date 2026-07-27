@@ -105,6 +105,11 @@ func _verify_player_feedback() -> void:
 			failures.append("Holding Meditate on the floor did not enter meditation.")
 		elif sprite.animation != &"Sit":
 			failures.append("Meditation did not select the Sit animation.")
+		elif not sprite.scale.is_equal_approx(Vector2(0.5, 0.5)):
+			failures.append(
+				"Meditation visual scale is %s; expected the atlas-matched (0.5, 0.5)." %
+				sprite.scale
+			)
 		Input.action_release(&"Meditate")
 
 	player.queue_free()
