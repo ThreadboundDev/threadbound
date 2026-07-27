@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Blue Wing/FreePlaceProps/blue_bamboo_tall.tscn" id="12_ojaqx"]
 [ext_resource type="PackedScene" uid="uid://chjbc1kgc3esj" path="res://Src/Enemies/Tensioner/tensioner.tscn" id="12_un15s"]
 [ext_resource type="TileSet" uid="uid://ejgfpekpqd7o" path="res://Assets/chamber_of_first_weave/Tiles/layer_atlases/cotfw_foreground_silhouettes_tileset_128.tres" id="13_541qs"]
-[ext_resource type="PackedScene" uid="uid://i5nchltxvo31" path="res://Src/Characters/Player/player.tscn" id="14_yhgke"]
+[ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="14_yhgke"]
 [ext_resource type="Shader" uid="uid://cgra1ey57geo8" path="res://Src/Environment/World/environment_depth_grade.gdshader" id="15_depth"]
 [ext_resource type="Texture2D" uid="uid://d3ijp3n1vfdwt" path="res://Src/Environment/World/lighting/cave_opening_light.png" id="16_cave_light"]
 [ext_resource type="PackedScene" uid="uid://btnl0a31p3ycy" path="res://Src/Enemies/ProtoWeaver/proto_weaver.tscn" id="17_f4x7l"]
@@ -128,7 +128,7 @@ shader_parameter/lower_shadow = 0.16
 shader_parameter/rim_strength = 0.08
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_arena_lock"]
-size = Vector2(5100, 2300)
+size = Vector2(5100, 2669)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_foreground_depth_grade"]
 shader = ExtResource("15_depth")
@@ -375,7 +375,7 @@ position = Vector2(-6212, -2872)
 position = Vector2(-6391, -825)
 
 [node name="RedWingObeliskLight5" parent="WorldArt/WingLighting" unique_id=2037453842 instance=ExtResource("32_red_wing_light")]
-position = Vector2(3558, 3892)
+position = Vector2(3526, 4044)
 
 [node name="YellowWingGlobeLight4" parent="WorldArt/WingLighting" unique_id=33970174 instance=ExtResource("34_yellow_wing_light")]
 position = Vector2(5471, 3312)
@@ -392,7 +392,7 @@ position = Vector2(7027, -412)
 position = Vector2(5380, -3492)
 
 [node name="BlueWingShrineLight4" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=1178528400 instance=ExtResource("33_blue_wing_light")]
-position = Vector2(6655, 4070)
+position = Vector2(6885, 4171)
 
 [node name="BlueWingShrineLight5" parent="WorldArt/WingLighting/Blue Wing Lighting" unique_id=149442964 instance=ExtResource("33_blue_wing_light")]
 position = Vector2(4229, -2451)
@@ -942,6 +942,7 @@ boss_path = NodePath("../../WorldArt/ProtoWeaver")
 entrance_door_path = NodePath("../TriThreadDoor")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DemoDoors/BossArenaLock" unique_id=2067067542]
+position = Vector2(-51, -359)
 shape = SubResource("RectangleShape2D_boss_arena_lock")
 
 [node name="SavePoints" type="Node2D" parent="." unique_id=932604754]
@@ -971,7 +972,7 @@ tile_set = ExtResource("13_541qs")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(1937, -844)
+position = Vector2(-655, 4325)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -979,7 +980,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(1937, -844)
+position = Vector2(-655, 4325)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200

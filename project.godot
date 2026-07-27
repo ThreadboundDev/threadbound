@@ -44,7 +44,7 @@ project/assembly_name="Threadbound"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/chase/Videos/Threadbound Test/Threabound_Test_1.avi"
+movie_writer/movie_file="C:/Users/chase/Videos/Threadbound Test/Threabound_Test_movingattack_single.avi"
 movie_writer/disable_vsync=true
 movie_writer/fps=144
 

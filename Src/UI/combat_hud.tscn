@@ -1,23 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://bk6sithumcg8y"]
+[gd_scene format=3 uid="uid://bk6sithumcg8y"]
 
-[ext_resource type="Script" path="res://Src/UI/combat_hud.gd" id="1_hud"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/hud_frame_v4.png" id="2_frame"]
-[ext_resource type="Script" path="res://Src/UI/combat_health_bar.gd" id="3_health_bar"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/bar_track_v3.png" id="4_bar_track"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/health_fill_v3.png" id="5_health_fill"]
-[ext_resource type="Script" path="res://Src/UI/combat_momentum_bar.gd" id="9_momentum_bar"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V3/momentum_fill_v3.png" id="10_momentum_fill"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/identity_base_weave_v2.png" id="11_identity_base"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png" id="12_pattern_overlay"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_red_v4.png" id="13_action_red"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_blue_v4.png" id="14_action_blue"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_yellow_v4.png" id="15_action_yellow"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V4/action_point_disc_grey_v4.png" id="16_action_colorless"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/thread_knot_counter_frame_v2.png" id="17_counter_frame"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="18_knot_icon"]
+[ext_resource type="Script" uid="uid://1hfdow24pasf" path="res://Src/UI/combat_hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" uid="uid://c0f27jqjbhh0m" path="res://Assets/UI/Hud/V4/hud_frame_v4.png" id="2_frame"]
+[ext_resource type="Script" uid="uid://br7xx5380ryc2" path="res://Src/UI/combat_health_bar.gd" id="3_health_bar"]
+[ext_resource type="Texture2D" uid="uid://3y7xdt21ab7b" path="res://Assets/UI/Hud/V3/bar_track_v3.png" id="4_bar_track"]
+[ext_resource type="Texture2D" uid="uid://dl8xuhcv7xmkp" path="res://Assets/UI/Hud/V3/health_fill_v3.png" id="5_health_fill"]
+[ext_resource type="Script" uid="uid://d0iudj04ffbw0" path="res://Src/UI/combat_momentum_bar.gd" id="9_momentum_bar"]
+[ext_resource type="Texture2D" uid="uid://dkd12x3u4iijv" path="res://Assets/UI/Hud/V3/momentum_fill_v3.png" id="10_momentum_fill"]
+[ext_resource type="Texture2D" uid="uid://0ltplwmpheif" path="res://Assets/UI/Hud/V2/identity_base_weave_v2.png" id="11_identity_base"]
+[ext_resource type="Texture2D" uid="uid://djvxpoebvctuy" path="res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png" id="12_pattern_overlay"]
+[ext_resource type="Texture2D" uid="uid://3c4ddmt4jxra" path="res://Assets/UI/Hud/V4/action_point_disc_red_v4.png" id="13_action_red"]
+[ext_resource type="Texture2D" uid="uid://c4dot4oyo3kc0" path="res://Assets/UI/Hud/V4/action_point_disc_blue_v4.png" id="14_action_blue"]
+[ext_resource type="Texture2D" uid="uid://c35d4vajbpkty" path="res://Assets/UI/Hud/V4/action_point_disc_yellow_v4.png" id="15_action_yellow"]
+[ext_resource type="Texture2D" uid="uid://cvdd03dwsnm1n" path="res://Assets/UI/Hud/V4/action_point_disc_grey_v4.png" id="16_action_colorless"]
+[ext_resource type="Texture2D" uid="uid://bss7gkyt8y8ht" path="res://Assets/UI/Hud/V2/thread_knot_counter_frame_v2.png" id="17_counter_frame"]
+[ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="18_knot_icon"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="19_label_settings"]
 
-[node name="CombatHUD" type="Control"]
+[node name="CombatHUD" type="Control" unique_id=187202720]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,7 @@ action_point_blue_texture = ExtResource("14_action_blue")
 action_point_yellow_texture = ExtResource("15_action_yellow")
 action_point_colorless_texture = ExtResource("16_action_colorless")
 
-[node name="HUDRoot" type="Control" parent="."]
+[node name="HUDRoot" type="Control" parent="." unique_id=1145578976]
 custom_minimum_size = Vector2(640, 298)
 layout_mode = 1
 anchors_preset = 0
@@ -41,15 +41,15 @@ offset_right = 656.0
 offset_bottom = 312.0
 mouse_filter = 2
 
-[node name="IdentityLayers" type="Control" parent="HUDRoot"]
-layout_mode = 0
+[node name="IdentityLayers" type="Control" parent="HUDRoot" unique_id=1566526817]
+anchors_preset = 0
 offset_left = 80.0
 offset_top = 77.0
 offset_right = 225.0
 offset_bottom = 222.0
 mouse_filter = 2
 
-[node name="IdentityBase" type="TextureRect" parent="HUDRoot/IdentityLayers"]
+[node name="IdentityBase" type="TextureRect" parent="HUDRoot/IdentityLayers" unique_id=1883581777]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,7 +61,7 @@ texture = ExtResource("11_identity_base")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PatternOverlay" type="TextureRect" parent="HUDRoot/IdentityLayers"]
+[node name="PatternOverlay" type="TextureRect" parent="HUDRoot/IdentityLayers" unique_id=1098627121]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -74,7 +74,7 @@ texture = ExtResource("12_pattern_overlay")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="HealthBar" type="Control" parent="HUDRoot"]
+[node name="HealthBar" type="Control" parent="HUDRoot" unique_id=772991628]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -86,11 +86,10 @@ mouse_filter = 2
 script = ExtResource("3_health_bar")
 track_texture = ExtResource("4_bar_track")
 fill_texture = ExtResource("5_health_fill")
-fill_rect = Rect2(236, 105, 390, 16)
-corner_radius = 8.0
+fill_rect = Rect2(220.91, 105, 390, 16)
 corner_segments = 12
 
-[node name="MomentumBar" type="Control" parent="HUDRoot"]
+[node name="MomentumBar" type="Control" parent="HUDRoot" unique_id=590282459]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -102,9 +101,9 @@ mouse_filter = 2
 script = ExtResource("9_momentum_bar")
 track_texture = ExtResource("4_bar_track")
 fill_texture = ExtResource("10_momentum_fill")
-fill_rect = Rect2(236, 132, 374, 11)
+fill_rect = Rect2(235.115, 134.015, 351.7, 8.38)
 
-[node name="ActionPointOrbs" type="Control" parent="HUDRoot"]
+[node name="ActionPointOrbs" type="Control" parent="HUDRoot" unique_id=2003177706]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,73 +112,73 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ActionPointOrb1" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb1" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=850876803]
 layout_mode = 0
-offset_left = 76.0
-offset_top = 15.0
-offset_right = 112.0
-offset_bottom = 51.0
+offset_left = 71.46
+offset_top = 11.77
+offset_right = 107.46
+offset_bottom = 47.77
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb2" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb2" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=1105715099]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 52.0
-offset_right = 62.0
-offset_bottom = 88.0
+offset_left = 29.0
+offset_top = 54.0
+offset_right = 65.0
+offset_bottom = 90.0
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb3" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb3" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=1390673858]
 layout_mode = 0
-offset_left = 7.0
-offset_top = 108.0
-offset_right = 43.0
-offset_bottom = 144.0
+offset_left = 9.0
+offset_top = 109.0
+offset_right = 45.0
+offset_bottom = 145.0
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb4" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb4" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=877735637]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 163.0
-offset_right = 44.0
-offset_bottom = 199.0
+offset_left = 10.0
+offset_top = 165.0
+offset_right = 46.0
+offset_bottom = 201.0
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb5" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb5" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=1976972510]
 layout_mode = 0
-offset_left = 35.0
-offset_top = 210.0
-offset_right = 71.0
-offset_bottom = 246.0
+offset_left = 36.0
+offset_top = 217.0
+offset_right = 72.0
+offset_bottom = 253.0
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionPointOrb6" type="TextureRect" parent="HUDRoot/ActionPointOrbs"]
+[node name="ActionPointOrb6" type="TextureRect" parent="HUDRoot/ActionPointOrbs" unique_id=1007319258]
 layout_mode = 0
-offset_left = 78.0
+offset_left = 81.0
 offset_top = 252.0
-offset_right = 114.0
+offset_right = 117.0
 offset_bottom = 288.0
 mouse_filter = 2
 texture = ExtResource("16_action_colorless")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Frame" type="TextureRect" parent="HUDRoot"]
+[node name="Frame" type="TextureRect" parent="HUDRoot" unique_id=1881161289]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -191,7 +190,7 @@ texture = ExtResource("2_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ThreadKnotCounter" type="Control" parent="."]
+[node name="ThreadKnotCounter" type="Control" parent="." unique_id=1230975559]
 visible = false
 custom_minimum_size = Vector2(352, 84)
 layout_mode = 1
@@ -208,7 +207,7 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Frame" type="TextureRect" parent="ThreadKnotCounter"]
+[node name="Frame" type="TextureRect" parent="ThreadKnotCounter" unique_id=983503052]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,7 +219,7 @@ texture = ExtResource("17_counter_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="KnotIcon" type="TextureRect" parent="ThreadKnotCounter"]
+[node name="KnotIcon" type="TextureRect" parent="ThreadKnotCounter" unique_id=766602669]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 14.0
@@ -231,7 +230,7 @@ texture = ExtResource("18_knot_icon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CountLabel" type="Label" parent="ThreadKnotCounter"]
+[node name="CountLabel" type="Label" parent="ThreadKnotCounter" unique_id=1634541681]
 layout_mode = 0
 offset_left = 78.0
 offset_top = 8.0
