@@ -103,19 +103,14 @@ All three active variant sheets are green-keyed while preserving the
 recordings' shared 640 px camera origin and ground line, then reduced to 320 px
 runtime cells. The stationary animation uses a `0.90` content scale, leaving at
 least 16 transparent pixels around every occupied frame so slash effects cannot
-bleed into adjacent atlas cells.
+clip at cell boundaries. It uses one consistent runtime scale across all 19
+frames; pose foreshortening is kept in the artwork instead of compensating with
+per-frame scale changes that make the upward sweep visibly grow.
 Backpedal clips retain their `1.15` source scale because their recorded framing
 already provides safe gutters. Preserving the fixed source canvas prevents a
 low slash trail from being mistaken for a foot anchor and shifting the body
 between frames. Broad white slash effects are protected during the selective
 bronze weapon recolor so the VFX does not inherit the weapon palette.
-
-The stationary-derived frames change apparent character scale during the middle
-of the first sweep. Runtime frames 5-9 therefore receive conservative per-frame
-presentation multipliers between `1.08` and `1.21`, with an equal upward
-foot-anchor correction. This corrects the visible character-size pulse without
-resampling the shared atlas cells, clipping their large slash arcs, or making
-the feet bob against the floor.
 
 The logical moving and backpedal opener/finisher chains remain at 14 and 19
 frames. A stationary input bypasses the opener, plays the approved double-hit
@@ -198,6 +193,12 @@ node's `SpriteFrames` resource. Stationary and backpedal attacks, ledge hang,
 wall cling, and the save-point sit sequence can therefore be previewed and
 edited in the Godot inspector without running the game. `player.gd` selects
 among those authored clips but no longer creates animation frames in `_ready()`.
+
+The ledge-hang sheet is a separately authored four-frame contact pose. Its upper
+hand, overall bounds, and foot line are registered within two pixels across the
+loop; the arched torso and restored waist sash are preserved directly in the
+artwork. The normalizer removes any connected dark background but does not apply
+the wall-cling procedural warp to this sheet.
 
 ### Secondary motion and grapple tosses
 

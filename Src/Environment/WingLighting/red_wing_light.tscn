@@ -9,6 +9,7 @@ blend_mode = 1
 
 [node name="RedWingLight" type="Node2D"]
 z_index = -1
+z_as_relative = false
 script = ExtResource("1_script")
 light_paths = Array[NodePath]([NodePath("CoreLight")])
 sprite_paths = Array[NodePath]([NodePath("RedHeatBloom")])

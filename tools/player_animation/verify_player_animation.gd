@@ -156,6 +156,42 @@ func _verify_ledge_transparency(failures: Array[String]) -> void:
 			[transparent_pixels, total_pixels]
 		)
 
+	var cell_size := Vector2i(image.get_width() / 2, image.get_height() / 2)
+	var reference_bounds := Rect2i()
+	for frame_index in 4:
+		var origin := Vector2i(
+			(frame_index % 2) * cell_size.x,
+			(frame_index / 2) * cell_size.y
+		)
+		var minimum := cell_size
+		var maximum := Vector2i(-1, -1)
+		for y in cell_size.y:
+			for x in cell_size.x:
+				if image.get_pixel(origin.x + x, origin.y + y).a < 0.06:
+					continue
+				minimum.x = mini(minimum.x, x)
+				minimum.y = mini(minimum.y, y)
+				maximum.x = maxi(maximum.x, x)
+				maximum.y = maxi(maximum.y, y)
+
+		if maximum.x < 0:
+			failures.append("Ledge hang frame %d is empty." % frame_index)
+			continue
+		var bounds := Rect2i(minimum, maximum - minimum + Vector2i.ONE)
+		if frame_index == 0:
+			reference_bounds = bounds
+			continue
+		if (
+			abs(bounds.position.x - reference_bounds.position.x) > 2
+			or abs(bounds.position.y - reference_bounds.position.y) > 2
+			or abs(bounds.end.x - reference_bounds.end.x) > 2
+			or abs(bounds.end.y - reference_bounds.end.y) > 2
+		):
+			failures.append(
+				"Ledge hang frame %d bounds %s jitter beyond the registered reference %s." %
+				[frame_index, bounds, reference_bounds]
+			)
+
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
 	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.88):
 		failures.append("Jump landing must use the corrected 0.88 visual scale.")
@@ -403,17 +439,16 @@ func _verify_ground_attack_variant_locking(
 		failures.append("A stationary swing did not use its locked visual variant.")
 	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
 		failures.append("Moving-to-stationary visual selection did not preserve frame progress.")
-	var expected_stationary_scale := Vector2(0.7, 0.7) * 1.4 * 1.16
+	var expected_stationary_scale := Vector2(0.7, 0.7) * 1.4
 	if not sprite.scale.is_equal_approx(expected_stationary_scale):
 		failures.append(
-			"Stationary frame 6 scale is %s; expected corrected scale %s." %
+			"Stationary frame 6 scale is %s; expected consistent scale %s." %
 			[sprite.scale, expected_stationary_scale]
 		)
-	var expected_stationary_y := -2.0 - 0.7 * 1.4 * 69.0 * 0.16
-	if not is_equal_approx(sprite.position.y, expected_stationary_y):
+	if not is_equal_approx(sprite.position.y, -2.0):
 		failures.append(
-			"Stationary frame 6 foot anchor is %s; expected corrected y %s." %
-			[sprite.position.y, expected_stationary_y]
+			"Stationary frame 6 position is %s; per-frame scaling must not move the character." %
+			sprite.position.y
 		)
 
 	player.set("velocity", Vector2(-120.0, 0.0))

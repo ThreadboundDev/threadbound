@@ -2541,26 +2541,21 @@ foreach ($groundedAttack in $groundedAttackJobs) {
         -Force
 }
 
-# Keep the wall-side hand and foot rows in place while lifting the torso away
-# from the collision silhouette. The ledge pose gets a slightly stronger arc
-# because it previously read as a straight body buried in the platform edge.
-foreach ($wallPose in @(
-    @("movement\wall_cling_cycle.png", 2, 2, 8),
-    @("movement\ledge_hang.png", 2, 2, 14)
-)) {
-    $wallPosePath = Join-Path $outputRoot ([string]$wallPose[0])
-    $archedWallPosePath = "$wallPosePath.arched.png"
-    [ThreadboundAnimationNormalizer]::ArcWallContactGrid(
-        $wallPosePath,
-        $archedWallPosePath,
-        [int]$wallPose[1],
-        [int]$wallPose[2],
-        [int]$wallPose[3])
-    Move-Item `
-        -LiteralPath $archedWallPosePath `
-        -Destination $wallPosePath `
-        -Force
-}
+# Keep the wall-cling hand and foot rows in place while lifting its torso away
+# from the collision silhouette. Ledge hang is now a separately authored,
+# contact-registered sheet and must not receive another procedural warp.
+$wallPosePath = Join-Path $outputRoot "movement\wall_cling_cycle.png"
+$archedWallPosePath = "$wallPosePath.arched.png"
+[ThreadboundAnimationNormalizer]::ArcWallContactGrid(
+    $wallPosePath,
+    $archedWallPosePath,
+    2,
+    2,
+    8)
+Move-Item `
+    -LiteralPath $archedWallPosePath `
+    -Destination $wallPosePath `
+    -Force
 
 # The runtime downscale can round otherwise registered cling frames one pixel
 # apart. Lock the occupied right and bottom edges to frame zero after resizing,

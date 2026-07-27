@@ -18,13 +18,6 @@ const SIT_ANIMATION := &"Sit"
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
-const STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS := [
-	1.0, 1.0, 1.0, 1.0, 1.0,
-	1.08, 1.16, 1.21, 1.21, 1.16,
-	1.0, 1.0, 1.0, 1.0, 1.0,
-	1.0, 1.0, 1.0, 1.0,
-]
-const STATIONARY_ATTACK_FOOT_ANCHOR_Y := 69.0
 const LEDGE_HANG_ANIMATION := &"Ledge_Hang"
 
 # ===============================
@@ -1581,15 +1574,6 @@ func _apply_attack_visual_tuning() -> void:
 			scale_multiplier = ground_combo_forward_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":
 		scale_multiplier = air_attack_visual_scale_multiplier
-	var frame_scale_multiplier := _get_attack_frame_scale_multiplier()
-	if frame_scale_multiplier != 1.0:
-		visual_offset.y -= (
-			_player_default_visual_scale.y
-			* scale_multiplier
-			* STATIONARY_ATTACK_FOOT_ANCHOR_Y
-			* (frame_scale_multiplier - 1.0)
-		)
-	scale_multiplier *= frame_scale_multiplier
 	if player_animation.flip_h:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
@@ -1598,19 +1582,6 @@ func _apply_attack_visual_tuning() -> void:
 func _on_player_animation_frame_changed() -> void:
 	if is_attacking:
 		_apply_attack_visual_tuning()
-
-func _get_attack_frame_scale_multiplier() -> float:
-	if (
-		ground_attack_visual_mode != &"stationary"
-		or current_attack_body_anim != "Ground_Attack_Combo_2"
-	):
-		return 1.0
-	var frame_index := clampi(
-		player_animation.frame,
-		0,
-		STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS.size() - 1
-	)
-	return float(STATIONARY_ATTACK_FRAME_SCALE_MULTIPLIERS[frame_index])
 
 func _select_ground_attack_visual_mode(dir: float) -> StringName:
 	if absf(dir) <= 0.01 or absf(velocity.x) < STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED:

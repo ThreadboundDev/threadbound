@@ -222,9 +222,9 @@ stretch_mode = 5
 
 [node name="KnotIcon" type="TextureRect" parent="ThreadKnotCounter"]
 layout_mode = 0
-offset_left = 18.0
+offset_left = 36.0
 offset_top = 14.0
-offset_right = 74.0
+offset_right = 92.0
 offset_bottom = 70.0
 mouse_filter = 2
 texture = ExtResource("18_knot_icon")

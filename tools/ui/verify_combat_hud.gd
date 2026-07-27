@@ -127,6 +127,11 @@ func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 		is_equal_approx(hud.thread_knot_counter.offset_right, -8.0),
 		"Thread Knot counter uses the approved right-edge placement."
 	)
+	var knot_icon := hud.thread_knot_counter.get_node("KnotIcon") as TextureRect
+	_expect(
+		is_equal_approx(knot_icon.offset_left, 36.0),
+		"Thread Knot icon sits completely inside the counter frame."
+	)
 
 func _texture_alpha_coverage(texture: Texture2D) -> float:
 	if not texture:
