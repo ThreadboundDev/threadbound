@@ -69,6 +69,7 @@ const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
 		momentum = clampf(value, 0.0, 100.0)
 		_update_momentum_state()
 		_sync_hud()
+		_sync_flow_vfx_momentum()
 		momentum_changed.emit(momentum)
 
 @export_range(0, 999999, 1) var thread_knot_count := 0:
@@ -174,6 +175,7 @@ const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
 @export var momentum_damage_loss_current_scale := 0.06
 @export_range(1.0, 100.0, 1.0) var debug_momentum_fill_amount := 25.0
 @export_range(1, 9999, 1) var debug_thread_knots_amount := 25
+@export_range(0.01, 1.0, 0.01) var debug_identity_step := 0.1
 
 @export_group("Momentum Multipliers")
 @export var momentum_action_point_recharge_low := 0.9
@@ -333,11 +335,18 @@ var _momentum_state: StringName = MOMENTUM_STATE_LOW
 var _pending_use_after_swap := false
 var _use_after_swap_timer := 0.0
 var _momentum_system_ready := false
+var _flow_vfx_dash_visual_active := false
 var _dash_iframe_timer := 0.0
 var _debug_momentum_was_pressed := false
 var _debug_force_doors_was_pressed := false
 var _debug_thread_knots_was_pressed := false
 var _debug_no_clip_was_pressed := false
+var _debug_identity_power_was_pressed := false
+var _debug_identity_balance_was_pressed := false
+var _debug_identity_essence_was_pressed := false
+var _debug_identity_reset_was_pressed := false
+var _debug_flow_toggle_was_pressed := false
+var _debug_identity_mix := Vector3.ZERO
 var _footstep_timer := 0.0
 var _coin_pickup_audio_timer := 0.0
 var _thread_knot_tutorial_shown := false
@@ -444,7 +453,13 @@ func _ready() -> void:
 	AudioManager.enter_gameplay_music()
 	_movement_momentum_last_position = global_position
 	_momentum_system_ready = true
+	_sync_flow_vfx_momentum()
 	_set_flow_state_visuals(_flow_state_active)
+	if OS.is_debug_build():
+		print(
+			"Flow VFX debug: F10 Power, F11 Balance, F12 Essence, ",
+			"Home reset identity, End toggle Flow"
+		)
 	update_equipment_facing()
 	_update_wall_cling_vfx()
 	call_deferred("_sync_hud")
@@ -485,6 +500,7 @@ func _physics_process(delta: float) -> void:
 	_update_debug_no_clip_toggle()
 	_update_debug_momentum_fill()
 	_update_debug_thread_knots()
+	_update_debug_flow_vfx_controls()
 	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
@@ -548,6 +564,7 @@ func _physics_process(delta: float) -> void:
 
 	# Jump
 	if Input.is_action_just_pressed("Jump"):
+		var velocity_before_jump := velocity
 		if is_wall_clinging:
 			is_wall_clinging = false
 			wall_cling_timer = 0.0
@@ -555,6 +572,8 @@ func _physics_process(delta: float) -> void:
 			pass
 		elif current_boots:
 			current_boots.handle_primary(delta, BaseEquipment.ActionState.PRESSED)
+		if velocity.y < 0.0 and velocity.y < velocity_before_jump.y:
+			_play_flow_vfx_jump(velocity)
 
 	# Dash / Dodge
 	if Input.is_action_just_pressed("Dash"):
@@ -582,9 +601,11 @@ func _physics_process(delta: float) -> void:
 	if current_gloves and current_gloves.has_method("apply_grapple_velocity") and not god_mode_enabled:
 		current_gloves.apply_grapple_velocity(delta)
 
+	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
 	move_and_slide()
 	if is_on_floor() and not was_on_floor and not god_mode_enabled:
 		landing_animation_timer = landing_animation_duration
+		_play_flow_vfx_land(pre_collision_downward_speed)
 	elif not is_on_floor():
 		landing_animation_timer = 0.0
 	elif landing_animation_timer > 0.0:
@@ -796,6 +817,67 @@ func _update_debug_thread_knots() -> void:
 		print("Debug thread knots: +", debug_thread_knots_amount, " total ", thread_knot_count)
 	_debug_thread_knots_was_pressed = pressed
 
+func _update_debug_flow_vfx_controls() -> void:
+	if not OS.is_debug_build():
+		return
+
+	var power_pressed := Input.is_key_pressed(KEY_F10)
+	var balance_pressed := Input.is_key_pressed(KEY_F11)
+	var essence_pressed := Input.is_key_pressed(KEY_F12)
+	var reset_pressed := Input.is_key_pressed(KEY_HOME)
+	var flow_pressed := Input.is_key_pressed(KEY_END)
+
+	if power_pressed and not _debug_identity_power_was_pressed:
+		_debug_identity_mix.x = minf(
+			1.0,
+			_debug_identity_mix.x + debug_identity_step
+		)
+		_apply_debug_identity_mix()
+	if balance_pressed and not _debug_identity_balance_was_pressed:
+		_debug_identity_mix.y = minf(
+			1.0,
+			_debug_identity_mix.y + debug_identity_step
+		)
+		_apply_debug_identity_mix()
+	if essence_pressed and not _debug_identity_essence_was_pressed:
+		_debug_identity_mix.z = minf(
+			1.0,
+			_debug_identity_mix.z + debug_identity_step
+		)
+		_apply_debug_identity_mix()
+	if reset_pressed and not _debug_identity_reset_was_pressed:
+		_debug_identity_mix = Vector3.ZERO
+		if flow_state_aura and flow_state_aura.has_method("clear_identity_override"):
+			flow_state_aura.call("clear_identity_override")
+		print("Flow identity debug override cleared; using collected threads")
+	if flow_pressed and not _debug_flow_toggle_was_pressed:
+		set_momentum(0.0 if _flow_state_active else 100.0)
+		print("Debug Flow State: ", "ON" if _flow_state_active else "OFF")
+
+	_debug_identity_power_was_pressed = power_pressed
+	_debug_identity_balance_was_pressed = balance_pressed
+	_debug_identity_essence_was_pressed = essence_pressed
+	_debug_identity_reset_was_pressed = reset_pressed
+	_debug_flow_toggle_was_pressed = flow_pressed
+
+func _apply_debug_identity_mix() -> void:
+	if flow_state_aura and flow_state_aura.has_method("set_identity_mix"):
+		flow_state_aura.call(
+			"set_identity_mix",
+			_debug_identity_mix.x,
+			_debug_identity_mix.y,
+			_debug_identity_mix.z
+		)
+	print(
+		"Flow identity debug mix - Power ",
+		roundi(_debug_identity_mix.x * 100.0),
+		"%, Balance ",
+		roundi(_debug_identity_mix.y * 100.0),
+		"%, Essence ",
+		roundi(_debug_identity_mix.z * 100.0),
+		"%"
+	)
+
 func _debug_force_open_demo_doors() -> void:
 	for door in get_tree().get_nodes_in_group("demo_doors"):
 		if door.has_method("debug_force_open"):
@@ -923,6 +1005,7 @@ func _process_ledge_climb(delta: float) -> bool:
 		-ledge_jump_force if _ledge_climb_jump_after else 0.0
 	)
 	if _ledge_climb_jump_after:
+		_play_flow_vfx_jump(velocity)
 		report_momentum_action(MOMENTUM_CATEGORY_JUMP)
 	_ledge_climb_jump_after = false
 	return true
@@ -976,7 +1059,10 @@ func _process_meditation(delta: float) -> void:
 	if is_meditating:
 		_process_meditation_healing(delta)
 	if is_meditating != was_meditating:
-		_set_flow_state_visuals(is_meditating or _flow_state_active)
+		if flow_state_aura and flow_state_aura.has_method("set_meditation_active"):
+			flow_state_aura.call("set_meditation_active", is_meditating)
+		else:
+			_set_flow_state_visuals(is_meditating or _flow_state_active)
 
 func _process_meditation_healing(delta: float) -> void:
 	if not _is_meditation_seated() or not _can_apply_meditation_heal_pulse():
@@ -1068,13 +1154,16 @@ func update_animations(dir: float) -> void:
 		return
 
 	if save_point_interaction_active:
+		_set_flow_vfx_dash_visual_active(false)
 		return
 	if is_meditating and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
+		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
 		player_animation.scale = save_point_sit_visual_scale
 		play_character_anim(SIT_ANIMATION, "equip_idle")
 		return
 	if is_ledge_hanging and player_animation.sprite_frames.has_animation(&"Wall_Cling"):
+		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
 		player_animation.position = _player_default_visual_position
@@ -1083,6 +1172,7 @@ func update_animations(dir: float) -> void:
 		player_animation.set_frame_and_progress(0, 0.0)
 		return
 	if is_ledge_climbing:
+		_set_flow_vfx_dash_visual_active(false)
 		_play_ledge_climb_pose()
 		return
 	if player_animation.scale != _player_default_visual_scale:
@@ -1091,6 +1181,7 @@ func update_animations(dir: float) -> void:
 		player_animation.position = _player_default_visual_position
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
+		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
 		_apply_attack_visual_tuning()
 		_play_attack_visual_animation(_get_ground_combo_visual_animation(dir))
@@ -1104,8 +1195,11 @@ func update_animations(dir: float) -> void:
 	var forced_dash_direction := Vector2.ZERO
 	if current_gloves and current_gloves.has_method("get_forced_dash_direction"):
 		forced_dash_direction = current_gloves.get_forced_dash_direction()
+	var dash_visual_active: bool = bool(is_dashing) and player_animation.sprite_frames.has_animation("Dash")
+	var dash_vfx_direction := forced_dash_direction if forced_dash_direction.length() > 0.001 else velocity
+	_set_flow_vfx_dash_visual_active(dash_visual_active, dash_vfx_direction)
 	
-	if is_dashing and player_animation.sprite_frames.has_animation("Dash"):
+	if dash_visual_active:
 		play_character_anim("Dash", "equip_dash")
 		player_animation.rotation = 0.0
 		if forced_dash_direction.length() > 0.001:
@@ -1274,6 +1368,11 @@ func update_combat_timers(delta: float) -> void:
 		_sync_attack_hitbox_to_anchor()
 		attack_hitbox.damage = _build_attack_damage()
 		attack_hitbox.enable()
+		_play_flow_vfx_attack_swing(
+			attack_direction,
+			ground_combo_hitbox_arc_degrees,
+			0
+		)
 
 	if attack_active_started and not attack_active_finished and attack_timer >= windup + active_time:
 		attack_active_finished = true
@@ -1404,6 +1503,11 @@ func _update_ground_combo_attack() -> void:
 			attack_hitbox.damage = _build_attack_damage()
 			attack_hitbox.enable()
 			_play_double_attack_strike_audio(ground_combo_active_strike)
+			_play_flow_vfx_attack_swing(
+				attack_direction,
+				ground_combo_hitbox_arc_degrees,
+				ground_combo_active_strike
+			)
 
 	if attack_timer >= ground_combo_attack_duration:
 		_finish_ground_combo_attack()
@@ -1486,6 +1590,11 @@ func _update_air_double_attack() -> void:
 			attack_hitbox.damage = _build_attack_damage()
 			attack_hitbox.enable()
 			_play_double_attack_strike_audio(air_attack_active_strike)
+			_play_flow_vfx_attack_swing(
+				attack_direction,
+				air_attack_hitbox_arc_degrees,
+				air_attack_active_strike
+			)
 
 	if attack_timer >= air_attack_duration:
 		_finish_air_double_attack()
@@ -2258,6 +2367,53 @@ func _sync_flow_state_audio() -> void:
 func _set_flow_state_visuals(is_active: bool) -> void:
 	if flow_state_aura and flow_state_aura.has_method("set_flow_active"):
 		flow_state_aura.set_flow_active(is_active)
+
+func _sync_flow_vfx_momentum() -> void:
+	if flow_state_aura and flow_state_aura.has_method("set_momentum_amount"):
+		flow_state_aura.call("set_momentum_amount", momentum)
+
+func _play_flow_vfx_attack_swing(
+	direction: Vector2,
+	arc_degrees: float,
+	strike_index: int
+) -> void:
+	if not flow_state_aura or not flow_state_aura.has_method("play_attack_swing"):
+		return
+	var swing_direction := direction
+	if swing_direction.length() <= ATTACK_DIRECTION_DEADZONE:
+		swing_direction = Vector2(float(last_direction), 0.0)
+	flow_state_aura.call(
+		"play_attack_swing",
+		swing_direction.normalized(),
+		arc_degrees,
+		strike_index
+	)
+
+func _set_flow_vfx_dash_visual_active(
+	is_active: bool,
+	direction := Vector2.ZERO
+) -> void:
+	if _flow_vfx_dash_visual_active == is_active:
+		return
+	_flow_vfx_dash_visual_active = is_active
+	if not is_active or not flow_state_aura or not flow_state_aura.has_method("play_dash"):
+		return
+	var dash_direction := direction
+	if dash_direction.length() <= 0.001:
+		dash_direction = Vector2(float(last_direction), 0.0)
+	flow_state_aura.call("play_dash", dash_direction.normalized())
+
+func _play_flow_vfx_jump(direction: Vector2) -> void:
+	if not flow_state_aura or not flow_state_aura.has_method("play_jump"):
+		return
+	var jump_direction := direction
+	if jump_direction.length() <= 0.001:
+		jump_direction = Vector2.UP
+	flow_state_aura.call("play_jump", jump_direction.normalized())
+
+func _play_flow_vfx_land(impact_speed: float) -> void:
+	if flow_state_aura and flow_state_aura.has_method("play_land"):
+		flow_state_aura.call("play_land", impact_speed)
 
 func _lose_momentum_from_damage(damage: DamageData) -> void:
 	var severity := maxf(1.0, float(damage.amount))

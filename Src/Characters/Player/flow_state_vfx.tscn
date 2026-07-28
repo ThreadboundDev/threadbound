@@ -1,0 +1,325 @@
+[gd_scene load_steps=31 format=3]
+
+[ext_resource type="Script" path="res://Src/Characters/Player/flow_state_aura.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V1/flow_aura_loop_v1.png" id="2_aura"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V1/flow_transition_v1.png" id="3_transition"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V3/flow_attack_smear_v3.png" id="4_attack"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V2/flow_movement_energy_v2.png" id="5_movement"]
+[ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V1/flow_motes_v1.png" id="6_motes"]
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="7_light"]
+
+[sub_resource type="AtlasTexture" id="Atlas_aura_0"]
+atlas = ExtResource("2_aura")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_aura_1"]
+atlas = ExtResource("2_aura")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_aura_2"]
+atlas = ExtResource("2_aura")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_aura_3"]
+atlas = ExtResource("2_aura")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_transition_0"]
+atlas = ExtResource("3_transition")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_transition_1"]
+atlas = ExtResource("3_transition")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_transition_2"]
+atlas = ExtResource("3_transition")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_transition_3"]
+atlas = ExtResource("3_transition")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_attack_0"]
+atlas = ExtResource("4_attack")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_attack_1"]
+atlas = ExtResource("4_attack")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_attack_2"]
+atlas = ExtResource("4_attack")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_attack_3"]
+atlas = ExtResource("4_attack")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_movement_dash"]
+atlas = ExtResource("5_movement")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_movement_jump"]
+atlas = ExtResource("5_movement")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_movement_land"]
+atlas = ExtResource("5_movement")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_movement_air"]
+atlas = ExtResource("5_movement")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_mote_filament"]
+atlas = ExtResource("6_motes")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_mote_knot"]
+atlas = ExtResource("6_motes")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_mote_spark"]
+atlas = ExtResource("6_motes")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Atlas_mote_fragment"]
+atlas = ExtResource("6_motes")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="SpriteFrames" id="Frames_aura"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_aura_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_aura_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_aura_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_aura_3")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 5.5
+}]
+
+[sub_resource type="SpriteFrames" id="Frames_transition"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_3")
+}],
+"loop": false,
+"name": &"ignite",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_transition_0")
+}],
+"loop": false,
+"name": &"unravel",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="Frames_attack"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_attack_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_attack_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_attack_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_attack_3")
+}],
+"loop": false,
+"name": &"swing",
+"speed": 24.0
+}]
+
+[node name="FlowStateVFX" type="Node2D"]
+visible = false
+z_index = -1
+script = ExtResource("1_script")
+
+[node name="AuraBack" type="Node2D" parent="."]
+
+[node name="SilhouetteShell" type="Sprite2D" parent="AuraBack"]
+visible = false
+
+[node name="CoreAura" type="AnimatedSprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(0, -38)
+scale = Vector2(0.62, 0.68)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+autoplay = "loop"
+
+[node name="GoldAura" type="AnimatedSprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(0, -38)
+scale = Vector2(0.66, 0.72)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+frame = 1
+autoplay = "loop"
+
+[node name="Accent1" type="AnimatedSprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(-2, -38)
+scale = Vector2(0.68, 0.73)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+frame = 2
+autoplay = "loop"
+
+[node name="Accent2" type="AnimatedSprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(2, -38)
+scale = Vector2(-0.65, 0.7)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+frame = 3
+autoplay = "loop"
+
+[node name="Accent3" type="AnimatedSprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(0, -38)
+rotation = 0.035
+scale = Vector2(0.61, 0.67)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+autoplay = "loop"
+
+[node name="GroundWeave" type="Sprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(0, 29)
+scale = Vector2(0.34, 0.1)
+texture = SubResource("Atlas_transition_3")
+
+[node name="CorePulse" type="Sprite2D" parent="AuraBack"]
+visible = false
+position = Vector2(0, -38)
+scale = Vector2(0.17, 0.17)
+texture = SubResource("Atlas_transition_0")
+
+[node name="FlowLight" type="PointLight2D" parent="AuraBack"]
+position = Vector2(0, -37)
+color = Color(1, 0.86, 0.58, 1)
+energy = 0.0
+range_z_min = -4096
+range_z_max = 4096
+texture = ExtResource("7_light")
+texture_scale = 1.15
+
+[node name="AuraFront" type="Node2D" parent="."]
+z_index = 9
+
+[node name="FrontStrand" type="AnimatedSprite2D" parent="AuraFront"]
+visible = false
+position = Vector2(0, -38)
+scale = Vector2(-0.52, 0.6)
+sprite_frames = SubResource("Frames_aura")
+animation = &"loop"
+frame = 1
+autoplay = "loop"
+
+[node name="TransitionLayer" type="Node2D" parent="."]
+z_index = 10
+
+[node name="TransitionCore" type="AnimatedSprite2D" parent="TransitionLayer"]
+visible = false
+position = Vector2(0, -38)
+scale = Vector2(0.58, 0.58)
+sprite_frames = SubResource("Frames_transition")
+animation = &"ignite"
+
+[node name="TransitionAccent1" type="AnimatedSprite2D" parent="TransitionLayer"]
+visible = false
+position = Vector2(0, -38)
+rotation = -0.045
+scale = Vector2(0.54, 0.54)
+sprite_frames = SubResource("Frames_transition")
+animation = &"ignite"
+
+[node name="TransitionAccent2" type="AnimatedSprite2D" parent="TransitionLayer"]
+visible = false
+position = Vector2(0, -38)
+rotation = 0.045
+scale = Vector2(-0.51, 0.51)
+sprite_frames = SubResource("Frames_transition")
+animation = &"ignite"
+
+[node name="TransitionAccent3" type="AnimatedSprite2D" parent="TransitionLayer"]
+visible = false
+position = Vector2(0, -38)
+rotation = 0.09
+scale = Vector2(0.48, 0.48)
+sprite_frames = SubResource("Frames_transition")
+animation = &"ignite"
+
+[node name="EventLayer" type="Node2D" parent="."]
+z_index = 12
+
+[node name="Templates" type="Node2D" parent="."]
+visible = false
+
+[node name="AttackTemplate" type="AnimatedSprite2D" parent="Templates"]
+sprite_frames = SubResource("Frames_attack")
+animation = &"swing"
+
+[node name="MovementTemplates" type="Node2D" parent="Templates"]
+
+[node name="Dash" type="Sprite2D" parent="Templates/MovementTemplates"]
+texture = SubResource("Atlas_movement_dash")
+
+[node name="Jump" type="Sprite2D" parent="Templates/MovementTemplates"]
+texture = SubResource("Atlas_movement_jump")
+
+[node name="Land" type="Sprite2D" parent="Templates/MovementTemplates"]
+texture = SubResource("Atlas_movement_land")
+
+[node name="AirJump" type="Sprite2D" parent="Templates/MovementTemplates"]
+texture = SubResource("Atlas_movement_air")
+
+[node name="MoteTemplates" type="Node2D" parent="Templates"]
+
+[node name="Filament" type="Sprite2D" parent="Templates/MoteTemplates"]
+texture = SubResource("Atlas_mote_filament")
+
+[node name="Knot" type="Sprite2D" parent="Templates/MoteTemplates"]
+texture = SubResource("Atlas_mote_knot")
+
+[node name="Spark" type="Sprite2D" parent="Templates/MoteTemplates"]
+texture = SubResource("Atlas_mote_spark")
+
+[node name="Fragment" type="Sprite2D" parent="Templates/MoteTemplates"]
+texture = SubResource("Atlas_mote_fragment")

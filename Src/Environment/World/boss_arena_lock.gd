@@ -3,7 +3,7 @@ extends Area2D
 @export var boss_path: NodePath
 @export var entrance_door_path: NodePath
 @export var camera_path: NodePath
-@export var boss_camera_zoom := Vector2(0.84, 0.84)
+@export var boss_camera_zoom := Vector2(0.72, 0.72)
 @export_range(0.1, 2.0, 0.05) var boss_zoom_duration := 0.75
 
 var _locked := false

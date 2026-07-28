@@ -7,12 +7,12 @@
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="5_title_settings"]
 
 [node name="BossHealthBar" type="Control" unique_id=154424498]
-custom_minimum_size = Vector2(1100, 300)
+custom_minimum_size = Vector2(820, 220)
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 12.0
-offset_bottom = 312.0
+offset_bottom = 232.0
 grow_horizontal = 2
 mouse_filter = 2
 script = ExtResource("1_script")
