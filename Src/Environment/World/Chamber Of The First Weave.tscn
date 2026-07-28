@@ -941,7 +941,7 @@ script = ExtResource("30_boss_arena_lock")
 boss_path = NodePath("../../WorldArt/ProtoWeaver")
 entrance_door_path = NodePath("../TriThreadDoor")
 camera_path = NodePath("../../Camera2D")
-boss_camera_zoom = Vector2(0.84, 0.84)
+boss_camera_zoom = Vector2(0.72, 0.72)
 boss_zoom_duration = 0.75
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DemoDoors/BossArenaLock" unique_id=2067067542]

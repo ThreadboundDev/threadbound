@@ -146,10 +146,16 @@ func _verify_boss_health_bar() -> void:
 		return
 
 	add_child(boss_bar)
-	boss_bar.size = Vector2(1100.0, 300.0)
+	boss_bar.size = Vector2(1920.0, 220.0)
+	var boss_geometry := boss_bar.call("_get_draw_geometry") as Dictionary
+	var boss_draw_size := boss_geometry.get("draw_size", Vector2.ZERO) as Vector2
 	var title := boss_bar.get_node_or_null("BossTitle") as Label
 	_expect(title != null, "Boss health bar includes an editable title label.")
 	_expect(title.text == "PROTO-WEAVER", "Proto-Weaver title is visible above the boss rail.")
+	_expect(
+		boss_draw_size.x <= 780.0 and boss_draw_size.y <= 220.0,
+		"Boss HUD stays compact enough to preserve the arena view."
+	)
 	_expect(
 		boss_bar.frame_texture.resource_path.ends_with("boss_health_frame_v4.png"),
 		"Boss frame uses the player-HUD-matched V4 asset."
@@ -194,7 +200,7 @@ func _verify_boss_camera_zoom() -> void:
 	arena_lock.set("boss_path", NodePath("../MissingBoss"))
 	arena_lock.set("entrance_door_path", NodePath("../MissingDoor"))
 	arena_lock.set("camera_path", NodePath("../BossTestCamera"))
-	arena_lock.set("boss_camera_zoom", Vector2(0.84, 0.84))
+	arena_lock.set("boss_camera_zoom", Vector2(0.72, 0.72))
 	arena_lock.set("boss_zoom_duration", 0.05)
 	add_child(arena_lock)
 	await get_tree().process_frame
@@ -205,8 +211,8 @@ func _verify_boss_camera_zoom() -> void:
 	arena_lock.call("_on_body_entered", test_player)
 	await get_tree().create_timer(0.12).timeout
 	_expect(
-		camera.zoom.is_equal_approx(Vector2(0.84, 0.84)),
-		"Entering the boss arena smoothly selects the approved 0.84 camera zoom."
+		camera.zoom.is_equal_approx(Vector2(0.72, 0.72)),
+		"Entering the boss arena smoothly selects the approved 0.72 camera zoom."
 	)
 
 	arena_lock.call("_on_boss_died", null)
