@@ -465,7 +465,7 @@ func _update_blue_debug(
 	rope_dir: Vector2,
 	state_name: String
 ) -> void:
-	if not blue_debug_enabled:
+	if not OS.is_debug_build() or not blue_debug_enabled:
 		return
 
 	blue_debug_snapshot = {

@@ -157,6 +157,8 @@ func open_silently() -> void:
 	_open()
 
 func debug_force_open() -> void:
+	if not OS.is_debug_build():
+		return
 	closed = false
 	_is_opening = false
 	_message_acknowledged = false

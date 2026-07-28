@@ -8,6 +8,10 @@ var target_node: Node2D = null  # Usually the player
 var canvas_layer: CanvasLayer = null
 
 func _ready():
+	if not OS.is_debug_build():
+		process_mode = Node.PROCESS_MODE_DISABLED
+		return
+
 	# Create canvas layer for debug UI (always on top)
 	canvas_layer = CanvasLayer.new()
 	canvas_layer.name = "DebugCanvas"
@@ -22,17 +26,23 @@ func _ready():
 
 ## Update debug text - call from anywhere
 func update_debug(text: String):
+	if not OS.is_debug_build():
+		return
 	if debug_label:
 		debug_label.text = text
 
 ## Clear debug text
 func clear_debug():
+	if not OS.is_debug_build():
+		return
 	if debug_label:
 		debug_label.text = ""
 
 ## Set target node for relative positioning (optional)
 ## When set, the debug label will follow the target node
 func set_target_node(node: Node2D):
+	if not OS.is_debug_build():
+		return
 	target_node = node
 	if target_node and debug_label:
 		# Position relative to target (above player)
@@ -44,6 +54,8 @@ func set_target_node(node: Node2D):
 
 ## Reset to screen-relative positioning
 func reset_position():
+	if not OS.is_debug_build():
+		return
 	if debug_label and target_node:
 		if debug_label.get_parent() == target_node:
 			target_node.remove_child(debug_label)

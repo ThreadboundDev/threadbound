@@ -35,6 +35,7 @@ var _attack_cooldown_timer := 0.0
 var _contact_damage_cooldown_timer := 0.0
 var _base_visuals_scale := Vector2.ONE
 var _base_visuals_modulate := Color.WHITE
+var _pending_hurt_duration := 0.0
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -57,7 +58,6 @@ func _ready() -> void:
 
 	attack_hitbox.hitbox_owner = self
 	attack_hitbox.damage = _build_attack_damage()
-	attack_hitbox.hit_landed.connect(_on_attack_hit_landed)
 
 	detection_area.body_entered.connect(_on_detection_body_entered)
 	detection_area.body_exited.connect(_on_detection_body_exited)
@@ -334,6 +334,11 @@ func _on_damaged(damage: DamageData) -> void:
 
 	velocity = knockback
 	start_attack_cooldown(0.45)
+	_pending_hurt_duration = (
+		damage.hitstun
+		if damage.hitstun > 0.0
+		else stats.hurt_time
+	)
 
 	if state_machine.current_state_name != &"Dead":
 		state_machine.transition_to(&"Hurt")
@@ -345,9 +350,12 @@ func _on_died(_damage: DamageData) -> void:
 	if state_machine.current_state_name != &"Dead":
 		state_machine.transition_to(&"Dead")
 
-func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
-	CombatFeedback.screen_shake(self, stats.screen_shake_strength, 0.08)
-	CombatFeedback.hit_pause(self, damage.hit_pause)
+func consume_pending_hurt_duration() -> float:
+	var duration := _pending_hurt_duration
+	_pending_hurt_duration = 0.0
+	if duration > 0.0:
+		return duration
+	return stats.hurt_time if stats else 0.18
 
 func _spawn_enemy_damage_vfx(damage: DamageData) -> void:
 	var direction := _get_hit_direction(damage)

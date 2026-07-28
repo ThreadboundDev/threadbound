@@ -39,7 +39,7 @@ func _ready() -> void:
 	_refresh_continue_state()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
+	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
 		get_viewport().set_input_as_handled()
 		_start_new_journey()
 		return

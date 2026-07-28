@@ -11,6 +11,7 @@ const PAUSE_MENU_SCENE := preload("res://Src/UI/PauseMenu/pause_menu.tscn")
 const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
 const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
+const NEUTRAL_SPECIAL_VFX_SCENE := preload("res://Src/VFX/neutral_special_vfx.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -19,6 +20,20 @@ const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
 const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
+const NEUTRAL_SPECIAL_CHARGE_FIRST_FRAME := 8
+const NEUTRAL_SPECIAL_WEAPON_ANCHORS := [
+	Vector2(-72.0, -108.0),
+	Vector2(-70.0, -108.0),
+	Vector2(-68.0, -107.0),
+	Vector2(-66.0, -108.0),
+	Vector2(-64.0, -108.0),
+	Vector2(-62.0, -108.0),
+	Vector2(-60.0, -108.0),
+	Vector2(-42.0, -109.0),
+	Vector2(-13.0, -122.0),
+	Vector2(126.0, -7.0),
+]
+const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
 
 # ===============================
 # NODES
@@ -111,14 +126,22 @@ const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
 @export var momentum_gain_utility := 2.4
 
 @export_group("Special Attacks")
+@export_range(1, 6, 1) var neutral_special_action_point_cost := 2
 @export_range(1.0, 5.0, 0.05) var neutral_special_damage_multiplier := 1.65
-@export_range(0.0, 3.0, 0.01) var neutral_special_windup := 0.425
+@export_range(0.0, 3.0, 0.01) var neutral_special_windup := 0.45
 @export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
-@export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.625
+@export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.60
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
 @export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 1.0
 @export var neutral_special_visual_offset := Vector2(0.0, -20.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
+@export_range(64.0, 360.0, 1.0) var neutral_special_aoe_radius := 220.0
+@export_range(0.05, 1.0, 0.01) var neutral_special_hitstun := 0.30
+@export_range(1.0, 3.0, 0.05) var neutral_special_knockback_multiplier := 1.55
+@export_range(0.0, 1.0, 0.05) var neutral_special_knockback_lift := 0.30
+@export_range(0.0, 0.2, 0.005) var neutral_special_hit_pause := 0.065
+@export_range(0.0, 16.0, 0.25) var neutral_special_screen_shake_strength := 7.0
+@export_range(0.0, 0.4, 0.01) var neutral_special_screen_shake_duration := 0.14
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
@@ -388,6 +411,7 @@ var ground_attack_visual_mode: StringName = &"stationary"
 var air_attack_duration := 0.0
 var air_attack_active_strike := -1
 var _default_attack_hitbox_polygon := PackedVector2Array()
+var _neutral_special_vfx_instance: Node2D = null
 
 # Equipment slots
 var current_gloves: Node = null
@@ -496,11 +520,7 @@ func unequip_gloves() -> void:
 # PHYSICS PROCESS
 # ===============================
 func _physics_process(delta: float) -> void:
-	_update_god_mode_toggle()
-	_update_debug_no_clip_toggle()
-	_update_debug_momentum_fill()
-	_update_debug_thread_knots()
-	_update_debug_flow_vfx_controls()
+	_process_debug_inputs()
 	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
@@ -627,10 +647,11 @@ func _process(_delta: float) -> void:
 	if save_point_interaction_active:
 		return
 
-	var debug_force_doors_pressed := Input.is_key_pressed(KEY_F7)
-	if debug_force_doors_pressed and not _debug_force_doors_was_pressed:
-		_debug_force_open_demo_doors()
-	_debug_force_doors_was_pressed = debug_force_doors_pressed
+	if OS.is_debug_build():
+		var debug_force_doors_pressed := Input.is_key_pressed(KEY_F7)
+		if debug_force_doors_pressed and not _debug_force_doors_was_pressed:
+			_debug_force_open_demo_doors()
+		_debug_force_doors_was_pressed = debug_force_doors_pressed
 
 	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started and not _should_block_pause_open():
 		_open_pause_menu()
@@ -767,7 +788,18 @@ func _get_connected_controller_family(device_id := -1) -> StringName:
 		return &"steam"
 	return &"xbox"
 
+func _process_debug_inputs() -> void:
+	if not OS.is_debug_build():
+		return
+	_update_god_mode_toggle()
+	_update_debug_no_clip_toggle()
+	_update_debug_momentum_fill()
+	_update_debug_thread_knots()
+	_update_debug_flow_vfx_controls()
+
 func _update_god_mode_toggle() -> void:
+	if not OS.is_debug_build():
+		return
 	if Input.is_action_just_pressed("debug_god_mode"):
 		god_mode_enabled = not god_mode_enabled
 		if god_mode_enabled:
@@ -778,6 +810,8 @@ func _update_god_mode_toggle() -> void:
 		print("God mode: ", "ON" if god_mode_enabled else "OFF")
 
 func _update_debug_no_clip_toggle() -> void:
+	if not OS.is_debug_build():
+		return
 	var pressed: bool = Input.is_key_pressed(KEY_F6)
 	if pressed and not _debug_no_clip_was_pressed:
 		_debug_no_clip_enabled = not _debug_no_clip_enabled
@@ -786,6 +820,8 @@ func _update_debug_no_clip_toggle() -> void:
 	_debug_no_clip_was_pressed = pressed
 
 func _apply_debug_no_clip() -> void:
+	if not OS.is_debug_build():
+		return
 	if _debug_no_clip_enabled:
 		collision_layer = 0
 		collision_mask = 0
@@ -794,6 +830,8 @@ func _apply_debug_no_clip() -> void:
 		collision_mask = _debug_original_collision_mask
 
 func _complete_tutorial_for_debug() -> void:
+	if not OS.is_debug_build():
+		return
 	_thread_knot_tutorial_shown = true
 	DemoProgress.claim_thread(&"power")
 	DemoProgress.claim_thread(&"balance")
@@ -804,6 +842,8 @@ func _complete_tutorial_for_debug() -> void:
 			controller.call("debug_complete_tutorial")
 
 func _update_debug_momentum_fill() -> void:
+	if not OS.is_debug_build():
+		return
 	var pressed := Input.is_key_pressed(KEY_F8)
 	if pressed and not _debug_momentum_was_pressed:
 		_change_momentum(debug_momentum_fill_amount)
@@ -811,6 +851,8 @@ func _update_debug_momentum_fill() -> void:
 	_debug_momentum_was_pressed = pressed
 
 func _update_debug_thread_knots() -> void:
+	if not OS.is_debug_build():
+		return
 	var pressed := Input.is_key_pressed(KEY_F9)
 	if pressed and not _debug_thread_knots_was_pressed:
 		collect_thread_knots(debug_thread_knots_amount)
@@ -861,6 +903,8 @@ func _update_debug_flow_vfx_controls() -> void:
 	_debug_flow_toggle_was_pressed = flow_pressed
 
 func _apply_debug_identity_mix() -> void:
+	if not OS.is_debug_build():
+		return
 	if flow_state_aura and flow_state_aura.has_method("set_identity_mix"):
 		flow_state_aura.call(
 			"set_identity_mix",
@@ -879,12 +923,16 @@ func _apply_debug_identity_mix() -> void:
 	)
 
 func _debug_force_open_demo_doors() -> void:
+	if not OS.is_debug_build():
+		return
 	for door in get_tree().get_nodes_in_group("demo_doors"):
 		if door.has_method("debug_force_open"):
 			door.debug_force_open()
 	print("Debug doors: forced open")
 
 func _apply_god_mode_flight(delta: float) -> void:
+	if not OS.is_debug_build():
+		return
 	var vertical_input := 0.0
 	if Input.is_action_pressed("Jump") or Input.is_action_pressed("move_up"):
 		vertical_input -= 1.0
@@ -1362,12 +1410,26 @@ func update_combat_timers(delta: float) -> void:
 		if not attack_vfx_started and attack_timer >= maxf(0.0, windup - neutral_special_vfx_lead_time):
 			attack_vfx_started = true
 			_play_weapon_attack_anim()
+			_play_neutral_special_vfx()
+		if attack_vfx_started and not attack_active_started:
+			_update_neutral_special_vfx_anchor()
 
 	if not attack_active_started and attack_timer >= windup:
 		attack_active_started = true
+		if current_attack_is_special:
+			attack_collision_polygon.polygon = _build_circle_hitbox_polygon(
+				neutral_special_aoe_radius
+			)
+			_trigger_neutral_special_impact_vfx()
 		_sync_attack_hitbox_to_anchor()
 		attack_hitbox.damage = _build_attack_damage()
 		attack_hitbox.enable()
+		if current_attack_is_special:
+			CombatFeedback.screen_shake(
+				self,
+				neutral_special_screen_shake_strength,
+				neutral_special_screen_shake_duration
+			)
 		_play_flow_vfx_attack_swing(
 			attack_direction,
 			ground_combo_hitbox_arc_degrees,
@@ -1382,6 +1444,7 @@ func update_combat_timers(delta: float) -> void:
 		is_attacking = false
 		current_attack_is_special = false
 		attack_hitbox.disable()
+		_reset_attack_hitbox_polygon()
 		_reset_weapon_visuals()
 
 func start_attack(is_special := false) -> void:
@@ -1392,8 +1455,10 @@ func start_attack(is_special := false) -> void:
 
 	if not can_start_attack():
 		return
-	if is_special and not spend_action_points(1):
+	if is_special and not spend_action_points(neutral_special_action_point_cost):
 		return
+	if is_special:
+		_cancel_neutral_special_vfx()
 
 	attack_direction = _get_attack_input_direction()
 	if not is_special and is_on_floor() and not _is_grapple_restricting():
@@ -1416,6 +1481,7 @@ func start_attack(is_special := false) -> void:
 	attack_active_started = false
 	attack_vfx_started = not current_attack_is_special
 	attack_active_finished = false
+	_reset_attack_hitbox_polygon()
 	current_attack_body_anim = _get_special_body_animation() if current_attack_is_special else _get_attack_body_animation()
 	update_equipment_facing()
 	if not current_attack_is_special:
@@ -1688,6 +1754,18 @@ func _build_attack_sector_polygon(arc_degrees: float, radius: float) -> PackedVe
 		points.append(Vector2.from_angle(angle) * radius)
 	return points
 
+func _build_circle_hitbox_polygon(radius: float) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	const CIRCLE_SEGMENTS := 16
+	for index in range(CIRCLE_SEGMENTS):
+		var angle := TAU * float(index) / float(CIRCLE_SEGMENTS)
+		points.append(Vector2.from_angle(angle) * radius)
+	return points
+
+func _reset_attack_hitbox_polygon() -> void:
+	if attack_collision_polygon:
+		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+
 func can_start_attack() -> bool:
 	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
 	return not is_dead and not is_hurt and not is_attacking and attack_cooldown_timer <= 0.0
@@ -1896,6 +1974,10 @@ func _apply_attack_direction() -> void:
 func _sync_attack_hitbox_to_anchor() -> void:
 	if not attack_hitbox:
 		return
+	if current_attack_is_special:
+		attack_hitbox.global_transform = global_transform
+		attack_hitbox.global_position = _get_neutral_special_ground_contact_position()
+		return
 	if current_attack_uses_ground_combo or current_attack_uses_air_double:
 		attack_hitbox.global_transform = global_transform
 		attack_hitbox.global_rotation = attack_direction.angle()
@@ -1910,16 +1992,49 @@ func _build_attack_damage() -> DamageData:
 	data.amount = player_stats.attack_damage
 	if current_attack_is_special:
 		data.amount = roundi(float(player_stats.attack_damage) * neutral_special_damage_multiplier * player_stats.skill_damage_multiplier)
-	data.hitstun = player_stats.hurt_time
+	data.hitstun = (
+		neutral_special_hitstun
+		if current_attack_is_special
+		else player_stats.hurt_time
+	)
 	data.hit_pause = player_stats.hit_pause
 	var knockback_direction := attack_direction
 	if knockback_direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		knockback_direction = Vector2(float(last_direction), 0.0)
 	data.knockback = knockback_direction.normalized() * player_stats.knockback_strength
 	if current_attack_is_special:
-		data.knockback *= 1.2
-		data.hit_pause *= 1.2
+		data.knockback *= neutral_special_knockback_multiplier
+		data.hit_pause = neutral_special_hit_pause
 	return data
+
+func modify_outgoing_hit_damage(
+	damage: DamageData,
+	target_hurtbox: HurtboxComponent
+) -> DamageData:
+	if not current_attack_is_special or not target_hurtbox:
+		return damage
+
+	var target_owner := target_hurtbox.hurtbox_owner as Node2D
+	if not target_owner:
+		return damage
+
+	var radial_direction := (
+		target_owner.global_position
+		- _get_neutral_special_ground_contact_position()
+	)
+	if radial_direction.length() <= ATTACK_DIRECTION_DEADZONE:
+		radial_direction = Vector2(float(last_direction), 0.0)
+	radial_direction = radial_direction.normalized()
+	radial_direction.y -= neutral_special_knockback_lift
+	radial_direction = radial_direction.normalized()
+
+	damage.knockback = (
+		radial_direction
+		* player_stats.knockback_strength
+		* neutral_special_knockback_multiplier
+	)
+	damage.hit_position = target_owner.global_position
+	return damage
 
 func set_action_points(current: int, maximum: int = max_action_points) -> void:
 	max_action_points = maximum
@@ -2372,6 +2487,84 @@ func _sync_flow_vfx_momentum() -> void:
 	if flow_state_aura and flow_state_aura.has_method("set_momentum_amount"):
 		flow_state_aura.call("set_momentum_amount", momentum)
 
+func _play_neutral_special_vfx() -> void:
+	if not NEUTRAL_SPECIAL_VFX_SCENE or not is_inside_tree():
+		return
+
+	_cancel_neutral_special_vfx()
+	var vfx := NEUTRAL_SPECIAL_VFX_SCENE.instantiate() as Node2D
+	if not vfx:
+		return
+
+	var host: Node = get_tree().current_scene
+	if not host:
+		host = get_tree().root
+	host.add_child(vfx)
+	_neutral_special_vfx_instance = vfx
+	vfx.global_position = _get_neutral_special_weapon_anchor_position()
+	if vfx.has_method("play"):
+		vfx.call(
+			"play",
+			neutral_special_aoe_radius,
+			neutral_special_vfx_lead_time,
+			last_direction
+		)
+
+func _update_neutral_special_vfx_anchor() -> void:
+	if not is_instance_valid(_neutral_special_vfx_instance):
+		_neutral_special_vfx_instance = null
+		return
+
+	var anchor_position := _get_neutral_special_weapon_anchor_position()
+	if _neutral_special_vfx_instance.has_method("set_charge_position"):
+		_neutral_special_vfx_instance.call("set_charge_position", anchor_position)
+	else:
+		_neutral_special_vfx_instance.global_position = anchor_position
+
+func _trigger_neutral_special_impact_vfx() -> void:
+	if not is_instance_valid(_neutral_special_vfx_instance):
+		_neutral_special_vfx_instance = null
+		return
+
+	var impact_position := _get_neutral_special_ground_contact_position()
+	if _neutral_special_vfx_instance.has_method("trigger_impact"):
+		_neutral_special_vfx_instance.call("trigger_impact", impact_position)
+	else:
+		_neutral_special_vfx_instance.global_position = impact_position
+
+func _cancel_neutral_special_vfx() -> void:
+	if not is_instance_valid(_neutral_special_vfx_instance):
+		_neutral_special_vfx_instance = null
+		return
+	if _neutral_special_vfx_instance.has_method("cancel"):
+		_neutral_special_vfx_instance.call("cancel")
+	else:
+		_neutral_special_vfx_instance.queue_free()
+	_neutral_special_vfx_instance = null
+
+func _get_neutral_special_weapon_anchor_position() -> Vector2:
+	if not player_animation:
+		return global_position
+
+	var anchor_index := clampi(
+		player_animation.frame - NEUTRAL_SPECIAL_CHARGE_FIRST_FRAME,
+		0,
+		NEUTRAL_SPECIAL_WEAPON_ANCHORS.size() - 1
+	)
+	var local_anchor: Vector2 = NEUTRAL_SPECIAL_WEAPON_ANCHORS[anchor_index]
+	if player_animation.flip_h:
+		local_anchor.x = -local_anchor.x
+	return player_animation.to_global(local_anchor)
+
+func _get_neutral_special_ground_contact_position() -> Vector2:
+	if not player_animation:
+		return global_position
+
+	var local_contact := NEUTRAL_SPECIAL_GROUND_CONTACT
+	if player_animation.flip_h:
+		local_contact.x = -local_contact.x
+	return player_animation.to_global(local_contact)
+
 func _play_flow_vfx_attack_swing(
 	direction: Vector2,
 	arc_degrees: float,
@@ -2448,9 +2641,7 @@ func _update_momentum_state() -> void:
 	_momentum_state = next_state
 	momentum_state_changed.emit(_momentum_state, _flow_state_active)
 
-func _on_attack_hit_landed(_hurtbox: HurtboxComponent, damage: DamageData) -> void:
-	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
-	CombatFeedback.hit_pause(self, damage.hit_pause)
+func _on_attack_hit_landed(_hurtbox: HurtboxComponent, _damage: DamageData) -> void:
 	if attack_direction.y > 0.55 and not is_on_floor():
 		report_momentum_action(MOMENTUM_CATEGORY_POGO)
 	else:
@@ -2481,12 +2672,14 @@ func receive_ignored_health_hit(damage: DamageData) -> void:
 
 func _on_damaged(damage: DamageData) -> void:
 	is_hurt = true
-	hurt_timer = player_stats.hurt_time
+	hurt_timer = damage.hitstun if damage.hitstun > 0.0 else player_stats.hurt_time
 	is_attacking = false
 	current_attack_is_special = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
+	_cancel_neutral_special_vfx()
 	attack_hitbox.disable()
+	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
 	AudioManager.play_sfx(&"player_damage")
 
@@ -2521,7 +2714,9 @@ func _on_died(_damage: DamageData) -> void:
 	current_attack_is_special = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
+	_cancel_neutral_special_vfx()
 	attack_hitbox.disable()
+	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
 	call_deferred("_show_game_over_after_death")
 
@@ -2557,6 +2752,7 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	current_attack_is_special = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
+	_cancel_neutral_special_vfx()
 	attack_timer = 0.0
 	attack_cooldown_timer = 0.0
 	attack_active_started = false
@@ -2574,6 +2770,7 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 		current_gloves.call("_reset_active_grapple_visuals")
 	if attack_hitbox:
 		attack_hitbox.disable()
+	_reset_attack_hitbox_polygon()
 	if health_component:
 		health_component.is_dead = false
 		health_component.current_health = health_component.max_health
@@ -2624,6 +2821,7 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	current_attack_is_special = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
+	_cancel_neutral_special_vfx()
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 	is_ledge_hanging = false
@@ -2638,6 +2836,7 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 		_save_point_equipment_was_visible = equipment_mount.visible
 	if attack_hitbox:
 		attack_hitbox.disable()
+	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
 	return true
 
