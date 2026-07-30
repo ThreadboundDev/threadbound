@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=4]
+[gd_scene load_steps=6 format=4]
 
 [ext_resource type="Script" path="res://Src/Environment/WingLighting/wing_light_pulse.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Red Wing/obelisk.png" id="2_obelisk"]
 [ext_resource type="Texture2D" uid="uid://b37t11ei5o52w" path="res://Src/Environment/World/lighting/shrine_light.png" id="3_shrine_light"]
+[ext_resource type="Texture2D" path="res://Src/Environment/WingLighting/wing_light_falloff.png" id="4_wing_falloff"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_soft_add"]
 blend_mode = 1
@@ -39,5 +40,5 @@ range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
 shadow_filter_smooth = 4.0
-texture = ExtResource("3_shrine_light")
+texture = ExtResource("4_wing_falloff")
 texture_scale = 2.4
