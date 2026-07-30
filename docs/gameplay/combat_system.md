@@ -254,6 +254,37 @@ These encounters push the player to:
 
 ---
 
+## Impact Feedback Rules
+
+Combat feedback is resolved from the accepted hit at the receiver. Attacker-side
+hit-confirm callbacks may update gameplay state such as momentum, but they must
+not request a second global hit pause or camera shake for the same collision.
+
+- `DamageData.hitstun` controls the receiver's hurt duration.
+- Concurrent hit-pause requests share one real-time window and use the longest
+  requested end time.
+- Concurrent camera-shake requests share one camera tween, preserve its original
+  offset, and use the strongest requested shake.
+- Multi-target attacks therefore create one deliberate impact beat instead of
+  stacking independent feedback effects.
+
+### Neutral Special: Smash
+
+The neutral special is a stationary, two-action-point commitment that controls
+space around the weapon's ground contact.
+
+- Charges around the raised weapon, follows its overhead swing, and releases
+  when the weapon reaches the ground on animation frame 18.
+- Hits once in a 220-pixel circular area centered on that ground contact.
+- Deals 1.65 times base attack damage before the skill-damage multiplier.
+- Applies 0.30 seconds of hitstun and stronger radial knockback with upward lift.
+- Telegraphs the release with inward-gathering threads around the weapon, then
+  expands from the impact through an ivory-and-gold ring and ground fragments.
+- Uses one stronger release shake and one coalesced hit-pause window.
+
+Its purpose is crowd control and breathing-room creation. Basic attacks remain
+the faster and more efficient option against a single exposed target.
+
 ## Meditation Recovery
 
 Meditation is an intentional pause in combat rather than a source of free

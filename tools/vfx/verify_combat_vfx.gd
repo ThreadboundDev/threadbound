@@ -10,6 +10,7 @@ const FLOW_MOVEMENT_TEXTURE := preload("res://Assets/VFX/FlowState/V2/flow_movem
 const FLOW_MOTES_TEXTURE := preload("res://Assets/VFX/FlowState/V1/flow_motes_v1.png")
 const FLOW_SILHOUETTE_SHADER := preload("res://Src/VFX/flow_state_silhouette.gdshader")
 const FLOW_STATE_VFX_SCENE_PATH := "res://Src/Characters/Player/flow_state_vfx.tscn"
+const NEUTRAL_SPECIAL_VFX_SCENE_PATH := "res://Src/VFX/neutral_special_vfx.tscn"
 const REQUIRED_FLOW_STATE_API := [
 	&"set_flow_active",
 	&"set_meditation_active",
@@ -32,6 +33,7 @@ func _ready() -> void:
 	_verify_flow_alpha_sheet(FLOW_MOTES_TEXTURE, "Flow motes")
 	_verify_enemy_sprite_setup()
 	_verify_flow_state_vfx()
+	_verify_neutral_special_vfx()
 	_finish()
 
 func _verify_true_alpha_sheet(texture: Texture2D, label: String) -> void:
@@ -212,6 +214,46 @@ func _verify_flow_state_vfx() -> void:
 
 	_verify_identity_channel_states(flow_vfx)
 	flow_vfx.free()
+
+func _verify_neutral_special_vfx() -> void:
+	var scene_exists := ResourceLoader.exists(NEUTRAL_SPECIAL_VFX_SCENE_PATH, "PackedScene")
+	_expect(
+		scene_exists,
+		"Neutral-special VFX scene exists at %s." % NEUTRAL_SPECIAL_VFX_SCENE_PATH
+	)
+	if not scene_exists:
+		return
+
+	var packed_scene := ResourceLoader.load(
+		NEUTRAL_SPECIAL_VFX_SCENE_PATH,
+		"PackedScene"
+	) as PackedScene
+	_expect(packed_scene != null, "Neutral-special VFX loads as a PackedScene.")
+	if packed_scene == null:
+		return
+
+	var neutral_special_vfx := packed_scene.instantiate()
+	_expect(neutral_special_vfx != null, "Neutral-special VFX scene instantiates.")
+	if neutral_special_vfx == null:
+		return
+
+	add_child(neutral_special_vfx)
+	_expect(
+		neutral_special_vfx.has_method(&"play"),
+		"Neutral-special VFX exposes play()."
+	)
+	for method_name in [&"set_charge_position", &"trigger_impact", &"cancel"]:
+		_expect(
+			neutral_special_vfx.has_method(method_name),
+			"Neutral-special VFX exposes %s()." % method_name
+		)
+	if neutral_special_vfx.has_method(&"play"):
+		neutral_special_vfx.call(&"play", 220.0, 0.245, 1)
+	if neutral_special_vfx.has_method(&"set_charge_position"):
+		neutral_special_vfx.call(&"set_charge_position", Vector2(24.0, -80.0))
+	if neutral_special_vfx.has_method(&"trigger_impact"):
+		neutral_special_vfx.call(&"trigger_impact", Vector2(96.0, 48.0))
+	neutral_special_vfx.free()
 
 func _collect_flow_visual_stats(node: Node, stats: Dictionary) -> void:
 	if node is Line2D:

@@ -4,7 +4,7 @@ extends EnemyState
 var _timer := 0.0
 
 func enter(_previous_state: StringName = &"") -> void:
-	_timer = enemy.stats.hurt_time if enemy.stats else 0.18
+	_timer = enemy.consume_pending_hurt_duration()
 	enemy.end_attack()
 
 func physics_update(delta: float) -> void:

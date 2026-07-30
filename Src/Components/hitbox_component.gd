@@ -43,6 +43,15 @@ func _on_area_entered(area: Area2D) -> void:
 		hit_damage.source = hitbox_owner
 		hit_damage.hit_position = global_position
 
+	if hitbox_owner and hitbox_owner.has_method("modify_outgoing_hit_damage"):
+		var modified_damage: Variant = hitbox_owner.call(
+			"modify_outgoing_hit_damage",
+			hit_damage,
+			hurtbox
+		)
+		if modified_damage is DamageData:
+			hit_damage = modified_damage as DamageData
+
 	if hurtbox.receive_hit(hit_damage):
 		_hit_hurtboxes.append(hurtbox)
 		hit_landed.emit(hurtbox, hit_damage)

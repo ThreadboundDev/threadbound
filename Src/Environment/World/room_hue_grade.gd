@@ -1,7 +1,9 @@
 @tool
 extends CanvasLayer
 
-@export var player_path: NodePath = ^"../Player"
+const TRANSITION_SETTLE_EPSILON := 0.001
+
+@export var player_path: NodePath = ^"../../Player"
 @export var grade_rect_path: NodePath = ^"RoomHueRect"
 @export var fade_speed := 2.8
 @export var max_strength := 0.12
@@ -33,19 +35,46 @@ extends CanvasLayer
 @export var bottom_left_color := Color(1.0, 0.78, 0.24, 1.0)
 @export var bottom_right_color := Color(0.62, 0.34, 1.0, 1.0)
 
+@export_group("Wing Grass Recolor")
+@export var grass_recolor_enabled := true
+@export_range(0.0, 1.0, 0.01) var grass_recolor_strength := 1.0
+@export var grass_fade_speed := 2.8
+@export var red_grass_color := Color(0.82, 0.16, 0.12, 1.0)
+@export var blue_grass_color := Color(0.2, 0.48, 0.95, 1.0)
+@export var yellow_grass_color := Color(1.0, 0.7, 0.16, 1.0)
+@export var boss_grass_color := Color(0.9, 0.95, 1.0, 1.0)
+@export var grass_tilemap_paths: Array[NodePath] = [
+	^"../../WorldArt/Architecture/ChamberTileMap",
+	^"../../WorldArt/Architecture/ChamberLedgerTileMap",
+]
+
 @onready var _player := get_node_or_null(player_path) as Node2D
 @onready var _grade_rect := get_node_or_null(grade_rect_path) as ColorRect
 
 var _current_color := Color.WHITE
 var _current_strength := 0.0
+var _current_grass_strengths := Vector4.ZERO
+var _grass_materials: Array[ShaderMaterial] = []
+var _last_applied_color := Color(-1.0, -1.0, -1.0, -1.0)
+var _last_applied_strength := -1.0
+var _last_applied_grass_strengths := Vector4(-1.0, -1.0, -1.0, -1.0)
 
 func _ready() -> void:
 	_sync_room_bounds_from_placeholders()
+	_cache_grass_materials()
 	_current_color = neutral_color
-	_apply_grade()
+	_current_grass_strengths = Vector4.ZERO
+	_apply_grade(true)
+	_apply_grass_static_parameters()
+	_apply_grass_grade(true)
+
+	# Keep the editor preview static. Continuously changing shared TileMap
+	# materials while editing forces unnecessary redraw and inspector work.
+	if Engine.is_editor_hint():
+		set_process(false)
 
 func _process(delta: float) -> void:
-	if not _player or not _grade_rect:
+	if not _player:
 		return
 
 	var target := _target_grade_for_position(_player.global_position)
@@ -55,7 +84,32 @@ func _process(delta: float) -> void:
 
 	_current_color = _current_color.lerp(target_color, weight)
 	_current_strength = lerpf(_current_strength, target_strength, weight)
+	if _colors_close(
+		_current_color,
+		target_color,
+		TRANSITION_SETTLE_EPSILON
+	):
+		_current_color = target_color
+	if absf(_current_strength - target_strength) <= TRANSITION_SETTLE_EPSILON:
+		_current_strength = target_strength
 	_apply_grade()
+
+	var grass_target_strengths := _target_grass_strengths_for_position(
+		_player.global_position
+	)
+	var grass_weight := clampf(grass_fade_speed * delta, 0.0, 1.0)
+
+	_current_grass_strengths = _current_grass_strengths.lerp(
+		grass_target_strengths,
+		grass_weight
+	)
+	if _vector4_close(
+		_current_grass_strengths,
+		grass_target_strengths,
+		TRANSITION_SETTLE_EPSILON
+	):
+		_current_grass_strengths = grass_target_strengths
+	_apply_grass_grade()
 
 func _target_grade_for_position(global_position: Vector2) -> Dictionary:
 	if center_neutral_room.has_point(global_position):
@@ -72,7 +126,27 @@ func _target_grade_for_position(global_position: Vector2) -> Dictionary:
 
 	return {"color": neutral_color, "strength": 0.0}
 
-func _apply_grade() -> void:
+func _target_grass_strengths_for_position(
+	global_position: Vector2
+) -> Vector4:
+	if not grass_recolor_enabled:
+		return Vector4.ZERO
+
+	if center_neutral_room.has_point(global_position):
+		return Vector4.ZERO
+
+	if _room_contains(bottom_right_polygon, bottom_right_room, global_position):
+		return Vector4(0.0, 0.0, 0.0, grass_recolor_strength)
+	if _room_contains(bottom_left_polygon, bottom_left_room, global_position):
+		return Vector4(0.0, 0.0, grass_recolor_strength, 0.0)
+	if _room_contains(top_right_polygon, top_right_room, global_position):
+		return Vector4(0.0, grass_recolor_strength, 0.0, 0.0)
+	if _room_contains(top_left_polygon, top_left_room, global_position):
+		return Vector4(grass_recolor_strength, 0.0, 0.0, 0.0)
+
+	return Vector4.ZERO
+
+func _apply_grade(force := false) -> void:
 	if not _grade_rect or not _grade_rect.material:
 		return
 
@@ -80,8 +154,117 @@ func _apply_grade() -> void:
 	if not shader_material:
 		return
 
+	if (
+		not force
+		and _current_color == _last_applied_color
+		and _current_strength == _last_applied_strength
+	):
+		return
+
 	shader_material.set_shader_parameter("hue_color", _current_color)
 	shader_material.set_shader_parameter("hue_strength", _current_strength)
+	_last_applied_color = _current_color
+	_last_applied_strength = _current_strength
+
+func _cache_grass_materials() -> void:
+	_grass_materials.clear()
+	for tilemap_path in grass_tilemap_paths:
+		var canvas_item := get_node_or_null(tilemap_path) as CanvasItem
+		if not canvas_item:
+			continue
+
+		var shader_material := canvas_item.material as ShaderMaterial
+		if shader_material and not _grass_materials.has(shader_material):
+			_grass_materials.append(shader_material)
+
+func _apply_grass_static_parameters() -> void:
+	for shader_material in _grass_materials:
+		shader_material.set_shader_parameter(
+			"red_luminance_basis",
+			_grass_luminance_basis(red_grass_color)
+		)
+		shader_material.set_shader_parameter(
+			"blue_luminance_basis",
+			_grass_luminance_basis(blue_grass_color)
+		)
+		shader_material.set_shader_parameter(
+			"yellow_luminance_basis",
+			_grass_luminance_basis(yellow_grass_color)
+		)
+		shader_material.set_shader_parameter(
+			"boss_luminance_basis",
+			_grass_luminance_basis(boss_grass_color)
+		)
+		shader_material.set_shader_parameter(
+			"red_bounds",
+			_rect_shader_bounds(top_left_room)
+		)
+		shader_material.set_shader_parameter(
+			"blue_bounds",
+			_rect_shader_bounds(top_right_room)
+		)
+		shader_material.set_shader_parameter(
+			"yellow_bounds",
+			_rect_shader_bounds(bottom_left_room)
+		)
+		shader_material.set_shader_parameter(
+			"boss_bounds",
+			_rect_shader_bounds(bottom_right_room)
+		)
+
+func _apply_grass_grade(force := false) -> void:
+	if _grass_materials.is_empty():
+		_cache_grass_materials()
+		_apply_grass_static_parameters()
+
+	if (
+		not force
+		and _current_grass_strengths == _last_applied_grass_strengths
+	):
+		return
+
+	for shader_material in _grass_materials:
+		shader_material.set_shader_parameter(
+			"wing_strengths",
+			_current_grass_strengths
+		)
+	_last_applied_grass_strengths = _current_grass_strengths
+
+func _grass_luminance_basis(color: Color) -> Vector3:
+	var luminance := maxf(
+		color.r * 0.2126 + color.g * 0.7152 + color.b * 0.0722,
+		0.001
+	)
+	return Vector3(
+		color.r / luminance,
+		color.g / luminance,
+		color.b / luminance
+	)
+
+func _rect_shader_bounds(rect: Rect2) -> Vector4:
+	var normalized := rect.abs()
+	return Vector4(
+		normalized.position.x,
+		normalized.position.y,
+		normalized.end.x,
+		normalized.end.y
+	)
+
+func _colors_close(a: Color, b: Color, epsilon: float) -> bool:
+	return (
+		absf(a.r - b.r) <= epsilon
+		and absf(a.g - b.g) <= epsilon
+		and absf(a.b - b.b) <= epsilon
+		and absf(a.a - b.a) <= epsilon
+	)
+
+func _vector4_close(a: Vector4, b: Vector4, epsilon: float) -> bool:
+	return (
+		absf(a.x - b.x) <= epsilon
+		and absf(a.y - b.y) <= epsilon
+		and absf(a.z - b.z) <= epsilon
+		and absf(a.w - b.w) <= epsilon
+	)
 
 func _sync_room_bounds_from_placeholders() -> void:
 	if not sync_bounds_from_placeholders:

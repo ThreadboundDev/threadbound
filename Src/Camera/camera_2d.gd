@@ -64,8 +64,8 @@ func _process(delta: float) -> void:
 
 	global_position = smoothed
 
-	# Update debug draw every frame
-	queue_redraw()
+	if OS.is_debug_build():
+		queue_redraw()
 
 # --- Accurate global bounds (handles scale=0.25, offsets, etc.) with margin shrink ---
 func get_tilemap_layer_bounds(tilemap_layer: TileMapLayer) -> Rect2:
@@ -95,6 +95,8 @@ func get_tilemap_layer_bounds(tilemap_layer: TileMapLayer) -> Rect2:
 	return Rect2(top_left_global, size)
 
 func _draw():
+	if not OS.is_debug_build():
+		return
 	if level_bounds.size == Vector2.ZERO:
 		return
 	# Draw the bounds rectangle in local space for debug (red outline)

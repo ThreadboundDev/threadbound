@@ -30,6 +30,11 @@
 /text_editor_themes/
 Assets/UI/Main Menu/*.mp4
 
+# Local @icons catalog used for browsing and selecting editor-only node icons.
+# Referenced icons are copied into addons/at-icons and committed separately.
+/local_tools/at-icons/
+/local_tools/@icons picker.html
+
 # Local IDE/editor folders
 .idea/
 

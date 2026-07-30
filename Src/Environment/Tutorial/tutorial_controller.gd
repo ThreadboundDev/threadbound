@@ -370,6 +370,8 @@ func _advance_step() -> void:
 	_set_step(_step + 1)
 
 func debug_complete_tutorial() -> void:
+	if not OS.is_debug_build():
+		return
 	if _step == TutorialStep.DONE:
 		return
 
