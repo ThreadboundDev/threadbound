@@ -67,6 +67,13 @@ stream = ExtResource("34_enemy_stomp_attack")
 volume_db = -3.0
 pitch_variation = 0.02
 
+[sub_resource type="Resource" id="AudioSound_enemy_stomp_attack_heavy"]
+script = ExtResource("2_sound")
+stream = ExtResource("34_enemy_stomp_attack")
+volume_db = -1.5
+pitch_scale = 0.78
+pitch_variation = 0.015
+
 [sub_resource type="Resource" id="AudioSound_enemy_sword_attack"]
 script = ExtResource("2_sound")
 stream = ExtResource("33_enemy_sword_attack")
@@ -100,6 +107,13 @@ pitch_variation = 0.02
 script = ExtResource("2_sound")
 stream = ExtResource("17_grapple_hanging")
 volume_db = -8.0
+
+[sub_resource type="Resource" id="AudioSound_grapple_strike"]
+script = ExtResource("2_sound")
+stream = ExtResource("16_grapple_connect")
+volume_db = -0.5
+pitch_scale = 0.78
+pitch_variation = 0.015
 
 [sub_resource type="Resource" id="AudioSound_loot_special"]
 script = ExtResource("2_sound")
@@ -169,6 +183,13 @@ stream = ExtResource("3_dash")
 volume_db = -2.0
 pitch_variation = 0.03
 
+[sub_resource type="Resource" id="AudioSound_player_dash_evade"]
+script = ExtResource("2_sound")
+stream = ExtResource("3_dash")
+volume_db = -8.0
+pitch_scale = 1.25
+pitch_variation = 0.015
+
 [sub_resource type="Resource" id="AudioSound_player_footstep"]
 script = ExtResource("2_sound")
 stream_variants = Array[AudioStream]([ExtResource("4_step_1"), ExtResource("5_step_2"), ExtResource("6_step_3")])
@@ -187,6 +208,20 @@ stream_variants = Array[AudioStream]([ExtResource("10_land_1"), ExtResource("11_
 volume_db = -4.0
 pitch_variation = 0.03
 
+[sub_resource type="Resource" id="AudioSound_player_smash_impact"]
+script = ExtResource("2_sound")
+stream = ExtResource("34_enemy_stomp_attack")
+volume_db = -1.0
+pitch_scale = 0.86
+pitch_variation = 0.01
+
+[sub_resource type="Resource" id="AudioSound_player_smash_swing"]
+script = ExtResource("2_sound")
+stream = ExtResource("13_attack")
+volume_db = -1.0
+pitch_scale = 0.72
+pitch_variation = 0.015
+
 [sub_resource type="Resource" id="AudioSound_ui_click"]
 script = ExtResource("2_sound")
 stream = ExtResource("21_ui_click")
@@ -202,12 +237,14 @@ sounds = {
 &"enemy_hit": SubResource("AudioSound_enemy_hit"),
 &"enemy_laser_attack": SubResource("AudioSound_enemy_laser_attack"),
 &"enemy_stomp_attack": SubResource("AudioSound_enemy_stomp_attack"),
+&"enemy_stomp_attack_heavy": SubResource("AudioSound_enemy_stomp_attack_heavy"),
 &"enemy_sword_attack": SubResource("AudioSound_enemy_sword_attack"),
 &"enter_momentum": SubResource("AudioSound_enter_momentum"),
 &"enter_world": SubResource("AudioSound_enter_world"),
 &"grapple": SubResource("AudioSound_grapple_throw"),
 &"grapple_connect": SubResource("AudioSound_grapple_connect"),
 &"grapple_hanging": SubResource("AudioSound_grapple_hanging"),
+&"grapple_strike": SubResource("AudioSound_grapple_strike"),
 &"loot_special_item": SubResource("AudioSound_loot_special"),
 &"menu_select": SubResource("AudioSound_menu_select"),
 &"momentum_aura": SubResource("AudioSound_momentum_aura"),
@@ -220,9 +257,12 @@ sounds = {
 &"player_attack": SubResource("AudioSound_player_attack"),
 &"player_damage": SubResource("AudioSound_player_damage"),
 &"player_dash": SubResource("AudioSound_player_dash"),
+&"player_dash_evade": SubResource("AudioSound_player_dash_evade"),
 &"player_footstep": SubResource("AudioSound_player_footstep"),
 &"player_jump": SubResource("AudioSound_player_jump"),
 &"player_land": SubResource("AudioSound_player_land"),
+&"player_smash_impact": SubResource("AudioSound_player_smash_impact"),
+&"player_smash_swing": SubResource("AudioSound_player_smash_swing"),
 &"sword_hit": SubResource("AudioSound_player_attack"),
 &"ui_click": SubResource("AudioSound_ui_click")
 }

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/enemy_health_bar.gd" id="1_script"]
+
+[node name="EnemyHealthBar" type="Node2D"]
+visible = false
+z_index = 90
+script = ExtResource("1_script")

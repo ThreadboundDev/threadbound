@@ -2,6 +2,7 @@ class_name BaseGloves
 extends Node2D
 
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
+const GRAPPLE_STRIKE_VFX_SCENE := preload("res://Src/VFX/grapple_strike_vfx.tscn")
 
 var player: CharacterBody2D = null
 
@@ -66,8 +67,22 @@ var player: CharacterBody2D = null
 @export var hookshot_arrival_distance := 8.0
 @export var hookshot_stall_time := 0.18
 @export var hookshot_min_progress := 1.0
-@export var hookshot_arrival_damage := 10
-@export var hookshot_hitstun := 0.10
+
+@export_group("Enemy Grapple Strike")
+@export var enemy_grapple_hold_time := 0.72
+@export var grapple_strike_approach_speed := 1600.0
+@export var grapple_strike_standoff_padding := 20.0
+@export var grapple_strike_resolve_slack := 72.0
+@export var grapple_strike_damage := 30
+@export var grapple_strike_hitstun := 0.22
+@export var grapple_strike_hit_pause := 0.05
+@export var grapple_strike_knockback_strength := 320.0
+@export var grapple_strike_recoil_strength := 360.0
+@export var grapple_strike_recoil_lift := 165.0
+@export var grapple_strike_screen_shake_strength := 3.4
+@export var grapple_strike_screen_shake_duration := 0.08
+@export_range(0.0, 0.9, 0.01) var grapple_strike_range_bonus_start_ratio := 0.35
+@export_range(1.0, 2.0, 0.01) var grapple_strike_max_range_damage_multiplier := 1.25
 
 # Climbing Variables
 @export var rope_climb_speed := 220.0
@@ -118,6 +133,11 @@ var grapple_collision_normal := Vector2.ZERO
 var hookshot_enemy_hurtbox: HurtboxComponent = null
 var hookshot_previous_distance := INF
 var hookshot_stall_timer := 0.0
+var enemy_grapple_ready := false
+var enemy_grapple_hold_timer := 0.0
+var grapple_strike_active := false
+var grapple_strike_direction := Vector2.RIGHT
+var grapple_strike_launch_range_ratio := 0.0
 
 var active_rope_points: Array[Vector2] = []
 var active_rope_previous_points: Array[Vector2] = []
@@ -149,6 +169,7 @@ func on_equipped() -> void:
 		rope_hang_anchor.reset_rope()
 
 func on_unequipped() -> void:
+	_reset_active_grapple_visuals()
 	queue_free()
 
 # ===============================
@@ -237,7 +258,401 @@ func get_grapple_origin_global_position() -> Vector2:
 func is_grapple_attached() -> bool:
 	return grapple_state == GrappleState.ATTACHED
 
+func has_enemy_grapple_target() -> bool:
+	return (
+		grapple_state == GrappleState.ATTACHED
+		and hookshot_enemy_hurtbox != null
+		and is_instance_valid(hookshot_enemy_hurtbox)
+		and hookshot_enemy_hurtbox.hurtbox_owner is Node2D
+	)
+
+func try_start_grapple_strike() -> bool:
+	if grapple_strike_active or not has_enemy_grapple_target() or not player:
+		return false
+
+	grapple_strike_active = true
+	enemy_grapple_ready = false
+	enemy_grapple_hold_timer = 0.0
+	grapple_strike_direction = _get_enemy_grapple_direction()
+	_on_enemy_grapple_strike_started()
+	return true
+
+func is_grapple_strike_active() -> bool:
+	return grapple_strike_active
+
+func is_grapple_strike_contact_guard_active() -> bool:
+	return grapple_strike_active
+
+func get_grapple_strike_direction() -> Vector2:
+	if grapple_strike_direction.length_squared() <= 0.001:
+		return Vector2.RIGHT
+	return grapple_strike_direction.normalized()
+
+func apply_grapple_strike_velocity(delta: float) -> bool:
+	if not grapple_strike_active:
+		return false
+	if not has_enemy_grapple_target() or not player:
+		cancel_grapple_strike()
+		return false
+
+	_update_moving_grapple_target()
+	var destination := _get_enemy_grapple_standoff_position()
+	var to_destination := destination - player.global_position
+	grapple_strike_direction = _get_enemy_grapple_direction()
+
+	if to_destination.length() <= hookshot_arrival_distance:
+		player.velocity = Vector2.ZERO
+		return true
+	if _is_hookshot_pull_blocked(to_destination.normalized()):
+		cancel_grapple_strike()
+		return false
+
+	var approach_multiplier := 1.0
+	if player.has_method("get_momentum_grapple_pull_multiplier"):
+		approach_multiplier = maxf(
+			1.0,
+			float(player.call("get_momentum_grapple_pull_multiplier"))
+		)
+	var approach_speed := grapple_strike_approach_speed * approach_multiplier
+	player.velocity = (
+		to_destination.normalized()
+		* minf(approach_speed, to_destination.length() / maxf(delta, 0.001))
+	)
+	return true
+
+func resolve_grapple_strike() -> bool:
+	if not grapple_strike_active or not has_enemy_grapple_target() or not player:
+		cancel_grapple_strike()
+		return false
+
+	_update_moving_grapple_target()
+	var target_position := _get_enemy_grapple_center()
+	var desired_position := _get_enemy_grapple_standoff_position()
+	var close_enough := (
+		player.global_position.distance_to(desired_position)
+		<= grapple_strike_resolve_slack
+	)
+	if not close_enough:
+		return false
+
+	var strike_direction := (target_position - _get_player_collision_center()).normalized()
+	if strike_direction.length_squared() <= 0.001:
+		strike_direction = get_grapple_strike_direction()
+	grapple_strike_direction = strike_direction
+	var impact_position := _get_enemy_grapple_impact_position(strike_direction)
+	if _has_world_between_player_and_grapple_target(impact_position):
+		cancel_grapple_strike()
+		return false
+
+	var damage := DamageData.new()
+	var damage_multiplier := 1.0
+	if player.has_method("get_momentum_attack_damage_multiplier"):
+		damage_multiplier = float(player.call("get_momentum_attack_damage_multiplier"))
+	damage_multiplier *= get_grapple_strike_range_damage_multiplier()
+	damage.amount = maxi(1, roundi(float(grapple_strike_damage) * damage_multiplier))
+	damage.hitstun = grapple_strike_hitstun
+	damage.hit_pause = grapple_strike_hit_pause
+	damage.screen_shake_strength = grapple_strike_screen_shake_strength
+	damage.screen_shake_duration = grapple_strike_screen_shake_duration
+	damage.use_receiver_screen_shake_fallback = false
+	damage.source = player
+	damage.hit_position = impact_position
+	var target_knockback_direction := strike_direction
+	target_knockback_direction.y = minf(target_knockback_direction.y, -0.24)
+	damage.knockback = (
+		target_knockback_direction.normalized()
+		* grapple_strike_knockback_strength
+	)
+
+	var accepted := hookshot_enemy_hurtbox.receive_hit(damage)
+	if accepted:
+		_spawn_grapple_strike_vfx(impact_position, strike_direction)
+		AudioManager.play_sfx(&"grapple_strike")
+		var horizontal_recoil_sign := -signf(strike_direction.x)
+		if is_zero_approx(horizontal_recoil_sign):
+			horizontal_recoil_sign = -signf(float(player.last_direction))
+		player.velocity = Vector2(
+			horizontal_recoil_sign * grapple_strike_recoil_strength,
+			-grapple_strike_recoil_lift
+		)
+		if player.has_method("report_momentum_action"):
+			player.report_momentum_action(&"Attack", 1.35)
+
+	_clear_grapple_strike_state()
+	_release_after_enemy_grapple_strike()
+	return accepted
+
+func get_grapple_strike_range_damage_multiplier() -> float:
+	var bonus_start := clampf(
+		grapple_strike_range_bonus_start_ratio,
+		0.0,
+		0.99
+	)
+	var range_weight := clampf(
+		inverse_lerp(
+			bonus_start,
+			1.0,
+			grapple_strike_launch_range_ratio
+		),
+		0.0,
+		1.0
+	)
+	var smooth_weight := (
+		range_weight
+		* range_weight
+		* (3.0 - 2.0 * range_weight)
+	)
+	return lerpf(
+		1.0,
+		maxf(1.0, grapple_strike_max_range_damage_multiplier),
+		smooth_weight
+	)
+
+func cancel_grapple_strike(retract := true) -> void:
+	if not grapple_strike_active and not enemy_grapple_ready:
+		return
+	_clear_grapple_strike_state()
+	if retract:
+		_release_after_enemy_grapple_strike()
+
+func cancel_enemy_grapple_combat() -> void:
+	if (
+		not has_enemy_grapple_target()
+		and not grapple_strike_active
+		and not enemy_grapple_ready
+	):
+		return
+	_clear_grapple_strike_state()
+	_release_after_enemy_grapple_strike()
+
+func cancel_for_committed_attack() -> void:
+	if (
+		grapple_state == GrappleState.STOWED
+		and not grapple_strike_active
+		and not enemy_grapple_ready
+	):
+		return
+	_clear_grapple_strike_state()
+	_release_after_enemy_grapple_strike()
+
+func mark_enemy_grapple_ready() -> void:
+	enemy_grapple_ready = true
+	enemy_grapple_hold_timer = enemy_grapple_hold_time
+	if player:
+		player.velocity = Vector2.ZERO
+
+func hold_enemy_grapple_ready(delta: float) -> bool:
+	if not enemy_grapple_ready:
+		return false
+	if grapple_strike_active:
+		return true
+	if not has_enemy_grapple_target() or not player:
+		_clear_grapple_strike_state()
+		_release_after_enemy_grapple_strike()
+		return true
+
+	player.velocity = Vector2.ZERO
+	enemy_grapple_hold_timer = maxf(0.0, enemy_grapple_hold_timer - delta)
+	if enemy_grapple_hold_timer <= 0.0:
+		_clear_grapple_strike_state()
+		_release_after_enemy_grapple_strike()
+	return true
+
+func apply_enemy_grapple_setup_pull(delta: float, pull_speed: float) -> bool:
+	if not has_enemy_grapple_target() or not player:
+		return false
+	if hold_enemy_grapple_ready(delta):
+		return true
+	if grapple_strike_active:
+		return true
+
+	_update_moving_grapple_target()
+	var destination := _get_enemy_grapple_standoff_position()
+	var to_destination := destination - player.global_position
+	if to_destination.length() <= hookshot_arrival_distance:
+		mark_enemy_grapple_ready()
+		return true
+	if _is_hookshot_pull_blocked(to_destination.normalized()):
+		_clear_grapple_strike_state()
+		_release_after_enemy_grapple_strike()
+		return true
+
+	player.velocity = (
+		to_destination.normalized()
+		* minf(pull_speed, to_destination.length() / maxf(delta, 0.001))
+	)
+	return true
+
+func forces_dash_animation() -> bool:
+	return (
+		grapple_strike_active
+		or (
+			hookshot_enabled
+			and has_enemy_grapple_target()
+			and not enemy_grapple_ready
+		)
+	)
+
+func get_forced_dash_direction() -> Vector2:
+	if not forces_dash_animation():
+		return Vector2.ZERO
+	if grapple_strike_active:
+		return get_grapple_strike_direction()
+	if hookshot_enabled and has_enemy_grapple_target() and player:
+		var pull_direction := _get_enemy_grapple_standoff_position() - player.global_position
+		if pull_direction.length_squared() > 0.001:
+			return pull_direction.normalized()
+	return Vector2.ZERO
+
+func get_enemy_grapple_center_distance() -> float:
+	if not has_enemy_grapple_target():
+		return INF
+	return _get_player_collision_center().distance_to(_get_enemy_grapple_center())
+
+func get_enemy_grapple_safe_center_distance() -> float:
+	if not has_enemy_grapple_target():
+		return 0.0
+	var away_from_target := (
+		_get_player_collision_center() - _get_enemy_grapple_center()
+	).normalized()
+	if away_from_target.length_squared() <= 0.001:
+		away_from_target = -grapple_direction.normalized()
+	return (
+		_get_collision_extent_along(_get_enemy_grapple_collision_shape(), away_from_target)
+		+ _get_collision_extent_along(_get_player_collision_shape(), away_from_target)
+		+ grapple_strike_standoff_padding
+	)
+
+func _clear_grapple_strike_state() -> void:
+	grapple_strike_active = false
+	enemy_grapple_ready = false
+	enemy_grapple_hold_timer = 0.0
+
+func _on_enemy_grapple_strike_started() -> void:
+	pass
+
+func _release_after_enemy_grapple_strike() -> void:
+	_begin_grapple_retract()
+
+func _get_enemy_grapple_direction() -> Vector2:
+	if not player:
+		return grapple_direction.normalized()
+	var direction := _get_enemy_grapple_center() - _get_player_collision_center()
+	if direction.length_squared() <= 0.001:
+		direction = grapple_direction
+	if direction.length_squared() <= 0.001:
+		direction = Vector2.RIGHT
+	return direction.normalized()
+
+func _get_enemy_grapple_standoff_position() -> Vector2:
+	if not player:
+		return grapple_attach_position
+
+	var target_center := _get_enemy_grapple_center()
+	var player_center := _get_player_collision_center()
+	var away_from_target := (player_center - target_center).normalized()
+	if away_from_target.length_squared() <= 0.001:
+		away_from_target = -grapple_direction.normalized()
+	if away_from_target.length_squared() <= 0.001:
+		away_from_target = Vector2.LEFT
+
+	var center_distance := get_enemy_grapple_safe_center_distance()
+	var desired_player_center := target_center + away_from_target * center_distance
+	return desired_player_center - _get_player_collision_center_offset()
+
+func _get_enemy_grapple_center() -> Vector2:
+	var collision_shape := _get_enemy_grapple_collision_shape()
+	if collision_shape:
+		return collision_shape.global_position
+	if hookshot_enemy_hurtbox and hookshot_enemy_hurtbox.hurtbox_owner is Node2D:
+		return (hookshot_enemy_hurtbox.hurtbox_owner as Node2D).global_position
+	return grapple_attach_position
+
+func _get_enemy_grapple_impact_position(strike_direction: Vector2) -> Vector2:
+	var target_center := _get_enemy_grapple_center()
+	var direction := strike_direction.normalized()
+	if direction.length_squared() <= 0.001:
+		direction = _get_enemy_grapple_direction()
+	var target_extent := _get_collision_extent_along(
+		_get_enemy_grapple_collision_shape(),
+		-direction
+	)
+	return target_center - direction * target_extent
+
+func _get_enemy_grapple_collision_shape() -> CollisionShape2D:
+	if not hookshot_enemy_hurtbox or not is_instance_valid(hookshot_enemy_hurtbox):
+		return null
+	return hookshot_enemy_hurtbox.get_node_or_null("CollisionShape2D") as CollisionShape2D
+
+func _get_player_collision_shape() -> CollisionShape2D:
+	if not player:
+		return null
+	return player.get_node_or_null("CollisionShape2D") as CollisionShape2D
+
+func _get_player_collision_center_offset() -> Vector2:
+	var collision_shape := _get_player_collision_shape()
+	if not collision_shape or not player:
+		return Vector2.ZERO
+	return collision_shape.global_position - player.global_position
+
+func _get_player_collision_center() -> Vector2:
+	if not player:
+		return global_position
+	return player.global_position + _get_player_collision_center_offset()
+
+func _get_collision_extent_along(
+	collision_shape: CollisionShape2D,
+	world_direction: Vector2
+) -> float:
+	if not collision_shape or not collision_shape.shape:
+		return 0.0
+	var direction := world_direction.normalized()
+	if direction.length_squared() <= 0.001:
+		direction = Vector2.RIGHT
+
+	var shape_rect := collision_shape.shape.get_rect()
+	var corners := [
+		shape_rect.position,
+		shape_rect.position + Vector2(shape_rect.size.x, 0.0),
+		shape_rect.position + Vector2(0.0, shape_rect.size.y),
+		shape_rect.end,
+	]
+	var center := collision_shape.global_position
+	var extent := 0.0
+	for corner in corners:
+		var world_corner := collision_shape.to_global(corner)
+		extent = maxf(extent, absf((world_corner - center).dot(direction)))
+	return extent
+
+func _has_world_between_player_and_grapple_target(target_position: Vector2) -> bool:
+	if not player or not is_inside_tree():
+		return true
+	var query := PhysicsRayQueryParameters2D.create(
+		_get_player_collision_center(),
+		target_position,
+		1,
+		[player.get_rid()]
+	)
+	query.hit_from_inside = false
+	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+func _spawn_grapple_strike_vfx(world_position: Vector2, direction: Vector2) -> void:
+	var vfx := GRAPPLE_STRIKE_VFX_SCENE.instantiate() as GrappleStrikeVFX
+	if not vfx:
+		return
+	var parent := get_tree().current_scene
+	if not parent:
+		parent = get_parent()
+	if not parent:
+		vfx.queue_free()
+		return
+	parent.add_child(vfx)
+	vfx.global_position = world_position
+	vfx.play(direction)
+
 func is_base_grapple_restricting() -> bool:
+	if grapple_strike_active:
+		return true
 	if grapple_state != GrappleState.ATTACHED:
 		return false
 
@@ -312,6 +727,11 @@ func _reset_active_grapple_visuals() -> void:
 	hookshot_enemy_hurtbox = null
 	hookshot_previous_distance = INF
 	hookshot_stall_timer = 0.0
+	enemy_grapple_ready = false
+	enemy_grapple_hold_timer = 0.0
+	grapple_strike_active = false
+	grapple_strike_direction = Vector2.RIGHT
+	grapple_strike_launch_range_ratio = 0.0
 	active_rope_points.clear()
 	active_rope_previous_points.clear()
 
@@ -486,6 +906,7 @@ func _start_grapple_fire() -> void:
 
 func _begin_grapple_retract() -> void:
 	if grapple_state != GrappleState.STOWED:
+		_clear_grapple_strike_state()
 		AudioManager.stop_loop(&"grapple_hanging")
 		grapple_state = GrappleState.RETRACTING
 		grapple_attachment_state = GrappleAttachmentState.SPENT
@@ -570,7 +991,7 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 			return
 
 		var collider := grapple_raycast.get_collider()
-		if hookshot_enabled and not _is_valid_hookshot_collider(collider):
+		if not _is_valid_hookshot_collider(collider):
 			if collider is CollisionObject2D:
 				grapple_raycast.add_exception(collider as CollisionObject2D)
 				continue
@@ -643,6 +1064,7 @@ func _capture_grapple_target(collider: Object) -> void:
 	if grapple_target:
 		grapple_target_local_position = grapple_target.to_local(grapple_attach_position)
 
+	grapple_strike_launch_range_ratio = 0.0
 	hookshot_enemy_hurtbox = collider as HurtboxComponent
 	if not hookshot_enemy_hurtbox and collider is Node:
 		var collider_node := collider as Node
@@ -650,9 +1072,19 @@ func _capture_grapple_target(collider: Object) -> void:
 			hookshot_enemy_hurtbox = collider_node.get_node_or_null("Hurtbox") as HurtboxComponent
 		elif collider_node.get_parent() and collider_node.get_parent().is_in_group("enemies"):
 			hookshot_enemy_hurtbox = collider_node.get_parent().get_node_or_null("Hurtbox") as HurtboxComponent
+	if hookshot_enemy_hurtbox:
+		grapple_strike_launch_range_ratio = clampf(
+			grapple_start_position.distance_to(grapple_attach_position)
+			/ maxf(grapple_max_distance, 1.0),
+			0.0,
+			1.0
+		)
 
 	hookshot_previous_distance = INF
 	hookshot_stall_timer = 0.0
+	enemy_grapple_ready = false
+	enemy_grapple_hold_timer = 0.0
+	grapple_strike_active = false
 
 func _update_moving_grapple_target() -> void:
 	if grapple_target and is_instance_valid(grapple_target):
@@ -830,19 +1262,23 @@ func apply_grapple_velocity(delta: float) -> void:
 
 func _apply_hookshot_pull(delta: float) -> void:
 	_update_moving_grapple_target()
+	if hold_enemy_grapple_ready(delta):
+		return
 
 	var destination := grapple_attach_position
-	if grapple_collision_normal.length_squared() > 0.001:
+	if has_enemy_grapple_target():
+		destination = _get_enemy_grapple_standoff_position()
+	elif grapple_collision_normal.length_squared() > 0.001:
 		var surface_normal := grapple_collision_normal.normalized()
 		destination += surface_normal * _get_hookshot_surface_clearance(surface_normal)
 
 	var to_destination := destination - player.global_position
 	var distance := to_destination.length()
 	if distance <= hookshot_arrival_distance:
-		_finish_hookshot_pull()
+		_finish_hookshot_pull(true)
 		return
 	if _is_hookshot_pull_blocked(to_destination.normalized()):
-		_finish_hookshot_pull()
+		_finish_hookshot_pull(false)
 		return
 
 	if hookshot_previous_distance == INF or distance <= hookshot_previous_distance - hookshot_min_progress:
@@ -852,7 +1288,7 @@ func _apply_hookshot_pull(delta: float) -> void:
 		hookshot_stall_timer += delta
 
 	if hookshot_stall_timer >= hookshot_stall_time:
-		_finish_hookshot_pull()
+		_finish_hookshot_pull(false)
 		return
 
 	player.velocity = to_destination.normalized() * minf(hookshot_pull_speed, distance / maxf(delta, 0.001))
@@ -896,22 +1332,12 @@ func _get_hookshot_surface_clearance(surface_normal: Vector2) -> float:
 		clearance = maxf(clearance, -minimum_projection + hookshot_surface_padding)
 	return clearance
 
-func _finish_hookshot_pull() -> void:
+func _finish_hookshot_pull(reached_destination := true) -> void:
 	player.velocity = Vector2.ZERO
-	_apply_hookshot_arrival_hit()
-	_begin_grapple_retract()
-
-func _apply_hookshot_arrival_hit() -> void:
-	if not hookshot_enemy_hurtbox or not is_instance_valid(hookshot_enemy_hurtbox):
+	if reached_destination and has_enemy_grapple_target():
+		mark_enemy_grapple_ready()
 		return
-
-	var damage := DamageData.new()
-	damage.amount = hookshot_arrival_damage
-	damage.hitstun = hookshot_hitstun
-	damage.hit_pause = 0.03
-	damage.source = player
-	damage.hit_position = grapple_attach_position
-	hookshot_enemy_hurtbox.receive_hit(damage)
+	_begin_grapple_retract()
 
 func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 	if absf(Input.get_axis("move_left", "move_right")) > 0.05:

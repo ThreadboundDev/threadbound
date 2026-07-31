@@ -99,13 +99,45 @@ var _link_alive := [false, false]
 var _link_respawn_remaining := [0.0, 0.0]
 var _link_respawn_duration := [1.0, 1.0]
 var _link_pulse_warning_time := 3.0
+var _intro_rest_position := Vector2.ZERO
+var _intro_tween: Tween
 
 func _ready() -> void:
+	_intro_rest_position = position
 	if not resized.is_connected(_sync_title_layout):
 		resized.connect(_sync_title_layout)
 	_sync_title()
 	_sync_title_layout()
 	queue_redraw()
+
+func prepare_intro() -> void:
+	if _intro_tween and _intro_tween.is_valid():
+		_intro_tween.kill()
+	_intro_rest_position = position
+	position = _intro_rest_position + Vector2(0.0, -18.0)
+	modulate.a = 0.0
+	visible = true
+
+func reveal_intro(duration: float = 0.4) -> void:
+	if _intro_tween and _intro_tween.is_valid():
+		_intro_tween.kill()
+	visible = true
+	_intro_tween = create_tween()
+	_intro_tween.set_parallel(true)
+	_intro_tween.set_trans(Tween.TRANS_CUBIC)
+	_intro_tween.set_ease(Tween.EASE_OUT)
+	_intro_tween.tween_property(
+		self,
+		"position",
+		_intro_rest_position,
+		maxf(0.01, duration)
+	)
+	_intro_tween.tween_property(
+		self,
+		"modulate:a",
+		1.0,
+		maxf(0.01, duration)
+	)
 
 func set_health(current: int, maximum: int) -> void:
 	max_health = maximum

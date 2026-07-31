@@ -5,6 +5,9 @@ const BOSS_HEALTH_BAR_SCENE := preload("res://Src/UI/boss_health_bar.tscn")
 const BOSS_ARENA_LOCK_SCRIPT := preload(
 	"res://Src/Environment/World/boss_arena_lock.gd"
 )
+const ROOM_HUE_GRADE_SCRIPT := preload(
+	"res://Src/Environment/World/room_hue_grade.gd"
+)
 
 var _failures := PackedStringArray()
 
@@ -26,6 +29,7 @@ func _ready() -> void:
 	await _verify_thread_knot_counter(hud)
 	_verify_boss_health_bar()
 	await _verify_boss_camera_zoom()
+	await _verify_boss_room_grade_intro()
 	_finish()
 
 func _verify_scene_layers(hud: CombatHUD) -> void:
@@ -180,6 +184,16 @@ func _verify_boss_health_bar() -> void:
 		boss_bar.title_rect.end.y < 96.0,
 		"Boss title stays above the center ornament instead of overlapping it."
 	)
+	boss_bar.prepare_intro()
+	_expect(
+		boss_bar.visible and is_zero_approx(boss_bar.modulate.a),
+		"Boss HUD can begin hidden while retaining its cinematic layout."
+	)
+	boss_bar.reveal_intro(0.01)
+	_expect(
+		boss_bar.visible,
+		"Boss HUD exposes a cinematic name-and-health reveal."
+	)
 	boss_bar.set_armor_link_state(0, true, 0.0, 26.0, 3.0)
 	boss_bar.set_armor_link_state(1, false, 13.0, 26.0, 3.0)
 	_expect(
@@ -202,17 +216,37 @@ func _verify_boss_camera_zoom() -> void:
 	arena_lock.set("camera_path", NodePath("../BossTestCamera"))
 	arena_lock.set("boss_camera_zoom", Vector2(0.72, 0.72))
 	arena_lock.set("boss_zoom_duration", 0.05)
+	arena_lock.set("cinematic_start_hold", 0.01)
+	arena_lock.set("cinematic_pan_duration", 0.01)
+	arena_lock.set("cinematic_hud_reveal_duration", 0.01)
+	arena_lock.set("cinematic_boss_hold", 0.01)
+	arena_lock.set("cinematic_return_duration", 0.01)
 	add_child(arena_lock)
 	await get_tree().process_frame
 
 	var test_player := Node2D.new()
 	test_player.add_to_group("player")
+	test_player.set_process(true)
+	test_player.set_physics_process(true)
 	add_child(test_player)
 	arena_lock.call("_on_body_entered", test_player)
+	await get_tree().process_frame
+	_expect(
+		bool(arena_lock.call("is_intro_running"))
+		and not test_player.is_processing()
+		and not test_player.is_physics_processing(),
+		"Boss introduction temporarily owns player control."
+	)
 	await get_tree().create_timer(0.12).timeout
 	_expect(
 		camera.zoom.is_equal_approx(Vector2(0.72, 0.72)),
 		"Entering the boss arena smoothly selects the approved 0.72 camera zoom."
+	)
+	_expect(
+		not bool(arena_lock.call("is_intro_running"))
+		and test_player.is_processing()
+		and test_player.is_physics_processing(),
+		"Boss introduction restores player control before combat."
 	)
 
 	arena_lock.call("_on_boss_died", null)
@@ -224,6 +258,37 @@ func _verify_boss_camera_zoom() -> void:
 	test_player.queue_free()
 	arena_lock.queue_free()
 	camera.queue_free()
+
+func _verify_boss_room_grade_intro() -> void:
+	var room_grade := CanvasLayer.new()
+	room_grade.set_script(ROOM_HUE_GRADE_SCRIPT)
+	room_grade.set("sync_bounds_from_placeholders", false)
+	room_grade.set("grass_recolor_enabled", false)
+	add_child(room_grade)
+	await get_tree().process_frame
+
+	var boss_room_position := Vector2(2000.0, 3000.0)
+	var before := room_grade.call(
+		"_target_grade_for_position",
+		boss_room_position
+	) as Dictionary
+	_expect(
+		is_zero_approx(float(before.get("strength", -1.0))),
+		"Boss-room grade stays neutral before the cinematic cue."
+	)
+
+	room_grade.call("start_boss_intro_grade", 0.01)
+	await get_tree().create_timer(0.04).timeout
+	var after := room_grade.call(
+		"_target_grade_for_position",
+		boss_room_position
+	) as Dictionary
+	_expect(
+		float(room_grade.call("get_boss_intro_grade_blend")) >= 0.99
+		and float(after.get("strength", 0.0)) > 0.0,
+		"Boss-room grade fades in from the cinematic instead of a spatial hard cut."
+	)
+	room_grade.queue_free()
 
 func _texture_alpha_coverage(texture: Texture2D) -> float:
 	if not texture:

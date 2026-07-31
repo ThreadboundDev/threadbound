@@ -17,6 +17,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export var required_threads: Array[StringName] = [&"power", &"essence", &"balance"]
 @export var door_color := Color(0.8, 0.6, 0.28, 1.0)
 @export var fog_color := Color(0.015, 0.012, 0.018, 0.96)
+@export var fog_panel_enabled := true
 @export var closed := true
 @export_group("Prompt")
 @export var prompt_read_text := "Read"
@@ -145,12 +146,14 @@ func _open() -> void:
 		_is_opening = false
 		_show_opened_split_layers()
 
-	if fog_panel:
+	if fog_panel and fog_panel_enabled:
 		var tween := create_tween()
 		tween.tween_property(fog_panel, "modulate:a", 0.0, 0.2)
 		tween.finished.connect(func() -> void:
 			fog_panel.visible = false
 		)
+	elif fog_panel:
+		fog_panel.visible = false
 
 func open_silently() -> void:
 	_message_acknowledged = false
@@ -183,7 +186,10 @@ func lock_closed_for_boss() -> void:
 	_is_opening = true
 	_set_opened_split_visible(false)
 	if blocker_shape:
-		blocker_shape.set_deferred("disabled", false)
+		# Keep the blocker non-solid while the large closing artwork crosses the
+		# doorway. The arena trigger is beyond the door, and collision becomes
+		# authoritative only once the door is fully seated.
+		blocker_shape.set_deferred("disabled", true)
 	if interact_shape:
 		interact_shape.set_deferred("disabled", true)
 	if prompt_label:
@@ -201,9 +207,13 @@ func lock_closed_for_boss() -> void:
 			_is_opening = false
 			door_sprite.animation = closed_animation
 			door_sprite.frame = 0
+			if blocker_shape:
+				blocker_shape.set_deferred("disabled", false)
 		, CONNECT_ONE_SHOT)
 	else:
 		_is_opening = false
+		if blocker_shape:
+			blocker_shape.set_deferred("disabled", false)
 		_apply_visual_state()
 
 func _apply_visual_state() -> void:
@@ -223,8 +233,8 @@ func _apply_visual_state() -> void:
 		_show_opened_split_layers()
 	if fog_panel:
 		fog_panel.color = fog_color
-		fog_panel.visible = closed
-		fog_panel.modulate.a = 1.0 if closed else 0.0
+		fog_panel.visible = fog_panel_enabled and closed
+		fog_panel.modulate.a = 1.0 if fog_panel_enabled and closed else 0.0
 	if blocker_shape:
 		blocker_shape.disabled = not closed
 	if interact_shape:

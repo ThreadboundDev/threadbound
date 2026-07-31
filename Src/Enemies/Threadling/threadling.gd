@@ -167,6 +167,7 @@ func move_enemy(delta: float) -> void:
 	if state_machine and state_machine.current_state_name == &"Hurt":
 		velocity = velocity.move_toward(Vector2.ZERO, stats.acceleration * delta)
 		move_and_slide()
+		_process_contact_overlaps()
 		_resolve_tether_overlaps()
 		return
 
@@ -178,6 +179,7 @@ func move_enemy(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, target_y_speed, stats.acceleration * delta)
 
 	move_and_slide()
+	_process_contact_overlaps()
 	_resolve_tether_overlaps()
 
 func _play_idle_animation() -> void:

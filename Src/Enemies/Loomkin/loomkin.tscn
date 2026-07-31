@@ -63,5 +63,9 @@ position = Vector2(-76, -58)
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
 shape = SubResource("RectangleShape2D_attack")
 
+[node name="CollisionShape2D" parent="ContactHitbox" index="0"]
+position = Vector2(0, -62)
+shape = SubResource("RectangleShape2D_body")
+
 [node name="HitFlashComponent" parent="." index="7"]
 target_path = NodePath("../Visuals/Sprite2D")

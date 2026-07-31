@@ -27,3 +27,13 @@ extends Resource
 @export var contact_knockback_strength: float = 260.0
 @export var hit_pause: float = 0.04
 @export var screen_shake_strength: float = 3.0
+
+@export_group("Hit Response")
+@export var use_polished_hurt_response := false
+@export_range(0.0, 0.5, 0.01) var incoming_hit_invulnerability := 0.06
+@export_range(0.0, 3.0, 0.05) var incoming_knockback_multiplier := 1.0
+@export_range(0.05, 3.0, 0.05) var incoming_hitstun_multiplier := 1.0
+@export_range(0.0, 5000.0, 25.0) var hurt_knockback_deceleration := 700.0
+@export var hurt_motion_uses_gravity := true
+@export_range(0.0, 32.0, 0.5) var hurt_visual_recoil_distance := 8.0
+@export_range(0.02, 0.3, 0.01) var hurt_visual_recoil_duration := 0.12

@@ -24,6 +24,7 @@ const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.
 @onready var attack_area: Area2D = $AttackArea
 @onready var contact_hitbox: Area2D = $ContactHitbox
 @onready var hit_flash: HitFlashComponent = $HitFlashComponent as HitFlashComponent
+@onready var enemy_health_bar: EnemyHealthBar = $EnemyHealthBar as EnemyHealthBar
 @onready var state_machine: EnemyStateMachine = $StateMachine as EnemyStateMachine
 
 var target: Node2D = null
@@ -35,7 +36,9 @@ var _attack_cooldown_timer := 0.0
 var _contact_damage_cooldown_timer := 0.0
 var _base_visuals_scale := Vector2.ONE
 var _base_visuals_modulate := Color.WHITE
+var _base_visuals_position := Vector2.ZERO
 var _pending_hurt_duration := 0.0
+var _hurt_visual_tween: Tween
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -44,10 +47,13 @@ func _ready() -> void:
 	if visuals:
 		_base_visuals_scale = visuals.scale
 		_base_visuals_modulate = visuals.modulate
+		_base_visuals_position = visuals.position
 
 	if not stats:
 		stats = EnemyStats.new()
 
+	if stats.use_polished_hurt_response:
+		health_component.invincible_after_hit = stats.incoming_hit_invulnerability
 	health_component.configure(_get_scaled_max_health())
 	health_component.damaged.connect(_on_damaged)
 	health_component.died.connect(_on_died)
@@ -55,6 +61,12 @@ func _ready() -> void:
 	hurtbox.health_component = health_component
 	hurtbox.hurtbox_owner = self
 	hurtbox.hit_received.connect(_on_hurtbox_hit_received)
+	if enemy_health_bar:
+		enemy_health_bar.setup(
+			health_component,
+			hurtbox,
+			resets_at_save_points and not is_in_group("bosses")
+		)
 
 	attack_hitbox.hitbox_owner = self
 	attack_hitbox.damage = _build_attack_damage()
@@ -83,6 +95,25 @@ func move_enemy(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
 	move_and_slide()
 	_process_contact_overlaps()
+
+func uses_polished_hurt_response() -> bool:
+	return stats != null and stats.use_polished_hurt_response
+
+func begin_polished_hurt_response() -> void:
+	set_horizontal_target_speed(0.0)
+
+func update_polished_hurt_motion(delta: float) -> void:
+	var deceleration := maxf(0.0, stats.hurt_knockback_deceleration)
+	if stats.hurt_motion_uses_gravity:
+		apply_gravity(delta)
+	else:
+		velocity.y = move_toward(velocity.y, 0.0, deceleration * delta)
+	velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
+	move_and_slide()
+	_process_contact_overlaps()
+
+func end_polished_hurt_response() -> void:
+	pass
 
 func update_attack_motion(delta: float) -> void:
 	apply_gravity(delta)
@@ -159,6 +190,7 @@ func die() -> void:
 
 	is_dead = true
 	end_attack()
+	_stop_hurt_visual_recoil()
 	set_physics_process(false)
 	hurtbox.set_deferred("monitorable", false)
 	detection_area.set_deferred("monitoring", false)
@@ -183,8 +215,10 @@ func reset_for_save_point() -> void:
 	if health_component:
 		health_component.configure(_get_scaled_max_health())
 	if visuals:
+		_stop_hurt_visual_recoil()
 		visuals.scale = _base_visuals_scale
 		visuals.modulate = _base_visuals_modulate
+		visuals.position = _base_visuals_position
 	visible = true
 	set_physics_process(true)
 	_attack_cooldown_timer = 0.0
@@ -221,8 +255,29 @@ func _build_attack_damage() -> DamageData:
 	data.amount = _get_scaled_attack_damage()
 	data.hitstun = stats.hurt_time
 	data.hit_pause = stats.hit_pause
+	if stats.use_polished_hurt_response:
+		data.screen_shake_strength = stats.screen_shake_strength
+		data.screen_shake_duration = 0.08
+		data.use_receiver_screen_shake_fallback = false
 	data.knockback = Vector2(float(facing) * stats.knockback_strength, -70.0)
 	return data
+
+func modify_outgoing_hit_damage(
+	damage: DamageData,
+	target_hurtbox: HurtboxComponent
+) -> DamageData:
+	if not damage or not target_hurtbox:
+		return damage
+
+	damage.hit_position = _get_hurtbox_feedback_position(target_hurtbox)
+	return damage
+
+func _get_hurtbox_feedback_position(target_hurtbox: HurtboxComponent) -> Vector2:
+	for child in target_hurtbox.get_children():
+		var collision_shape := child as CollisionShape2D
+		if collision_shape and not collision_shape.disabled and collision_shape.shape:
+			return collision_shape.global_position
+	return target_hurtbox.global_position
 
 func _get_scaled_max_health() -> int:
 	return EnemyScaling.scale_health(stats.max_health)
@@ -268,6 +323,13 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 	if not target_hurtbox or not target_hurtbox.hurtbox_owner or not target_hurtbox.hurtbox_owner.is_in_group("player"):
 		return false
 
+	var target_owner := target_hurtbox.hurtbox_owner
+	if (
+		target_owner.has_method("should_ignore_enemy_contact")
+		and bool(target_owner.call("should_ignore_enemy_contact", self))
+	):
+		return true
+
 	var away_from_enemy := _get_contact_away_direction(target_hurtbox)
 	_separate_from_contact(away_from_enemy)
 
@@ -284,6 +346,10 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 	)
 	damage.hitstun = stats.hurt_time
 	damage.hit_pause = stats.hit_pause
+	if stats.use_polished_hurt_response:
+		damage.screen_shake_strength = stats.screen_shake_strength
+		damage.screen_shake_duration = 0.08
+		damage.use_receiver_screen_shake_fallback = false
 
 	if target_hurtbox.receive_hit(damage):
 		_contact_damage_cooldown_timer = stats.contact_damage_cooldown
@@ -315,6 +381,26 @@ func _separate_from_contact(away_from_enemy: Vector2) -> void:
 func _on_hurtbox_hit_received(_damage: DamageData) -> void:
 	pass
 
+func modify_incoming_health_damage(damage: DamageData) -> DamageData:
+	if not damage or not stats:
+		return damage
+
+	var knockback_multiplier := maxf(0.0, stats.incoming_knockback_multiplier)
+	var hitstun_multiplier := maxf(0.05, stats.incoming_hitstun_multiplier)
+	if is_equal_approx(knockback_multiplier, 1.0) and is_equal_approx(hitstun_multiplier, 1.0):
+		return damage
+
+	var modified := damage.duplicate_for_hit(
+		damage.source,
+		damage.hit_position
+	)
+	modified.knockback *= knockback_multiplier
+	if modified.hitstun > 0.0:
+		modified.hitstun *= hitstun_multiplier
+	elif not is_equal_approx(hitstun_multiplier, 1.0):
+		modified.hitstun = stats.hurt_time * hitstun_multiplier
+	return modified
+
 func _on_damaged(damage: DamageData) -> void:
 	AudioManager.play_sfx(&"enemy_hit")
 
@@ -324,15 +410,30 @@ func _on_damaged(damage: DamageData) -> void:
 	if health_component.current_health > 0:
 		_spawn_enemy_damage_vfx(damage)
 
-	CombatFeedback.screen_shake(self, stats.screen_shake_strength, 0.08)
+	if damage.screen_shake_strength > 0.0:
+		CombatFeedback.screen_shake(
+			self,
+			damage.screen_shake_strength,
+			damage.screen_shake_duration
+		)
+	elif damage.use_receiver_screen_shake_fallback:
+		CombatFeedback.screen_shake(self, stats.screen_shake_strength, 0.08)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
 	var knockback := damage.knockback
 	if knockback == Vector2.ZERO and damage.source is Node2D:
 		var source_node := damage.source as Node2D
-		knockback = Vector2(sign(global_position.x - source_node.global_position.x) * stats.knockback_strength, -70.0)
+		knockback = (
+			Vector2(
+				sign(global_position.x - source_node.global_position.x)
+					* stats.knockback_strength,
+				-70.0
+			)
+			* stats.incoming_knockback_multiplier
+		)
 
 	velocity = knockback
+	_play_hurt_visual_recoil(damage)
 	start_attack_cooldown(0.45)
 	_pending_hurt_duration = (
 		damage.hitstun
@@ -461,6 +562,42 @@ func _get_hit_direction(damage: DamageData) -> Vector2:
 		if from_source.length() > 0.01:
 			return from_source.normalized()
 	return Vector2(float(facing), -0.15).normalized()
+
+func _play_hurt_visual_recoil(damage: DamageData) -> void:
+	if (
+		not uses_polished_hurt_response()
+		or not visuals
+		or stats.hurt_visual_recoil_distance <= 0.0
+	):
+		return
+
+	_stop_hurt_visual_recoil()
+	var direction := _get_hit_direction(damage)
+	var duration := maxf(0.02, stats.hurt_visual_recoil_duration)
+	var recoil_duration := minf(duration * 0.32, 0.05)
+	var return_duration := maxf(0.01, duration - recoil_duration)
+	var recoil_offset := direction * stats.hurt_visual_recoil_distance
+
+	_hurt_visual_tween = visuals.create_tween()
+	_hurt_visual_tween.tween_property(
+		visuals,
+		"position",
+		_base_visuals_position + recoil_offset,
+		recoil_duration
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_hurt_visual_tween.tween_property(
+		visuals,
+		"position",
+		_base_visuals_position,
+		return_duration
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+func _stop_hurt_visual_recoil() -> void:
+	if _hurt_visual_tween and _hurt_visual_tween.is_valid():
+		_hurt_visual_tween.kill()
+	_hurt_visual_tween = null
+	if visuals:
+		visuals.position = _base_visuals_position
 
 func _play_death_collapse() -> void:
 	if not visuals:

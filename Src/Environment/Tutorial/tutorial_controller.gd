@@ -14,6 +14,7 @@ const INPUT_PLACEHOLDER_ACTIONS := {
 	"{grapple}": "Grapple",
 	"{attack}": "Attack",
 	"{special_attack}": "SpecialAttack",
+	"{meditate}": "Meditate",
 	"{interact}": "interact",
 	"{inventory}": "open_inventory",
 	"{map}": "open_map",
@@ -32,6 +33,7 @@ const INPUT_PLACEHOLDER_FALLBACKS := {
 	"{grapple}": "RMB",
 	"{attack}": "LMB",
 	"{special_attack}": "Q",
+	"{meditate}": "V",
 	"{interact}": "E",
 	"{inventory}": "I",
 	"{map}": "M",
@@ -50,8 +52,10 @@ enum TutorialStep {
 	DASH,
 	GRAPPLE,
 	ATTACK,
+	SMASH,
 	MENUS,
 	COMBAT,
+	MEDITATE,
 	THREAD_KNOTS,
 	SAVE_POINT,
 	COMPLETE,
@@ -102,12 +106,14 @@ enum TutorialStep {
 @export_multiline var dash_text := "Press {dash} to dash {dash_goal} times. {dash_progress}/{dash_goal}"
 @export_multiline var grapple_text := "Press {grapple} to fire the grapple {grapple_goal} times. {grapple_progress}/{grapple_goal}"
 @export_multiline var attack_text := "Press {attack} to attack with the shuttle {attack_goal} times. {attack_progress}/{attack_goal}"
+@export_multiline var smash_text := "While grounded, press {special_attack} to perform a Thread Smash. It costs 2 Action Points, briefly commits you in place, and deals heavy area damage."
 @export_multiline var menu_text := "Press {inventory}, {map}, {controls}, or {pause} to open your menus."
 @export_multiline var combat_text := "Press {attack} to defeat the Threadling. Movement and attacks both build momentum."
+@export_multiline var meditation_text := "Now that you are safe, hold {meditate} to meditate. Meditation rapidly restores Action Points and can spend Momentum to recover health up to 75%."
 @export_multiline var thread_knot_text := "These are Thread Knots. They are used to purchase items and level up. Click or press {interact} to continue."
 @export_multiline var save_point_text := "Press {interact} near the Blossom to rest, recover, save, and reset the world."
 @export_multiline var save_point_weave_text := "Choose WEAVE to spend a Thread Knot and strengthen your Threadborne."
-@export_multiline var save_point_reflect_text := "Now choose REFLECT to rest, recover, save, and reset the world."
+@export_multiline var save_point_reflect_text := "Now choose REFLECT—the Blossom's Rest option—to fully recover, save your checkpoint, and reset the world."
 @export_multiline var complete_text := "The first weave opens. Continue into the chamber below."
 
 @export_group("Step Requirements")
@@ -148,6 +154,8 @@ var _air_jump_count := 0
 var _dash_count := 0
 var _grapple_count := 0
 var _attack_count := 0
+var _special_attack_was_active := false
+var _meditation_lesson_queued := false
 var _tutorial_enemy: Node
 var _save_point_revealed := false
 var _combat_completion_handled := false
@@ -186,6 +194,11 @@ func _ready() -> void:
 		var stat_upgraded_callback := Callable(self, "_on_player_stat_upgraded")
 		if not _player.is_connected("stat_upgraded", stat_upgraded_callback):
 			_player.connect("stat_upgraded", stat_upgraded_callback)
+	var player_health_component: Node = _player.get_node_or_null("HealthComponent")
+	if player_health_component and player_health_component.has_signal("damaged"):
+		var damaged_callback := Callable(self, "_on_player_damaged_for_tutorial")
+		if not player_health_component.is_connected("damaged", damaged_callback):
+			player_health_component.connect("damaged", damaged_callback)
 
 	var has_scene_checkpoint := _has_checkpoint_in_current_scene()
 	if has_scene_checkpoint and not DemoProgress.has_tutorial_completion_record():
@@ -275,11 +288,17 @@ func _process(delta: float) -> void:
 		TutorialStep.ATTACK:
 			if _attack_count >= required_attacks:
 				_advance_step()
+		TutorialStep.SMASH:
+			if _special_attack_was_active:
+				_advance_step()
 		TutorialStep.MENUS:
 			if _step_timer >= menu_intro_seconds or _menu_input_pressed():
 				_advance_step()
 		TutorialStep.COMBAT:
 			pass
+		TutorialStep.MEDITATE:
+			if bool(_player.get("is_meditating")):
+				_complete_meditation_tutorial()
 		TutorialStep.THREAD_KNOTS:
 			if _hud_advance_pressed():
 				_advance_step()
@@ -312,6 +331,7 @@ func _set_step(step: TutorialStep) -> void:
 	_dash_count = 0
 	_grapple_count = 0
 	_attack_count = 0
+	_special_attack_was_active = false
 	if step == TutorialStep.COMBAT:
 		_combat_completion_handled = false
 	_jump_count_ready_at = 0.0
@@ -347,11 +367,15 @@ func _set_step(step: TutorialStep) -> void:
 			_show_prompt(grapple_text)
 		TutorialStep.ATTACK:
 			_show_prompt(attack_text)
+		TutorialStep.SMASH:
+			_show_prompt(smash_text)
 		TutorialStep.MENUS:
 			_show_prompt(menu_text)
 		TutorialStep.COMBAT:
 			_show_prompt(combat_text)
 			_spawn_tutorial_enemy()
+		TutorialStep.MEDITATE:
+			_show_prompt(meditation_text)
 		TutorialStep.THREAD_KNOTS:
 			_thread_knot_prompt_seen = true
 			_show_hud_prompt(thread_knot_text, thread_knot_spotlight_rect, thread_knot_pointer_start, thread_knot_pointer_end)
@@ -507,6 +531,8 @@ func _count_inputs() -> void:
 			_count_grapple_throw()
 		TutorialStep.ATTACK:
 			_count_attack_attempt()
+		TutorialStep.SMASH:
+			_count_special_attack_attempt()
 
 func _update_move_progress() -> void:
 	if not _player:
@@ -575,6 +601,11 @@ func _count_attack_attempt() -> void:
 		_attack_count_ready_at = _step_timer + attack_count_cooldown
 		_refresh_current_prompt()
 
+func _count_special_attack_attempt() -> void:
+	if not _player:
+		return
+	_special_attack_was_active = bool(_player.get("current_attack_is_special"))
+
 func _menu_input_pressed() -> bool:
 	return (
 		Input.is_action_just_pressed("open_inventory")
@@ -632,10 +663,24 @@ func _complete_tutorial_combat() -> void:
 	if _combat_completion_handled or _step != TutorialStep.COMBAT:
 		return
 	_combat_completion_handled = true
+	if _meditation_lesson_queued:
+		_set_step(TutorialStep.MEDITATE)
+		return
+	_continue_after_combat_lessons()
+
+func _complete_meditation_tutorial() -> void:
+	_meditation_lesson_queued = false
+	_continue_after_combat_lessons()
+
+func _continue_after_combat_lessons() -> void:
 	if _thread_knot_prompt_seen:
 		_set_step(TutorialStep.SAVE_POINT)
 	else:
 		_set_step(TutorialStep.THREAD_KNOTS)
+
+func _on_player_damaged_for_tutorial(_damage: DamageData) -> void:
+	if tutorial_enabled and _step == TutorialStep.COMBAT:
+		_meditation_lesson_queued = true
 
 func handle_first_thread_knot_tutorial() -> bool:
 	if not tutorial_enabled:
@@ -646,6 +691,8 @@ func handle_first_thread_knot_tutorial() -> bool:
 		return false
 
 	_thread_knot_prompt_seen = true
+	if _step == TutorialStep.COMBAT or _step == TutorialStep.MEDITATE:
+		return true
 	call_deferred("_set_step", TutorialStep.THREAD_KNOTS)
 	return true
 

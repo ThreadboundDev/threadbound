@@ -12,6 +12,7 @@ const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
 const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 const NEUTRAL_SPECIAL_VFX_SCENE := preload("res://Src/VFX/neutral_special_vfx.tscn")
+const DASH_IFRAME_VFX_SCENE := preload("res://Src/VFX/dash_iframe_vfx.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -34,6 +35,78 @@ const NEUTRAL_SPECIAL_WEAPON_ANCHORS := [
 	Vector2(126.0, -7.0),
 ]
 const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
+const ATTACK_PROFILE_BASE_DAMAGE := 25.0
+const ATTACK_PROFILE_BASE_KNOCKBACK := 260.0
+const ATTACK_PROFILE_BASIC := {
+	&"damage": 25.0,
+	&"hitstun": 0.16,
+	&"knockback": 260.0,
+	&"hit_pause": 0.040,
+	&"screen_shake": 2.25,
+}
+const ATTACK_PROFILE_MOVING_FINISHER_FIRST := {
+	&"damage": 18.0,
+	&"hitstun": 0.14,
+	&"knockback": 220.0,
+	&"hit_pause": 0.030,
+	&"screen_shake": 1.8,
+}
+const ATTACK_PROFILE_MOVING_FINISHER_SECOND := {
+	&"damage": 25.0,
+	&"hitstun": 0.20,
+	&"knockback": 300.0,
+	&"hit_pause": 0.045,
+	&"screen_shake": 3.0,
+}
+const ATTACK_PROFILE_STATIONARY_FIRST := {
+	&"damage": 23.0,
+	&"hitstun": 0.18,
+	&"knockback": 270.0,
+	&"hit_pause": 0.040,
+	&"screen_shake": 2.2,
+}
+const ATTACK_PROFILE_STATIONARY_SECOND := {
+	&"damage": 30.0,
+	&"hitstun": 0.25,
+	&"knockback": 340.0,
+	&"hit_pause": 0.055,
+	&"screen_shake": 3.5,
+}
+const ATTACK_PROFILE_BACKPEDAL_OPENER := {
+	&"damage": 21.0,
+	&"hitstun": 0.18,
+	&"knockback": 290.0,
+	&"hit_pause": 0.040,
+	&"screen_shake": 2.4,
+}
+const ATTACK_PROFILE_BACKPEDAL_FINISHER_FIRST := {
+	&"damage": 17.0,
+	&"hitstun": 0.14,
+	&"knockback": 235.0,
+	&"hit_pause": 0.030,
+	&"screen_shake": 2.4,
+}
+const ATTACK_PROFILE_BACKPEDAL_FINISHER_SECOND := {
+	&"damage": 23.0,
+	&"hitstun": 0.20,
+	&"knockback": 310.0,
+	&"hit_pause": 0.045,
+	&"screen_shake": 2.4,
+}
+const ATTACK_PROFILE_AIR_FIRST := {
+	&"damage": 16.0,
+	&"hitstun": 0.14,
+	&"knockback": 210.0,
+	&"hit_pause": 0.030,
+	&"screen_shake": 1.6,
+}
+const ATTACK_PROFILE_AIR_SECOND := {
+	&"damage": 21.0,
+	&"hitstun": 0.18,
+	&"knockback": 275.0,
+	&"hit_pause": 0.040,
+	&"screen_shake": 2.4,
+}
 
 # ===============================
 # NODES
@@ -107,12 +180,14 @@ const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
 @export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
 @export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
 @export_range(0.5, 1.0, 0.01) var landing_visual_scale_multiplier := 0.88
+@export_range(0.5, 1.0, 0.01) var grapple_strike_visual_scale_multiplier := 0.82
 @export var landing_visual_offset := Vector2(0.0, 5.0)
 
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
 @export var base_grapple_steer_speed: float = 120.0
 @export var base_grapple_steer_accel: float = 500.0
+@export_range(0.4, 1.5, 0.05) var grapple_strike_max_duration := 0.85
 
 # Momentum tuning. Abilities should call report_momentum_action(category) when
 # they successfully fire, connect, or otherwise complete a meaningful action.
@@ -127,21 +202,28 @@ const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
 
 @export_group("Special Attacks")
 @export_range(1, 6, 1) var neutral_special_action_point_cost := 2
-@export_range(1.0, 5.0, 0.05) var neutral_special_damage_multiplier := 1.65
+@export_range(1.0, 5.0, 0.05) var neutral_special_damage_multiplier := 2.8
 @export_range(0.0, 3.0, 0.01) var neutral_special_windup := 0.45
 @export_range(0.01, 1.0, 0.01) var neutral_special_active_time := 0.15
 @export_range(0.0, 3.0, 0.01) var neutral_special_recovery := 0.60
 @export_range(0.25, 3.0, 0.05) var neutral_special_cooldown_multiplier := 1.55
+@export_range(0.0, 0.5, 0.01) var neutral_special_dash_cancel_window := 0.22
 @export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 1.0
 @export var neutral_special_visual_offset := Vector2(0.0, -20.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export_range(64.0, 360.0, 1.0) var neutral_special_aoe_radius := 220.0
+@export_range(0.1, 0.9, 0.01) var neutral_special_full_force_radius_ratio := 0.45
+@export_range(0.1, 1.0, 0.01) var neutral_special_edge_damage_ratio := 0.55
 @export_range(0.05, 1.0, 0.01) var neutral_special_hitstun := 0.30
+@export_range(0.05, 1.0, 0.01) var neutral_special_edge_hitstun := 0.24
 @export_range(1.0, 3.0, 0.05) var neutral_special_knockback_multiplier := 1.55
+@export_range(0.1, 1.0, 0.01) var neutral_special_edge_knockback_ratio := 0.75
 @export_range(0.0, 1.0, 0.05) var neutral_special_knockback_lift := 0.30
 @export_range(0.0, 0.2, 0.005) var neutral_special_hit_pause := 0.065
 @export_range(0.0, 16.0, 0.25) var neutral_special_screen_shake_strength := 7.0
 @export_range(0.0, 0.4, 0.01) var neutral_special_screen_shake_duration := 0.14
+@export_range(0.5, 1.5, 0.01) var neutral_special_swing_pitch := 1.0
+@export_range(0.5, 1.5, 0.01) var neutral_special_impact_pitch := 1.0
 @export var momentum_gain_equipment_swap := 1.5
 @export var momentum_gain_use_after_swap := 7.0
 
@@ -227,8 +309,12 @@ const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
 @export var momentum_grapple_pull_flow := 1.24
 @export var momentum_attack_speed_low := 0.94
 @export var momentum_attack_speed_mid := 1.0
-@export var momentum_attack_speed_high := 1.16
-@export var momentum_attack_speed_flow := 1.2
+@export var momentum_attack_speed_high := 1.10
+@export var momentum_attack_speed_flow := 1.15
+@export var momentum_attack_damage_low := 1.0
+@export var momentum_attack_damage_mid := 1.0
+@export var momentum_attack_damage_high := 1.05
+@export var momentum_attack_damage_flow := 1.10
 @export var momentum_dash_speed_low := 0.95
 @export var momentum_dash_speed_mid := 1.0
 @export var momentum_dash_speed_high := 1.14
@@ -278,6 +364,8 @@ const NEUTRAL_SPECIAL_GROUND_CONTACT := Vector2(134.0, 109.0)
 @export_range(0.0, 1.0, 0.01) var meditation_wounded_heal_ratio := 0.04
 @export_range(0.0, 1.0, 0.01) var meditation_upper_heal_ratio := 0.03
 @export_range(0.1, 1.0, 0.05) var meditation_flow_interval_multiplier := 0.75
+@export_range(0.5, 1.2, 0.01) var meditation_flow_audio_pitch := 0.78
+@export_range(-20.0, 6.0, 0.5) var meditation_flow_audio_volume_db := -4.0
 
 # Debug testing helpers
 @export var god_mode_fly_speed: float = 1100.0
@@ -360,6 +448,8 @@ var _use_after_swap_timer := 0.0
 var _momentum_system_ready := false
 var _flow_vfx_dash_visual_active := false
 var _dash_iframe_timer := 0.0
+var _dash_contact_phasing_active := false
+var _grapple_strike_contact_guard := false
 var _debug_momentum_was_pressed := false
 var _debug_force_doors_was_pressed := false
 var _debug_thread_knots_was_pressed := false
@@ -382,6 +472,7 @@ var current_equip_anim := ""
 var current_weapon_pose_anim := ""
 var current_attack_body_anim := "Attack"
 var landing_animation_timer := 0.0
+var _movement_facing_before_input := 1
 
 var is_attacking := false
 var is_hurt := false
@@ -400,6 +491,10 @@ var _player_default_visual_position := Vector2.ZERO
 var current_attack_is_special := false
 var current_attack_uses_ground_combo := false
 var current_attack_uses_air_double := false
+var current_attack_uses_grapple_strike := false
+var current_grapple_strike_landed := false
+var current_grapple_strike_finished := false
+var current_grapple_strike_impact_time := -1.0
 var ground_combo_family: StringName = &""
 var ground_combo_step := -1
 var ground_combo_reset_timer := 0.0
@@ -408,10 +503,12 @@ var ground_combo_active_strike := -1
 var ground_combo_queued := false
 var ground_combo_queued_family: StringName = &""
 var ground_attack_visual_mode: StringName = &"stationary"
+var ground_attack_locked_facing := 1
 var air_attack_duration := 0.0
 var air_attack_active_strike := -1
 var _default_attack_hitbox_polygon := PackedVector2Array()
 var _neutral_special_vfx_instance: Node2D = null
+var _dash_iframe_vfx_instance: Node2D = null
 
 # Equipment slots
 var current_gloves: Node = null
@@ -509,6 +606,9 @@ func equip_gloves(glove_scene: PackedScene) -> void:
 
 func unequip_gloves() -> void:
 	if current_gloves:
+		if current_attack_uses_grapple_strike:
+			_cancel_current_grapple_strike()
+			_finish_cancelled_attack()
 		if current_gloves.has_method("on_unequipped"):
 			current_gloves.on_unequipped()
 		else:
@@ -565,15 +665,21 @@ func _physics_process(delta: float) -> void:
 		air_jump_available = true
 
 	# Horizontal movement
+	_movement_facing_before_input = last_direction
 	var horizontal_input := Input.get_axis("move_left", "move_right")
-	if horizontal_input != 0:
+	if horizontal_input != 0 and not is_attacking:
 		last_direction = sign(horizontal_input)
 
 	var grapple_restricting := false
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
-	if not grapple_restricting and not is_hurt:
+	if current_attack_uses_grapple_strike and current_grapple_strike_landed:
+		# Preserve the authored recoil through the short attack recovery.
+		pass
+	elif _is_attack_movement_committed():
+		velocity.x = 0.0
+	elif not grapple_restricting and not is_hurt:
 		var control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
 		velocity.x = speed * get_momentum_move_speed_multiplier() * horizontal_input * control
 	elif is_hurt:
@@ -582,8 +688,18 @@ func _physics_process(delta: float) -> void:
 	if god_mode_enabled:
 		_apply_god_mode_flight(delta)
 
-	# Jump
-	if Input.is_action_just_pressed("Jump"):
+	var special_attack_requested := Input.is_action_just_pressed("SpecialAttack")
+	var basic_attack_requested := Input.is_action_just_pressed("Attack")
+	var attack_requested_this_frame := (
+		special_attack_requested or basic_attack_requested
+	)
+
+	# Jump remains available during ordinary attacks, but not while a committed
+	# strike is still waiting to deliver its authored impact.
+	if (
+		Input.is_action_just_pressed("Jump")
+		and _can_process_jump_input(attack_requested_this_frame)
+	):
 		var velocity_before_jump := velocity
 		if is_wall_clinging:
 			is_wall_clinging = false
@@ -600,9 +716,9 @@ func _physics_process(delta: float) -> void:
 		if current_chest:
 			current_chest.handle_secondary(delta, BaseEquipment.ActionState.PRESSED)
 
-	if Input.is_action_just_pressed("SpecialAttack"):
+	if special_attack_requested:
 		start_attack(true)
-	elif Input.is_action_just_pressed("Attack"):
+	elif basic_attack_requested:
 		start_attack()
 
 	# Gloves active mechanic
@@ -617,8 +733,23 @@ func _physics_process(delta: float) -> void:
 	if current_chest:
 		current_chest.process_passive(delta)
 
-	# Apply base grapple rope limit before movement.
-	if current_gloves and current_gloves.has_method("apply_grapple_velocity") and not god_mode_enabled:
+	# A grapple strike owns approach velocity. Ordinary grapple movement resumes
+	# only when that dedicated attack is no longer controlling the player.
+	var grapple_strike_controls_velocity := false
+	if (
+		current_gloves
+		and current_gloves.has_method("apply_grapple_strike_velocity")
+		and not god_mode_enabled
+	):
+		grapple_strike_controls_velocity = bool(
+			current_gloves.call("apply_grapple_strike_velocity", delta)
+		)
+	if (
+		not grapple_strike_controls_velocity
+		and current_gloves
+		and current_gloves.has_method("apply_grapple_velocity")
+		and not god_mode_enabled
+	):
 		current_gloves.apply_grapple_velocity(delta)
 
 	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
@@ -1100,6 +1231,13 @@ func _process_meditation(delta: float) -> void:
 	if is_meditating and not was_meditating:
 		_meditation_heal_timer = 0.0
 		_meditation_started_in_flow = _flow_state_active
+		var meditation_audio := AudioManager.play_sfx(
+			&"enter_momentum",
+			meditation_flow_audio_volume_db,
+			0.0
+		)
+		if meditation_audio:
+			meditation_audio.pitch_scale *= meditation_flow_audio_pitch
 	elif not is_meditating and was_meditating:
 		_meditation_heal_timer = 0.0
 		_meditation_started_in_flow = false
@@ -1235,11 +1373,13 @@ func update_animations(dir: float) -> void:
 		_play_attack_visual_animation(_get_ground_combo_visual_animation(dir))
 		return
 	
-	var is_dashing = false
+	var is_dashing := false
+	var is_grapple_strike_dash := false
 	if current_chest and "is_dashing" in current_chest:
 		is_dashing = current_chest.is_dashing
 	if current_gloves and current_gloves.has_method("forces_dash_animation") and current_gloves.forces_dash_animation():
 		is_dashing = true
+		is_grapple_strike_dash = true
 	var forced_dash_direction := Vector2.ZERO
 	if current_gloves and current_gloves.has_method("get_forced_dash_direction"):
 		forced_dash_direction = current_gloves.get_forced_dash_direction()
@@ -1250,6 +1390,11 @@ func update_animations(dir: float) -> void:
 	if dash_visual_active:
 		play_character_anim("Dash", "equip_dash")
 		player_animation.rotation = 0.0
+		if is_grapple_strike_dash:
+			player_animation.scale = (
+				_player_default_visual_scale
+				* grapple_strike_visual_scale_multiplier
+			)
 		if forced_dash_direction.length() > 0.001:
 			_apply_directional_dash_pose(forced_dash_direction)
 			update_equipment_facing()
@@ -1286,7 +1431,13 @@ func update_animations(dir: float) -> void:
 		player_animation.rotation = 0.0
 		play_character_anim("Idle", "equip_idle")
 
-	if velocity.x != 0 and forced_dash_direction.length() <= 0.001:
+	if (
+		velocity.x != 0
+		and (
+			not dash_visual_active
+			or forced_dash_direction.length() <= 0.001
+		)
+	):
 		player_animation.flip_h = velocity.x < 0
 		update_equipment_facing()
 
@@ -1421,9 +1572,14 @@ func update_combat_timers(delta: float) -> void:
 				neutral_special_aoe_radius
 			)
 			_trigger_neutral_special_impact_vfx()
-		_sync_attack_hitbox_to_anchor()
-		attack_hitbox.damage = _build_attack_damage()
-		attack_hitbox.enable()
+			_play_neutral_special_impact_audio()
+		if current_attack_uses_grapple_strike:
+			attack_hitbox.disable()
+			_try_resolve_current_grapple_strike()
+		else:
+			_sync_attack_hitbox_to_anchor()
+			attack_hitbox.damage = _build_attack_damage()
+			attack_hitbox.enable()
 		if current_attack_is_special:
 			CombatFeedback.screen_shake(
 				self,
@@ -1436,11 +1592,26 @@ func update_combat_timers(delta: float) -> void:
 			0
 		)
 
+	if (
+		current_attack_uses_grapple_strike
+		and attack_active_started
+		and not current_grapple_strike_finished
+	):
+		_try_resolve_current_grapple_strike()
+
 	if attack_active_started and not attack_active_finished and attack_timer >= windup + active_time:
 		attack_active_finished = true
 		attack_hitbox.disable()
 
-	if attack_timer >= windup + active_time + recovery:
+	var attack_end := windup + active_time + recovery
+	if current_attack_uses_grapple_strike:
+		if current_grapple_strike_landed:
+			attack_end = current_grapple_strike_impact_time + recovery
+		elif not current_grapple_strike_finished:
+			attack_end = maxf(attack_end, grapple_strike_max_duration)
+	if attack_timer >= attack_end:
+		if current_attack_uses_grapple_strike:
+			_cancel_current_grapple_strike()
 		is_attacking = false
 		current_attack_is_special = false
 		attack_hitbox.disable()
@@ -1453,27 +1624,64 @@ func start_attack(is_special := false) -> void:
 		ground_combo_queued_family = _get_ground_combo_family(_get_attack_input_direction())
 		return
 
-	if not can_start_attack():
+	if not can_start_attack(is_special):
 		return
 	if is_special and not spend_action_points(neutral_special_action_point_cost):
 		return
 	if is_special:
+		if (
+			current_gloves
+			and current_gloves.has_method("cancel_for_committed_attack")
+		):
+			current_gloves.call("cancel_for_committed_attack")
 		_cancel_neutral_special_vfx()
 
-	attack_direction = _get_attack_input_direction()
-	if not is_special and is_on_floor() and not _is_grapple_restricting():
+	var grapple_strike_started := false
+	if (
+		not is_special
+		and current_gloves
+		and current_gloves.has_method("try_start_grapple_strike")
+	):
+		grapple_strike_started = bool(
+			current_gloves.call("try_start_grapple_strike")
+		)
+
+	if (
+		grapple_strike_started
+		and current_gloves.has_method("get_grapple_strike_direction")
+	):
+		attack_direction = current_gloves.call("get_grapple_strike_direction")
+	else:
+		attack_direction = _get_attack_input_direction()
+	if (
+		not is_special
+		and not grapple_strike_started
+		and is_on_floor()
+		and not _is_grapple_restricting()
+	):
 		_begin_ground_combo_attack(_get_ground_combo_family(attack_direction))
 		return
-	if not is_special and not is_on_floor():
+	if not is_special and not grapple_strike_started and not is_on_floor():
 		_begin_air_double_attack(attack_direction)
 		return
 
-	AudioManager.play_sfx(&"player_attack")
+	var attack_audio_key := &"player_smash_swing" if is_special else &"player_attack"
+	var attack_audio := AudioManager.play_sfx(attack_audio_key, 0.0, 0.0)
+	if attack_audio and is_special:
+		attack_audio.pitch_scale *= neutral_special_swing_pitch
 	is_attacking = true
 	current_attack_is_special = is_special
 	current_attack_uses_ground_combo = false
 	current_attack_uses_air_double = false
+	current_attack_uses_grapple_strike = grapple_strike_started
+	current_grapple_strike_landed = false
+	current_grapple_strike_finished = false
+	current_grapple_strike_impact_time = -1.0
+	if current_attack_uses_grapple_strike:
+		_sync_current_grapple_strike_direction()
 	attack_timer = 0.0
+	if current_attack_is_special:
+		velocity.x = 0.0
 	var cooldown := player_stats.attack_cooldown
 	if current_attack_is_special:
 		cooldown *= neutral_special_cooldown_multiplier
@@ -1492,6 +1700,93 @@ func start_attack(is_special := false) -> void:
 		play_character_anim(current_attack_body_anim, "equip_idle")
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+
+func _try_resolve_current_grapple_strike() -> void:
+	if (
+		not current_attack_uses_grapple_strike
+		or current_grapple_strike_finished
+		or not current_gloves
+		or not current_gloves.has_method("resolve_grapple_strike")
+	):
+		return
+
+	_sync_current_grapple_strike_direction()
+	current_grapple_strike_landed = bool(
+		current_gloves.call("resolve_grapple_strike")
+	)
+	if current_grapple_strike_landed:
+		current_grapple_strike_finished = true
+		current_grapple_strike_impact_time = attack_timer
+		return
+
+	if (
+		not current_gloves.has_method("is_grapple_strike_active")
+		or not bool(current_gloves.call("is_grapple_strike_active"))
+	):
+		current_grapple_strike_finished = true
+
+func _sync_current_grapple_strike_direction() -> void:
+	if (
+		not current_attack_uses_grapple_strike
+		or not current_gloves
+		or not current_gloves.has_method("get_grapple_strike_direction")
+	):
+		return
+
+	var strike_direction: Vector2 = current_gloves.call(
+		"get_grapple_strike_direction"
+	)
+	if strike_direction.length_squared() <= 0.001:
+		return
+	attack_direction = strike_direction.normalized()
+	if absf(attack_direction.x) <= ATTACK_DIRECTION_DEADZONE:
+		return
+
+	var next_facing := -1 if attack_direction.x < 0.0 else 1
+	if last_direction == next_facing:
+		return
+	last_direction = next_facing
+	if player_animation:
+		player_animation.flip_h = last_direction < 0
+	update_equipment_facing()
+
+func _cancel_current_grapple_strike() -> void:
+	if (
+		current_gloves
+		and current_gloves.has_method("cancel_grapple_strike")
+	):
+		current_gloves.call("cancel_grapple_strike", true)
+	current_attack_uses_grapple_strike = false
+	current_grapple_strike_landed = false
+	current_grapple_strike_finished = false
+	current_grapple_strike_impact_time = -1.0
+	_grapple_strike_contact_guard = false
+
+func _cancel_enemy_grapple_combat() -> void:
+	if (
+		current_gloves
+		and current_gloves.has_method("cancel_enemy_grapple_combat")
+	):
+		current_gloves.call("cancel_enemy_grapple_combat")
+	current_attack_uses_grapple_strike = false
+	current_grapple_strike_landed = false
+	current_grapple_strike_finished = false
+	current_grapple_strike_impact_time = -1.0
+	_grapple_strike_contact_guard = false
+
+func _finish_cancelled_attack() -> void:
+	is_attacking = false
+	current_attack_is_special = false
+	attack_timer = 0.0
+	attack_active_started = false
+	attack_active_finished = false
+	attack_vfx_started = false
+	_cancel_ground_combo_attack()
+	_cancel_air_double_attack()
+	_cancel_neutral_special_vfx()
+	attack_hitbox.disable()
+	_reset_attack_hitbox_polygon()
+	_reset_weapon_visuals()
 
 func _begin_ground_combo_attack(
 	family: StringName,
@@ -1521,6 +1816,14 @@ func _begin_ground_combo_attack(
 	ground_combo_queued_family = &""
 	ground_combo_active_strike = -1
 	ground_attack_visual_mode = requested_visual_mode
+	if ground_attack_visual_mode == &"backpedal":
+		if visual_mode_override == &"":
+			ground_attack_locked_facing = _movement_facing_before_input
+		last_direction = ground_attack_locked_facing
+	else:
+		ground_attack_locked_facing = last_direction
+	if ground_attack_visual_mode == &"stationary":
+		velocity.x = 0.0
 	current_attack_uses_ground_combo = true
 	current_attack_is_special = false
 	is_attacking = true
@@ -1574,6 +1877,8 @@ func _update_ground_combo_attack() -> void:
 				ground_combo_hitbox_arc_degrees,
 				ground_combo_active_strike
 			)
+	if ground_combo_active_strike >= 0:
+		_retry_active_attack_overlaps()
 
 	if attack_timer >= ground_combo_attack_duration:
 		_finish_ground_combo_attack()
@@ -1581,6 +1886,7 @@ func _update_ground_combo_attack() -> void:
 func _finish_ground_combo_attack() -> void:
 	var queued_family := ground_combo_queued_family
 	var should_chain := ground_combo_queued and queued_family != &""
+	var completed_visual_mode := ground_attack_visual_mode
 	var completed_forward_finisher := (
 		ground_combo_family == &"forward" and ground_combo_step >= 1
 	)
@@ -1599,7 +1905,7 @@ func _finish_ground_combo_attack() -> void:
 
 	if should_chain and not completed_forward_finisher and not is_dead and not is_hurt:
 		attack_cooldown_timer = 0.0
-		_begin_ground_combo_attack(queued_family)
+		_begin_ground_combo_attack(queued_family, completed_visual_mode)
 
 func _begin_air_double_attack(direction: Vector2) -> void:
 	current_attack_is_special = false
@@ -1661,9 +1967,21 @@ func _update_air_double_attack() -> void:
 				air_attack_hitbox_arc_degrees,
 				air_attack_active_strike
 			)
+	if air_attack_active_strike >= 0:
+		_retry_active_attack_overlaps()
 
 	if attack_timer >= air_attack_duration:
 		_finish_air_double_attack()
+
+func _retry_active_attack_overlaps() -> void:
+	if (
+		not attack_hitbox
+		or not attack_hitbox.active
+		or not attack_hitbox.monitoring
+	):
+		return
+	for area in attack_hitbox.get_overlapping_areas():
+		attack_hitbox.call("_on_area_entered", area)
 
 func _finish_air_double_attack() -> void:
 	attack_hitbox.disable()
@@ -1721,19 +2039,16 @@ func _reset_ground_combo_chain() -> void:
 	ground_combo_reset_timer = 0.0
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
+	ground_attack_locked_facing = last_direction
 
 func _cancel_ground_combo_attack() -> void:
 	current_attack_uses_ground_combo = false
 	ground_combo_active_strike = -1
-	if attack_collision_polygon:
-		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 	_reset_ground_combo_chain()
 
 func _cancel_air_double_attack() -> void:
 	current_attack_uses_air_double = false
 	air_attack_active_strike = -1
-	if attack_collision_polygon:
-		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 
 func _get_ground_combo_family(_direction: Vector2) -> StringName:
 	return &"forward"
@@ -1764,11 +2079,104 @@ func _build_circle_hitbox_polygon(radius: float) -> PackedVector2Array:
 
 func _reset_attack_hitbox_polygon() -> void:
 	if attack_collision_polygon:
-		attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+		attack_collision_polygon.set_deferred(
+			"polygon",
+			_default_attack_hitbox_polygon
+		)
 
-func can_start_attack() -> bool:
-	# Attacks are intentionally allowed while grounded, airborne, or attached to a grapple.
-	return not is_dead and not is_hurt and not is_attacking and attack_cooldown_timer <= 0.0
+func can_start_attack(is_special := false) -> bool:
+	if is_dead or is_hurt or is_attacking or attack_cooldown_timer > 0.0:
+		return false
+	if is_special and not is_on_floor():
+		return false
+	if (
+		current_chest
+		and current_chest.has_method("is_dash_active")
+		and bool(current_chest.call("is_dash_active"))
+	):
+		return false
+	return true
+
+func _can_process_jump_input(attack_requested_this_frame: bool) -> bool:
+	return (
+		not attack_requested_this_frame
+		and not _is_attack_movement_committed()
+	)
+
+func can_start_dash() -> bool:
+	if (
+		is_dead
+		or is_hurt
+		or save_point_interaction_active
+		or is_meditating
+		or is_ledge_hanging
+		or is_ledge_climbing
+	):
+		return false
+	if not is_attacking:
+		return true
+	return _is_attack_in_dash_cancel_recovery()
+
+func prepare_for_dash() -> void:
+	var should_cancel_attack := (
+		is_attacking and _is_attack_in_dash_cancel_recovery()
+	)
+	_cancel_enemy_grapple_combat()
+	if should_cancel_attack:
+		_finish_cancelled_attack()
+
+func _is_attack_movement_committed() -> bool:
+	if not is_attacking:
+		return false
+	if current_attack_is_special:
+		return not attack_active_finished
+	if current_attack_uses_ground_combo and ground_attack_visual_mode == &"stationary":
+		if not player_animation:
+			return true
+		return player_animation.frame <= stationary_combo_2_second_strike_frames.y
+	if not current_attack_uses_ground_combo and not current_attack_uses_air_double:
+		return not attack_active_finished
+	return false
+
+func _is_attack_in_dash_cancel_recovery() -> bool:
+	if not is_attacking:
+		return true
+	if current_attack_is_special:
+		var attack_end := (
+			neutral_special_windup
+			+ neutral_special_active_time
+			+ neutral_special_recovery
+		)
+		return (
+			attack_active_finished
+			and attack_timer >= attack_end - neutral_special_dash_cancel_window
+		)
+	if current_attack_uses_grapple_strike:
+		return (
+			current_grapple_strike_landed
+			or current_grapple_strike_finished
+		)
+	if current_attack_uses_ground_combo:
+		return _has_passed_attack_strike_frames(_get_ground_combo_strike_frames())
+	if current_attack_uses_air_double:
+		return _has_passed_attack_strike_frames([
+			air_attack_first_strike_frames,
+			air_attack_second_strike_frames,
+		])
+	return attack_active_finished
+
+func _has_passed_attack_strike_frames(strike_frames: Array[Vector2i]) -> bool:
+	if not player_animation:
+		return false
+	var final_active_frame := -1
+	for frame_window in strike_frames:
+		final_active_frame = maxi(final_active_frame, frame_window.y)
+	return final_active_frame >= 0 and player_animation.frame > final_active_frame
+
+func _cancel_attack_for_dash() -> void:
+	if current_attack_uses_grapple_strike:
+		_cancel_current_grapple_strike()
+	_finish_cancelled_attack()
 
 func _play_weapon_attack_anim() -> void:
 	if not weapon_animation_player:
@@ -1857,7 +2265,8 @@ func _on_player_animation_frame_changed() -> void:
 func _select_ground_attack_visual_mode(dir: float) -> StringName:
 	if absf(dir) <= 0.01 or absf(velocity.x) < STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED:
 		return &"stationary"
-	if dir * float(last_direction) < 0.0 and velocity.x * float(last_direction) < 0.0:
+	var committed_facing := float(_movement_facing_before_input)
+	if dir * committed_facing < 0.0 and velocity.x * committed_facing < 0.0:
 		return &"backpedal"
 	return &"moving"
 
@@ -1989,52 +2398,160 @@ func _sync_attack_hitbox_to_anchor() -> void:
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
-	data.amount = player_stats.attack_damage
 	if current_attack_is_special:
-		data.amount = roundi(float(player_stats.attack_damage) * neutral_special_damage_multiplier * player_stats.skill_damage_multiplier)
-	data.hitstun = (
-		neutral_special_hitstun
-		if current_attack_is_special
-		else player_stats.hurt_time
-	)
-	data.hit_pause = player_stats.hit_pause
+		data.amount = roundi(
+			float(player_stats.attack_damage)
+			* neutral_special_damage_multiplier
+			* player_stats.skill_damage_multiplier
+			* get_momentum_attack_damage_multiplier()
+		)
+		data.hitstun = neutral_special_hitstun
+		data.hit_pause = neutral_special_hit_pause
+		# The ground impact requests its shake even when the smash misses.
+		data.use_receiver_screen_shake_fallback = false
+	else:
+		var profile := _get_current_attack_profile()
+		var attack_upgrade_scale := (
+			float(player_stats.attack_damage)
+			/ ATTACK_PROFILE_BASE_DAMAGE
+		)
+		data.amount = maxi(
+			1,
+			roundi(
+				float(profile.get(&"damage", ATTACK_PROFILE_BASE_DAMAGE))
+				* attack_upgrade_scale
+				* get_momentum_attack_damage_multiplier()
+			)
+		)
+		data.hitstun = float(profile.get(&"hitstun", player_stats.hurt_time))
+		data.hit_pause = float(profile.get(&"hit_pause", player_stats.hit_pause))
+		data.screen_shake_strength = float(profile.get(&"screen_shake", 0.0))
+		data.screen_shake_duration = 0.06
+		data.use_receiver_screen_shake_fallback = false
+
 	var knockback_direction := attack_direction
 	if knockback_direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		knockback_direction = Vector2(float(last_direction), 0.0)
-	data.knockback = knockback_direction.normalized() * player_stats.knockback_strength
 	if current_attack_is_special:
-		data.knockback *= neutral_special_knockback_multiplier
-		data.hit_pause = neutral_special_hit_pause
+		data.knockback = (
+			knockback_direction.normalized()
+			* player_stats.knockback_strength
+			* neutral_special_knockback_multiplier
+		)
+	else:
+		var profile := _get_current_attack_profile()
+		var knockback_upgrade_scale := (
+			player_stats.knockback_strength
+			/ ATTACK_PROFILE_BASE_KNOCKBACK
+		)
+		data.knockback = (
+			knockback_direction.normalized()
+			* float(profile.get(&"knockback", ATTACK_PROFILE_BASE_KNOCKBACK))
+			* knockback_upgrade_scale
+		)
 	return data
+
+func _get_hurtbox_feedback_position(target_hurtbox: HurtboxComponent) -> Vector2:
+	for child in target_hurtbox.get_children():
+		var collision_shape := child as CollisionShape2D
+		if collision_shape and not collision_shape.disabled and collision_shape.shape:
+			return collision_shape.global_position
+	return target_hurtbox.global_position
 
 func modify_outgoing_hit_damage(
 	damage: DamageData,
 	target_hurtbox: HurtboxComponent
 ) -> DamageData:
-	if not current_attack_is_special or not target_hurtbox:
+	if not target_hurtbox:
 		return damage
 
+	var target_position := target_hurtbox.global_position
 	var target_owner := target_hurtbox.hurtbox_owner as Node2D
-	if not target_owner:
+	if target_owner:
+		target_position = target_owner.global_position
+	damage.hit_position = _get_hurtbox_feedback_position(target_hurtbox)
+	if not current_attack_is_special:
 		return damage
 
 	var radial_direction := (
-		target_owner.global_position
+		target_position
 		- _get_neutral_special_ground_contact_position()
 	)
+	var target_distance := radial_direction.length()
 	if radial_direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		radial_direction = Vector2(float(last_direction), 0.0)
 	radial_direction = radial_direction.normalized()
 	radial_direction.y -= neutral_special_knockback_lift
 	radial_direction = radial_direction.normalized()
 
+	var full_force_radius := (
+		neutral_special_aoe_radius
+		* neutral_special_full_force_radius_ratio
+	)
+	var falloff_range := maxf(
+		neutral_special_aoe_radius - full_force_radius,
+		0.001
+	)
+	var linear_falloff := clampf(
+		(target_distance - full_force_radius) / falloff_range,
+		0.0,
+		1.0
+	)
+	var smooth_falloff := linear_falloff * linear_falloff * (3.0 - 2.0 * linear_falloff)
+	damage.amount = maxi(
+		1,
+		roundi(
+			float(damage.amount)
+			* lerpf(1.0, neutral_special_edge_damage_ratio, smooth_falloff)
+		)
+	)
+	damage.hitstun = lerpf(
+		neutral_special_hitstun,
+		neutral_special_edge_hitstun,
+		smooth_falloff
+	)
 	damage.knockback = (
 		radial_direction
 		* player_stats.knockback_strength
 		* neutral_special_knockback_multiplier
+		* lerpf(1.0, neutral_special_edge_knockback_ratio, smooth_falloff)
 	)
-	damage.hit_position = target_owner.global_position
 	return damage
+
+func _get_current_attack_profile() -> Dictionary:
+	if current_attack_uses_air_double:
+		return (
+			ATTACK_PROFILE_AIR_SECOND
+			if air_attack_active_strike == 1
+			else ATTACK_PROFILE_AIR_FIRST
+		)
+	if not current_attack_uses_ground_combo:
+		return ATTACK_PROFILE_BASIC
+
+	var is_second_strike := ground_combo_active_strike == 1
+	match ground_attack_visual_mode:
+		&"stationary":
+			return (
+				ATTACK_PROFILE_STATIONARY_SECOND
+				if is_second_strike
+				else ATTACK_PROFILE_STATIONARY_FIRST
+			)
+		&"backpedal":
+			if ground_combo_step <= 0:
+				return ATTACK_PROFILE_BACKPEDAL_OPENER
+			return (
+				ATTACK_PROFILE_BACKPEDAL_FINISHER_SECOND
+				if is_second_strike
+				else ATTACK_PROFILE_BACKPEDAL_FINISHER_FIRST
+			)
+		_:
+			if ground_combo_step <= 0:
+				return ATTACK_PROFILE_BASIC
+			return (
+				ATTACK_PROFILE_MOVING_FINISHER_SECOND
+				if is_second_strike
+				else ATTACK_PROFILE_MOVING_FINISHER_FIRST
+			)
 
 func set_action_points(current: int, maximum: int = max_action_points) -> void:
 	max_action_points = maximum
@@ -2255,8 +2772,58 @@ func report_momentum_action(category: StringName, strength: float = 1.0) -> void
 		_use_after_swap_timer = 0.0
 		_apply_momentum_category(MOMENTUM_CATEGORY_USE_AFTER_SWAP, 1.0)
 
-func start_dash_iframe(duration: float) -> void:
-	_dash_iframe_timer = maxf(_dash_iframe_timer, duration * get_momentum_dash_iframe_multiplier())
+func start_dash_iframe(duration: float, direction := Vector2.ZERO) -> void:
+	var iframe_multiplier := maxf(
+		1.0,
+		get_momentum_dash_iframe_multiplier()
+	)
+	var safe_duration := maxf(0.0, duration) * iframe_multiplier
+	_dash_iframe_timer = maxf(_dash_iframe_timer, safe_duration)
+	_set_dash_contact_phasing(_dash_iframe_timer > 0.0)
+	_play_dash_iframe_vfx(direction, _dash_iframe_timer)
+
+func _set_dash_contact_phasing(is_active: bool) -> void:
+	if _dash_contact_phasing_active == is_active:
+		return
+	_dash_contact_phasing_active = is_active
+	if hurtbox:
+		# Enemy contact is Area2D-based, while world collision belongs to the
+		# CharacterBody2D. Hiding only the hurtbox preserves floors and walls.
+		hurtbox.set_deferred("monitorable", not is_active)
+
+func is_dash_contact_phasing() -> bool:
+	return _dash_contact_phasing_active
+
+func _play_dash_iframe_vfx(direction: Vector2, duration: float) -> void:
+	if not DASH_IFRAME_VFX_SCENE or not is_inside_tree():
+		return
+
+	if not is_instance_valid(_dash_iframe_vfx_instance):
+		_dash_iframe_vfx_instance = DASH_IFRAME_VFX_SCENE.instantiate() as Node2D
+		if not _dash_iframe_vfx_instance:
+			return
+		add_child(_dash_iframe_vfx_instance)
+		_dash_iframe_vfx_instance.position = Vector2(0.0, -36.0)
+
+	var dash_direction := direction
+	if dash_direction.length_squared() <= 0.001:
+		dash_direction = Vector2(float(last_direction), 0.0)
+	if _dash_iframe_vfx_instance.has_method("play"):
+		_dash_iframe_vfx_instance.call(
+			"play",
+			dash_direction.normalized(),
+			duration
+		)
+
+func _cancel_dash_iframe() -> void:
+	_dash_iframe_timer = 0.0
+	_set_dash_contact_phasing(false)
+	if is_instance_valid(_dash_iframe_vfx_instance):
+		if _dash_iframe_vfx_instance.has_method("cancel"):
+			_dash_iframe_vfx_instance.call("cancel")
+		else:
+			_dash_iframe_vfx_instance.queue_free()
+	_dash_iframe_vfx_instance = null
 
 func get_momentum_action_point_recharge_multiplier() -> float:
 	return _get_momentum_multiplier(momentum_action_point_recharge_low, momentum_action_point_recharge_mid, momentum_action_point_recharge_high, momentum_action_point_recharge_flow)
@@ -2277,7 +2844,23 @@ func get_momentum_grapple_pull_multiplier() -> float:
 	return _get_momentum_multiplier(momentum_grapple_pull_low, momentum_grapple_pull_mid, momentum_grapple_pull_high, momentum_grapple_pull_flow)
 
 func get_momentum_attack_speed_multiplier() -> float:
+	if _flow_state_active:
+		return momentum_attack_speed_flow
+	if momentum >= momentum_high_threshold:
+		return momentum_attack_speed_high
 	return _get_momentum_multiplier(momentum_attack_speed_low, momentum_attack_speed_mid, momentum_attack_speed_high, momentum_attack_speed_flow)
+
+func get_momentum_attack_damage_multiplier() -> float:
+	if _flow_state_active:
+		return momentum_attack_damage_flow
+	if momentum >= momentum_high_threshold:
+		return momentum_attack_damage_high
+	return _get_momentum_multiplier(
+		momentum_attack_damage_low,
+		momentum_attack_damage_mid,
+		momentum_attack_damage_high,
+		momentum_attack_damage_flow
+	)
 
 func get_momentum_dash_speed_multiplier() -> float:
 	return _get_momentum_multiplier(momentum_dash_speed_low, momentum_dash_speed_mid, momentum_dash_speed_high, momentum_dash_speed_flow)
@@ -2291,6 +2874,8 @@ func get_coin_vacuum_multiplier() -> float:
 func _process_momentum(delta: float) -> void:
 	if _dash_iframe_timer > 0.0:
 		_dash_iframe_timer = maxf(0.0, _dash_iframe_timer - delta)
+		if _dash_iframe_timer <= 0.0:
+			_set_dash_contact_phasing(false)
 
 	if _pending_use_after_swap:
 		_use_after_swap_timer -= delta
@@ -2507,7 +3092,8 @@ func _play_neutral_special_vfx() -> void:
 			"play",
 			neutral_special_aoe_radius,
 			neutral_special_vfx_lead_time,
-			last_direction
+			last_direction,
+			neutral_special_full_force_radius_ratio
 		)
 
 func _update_neutral_special_vfx_anchor() -> void:
@@ -2531,6 +3117,11 @@ func _trigger_neutral_special_impact_vfx() -> void:
 		_neutral_special_vfx_instance.call("trigger_impact", impact_position)
 	else:
 		_neutral_special_vfx_instance.global_position = impact_position
+
+func _play_neutral_special_impact_audio() -> void:
+	var impact_audio := AudioManager.play_sfx(&"player_smash_impact", -1.5, 0.0)
+	if impact_audio:
+		impact_audio.pitch_scale *= neutral_special_impact_pitch
 
 func _cancel_neutral_special_vfx() -> void:
 	if not is_instance_valid(_neutral_special_vfx_instance):
@@ -2653,11 +3244,29 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 func should_ignore_health_damage(_damage: DamageData) -> bool:
 	return god_mode_enabled or _dash_iframe_timer > 0.0
 
+func should_ignore_enemy_contact(_enemy: Node = null) -> bool:
+	if _dash_iframe_timer > 0.0 or _grapple_strike_contact_guard:
+		return true
+	if (
+		current_gloves
+		and current_gloves.has_method("is_grapple_strike_contact_guard_active")
+	):
+		return bool(
+			current_gloves.call("is_grapple_strike_contact_guard_active")
+		)
+	return false
+
+func set_grapple_strike_contact_guard(is_active: bool) -> void:
+	_grapple_strike_contact_guard = is_active
+
 func modify_incoming_health_damage(damage: DamageData) -> DamageData:
 	if not player_stats or player_stats.resistance <= 0:
 		return damage
 
-	var modified := damage.duplicate(true) as DamageData
+	var modified := damage.duplicate_for_hit(
+		damage.source,
+		damage.hit_position
+	)
 	var mitigation := player_stats.get_resistance_mitigation()
 	modified.amount = maxi(1, roundi(float(damage.amount) * (1.0 - mitigation)))
 	return modified
@@ -2671,6 +3280,8 @@ func receive_ignored_health_hit(damage: DamageData) -> void:
 	_sync_hud()
 
 func _on_damaged(damage: DamageData) -> void:
+	_cancel_dash_iframe()
+	_cancel_enemy_grapple_combat()
 	is_hurt = true
 	hurt_timer = damage.hitstun if damage.hitstun > 0.0 else player_stats.hurt_time
 	is_attacking = false
@@ -2693,7 +3304,18 @@ func _on_damaged(damage: DamageData) -> void:
 
 	velocity = knockback
 	_lose_momentum_from_damage(damage)
-	CombatFeedback.screen_shake(self, player_stats.screen_shake_strength, 0.08)
+	if damage.screen_shake_strength > 0.0:
+		CombatFeedback.screen_shake(
+			self,
+			damage.screen_shake_strength,
+			damage.screen_shake_duration
+		)
+	elif damage.use_receiver_screen_shake_fallback:
+		CombatFeedback.screen_shake(
+			self,
+			player_stats.screen_shake_strength,
+			0.08
+		)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
 func _on_died(_damage: DamageData) -> void:
@@ -2707,6 +3329,8 @@ func _on_died(_damage: DamageData) -> void:
 			return
 
 	_exit_flow_state()
+	_cancel_dash_iframe()
+	_cancel_enemy_grapple_combat()
 	AudioManager.stop_loop(&"grapple_hanging")
 	is_dead = true
 	death_reset_started = true
@@ -2750,9 +3374,11 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	hurt_timer = 0.0
 	is_attacking = false
 	current_attack_is_special = false
+	_cancel_enemy_grapple_combat()
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
 	_cancel_neutral_special_vfx()
+	_cancel_dash_iframe()
 	attack_timer = 0.0
 	attack_cooldown_timer = 0.0
 	attack_active_started = false
@@ -2819,6 +3445,7 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	is_attacking = false
 	is_hurt = false
 	current_attack_is_special = false
+	_cancel_enemy_grapple_combat()
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
 	_cancel_neutral_special_vfx()

@@ -6,6 +6,7 @@ const GOLD := Color(1.0, 0.69, 0.20)
 const HOT_GOLD := Color(1.0, 0.88, 0.48)
 
 @export_range(0.1, 2.0, 0.01) var impact_duration := 0.48
+@export_range(0.1, 0.9, 0.01) var full_force_radius_ratio := 0.45
 
 var _radius := 220.0
 var _impact_delay := 0.245
@@ -19,10 +20,16 @@ func _ready() -> void:
 	z_index = 40
 	queue_redraw()
 
-func play(radius: float, impact_delay: float, facing: int = 1) -> void:
+func play(
+	radius: float,
+	impact_delay: float,
+	facing: int = 1,
+	full_force_ratio: float = 0.45
+) -> void:
 	_radius = maxf(32.0, radius)
 	_impact_delay = maxf(0.01, impact_delay)
 	_facing = -1.0 if facing < 0 else 1.0
+	full_force_radius_ratio = clampf(full_force_ratio, 0.1, 0.9)
 	_charge_elapsed = 0.0
 	_impact_elapsed = 0.0
 	_has_played = true
@@ -114,6 +121,7 @@ func _draw_impact() -> void:
 	var impact := clampf(impact_age / impact_duration, 0.0, 1.0)
 	var fade := pow(1.0 - impact, 1.7)
 	var primary_radius := lerpf(_radius * 0.08, _radius * 1.04, ease(impact, -1.8))
+	var full_force_radius := _radius * full_force_radius_ratio
 
 	var flash_color := IVORY
 	flash_color.a = maxf(0.0, 0.72 - impact_age * 5.8)
@@ -150,6 +158,34 @@ func _draw_impact() -> void:
 		64,
 		secondary_color,
 		lerpf(5.0, 1.5, secondary_impact),
+		true
+	)
+
+	# A compressed ground ring sells a weapon impact rather than a pulse emitted
+	# by the player. Its final radius matches the full-force gameplay zone.
+	var ground_impact := clampf(impact * 2.2, 0.0, 1.0)
+	var ground_color := HOT_GOLD
+	ground_color.a = pow(1.0 - ground_impact, 1.4) * 0.82
+	draw_set_transform(Vector2(0.0, 8.0), 0.0, Vector2(1.0, 0.24))
+	draw_arc(
+		Vector2.ZERO,
+		lerpf(full_force_radius * 0.12, full_force_radius, ease(ground_impact, -1.6)),
+		0.0,
+		TAU,
+		48,
+		ground_color,
+		lerpf(8.0, 2.0, ground_impact),
+		true
+	)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+	var strike_color := IVORY
+	strike_color.a = maxf(0.0, 0.66 - impact_age * 4.6)
+	draw_line(
+		Vector2(0.0, -lerpf(92.0, 26.0, ground_impact)),
+		Vector2.ZERO,
+		strike_color,
+		lerpf(9.0, 2.0, ground_impact),
 		true
 	)
 

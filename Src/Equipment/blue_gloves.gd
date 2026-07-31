@@ -120,6 +120,14 @@ func _begin_grapple_retract() -> void:
 		_release_jump_buffer_timer = blue_release_jump_buffer
 	super()
 
+func _release_after_enemy_grapple_strike() -> void:
+	# Combat-forced releases must not award the manual swing-release buffer;
+	# it could otherwise overwrite strike recoil, hurt knockback, smash root,
+	# or dash movement on the next Jump input.
+	_release_jump_buffer_timer = 0.0
+	_last_release_velocity = Vector2.ZERO
+	super._begin_grapple_retract()
+
 func _handle_rope_climb(delta: float) -> void:
 	if grapple_state != GrappleState.ATTACHED:
 		return

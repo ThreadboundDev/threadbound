@@ -111,6 +111,8 @@ func on_unequipped() -> void:
 	super()
 
 func is_base_grapple_restricting() -> bool:
+	if is_grapple_strike_active():
+		return true
 	if red_grapple_state == RedGrappleState.TOWING:
 		return true
 	if red_grapple_state == RedGrappleState.ATTACHED:
@@ -121,11 +123,14 @@ func is_base_grapple_restricting() -> bool:
 
 func forces_dash_animation() -> bool:
 	return (
-		red_grapple_state == RedGrappleState.TOWING
+		is_grapple_strike_active()
+		or red_grapple_state == RedGrappleState.TOWING
 		or red_grapple_state == RedGrappleState.PULLING_PLAYER
 	)
 
 func get_forced_dash_direction() -> Vector2:
+	if is_grapple_strike_active():
+		return get_grapple_strike_direction()
 	if not forces_dash_animation():
 		return Vector2.ZERO
 	return _tow_visual_direction
@@ -311,6 +316,7 @@ func _cancel_charge() -> void:
 	_reset_charge_visuals()
 
 func _start_red_grapple_fire() -> void:
+	_reset_grapple_raycast_exceptions()
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 	grapple_tip_velocity = grapple_direction * grapple_speed
@@ -356,10 +362,18 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 
 	grapple_raycast.global_position = previous_tip
 	grapple_raycast.target_position = new_tip - previous_tip
-	grapple_raycast.force_raycast_update()
+	for _skipped_collider in range(8):
+		grapple_raycast.force_raycast_update()
+		if not grapple_raycast.is_colliding():
+			return
 
-	if grapple_raycast.is_colliding():
 		var collider := grapple_raycast.get_collider()
+		if not _is_valid_hookshot_collider(collider):
+			if collider is CollisionObject2D:
+				grapple_raycast.add_exception(collider as CollisionObject2D)
+				continue
+			return
+
 		if not _can_attach_grapple():
 			_handle_non_attaching_collision(
 				grapple_raycast.get_collision_point(),
@@ -383,8 +397,10 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 			_begin_red_target_pull()
 		else:
 			_begin_red_player_pull()
+		return
 
 func _begin_red_retract() -> void:
+	_clear_grapple_strike_state()
 	AudioManager.stop_loop(&"grapple_hanging")
 	grapple_state = GrappleState.RETRACTING
 	red_grapple_state = RedGrappleState.RETRACTING
@@ -456,29 +472,62 @@ func _process_red_target_pull(delta: float) -> void:
 	if not player or not _red_grapple_target or not is_instance_valid(_red_grapple_target):
 		_begin_red_retract()
 		return
+	if hold_enemy_grapple_ready(delta):
+		return
+	if get_enemy_grapple_center_distance() <= get_enemy_grapple_safe_center_distance():
+		mark_enemy_grapple_ready()
+		return
 
 	var pull_speed := lerpf(light_target_min_pull_speed, light_target_max_pull_speed, _released_charge_curve)
-	var distance := _red_grapple_target.pull_toward(player.global_position, pull_speed, delta)
+	var remaining_clearance := maxf(
+		0.0,
+		get_enemy_grapple_center_distance()
+		- get_enemy_grapple_safe_center_distance()
+	)
+	var safe_pull_speed := minf(
+		pull_speed,
+		remaining_clearance / maxf(delta, 0.001)
+	)
+	var distance := _red_grapple_target.pull_toward(
+		player.global_position,
+		safe_pull_speed,
+		delta
+	)
 	_update_moving_grapple_target()
 	grapple_tip_position = grapple_attach_position
 	_simulate_active_rope(delta, true)
 	_update_active_grapple_visuals()
 
-	if distance <= light_target_arrival_distance or _red_pull_has_stalled(distance, delta):
+	if get_enemy_grapple_center_distance() <= get_enemy_grapple_safe_center_distance():
+		mark_enemy_grapple_ready()
+	elif _red_pull_has_stalled(distance, delta):
 		_begin_red_retract()
 
 func _process_red_player_pull(delta: float) -> void:
 	if not player or red_grapple_state != RedGrappleState.PULLING_PLAYER:
 		return
+	if hold_enemy_grapple_ready(delta):
+		return
 
 	_update_moving_grapple_target()
-	var destination := grapple_attach_position
-	if grapple_collision_normal.length_squared() > 0.001:
+	var destination := (
+		_get_enemy_grapple_standoff_position()
+		if has_enemy_grapple_target()
+		else grapple_attach_position
+	)
+	if not has_enemy_grapple_target() and grapple_collision_normal.length_squared() > 0.001:
 		destination += grapple_collision_normal.normalized() * player_pull_surface_offset
 
 	var to_destination := destination - player.global_position
 	var distance := to_destination.length()
-	if distance <= player_pull_arrival_distance or _red_pull_has_stalled(distance, delta):
+	if distance <= player_pull_arrival_distance:
+		player.velocity = Vector2.ZERO
+		if has_enemy_grapple_target():
+			mark_enemy_grapple_ready()
+		else:
+			_begin_red_retract()
+		return
+	if _red_pull_has_stalled(distance, delta):
 		player.velocity = Vector2.ZERO
 		_begin_red_retract()
 		return
@@ -486,6 +535,9 @@ func _process_red_player_pull(delta: float) -> void:
 	var pull_speed := lerpf(player_pull_min_speed, player_pull_max_speed, _released_charge_curve)
 	player.velocity = to_destination.normalized() * minf(pull_speed, distance / maxf(delta, 0.001))
 	_tow_visual_direction = to_destination.normalized()
+
+func _release_after_enemy_grapple_strike() -> void:
+	_begin_red_retract()
 
 func _red_pull_has_stalled(distance: float, delta: float) -> bool:
 	if _red_pull_previous_distance < INF and distance >= _red_pull_previous_distance - 0.5:

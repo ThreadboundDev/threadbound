@@ -11,7 +11,8 @@ Combat is built from small reusable pieces:
 - `HealthComponent` stores health, damage, invulnerability, and death signals.
 - `HurtboxComponent` receives hit data and forwards damage to health.
 - `HitboxComponent` sends damage to hurtboxes while active.
-- `DamageData` carries damage amount, knockback, hitstun, hit pause, source, and hit position.
+- `DamageData` carries damage amount, knockback, hitstun, hit pause, move-owned
+  screen shake, source, and hit position.
 - `HitFlashComponent` gives immediate visual hit confirmation.
 - `CombatFeedback` provides shared hit pause and camera shake helpers.
 
@@ -22,7 +23,7 @@ These components are meant to work for the player, normal enemies, bosses, hazar
 `EnemyBase` is a `CharacterBody2D` scene with:
 
 - collision body
-- visual placeholder
+- authored or fallback visual
 - health component
 - hurtbox
 - detection area
@@ -68,8 +69,16 @@ Current tunables include:
 - knockback
 - hit pause
 - screen shake strength
+- opt-in incoming knockback and hitstun multipliers
+- opt-in hurt knockback damping, gravity, and visual recoil
 
 Player combat tuning lives in `PlayerStats`.
+
+Normal enemies opt into receiver-specific hurt response so the same player move
+can read differently by target weight: Threadlings react lightly, Loomkins sit
+in the middle, and Tensioners react heavily. Bosses and legacy enemies retain
+their authored behavior unless they explicitly opt in. Opt-in normal enemies
+use a short damage gate so distinct rapid combo strikes can both connect.
 
 ## Threadling Example
 
@@ -85,7 +94,8 @@ It currently:
 - flashes on hit
 - dies when health reaches zero
 
-The visuals are placeholder geometry. Future animation work can hook into `begin_attack`, hurt, and death behavior without replacing the architecture.
+Enemy scenes may replace the fallback geometry with authored animation while
+continuing to use `begin_attack`, hurt, and death behavior from this architecture.
 
 ## Player Combat Hooks
 
@@ -98,13 +108,29 @@ The player now has:
 - `PlayerStats`
 - `Attack` input action
 
-The existing movement controller remains intact. The current attack is a simple timed melee hitbox used to prove the combat loop before final animations are added.
+The movement controller now drives authored moving, stationary, backpedal, air,
+grapple-strike, and neutral-smash attack timelines. Hitboxes follow the matching
+animation strike windows and each move owns its damage and feedback profile.
+
+## Combat Presentation Ownership
+
+The accepted `DamageData` owns hitstun, hit pause, and move-specific camera
+shake. Receivers may scale physical response for body weight, but should not
+replace a move's presentation profile. Legacy hits without move-owned shake may
+fall back to the receiver's existing feedback values. Ground impacts that must
+read even on a miss—the neutral smash and Tensioner stomp—request one
+activation-owned shake and explicitly suppress per-target shake fallback.
+
+Normal enemies also attach a small world-space health bar above their visuals.
+It appears after recent damage, follows the enemy, and hides again after a short
+delay. Bosses keep their dedicated HUD and do not receive this bar.
 
 ## Next Steps
 
-- Add proper player attack, hurt, and death animations.
-- Add enemy animation hooks for patrol, chase, attack, hurt, and death.
-- Place Threadling instances into a test room.
-- Add debug health displays if needed.
-- Tune hit pause, knockback, and screen shake after testing in-game.
+- Playtest attack commitment, cancel timing, and hit readability across mixed
+  Threadling, Loomkin, and Tensioner encounters.
+- Tune the ProtoWeaver and later bosses in their own dedicated boss pass.
+- Extend the same move-owned feedback contract to future enemies and weapons.
+- Continue tuning move-owned hit pause, knockback, and screen shake after
+  playtesting.
 - Extend the state machine for bosses when boss-specific behavior is ready.

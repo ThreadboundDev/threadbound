@@ -451,6 +451,12 @@ A precursor to the main Reclaimer boss.
 - Enemies should never halt player flow  
 - Enemies should influence movement, not restrict it  
 - Enemy complexity should come from interaction, not mechanics overload  
+- Base enemies should teach readable pieces of their area's boss vocabulary:
+  - Threadling beam pressure teaches the boss laser.
+  - Loomkin close-range pressure teaches the boss stab.
+  - Tensioner ground smash and falling missiles teach the boss Threadburst.
+  These shared visual ideas establish recognition without requiring identical
+  timing, damage, or boss tuning.
 - Each region should contain:
   - 3–4 core enemy types  
   - 1 mini-boss  

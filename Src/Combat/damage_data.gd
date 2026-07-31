@@ -5,6 +5,9 @@ extends Resource
 @export var knockback: Vector2 = Vector2.ZERO
 @export var hitstun: float = 0.12
 @export var hit_pause: float = 0.04
+@export var screen_shake_strength: float = 0.0
+@export var screen_shake_duration: float = 0.06
+@export var use_receiver_screen_shake_fallback := true
 @export var allow_friendly_fire := false
 
 var source: Node = null

@@ -58,6 +58,8 @@ var _grass_materials: Array[ShaderMaterial] = []
 var _last_applied_color := Color(-1.0, -1.0, -1.0, -1.0)
 var _last_applied_strength := -1.0
 var _last_applied_grass_strengths := Vector4(-1.0, -1.0, -1.0, -1.0)
+var _boss_intro_blend := 0.0
+var _boss_intro_tween: Tween
 
 func _ready() -> void:
 	_sync_room_bounds_from_placeholders()
@@ -116,7 +118,10 @@ func _target_grade_for_position(global_position: Vector2) -> Dictionary:
 		return {"color": neutral_color, "strength": 0.0}
 
 	if _room_contains(bottom_right_polygon, bottom_right_room, global_position):
-		return {"color": bottom_right_color, "strength": max_strength}
+		return {
+			"color": bottom_right_color,
+			"strength": max_strength * _boss_intro_blend,
+		}
 	if _room_contains(bottom_left_polygon, bottom_left_room, global_position):
 		return {"color": bottom_left_color, "strength": max_strength}
 	if _room_contains(top_right_polygon, top_right_room, global_position):
@@ -136,7 +141,12 @@ func _target_grass_strengths_for_position(
 		return Vector4.ZERO
 
 	if _room_contains(bottom_right_polygon, bottom_right_room, global_position):
-		return Vector4(0.0, 0.0, 0.0, grass_recolor_strength)
+		return Vector4(
+			0.0,
+			0.0,
+			0.0,
+			grass_recolor_strength * _boss_intro_blend
+		)
 	if _room_contains(bottom_left_polygon, bottom_left_room, global_position):
 		return Vector4(0.0, 0.0, grass_recolor_strength, 0.0)
 	if _room_contains(top_right_polygon, top_right_room, global_position):
@@ -145,6 +155,25 @@ func _target_grass_strengths_for_position(
 		return Vector4(grass_recolor_strength, 0.0, 0.0, 0.0)
 
 	return Vector4.ZERO
+
+func start_boss_intro_grade(duration: float = 1.2) -> void:
+	if _boss_intro_blend >= 1.0:
+		return
+	if _boss_intro_tween and _boss_intro_tween.is_valid():
+		_boss_intro_tween.kill()
+
+	_boss_intro_tween = create_tween()
+	_boss_intro_tween.set_trans(Tween.TRANS_CUBIC)
+	_boss_intro_tween.set_ease(Tween.EASE_IN_OUT)
+	_boss_intro_tween.tween_property(
+		self,
+		"_boss_intro_blend",
+		1.0,
+		maxf(0.01, duration)
+	)
+
+func get_boss_intro_grade_blend() -> float:
+	return _boss_intro_blend
 
 func _apply_grade(force := false) -> void:
 	if not _grade_rect or not _grade_rect.material:

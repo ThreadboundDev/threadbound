@@ -122,6 +122,9 @@ var _player_in_boss_music_area := false
 var _boss_music_latched := false
 var _boss_aggro_latched := false
 var _last_preferred_laser_attack_count := -999
+var _encounter_intro_active := false
+var _intro_hud_revealed := false
+var _intro_state_machine_process_mode := Node.PROCESS_MODE_INHERIT
 
 func _ready() -> void:
 	super._ready()
@@ -248,6 +251,8 @@ func is_attack_sequence_busy() -> bool:
 	return _hanging_laser_busy
 
 func _on_detection_body_entered(body: Node2D) -> void:
+	if _encounter_intro_active:
+		return
 	super._on_detection_body_entered(body)
 	if body.is_in_group("player"):
 		_boss_aggro_latched = true
@@ -256,6 +261,8 @@ func _on_detection_body_entered(body: Node2D) -> void:
 	_update_boss_health_visibility()
 
 func _on_detection_body_exited(body: Node2D) -> void:
+	if _encounter_intro_active:
+		return
 	super._on_detection_body_exited(body)
 	if body.is_in_group("player") and _boss_aggro_latched and not is_dead:
 		target = body
@@ -915,4 +922,62 @@ func _update_boss_health_visibility() -> void:
 	if not boss_health_layer:
 		return
 
+	if _encounter_intro_active:
+		boss_health_layer.visible = _intro_hud_revealed and not is_dead
+		return
 	boss_health_layer.visible = target != null and not is_dead
+
+func begin_encounter_intro() -> void:
+	if is_dead or _encounter_intro_active:
+		return
+
+	_encounter_intro_active = true
+	_intro_hud_revealed = false
+	target = null
+	velocity = Vector2.ZERO
+	set_horizontal_target_speed(0.0)
+	deactivate_attack_hitbox()
+	if state_machine:
+		_intro_state_machine_process_mode = state_machine.process_mode
+		state_machine.process_mode = Node.PROCESS_MODE_DISABLED
+	if detection_area:
+		detection_area.set_deferred("monitoring", false)
+	if contact_hitbox:
+		contact_hitbox.set_deferred("monitoring", false)
+	if boss_health_bar:
+		boss_health_bar.prepare_intro()
+	if boss_health_layer:
+		boss_health_layer.visible = false
+
+func reveal_encounter_intro_hud(duration: float = 0.4) -> void:
+	if is_dead:
+		return
+	_intro_hud_revealed = true
+	if boss_health_layer:
+		boss_health_layer.visible = true
+	if boss_health_bar:
+		boss_health_bar.reveal_intro(duration)
+
+func complete_encounter_intro(player: Node2D) -> void:
+	if is_dead:
+		return
+
+	_encounter_intro_active = false
+	if state_machine:
+		state_machine.process_mode = _intro_state_machine_process_mode
+	if detection_area:
+		detection_area.set_deferred("monitoring", true)
+	if contact_hitbox:
+		contact_hitbox.set_deferred("monitoring", true)
+	if not _intro_hud_revealed:
+		reveal_encounter_intro_hud(0.01)
+	if is_instance_valid(player):
+		target = player
+		_boss_aggro_latched = true
+		_boss_music_latched = true
+		target_acquired.emit(target)
+	_update_boss_music_state()
+	_update_boss_health_visibility()
+
+func is_encounter_intro_active() -> bool:
+	return _encounter_intro_active

@@ -19,12 +19,12 @@ func _ready() -> void:
 func enable() -> void:
 	active = true
 	_hit_hurtboxes.clear()
-	monitoring = true
-	monitorable = false
+	set_deferred("monitoring", true)
+	set_deferred("monitorable", false)
 
 func disable() -> void:
 	active = false
-	monitoring = false
+	set_deferred("monitoring", false)
 	_hit_hurtboxes.clear()
 
 func _on_area_entered(area: Area2D) -> void:

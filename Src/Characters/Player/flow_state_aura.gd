@@ -23,29 +23,22 @@ const ESSENCE_YELLOW := Color(1.0, 0.79, 0.2, 1.0)
 @export var aura_fade_in_speed := 6.5
 @export var aura_fade_out_speed := 4.8
 @export var aura_pulse_speed := 3.0
-@export_range(1.0, 24.0, 0.5) var silhouette_distance_px := 14.0
-@export_range(1.0, 12.0, 0.5) var silhouette_feather_px := 9.0
+@export_range(1.0, 24.0, 0.5) var silhouette_distance_px := 16.0
+@export_range(1.0, 12.0, 0.5) var silhouette_feather_px := 10.0
+@export_range(0.0, 32.0, 0.5) var silhouette_flame_height_px := 18.0
+@export_range(0.1, 0.9, 0.01) var meditation_aura_target := 0.48
+@export_range(0.1, 1.0, 0.01) var meditation_visual_strength := 0.68
 @export var run_trail_min_speed := 180.0
 @export var run_trail_max_speed := 780.0
 @export var run_trail_interval := 0.14
-@export var ambient_wisp_interval := 0.11
+@export var ambient_wisp_interval := 0.09
 
 @export_group("Events")
 @export var maximum_ephemeral_sprites := 32
 @export var minimum_landing_effect_speed := 160.0
 
-@onready var core_aura: AnimatedSprite2D = $AuraBack/CoreAura
-@onready var gold_aura: AnimatedSprite2D = $AuraBack/GoldAura
 @onready var silhouette_shell: Sprite2D = $AuraBack/SilhouetteShell
-@onready var aura_accents: Array[AnimatedSprite2D] = [
-	$AuraBack/Accent1 as AnimatedSprite2D,
-	$AuraBack/Accent2 as AnimatedSprite2D,
-	$AuraBack/Accent3 as AnimatedSprite2D,
-]
-@onready var ground_weave: Sprite2D = $AuraBack/GroundWeave
-@onready var core_pulse: Sprite2D = $AuraBack/CorePulse
 @onready var flow_light: PointLight2D = $AuraBack/FlowLight
-@onready var front_strand: AnimatedSprite2D = $AuraFront/FrontStrand
 @onready var transition_core: AnimatedSprite2D = $TransitionLayer/TransitionCore
 @onready var transition_accents: Array[AnimatedSprite2D] = [
 	$TransitionLayer/TransitionAccent1 as AnimatedSprite2D,
@@ -89,7 +82,6 @@ func _ready() -> void:
 	_configure_static_materials()
 	_resolve_player_visual()
 	_connect_transition_signals()
-	_start_aura_loops()
 	if not DemoProgress.threads_changed.is_connected(_refresh_demo_identity_channels):
 		DemoProgress.threads_changed.connect(_refresh_demo_identity_channels)
 	_refresh_demo_identity_channels()
@@ -109,7 +101,11 @@ func set_flow_active(is_active: bool) -> void:
 		return
 
 	active = is_active
-	_aura_target = 1.0 if active else (0.28 if _meditation_active else 0.0)
+	_aura_target = (
+		1.0
+		if active
+		else (meditation_aura_target if _meditation_active else 0.0)
+	)
 	visible = true
 	set_process(true)
 	_buildup_timer = 0.0
@@ -119,12 +115,18 @@ func set_meditation_active(is_active: bool) -> void:
 	if _meditation_active == is_active:
 		return
 	_meditation_active = is_active
-	_aura_target = 1.0 if active else (0.28 if _meditation_active else 0.0)
+	_aura_target = (
+		1.0
+		if active
+		else (meditation_aura_target if _meditation_active else 0.0)
+	)
 	if active or _meditation_active or _aura_visibility > 0.005:
 		visible = true
 		set_process(true)
 	else:
 		_refresh_processing_state()
+	if _meditation_active and not active:
+		_play_meditation_bloom()
 
 func set_momentum_amount(value: float) -> void:
 	_momentum_amount = clampf(value, 0.0, 100.0)
@@ -198,13 +200,16 @@ func play_attack_swing(
 			+ (float(index) - color_center) * 0.035
 		)
 		sprite.scale = Vector2.ONE * (0.58 * arc_scale * (1.0 - index * 0.025))
+		# The authored crescent faces opposite the weapon travel direction.
+		# Mirror it horizontally while retaining the alternating vertical cut.
+		sprite.flip_h = not attack_template.flip_h
 		sprite.flip_v = strike_index % 2 == 1
 		sprite.material = _make_tint_material(
 			colors[index],
 			0.18 if index == 0 else 0.9,
 			1.28 if index == 0 else 1.04
 		)
-		sprite.modulate.a = 0.46 if index == 0 else 0.29
+		sprite.modulate.a = 0.32 if index == 0 else 0.18
 		_register_ephemeral(sprite)
 		sprite.animation_finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
 		sprite.play(&"swing")
@@ -290,11 +295,6 @@ func _configure_static_materials() -> void:
 	_silhouette_material = ShaderMaterial.new()
 	_silhouette_material.shader = FLOW_SILHOUETTE_SHADER
 	silhouette_shell.material = _silhouette_material
-	core_aura.material = _make_tint_material(IVORY, 0.12, 1.34)
-	gold_aura.material = _make_tint_material(ANTIQUE_GOLD, 0.84, 1.12)
-	ground_weave.material = _make_tint_material(ANTIQUE_GOLD, 0.82, 1.04)
-	core_pulse.material = _make_tint_material(IVORY, 0.08, 1.38)
-	front_strand.material = _make_tint_material(ANTIQUE_GOLD, 0.9, 1.08)
 	transition_core.material = _make_tint_material(IVORY, 0.08, 1.35)
 	_update_silhouette_identity_material()
 
@@ -372,14 +372,6 @@ func _connect_transition_signals() -> void:
 				_on_transition_animation_finished.bind(sprite)
 			)
 
-func _start_aura_loops() -> void:
-	var loop_sprites: Array[AnimatedSprite2D] = [core_aura, gold_aura, front_strand]
-	loop_sprites.append_array(aura_accents)
-	for index in loop_sprites.size():
-		var sprite := loop_sprites[index]
-		sprite.play(&"loop")
-		sprite.set_frame_and_progress(index % 4, float(index % 3) * 0.22)
-
 func _refresh_demo_identity_channels() -> void:
 	if _identity_override_active:
 		return
@@ -394,23 +386,39 @@ func _refresh_demo_identity_channels() -> void:
 
 func _apply_identity_channels() -> void:
 	var effective_channels := _get_effective_identity_channels()
-	for index in aura_accents.size():
+	for index in transition_accents.size():
 		var color := (
 			effective_channels[index]
 			if index < effective_channels.size()
 			else ANTIQUE_GOLD
 		)
-		aura_accents[index].material = _make_tint_material(color, 0.95, 1.14)
 		transition_accents[index].material = _make_tint_material(color, 0.94, 1.08)
 
-	var front_color := (
-		effective_channels[_channel_cursor % effective_channels.size()]
-		if not effective_channels.is_empty()
-		else ANTIQUE_GOLD
-	)
-	front_strand.material = _make_tint_material(front_color, 0.94, 1.06)
+	flow_light.color = _get_identity_glow_color(effective_channels)
 	_update_silhouette_identity_material()
 	_update_aura_visuals()
+
+func _get_identity_glow_color(channels: Array[Color]) -> Color:
+	if channels.is_empty():
+		return ANTIQUE_GOLD.lerp(IVORY, 0.18)
+
+	var weighted_rgb := Vector3.ZERO
+	var total_weight := 0.0
+	for channel in channels:
+		var weight := clampf(channel.a, 0.0, 1.0)
+		weighted_rgb += Vector3(channel.r, channel.g, channel.b) * weight
+		total_weight += weight
+	if total_weight <= 0.0001:
+		return ANTIQUE_GOLD.lerp(IVORY, 0.18)
+
+	weighted_rgb /= total_weight
+	var identity_color := Color(
+		weighted_rgb.x,
+		weighted_rgb.y,
+		weighted_rgb.z,
+		1.0
+	)
+	return identity_color.lerp(IVORY, 0.18)
 
 func _update_silhouette_identity_material() -> void:
 	if not _silhouette_material:
@@ -460,42 +468,52 @@ func _update_aura_visuals() -> void:
 	var show_aura := _aura_visibility > 0.005
 	var pulse := 0.5 + sin(_time * aura_pulse_speed) * 0.5
 	var meditation_only := _meditation_active and not active
-	var persistent_strength := 0.42 if meditation_only else 1.0
+	var persistent_strength := (
+		meditation_visual_strength
+		if meditation_only
+		else 1.0
+	)
+	var display_strength := clampf(
+		_aura_visibility * persistent_strength,
+		0.0,
+		1.0
+	)
 
 	silhouette_shell.visible = show_aura and silhouette_shell.texture != null
-	core_aura.visible = false
-	gold_aura.visible = false
-	ground_weave.visible = false
-	core_pulse.visible = false
-	front_strand.visible = false
 
 	if _silhouette_material:
 		_silhouette_material.set_shader_parameter(&"time_seconds", _time)
 		_silhouette_material.set_shader_parameter(
 			&"aura_visibility",
-			_aura_visibility * persistent_strength
+			display_strength
 		)
 		_silhouette_material.set_shader_parameter(
 			&"outline_distance_px",
-			silhouette_distance_px + _activation_burst * 7.0
+			silhouette_distance_px + _activation_burst * 8.0
 		)
 		_silhouette_material.set_shader_parameter(
 			&"outline_feather_px",
 			silhouette_feather_px
 		)
 		_silhouette_material.set_shader_parameter(
+			&"flame_height_px",
+			(silhouette_flame_height_px * 0.55)
+			if meditation_only
+			else silhouette_flame_height_px + _activation_burst * 6.0
+		)
+		_silhouette_material.set_shader_parameter(
 			&"energy",
-			1.0 + pulse * 0.26 + _activation_burst * 0.62
+			1.28 + pulse * 0.42 + _activation_burst * 0.82
 		)
 
-	for index in aura_accents.size():
-		var accent := aura_accents[index]
-		accent.visible = false
-
 	flow_light.energy = (
-		_aura_visibility
-		* (0.27 + pulse * 0.14 + _activation_burst * 0.3)
-		* persistent_strength
+		display_strength
+		* (0.48 + pulse * 0.22 + _activation_burst * 0.42)
+	)
+	flow_light.texture_scale = (
+		1.08
+		+ pulse * 0.16
+		+ _activation_burst * 0.22
 	)
 
 func _play_transition(animation_name: StringName) -> void:
@@ -509,6 +527,18 @@ func _play_transition(animation_name: StringName) -> void:
 		_activation_tween.kill()
 	_activation_tween = create_tween()
 	if animation_name == &"ignite":
+		transition_core.visible = true
+		transition_core.modulate.a = 0.86
+		transition_core.scale = Vector2.ONE * 0.62
+		transition_core.play(&"ignite")
+		for index in transition_accents.size():
+			var accent := transition_accents[index]
+			accent.visible = true
+			accent.modulate.a = 0.38 - index * 0.055
+			accent.scale = Vector2.ONE * (0.58 - index * 0.035)
+			if index == 1:
+				accent.scale.x *= -1.0
+			accent.play(&"ignite")
 		_activation_burst = 0.0
 		_activation_tween.tween_property(
 			self,
@@ -523,6 +553,10 @@ func _play_transition(animation_name: StringName) -> void:
 			0.4
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	else:
+		transition_core.visible = true
+		transition_core.modulate.a = 0.34
+		transition_core.scale = Vector2.ONE * 0.54
+		transition_core.play(&"unravel")
 		_activation_burst = minf(maxf(_activation_burst, 0.24), 0.4)
 		_activation_tween.tween_property(
 			self,
@@ -530,6 +564,18 @@ func _play_transition(animation_name: StringName) -> void:
 			0.0,
 			0.32
 		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func _play_meditation_bloom() -> void:
+	if _activation_tween and _activation_tween.is_valid():
+		_activation_tween.kill()
+	_activation_burst = 0.34
+	_activation_tween = create_tween()
+	_activation_tween.tween_property(
+		self,
+		"_activation_burst",
+		0.0,
+		0.62
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _on_transition_animation_finished(sprite: AnimatedSprite2D) -> void:
 	sprite.visible = false
@@ -653,26 +699,26 @@ func _update_ambient_wisps(delta: float) -> void:
 	event_layer.add_child(sprite)
 	sprite.visible = true
 	sprite.position = Vector2(
-		_ambient_wisp_side * randf_range(30.0, 44.0),
-		randf_range(-78.0, 20.0)
+		_ambient_wisp_side * randf_range(20.0, 40.0),
+		randf_range(-4.0, 31.0)
 	)
 	sprite.rotation = randf_range(-0.22, 0.22)
 	sprite.scale = Vector2(
-		randf_range(0.085, 0.13),
-		randf_range(0.11, 0.18)
+		randf_range(0.105, 0.16),
+		randf_range(0.15, 0.23)
 	)
 	sprite.material = _make_tint_material(
 		_get_next_identity_color(),
 		0.9,
-		randf_range(0.82, 1.02)
+		randf_range(1.0, 1.22)
 	)
 	sprite.modulate.a = 0.0
 	_register_ephemeral(sprite)
 
 	var lifetime := randf_range(0.7, 0.95)
 	var drift := Vector2(
-		_ambient_wisp_side * randf_range(9.0, 19.0),
-		-randf_range(45.0, 75.0)
+		_ambient_wisp_side * randf_range(8.0, 18.0),
+		-randf_range(92.0, 142.0)
 	)
 	var motion_tween := create_tween()
 	motion_tween.set_parallel(true)
@@ -693,7 +739,7 @@ func _update_ambient_wisps(delta: float) -> void:
 	fade_tween.tween_property(
 		sprite,
 		"modulate:a",
-		randf_range(0.22, 0.34),
+		randf_range(0.36, 0.54),
 		lifetime * 0.18
 	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	fade_tween.tween_interval(lifetime * 0.18)

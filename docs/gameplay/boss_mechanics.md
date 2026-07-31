@@ -326,8 +326,15 @@ changing the underlying combat rules:
 - A circular socket at each end of the rail represents one armor-link add. A
   bright portrait means the add is alive; a grey portrait and radial countdown
   communicate its respawn.
-- Crossing the arena lock smoothly changes the world camera zoom from `1.0` to
-  `0.84` over `0.75` seconds. This reveals more of the boss, adds, and attack
-  lanes while keeping the player readable.
+- The Proto-Weaver remains encounter-locked while the entrance closes. Player
+  control pauses for a roughly three-second introduction: the camera pans and
+  zooms toward the boss, the boss-room grade fades in, and the
+  `PROTO-WEAVER` name and health rail reveal together.
+- The camera then returns to the player at the `0.72` combat zoom before player
+  control, boss contact, boss AI, and boss music activate together.
+- The boss-room grade remains neutral before this cue, preventing its spatial
+  boundary from appearing as a hard line at the doorway.
+- The boss entrance disables the shared door's legacy fog panel. Its animated
+  door art provides the sight block without an arena-sized black polygon.
 - Boss defeat restores the camera zoom that was active before the encounter.
   HUD elements remain unaffected because they render in a `CanvasLayer`.

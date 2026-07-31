@@ -504,24 +504,36 @@ tether_line_anchor_offset = Vector2(0, -230)
 [node name="Tensioner" parent="WorldArt/CentralChamber/Enemies" unique_id=1012165391 instance=ExtResource("12_un15s")]
 position = Vector2(2304, 3617)
 walk_visual_offset = Vector2(0, 0)
-thread_missile_scene = null
-thread_smash_horizontal_spread = 360.0
+thread_smash_min_landing_spacing = 120.0
+thread_smash_landing_jitter = 18.0
+thread_smash_safe_gap_width = 96.0
+thread_smash_marker_radius = 32.0
 thread_smash_spawn_offset = Vector2(0, -12)
-thread_smash_min_launch_speed = 650.0
-thread_smash_max_launch_speed = 800.0
-thread_smash_horizontal_force = 240.0
-thread_smash_velocity_jitter = 45.0
+thread_smash_min_flight_time = 0.72
+thread_smash_max_flight_time = 1.02
+thread_smash_floor_ray_start_height = 180.0
+thread_smash_floor_ray_depth = 480.0
+thread_smash_impact_vfx_duration = 0.28
+thread_smash_screen_shake_strength = 4.25
+thread_smash_screen_shake_duration = 0.1
+thread_smash_random_seed = 0
 
 [node name="Tensioner2" parent="WorldArt/CentralChamber/Enemies" unique_id=1796264249 instance=ExtResource("12_un15s")]
 position = Vector2(2524, 1322)
 walk_visual_offset = Vector2(0, 0)
-thread_missile_scene = null
-thread_smash_horizontal_spread = 360.0
+thread_smash_min_landing_spacing = 120.0
+thread_smash_landing_jitter = 18.0
+thread_smash_safe_gap_width = 96.0
+thread_smash_marker_radius = 32.0
 thread_smash_spawn_offset = Vector2(0, -12)
-thread_smash_min_launch_speed = 650.0
-thread_smash_max_launch_speed = 800.0
-thread_smash_horizontal_force = 240.0
-thread_smash_velocity_jitter = 45.0
+thread_smash_min_flight_time = 0.72
+thread_smash_max_flight_time = 1.02
+thread_smash_floor_ray_start_height = 180.0
+thread_smash_floor_ray_depth = 480.0
+thread_smash_impact_vfx_duration = 0.28
+thread_smash_screen_shake_strength = 4.25
+thread_smash_screen_shake_duration = 0.1
+thread_smash_random_seed = 0
 
 [node name="Threadling4" parent="WorldArt/CentralChamber/Enemies" unique_id=699253797 instance=ExtResource("11_be3p8")]
 position = Vector2(2283, 4305)
@@ -1163,20 +1175,36 @@ position = Vector2(2048, -896)
 [node name="Tensioner" parent="WorldArt/Rooms/RedWing/EnemyEncounter" unique_id=1683687812 instance=ExtResource("12_un15s")]
 position = Vector2(-1093, 1305)
 walk_visual_offset = Vector2(0, 0)
+thread_smash_min_landing_spacing = 120.0
+thread_smash_landing_jitter = 18.0
+thread_smash_safe_gap_width = 96.0
+thread_smash_marker_radius = 32.0
 thread_smash_spawn_offset = Vector2(0, -12)
-thread_smash_min_launch_speed = 650.0
-thread_smash_max_launch_speed = 800.0
-thread_smash_horizontal_force = 240.0
-thread_smash_velocity_jitter = 45.0
+thread_smash_min_flight_time = 0.72
+thread_smash_max_flight_time = 1.02
+thread_smash_floor_ray_start_height = 180.0
+thread_smash_floor_ray_depth = 480.0
+thread_smash_impact_vfx_duration = 0.28
+thread_smash_screen_shake_strength = 4.25
+thread_smash_screen_shake_duration = 0.1
+thread_smash_random_seed = 0
 
 [node name="Tensioner2" parent="WorldArt/Rooms/RedWing/EnemyEncounter" unique_id=510283777 instance=ExtResource("12_un15s")]
 position = Vector2(-1152, -768)
 walk_visual_offset = Vector2(0, 0)
+thread_smash_min_landing_spacing = 120.0
+thread_smash_landing_jitter = 18.0
+thread_smash_safe_gap_width = 96.0
+thread_smash_marker_radius = 32.0
 thread_smash_spawn_offset = Vector2(0, -12)
-thread_smash_min_launch_speed = 650.0
-thread_smash_max_launch_speed = 800.0
-thread_smash_horizontal_force = 240.0
-thread_smash_velocity_jitter = 45.0
+thread_smash_min_flight_time = 0.72
+thread_smash_max_flight_time = 1.02
+thread_smash_floor_ray_start_height = 180.0
+thread_smash_floor_ray_depth = 480.0
+thread_smash_impact_vfx_duration = 0.28
+thread_smash_screen_shake_strength = 4.25
+thread_smash_screen_shake_duration = 0.1
+thread_smash_random_seed = 0
 
 [node name="Threadling7" parent="WorldArt/Rooms/RedWing/EnemyEncounter" unique_id=1201086355 instance=ExtResource("11_be3p8")]
 position = Vector2(-384, -1408)
@@ -1633,12 +1661,13 @@ prompt_read_text = "Up - Read"
 prompt_open_text = "Up - Face Boss"
 
 [node name="BossArenaLock" type="Area2D" parent="WorldArt/Rooms/BossArena/Doors" unique_id=1044286421]
-position = Vector2(5568, 3820)
+position = Vector2(6018, 3820)
 collision_layer = 0
 script = ExtResource("30_boss_arena_lock")
 boss_path = NodePath("../../Enemies/ProtoWeaver")
 entrance_door_path = NodePath("../TriThreadDoor")
 camera_path = NodePath("../../../../../Camera2D")
+room_grade_path = NodePath("../../../../../Atmosphere/RoomHueGrade")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArt/Rooms/BossArena/Doors/BossArenaLock" unique_id=2067067542]
 position = Vector2(-51, -359)
@@ -1672,7 +1701,7 @@ position = Vector2(0, -4577)
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(-2297, -526)
+position = Vector2(-4, -3615)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -1680,7 +1709,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(-2297, -526)
+position = Vector2(-4, -3615)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200

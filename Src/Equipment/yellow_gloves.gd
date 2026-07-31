@@ -51,7 +51,7 @@ func _apply_yellow_tuning() -> void:
 	enforce_player_rope_limit = false
 
 func is_base_grapple_restricting() -> bool:
-	return false
+	return has_enemy_grapple_target()
 
 func jump_off_grapple() -> bool:
 	return false
@@ -68,31 +68,46 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 
 	grapple_raycast.global_position = previous_tip
 	grapple_raycast.target_position = new_tip - previous_tip
-	grapple_raycast.force_raycast_update()
+	for _skipped_collider in range(8):
+		grapple_raycast.force_raycast_update()
+		if not grapple_raycast.is_colliding():
+			return
 
-	if not grapple_raycast.is_colliding():
+		var collider := grapple_raycast.get_collider()
+		if not _is_valid_hookshot_collider(collider):
+			if collider is CollisionObject2D:
+				grapple_raycast.add_exception(collider as CollisionObject2D)
+				continue
+			return
+
+		if not _can_attach_grapple():
+			_handle_non_attaching_collision(
+				grapple_raycast.get_collision_point(),
+				grapple_raycast.get_collision_normal()
+			)
+			_update_active_grapple_visuals()
+			return
+
+		_notify_grapple_collider(collider)
+		grapple_attached = true
+		grapple_attachment_state = GrappleAttachmentState.SPENT
+		grapple_attach_position = grapple_raycast.get_collision_point()
+		_snap_collision_normal = grapple_raycast.get_collision_normal()
+		grapple_collision_normal = _snap_collision_normal
+		_capture_grapple_target(collider)
+		grapple_tip_position = grapple_attach_position
+		grapple_tip_velocity = Vector2.ZERO
+		grapple_state = GrappleState.ATTACHED
+		AudioManager.play_sfx(&"grapple_connect")
+		if has_enemy_grapple_target():
+			_snap_pending = false
+			if player and player.has_method("report_momentum_action"):
+				player.report_momentum_action(&"Grapple", snap_momentum_multiplier)
+			return
+		_begin_snap_sequence()
+		if player and player.has_method("report_momentum_action"):
+			player.report_momentum_action(&"Grapple", snap_momentum_multiplier)
 		return
-
-	if not _can_attach_grapple():
-		_handle_non_attaching_collision(
-			grapple_raycast.get_collision_point(),
-			grapple_raycast.get_collision_normal()
-		)
-		_update_active_grapple_visuals()
-		return
-
-	_notify_grapple_collider(grapple_raycast.get_collider())
-	grapple_attached = true
-	grapple_attachment_state = GrappleAttachmentState.SPENT
-	grapple_attach_position = grapple_raycast.get_collision_point()
-	_snap_collision_normal = grapple_raycast.get_collision_normal()
-	grapple_tip_position = grapple_attach_position
-	grapple_tip_velocity = Vector2.ZERO
-	grapple_state = GrappleState.ATTACHED
-	AudioManager.play_sfx(&"grapple_connect")
-	_begin_snap_sequence()
-	if player and player.has_method("report_momentum_action"):
-		player.report_momentum_action(&"Grapple", snap_momentum_multiplier)
 
 func _begin_snap_sequence() -> void:
 	if _snap_pending:
@@ -114,10 +129,22 @@ func _begin_snap_sequence() -> void:
 	_flash_player_snap()
 
 func process_passive(delta: float) -> void:
+	if has_enemy_grapple_target():
+		apply_enemy_grapple_setup_pull(delta, snap_pull_speed)
+		return
 	if not _snap_pending:
 		return
 	_hold_snap_primed(delta)
 	_process_snap_choice_input()
+
+func _on_enemy_grapple_strike_started() -> void:
+	_snap_pending = false
+	_snap_platform_phase_requested = false
+
+func _release_after_enemy_grapple_strike() -> void:
+	_snap_pending = false
+	_snap_platform_phase_requested = false
+	_begin_grapple_retract()
 
 func _hold_snap_primed(delta: float) -> void:
 	if not player or not is_instance_valid(player):

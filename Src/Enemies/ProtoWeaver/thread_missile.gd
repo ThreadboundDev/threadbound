@@ -87,14 +87,14 @@ func _on_body_entered(body: Node2D) -> void:
 func _arm_after_delay() -> void:
 	await get_tree().create_timer(arming_time).timeout
 	if not _is_impacting:
-		monitoring = true
+		set_deferred("monitoring", true)
 
 func _start_impact() -> void:
 	if _is_impacting:
 		return
 
 	_is_impacting = true
-	monitoring = false
+	set_deferred("monitoring", false)
 	velocity = Vector2.ZERO
 	if sprite:
 		sprite.frame = 3

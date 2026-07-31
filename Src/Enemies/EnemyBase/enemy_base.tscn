@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b7c0wckm4o8vi"]
+[gd_scene load_steps=18 format=3 uid="uid://b7c0wckm4o8vi"]
 
 [ext_resource type="Script" path="res://Src/Enemies/EnemyBase/enemy_base.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://Src/Components/health_component.gd" id="2_health"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Src/Enemies/States/enemy_hurt_state.gd" id="11_hurt"]
 [ext_resource type="Script" path="res://Src/Enemies/States/enemy_dead_state.gd" id="12_dead"]
 [ext_resource type="Script" path="res://Src/Components/grapple_target_component.gd" id="13_grapple_target"]
+[ext_resource type="PackedScene" path="res://Src/UI/enemy_health_bar.tscn" id="14_enemy_health_bar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(34, 42)
@@ -112,3 +113,5 @@ script = ExtResource("11_hurt")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 script = ExtResource("12_dead")
+
+[node name="EnemyHealthBar" parent="." instance=ExtResource("14_enemy_health_bar")]

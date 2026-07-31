@@ -3,7 +3,6 @@ extends Node
 const ENEMY_BASE_SCENE := preload("res://Src/Enemies/EnemyBase/enemy_base.tscn")
 const DAMAGE_TEXTURE := preload("res://Assets/VFX/V2/enemy_damage_fray_v2.png")
 const DEATH_TEXTURE := preload("res://Assets/VFX/V2/enemy_death_unravel_v2.png")
-const FLOW_AURA_TEXTURE := preload("res://Assets/VFX/FlowState/V1/flow_aura_loop_v1.png")
 const FLOW_TRANSITION_TEXTURE := preload("res://Assets/VFX/FlowState/V1/flow_transition_v1.png")
 const FLOW_ATTACK_TEXTURE := preload("res://Assets/VFX/FlowState/V3/flow_attack_smear_v3.png")
 const FLOW_MOVEMENT_TEXTURE := preload("res://Assets/VFX/FlowState/V2/flow_movement_energy_v2.png")
@@ -11,9 +10,12 @@ const FLOW_MOTES_TEXTURE := preload("res://Assets/VFX/FlowState/V1/flow_motes_v1
 const FLOW_SILHOUETTE_SHADER := preload("res://Src/VFX/flow_state_silhouette.gdshader")
 const FLOW_STATE_VFX_SCENE_PATH := "res://Src/Characters/Player/flow_state_vfx.tscn"
 const NEUTRAL_SPECIAL_VFX_SCENE_PATH := "res://Src/VFX/neutral_special_vfx.tscn"
+const DASH_IFRAME_VFX_SCENE_PATH := "res://Src/VFX/dash_iframe_vfx.tscn"
+const GRAPPLE_STRIKE_VFX_SCENE_PATH := "res://Src/VFX/grapple_strike_vfx.tscn"
 const REQUIRED_FLOW_STATE_API := [
 	&"set_flow_active",
 	&"set_meditation_active",
+	&"set_identity_channels",
 	&"set_momentum_amount",
 	&"play_attack_swing",
 	&"play_dash",
@@ -26,7 +28,6 @@ var _failures := PackedStringArray()
 func _ready() -> void:
 	_verify_true_alpha_sheet(DAMAGE_TEXTURE, "damage fray")
 	_verify_true_alpha_sheet(DEATH_TEXTURE, "death unravel")
-	_verify_flow_alpha_sheet(FLOW_AURA_TEXTURE, "Flow aura")
 	_verify_flow_alpha_sheet(FLOW_TRANSITION_TEXTURE, "Flow transition")
 	_verify_flow_alpha_sheet(FLOW_ATTACK_TEXTURE, "Flow attack")
 	_verify_flow_alpha_sheet(FLOW_MOVEMENT_TEXTURE, "Flow movement")
@@ -34,6 +35,8 @@ func _ready() -> void:
 	_verify_enemy_sprite_setup()
 	_verify_flow_state_vfx()
 	_verify_neutral_special_vfx()
+	_verify_dash_iframe_vfx()
+	_verify_grapple_strike_vfx()
 	_finish()
 
 func _verify_true_alpha_sheet(texture: Texture2D, label: String) -> void:
@@ -181,7 +184,7 @@ func _verify_flow_state_vfx() -> void:
 	)
 	_expect(
 		int(visual_stats["line_nodes"]) == 0,
-		"Flow State VFX contains no Line2D procedural-line nodes."
+		"Flow State VFX contains no detached procedural energy ribbons."
 	)
 	var silhouette_shell := flow_vfx.get_node_or_null(
 		"AuraBack/SilhouetteShell"
@@ -197,22 +200,99 @@ func _verify_flow_state_vfx() -> void:
 			and silhouette_material.shader == FLOW_SILHOUETTE_SHADER,
 			"Flow silhouette shell uses the distance-field energy shader."
 		)
+	_expect(
+		flow_vfx.get_node_or_null("AuraBack/ConceptAura") == null,
+		"Flow State VFX omits the detached yellow concept composition."
+	)
+	for removed_path in [
+		"AuraBack/CoreAura",
+		"AuraBack/GoldAura",
+		"AuraBack/Accent1",
+		"AuraBack/Accent2",
+		"AuraBack/Accent3",
+		"AuraBack/GroundWeave",
+		"AuraBack/CorePulse",
+		"AuraFront/FrontStrand",
+	]:
+		_expect(
+			flow_vfx.get_node_or_null(removed_path) == null,
+			"Persistent Flow omits decorative node %s." % removed_path
+		)
 
-	if flow_vfx.has_method(&"set_flow_active"):
-		flow_vfx.call(&"set_flow_active", true)
-		flow_vfx.call(&"set_flow_active", false)
 	if flow_vfx.has_method(&"set_meditation_active"):
 		flow_vfx.call(&"set_meditation_active", true)
+		flow_vfx.set("_aura_visibility", 0.48)
+		flow_vfx.set("_activation_burst", 0.0)
+		flow_vfx.call(&"_update_aura_visuals")
+		_expect(
+			is_equal_approx(float(flow_vfx.get("_aura_target")), 0.48),
+			"Meditation uses a clearly visible half-strength Flow target."
+		)
+		_expect(
+			(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy > 0.1,
+			"Meditation displays a restrained character-bound glow."
+		)
 		flow_vfx.call(&"set_meditation_active", false)
+	if flow_vfx.has_method(&"set_flow_active"):
+		flow_vfx.call(&"set_flow_active", true)
+		flow_vfx.set("_aura_visibility", 1.0)
+		flow_vfx.set("_activation_burst", 0.0)
+		flow_vfx.call(&"_update_aura_visuals")
+		_expect(
+			(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy >= 0.48,
+			"Full Flow supplies a strong character-bound glow."
+		)
+		_expect(
+			(flow_vfx.get_node("TransitionLayer/TransitionCore") as CanvasItem).visible,
+			"Full Flow retains a brief visible ignition burst."
+		)
+		var power_channels: Array[Color] = [Color(0.94, 0.2, 0.17, 1.0)]
+		flow_vfx.call(&"set_identity_channels", power_channels)
+		var identity_glow := (
+			flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D
+		).color
+		_expect(
+			identity_glow.r > identity_glow.g
+			and identity_glow.r > identity_glow.b,
+			"The persistent glow responds to the equipped identity color."
+		)
+		_expect(
+			int(flow_vfx.get("maximum_ephemeral_sprites")) == 32,
+			"Stronger Flow presentation retains the 32-effect safety cap."
+		)
 	if flow_vfx.has_method(&"set_momentum_amount"):
 		for momentum_amount in [0.0, 25.0, 50.0, 75.0, 100.0]:
 			flow_vfx.call(&"set_momentum_amount", momentum_amount)
 
-	for method_name in [&"play_attack_swing", &"play_dash", &"play_jump", &"play_land"]:
+	if flow_vfx.has_method(&"play_attack_swing"):
+		flow_vfx.call(&"play_attack_swing", Vector2.RIGHT, 130.0, 0)
+		var event_layer := flow_vfx.get_node_or_null("EventLayer")
+		var attack_layers: Array[AnimatedSprite2D] = []
+		if event_layer:
+			for child in event_layer.get_children():
+				if child is AnimatedSprite2D:
+					attack_layers.append(child as AnimatedSprite2D)
+		_expect(
+			not attack_layers.is_empty(),
+			"Flow attack swing spawns visible crescent layers."
+		)
+		for attack_layer in attack_layers:
+			_expect(
+				attack_layer.flip_h,
+				"Flow attack crescent is horizontally mirrored into weapon-travel orientation."
+			)
+			_expect(
+				attack_layer.modulate.a <= 0.32,
+				"Flow attack crescent layers retain the reduced combat-readable opacity."
+			)
+
+	for method_name in [&"play_dash", &"play_jump", &"play_land"]:
 		if flow_vfx.has_method(method_name):
 			_call_method_with_test_arguments(flow_vfx, method_name)
 
 	_verify_identity_channel_states(flow_vfx)
+	if flow_vfx.has_method(&"set_flow_active"):
+		flow_vfx.call(&"set_flow_active", false)
 	flow_vfx.free()
 
 func _verify_neutral_special_vfx() -> void:
@@ -249,11 +329,130 @@ func _verify_neutral_special_vfx() -> void:
 		)
 	if neutral_special_vfx.has_method(&"play"):
 		neutral_special_vfx.call(&"play", 220.0, 0.245, 1)
+		_expect(
+			is_equal_approx(float(neutral_special_vfx.get("_radius")), 220.0)
+			and is_equal_approx(
+				float(neutral_special_vfx.get("full_force_radius_ratio")),
+				0.45
+			),
+			"Neutral-special VFX uses the gameplay AOE and full-force radii."
+		)
 	if neutral_special_vfx.has_method(&"set_charge_position"):
 		neutral_special_vfx.call(&"set_charge_position", Vector2(24.0, -80.0))
+		_expect(
+			neutral_special_vfx.position == Vector2(24.0, -80.0),
+			"Neutral-special charge follows its weapon anchor."
+		)
 	if neutral_special_vfx.has_method(&"trigger_impact"):
 		neutral_special_vfx.call(&"trigger_impact", Vector2(96.0, 48.0))
+		_expect(
+			neutral_special_vfx.position == Vector2(96.0, 48.0)
+			and bool(neutral_special_vfx.get("_impact_started")),
+			"Neutral-special impact recenters its ring and core on weapon-ground contact."
+		)
+	_expect(
+		NeutralSpecialVFX.IVORY.r > 0.95
+		and NeutralSpecialVFX.GOLD.r > 0.95
+		and NeutralSpecialVFX.GOLD.g > NeutralSpecialVFX.GOLD.b,
+		"Neutral-special impact retains its ivory-and-gold presentation."
+	)
 	neutral_special_vfx.free()
+
+func _verify_dash_iframe_vfx() -> void:
+	var scene_exists := ResourceLoader.exists(
+		DASH_IFRAME_VFX_SCENE_PATH,
+		"PackedScene"
+	)
+	_expect(
+		scene_exists,
+		"Dash iframe VFX scene exists at %s." % DASH_IFRAME_VFX_SCENE_PATH
+	)
+	if not scene_exists:
+		return
+
+	var packed_scene := ResourceLoader.load(
+		DASH_IFRAME_VFX_SCENE_PATH,
+		"PackedScene"
+	) as PackedScene
+	_expect(packed_scene != null, "Dash iframe VFX loads as a PackedScene.")
+	if packed_scene == null:
+		return
+
+	var dash_vfx := packed_scene.instantiate()
+	_expect(dash_vfx != null, "Dash iframe VFX scene instantiates.")
+	if dash_vfx == null:
+		return
+
+	add_child(dash_vfx)
+	for method_name in [
+		&"play",
+		&"cancel",
+		&"is_playing",
+		&"get_dash_direction",
+		&"get_remaining_time",
+	]:
+		_expect(
+			dash_vfx.has_method(method_name),
+			"Dash iframe VFX exposes %s()." % method_name
+		)
+
+	if dash_vfx.has_method(&"play"):
+		dash_vfx.call(&"play", Vector2.LEFT, 0.29)
+	if dash_vfx.has_method(&"is_playing"):
+		_expect(
+			bool(dash_vfx.call(&"is_playing")),
+			"Dash iframe VFX begins its visible lifetime immediately."
+		)
+	if dash_vfx.has_method(&"get_dash_direction"):
+		_expect(
+			(dash_vfx.call(&"get_dash_direction") as Vector2).is_equal_approx(Vector2.LEFT),
+			"Dash iframe VFX preserves the requested dash direction."
+		)
+	if dash_vfx.has_method(&"get_remaining_time"):
+		_expect(
+			float(dash_vfx.call(&"get_remaining_time")) >= 0.29,
+			"Dash iframe VFX covers the full dash plus grace lifetime."
+		)
+	_expect(
+		DashIframeVFX.IVORY.r > 0.95
+		and DashIframeVFX.PALE_GOLD.g > DashIframeVFX.PALE_GOLD.b
+		and DashIframeVFX.THREAD_GOLD.r > DashIframeVFX.THREAD_GOLD.b,
+		"Dash iframe VFX uses its universal ivory-and-gold palette."
+	)
+	dash_vfx.free()
+
+func _verify_grapple_strike_vfx() -> void:
+	var scene_exists := ResourceLoader.exists(
+		GRAPPLE_STRIKE_VFX_SCENE_PATH,
+		"PackedScene"
+	)
+	_expect(
+		scene_exists,
+		"Grapple-strike VFX scene exists at %s." % GRAPPLE_STRIKE_VFX_SCENE_PATH
+	)
+	if not scene_exists:
+		return
+
+	var packed_scene := ResourceLoader.load(
+		GRAPPLE_STRIKE_VFX_SCENE_PATH,
+		"PackedScene"
+	) as PackedScene
+	var grapple_vfx := packed_scene.instantiate() as GrappleStrikeVFX
+	_expect(grapple_vfx != null, "Grapple-strike VFX scene instantiates.")
+	if grapple_vfx == null:
+		return
+
+	add_child(grapple_vfx)
+	_expect(
+		is_equal_approx(grapple_vfx.visual_scale, 0.72),
+		"Grapple-strike VFX uses the approved character-readable 0.72 scale."
+	)
+	grapple_vfx.play(Vector2.RIGHT)
+	_expect(
+		grapple_vfx.scale.is_equal_approx(Vector2.ONE * 0.72),
+		"Grapple-strike VFX applies its visual scale when played."
+	)
+	grapple_vfx.free()
 
 func _collect_flow_visual_stats(node: Node, stats: Dictionary) -> void:
 	if node is Line2D:

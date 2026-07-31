@@ -268,22 +268,85 @@ not request a second global hit pause or camera shake for the same collision.
 - Multi-target attacks therefore create one deliberate impact beat instead of
   stacking independent feedback effects.
 
+## Current Attack Roles
+
+The first universal attack set uses different commitment and reward profiles
+instead of treating every animation as the same hit:
+
+- Moving opener: 25 damage with moderate hitstun and knockback.
+- Moving finisher: two hits at 18 and 25 damage, with the second hit providing
+  the stronger finish.
+- Stationary combo: 23 damage followed by a committed 30-damage strike. The
+  player is rooted through the second hit, then may dash-cancel the
+  recovery.
+- Backpedal combo: a spacing-focused 21-damage opener followed by 17- and
+  23-damage hits.
+- Air combo: the fastest and most flexible profile, dealing 16 then 21 damage.
+
+Normal recovery may be dash-cancelled. Committed attacks cannot be cancelled
+before their impact. High momentum grants 5% damage and 10% attack speed; full Flow
+grants 10% damage and 15% attack speed.
+
 ### Neutral Special: Smash
 
 The neutral special is a stationary, two-action-point commitment that controls
 space around the weapon's ground contact.
 
+- It can only begin while grounded; jumping and horizontal movement remain
+  committed through impact.
 - Charges around the raised weapon, follows its overhead swing, and releases
   when the weapon reaches the ground on animation frame 18.
 - Hits once in a 220-pixel circular area centered on that ground contact.
-- Deals 1.65 times base attack damage before the skill-damage multiplier.
-- Applies 0.30 seconds of hitstun and stronger radial knockback with upward lift.
+- Deals 70 damage within the inner 99 pixels, then smoothly falls to about 39
+  damage at the outer edge.
+- Hitstun falls from 0.30 to 0.24 seconds with distance; radial knockback retains
+  at least 75% of its inner strength and adds upward lift.
 - Telegraphs the release with inward-gathering threads around the weapon, then
-  expands from the impact through an ivory-and-gold ring and ground fragments.
+  expands from the impact through a bright inner core, an ivory-and-gold outer
+  ring, and ground fragments.
 - Uses one stronger release shake and one coalesced hit-pause window.
+- Roots the player through impact, then permits a dash cancel during the final
+  recovery window.
 
 Its purpose is crowd control and breathing-room creation. Basic attacks remain
 the faster and more efficient option against a single exposed target.
+
+### Dash / Thread Dodge
+
+The dash is both a repositioning tool and the player's deliberate evade:
+
+- Moves at 1,150 pixels per second for 0.30 seconds. Even at low momentum, the
+  resulting distance clears the widest current enemy with a safety margin.
+- Uses a 0.65-second cooldown measured from dash start.
+- Removes the player hurtbox from enemy contact queries for the movement window
+  plus 0.06 seconds of grace, preventing contact separation from shoving an
+  enemy instead of carrying the player through it.
+- Keeps world collision active and does not pass through walls.
+- Blocks attacks from starting mid-dash and overriding the evade movement.
+- Uses a universal ivory-and-gold afterimage so the protected window is readable
+  regardless of equipped chest color.
+
+### Grapple Strike
+
+Pressing Attack while tethered to an enemy performs a dedicated grapple strike
+instead of pulling the player into the enemy body.
+
+- The approach stops outside the combined player and enemy collision shapes.
+- The dedicated approach pose renders at `0.82` of the ordinary Dash sprite
+  scale so its apparent body size matches the rest of the player animation set.
+- Contact damage is ignored only during the approach; authored enemy attack
+  hitboxes remain dangerous.
+- The confirmed strike starts at 30 damage, applies 0.22 seconds of hitstun,
+  strong knockback, and a small upward player recoil that restores safe spacing.
+- Grapples launched from less than 35% of maximum range retain base damage.
+  Beyond that point, a smooth distance bonus rises to 25% at full range.
+- The distance bonus multiplies the existing momentum attack bonus. A full-range
+  Flow strike therefore deals about 41 damage instead of 30.
+- The grapple retracts after one confirmed strike. Ordinary grapple arrival no
+  longer deals an automatic damage tap.
+- Blue and Yellow grapples can target enemies. Yellow uses the strike branch
+  rather than teleporting into an enemy. Red's charged attach damage remains a
+  separate setup hit and cannot double-trigger the grapple strike.
 
 ## Meditation Recovery
 
@@ -304,8 +367,26 @@ action interrupts it.
   recovery option.
 - Entering meditation during Flow shortens the pulse interval to 0.6 seconds
   without improving total momentum efficiency.
+- Meditation displays the same character-bound outline and glow as Flow at
+  reduced strength. Its lower-pitched, quieter ignition sound communicates
+  reaching toward Flow rather than fully entering it.
 - Movement, jumping, dashing, attacking, taking damage, leaving the ground, or
   releasing the meditation input interrupts the state.
+
+### Flow Presentation
+
+Full Flow must read as a peak combat state at normal gameplay zoom:
+
+- A bright identity-tinted silhouette hugs the complete character.
+- The live player frame drives both the close silhouette halo and short upward
+  energy licks, so the effect follows every pose instead of relying on a fixed
+  humanoid-shaped gap.
+- A soft local glow blends the player's equipped thread identities and pulses
+  with Flow intensity.
+- Persistent rear loops, orbiting filaments, chest knots, and grounded weaves
+  are intentionally omitted so the character outline remains clean.
+- Brief ignition, movement trails, and action bursts provide event emphasis
+  without obscuring the character or exceeding the 32-effect safety cap.
 
 ---
 

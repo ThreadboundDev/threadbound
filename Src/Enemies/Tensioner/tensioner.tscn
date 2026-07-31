@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://chjbc1kgc3esj"]
+[gd_scene load_steps=11 format=3 uid="uid://chjbc1kgc3esj"]
 
 [ext_resource type="PackedScene" uid="uid://b7c0wckm4o8vi" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1_eeuym"]
 [ext_resource type="Script" path="res://Src/Enemies/Tensioner/tensioner.gd" id="2_tensioner"]
@@ -6,15 +6,19 @@
 [ext_resource type="Resource" path="res://Src/Enemies/Tensioner/tensioner_stats.tres" id="4_stats"]
 [ext_resource type="Texture2D" uid="uid://d2qgkudiixg2l" path="res://Assets/Enemys/Tensioner/Tensioner_Attack.png" id="5_attack"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="6_missile"]
+[ext_resource type="PackedScene" path="res://Src/VFX/ground_attack_telegraph.tscn" id="7_ground_telegraph"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(193.005, 149.795)
+size = Vector2(212.3055, 164.7745)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 380.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack_area"]
 size = Vector2(310, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack_hitbox"]
+size = Vector2(330, 72)
 
 [node name="Tensioner" unique_id=1012165391 instance=ExtResource("1_eeuym")]
 script = ExtResource("2_tensioner")
@@ -34,24 +38,24 @@ attack_visual_offset = Vector2(5, 0)
 thread_missile_scene = ExtResource("6_missile")
 thread_smash_min_missile_count = 2
 thread_smash_max_missile_count = 4
-thread_smash_horizontal_spread = 380.0
+thread_smash_landing_span = 600.0
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(-4.23, -73.995)
+position = Vector2(-4.23, -81.48475)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Body" parent="Visuals" index="0"]
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1" unique_id=1442147122]
-position = Vector2(-14.47, -86.965)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-14.47, -96.645)
+scale = Vector2(0.44, 0.44)
 texture = ExtResource("3_walk")
 hframes = 6
 vframes = 4
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
-position = Vector2(-4.5025015, -77.1025)
+position = Vector2(-4.5025015, -84.59225)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
@@ -61,16 +65,16 @@ shape = SubResource("CircleShape2D_detection")
 position = Vector2(-4.23, -86)
 
 [node name="CollisionShape2D" parent="AttackArea" index="0"]
-shape = SubResource("RectangleShape2D_attack")
+shape = SubResource("RectangleShape2D_attack_area")
 
 [node name="AttackHitbox" parent="." index="6"]
-position = Vector2(-4.23, -86)
+position = Vector2(-4.23, -36)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
-shape = SubResource("RectangleShape2D_attack")
+shape = SubResource("RectangleShape2D_attack_hitbox")
 
 [node name="CollisionShape2D" parent="ContactHitbox" index="0"]
-position = Vector2(-4.5025015, -77.1025)
+position = Vector2(-4.5025015, -84.59225)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="HitFlashComponent" parent="." index="8"]
@@ -78,3 +82,6 @@ target_path = NodePath("../Visuals/Sprite2D")
 
 [node name="GrappleTargetComponent" parent="." index="9"]
 weight_class = 1
+
+[node name="GroundAttackTelegraph" parent="." index="10" instance=ExtResource("7_ground_telegraph")]
+position = Vector2(-4.23, -2)
