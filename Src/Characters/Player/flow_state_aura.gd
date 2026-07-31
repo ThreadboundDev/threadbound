@@ -322,12 +322,22 @@ func _sync_silhouette_source() -> void:
 	silhouette_shell.position = _player_visual.position
 	silhouette_shell.rotation = _player_visual.rotation
 	silhouette_shell.scale = _player_visual.scale
-	silhouette_shell.flip_h = _player_visual.flip_h
-	silhouette_shell.flip_v = _player_visual.flip_v
+	# Keep the shell quad unflipped so its shader can expand the vertices evenly.
+	# The source pose is mirrored explicitly inside the shader instead.
+	silhouette_shell.flip_h = false
+	silhouette_shell.flip_v = false
 	silhouette_shell.offset = _player_visual.offset
 	silhouette_shell.centered = _player_visual.centered
 
 	if _silhouette_material:
+		_silhouette_material.set_shader_parameter(
+			&"source_flip_h",
+			_player_visual.flip_h
+		)
+		_silhouette_material.set_shader_parameter(
+			&"source_flip_v",
+			_player_visual.flip_v
+		)
 		var sampled_texture: Texture2D = frame_texture
 		var sampled_size := Vector2(frame_texture.get_size())
 		var source_uv_rect := Rect2(0.0, 0.0, 1.0, 1.0)

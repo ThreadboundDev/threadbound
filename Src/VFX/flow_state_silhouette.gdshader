@@ -9,6 +9,8 @@ uniform float flame_height_px : hint_range(0.0, 32.0) = 14.0;
 uniform vec2 source_texture_size = vec2(256.0);
 uniform sampler2D silhouette_texture : source_color, filter_linear, repeat_disable;
 uniform vec4 source_uv_rect = vec4(0.0, 0.0, 1.0, 1.0);
+uniform bool source_flip_h = false;
+uniform bool source_flip_v = false;
 uniform vec4 ivory_color : source_color = vec4(1.0, 0.965, 0.82, 1.0);
 uniform vec4 channel_1 : source_color = vec4(0.96, 0.67, 0.24, 1.0);
 uniform vec4 channel_2 : source_color = vec4(0.96, 0.67, 0.24, 1.0);
@@ -31,6 +33,12 @@ void vertex() {
 float source_alpha(vec2 uv) {
 	if (uv.x < 0.0 || uv.y < 0.0 || uv.x > 1.0 || uv.y > 1.0) {
 		return 0.0;
+	}
+	if (source_flip_h) {
+		uv.x = 1.0 - uv.x;
+	}
+	if (source_flip_v) {
+		uv.y = 1.0 - uv.y;
 	}
 	vec2 atlas_uv = source_uv_rect.xy + uv * source_uv_rect.zw;
 	return texture(silhouette_texture, atlas_uv).a;
