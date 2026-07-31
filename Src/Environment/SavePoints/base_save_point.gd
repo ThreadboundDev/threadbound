@@ -7,6 +7,10 @@ signal menu_opened(menu: Node)
 signal rested(save_point: Area2D, player: Node)
 
 const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_menu.tscn")
+const BLOSSOM_SOUND_MIX_RATE := 22050
+const BLOSSOM_SOUND_DURATION := 0.95
+
+static var _blossom_open_stream: AudioStreamWAV
 
 @export var save_point_id: StringName = &""
 @export var open_animation := &"open_to_closed"
@@ -41,6 +45,7 @@ const SAVE_POINT_MENU_SCENE := preload("res://Src/UI/SavePointMenu/save_point_me
 var _nearby_player: Node
 var _interactable_player: Node
 var _is_open := false
+var _open_sound_armed := true
 var _active_player: Node
 var _menu: Node
 var _camera: Camera2D
@@ -64,6 +69,8 @@ func _ready() -> void:
 	if interaction_area:
 		interaction_area.body_entered.connect(_on_interaction_body_entered)
 		interaction_area.body_exited.connect(_on_interaction_body_exited)
+	if save_point_sprite:
+		save_point_sprite.animation_finished.connect(_on_save_point_animation_finished)
 	var input_manager := get_node_or_null("/root/InputBindingManager")
 	if input_manager and input_manager.has_signal("bindings_changed"):
 		input_manager.bindings_changed.connect(_refresh_prompt_label)
@@ -179,7 +186,61 @@ func _open() -> void:
 	_is_open = true
 	save_point_sprite.animation = open_animation
 	save_point_sprite.play_backwards(open_animation)
+	if _open_sound_armed:
+		_open_sound_armed = false
+		_play_open_sound()
 	opened.emit(self)
+
+func _on_save_point_animation_finished() -> void:
+	if not _is_open and save_point_sprite.animation == open_animation:
+		_open_sound_armed = true
+
+func _play_open_sound() -> void:
+	var player := AudioStreamPlayer.new()
+	player.name = "BlossomOpenSound"
+	player.bus = &"SFX"
+	player.volume_db = -2.0
+	player.pitch_scale = randf_range(0.98, 1.02)
+	player.stream = _get_blossom_open_stream()
+	player.finished.connect(player.queue_free)
+	add_child(player)
+	player.play()
+
+static func _get_blossom_open_stream() -> AudioStreamWAV:
+	if _blossom_open_stream:
+		return _blossom_open_stream
+
+	var frame_count := int(BLOSSOM_SOUND_MIX_RATE * BLOSSOM_SOUND_DURATION)
+	var samples := PackedByteArray()
+	samples.resize(frame_count * 2)
+	var random := RandomNumberGenerator.new()
+	random.seed = 0xE7D0
+	var soft_noise := 0.0
+	for frame in frame_count:
+		var time := float(frame) / float(BLOSSOM_SOUND_MIX_RATE)
+		var progress := time / BLOSSOM_SOUND_DURATION
+		var opening_envelope := minf(time / 0.055, 1.0) * pow(1.0 - progress, 1.75)
+
+		var root_tone := sin(TAU * 392.0 * time) * opening_envelope * 0.38
+		var middle_time := maxf(time - 0.12, 0.0)
+		var middle_envelope := minf(middle_time / 0.045, 1.0) * exp(-middle_time * 3.1)
+		var middle_tone := sin(TAU * 523.25 * middle_time) * middle_envelope * 0.28
+		var high_time := maxf(time - 0.27, 0.0)
+		var high_envelope := minf(high_time / 0.04, 1.0) * exp(-high_time * 3.8)
+		var high_tone := sin(TAU * 783.99 * high_time) * high_envelope * 0.2
+
+		soft_noise = lerpf(soft_noise, random.randf_range(-1.0, 1.0), 0.16)
+		var petal_rustle := soft_noise * opening_envelope * 0.13
+		var combined := root_tone + middle_tone + high_tone + petal_rustle
+		var sample := int(clampf(combined * 25000.0, -32768.0, 32767.0))
+		samples.encode_s16(frame * 2, sample)
+
+	_blossom_open_stream = AudioStreamWAV.new()
+	_blossom_open_stream.format = AudioStreamWAV.FORMAT_16_BITS
+	_blossom_open_stream.mix_rate = BLOSSOM_SOUND_MIX_RATE
+	_blossom_open_stream.stereo = false
+	_blossom_open_stream.data = samples
+	return _blossom_open_stream
 
 func _close() -> void:
 	if not _is_open or not save_point_sprite:

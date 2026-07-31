@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Texture2D" uid="uid://06wlgov655wl" path="res://Assets/chamber_of_first_weave/Red Wing/red_wing_decor_atlas.png" id="1_atlas"]
+
+[ext_resource type="Script" path="res://Src/Environment/World/interactive_decoration.gd" id="2_decoration"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_prop"]
 atlas = ExtResource("1_atlas")
@@ -8,4 +10,6 @@ region = Rect2(512, 512, 256, 256)
 filter_clip = true
 
 [node name="RedGrassBroad" type="Sprite2D"]
+script = ExtResource("2_decoration")
+reacts_to_player = true
 texture = SubResource("AtlasTexture_prop")

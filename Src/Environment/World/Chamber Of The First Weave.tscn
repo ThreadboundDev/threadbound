@@ -84,6 +84,30 @@
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Red Wing/FreePlaceProps/red_rubble_banner.tscn" id="50_e7mb2"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Red Wing/FreePlaceProps/red_rock_ledge.tscn" id="51_q8bhh"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Red Wing/FreePlaceProps/red_foliage_cluster.tscn" id="52_a60w1"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_root_large.tscn" id="88_k1mla"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_rock_spire.tscn" id="89_xwu2b"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_rock_slab.tscn" id="90_vgxkj"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_rock_monolith.tscn" id="91_oq2r0"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_grass_broad.tscn" id="92_6wvwi"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_rock_blocks.tscn" id="93_yhf1l"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_rock_ledge.tscn" id="94_6mh56"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_tree_large.tscn" id="95_2dgvf"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_shrine_fragment_round.tscn" id="96_88k0j"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_shrine_fragment_arch.tscn" id="97_y7esh"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_writing_set.tscn" id="98_a6k4p"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_books_open.tscn" id="99_q1sjm"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_books_scrolls.tscn" id="100_u6hbe"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_books_stack.tscn" id="101_htsxn"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_broad.tscn" id="102_ipw0n"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_large.tscn" id="103_e1vj7"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_grass_tall.tscn" id="104_b8f8i"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_lily.tscn" id="105_xqwia"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_root_small.tscn" id="106_aq4aa"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_scholar_book.tscn" id="107_exxl6"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_tree_medium.tscn" id="108_gs7dw"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_grass_medium.tscn" id="109_we2pp"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_tree_small.tscn" id="110_lmcdd"]
+[ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_small.tscn" id="111_y0uyv"]
 [ext_resource type="Texture2D" uid="uid://bvr70up0yrlt2" path="res://Assets/chamber_of_first_weave/Tiles/new_tiles_atlas_grass_mask.png" id="grass_recolor_mask"]
 [ext_resource type="Shader" uid="uid://t32t4ypnoj6e" path="res://Src/Environment/World/wing_grass_recolor.gdshader" id="grass_recolor_shader"]
 [ext_resource type="Script" uid="uid://c5v22e76ucgcm" path="res://Src/Environment/World/SceneOrganization/architecture_section.gd" id="org_architecture"]
@@ -997,7 +1021,7 @@ position = Vector2(-3908, -1336)
 position = Vector2(-6557, -3902)
 
 [node name="RedFoliageBroad2" parent="WorldArt/Rooms/RedWing/Decoration" unique_id=876386004 instance=ExtResource("46_80yu8")]
-position = Vector2(-4164, -800)
+position = Vector2(-4005, -793)
 
 [node name="RedFoliageBroad3" parent="WorldArt/Rooms/RedWing/Decoration" unique_id=1639623281 instance=ExtResource("46_80yu8")]
 position = Vector2(-6456, -556)
@@ -1234,6 +1258,12 @@ script = ExtResource("org_door")
 
 [node name="RedWingDoor" parent="WorldArt/Rooms/RedWing/Doors" unique_id=1666223729 instance=ExtResource("21_red_door")]
 position = Vector2(-2816, -768)
+
+[node name="SavePoints" type="Node" parent="WorldArt/Rooms/RedWing" unique_id=2016906978]
+script = ExtResource("org_section")
+
+[node name="BlossomOfEryndor3" parent="WorldArt/Rooms/RedWing/SavePoints" unique_id=323926507 instance=ExtResource("25_blossom")]
+position = Vector2(-4158, -723)
 
 [node name="BlueWing" type="Node" parent="WorldArt/Rooms" unique_id=1351661789]
 script = ExtResource("org_room")
@@ -1518,7 +1548,7 @@ position = Vector2(2432, -1024)
 [node name="SavePoints" type="Node" parent="WorldArt/Rooms/BlueWing" unique_id=1834942107]
 script = ExtResource("org_section")
 
-[node name="BlossomOfEryndor2" parent="WorldArt/Rooms/BlueWing/SavePoints" unique_id=323926507 instance=ExtResource("25_blossom")]
+[node name="BlossomOfEryndor2" parent="WorldArt/Rooms/BlueWing/SavePoints" unique_id=2146586239 instance=ExtResource("25_blossom")]
 position = Vector2(3337, -473)
 
 [node name="YellowWing" type="Node" parent="WorldArt/Rooms" unique_id=1800700167]
@@ -1540,6 +1570,322 @@ position = Vector2(-5994, 3967)
 [node name="Decoration" type="Node2D" parent="WorldArt/Rooms/YellowWing" unique_id=1772765278]
 z_index = 9
 script = ExtResource("org_decoration")
+
+[node name="YellowRootLarge2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1038088290 instance=ExtResource("88_k1mla")]
+position = Vector2(-3152, 4057)
+
+[node name="YellowRockSpire" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=238684154 instance=ExtResource("89_xwu2b")]
+position = Vector2(-5544, 4295)
+
+[node name="YellowRockSlab" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=151096948 instance=ExtResource("90_vgxkj")]
+position = Vector2(-3339, 4290)
+
+[node name="YellowRockSlab2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=601430469 instance=ExtResource("90_vgxkj")]
+position = Vector2(-3069, 4036)
+
+[node name="YellowRockMonolith" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=825860104 instance=ExtResource("91_oq2r0")]
+position = Vector2(-4936, 2765)
+
+[node name="YellowRockSlab3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1864528980 instance=ExtResource("90_vgxkj")]
+position = Vector2(-7663, 3540)
+
+[node name="YellowRockSlab4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1009014294 instance=ExtResource("90_vgxkj")]
+position = Vector2(-7205, 3521)
+flip_h = true
+
+[node name="YellowRockSlab5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=562001964 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6392, 2768)
+
+[node name="YellowRockSlab6" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1812012783 instance=ExtResource("90_vgxkj")]
+position = Vector2(-3040, 3010)
+
+[node name="YellowRockSlab7" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=941896791 instance=ExtResource("90_vgxkj")]
+position = Vector2(-3078, 1987)
+
+[node name="YellowRockSlab8" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1472348084 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6403, 4259)
+scale = Vector2(1.1367188, 1.3671875)
+flip_h = true
+
+[node name="YellowRockSlab9" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1609284772 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6738, 4033)
+
+[node name="YellowRockSlab10" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=193295804 instance=ExtResource("90_vgxkj")]
+position = Vector2(-8021, 3537)
+
+[node name="YellowRockSlab11" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1192428928 instance=ExtResource("90_vgxkj")]
+position = Vector2(-8288, 3283)
+
+[node name="YellowRockSlab12" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=924075091 instance=ExtResource("90_vgxkj")]
+position = Vector2(-8263, 2765)
+
+[node name="YellowRockSlab13" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1713838302 instance=ExtResource("90_vgxkj")]
+position = Vector2(-5724, 2498)
+
+[node name="YellowRockSlab14" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1001405254 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6100, 2501)
+
+[node name="YellowRockSpire2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=275849819 instance=ExtResource("89_xwu2b")]
+position = Vector2(-6628, 710)
+
+[node name="YellowRockSlab15" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1744835965 instance=ExtResource("90_vgxkj")]
+position = Vector2(-4569, 1478)
+
+[node name="YellowRockSlab16" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1436630233 instance=ExtResource("90_vgxkj")]
+position = Vector2(-5724, 1469)
+
+[node name="YellowRockSlab17" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=140468729 instance=ExtResource("90_vgxkj")]
+position = Vector2(-5718, 960)
+
+[node name="YellowRockSlab18" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=232775270 instance=ExtResource("90_vgxkj")]
+position = Vector2(-4572, 970)
+
+[node name="YellowRockSlab19" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=470589377 instance=ExtResource("90_vgxkj")]
+position = Vector2(-7481, 1745)
+
+[node name="YellowRockSlab20" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1784241882 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6866, 1736)
+
+[node name="YellowGrassBroad3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=133459551 instance=ExtResource("92_6wvwi")]
+position = Vector2(-7416, 728)
+
+[node name="YellowRockSlab21" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1161329303 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6471, 1745)
+
+[node name="YellowRockSlab22" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=501669211 instance=ExtResource("90_vgxkj")]
+position = Vector2(-6119, 1739)
+
+[node name="YellowRockSlab23" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1572411403 instance=ExtResource("90_vgxkj")]
+position = Vector2(-8263, 1729)
+
+[node name="YellowRockSlab24" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1004475508 instance=ExtResource("90_vgxkj")]
+position = Vector2(-7908, 1748)
+
+[node name="YellowRockMonolith2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=75209818 instance=ExtResource("91_oq2r0")]
+position = Vector2(-7519, 722)
+
+[node name="YellowRockBlocks" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=376920397 instance=ExtResource("93_yhf1l")]
+position = Vector2(-6581, 1227)
+
+[node name="YellowRockBlocks2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=996815506 instance=ExtResource("93_yhf1l")]
+position = Vector2(-4158, 3525)
+
+[node name="YellowRockLedge" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1765812990 instance=ExtResource("94_6mh56")]
+position = Vector2(-5482, 3791)
+
+[node name="YellowTreeLarge" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1490418703 instance=ExtResource("95_2dgvf")]
+position = Vector2(-5626, 4247.5)
+scale = Vector2(1.0625, 1.3554688)
+
+[node name="YellowShrineFragmentRound" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=41671500 instance=ExtResource("96_88k0j")]
+position = Vector2(-4927, 1521)
+
+[node name="YellowShrineFragmentArch" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=2134251128 instance=ExtResource("97_y7esh")]
+position = Vector2(-5318, 1490)
+
+[node name="YellowWritingSet" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=651944005 instance=ExtResource("98_a6k4p")]
+position = Vector2(-4885, 1532)
+
+[node name="YellowBooksOpen" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=514742921 instance=ExtResource("99_q1sjm")]
+position = Vector2(-5216, 1487)
+
+[node name="YellowBooksScrolls" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1540135555 instance=ExtResource("100_u6hbe")]
+position = Vector2(-5040, 1555)
+
+[node name="YellowBooksStack" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1400020754 instance=ExtResource("101_htsxn")]
+position = Vector2(-5452, 1531)
+
+[node name="YellowFlowersBroad" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1971461506 instance=ExtResource("102_ipw0n")]
+position = Vector2(-4914, 1579)
+
+[node name="YellowFlowersLarge" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1333626052 instance=ExtResource("103_e1vj7")]
+position = Vector2(-5350, 1568)
+
+[node name="YellowGrassBroad" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=130454630 instance=ExtResource("92_6wvwi")]
+position = Vector2(-5141, 1556)
+
+[node name="YellowFlowersBroad2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1484974637 instance=ExtResource("102_ipw0n")]
+position = Vector2(-5571, 1518)
+
+[node name="YellowGrassTall" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=837699820 instance=ExtResource("104_b8f8i")]
+position = Vector2(-4853, 1483)
+
+[node name="YellowFlowersLarge2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1177524921 instance=ExtResource("103_e1vj7")]
+position = Vector2(-4724, 1534)
+
+[node name="YellowFlowersLily" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=587655640 instance=ExtResource("105_xqwia")]
+position = Vector2(-5607, 1025)
+
+[node name="YellowGrassBroad2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=876801799 instance=ExtResource("92_6wvwi")]
+position = Vector2(-4623, 1002)
+
+[node name="YellowRootSmall" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1016742670 instance=ExtResource("106_aq4aa")]
+position = Vector2(-6344, 1750)
+
+[node name="YellowGrassTall2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1726975887 instance=ExtResource("104_b8f8i")]
+position = Vector2(-6280, 1799)
+
+[node name="YellowFlowersLarge3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=437051999 instance=ExtResource("103_e1vj7")]
+position = Vector2(-6594, 1284)
+
+[node name="YellowScholarBook" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1160001366 instance=ExtResource("107_exxl6")]
+position = Vector2(-7436, 698)
+
+[node name="YellowGrassBroad4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=605804098 instance=ExtResource("92_6wvwi")]
+position = Vector2(-7607, 735)
+
+[node name="YellowRootLarge" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1879570348 instance=ExtResource("88_k1mla")]
+position = Vector2(-6742, 729)
+
+[node name="YellowFlowersLily2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=184483313 instance=ExtResource("105_xqwia")]
+position = Vector2(-6817, 748)
+
+[node name="YellowBooksOpen2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1235907463 instance=ExtResource("99_q1sjm")]
+position = Vector2(-6706, 748)
+
+[node name="YellowTreeLarge4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=226310390 instance=ExtResource("95_2dgvf")]
+position = Vector2(-4664, 4237)
+scale = Vector2(1, 1.359375)
+
+[node name="YellowFlowersLarge4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=580520415 instance=ExtResource("103_e1vj7")]
+position = Vector2(-6541, 743)
+
+[node name="YellowFlowersLily3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1163680826 instance=ExtResource("105_xqwia")]
+position = Vector2(-3039, 2063)
+
+[node name="YellowGrassBroad5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=430234667 instance=ExtResource("92_6wvwi")]
+position = Vector2(-3440, 959)
+
+[node name="YellowRockBlocks3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1488320657 instance=ExtResource("93_yhf1l")]
+position = Vector2(-3335, 1013)
+
+[node name="YellowTreeMedium" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=967145373 instance=ExtResource("108_gs7dw")]
+position = Vector2(-3095, 1975)
+
+[node name="YellowTreeLarge2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=439322021 instance=ExtResource("95_2dgvf")]
+position = Vector2(-4505, 2743)
+
+[node name="YellowGrassMedium" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=3266940 instance=ExtResource("109_we2pp")]
+position = Vector2(-4546, 2824)
+
+[node name="YellowFlowersBroad3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=2028439763 instance=ExtResource("102_ipw0n")]
+position = Vector2(-4526, 2818)
+
+[node name="YellowTreeSmall3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1638013575 instance=ExtResource("110_lmcdd")]
+position = Vector2(-3873, 4251)
+
+[node name="YellowTreeSmall" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1994864193 instance=ExtResource("110_lmcdd")]
+position = Vector2(-5325, 3770)
+
+[node name="YellowGrassTall3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=43501922 instance=ExtResource("104_b8f8i")]
+position = Vector2(-5502, 3843)
+
+[node name="YellowRootSmall2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=217615253 instance=ExtResource("106_aq4aa")]
+position = Vector2(-3927, 4333)
+
+[node name="YellowTreeSmall2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=535530165 instance=ExtResource("110_lmcdd")]
+position = Vector2(-3924, 4281)
+
+[node name="YellowFlowersSmall" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1293374490 instance=ExtResource("111_y0uyv")]
+position = Vector2(-3924, 4355)
+
+[node name="YellowFlowersBroad4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=160781546 instance=ExtResource("102_ipw0n")]
+position = Vector2(-7745, 3595)
+
+[node name="YellowFlowersLily4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=254470808 instance=ExtResource("105_xqwia")]
+position = Vector2(-7930, 3595)
+
+[node name="YellowTreeLarge3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1890319741 instance=ExtResource("95_2dgvf")]
+position = Vector2(-8049, 2760)
+
+[node name="YellowFlowersBroad5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=2036512957 instance=ExtResource("102_ipw0n")]
+position = Vector2(-8152, 2814)
+
+[node name="YellowGrassBroad6" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1839148187 instance=ExtResource("92_6wvwi")]
+position = Vector2(-4705, 4359)
+
+[node name="YellowGrassMedium2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1255782976 instance=ExtResource("109_we2pp")]
+position = Vector2(-4644, 4357)
+
+[node name="YellowFlowersSmall2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1643916116 instance=ExtResource("111_y0uyv")]
+position = Vector2(-4736, 4366)
+
+[node name="YellowGrassBroad7" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=2039552376 instance=ExtResource("92_6wvwi")]
+position = Vector2(-4787, 4354)
+flip_h = true
+
+[node name="YellowGrassMedium3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=16240278 instance=ExtResource("109_we2pp")]
+position = Vector2(-4619, 4333)
+
+[node name="YellowGrassTall4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1882144385 instance=ExtResource("104_b8f8i")]
+position = Vector2(-4059, 3516)
+
+[node name="YellowFlowersSmall3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=73151116 instance=ExtResource("111_y0uyv")]
+position = Vector2(-4175, 3564)
+
+[node name="YellowBooksScrolls2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=956990003 instance=ExtResource("100_u6hbe")]
+position = Vector2(-3406, 4352)
+
+[node name="YellowGrassBroad8" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1623222596 instance=ExtResource("92_6wvwi")]
+position = Vector2(-3072, 4106)
+
+[node name="YellowFlowersLily5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1849645421 instance=ExtResource("105_xqwia")]
+position = Vector2(-3129, 4097)
+
+[node name="YellowFlowersLarge5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1104955705 instance=ExtResource("103_e1vj7")]
+position = Vector2(-5543, 4357)
+
+[node name="YellowFlowersBroad6" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=116645453 instance=ExtResource("102_ipw0n")]
+position = Vector2(-6379, 4364)
+
+[node name="YellowGrassMedium4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1554228619 instance=ExtResource("109_we2pp")]
+position = Vector2(-6255, 4359)
+
+[node name="YellowGrassBroad9" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=4126881 instance=ExtResource("92_6wvwi")]
+position = Vector2(-6198, 4354)
+
+[node name="YellowGrassMedium5" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1058452086 instance=ExtResource("109_we2pp")]
+position = Vector2(-6132, 4382)
+
+[node name="YellowGrassBroad10" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1866870249 instance=ExtResource("92_6wvwi")]
+position = Vector2(-6107, 4318)
+
+[node name="YellowGrassMedium6" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=965003651 instance=ExtResource("109_we2pp")]
+position = Vector2(-6048, 4345)
+
+[node name="YellowGrassBroad11" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=950652742 instance=ExtResource("92_6wvwi")]
+position = Vector2(-5995, 4373)
+flip_h = true
+
+[node name="YellowFlowersBroad7" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1109577318 instance=ExtResource("102_ipw0n")]
+position = Vector2(-6207, 3309)
+
+[node name="YellowGrassBroad12" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1459852379 instance=ExtResource("92_6wvwi")]
+position = Vector2(-8151, 3318)
+
+[node name="YellowFlowersSmall4" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1668614556 instance=ExtResource("111_y0uyv")]
+position = Vector2(-4964, 2292)
+
+[node name="YellowBooksOpen3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1359446487 instance=ExtResource("99_q1sjm")]
+position = Vector2(-3628, 2014)
+
+[node name="YellowBooksStack2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1248513219 instance=ExtResource("101_htsxn")]
+position = Vector2(-7087, 3551)
+
+[node name="YellowTreeMedium2" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=774981564 instance=ExtResource("108_gs7dw")]
+position = Vector2(-7554, 2507)
+
+[node name="YellowFlowersLily6" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=1311832675 instance=ExtResource("105_xqwia")]
+position = Vector2(-6996, 3626)
+
+[node name="YellowGrassMedium7" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=510174660 instance=ExtResource("109_we2pp")]
+position = Vector2(-7137, 3569)
+
+[node name="YellowBooksScrolls3" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=894761387 instance=ExtResource("100_u6hbe")]
+position = Vector2(-7493, 2522)
+
+[node name="YellowFlowersBroad8" parent="WorldArt/Rooms/YellowWing/Decoration" unique_id=2133421173 instance=ExtResource("102_ipw0n")]
+position = Vector2(-7403, 2552)
 
 [node name="Portals" type="Node2D" parent="WorldArt/Rooms/YellowWing" unique_id=775772412]
 position = Vector2(-2687, 1245)
@@ -1701,7 +2047,7 @@ position = Vector2(0, -4577)
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(-4, -3615)
+position = Vector2(-2380, -536)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -1709,7 +2055,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(-4, -3615)
+position = Vector2(-2380, -536)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200
