@@ -61,6 +61,8 @@ func try_purchase(item_id: StringName, player: Node, cost: int, one_time := fals
 	return true
 
 func has_purchased(item_id: StringName) -> bool:
+	if item_id == &"merchant_knot_pattern" and EquipManager:
+		return EquipManager.owns_pattern(&"merchant_knot")
 	return purchased_one_time_items.get(item_id, false)
 
 func _open_merchant_menu(player: Node) -> void:
@@ -104,6 +106,13 @@ func _apply_purchase_effect(item_id: StringName, player: Node, cost: int) -> boo
 			if not player.has_method("weave_stat_upgrade"):
 				return false
 			return player.weave_stat_upgrade(&"health", cost)
+		&"merchant_knot_pattern":
+			if not EquipManager:
+				return false
+			var unlocked := EquipManager.unlock_pattern(&"merchant_knot")
+			if unlocked:
+				AudioManager.play_ui(&"loot_special_item")
+			return unlocked
 	return false
 
 func _can_afford(player: Node, cost: int) -> bool:

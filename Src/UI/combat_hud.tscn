@@ -16,6 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://bss7gkyt8y8ht" path="res://Assets/UI/Hud/V2/thread_knot_counter_frame_v2.png" id="17_counter_frame"]
 [ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="18_knot_icon"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="19_label_settings"]
+[ext_resource type="Shader" path="res://Src/UI/hud_pattern_recolor.gdshader" id="20_pattern_recolor"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pattern_recolor"]
+shader = ExtResource("20_pattern_recolor")
 
 [node name="CombatHUD" type="Control" unique_id=187202720]
 layout_mode = 3
@@ -63,6 +67,7 @@ stretch_mode = 5
 
 [node name="PatternOverlay" type="TextureRect" parent="HUDRoot/IdentityLayers" unique_id=1098627121]
 visible = false
+material = SubResource("ShaderMaterial_pattern_recolor")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

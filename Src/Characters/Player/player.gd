@@ -16,6 +16,7 @@ const DASH_IFRAME_VFX_SCENE := preload("res://Src/VFX/dash_iframe_vfx.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
+const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
 const SIT_ANIMATION := &"Sit"
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
@@ -514,6 +515,8 @@ var _dash_iframe_vfx_instance: Node2D = null
 var current_gloves: Node = null
 var current_boots: BaseEquipment = null
 var current_chest: BaseEquipment = null
+var current_pattern: EquipmentPattern = null
+var _pattern_visual: AnimatedSprite2D = null
 
 var save_point_interaction_active := false
 var _save_point_target_position := Vector2.ZERO
@@ -541,6 +544,7 @@ func _ready() -> void:
 	_default_attack_hitbox_polygon = attack_collision_polygon.polygon
 	if not player_animation.frame_changed.is_connected(_on_player_animation_frame_changed):
 		player_animation.frame_changed.connect(_on_player_animation_frame_changed)
+	_ensure_pattern_visual()
 
 	max_health = player_stats.max_health
 	health_component.configure(player_stats.max_health)
@@ -570,6 +574,8 @@ func _ready() -> void:
 
 	if base_gloves_scene:
 		equip_gloves(base_gloves_scene)
+	if EquipManager:
+		EquipManager.call_deferred("apply_current_pattern_to_player")
 
 	AudioManager.enter_gameplay_music()
 	_movement_momentum_last_position = global_position
@@ -775,6 +781,7 @@ func _physics_process(delta: float) -> void:
 # PROCESS
 # ===============================
 func _process(_delta: float) -> void:
+	_sync_pattern_visual_transform()
 	if save_point_interaction_active:
 		return
 
@@ -2701,11 +2708,64 @@ func _sync_hud() -> void:
 		hud.set_momentum_state(_momentum_state, _flow_state_active)
 	if hud.has_method("set_thread_knots"):
 		hud.set_thread_knots(thread_knot_count)
+	if hud.has_method("set_pattern_texture"):
+		hud.set_pattern_texture(
+			current_pattern.hud_overlay if current_pattern else null,
+			current_pattern != null
+		)
+
+func apply_equipment_pattern(pattern: EquipmentPattern) -> void:
+	current_pattern = pattern
+	_ensure_pattern_visual()
+	if _pattern_visual:
+		_pattern_visual.visible = current_pattern != null
+		var pattern_material := _pattern_visual.material as ShaderMaterial
+		if pattern_material:
+			pattern_material.set_shader_parameter(
+				"pattern_texture",
+				current_pattern.textile_texture if current_pattern else null
+			)
+	_sync_hud()
+
+func get_pattern_action_point_recharge_multiplier() -> float:
+	return current_pattern.action_point_recharge_multiplier if current_pattern else 1.0
+
+func get_pattern_momentum_generation_multiplier() -> float:
+	return current_pattern.momentum_generation_multiplier if current_pattern else 1.0
+
+func _ensure_pattern_visual() -> void:
+	if _pattern_visual or not player_animation:
+		return
+	_pattern_visual = AnimatedSprite2D.new()
+	_pattern_visual.name = "PatternClothingOverlay"
+	_pattern_visual.sprite_frames = player_animation.sprite_frames
+	_pattern_visual.z_index = player_animation.z_index + 1
+	_pattern_visual.visible = false
+	var pattern_material := ShaderMaterial.new()
+	pattern_material.shader = PATTERN_OVERLAY_SHADER
+	_pattern_visual.material = pattern_material
+	add_child(_pattern_visual)
+	_sync_pattern_visual_transform()
+
+func _sync_pattern_visual_transform() -> void:
+	if not _pattern_visual or not player_animation:
+		return
+	_pattern_visual.sprite_frames = player_animation.sprite_frames
+	_pattern_visual.animation = player_animation.animation
+	_pattern_visual.frame = player_animation.frame
+	_pattern_visual.frame_progress = player_animation.frame_progress
+	_pattern_visual.speed_scale = 0.0
+	_pattern_visual.position = player_animation.position
+	_pattern_visual.rotation = player_animation.rotation
+	_pattern_visual.scale = player_animation.scale
+	_pattern_visual.flip_h = player_animation.flip_h
+	_pattern_visual.flip_v = player_animation.flip_v
+	_pattern_visual.modulate = player_animation.modulate
 
 func _process_action_point_recharge(delta: float) -> void:
 	_ensure_action_point_timers()
 	var meditation_multiplier := meditation_ap_recharge_multiplier if is_meditating else 1.0
-	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier * meditation_multiplier
+	var recharge_delta := delta * get_momentum_action_point_recharge_multiplier() * player_stats.action_point_recharge_multiplier * get_pattern_action_point_recharge_multiplier() * meditation_multiplier
 	var changed := false
 	if is_meditating:
 		var target_index := _get_meditation_action_point_target_index()
@@ -2943,7 +3003,7 @@ func _apply_momentum_category(category: StringName, strength: float) -> void:
 		var movement_stale_timer := float(_momentum_staleness.get(category, 0.0))
 		var movement_duration := maxf(momentum_movement_stale_duration, 0.001)
 		var movement_stale_multiplier := maxf(0.0, 1.0 - movement_stale_timer / movement_duration)
-		var movement_gain := base_gain * strength * movement_stale_multiplier * _get_momentum_gain_curve_multiplier() * player_stats.momentum_generation_multiplier
+		var movement_gain := base_gain * strength * movement_stale_multiplier * _get_momentum_gain_curve_multiplier() * player_stats.momentum_generation_multiplier * get_pattern_momentum_generation_multiplier()
 		_change_momentum(movement_gain)
 		_reduce_other_momentum_staleness(category)
 		_momentum_staleness[category] = minf(movement_duration, movement_stale_timer + momentum_movement_report_interval)
@@ -2954,7 +3014,7 @@ func _apply_momentum_category(category: StringName, strength: float) -> void:
 	var stale_timer := float(_momentum_staleness.get(category, 0.0))
 	var stale_ratio := clampf(stale_timer / stale_duration, 0.0, 1.0)
 	var stale_multiplier := maxf(0.0, 1.0 - stale_ratio)
-	var gain := base_gain * strength * stale_multiplier * _get_momentum_gain_curve_multiplier() * _get_weaving_multiplier(category) * player_stats.momentum_generation_multiplier
+	var gain := base_gain * strength * stale_multiplier * _get_momentum_gain_curve_multiplier() * _get_weaving_multiplier(category) * player_stats.momentum_generation_multiplier * get_pattern_momentum_generation_multiplier()
 
 	if stale_ratio >= 1.0:
 		gain -= momentum_stale_penalty

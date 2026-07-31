@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://c5os2vg8reytn" path="res://Src/UI/GameMenu/game_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b1dyj5i1o528r" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
 [ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="3_separator"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="4_title_font"]
+[ext_resource type="FontFile" uid="uid://cu5ywem1gvg6p" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="4_title_font"]
 [ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="5_base_font"]
-[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Italic.ttf" id="6_italic_font"]
+[ext_resource type="FontFile" uid="uid://cxq0npgttwlq6" path="res://Assets/UI/Fonts/Almendra/Almendra-Italic.ttf" id="6_italic_font"]
 [ext_resource type="Texture2D" uid="uid://ckvdkmt3s0pnj" path="res://Assets/chamber_of_first_weave/Threads/thread_of_power.png" id="7_thread_power"]
 [ext_resource type="Texture2D" uid="uid://cysa6x21ivsyu" path="res://Assets/chamber_of_first_weave/Threads/thread_of_balance.png" id="8_thread_balance"]
 [ext_resource type="Texture2D" uid="uid://ccggl0001g7gn" path="res://Assets/chamber_of_first_weave/Threads/thread_of_essence.png" id="9_thread_essence"]
@@ -301,7 +301,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_inventory_idle_32")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 24.0
 }]
@@ -512,7 +512,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="InventoryPage" type="Control" parent="MenuRoot/Pages" unique_id=222614757]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -546,8 +545,8 @@ color = Color(0.025, 0.021, 0.016, 0.72)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 18.0
-offset_bottom = 62.0
+offset_top = -55.0
+offset_bottom = -11.0
 grow_horizontal = 2
 text = "THREADBORNE"
 label_settings = SubResource("LabelSettings_inventory_name")
@@ -559,9 +558,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 51.00003
-offset_top = 26.000004
+offset_top = -47.0
 offset_right = -356.5782
-offset_bottom = 54.000004
+offset_bottom = -19.0
 grow_horizontal = 2
 scale = Vector2(3.035, 3.035)
 mouse_filter = 2
@@ -570,8 +569,8 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="PlayerPortrait" type="AnimatedSprite2D" parent="MenuRoot/Pages/InventoryPage/CharacterPanel" unique_id=1301792602]
-position = Vector2(280, 310)
-scale = Vector2(0.74, 0.74)
+position = Vector2(280, 346.99994)
+scale = Vector2(0.68, 0.68)
 sprite_frames = SubResource("SpriteFrames_inventory_idle")
 animation = &"Idle"
 autoplay = "Idle"
@@ -681,10 +680,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 22.0
-offset_top = 22.0
-offset_right = -22.0
-offset_bottom = -22.0
+offset_left = 22.385
+offset_top = 33.91
+offset_right = -21.614998
+offset_bottom = -10.089996
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -720,9 +719,9 @@ vertical_alignment = 1
 [node name="WeaponSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots" unique_id=1043198247]
 anchors_preset = 0
 offset_left = 22.0
-offset_top = 96.0
+offset_top = 134.0
 offset_right = 152.0
-offset_bottom = 226.0
+offset_bottom = 264.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/WeaponSlot" unique_id=1612670551]
@@ -730,9 +729,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -23.0
+offset_left = -19.0
 offset_top = -8.0
-offset_right = 21.0
+offset_right = 25.0
 offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -747,9 +746,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -31.0
+offset_left = -27.055
 offset_top = -9.0
-offset_right = 13.0
+offset_right = 16.945007
 offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -763,6 +762,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = -38.0
+offset_right = 8.744995
 offset_bottom = 23.0
 grow_horizontal = 2
 text = "WEAPON"
@@ -786,9 +786,9 @@ vertical_alignment = 1
 [node name="ChestSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots" unique_id=173611458]
 anchors_preset = 0
 offset_left = 408.0
-offset_top = 96.0
+offset_top = 134.0
 offset_right = 538.0
-offset_bottom = 226.0
+offset_bottom = 264.0
 mouse_filter = 2
 
 [node name="Frame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/ChestSlot" unique_id=378592207]
@@ -796,9 +796,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -20.0
+offset_left = -24.0
 offset_top = -9.0
-offset_right = 24.0
+offset_right = 20.0
 offset_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -813,10 +813,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 22.0
-offset_top = 22.0
-offset_right = -22.0
-offset_bottom = -22.0
+offset_left = 20.43
+offset_top = 33.785
+offset_right = -23.57
+offset_bottom = -10.214996
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -837,6 +837,71 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Value" type="Label" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/ChestSlot" unique_id=1679044151]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "NONE"
+label_settings = SubResource("LabelSettings_inventory_description")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PatternSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots" unique_id=1154644566]
+anchors_preset = 0
+offset_left = 225.0
+offset_top = 40.0
+offset_right = 335.0
+offset_bottom = 150.0
+mouse_filter = 2
+
+[node name="Frame" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot" unique_id=1675791942]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -9.0
+offset_right = 22.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("21_equipment_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot" unique_id=1081355802]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 30.0
+offset_right = -17.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot" unique_id=1538049383]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -38.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "PATTERN"
+label_settings = SubResource("LabelSettings_controls_binding")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot" unique_id=990246229]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -2387,6 +2452,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="ControlsPage" type="Control" parent="MenuRoot/Pages" unique_id=357483101]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -2418,7 +2484,7 @@ label_settings = SubResource("LabelSettings_body")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResetDefaults" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout"]
+[node name="ResetDefaults" type="Label" parent="MenuRoot/Pages/ControlsPage/ControlsLayout" unique_id=240274906]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

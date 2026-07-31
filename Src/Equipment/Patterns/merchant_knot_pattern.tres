@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EquipmentPattern" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Src/Equipment/Patterns/equipment_pattern.gd" id="1_pattern"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png" id="3_hud"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Patterns/merchant_knot_textile.png" id="4_textile"]
+
+[resource]
+script = ExtResource("1_pattern")
+id = &"merchant_knot"
+display_name = "FOLLOWER'S KNOT"
+description = "A balanced knotwork Pattern taught by the Follower. Its repeating weave quickens recovery and carries motion forward."
+inventory_icon = ExtResource("2_icon")
+hud_overlay = ExtResource("3_hud")
+textile_texture = ExtResource("4_textile")
+action_point_recharge_multiplier = 1.1
+momentum_generation_multiplier = 1.1

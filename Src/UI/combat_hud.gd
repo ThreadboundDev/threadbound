@@ -114,7 +114,7 @@ func _ready() -> void:
 		thread_knot_counter.visible = false
 		thread_knot_counter.modulate.a = 0.0
 	if identity_base:
-		identity_base.modulate = default_identity_color
+		_sync_identity_pattern_palette()
 	_create_action_point_cooldown_overlay()
 	_configure_default_action_points()
 	_sync_hud_visuals()
@@ -174,8 +174,7 @@ func set_thread_knots(count: int) -> void:
 
 func set_identity_color(color: Color) -> void:
 	default_identity_color = color
-	if identity_base:
-		identity_base.modulate = color
+	_sync_identity_pattern_palette()
 	identity_visual_changed.emit(color, pattern_overlay.visible if pattern_overlay else false)
 
 func set_pattern_texture(texture: Texture2D, show_pattern := true) -> void:
@@ -183,13 +182,19 @@ func set_pattern_texture(texture: Texture2D, show_pattern := true) -> void:
 		return
 	pattern_overlay.texture = texture
 	pattern_overlay.visible = show_pattern and texture != null
+	_sync_identity_pattern_palette()
 	identity_visual_changed.emit(default_identity_color, pattern_overlay.visible)
 
 func set_pattern_visible(show_pattern: bool) -> void:
 	if not pattern_overlay:
 		return
 	pattern_overlay.visible = show_pattern and pattern_overlay.texture != null
+	_sync_identity_pattern_palette()
 	identity_visual_changed.emit(default_identity_color, pattern_overlay.visible)
+
+func _sync_identity_pattern_palette() -> void:
+	if identity_base:
+		identity_base.modulate = default_identity_color
 
 func set_action_point_type(index: int, point_type: StringName, available := true) -> void:
 	if index < 0 or index >= 6:

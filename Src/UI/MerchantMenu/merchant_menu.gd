@@ -38,6 +38,14 @@ const ITEMS := [
 		"icon_path": "res://Assets/UI/Merchant/merchant_icon_stat_boost.png",
 		"description": "Permanently strengthens health once."
 	},
+	{
+		"id": &"merchant_knot_pattern",
+		"name": "FOLLOWER'S KNOT",
+		"type": "PATTERN",
+		"cost": 12,
+		"icon_path": "res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png",
+		"description": "Equip a woven Pattern: +10% AP recharge and +10% momentum generation."
+	},
 ]
 
 @export var selected_color := Color(1.0, 0.86, 0.52, 1.0)
@@ -232,7 +240,7 @@ func _purchase_selected() -> void:
 	var item: Dictionary = ITEMS[_selected_index]
 	var item_id := StringName(item["id"])
 	var cost := int(item["cost"])
-	var one_time := String(item["type"]) == "ONE TIME"
+	var one_time := String(item["type"]) in ["ONE TIME", "PATTERN"]
 
 	if _is_sold_out(item_id):
 		_set_status("This thread has already been claimed.")

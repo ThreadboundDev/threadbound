@@ -5,6 +5,7 @@ const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
 const BLUE_GLOVES_SCENE := preload("res://Src/Equipment/blue_gloves.tscn")
 const RED_GLOVES_SCENE := preload("res://Src/Equipment/red_gloves.tscn")
 const YELLOW_GLOVES_SCENE := preload("res://Src/Equipment/yellow_gloves.tscn")
+const MERCHANT_KNOT_PATTERN: EquipmentPattern = preload("res://Src/Equipment/Patterns/merchant_knot_pattern.tres")
 const BLUE_GLOVES_SLOT := 3
 const RED_GLOVES_SLOT := 6
 const YELLOW_GLOVES_SLOT := 9
@@ -15,8 +16,12 @@ var current_equip: Array[int] = [0, 0, 0] # [gloves, boots, chest]
 var current_gloves: Node = null
 var current_boots: BaseEquipment = null
 var current_chest: BaseEquipment = null
+var current_pattern: EquipmentPattern = null
+var owned_pattern_ids: Array[StringName] = []
 
 signal equip_changed(slot_type: int, new_equip_index: int)
+signal pattern_owned(pattern_id: StringName)
+signal pattern_changed(pattern: EquipmentPattern)
 
 func _ready() -> void:
 	print("EquipManager loaded - scene-based gloves compatible")
@@ -119,6 +124,52 @@ func unequip_all() -> void:
 	unequip_slot(0)
 	unequip_slot(1)
 	unequip_slot(2)
+	unequip_pattern()
+
+func unlock_pattern(pattern_id: StringName) -> bool:
+	if get_pattern(pattern_id) == null or owned_pattern_ids.has(pattern_id):
+		return false
+	owned_pattern_ids.append(pattern_id)
+	pattern_owned.emit(pattern_id)
+	return true
+
+func owns_pattern(pattern_id: StringName) -> bool:
+	return owned_pattern_ids.has(pattern_id)
+
+func equip_pattern(pattern_id: StringName) -> bool:
+	var pattern := get_pattern(pattern_id)
+	if pattern == null or not owns_pattern(pattern_id):
+		return false
+	if current_pattern == pattern:
+		unequip_pattern()
+		return true
+	current_pattern = pattern
+	_apply_pattern_to_player()
+	pattern_changed.emit(current_pattern)
+	return true
+
+func unequip_pattern() -> void:
+	if current_pattern == null:
+		return
+	current_pattern = null
+	_apply_pattern_to_player()
+	pattern_changed.emit(null)
+
+func get_pattern(pattern_id: StringName) -> EquipmentPattern:
+	if pattern_id == MERCHANT_KNOT_PATTERN.id:
+		return MERCHANT_KNOT_PATTERN
+	return null
+
+func get_current_pattern() -> EquipmentPattern:
+	return current_pattern
+
+func apply_current_pattern_to_player() -> void:
+	_apply_pattern_to_player()
+
+func _apply_pattern_to_player() -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("apply_equipment_pattern"):
+		player.apply_equipment_pattern(current_pattern)
 
 func _get_glove_scene(slot_idx: int, player: Node) -> PackedScene:
 	if slot_idx == BLUE_GLOVES_SLOT:

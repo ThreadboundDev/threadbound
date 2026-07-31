@@ -3,6 +3,7 @@ class_name GameMenu
 
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
+const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -147,6 +148,15 @@ const INVENTORY_ITEMS := [
 		"description": "Standard Threadborne footwork. Current demo equipment.",
 		"icon_texture": "27_icon_boots",
 	},
+	{
+		"id": &"merchant_knot_pattern",
+		"category": &"equipment",
+		"name": "FOLLOWER'S KNOT",
+		"description": "A balanced woven Pattern. +10% AP recharge and +10% momentum generation.",
+		"icon_texture": "33_icon_merchant_knot",
+		"pattern_id": &"merchant_knot",
+		"owned_pattern": &"merchant_knot",
+	},
 ]
 const EQUIPPED_SLOT_ITEMS := {
 	"WeaponSlot": {
@@ -166,6 +176,10 @@ const EQUIPPED_SLOT_ITEMS := {
 	"BootsSlot": {
 		"name": "BASE BOOTS",
 		"description": "Standard Threadborne footwork. Current demo equipment.",
+	},
+	"PatternSlot": {
+		"name": "NO PATTERN",
+		"description": "No Pattern is currently equipped.",
 	},
 }
 
@@ -203,6 +217,7 @@ const EQUIPPED_SLOT_ITEMS := {
 	$MenuRoot/Pages/InventoryPage/InventoryPanel/CategoryTabs/Materials,
 ]
 @onready var equipment_slots_root: Control = $MenuRoot/Pages/InventoryPage/EquipmentSlots as Control
+@onready var inventory_player_portrait: AnimatedSprite2D = $MenuRoot/Pages/InventoryPage/CharacterPanel/PlayerPortrait as AnimatedSprite2D
 @onready var inventory_slots_root: Control = $MenuRoot/Pages/InventoryPage/InventorySlots as Control
 @onready var inventory_tooltip: Control = $MenuRoot/Pages/InventoryPage/ItemTooltip as Control
 @onready var inventory_tooltip_title: Label = $MenuRoot/Pages/InventoryPage/ItemTooltip/Title as Label
@@ -252,6 +267,7 @@ var _pending_conflict_action: StringName = &""
 var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
 var _controls_only := false
+var _inventory_pattern_portrait: AnimatedSprite2D = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -273,6 +289,10 @@ func _ready() -> void:
 		InputBindingManager.bindings_changed.connect(_update_control_binding_labels)
 	if EquipManager and not EquipManager.equip_changed.is_connected(_on_equip_changed):
 		EquipManager.equip_changed.connect(_on_equip_changed)
+	if EquipManager and not EquipManager.pattern_changed.is_connected(_on_pattern_changed):
+		EquipManager.pattern_changed.connect(_on_pattern_changed)
+	if EquipManager and not EquipManager.pattern_owned.is_connected(_on_pattern_owned):
+		EquipManager.pattern_owned.connect(_on_pattern_owned)
 	if controls_reset_defaults:
 		controls_reset_defaults.mouse_filter = Control.MOUSE_FILTER_STOP
 		controls_reset_defaults.gui_input.connect(_on_controls_reset_defaults_gui_input)
@@ -280,6 +300,7 @@ func _ready() -> void:
 		controls_reset_defaults.mouse_exited.connect(_on_controls_reset_defaults_mouse_exited)
 	_setup_keyboard_binding_rows()
 	_setup_inventory_ui()
+	_ensure_inventory_pattern_portrait()
 	_hide_rebind_prompt()
 	_update_equipped_slot_items()
 	_update_inventory_threads()
@@ -298,6 +319,7 @@ func _ensure_keyboard_binding_row(node_name: String, template_name: String, row_
 	bindings.add_child(row)
 
 func _process(_delta: float) -> void:
+	_sync_inventory_pattern_portrait()
 	if TAB_ORDER[_selected_index] == &"Map":
 		_update_map_tracker()
 	if inventory_tooltip and inventory_tooltip.visible:
@@ -397,6 +419,14 @@ func _on_inventory_category_mouse_entered(_index: int) -> void:
 
 func _on_equip_changed(_slot_type: int, _new_equip_index: int) -> void:
 	_update_equipped_slot_items()
+
+func _on_pattern_changed(_pattern: EquipmentPattern) -> void:
+	_update_equipped_slot_items()
+	_update_inventory_stats()
+	_refresh_inventory_pattern_portrait()
+
+func _on_pattern_owned(_pattern_id: StringName) -> void:
+	_update_inventory_threads()
 
 func _set_children_mouse_filter(node: Node, filter: Control.MouseFilter) -> void:
 	for child in node.get_children():
@@ -1417,6 +1447,8 @@ func _get_visible_inventory_items() -> Array[Dictionary]:
 			continue
 		if item.has("unlock_thread") and not DemoProgress.has_thread(item["unlock_thread"]):
 			continue
+		if item.has("owned_pattern") and (not EquipManager or not EquipManager.owns_pattern(item["owned_pattern"])):
+			continue
 		visible_items.append(item)
 	return visible_items
 
@@ -1469,10 +1501,17 @@ func _get_inventory_icon_texture(texture_id: String) -> Texture2D:
 			return preload("res://Assets/Threadborne/Equipment/Blue Gear/blue_glove_icon.png")
 		"32_icon_yellow_gloves":
 			return preload("res://Assets/Threadborne/Equipment/Yellow Gear/yellow_glove_icon.png")
+		"33_icon_merchant_knot":
+			return preload("res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png")
 		_:
 			return null
 
 func _try_equip_inventory_item(item: Dictionary) -> void:
+	if item.has("pattern_id"):
+		if EquipManager and EquipManager.equip_pattern(item["pattern_id"]):
+			AudioManager.play_ui(&"menu_select")
+			_update_equipped_slot_items()
+		return
 	if not item.has("equip_slot_idx"):
 		return
 	var slot_idx := int(item["equip_slot_idx"])
@@ -1493,6 +1532,7 @@ func _update_equipped_slot_items() -> void:
 	_apply_equipped_slot_item("BootsSlot", _get_equipped_static_item("BASE BOOTS", "Standard Threadborne footwork. Current demo equipment.", "27_icon_boots", -1))
 	_apply_equipped_slot_item("ChestSlot", _get_equipped_static_item("BASE CHEST", "The current Threadborne chest wrapping and cloth kit.", "29_icon_chest", -1))
 	_apply_equipped_slot_item("WeaponSlot", _get_equipped_static_item("WEAVER'S SHUTTLE", "A simple shuttle weapon for close-range attacks.", "28_icon_shuttle", -1))
+	_apply_equipped_slot_item("PatternSlot", _get_equipped_pattern_item())
 
 func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
 	var slot := equipment_slots_root.get_node_or_null(slot_name) as Control
@@ -1537,6 +1577,61 @@ func _get_equipped_gloves_item() -> Dictionary:
 		"equip_slot_idx": 0,
 	}
 
+func _get_equipped_pattern_item() -> Dictionary:
+	var pattern: EquipmentPattern = EquipManager.get_current_pattern()
+	if not pattern:
+		return {
+			"name": "NO PATTERN",
+			"description": "No Pattern is currently equipped.",
+			"icon_texture": "",
+		}
+	return {
+		"name": pattern.display_name,
+		"description": "%s\n%s" % [pattern.description, pattern.get_bonus_description()],
+		"icon_texture": "33_icon_merchant_knot",
+		"pattern_id": pattern.id,
+	}
+
+func _ensure_inventory_pattern_portrait() -> void:
+	if _inventory_pattern_portrait or not inventory_player_portrait:
+		return
+	_inventory_pattern_portrait = AnimatedSprite2D.new()
+	_inventory_pattern_portrait.name = "PatternPortraitOverlay"
+	_inventory_pattern_portrait.sprite_frames = inventory_player_portrait.sprite_frames
+	_inventory_pattern_portrait.z_index = inventory_player_portrait.z_index + 1
+	var pattern_material := ShaderMaterial.new()
+	pattern_material.shader = PATTERN_OVERLAY_SHADER
+	_inventory_pattern_portrait.material = pattern_material
+	inventory_player_portrait.get_parent().add_child(_inventory_pattern_portrait)
+	_refresh_inventory_pattern_portrait()
+	_sync_inventory_pattern_portrait()
+
+func _refresh_inventory_pattern_portrait() -> void:
+	if not _inventory_pattern_portrait:
+		return
+	var pattern: EquipmentPattern = EquipManager.get_current_pattern() if EquipManager else null
+	_inventory_pattern_portrait.visible = pattern != null
+	var pattern_material := _inventory_pattern_portrait.material as ShaderMaterial
+	if pattern_material:
+		pattern_material.set_shader_parameter(
+			"pattern_texture",
+			pattern.textile_texture if pattern else null
+		)
+
+func _sync_inventory_pattern_portrait() -> void:
+	if not _inventory_pattern_portrait or not inventory_player_portrait:
+		return
+	_inventory_pattern_portrait.sprite_frames = inventory_player_portrait.sprite_frames
+	_inventory_pattern_portrait.animation = inventory_player_portrait.animation
+	_inventory_pattern_portrait.frame = inventory_player_portrait.frame
+	_inventory_pattern_portrait.frame_progress = inventory_player_portrait.frame_progress
+	_inventory_pattern_portrait.position = inventory_player_portrait.position
+	_inventory_pattern_portrait.rotation = inventory_player_portrait.rotation
+	_inventory_pattern_portrait.scale = inventory_player_portrait.scale
+	_inventory_pattern_portrait.flip_h = inventory_player_portrait.flip_h
+	_inventory_pattern_portrait.flip_v = inventory_player_portrait.flip_v
+	_inventory_pattern_portrait.modulate = inventory_player_portrait.modulate
+
 func _get_equipped_static_item(item_name: String, description: String, icon_texture: String, equip_slot_idx: int) -> Dictionary:
 	var item := {
 		"name": item_name,
@@ -1573,10 +1668,15 @@ func _update_inventory_stats() -> void:
 		inventory_skill_damage_label.text = "SKILL DAMAGE - %d%%" % skill_damage_percent
 	if inventory_action_recharge_label:
 		var recharge_multiplier := stats.action_point_recharge_multiplier if stats else 1.0
+		if player and player.has_method("get_pattern_action_point_recharge_multiplier"):
+			recharge_multiplier *= player.get_pattern_action_point_recharge_multiplier()
 		var recharge_percent := roundi(recharge_multiplier * 100.0)
 		inventory_action_recharge_label.text = "AP RECHARGE - %d%%" % recharge_percent
 	if inventory_momentum_gain_label:
-		var momentum_gain_percent := roundi((stats.momentum_generation_multiplier if stats else 1.0) * 100.0)
+		var momentum_multiplier := stats.momentum_generation_multiplier if stats else 1.0
+		if player and player.has_method("get_pattern_momentum_generation_multiplier"):
+			momentum_multiplier *= player.get_pattern_momentum_generation_multiplier()
+		var momentum_gain_percent := roundi(momentum_multiplier * 100.0)
 		inventory_momentum_gain_label.text = "MOMENTUM GAIN - %d%%" % momentum_gain_percent
 	if inventory_resistance_label:
 		var resistance_percent := roundi(stats.get_resistance_mitigation() * 100.0) if stats else 0
