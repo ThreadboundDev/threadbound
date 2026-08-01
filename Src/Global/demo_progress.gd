@@ -2,10 +2,12 @@ extends Node
 
 signal threads_changed
 signal checkpoint_changed
+signal follower_dialogue_changed
 
 const SAVE_PATH := "user://demo_save.cfg"
 
 var _claimed_threads: Dictionary = {}
+var _heard_follower_dialogue: Dictionary = {}
 var _checkpoint_scene_path := ""
 var _checkpoint_id: StringName = &""
 var _checkpoint_position := Vector2.ZERO
@@ -38,10 +40,22 @@ func remaining_threads(required_threads: Array[StringName]) -> Array[StringName]
 func claimed_count(required_threads: Array[StringName]) -> int:
 	return required_threads.size() - remaining_threads(required_threads).size()
 
+func mark_follower_dialogue_heard(dialogue_id: StringName) -> void:
+	if String(dialogue_id).is_empty() or _heard_follower_dialogue.has(dialogue_id):
+		return
+	_heard_follower_dialogue[dialogue_id] = true
+	_write_progress()
+	follower_dialogue_changed.emit()
+
+func has_heard_follower_dialogue(dialogue_id: StringName) -> bool:
+	return _heard_follower_dialogue.has(dialogue_id)
+
 func reset_demo_threads() -> void:
 	_claimed_threads.clear()
+	_heard_follower_dialogue.clear()
 	_write_progress()
 	threads_changed.emit()
+	follower_dialogue_changed.emit()
 
 func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_position: Vector2) -> void:
 	_checkpoint_id = checkpoint_id
@@ -55,6 +69,7 @@ func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_posit
 	config.set_value("checkpoint", "position_y", player_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)
 	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
+	config.set_value("progress", "follower_dialogue", _get_follower_dialogue_strings())
 	_tutorial_completion_recorded = true
 	var error := config.save(SAVE_PATH)
 	if error != OK:
@@ -78,6 +93,9 @@ func load_checkpoint() -> bool:
 	_claimed_threads.clear()
 	for thread_id in config.get_value("progress", "claimed_threads", PackedStringArray()):
 		_claimed_threads[StringName(str(thread_id))] = true
+	_heard_follower_dialogue.clear()
+	for dialogue_id in config.get_value("progress", "follower_dialogue", PackedStringArray()):
+		_heard_follower_dialogue[StringName(str(dialogue_id))] = true
 	checkpoint_changed.emit()
 	return has_checkpoint()
 
@@ -88,6 +106,7 @@ func clear_checkpoint() -> void:
 	_tutorial_completed = false
 	_tutorial_completion_recorded = false
 	_claimed_threads.clear()
+	_heard_follower_dialogue.clear()
 	var dir := DirAccess.open("user://")
 	if dir and dir.file_exists(SAVE_PATH.get_file()):
 		dir.remove(SAVE_PATH.get_file())
@@ -126,6 +145,7 @@ func _write_progress() -> void:
 	config.set_value("checkpoint", "position_y", _checkpoint_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)
 	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
+	config.set_value("progress", "follower_dialogue", _get_follower_dialogue_strings())
 	var error := config.save(SAVE_PATH)
 	if error != OK:
 		push_warning("DemoProgress could not save progress: %s." % error_string(error))
@@ -135,3 +155,9 @@ func _get_claimed_thread_strings() -> PackedStringArray:
 	for thread_id in _claimed_threads:
 		claimed.append(String(thread_id))
 	return claimed
+
+func _get_follower_dialogue_strings() -> PackedStringArray:
+	var heard := PackedStringArray()
+	for dialogue_id in _heard_follower_dialogue:
+		heard.append(String(dialogue_id))
+	return heard

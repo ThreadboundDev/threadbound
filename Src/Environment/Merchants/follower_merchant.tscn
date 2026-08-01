@@ -194,6 +194,7 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_t33h8")
 animation = &"idle"
 frame = 21
+flip_h = true
 
 [node name="InteractionShape" type="CollisionShape2D" parent="." unique_id=855816873]
 position = Vector2(0, -84)

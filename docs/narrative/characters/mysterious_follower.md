@@ -341,4 +341,56 @@ The player should never learn his identity through normal play.
 
 The revelation that the Follower is Thought should be reserved for secret-path content and hidden endings.
 
+## Chamber of the First Weave Demo Dialogue
+
+The Follower's merchant encounter is the demo's primary optional lore delivery point.
+It should remain brief, interpretable, and useful without revealing that the Follower
+is Thought.
+
+His observations are delivered one at a time and remain available after their
+associated wing is completed. If the player completes several wings before returning,
+none of the progression observations are lost.
+
+### Opening
+
+> "Ah. A loose thread with somewhere to be. That is new."
+
+### Initial Guidance
+
+> "Three threads bind the way ahead: Power, Balance, Essence. Each wing asks a
+> different question. None will tell you what your answer means."
+
+### Thread of Power
+
+> "Power answers you. Strength opens many paths. It is less gifted at choosing
+> among them."
+
+### Thread of Balance
+
+> "Balance answers you. Do not mistake stillness for mastery. Even a poised thread
+> may be waiting to snap."
+
+### Thread of Essence
+
+> "Essence answers you. Clever hands loosen knots. Clever minds sometimes pull
+> them tighter."
+
+### All Three Threads
+
+> "Three threads gathered, and still you remain unfinished. Good. Finished things
+> have so few choices left."
+
+> "Something beyond that door has very firm ideas about where loose threads belong."
+
+### Repeat Observations
+
+> "You are not lost. Lost things had somewhere they were meant to be."
+
+> "Every knot is a choice that has forgotten it was made."
+
+> "I sell what can be counted. The costly things are rarely so simple."
+
+### Farewell
+
+> "Go on, then. I would hate to make your choices for you."
 
