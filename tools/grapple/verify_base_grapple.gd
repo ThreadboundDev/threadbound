@@ -3,7 +3,14 @@ extends Node
 const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
 const BLUE_GLOVES_SCENE := preload("res://Src/Equipment/blue_gloves.tscn")
 const RED_GLOVES_SCENE := preload("res://Src/Equipment/red_gloves.tscn")
+const YELLOW_GLOVES_SCENE := preload("res://Src/Equipment/yellow_gloves.tscn")
 const PLAYER_SCENE := preload("res://Src/Characters/Player/player.tscn")
+const BASE_POSE_LIBRARY := preload("res://Src/Equipment/base_grapple_animation_library.tres")
+const POSE_TRACK_PATHS := [
+	NodePath("Equipment/RightHandAnchor:position"),
+	NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation"),
+	NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale"),
+]
 const GRAPPLE_EQUIPMENT_SCENES := [
 	{"label": "base", "scene": BASE_GLOVES_SCENE},
 	{"label": "blue", "scene": preload("res://Src/Equipment/blue_gloves.tscn")},
@@ -16,6 +23,7 @@ var failures: Array[String] = []
 func _ready() -> void:
 	var player := _create_player()
 	add_child(player)
+	_verify_frame_aligned_pose_libraries(player)
 	if not is_equal_approx(
 		float(player.grapple_strike_visual_scale_multiplier),
 		0.82
@@ -152,6 +160,96 @@ func _ready() -> void:
 	for failure in failures:
 		push_error(failure)
 	get_tree().quit(1)
+
+func _verify_frame_aligned_pose_libraries(player: Node) -> void:
+	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	var player_animations := sprite.sprite_frames.get_animation_names()
+	for library_data in [{"label": "shared", "library": BASE_POSE_LIBRARY}]:
+		var label := String(library_data.label)
+		var library := library_data.library as AnimationLibrary
+		if library.get_animation_list().size() != player_animations.size():
+			failures.append(
+				"%s glove pose library has %d animations; expected %d." % [
+					label,
+					library.get_animation_list().size(),
+					player_animations.size(),
+				]
+			)
+		for animation_name in player_animations:
+			if not library.has_animation(animation_name):
+				failures.append("%s glove library is missing %s." % [label, animation_name])
+				continue
+			var animation := library.get_animation(animation_name)
+			var frame_count := sprite.sprite_frames.get_frame_count(animation_name)
+			var fps := sprite.sprite_frames.get_animation_speed(animation_name)
+			if not is_equal_approx(animation.length, float(frame_count) / fps):
+				failures.append("%s/%s length does not match the player frames." % [label, animation_name])
+			if not is_equal_approx(animation.step, 1.0 / fps):
+				failures.append("%s/%s step does not match the player FPS." % [label, animation_name])
+			var should_loop := sprite.sprite_frames.get_animation_loop(animation_name)
+			if (animation.loop_mode != Animation.LOOP_NONE) != should_loop:
+				failures.append("%s/%s loop mode does not match the player." % [label, animation_name])
+			if animation.get_track_count() != POSE_TRACK_PATHS.size():
+				failures.append("%s/%s does not have exactly three pose tracks." % [label, animation_name])
+				continue
+			for track_index in POSE_TRACK_PATHS.size():
+				if animation.track_get_path(track_index) != POSE_TRACK_PATHS[track_index]:
+					failures.append("%s/%s track %d targets the wrong property." % [label, animation_name, track_index])
+				if animation.track_get_interpolation_type(track_index) != Animation.INTERPOLATION_LINEAR:
+					failures.append("%s/%s track %d is not smoothly interpolated." % [label, animation_name, track_index])
+				if animation.value_track_get_update_mode(track_index) != Animation.UPDATE_CONTINUOUS:
+					failures.append("%s/%s track %d is not continuously updated." % [label, animation_name, track_index])
+				if (
+					animation_name != &"Idle"
+					and animation.track_get_key_count(track_index) != frame_count
+				):
+					failures.append("%s/%s track %d has the wrong key count." % [label, animation_name, track_index])
+					continue
+				if animation_name == &"Idle":
+					if animation.track_get_key_count(track_index) < 2:
+						failures.append("%s/Idle track %d needs at least two control poses." % [label, track_index])
+					continue
+				for frame_index in animation.track_get_key_count(track_index):
+					var expected_time := float(frame_index) / fps
+					if not is_equal_approx(animation.track_get_key_time(track_index, frame_index), expected_time):
+						failures.append("%s/%s frame %d is keyed at the wrong time." % [label, animation_name, frame_index])
+						break
+
+	var base_player := BASE_GLOVES_SCENE.instantiate()
+	var red_player := RED_GLOVES_SCENE.instantiate()
+	var blue_player := BLUE_GLOVES_SCENE.instantiate()
+	var yellow_player := YELLOW_GLOVES_SCENE.instantiate()
+	var base_library := (base_player.get_node("Equipment/AnimationPlayer") as AnimationPlayer).get_animation_library("")
+	var red_library := (red_player.get_node("Equipment/AnimationPlayer") as AnimationPlayer).get_animation_library("")
+	var blue_library := (blue_player.get_node("Equipment/AnimationPlayer") as AnimationPlayer).get_animation_library("")
+	var yellow_library := (yellow_player.get_node("Equipment/AnimationPlayer") as AnimationPlayer).get_animation_library("")
+	if base_library != BASE_POSE_LIBRARY:
+		failures.append("Base grapple is not connected to the shared pose library.")
+	if (
+		red_library != BASE_POSE_LIBRARY
+		or blue_library != BASE_POSE_LIBRARY
+		or yellow_library != BASE_POSE_LIBRARY
+	):
+		failures.append("All colored grapples must use the Base pose library.")
+	for colored_player in [red_player, blue_player, yellow_player]:
+		for node_path in [
+			NodePath("Equipment"),
+			NodePath("Equipment/RightHandAnchor"),
+			NodePath("Equipment/RightHandAnchor/WristWrapPivot"),
+			NodePath("Equipment/RightHandAnchor/RopeHangAnchor"),
+			NodePath("Equipment/RightHandAnchor/GrappleOrigin"),
+		]:
+			var base_node := base_player.get_node(node_path) as Node2D
+			var colored_node := colored_player.get_node(node_path) as Node2D
+			if not colored_node.transform.is_equal_approx(base_node.transform):
+				failures.append(
+					"%s does not match Base's shared animated coordinate system."
+					% node_path
+				)
+	base_player.free()
+	red_player.free()
+	blue_player.free()
+	yellow_player.free()
 
 func _verify_serialized_grapple_visibility(scene: PackedScene, label: String) -> void:
 	var equipment := scene.instantiate()
@@ -316,6 +414,10 @@ func _verify_player_grapple_strike_integration() -> void:
 		"Attack did not dispatch into the dedicated grapple strike."
 	)
 	_expect_integration(
+		player.current_attack_body_anim == "Grapple_Strike",
+		"Grapple strike still selected the retired generic Attack animation."
+	)
+	_expect_integration(
 		gloves.is_grapple_strike_active(),
 		"Player grapple dispatch did not arm the glove strike state."
 	)
@@ -339,6 +441,13 @@ func _verify_player_grapple_strike_integration() -> void:
 		player.update_combat_timers(simulation_delta)
 		gloves.apply_grapple_strike_velocity(simulation_delta)
 		player.global_position += player.velocity * simulation_delta
+		player.update_animations(0.0)
+		if bool(player.current_grapple_strike_animation_started):
+			_expect_integration(
+				player.player_animation.animation == &"Grapple_Strike",
+				"Arrival did not switch from dash travel to Grapple_Strike."
+			)
+			player.player_animation.frame = 0
 		if health.current_health < health_before:
 			break
 

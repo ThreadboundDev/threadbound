@@ -3,6 +3,9 @@ extends Node2D
 
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const GRAPPLE_STRIKE_VFX_SCENE := preload("res://Src/VFX/grapple_strike_vfx.tscn")
+const GRAPPLE_STRIKE_TRAIL_VFX_SCENE := preload(
+	"res://Src/VFX/grapple_strike_trail_vfx.tscn"
+)
 
 var player: CharacterBody2D = null
 
@@ -138,6 +141,8 @@ var enemy_grapple_hold_timer := 0.0
 var grapple_strike_active := false
 var grapple_strike_direction := Vector2.RIGHT
 var grapple_strike_launch_range_ratio := 0.0
+var grapple_strike_at_strike_distance := false
+var _grapple_strike_trail_vfx: GrappleStrikeTrailVFX = null
 
 var active_rope_points: Array[Vector2] = []
 var active_rope_previous_points: Array[Vector2] = []
@@ -205,14 +210,14 @@ func _play_grapple_fire_animation() -> void:
 			player.update_equipment_facing()
 
 	if use_diagonal:
-		play_equipment_anim("equip_grapple_fire_diagonal")
+		play_equipment_anim("Grapple_Diagonal")
 
 		if player and player.has_node("Player Animation"):
 			var body_anim: AnimatedSprite2D = player.get_node("Player Animation")
 			if body_anim.sprite_frames.has_animation("Grapple_Diagonal"):
 				body_anim.play("Grapple_Diagonal")
 	else:
-		play_equipment_anim("equip_grapple_fire_straight")
+		play_equipment_anim("Grapple_Horizontal")
 
 		if player and player.has_node("Player Animation"):
 			var body_anim: AnimatedSprite2D = player.get_node("Player Animation")
@@ -221,12 +226,17 @@ func _play_grapple_fire_animation() -> void:
 
 func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> void:
 	action_anim_lock_timer = attack_follow_anim_lock_time
-	var attack_anim := "attack_ground" if body_anim == "Attack" or body_anim == "Neutral_Special_Attack" else "attack_air"
-	if animation_player and animation_player.has_animation(attack_anim):
-		play_equipment_anim(attack_anim)
+	if animation_player and animation_player.has_animation(body_anim):
+		play_equipment_anim(body_anim)
 
 func _is_action_equipment_anim(anim_name: String) -> bool:
-	return anim_name == "equip_dash" or anim_name.begins_with("equip_grapple") or anim_name.begins_with("attack_")
+	return (
+		anim_name == "Dash"
+		or anim_name.begins_with("Grapple_")
+		or anim_name.begins_with("Ground_Attack_")
+		or anim_name == "Air_Double_Attack"
+		or anim_name == "Neutral_Special_Attack"
+	)
 
 func enter_save_point_pose() -> void:
 	action_anim_lock_timer = 999.0
@@ -241,7 +251,7 @@ func enter_save_point_pose() -> void:
 
 func exit_save_point_pose() -> void:
 	action_anim_lock_timer = 0.0
-	play_equipment_anim("equip_idle")
+	play_equipment_anim("Idle")
 
 # ===============================
 # BASIC HELPERS
@@ -271,6 +281,7 @@ func try_start_grapple_strike() -> bool:
 		return false
 
 	grapple_strike_active = true
+	grapple_strike_at_strike_distance = false
 	enemy_grapple_ready = false
 	enemy_grapple_hold_timer = 0.0
 	grapple_strike_direction = _get_enemy_grapple_direction()
@@ -279,6 +290,9 @@ func try_start_grapple_strike() -> bool:
 
 func is_grapple_strike_active() -> bool:
 	return grapple_strike_active
+
+func is_grapple_strike_ready_to_animate() -> bool:
+	return grapple_strike_active and grapple_strike_at_strike_distance
 
 func is_grapple_strike_contact_guard_active() -> bool:
 	return grapple_strike_active
@@ -299,9 +313,11 @@ func apply_grapple_strike_velocity(delta: float) -> bool:
 	var destination := _get_enemy_grapple_standoff_position()
 	var to_destination := destination - player.global_position
 	grapple_strike_direction = _get_enemy_grapple_direction()
+	_update_grapple_strike_trail()
 
 	if to_destination.length() <= hookshot_arrival_distance:
 		player.velocity = Vector2.ZERO
+		grapple_strike_at_strike_distance = true
 		return true
 	if _is_hookshot_pull_blocked(to_destination.normalized()):
 		cancel_grapple_strike()
@@ -485,7 +501,7 @@ func apply_enemy_grapple_setup_pull(delta: float, pull_speed: float) -> bool:
 
 func forces_dash_animation() -> bool:
 	return (
-		grapple_strike_active
+		grapple_strike_active and not grapple_strike_at_strike_distance
 		or (
 			hookshot_enabled
 			and has_enemy_grapple_target()
@@ -525,11 +541,34 @@ func get_enemy_grapple_safe_center_distance() -> float:
 
 func _clear_grapple_strike_state() -> void:
 	grapple_strike_active = false
+	grapple_strike_at_strike_distance = false
 	enemy_grapple_ready = false
 	enemy_grapple_hold_timer = 0.0
+	_stop_grapple_strike_trail()
 
 func _on_enemy_grapple_strike_started() -> void:
-	pass
+	_stop_grapple_strike_trail()
+	var trail := GRAPPLE_STRIKE_TRAIL_VFX_SCENE.instantiate() as GrappleStrikeTrailVFX
+	if not trail or not player:
+		return
+	var parent := get_tree().current_scene
+	if not parent:
+		parent = get_parent()
+	if not parent:
+		trail.queue_free()
+		return
+	parent.add_child(trail)
+	trail.play(player, grapple_strike_direction)
+	_grapple_strike_trail_vfx = trail
+
+func _update_grapple_strike_trail() -> void:
+	if is_instance_valid(_grapple_strike_trail_vfx):
+		_grapple_strike_trail_vfx.update_direction(grapple_strike_direction)
+
+func _stop_grapple_strike_trail() -> void:
+	if is_instance_valid(_grapple_strike_trail_vfx):
+		_grapple_strike_trail_vfx.stop()
+	_grapple_strike_trail_vfx = null
 
 func _release_after_enemy_grapple_strike() -> void:
 	_begin_grapple_retract()
@@ -730,6 +769,8 @@ func _reset_active_grapple_visuals() -> void:
 	enemy_grapple_ready = false
 	enemy_grapple_hold_timer = 0.0
 	grapple_strike_active = false
+	grapple_strike_at_strike_distance = false
+	_stop_grapple_strike_trail()
 	grapple_strike_direction = Vector2.RIGHT
 	grapple_strike_launch_range_ratio = 0.0
 	active_rope_points.clear()
@@ -1085,6 +1126,7 @@ func _capture_grapple_target(collider: Object) -> void:
 	enemy_grapple_ready = false
 	enemy_grapple_hold_timer = 0.0
 	grapple_strike_active = false
+	grapple_strike_at_strike_distance = false
 
 func _update_moving_grapple_target() -> void:
 	if grapple_target and is_instance_valid(grapple_target):

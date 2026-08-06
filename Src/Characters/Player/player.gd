@@ -229,8 +229,6 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var momentum_gain_use_after_swap := 7.0
 
 @export_group("Attack Animation Visuals")
-@export_range(0.1, 5.0, 0.05) var grounded_forward_visual_scale_multiplier := 1.0
-@export var grounded_forward_visual_offset := Vector2(7.0, 0.0)
 @export_range(0.1, 2.0, 0.05) var ground_combo_forward_visual_scale_multiplier := 1.0
 @export_range(0.1, 2.0, 0.05) var ground_combo_2_moving_visual_scale_multiplier := 1.0
 @export_range(0.1, 2.0, 0.05) var ground_combo_stationary_visual_scale_multiplier := 1.4
@@ -396,6 +394,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 # STATE
 # ===============================
 const ATTACK_DIRECTION_DEADZONE := 0.15
+const GRAPPLE_STRIKE_IMPACT_FRAME := 0
 const MOMENTUM_CATEGORY_MOVEMENT := &"Movement"
 const MOMENTUM_CATEGORY_JUMP := &"Jump"
 const MOMENTUM_CATEGORY_DASH := &"Dash"
@@ -471,7 +470,7 @@ var _debug_original_collision_mask := 0
 var current_body_anim := ""
 var current_equip_anim := ""
 var current_weapon_pose_anim := ""
-var current_attack_body_anim := "Attack"
+var current_attack_body_anim := "Ground_Attack_Combo_1"
 var landing_animation_timer := 0.0
 var _movement_facing_before_input := 1
 
@@ -496,6 +495,7 @@ var current_attack_uses_grapple_strike := false
 var current_grapple_strike_landed := false
 var current_grapple_strike_finished := false
 var current_grapple_strike_impact_time := -1.0
+var current_grapple_strike_animation_started := false
 var ground_combo_family: StringName = &""
 var ground_combo_step := -1
 var ground_combo_reset_timer := 0.0
@@ -1326,8 +1326,9 @@ func _get_current_gravity() -> float:
 # ===============================
 # ANIMATION
 # ===============================
-func play_character_anim(body_anim: String, equip_anim: String) -> void:
+func play_character_anim(body_anim: String) -> void:
 	var body_changed := current_body_anim != body_anim
+	var equipment_anim := body_anim
 
 	if body_changed:
 		current_body_anim = body_anim
@@ -1336,11 +1337,11 @@ func play_character_anim(body_anim: String, equip_anim: String) -> void:
 			_play_weapon_pose_anim(body_anim)
 
 	if current_gloves:
-		if body_changed or current_equip_anim != equip_anim:
-			current_equip_anim = equip_anim
+		if body_changed or current_equip_anim != equipment_anim:
+			current_equip_anim = equipment_anim
 
 			if current_gloves.has_method("play_equipment_anim"):
-				current_gloves.play_equipment_anim(equip_anim)
+				current_gloves.play_equipment_anim(equipment_anim)
 
 func update_animations(dir: float) -> void:
 	if not player_animation or not player_animation.sprite_frames:
@@ -1353,14 +1354,14 @@ func update_animations(dir: float) -> void:
 		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
 		player_animation.scale = save_point_sit_visual_scale
-		play_character_anim(SIT_ANIMATION, "equip_idle")
+		play_character_anim(SIT_ANIMATION)
 		return
 	if is_ledge_hanging and player_animation.sprite_frames.has_animation(&"Wall_Cling"):
 		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
 		player_animation.position = _player_default_visual_position
-		play_character_anim("Wall_Cling", "equip_wall_cling")
+		play_character_anim("Wall_Cling")
 		player_animation.pause()
 		player_animation.set_frame_and_progress(0, 0.0)
 		return
@@ -1372,6 +1373,18 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = _player_default_visual_scale
 	if player_animation.position != _player_default_visual_position:
 		player_animation.position = _player_default_visual_position
+
+	if current_attack_uses_grapple_strike and not current_grapple_strike_animation_started:
+		var strike_ready := (
+			current_gloves
+			and current_gloves.has_method("is_grapple_strike_ready_to_animate")
+			and bool(current_gloves.call("is_grapple_strike_ready_to_animate"))
+		)
+		if strike_ready:
+			_begin_grapple_strike_impact_animation()
+		else:
+			_play_grapple_strike_approach_animation()
+			return
 
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_set_flow_vfx_dash_visual_active(false)
@@ -1395,7 +1408,7 @@ func update_animations(dir: float) -> void:
 	_set_flow_vfx_dash_visual_active(dash_visual_active, dash_vfx_direction)
 	
 	if dash_visual_active:
-		play_character_anim("Dash", "equip_dash")
+		play_character_anim("Dash")
 		player_animation.rotation = 0.0
 		if is_grapple_strike_dash:
 			player_animation.scale = (
@@ -1413,30 +1426,30 @@ func update_animations(dir: float) -> void:
 			float(wall_direction) * wall_cling_visual_standoff,
 			0.0
 		)
-		play_character_anim("Wall_Cling", "equip_wall_cling")
+		play_character_anim("Wall_Cling")
 
 	elif not is_on_floor():
 		player_animation.rotation = 0.0
 		if absf(velocity.y) <= jump_apex_velocity_threshold and player_animation.sprite_frames.has_animation("Jump_Apex"):
-			play_character_anim("Jump_Apex", "equip_jump_ascent")
+			play_character_anim("Jump_Apex")
 		elif velocity.y < 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
-			play_character_anim("Jump_Ascent", "equip_jump_ascent")
+			play_character_anim("Jump_Ascent")
 		else:
-			play_character_anim("Jump_Descent", "equip_jump_descent")
+			play_character_anim("Jump_Descent")
 
 	elif landing_animation_timer > 0.0 and absf(dir) < 0.01 and player_animation.sprite_frames.has_animation("Jump_Land"):
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale * landing_visual_scale_multiplier
 		player_animation.position = _player_default_visual_position + landing_visual_offset
-		play_character_anim("Jump_Land", "equip_idle")
+		play_character_anim("Jump_Land")
 
 	elif dir != 0 and player_animation.sprite_frames.has_animation("Run"):
 		player_animation.rotation = 0.0
-		play_character_anim("Run", "equip_run")
+		play_character_anim("Run")
 
 	elif player_animation.sprite_frames.has_animation("Idle"):
 		player_animation.rotation = 0.0
-		play_character_anim("Idle", "equip_idle")
+		play_character_anim("Idle")
 
 	if (
 		velocity.x != 0
@@ -1449,6 +1462,33 @@ func update_animations(dir: float) -> void:
 		update_equipment_facing()
 
 	_update_wall_cling_vfx()
+
+func _play_grapple_strike_approach_animation() -> void:
+	if not player_animation.sprite_frames.has_animation(&"Dash"):
+		return
+	var direction := attack_direction
+	if current_gloves and current_gloves.has_method("get_grapple_strike_direction"):
+		direction = current_gloves.call("get_grapple_strike_direction")
+	_set_flow_vfx_dash_visual_active(true, direction)
+	play_character_anim("Dash")
+	player_animation.scale = (
+		_player_default_visual_scale * grapple_strike_visual_scale_multiplier
+	)
+	_apply_directional_dash_pose(direction)
+	update_equipment_facing()
+
+func _begin_grapple_strike_impact_animation() -> void:
+	if not player_animation.sprite_frames.has_animation(&"Grapple_Strike"):
+		return
+	current_grapple_strike_animation_started = true
+	current_attack_body_anim = "Grapple_Strike"
+	_set_flow_vfx_dash_visual_active(false)
+	player_animation.rotation = 0.0
+	player_animation.scale = _player_default_visual_scale
+	player_animation.position = _player_default_visual_position
+	player_animation.speed_scale = maxf(0.1, get_momentum_attack_speed_multiplier())
+	_play_weapon_attack_anim()
+	play_character_anim("Grapple_Strike")
 
 func _apply_directional_dash_pose(direction: Vector2) -> void:
 	if direction.length() <= 0.001:
@@ -1506,8 +1546,7 @@ func _play_ledge_climb_pose() -> void:
 		0.0,
 		1.0
 	)
-	var equipment_pose := "equip_idle" if progress >= 0.75 else "equip_wall_cling"
-	play_character_anim(String(LEDGE_CLIMB_ANIMATION), equipment_pose)
+	play_character_anim(String(LEDGE_CLIMB_ANIMATION))
 	var frame_count := player_animation.sprite_frames.get_frame_count(
 		LEDGE_CLIMB_ANIMATION
 	)
@@ -1593,11 +1632,12 @@ func update_combat_timers(delta: float) -> void:
 				neutral_special_screen_shake_strength,
 				neutral_special_screen_shake_duration
 			)
-		_play_flow_vfx_attack_swing(
-			attack_direction,
-			ground_combo_hitbox_arc_degrees,
-			0
-		)
+		if not current_attack_uses_grapple_strike:
+			_play_flow_vfx_attack_swing(
+				attack_direction,
+				ground_combo_hitbox_arc_degrees,
+				0
+			)
 
 	if (
 		current_attack_uses_grapple_strike
@@ -1616,7 +1656,14 @@ func update_combat_timers(delta: float) -> void:
 			attack_end = current_grapple_strike_impact_time + recovery
 		elif not current_grapple_strike_finished:
 			attack_end = maxf(attack_end, grapple_strike_max_duration)
-	if attack_timer >= attack_end:
+	var waiting_for_grapple_strike_frame := (
+		current_attack_uses_grapple_strike
+		and current_grapple_strike_animation_started
+		and not current_grapple_strike_finished
+		and player_animation.animation == &"Grapple_Strike"
+		and player_animation.frame < GRAPPLE_STRIKE_IMPACT_FRAME
+	)
+	if attack_timer >= attack_end and not waiting_for_grapple_strike_frame:
 		if current_attack_uses_grapple_strike:
 			_cancel_current_grapple_strike()
 		is_attacking = false
@@ -1672,8 +1719,10 @@ func start_attack(is_special := false) -> void:
 		_begin_air_double_attack(attack_direction)
 		return
 
-	var attack_audio_key := &"player_smash_swing" if is_special else &"player_attack"
-	var attack_audio := AudioManager.play_sfx(attack_audio_key, 0.0, 0.0)
+	var attack_audio: AudioStreamPlayer = null
+	if not grapple_strike_started:
+		var attack_audio_key := &"player_smash_swing" if is_special else &"player_attack"
+		attack_audio = AudioManager.play_sfx(attack_audio_key, 0.0, 0.0)
 	if attack_audio and is_special:
 		attack_audio.pitch_scale *= neutral_special_swing_pitch
 	is_attacking = true
@@ -1684,6 +1733,7 @@ func start_attack(is_special := false) -> void:
 	current_grapple_strike_landed = false
 	current_grapple_strike_finished = false
 	current_grapple_strike_impact_time = -1.0
+	current_grapple_strike_animation_started = false
 	if current_attack_uses_grapple_strike:
 		_sync_current_grapple_strike_direction()
 	attack_timer = 0.0
@@ -1697,14 +1747,19 @@ func start_attack(is_special := false) -> void:
 	attack_vfx_started = not current_attack_is_special
 	attack_active_finished = false
 	_reset_attack_hitbox_polygon()
-	current_attack_body_anim = _get_special_body_animation() if current_attack_is_special else _get_attack_body_animation()
+	if current_attack_is_special:
+		current_attack_body_anim = _get_special_body_animation()
+	elif current_attack_uses_grapple_strike:
+		current_attack_body_anim = "Grapple_Strike"
+	else:
+		current_attack_body_anim = _get_attack_body_animation()
 	update_equipment_facing()
-	if not current_attack_is_special:
+	if not current_attack_is_special and not current_attack_uses_grapple_strike:
 		_play_weapon_attack_anim()
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		play_character_anim(current_attack_body_anim)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
@@ -1714,6 +1769,12 @@ func _try_resolve_current_grapple_strike() -> void:
 		or current_grapple_strike_finished
 		or not current_gloves
 		or not current_gloves.has_method("resolve_grapple_strike")
+	):
+		return
+	if (
+		not current_grapple_strike_animation_started
+		or player_animation.animation != &"Grapple_Strike"
+		or player_animation.frame < GRAPPLE_STRIKE_IMPACT_FRAME
 	):
 		return
 
@@ -1767,6 +1828,7 @@ func _cancel_current_grapple_strike() -> void:
 	current_grapple_strike_landed = false
 	current_grapple_strike_finished = false
 	current_grapple_strike_impact_time = -1.0
+	current_grapple_strike_animation_started = false
 	_grapple_strike_contact_guard = false
 
 func _cancel_enemy_grapple_combat() -> void:
@@ -1779,6 +1841,7 @@ func _cancel_enemy_grapple_combat() -> void:
 	current_grapple_strike_landed = false
 	current_grapple_strike_finished = false
 	current_grapple_strike_impact_time = -1.0
+	current_grapple_strike_animation_started = false
 	_grapple_strike_contact_guard = false
 
 func _finish_cancelled_attack() -> void:
@@ -1951,7 +2014,7 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 
 	if player_animation and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_apply_attack_visual_tuning()
-		play_character_anim(current_attack_body_anim, "equip_idle")
+		play_character_anim(current_attack_body_anim)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
@@ -2246,9 +2309,6 @@ func _apply_attack_visual_tuning() -> void:
 	if current_attack_is_special:
 		scale_multiplier = neutral_special_visual_scale_multiplier
 		visual_offset = neutral_special_visual_offset
-	elif current_attack_body_anim == "Attack":
-		scale_multiplier = grounded_forward_visual_scale_multiplier
-		visual_offset = grounded_forward_visual_offset
 	elif current_attack_body_anim.begins_with("Ground_Attack_Combo_"):
 		if ground_attack_visual_mode == &"stationary":
 			scale_multiplier = ground_combo_stationary_visual_scale_multiplier
@@ -2315,7 +2375,7 @@ func _play_attack_visual_animation(body_anim: StringName) -> void:
 	var previous_frame := player_animation.frame
 	var previous_progress := player_animation.frame_progress
 
-	play_character_anim(String(body_anim), "equip_idle")
+	play_character_anim(String(body_anim))
 	if not preserve_progress:
 		return
 
@@ -2344,10 +2404,10 @@ func _get_attack_input_direction() -> Vector2:
 
 func _get_attack_body_animation() -> String:
 	if not player_animation or not player_animation.sprite_frames:
-		return "Attack"
+		return "Ground_Attack_Combo_1"
 
 	if is_on_floor() and not _is_grapple_restricting():
-		return "Attack"
+		return "Ground_Attack_Combo_1"
 
 	var attack_anim := "Attack_Forward"
 	if attack_direction.y < -0.6 and abs(attack_direction.y) >= abs(attack_direction.x):
@@ -2359,16 +2419,16 @@ func _get_attack_body_animation() -> String:
 
 	if player_animation.sprite_frames.has_animation(attack_anim):
 		return attack_anim
-	return "Attack"
+	if player_animation.sprite_frames.has_animation("Air_Double_Attack"):
+		return "Air_Double_Attack"
+	return "Ground_Attack_Combo_1"
 
 func _get_special_body_animation() -> String:
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Neutral_Special_Attack"):
 		return "Neutral_Special_Attack"
-	return "Attack"
+	return "Ground_Attack_Combo_1"
 
 func _get_equipment_attack_follow_anim() -> String:
-	if current_attack_is_special:
-		return "Attack"
 	return current_attack_body_anim
 
 func _is_grapple_restricting() -> bool:
@@ -3464,7 +3524,7 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	refill_action_points()
 	_reset_weapon_visuals()
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
-		play_character_anim("Idle", "equip_idle")
+		play_character_anim("Idle")
 	_sync_hud()
 
 # ===============================
@@ -3572,7 +3632,7 @@ func _complete_save_point_interaction() -> void:
 		current_gloves.exit_save_point_pose()
 	_restore_save_point_equipment()
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Idle"):
-		play_character_anim("Idle", "equip_idle")
+		play_character_anim("Idle")
 
 func _process_save_point_interaction(delta: float) -> void:
 	if _save_point_sitting_down or _save_point_seated or _save_point_standing_up:
@@ -3590,7 +3650,7 @@ func _process_save_point_interaction(delta: float) -> void:
 		velocity.y = min(velocity.y, max_fall_speed)
 		move_and_slide()
 		if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation("Run"):
-			play_character_anim("Run", "equip_run")
+			play_character_anim("Run")
 		return
 
 	global_position = _save_point_target_position
@@ -3599,7 +3659,7 @@ func _process_save_point_interaction(delta: float) -> void:
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		player_animation.scale = save_point_sit_visual_scale
 		_hide_save_point_equipment()
-		play_character_anim(String(SIT_ANIMATION), "equip_idle")
+		play_character_anim(String(SIT_ANIMATION))
 		if current_gloves and current_gloves.has_method("enter_save_point_pose"):
 			current_gloves.enter_save_point_pose()
 		call_deferred("_complete_save_point_sit_down")

@@ -1,0 +1,892 @@
+[gd_resource type="AnimationLibrary" format=3 uid="uid://d1sl3q5uubg1k"]
+
+[sub_resource type="Animation" id="Animation_00_air_double_attack"]
+resource_name = "Air_Double_Attack"
+length = 0.675
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-12, -43), Vector2(-12, -43), Vector2(-12, -43), Vector2(-15, -41), Vector2(-8, -20), Vector2(50, -32), Vector2(51, -63), Vector2(46, -68), Vector2(45, -67), Vector2(45, -68), Vector2(45, -68), Vector2(45, -68), Vector2(45, -68), Vector2(45, -67), Vector2(46, -67), Vector2(50, -60), Vector2(18, -12), Vector2(-17, -29), Vector2(-16, -38), Vector2(-16, -39), Vector2(-15, -40), Vector2(-15, -40), Vector2(-15, -40), Vector2(-14, -41), Vector2(-15, -41), Vector2(-15, -41), Vector2(-14, -41)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-4.931699, -4.931699, -4.931699, -4.806745, -5.3967953, -7.4284897, -2.3188128, -2.4766235, -2.516593, -2.4057634, -2.3778415, -2.4553857, -2.4421954, -2.523489, -2.4182384, -2.1872258, -0.2874018, 1.1737012, 1.4306127, 1.4006983, 1.340641, 1.4300152, 1.3174742, 1.2940317, 1.3127741, 1.2579082, 1.3376852]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.905, 0.905), Vector2(0.905, 0.905), Vector2(0.905, 0.905), Vector2(0.905, 0.905), Vector2(1.128016, 1.0723189), Vector2(1.0128146, 0.95727676), Vector2(1.0555261, 0.9853529), Vector2(1.1710995, 0.77231234), Vector2(1.2090504, 0.9443835), Vector2(1.2305723, 0.8889012), Vector2(1.2555531, 0.8862715), Vector2(1.199249, 0.82151604), Vector2(1.2358383, 0.8239888), Vector2(1.1747614, 0.96176076), Vector2(1.2692982, 0.7958866), Vector2(1.2555958, 0.9499935), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.2145442, 0.9954393), Vector2(1.1082253, 1.0602888), Vector2(1.0968642, 1.1605269), Vector2(1.1246821, 0.9723989), Vector2(1.1441523, 1.025451), Vector2(1.1201298, 1.0472083), Vector2(1.1754591, 0.9730413), Vector2(1.1509565, 0.8891489), Vector2(1.1310735, 0.89134467)]
+}
+
+[sub_resource type="Animation" id="Animation_01_dash"]
+resource_name = "Dash"
+length = 0.2
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, -20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4610845]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_02_grapple_diagonal"]
+resource_name = "Grapple_Diagonal"
+length = 0.333333333
+step = 0.055555556
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-5, -13), Vector2(33, -44), Vector2(32, -46), Vector2(48, -49), Vector2(48, -52), Vector2(-7, -13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-1.7286265, -2.0157094, -2.1923327, -2.018285, -2.0813231, -1.6559155]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9186459, 0.8763755), Vector2(0.9894122, 1.211752), Vector2(0.8603605, 1.1220304), Vector2(1.0304636, 1.1504915), Vector2(0.96281546, 1.1861267), Vector2(0.9568843, 0.792327)]
+}
+
+[sub_resource type="Animation" id="Animation_03_grapple_horizontal"]
+resource_name = "Grapple_Horizontal"
+length = 0.333333333
+step = 0.055555556
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-11, -19), Vector2(37, -27), Vector2(51, -31), Vector2(56, -28), Vector2(36, -28), Vector2(-10, -18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-1.7903411, -1.5096161, -1.4594661, -1.4442099, -1.5188277, -1.6901654]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9507499, 1.1381209), Vector2(1.0113564, 1.176009), Vector2(1.0311065, 1.3742381), Vector2(1.0605265, 1.4917446), Vector2(0.9526805, 1.23188), Vector2(0.8798283, 0.89624673)]
+}
+
+[sub_resource type="Animation" id="Animation_04_grapple_strike"]
+resource_name = "Grapple_Strike"
+length = 0.275
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(18, -10), Vector2(-17, -29), Vector2(-16, -38), Vector2(-15, -39), Vector2(-15, -40), Vector2(-15, -40), Vector2(-15, -40), Vector2(-14, -41), Vector2(-14, -41), Vector2(-14, -41), Vector2(-15, -40)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.36419708, 1.0096112, 1.3390697, 1.3678018, 1.4707341, 1.4698787, 1.4974644, 7.6272807, 1.3673776, 1.3377596, 1.3241583]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.1329409, 1.1329409), Vector2(1.0526441, 1.0526441), Vector2(1.2249389, 0.83687174), Vector2(1.3339047, 0.9042055), Vector2(1.2905209, 0.90203667), Vector2(1.1296914, 0.92671597), Vector2(1.2285007, 0.9329973), Vector2(1.2756912, 0.9750619), Vector2(1.2595417, 0.9237426)]
+}
+
+[sub_resource type="Animation" id="Animation_05_ground_attack_combo_1"]
+resource_name = "Ground_Attack_Combo_1"
+length = 0.466666667
+step = 0.03333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-17, -30), Vector2(-15, -31), Vector2(-11, -20), Vector2(36, -65), Vector2(24, -63), Vector2(29, -67), Vector2(47, -13), Vector2(15, -3), Vector2(0, -3), Vector2(-13, -18), Vector2(-15, -23), Vector2(-16, -28), Vector2(-16, -31), Vector2(-16, -25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.1450902, 1.1009268, 1.0007837, -2.7887044, -3.4570131, -3.4492872, -1.267109, 0.048149586, 0.49518645, 1.1919247, 1.2538397, 1.1703383, 1.160005, 1.1146258]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.3042083, 0.7467417), Vector2(1.1393116, 0.7780701), Vector2(1.3641688, 0.84511846), Vector2(1.2626623, 1.1767843), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_06_ground_attack_combo_1_backpedal"]
+resource_name = "Ground_Attack_Combo_1_Backpedal"
+length = 0.466666667
+step = 0.03333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-15, -29), Vector2(-15, -30), Vector2(-12, -25), Vector2(15, -3), Vector2(29, -62), Vector2(12, -72), Vector2(8, -73), Vector2(8, -73), Vector2(28, -65), Vector2(-18, -24), Vector2(-16, -29), Vector2(-15, -30), Vector2(-14, -30), Vector2(-13, -31)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.2072529, 1.13458, 0.9833195, -0.16168213, -2.4706426, -3.4379876, -3.82872, -3.737593, -2.8305125, 0.9757956, 1.1090645, 1.0714363, 1.129158, 1.1066102]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9159479, 0.84211946), Vector2(0.8687094, 0.81065184), Vector2(1.0192558, 0.9481887), Vector2(1.0155817, 0.8799753), Vector2(1.1538476, 0.6795297), Vector2(1.0290068, 0.625169), Vector2(0.99828666, 0.9273566), Vector2(1.1321688, 0.8897733), Vector2(1.0913904, 0.921586), Vector2(1.0849395, 0.9485114), Vector2(0.86006266, 0.92482316), Vector2(0.85874534, 0.87600535), Vector2(0.95077443, 1.0470778), Vector2(1.012364, 0.98148257)]
+}
+
+[sub_resource type="Animation" id="Animation_07_ground_attack_combo_2"]
+resource_name = "Ground_Attack_Combo_2"
+length = 0.633333333
+step = 0.03333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-17, -30), Vector2(-16, -32), Vector2(16, -10), Vector2(45, -31), Vector2(45, -31), Vector2(35, -65), Vector2(25, -62), Vector2(28, -68), Vector2(47, -12), Vector2(47, -13), Vector2(15, -3), Vector2(14, -3), Vector2(1, -4), Vector2(-13, -19), Vector2(-15, -24), Vector2(-17, -28), Vector2(-16, -32), Vector2(-16, -25), Vector2(-16, -27)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.2071029, 1.149506, -0.323192, -1.268014, -1.267109, -2.714373, 2.998759, 3.0103867, -1.4045675, -1.3375851, -0.021601915, -0.044373035, 0.6460537, 1.1678962, 1.1386715, 1.1764492, 1.0733246, 1.06573, 1.0928885]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.0166479, 0.9306474), Vector2(1.0919868, 0.95492584), Vector2(1.1298779, 0.7020549), Vector2(1.2468354, 0.84167653), Vector2(1.3227899, 0.63802683), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_08_ground_attack_combo_2_backpedal"]
+resource_name = "Ground_Attack_Combo_2_Backpedal"
+length = 0.633333333
+step = 0.03333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-14, -30), Vector2(-14, -30), Vector2(-14, -29), Vector2(-13, -25), Vector2(-2, -17), Vector2(35, -29), Vector2(30, -62), Vector2(14, -72), Vector2(10, -73), Vector2(9, -73), Vector2(8, -73), Vector2(11, -73), Vector2(28, -66), Vector2(4, -17), Vector2(-18, -25), Vector2(-16, -29), Vector2(-15, -29), Vector2(-15, -30), Vector2(-14, -31)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0173293, 1.1553128, 1.1165224, 1.0377504, 0.51653916, -1.0383272, -2.5611112, 2.8541255, 2.6891463, 2.5631168, 2.7057679, 2.8240325, -2.7671149, -0.36571187, 1.1053747, 1.1524407, 1.1074686, 1.0957992, 1.0626849]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.6877683, 0.9382067), Vector2(0.8033849, 0.7939959), Vector2(0.88205904, 0.8566313), Vector2(0.92446756, 0.77382815), Vector2(0.91912323, 0.7480245), Vector2(0.92929554, 0.9476896), Vector2(1.0046328, 0.74632823), Vector2(0.95773506, 0.8486825), Vector2(1.0460634, 0.6753181), Vector2(0.93397623, 0.809211), Vector2(1.0946051, 0.646464), Vector2(1.0704695, 0.7231281), Vector2(1.0875845, 0.72970015), Vector2(1.1890632, 0.7867503), Vector2(1.13294, 0.97118646), Vector2(0.9900356, 0.9872571), Vector2(0.9948734, 1.0464942), Vector2(0.8236722, 0.87541837), Vector2(0.84424853, 0.91200227)]
+}
+
+[sub_resource type="Animation" id="Animation_09_ground_attack_combo_2_stationary"]
+resource_name = "Ground_Attack_Combo_2_Stationary"
+length = 0.633333333
+step = 0.03333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-16, -25), Vector2(-15, -26), Vector2(-17, -24), Vector2(-12, -18), Vector2(15, -14), Vector2(43, -40), Vector2(39, -51), Vector2(34, -55), Vector2(34, -56), Vector2(34, -55), Vector2(-7, -16), Vector2(-31, -19), Vector2(-34, -26), Vector2(-35, -26), Vector2(-34, -27), Vector2(-34, -26), Vector2(-29, -26), Vector2(-28, -25), Vector2(-25, -25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.10774, -5.116568, 1.180413, 0.9607328, -0.06128955, -1.6069583, -2.4278884, -2.8871164, -2.9126127, -2.982818, -0.9861677, 1.2386484, 1.4700416, 1.6105913, 1.4557441, 1.5617809, 1.3940512, 1.352624, 1.2694577]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.5, 0.53333336, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.7356647, 0.779596), Vector2(0.71977466, 0.66528046), Vector2(0.8075866, 0.6686914), Vector2(0.8288568, 0.7012554), Vector2(0.8680553, 0.70300853), Vector2(0.87374604, 0.83534956), Vector2(0.8252252, 0.6584387), Vector2(0.9084878, 0.6401134), Vector2(0.8568776, 0.682472), Vector2(0.7431016, 0.75498635), Vector2(1.0068669, 0.6401695), Vector2(0.930078, 0.60579693), Vector2(0.93245274, 0.7466218), Vector2(0.85955054, 0.6080655), Vector2(0.783947, 0.7412712), Vector2(0.8764596, 0.648664), Vector2(0.83650005, 0.79288274), Vector2(0.81152827, 0.6774383), Vector2(0.8685044, 0.72991204)]
+}
+
+[sub_resource type="Animation" id="Animation_10_idle"]
+resource_name = "Idle"
+length = 1.375
+loop_mode = 1
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20833333, 0.45833334, 0.8333333, 1.3333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-22, -15.46), Vector2(-23, -16), Vector2(-22, -15), Vector2(-19, -15), Vector2(-22, -15.545)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.20833333, 0.45833334, 0.8333333, 1.3333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.3333128, 0.39492622, 0.3735035, 0.31121445, 0.351244]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.20833333, 0.45833334, 0.8333333, 1.3333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2125078, 1.0507568), Vector2(1.2627755, 0.96542907), Vector2(1.312896, 0.91682416), Vector2(1.2386066, 0.93808675), Vector2(1.2324938, 1.0156248)]
+}
+
+[sub_resource type="Animation" id="Animation_11_jump_apex"]
+resource_name = "Jump_Apex"
+length = 0.5
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-36, -25), Vector2(-36, -25), Vector2(-36, -25), Vector2(-36, -25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.51154673, 0.53423655, 0.5453118, 0.57699573]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_12_jump_ascent"]
+resource_name = "Jump_Ascent"
+length = 0.5
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-28, -39), Vector2(-18, -15), Vector2(-28, -41), Vector2(-28, -41)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.92655385, -1.267109, 0.97667724, 0.95255506]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_13_jump_descent"]
+resource_name = "Jump_Descent"
+length = 0.5
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-21, -36), Vector2(-21, -36), Vector2(-21, -36), Vector2(-21, -36)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.70769536, 0.73111475, 0.6957406, 0.6923784]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.1184957, 0.9678247), Vector2(1.158445, 0.8625025), Vector2(1.2627926, 0.88582075), Vector2(1.2021455, 0.88882446)]
+}
+
+[sub_resource type="Animation" id="Animation_14_jump_land"]
+resource_name = "Jump_Land"
+length = 0.333333333
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-30, -24), Vector2(-29, -24), Vector2(-28, -21), Vector2(-28, -22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [1.063147, 1.0260226, 1.0421826, 1.0915487]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.3051466, 1.0591419), Vector2(1.2645357, 1.0690064), Vector2(1.2036197, 1.1402568), Vector2(1.2161527, 1.0646367)]
+}
+
+[sub_resource type="Animation" id="Animation_15_ledge_climb"]
+resource_name = "Ledge_Climb"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-4, -3), Vector2(68, -69), Vector2(-20, -26), Vector2(-31, -24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.060332507, -2.7197516, 0.0041025877, 1.0665976]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.68741053, 0.95542943), Vector2(1.0690325, 0.9042137), Vector2(1.235, 1.235), Vector2(1.2574885, 0.85167485)]
+}
+
+[sub_resource type="Animation" id="Animation_16_neutral_special_attack"]
+resource_name = "Neutral_Special_Attack"
+length = 1.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1, 1.025, 1.05, 1.075, 1.1, 1.125, 1.15, 1.175),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-13, -32), Vector2(-12.8, -33), Vector2(-12.6, -34), Vector2(-12.4, -35), Vector2(-12.2, -36), Vector2(-12, -37), Vector2(-12, -41), Vector2(-12, -45), Vector2(-12.5, -47), Vector2(-13, -49), Vector2(-13, -50), Vector2(-13, -51), Vector2(-13, -51), Vector2(-13, -51), Vector2(-3.5, -53), Vector2(6, -55), Vector2(30, -40), Vector2(24, 20), Vector2(24, 19), Vector2(24, 18), Vector2(23.90909, 17.90909), Vector2(23.818182, 17.818182), Vector2(23.727272, 17.727272), Vector2(23.636364, 17.636364), Vector2(23.545454, 17.545454), Vector2(23.454546, 17.454546), Vector2(23.363636, 17.363636), Vector2(23.272728, 17.272728), Vector2(23.181818, 17.181818), Vector2(23.09091, 17.09091), Vector2(23, 17), Vector2(22.333334, 15.333333), Vector2(21.666666, 13.666666), Vector2(21, 12), Vector2(16, -4), Vector2(5, -27), Vector2(-9, -34), Vector2(-11, -34), Vector2(-11, -35), Vector2(-11.125, -34.875), Vector2(-11.25, -34.75), Vector2(-11.375, -34.625), Vector2(-11.5, -34.5), Vector2(-11.625, -34.375), Vector2(-11.75, -34.25), Vector2(-11.875, -34.125), Vector2(-12, -34), Vector2(-12, -33)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1, 1.025, 1.05, 1.075, 1.1, 1.125, 1.15, 1.175),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-2.3385248, -2.3592367, -2.3799486, -2.4006605, -2.4213724, -2.4420843, -2.5155368, -2.5889893, -2.6084337, -2.6278782, -2.6334271, -2.638976, -2.6257873, -2.6125984, -2.5625653, -2.5125322, -2.9735186, -0.38454592, -0.34211555, -0.29968518, -0.3001104484904896, -0.3005357167937539, -0.30096098509701813, -0.3013862534002824, -0.3018115217035467, -0.302236790006811, -0.30266205831007525, -0.30308732661333954, -0.30351259491660376, -0.30393786321986804, -0.30436313, -0.36849294106165564, -0.432622750600179, -0.49675256, -1.267109, -1.8122264, -2.1250286, -2.3049405, -2.3461814, -2.348753333091736, -2.3513253, -2.353897213935852, -2.3564692, -2.3590410947799683, -2.361613, -2.3641849756240845, -2.366757, -2.4081666]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1, 1.025, 1.05, 1.075, 1.1, 1.125, 1.15, 1.175),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2709059, 0.96356064), Vector2(1.2539619, 0.9663074), Vector2(1.237018, 0.9690541), Vector2(1.2200739, 0.97180086), Vector2(1.20313, 0.97454756), Vector2(1.1861861, 0.9772943), Vector2(1.204186, 0.8485619), Vector2(1.222186, 0.7198295), Vector2(1.1728597, 0.6960077), Vector2(1.1235335, 0.67218596), Vector2(1.1257595, 0.64063615), Vector2(1.1279855, 0.60908633), Vector2(1.0937316, 0.6597023), Vector2(1.0594778, 0.7103182), Vector2(1.1610603, 0.76303256), Vector2(1.2626427, 0.81574684), Vector2(-1.3398176, 0.7429852), Vector2(1.1408696, 1.121006), Vector2(1.2028632, 1.1292689), Vector2(1.2648568, 1.1375319), Vector2(1.2592043, 1.1301198), Vector2(1.2535516, 1.1227076), Vector2(1.247899, 1.1152955), Vector2(1.2422464, 1.1078833), Vector2(1.2365938, 1.1004713), Vector2(1.2309412, 1.0930591), Vector2(1.2252886, 1.085647), Vector2(1.219636, 1.0782348), Vector2(1.2139834, 1.0708227), Vector2(1.2083308, 1.0634105), Vector2(1.2026782, 1.0559984), Vector2(1.2134521, 1.1156657), Vector2(1.2242261, 1.1753328), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.1676474, 0.925165), Vector2(1.1034249, 0.8873318), Vector2(1.1885608, 0.91237694), Vector2(1.141738, 0.92396444), Vector2(1.1354029, 0.93014014), Vector2(1.1290678, 0.9363158), Vector2(1.1227326, 0.9424915), Vector2(1.1163974, 0.94866717), Vector2(1.1100622, 0.9548428), Vector2(1.1037271, 0.9610185), Vector2(1.097392, 0.96719414), Vector2(1.0910568, 0.97336984), Vector2(1.1666131, 1.0130308)]
+}
+
+[sub_resource type="Animation" id="Animation_0hp4f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-12.000002, -44)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-2.178171]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.965, 0.965)]
+}
+
+[sub_resource type="Animation" id="Animation_17_run"]
+resource_name = "Run"
+length = 0.458333333
+loop_mode = 1
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-15, -33), Vector2(-17, -37), Vector2(-18, -38), Vector2(-16, -34), Vector2(20, -7), Vector2(55, -15), Vector2(52.5, -13.5), Vector2(50, -12), Vector2(46, -10), Vector2(23, -8), Vector2(-10, -27)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.1493989, 1.119032, 1.1643666, 1.1342404, -0.94503874, -1.8968513, -1.8774474263191223, -1.8580436, -1.8212068, -0.9771732, 0.7718478]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.235, 1.235), Vector2(1.1359042, 1.0560857), Vector2(1.1914542, 1.0081729), Vector2(1.247004, 0.96026003), Vector2(1.2475847, 0.99009717), Vector2(1.235, 1.235), Vector2(1.235, 1.235)]
+}
+
+[sub_resource type="Animation" id="Animation_18_sit"]
+resource_name = "Sit"
+length = 2.666666667
+step = 0.055555556
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778, 0.33333334, 0.3888889, 0.44444445, 0.5, 0.5555556, 0.6111111, 0.6666667, 0.7222222, 0.7777778, 0.8333333, 0.8888889, 0.9444444, 1, 1.0555556, 1.1111112, 1.1666666, 1.2222222, 1.2777778, 1.3333334, 1.3888888, 1.4444444, 1.5, 1.5555556, 1.6111112, 1.6666666, 1.7222222, 1.7777778, 1.8333334, 1.8888888, 1.9444444, 2, 2.0555556, 2.1111112, 2.1666667, 2.2222223, 2.2777777, 2.3333333, 2.3888888, 2.4444444, 2.5, 2.5555556, 2.6111112),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-32, -21), Vector2(-32.444443, -21.11111), Vector2(-32.88889, -21.222221), Vector2(-33.333332, -21.333334), Vector2(-33.77778, -21.444445), Vector2(-34.22222, -21.555555), Vector2(-34.666668, -21.666666), Vector2(-35.11111, -21.777779), Vector2(-35.555557, -21.88889), Vector2(-36, -22), Vector2(-35.5, -22), Vector2(-35, -22), Vector2(-34.5, -22), Vector2(-34, -22), Vector2(-32.5, -21), Vector2(-31, -20), Vector2(-29, -21), Vector2(-29.333334, -19.666666), Vector2(-29.666666, -18.333334), Vector2(-30, -17), Vector2(-32.333332, -12.333333), Vector2(-34.666668, -7.666666), Vector2(-37, -3), Vector2(-39, 4.5), Vector2(-41, 12), Vector2(-40.5, 18), Vector2(-40, 24), Vector2(-40.5, 29), Vector2(-41, 34), Vector2(-41.5, 39), Vector2(-42, 44), Vector2(-41, 46.5), Vector2(-40, 49), Vector2(-39, 49.5), Vector2(-38, 50), Vector2(-37, 50.5), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51), Vector2(-36, 51)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778, 0.33333334, 0.3888889, 0.44444445, 0.5, 0.5555556, 0.6111111, 0.6666667, 0.7222222, 0.7777778, 0.8333333, 0.8888889, 0.9444444, 1, 1.0555556, 1.1111112, 1.1666666, 1.2222222, 1.2777778, 1.3333334, 1.3888888, 1.4444444, 1.5, 1.5555556, 1.6111112, 1.6666666, 1.7222222, 1.7777778, 1.8333334, 1.8888888, 1.9444444, 2, 2.0555556, 2.1111112, 2.1666667, 2.2222223, 2.2777777, 2.3333333, 2.3888888, 2.4444444, 2.5, 2.5555556, 2.6111112),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.26449156, 0.27669330106841195, 0.2888950440618727, 0.30109678705533344, 0.3132985300487942, 0.325500273042255, 0.3377020160357157, 0.3499037590291765, 0.36210550202263725, 0.37430725, 0.38685741275548935, 0.3994075804948807, 0.411957748234272, 0.42450792, 0.41697368, 0.40943944, 0.4724079, 0.4724744458993276, 0.4725409845511119, 0.47260752, 0.47262277205785114, 0.4726380209128062, 0.47265327, 0.45172626, 0.43079925, 0.40236318, 0.37392712, 0.35203242, 0.33013773, 0.37634844, 0.42255914, 0.5431269, 0.6636946, 0.6753417551517487, 0.6869889, 0.6986360251903534, 0.71028316, 0.7185315110466697, 0.7267798618836836, 0.7350282127206976, 0.7432765635577115, 0.7515249143947255, 0.7597732652317394, 0.7680216160687533, 0.7762699669057673, 0.7845183177427812, 0.7927666685797952, 0.801015]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.055555556, 0.11111111, 0.16666667, 0.22222222, 0.2777778, 0.33333334, 0.3888889, 0.44444445, 0.5, 0.5555556, 0.6111111, 0.6666667, 0.7222222, 0.7777778, 0.8333333, 0.8888889, 0.9444444, 1, 1.0555556, 1.1111112, 1.1666666, 1.2222222, 1.2777778, 1.3333334, 1.3888888, 1.4444444, 1.5, 1.5555556, 1.6111112, 1.6666666, 1.7222222, 1.7777778, 1.8333334, 1.8888888, 1.9444444, 2, 2.0555556, 2.1111112, 2.1666667, 2.2222223, 2.2777777, 2.3333333, 2.3888888, 2.4444444, 2.5, 2.5555556, 2.6111112),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.4822003, 1.2787228), Vector2(1.4788485, 1.2833778), Vector2(1.4754966, 1.2880329), Vector2(1.4721448, 1.2926879), Vector2(1.468793, 1.2973429), Vector2(1.4654413, 1.301998), Vector2(1.4620895, 1.306653), Vector2(1.4587377, 1.311308), Vector2(1.4553859, 1.3159631), Vector2(1.4520341, 1.3206182), Vector2(1.4485055, 1.3155968), Vector2(1.4449769, 1.3105755), Vector2(1.4414483, 1.3055542), Vector2(1.4379197, 1.3005328), Vector2(1.4009535, 1.2914286), Vector2(1.3639872, 1.2823244), Vector2(1.5568517, 1.237783), Vector2(1.5374897, 1.2323654), Vector2(1.5181274, 1.2269477), Vector2(1.4987653, 1.2215301), Vector2(1.5171037, 1.224743), Vector2(1.535442, 1.2279559), Vector2(1.5537803, 1.2311689), Vector2(1.608666, 1.2608228), Vector2(1.6635517, 1.2904768), Vector2(1.61152, 1.2991123), Vector2(1.5594885, 1.3077477), Vector2(1.5646539, 1.1973495), Vector2(1.5698191, 1.0869513), Vector2(1.5874194, 1.0482271), Vector2(1.6050197, 1.0095028), Vector2(1.6523793, 0.9740285), Vector2(1.6997389, 0.9385543), Vector2(1.7463179, 0.9432615), Vector2(1.7928969, 0.9479688), Vector2(1.8394759, 0.95267606), Vector2(1.8860549, 0.9573833), Vector2(1.8685095, 0.9377271), Vector2(1.8509642, 0.918071), Vector2(1.8334187, 0.8984148), Vector2(1.8158734, 0.8787586), Vector2(1.798328, 0.8591025), Vector2(1.7807827, 0.8394463), Vector2(1.7632374, 0.8197901), Vector2(1.745692, 0.800134), Vector2(1.7281466, 0.7804778), Vector2(1.7106012, 0.7608217), Vector2(1.6930559, 0.7411655)]
+}
+
+[sub_resource type="Animation" id="Animation_19_wall_cling"]
+resource_name = "Wall_Cling"
+length = 0.666666667
+loop_mode = 1
+step = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-4, -3), Vector2(-4, -3), Vector2(-4, -3), Vector2(-4, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.059984833, 0.05170618, 0.043427527, 0.035148874]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.066518, 1.062117), Vector2(1.0476267, 1.0931257), Vector2(1.0287354, 1.1241344), Vector2(1.0098442, 1.1551431)]
+}
+
+[resource]
+_data = {
+&"Air_Double_Attack": SubResource("Animation_00_air_double_attack"),
+&"Dash": SubResource("Animation_01_dash"),
+&"Grapple_Diagonal": SubResource("Animation_02_grapple_diagonal"),
+&"Grapple_Horizontal": SubResource("Animation_03_grapple_horizontal"),
+&"Grapple_Strike": SubResource("Animation_04_grapple_strike"),
+&"Ground_Attack_Combo_1": SubResource("Animation_05_ground_attack_combo_1"),
+&"Ground_Attack_Combo_1_Backpedal": SubResource("Animation_06_ground_attack_combo_1_backpedal"),
+&"Ground_Attack_Combo_2": SubResource("Animation_07_ground_attack_combo_2"),
+&"Ground_Attack_Combo_2_Backpedal": SubResource("Animation_08_ground_attack_combo_2_backpedal"),
+&"Ground_Attack_Combo_2_Stationary": SubResource("Animation_09_ground_attack_combo_2_stationary"),
+&"Idle": SubResource("Animation_10_idle"),
+&"Jump_Apex": SubResource("Animation_11_jump_apex"),
+&"Jump_Ascent": SubResource("Animation_12_jump_ascent"),
+&"Jump_Descent": SubResource("Animation_13_jump_descent"),
+&"Jump_Land": SubResource("Animation_14_jump_land"),
+&"Ledge_Climb": SubResource("Animation_15_ledge_climb"),
+&"Neutral_Special_Attack": SubResource("Animation_16_neutral_special_attack"),
+&"RESET": SubResource("Animation_0hp4f"),
+&"Run": SubResource("Animation_17_run"),
+&"Sit": SubResource("Animation_18_sit"),
+&"Wall_Cling": SubResource("Animation_19_wall_cling")
+}

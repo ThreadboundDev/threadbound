@@ -2364,7 +2364,6 @@ if ($BackpedalAttackVideo) {
 }
 
 $attackJobs = @(
-    @("Assets\Threadborne\New Attack\threadborn_grounded_attack.png", "attacks\ground_forward.png", 6, 8, 1024, 0.75),
     @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.6428571),
     @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png", "attacks\ground_combo_02.png", 5, 5, 640, 0.9),
@@ -2568,7 +2567,6 @@ $runtimeRasterAssets = @(
     @("movement\wall_cling_cycle.png", 1280, 1280),
     @("grapple\toss_horizontal_cycle.png", 1920, 1280),
     @("grapple\toss_diagonal_cycle.png", 1920, 1280),
-    @("attacks\ground_forward.png", 6144, 8192),
     @("attacks\neutral_special.png", 6144, 8192),
     @("attacks\ground_combo_01.png", 3840, 2560),
     @("attacks\ground_combo_02.png", 3200, 3200),

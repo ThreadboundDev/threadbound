@@ -117,14 +117,6 @@
       }
     },
     "attacks": {
-      "ground_forward": {
-        "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png",
-        "grid": [6, 8],
-        "cell_size": 512,
-        "baked_source_scale": 0.75,
-        "playback_source_frames": [31, 32, 33],
-        "playback_fps": 6.0
-      },
       "neutral_special": {
         "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png",
         "grid": [6, 8],

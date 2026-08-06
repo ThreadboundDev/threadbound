@@ -1,0 +1,154 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/grapple_pose_authoring/grapple_pose_dock.gd" id="1_dock"]
+
+[node name="GrapplePoseDock" type="Control"]
+custom_minimum_size = Vector2(0, 176)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dock")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rows" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TopRow" type="HBoxContainer" parent="Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OpenButton" type="Button" parent="Margin/Rows/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Open / Refresh Player View"
+
+[node name="VariantLabel" type="Label" parent="Margin/Rows/TopRow"]
+layout_mode = 2
+text = "Library"
+
+[node name="VariantOption" type="OptionButton" parent="Margin/Rows/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 4
+popup/item_0/text = "Base"
+popup/item_0/id = 0
+popup/item_1/text = "Red (Shared Base Keys)"
+popup/item_1/id = 1
+popup/item_2/text = "Blue (Shared Base Keys)"
+popup/item_2/id = 2
+popup/item_3/text = "Yellow (Shared Base Keys)"
+popup/item_3/id = 3
+
+[node name="AnimationLabel" type="Label" parent="Margin/Rows/TopRow"]
+layout_mode = 2
+text = "Animation"
+
+[node name="AnimationOption" type="OptionButton" parent="Margin/Rows/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(245, 0)
+layout_mode = 2
+
+[node name="ShortcutsToggle" type="CheckButton" parent="Margin/Rows/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Authoring Shortcuts"
+
+[node name="OnionSkinToggle" type="CheckButton" parent="Margin/Rows/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Onion Skin"
+
+[node name="TimelineRow" type="HBoxContainer" parent="Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PreviousButton" type="Button" parent="Margin/Rows/TimelineRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "◀ Previous"
+
+[node name="FrameSpin" type="SpinBox" parent="Margin/Rows/TimelineRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+step = 1.0
+allow_greater = false
+allow_lesser = false
+
+[node name="NextButton" type="Button" parent="Margin/Rows/TimelineRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Next ▶"
+
+[node name="PlayButton" type="Button" parent="Margin/Rows/TimelineRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Play"
+
+[node name="FrameInfo" type="Label" parent="Margin/Rows/TimelineRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Frame 0 / 0   Time 0.000s"
+
+[node name="PoseRow" type="HBoxContainer" parent="Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SelectHandButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select Hand (Position)"
+
+[node name="SelectWristButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select Wrist (Rotation + Scale)"
+
+[node name="CaptureButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 1, 0.78, 1)
+text = "Capture Pose"
+
+[node name="CaptureNextButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 1, 0.7, 1)
+text = "Capture + Next"
+
+[node name="ResetInterpolateButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Frame to Interpolate"
+
+[node name="RevertButton" type="Button" parent="Margin/Rows/PoseRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Revert Frame"
+
+[node name="HintLabel" type="Label" parent="Margin/Rows"]
+layout_mode = 2
+text = "Unchanged Capture + Next marks interpolation. W: Move • E/R: Rotate/Scale • Mouse 4: Capture + Next."
+
+[node name="StatusLabel" type="Label" parent="Margin/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+modulate = Color(0.72, 0.9, 0.78, 1)
+text = "Open the Player view to begin."
