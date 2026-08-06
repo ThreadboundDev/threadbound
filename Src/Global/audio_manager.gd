@@ -39,6 +39,8 @@ var _music_player_index := 0
 var _boss_music_active := false
 var _pause_music_active := false
 var _game_over_music_active := false
+var _paused_music_name := &""
+var _paused_music_position := 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -112,6 +114,7 @@ func play_title_screen_music() -> AudioStreamPlayer:
 	_boss_music_active = false
 	_pause_music_active = false
 	_game_over_music_active = false
+	_clear_paused_music_resume()
 	stop_loop(&"music_cotfw_background")
 	return play_music(&"music_title", 0.0, DEFAULT_MUSIC_FADE_DURATION)
 
@@ -119,6 +122,7 @@ func enter_gameplay_music() -> void:
 	_game_over_music_active = false
 	_pause_music_active = false
 	_boss_music_active = false
+	_clear_paused_music_resume()
 	play_loop(&"music_cotfw_background")
 	play_exploration_music()
 
@@ -141,20 +145,35 @@ func stop_boss_music() -> void:
 func play_pause_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> AudioStreamPlayer:
 	if _game_over_music_active:
 		return _music_player
+	if not _pause_music_active and _music_player and _music_player.playing:
+		_paused_music_name = _current_music_name
+		_paused_music_position = _music_player.get_playback_position()
 	_pause_music_active = true
 	return play_music(&"music_pause", 0.0, fade_duration)
 
 func stop_pause_music() -> void:
 	_pause_music_active = false
+	if _paused_music_name != &"":
+		var resume_name := _paused_music_name
+		var resume_position := _paused_music_position
+		_clear_paused_music_resume()
+		play_music(resume_name, 0.0, DEFAULT_MUSIC_FADE_DURATION, resume_position)
+		return
 	_resume_gameplay_music()
 
 func play_game_over_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> AudioStreamPlayer:
 	_game_over_music_active = true
 	_pause_music_active = false
 	_boss_music_active = false
+	_clear_paused_music_resume()
 	return play_music(&"music_game_over", 0.0, fade_duration)
 
-func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration := 0.0) -> AudioStreamPlayer:
+func play_music(
+	sound_name: StringName,
+	volume_offset_db := 0.0,
+	fade_duration := 0.0,
+	start_position := 0.0
+) -> AudioStreamPlayer:
 	if _current_music_name == sound_name and _music_player and _music_player.playing:
 		return _music_player
 
@@ -174,7 +193,7 @@ func play_music(sound_name: StringName, volume_offset_db := 0.0, fade_duration :
 	next_player.bus = _resolve_bus(_get_sound_bus(sound), MUSIC_BUS)
 	next_player.volume_db = MIN_BUS_VOLUME_DB if fade_duration > 0.0 else target_volume
 	next_player.pitch_scale = _get_sound_pitch_scale(sound)
-	next_player.play()
+	next_player.play(maxf(0.0, start_position))
 	_music_player = next_player
 
 	if previous_player and previous_player != next_player and previous_player.playing:
@@ -199,6 +218,11 @@ func stop_music() -> void:
 	for player in _music_players:
 		_stop_music_player(player)
 	_current_music_name = &""
+	_clear_paused_music_resume()
+
+func _clear_paused_music_resume() -> void:
+	_paused_music_name = &""
+	_paused_music_position = 0.0
 
 func get_volume_categories() -> Array[StringName]:
 	return [&"master", &"music", &"ambient", &"sfx", &"ui"]

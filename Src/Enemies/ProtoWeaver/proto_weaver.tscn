@@ -10,15 +10,21 @@
 [ext_resource type="PackedScene" uid="uid://bbuxvfd44htht" path="res://Src/Enemies/Threadling/threadling.tscn" id="8_threadling"]
 [ext_resource type="Resource" uid="uid://dpif5qk5gouro" path="res://Src/Enemies/ProtoWeaver/proto_weaver_link_threadling_stats.tres" id="9_link_stats"]
 [ext_resource type="PackedScene" uid="uid://d2yp0m1u5qw7" path="res://Src/UI/boss_health_bar.tscn" id="10_boss_bar"]
-[ext_resource type="Texture2D" uid="uid://dav7m7xvqk42s" path="res://Assets/Enemys/proto_weaver/proto_weaver_beam_texture.png" id="11_beam"]
 [ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="12_hang"]
 [ext_resource type="Texture2D" uid="uid://bo6knlxuafjgq" path="res://Assets/Enemys/proto_weaver/proto_weaver_hang_thread.png" id="13_hang_thread"]
+[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver_beam.gd" id="14_beam_script"]
+
+[sub_resource type="Shader" id="Shader_clean_threadburst"]
+code = "shader_type canvas_item;\nuniform bool clean_threadburst = false;\n\nvoid fragment() {\n\tvec4 pixel = texture(TEXTURE, UV) * COLOR;\n\tif (clean_threadburst) {\n\t\tbool saturated_pink = pixel.r > 0.58 && pixel.b > 0.35 && pixel.g < pixel.r * 0.82;\n\t\tif (saturated_pink) {\n\t\t\tpixel.a = 0.0;\n\t\t}\n\t}\n\tCOLOR = pixel;\n}\n"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clean_threadburst"]
+shader = SubResource("Shader_clean_threadburst")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(196, 256)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
-radius = 1450.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detection"]
+size = Vector2(4300, 2050)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(336, 204)
@@ -32,7 +38,6 @@ walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
 threadburst_texture = ExtResource("6_threadburst")
 hang_texture = ExtResource("12_hang")
-beam_texture = ExtResource("11_beam")
 hang_thread_texture = ExtResource("13_hang_thread")
 thread_missile_scene = ExtResource("7_missile")
 armor_link_scene = ExtResource("8_threadling")
@@ -50,9 +55,9 @@ hang_columns = 5
 hang_rows = 10
 hang_frame_count = 48
 hang_fps = 18.0
-hang_scale_multiplier = 1.38
+hang_scale_multiplier = 1.4
 threadburst_every_n_attacks = 3
-hanging_laser_every_n_attacks = 6
+ground_sweep_every_n_attacks = 4
 threadburst_min_missile_count = 3
 threadburst_max_missile_count = 4
 threadburst_low_health_max_missile_count = 6
@@ -81,10 +86,14 @@ hang_rise_time = 0.45
 hang_return_time = 0.5
 hang_sway_pixels = 24.0
 hang_sway_speed = 2.2
-laser_shot_count = 2
-laser_tracking_time = 0.78
-laser_lock_time = 0.38
-laser_fire_time = 0.2
+phase_one_laser_shot_count = 5
+phase_two_laser_shot_count = 7
+laser_tracking_time = 0.46
+laser_lock_time = 0.24
+laser_fire_time = 0.28
+phase_two_timing_multiplier = 0.82
+phase_intershot_delay = 0.08
+phase_landing_punish_time = 0.9
 laser_damage = 30
 laser_hit_width = 42.0
 laser_max_distance = 980.0
@@ -110,13 +119,15 @@ scale = Vector2(0.64, 0.64)
 texture = ExtResource("4_walk")
 hframes = 6
 vframes = 8
+material = SubResource("ShaderMaterial_clean_threadburst")
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
-shape = SubResource("CircleShape2D_detection")
+position = Vector2(-50, -847)
+shape = SubResource("RectangleShape2D_detection")
 
 [node name="AttackArea" parent="." index="5"]
 position = Vector2(-210, -143)
@@ -149,17 +160,14 @@ texture_mode = 1
 
 [node name="DetachedHead" type="Sprite2D" parent="." index="11" unique_id=321134082]
 visible = false
-z_index = 8
+z_index = 1
 texture = ExtResource("12_hang")
 region_enabled = true
 region_rect = Rect2(430, 90, 420, 420)
 
-[node name="LaserLine" type="Line2D" parent="." index="12" unique_id=2113855632]
+[node name="AnimatedBeam" type="Node2D" parent="." index="12"]
 visible = false
-z_index = 7
-width = 9.0
-texture = ExtResource("11_beam")
-texture_mode = 1
+script = ExtResource("14_beam_script")
 
 [node name="BossHealthLayer" type="CanvasLayer" parent="." index="13" unique_id=1548498347]
 layer = 20

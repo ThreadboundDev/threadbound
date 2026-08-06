@@ -27,7 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://cndegq5udfsyc" path="res://Assets/Audio/SFX/UI Sounds/enter_world.mp3" id="25_enter_world"]
 [ext_resource type="AudioStream" uid="uid://1ts67vec44dl" path="res://Assets/Audio/Music/title.wav" id="26_music_title"]
 [ext_resource type="AudioStream" uid="uid://n8eit12x2dq6" path="res://Assets/Audio/Music/exploration.wav" id="27_music_exploration"]
-[ext_resource type="AudioStream" uid="uid://binsqpoc6guoy" path="res://Assets/Audio/Music/proto_weaver_fight.wav" id="28_music_boss"]
+[ext_resource type="AudioStream" uid="uid://crs8xjtcf0n6c" path="res://Assets/Audio/Music/proto_weaver_fight_v2.wav" id="28_music_boss"]
 [ext_resource type="AudioStream" uid="uid://csk0dsse0tc2e" path="res://Assets/Audio/Music/pause_menu.wav" id="29_music_pause"]
 [ext_resource type="AudioStream" uid="uid://g554v2e14y5a" path="res://Assets/Audio/Music/game_over.wav" id="30_music_game_over"]
 [ext_resource type="AudioStream" uid="uid://bshgqamtcyo14" path="res://Assets/Audio/Music/COTFW_background_loop.wav" id="31_music_cotfw_background"]

@@ -112,7 +112,7 @@
 [ext_resource type="Shader" uid="uid://t32t4ypnoj6e" path="res://Src/Environment/World/wing_grass_recolor.gdshader" id="grass_recolor_shader"]
 [ext_resource type="Texture2D" uid="uid://dldiybfap7cfw" path="res://Assets/chamber_of_first_weave/Follower/follower_neutral_decor_atlas.png" id="merchant_decor_atlas"]
 [ext_resource type="Script" uid="uid://t40ivx40kpml" path="res://Src/Environment/World/interactive_decoration.gd" id="merchant_interactive_decor"]
-[ext_resource type="Texture2D" path="res://Assets/chamber_of_first_weave/Follower/follower_wayfarers_loom.png" id="merchant_loom"]
+[ext_resource type="Texture2D" uid="uid://dpvdxcyshcdsn" path="res://Assets/chamber_of_first_weave/Follower/follower_wayfarers_loom.png" id="merchant_loom"]
 [ext_resource type="Texture2D" uid="uid://dtbfl1qttagub" path="res://Assets/chamber_of_first_weave/Follower/follower_neutral_nature_atlas.png" id="merchant_nature_atlas"]
 [ext_resource type="Script" uid="uid://c5v22e76ucgcm" path="res://Src/Environment/World/SceneOrganization/architecture_section.gd" id="org_architecture"]
 [ext_resource type="Script" uid="uid://dtlcu0f8ais42" path="res://Src/Environment/World/SceneOrganization/background_section.gd" id="org_background"]
@@ -266,7 +266,7 @@ region = Rect2(768, 683, 384, 341)
 filter_clip = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_arena_lock"]
-size = Vector2(5100, 2669)
+size = Vector2(4473, 2307)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_merchant_camera_zone"]
 size = Vector2(5725, 1460)
@@ -2137,14 +2137,35 @@ position = Vector2(6885, 4171)
 script = ExtResource("org_enemy")
 
 [node name="ProtoWeaver" parent="WorldArt/Rooms/BossArena/Enemies" unique_id=337995925 instance=ExtResource("17_f4x7l")]
-position = Vector2(5460, 4337)
+position = Vector2(5366, 4358)
 threadburst_spawn_offset = Vector2(0, -8)
 threadburst_horizontal_spread = 360.0
+phase_one_health_ratio = 0.6667
+phase_two_health_ratio = 0.3333
+ground_sweep_spawn_offset = Vector2(170, -4)
+ground_sweep_damage = 30
+ground_sweep_speed = 820.0
 chase_freely_after_aggro = true
-prefer_laser_when_player_above = true
-laser_preference_height_threshold = 210.0
-laser_preference_horizontal_range = 1500.0
-laser_preference_min_attacks_between = 2
+stagger_initial_threshold = 105.0
+stagger_threshold_increase = 30.0
+stagger_threshold_cap = 195.0
+stagger_per_damage = 1.0
+stagger_hitstun_weight = 80.0
+stagger_decay_delay = 0.0
+stagger_decay_per_second = 0.0
+stagger_duration = 0.58
+stagger_immunity_time = 1.35
+committed_attack_stagger_multiplier = 0.35
+heavy_interrupt_damage = 45
+heavy_interrupt_hitstun = 0.24
+stab_telegraph_hold_frame = 22
+stab_telegraph_hold_time = 0.2
+threadburst_telegraph_hold_frame = 23
+threadburst_telegraph_hold_time = 0.28
+ground_sweep_telegraph_hold_frame = 16
+ground_sweep_telegraph_hold_time = 0.42
+cleaned_threadburst_frame_count = 26
+stagger_pose_frame = 25
 boss_sfx_volume_offset_db = 1.5
 boss_stab_pitch = 0.78
 boss_threadburst_pitch = 0.72
@@ -2162,7 +2183,7 @@ prompt_read_text = "Up - Read"
 prompt_open_text = "Up - Face Boss"
 
 [node name="BossArenaLock" type="Area2D" parent="WorldArt/Rooms/BossArena/Doors" unique_id=1044286421]
-position = Vector2(6018, 3820)
+position = Vector2(5410, 3490)
 collision_layer = 0
 script = ExtResource("30_boss_arena_lock")
 boss_path = NodePath("../../Enemies/ProtoWeaver")
@@ -2171,7 +2192,7 @@ camera_path = NodePath("../../../../../Camera2D")
 room_grade_path = NodePath("../../../../../Atmosphere/RoomHueGrade")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldArt/Rooms/BossArena/Doors/BossArenaLock" unique_id=2067067542]
-position = Vector2(-51, -359)
+position = Vector2(-86.5, -128.5)
 shape = SubResource("RectangleShape2D_boss_arena_lock")
 
 [node name="SavePoints" type="Node" parent="WorldArt/Rooms/BossArena" unique_id=1100799089]
@@ -2181,15 +2202,16 @@ script = ExtResource("org_section")
 position = Vector2(768, 4381)
 
 [node name="BossRoomGlow" type="PointLight2D" parent="WorldArt/Rooms/BossArena" unique_id=155016364]
-position = Vector2(5237.5, 3440.9998)
-scale = Vector2(1.2522848, 0.74944437)
-energy = 4.53
-blend_mode = 2
+position = Vector2(5410, 3490)
+scale = Vector2(1.15, 0.82)
+color = Color(0.72, 0.9, 0.94, 1)
+energy = 1.45
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
+shadow_filter_smooth = 3.0
 texture = ExtResource("18_wing_light_falloff")
-texture_scale = 8.72
+texture_scale = 8.0
 
 [node name="TutorialArea" type="Node" parent="WorldArt/Rooms" unique_id=1425704591]
 script = ExtResource("org_room")
@@ -2218,7 +2240,7 @@ shape = SubResource("RectangleShape2D_merchant_camera_zone")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(6923, 1494)
+position = Vector2(7, -3612)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -2226,7 +2248,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(6923, 1494)
+position = Vector2(7, -3612)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200
