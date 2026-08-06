@@ -114,17 +114,28 @@ func get_frame_rate_limit_labels() -> Array[String]:
 	return labels
 
 func apply_settings() -> void:
-	if fullscreen:
+	# Godot's embedded game window cannot become fullscreen. Reapplying a saved
+	# fullscreen preference there repeatedly invalidates the Vulkan swapchain.
+	# Keep the preference intact so standalone runs still launch fullscreen.
+	var use_fullscreen := fullscreen and not _is_running_in_editor_window()
+	if use_fullscreen:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		var resolution := get_resolution()
 		DisplayServer.window_set_size(resolution)
-		_center_window(resolution)
+		if not _is_running_in_editor_window():
+			_center_window(resolution)
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED)
 	Engine.max_fps = FRAME_RATE_LIMITS[clampi(frame_rate_limit_index, 0, FRAME_RATE_LIMITS.size() - 1)]
 	_apply_quality_preset()
 	display_settings_changed.emit()
+
+func _is_running_in_editor_window() -> bool:
+	if not OS.has_feature("editor"):
+		return false
+	var command_line := OS.get_cmdline_args()
+	return command_line.has("-e") or command_line.has("--editor")
 
 func load_settings() -> void:
 	var config := ConfigFile.new()

@@ -24,6 +24,8 @@ func physics_update(delta: float) -> void:
 	enemy.update_attack_motion(delta)
 
 	var windup := enemy.stats.attack_windup if enemy.stats else 0.18
+	if enemy.has_method("get_attack_windup"):
+		windup = enemy.get_attack_windup()
 	var active_time := enemy.stats.attack_active_time if enemy.stats else 0.14
 	var recovery := enemy.stats.attack_recovery if enemy.stats else 0.28
 
