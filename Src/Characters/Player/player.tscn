@@ -33,7 +33,6 @@
 [ext_resource type="Texture2D" uid="uid://brwaxrjpcjgfj" path="res://Assets/VFX/wall_cling_VFX.png" id="100_wall_cling_vfx"]
 [ext_resource type="PackedScene" path="res://Src/Characters/Player/flow_state_vfx.tscn" id="101_flow_aura"]
 [ext_resource type="Texture2D" uid="uid://byaf0fqi4v452" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png" id="102_smash_attack"]
-[ext_resource type="Texture2D" uid="uid://cusgwtlgk67cf" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_forward.png" id="103_attack_forward_new"]
 [ext_resource type="Texture2D" uid="uid://b8b4gnm2ky5ho" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png" id="106_video_attack_02"]
 [ext_resource type="Texture2D" uid="uid://885f7jiibwkb" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png" id="109_air_attack_01"]
 [ext_resource type="Texture2D" uid="uid://djqbhb6nvbbro" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png" id="111_stationary_combo_02"]
@@ -155,18 +154,6 @@ region = Rect2(416, 1664, 416, 416)
 [sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_01_26"]
 atlas = ExtResource("109_air_attack_01")
 region = Rect2(832, 1664, 416, 416)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_forward_new_31"]
-atlas = ExtResource("103_attack_forward_new")
-region = Rect2(512, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_forward_new_32"]
-atlas = ExtResource("103_attack_forward_new")
-region = Rect2(1024, 2560, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_forward_new_33"]
-atlas = ExtResource("103_attack_forward_new")
-region = Rect2(1536, 2560, 512, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_grapple_diagonal_cycle_0"]
 atlas = ExtResource("3_puhm8")
@@ -1194,20 +1181,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_forward_new_31")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_forward_new_32")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_forward_new_33")
-}],
-"loop": 0,
-"name": &"Attack",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("99_dash")
 }],
 "loop": 1,
@@ -1259,6 +1232,44 @@ animations = [{
 "loop": 0,
 "name": &"Grapple_Horizontal",
 "speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_air_attack_01_26")
+}],
+"loop": 0,
+"name": &"Grapple_Strike",
+"speed": 40.0
 }, {
 "frames": [{
 "duration": 1.0,

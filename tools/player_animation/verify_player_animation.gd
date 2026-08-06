@@ -6,6 +6,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Air_Double_Attack": {"frames": 27, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
 	&"Grapple_Diagonal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Horizontal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Grapple_Strike": {"frames": 11, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
 	&"Ground_Attack_Combo_1": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_1_Backpedal": {"frames": 14, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
@@ -50,7 +51,6 @@ func _ready() -> void:
 		16,
 		failures
 	)
-
 	player.free()
 	if failures.is_empty():
 		print(
@@ -690,3 +690,5 @@ func _verify_retired_up_attack(
 		failures.append("Ground_Up_Combo_1 still exists in the active Player SpriteFrames.")
 	if sprite.sprite_frames.has_animation(&"Ground_Up_Combo_2"):
 		failures.append("Ground_Up_Combo_2 still exists in the active Player SpriteFrames.")
+	if sprite.sprite_frames.has_animation(&"Attack"):
+		failures.append("Retired green-smear Attack still exists in the active Player SpriteFrames.")

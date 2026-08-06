@@ -41,34 +41,43 @@ func _draw() -> void:
 
 	var progress := clampf(_elapsed / maxf(lifetime, 0.01), 0.0, 1.0)
 	var fade := pow(1.0 - progress, 1.7)
-	var flare_length := lerpf(18.0, 58.0, ease(progress, -1.8))
+	var flare_length := lerpf(34.0, 92.0, ease(progress, -1.8))
 	var core := IVORY
 	core.a = fade * 0.92
 	var accent := GOLD
 	accent.a = fade * 0.78
 
-	draw_circle(Vector2.ZERO, lerpf(12.0, 3.0, progress), core, true, -1.0, true)
-	draw_arc(
-		Vector2.ZERO,
-		lerpf(10.0, 34.0, progress),
-		-0.92,
-		0.92,
-		24,
+	# A compressed horizontal snap reads as the stored grapple velocity releasing
+	# into the target, rather than another circular weapon swing.
+	var core_half_width := lerpf(16.0, 5.0, progress)
+	var core_half_height := lerpf(13.0, 2.0, progress)
+	var burst := PackedVector2Array([
+		Vector2(-core_half_width, 0.0),
+		Vector2(-4.0, -core_half_height),
+		Vector2(2.0, -4.0),
+		Vector2(core_half_width, 0.0),
+		Vector2(2.0, 4.0),
+		Vector2(-4.0, core_half_height),
+	])
+	draw_colored_polygon(burst, core)
+	draw_line(
+		Vector2(-flare_length * 0.65, 0.0),
+		Vector2(flare_length, 0.0),
 		accent,
-		lerpf(5.0, 1.0, progress),
+		lerpf(6.0, 1.0, progress),
 		true
 	)
 
-	for index in range(7):
-		var offset := (float(index) - 3.0) * 5.5
-		var strand_start := Vector2(-flare_length * 0.48, offset * 0.34)
-		var strand_end := Vector2(flare_length, offset)
+	for index in range(9):
+		var offset := (float(index) - 4.0) * 5.0
+		var strand_start := Vector2(-flare_length * 0.72, offset * 0.28)
+		var strand_end := Vector2(flare_length * (0.82 + absf(offset) * 0.004), offset)
 		var strand_color := IVORY if index % 2 == 0 else GOLD
-		strand_color.a = fade * (0.76 - absf(offset) * 0.018)
+		strand_color.a = fade * (0.78 - absf(offset) * 0.015)
 		draw_line(
 			strand_start,
 			strand_end,
 			strand_color,
-			lerpf(3.4, 0.8, progress),
+			lerpf(3.2, 0.7, progress),
 			true
 		)
