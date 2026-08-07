@@ -14,6 +14,7 @@ radius = 520.0
 
 [node name="Threadling" unique_id=1838824112 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
+dash_pass_through = true
 hover_offset = -36.0
 bob_amplitude = 18.0
 bob_speed = 3.2

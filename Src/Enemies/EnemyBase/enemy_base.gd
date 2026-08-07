@@ -15,6 +15,7 @@ const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.
 @export var start_facing: int = -1
 @export var facing_dead_zone: float = 12.0
 @export var resets_at_save_points := true
+@export var dash_pass_through := false
 
 @onready var visuals: Node2D = $Visuals
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
@@ -324,6 +325,15 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 		return false
 
 	var target_owner := target_hurtbox.hurtbox_owner
+	if (
+		target_owner.has_method("is_dash_contact_phasing")
+		and bool(target_owner.call("is_dash_contact_phasing"))
+	):
+		if dash_pass_through:
+			return true
+		if target_owner.has_method("stop_dash_on_enemy_contact"):
+			target_owner.call("stop_dash_on_enemy_contact", global_position.x)
+			return true
 	if (
 		target_owner.has_method("should_ignore_enemy_contact")
 		and bool(target_owner.call("should_ignore_enemy_contact", self))

@@ -2914,6 +2914,14 @@ func _set_dash_contact_phasing(is_active: bool) -> void:
 func is_dash_contact_phasing() -> bool:
 	return _dash_contact_phasing_active
 
+func stop_dash_on_enemy_contact(enemy_position_x: float) -> void:
+	if current_chest and current_chest.has_method("stop_dash_on_enemy_contact"):
+		current_chest.stop_dash_on_enemy_contact()
+	var away_direction := signf(global_position.x - enemy_position_x)
+	if is_zero_approx(away_direction):
+		away_direction = -float(last_direction if last_direction != 0 else 1)
+	global_position.x += away_direction * 3.0
+
 func _play_dash_iframe_vfx(direction: Vector2, duration: float) -> void:
 	if not DASH_IFRAME_VFX_SCENE or not is_inside_tree():
 		return
@@ -3364,8 +3372,10 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 func should_ignore_health_damage(_damage: DamageData) -> bool:
 	return god_mode_enabled or _dash_iframe_timer > 0.0
 
-func should_ignore_enemy_contact(_enemy: Node = null) -> bool:
-	if _dash_iframe_timer > 0.0 or _grapple_strike_contact_guard:
+func should_ignore_enemy_contact(enemy: Node = null) -> bool:
+	if _dash_iframe_timer > 0.0:
+		return enemy == null or bool(enemy.get("dash_pass_through"))
+	if _grapple_strike_contact_guard:
 		return true
 	if (
 		current_gloves

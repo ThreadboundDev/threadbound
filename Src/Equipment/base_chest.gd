@@ -54,6 +54,14 @@ func process_passive(delta: float) -> void:
 		if dash_timer <= 0.0:
 			is_dashing = false
 
+func stop_dash_on_enemy_contact() -> void:
+	if not is_dashing:
+		return
+	is_dashing = false
+	dash_timer = 0.0
+	if player:
+		player.velocity.x = 0.0
+
 func get_dash_cooldown_remaining() -> float:
 	return dash_cooldown_timer
 

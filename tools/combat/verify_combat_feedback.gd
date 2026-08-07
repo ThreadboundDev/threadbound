@@ -555,6 +555,7 @@ func _verify_dash_contract() -> void:
 		"Dash temporarily removes the player hurtbox from enemy contact queries."
 	)
 	var contact_enemy := ENEMY_BASE_SCENE.instantiate() as EnemyBase
+	contact_enemy.dash_pass_through = true
 	var player_hurtbox := HurtboxComponent.new()
 	contact_enemy.stats = THREADLING_STATS
 	contact_enemy.position = Vector2(24.0, 0.0)
@@ -574,6 +575,27 @@ func _verify_dash_contract() -> void:
 	)
 	player_hurtbox.free()
 	contact_enemy.free()
+
+	var blocking_enemy := ENEMY_BASE_SCENE.instantiate() as EnemyBase
+	var blocking_hurtbox := HurtboxComponent.new()
+	blocking_enemy.stats = THREADLING_STATS
+	blocking_enemy.position = Vector2(24.0, 0.0)
+	blocking_enemy.velocity = Vector2(37.0, 0.0)
+	blocking_hurtbox.hurtbox_owner = player
+	var blocking_position_before := blocking_enemy.position
+	var blocking_velocity_before := blocking_enemy.velocity
+	_expect(
+		bool(blocking_enemy.call("_try_contact_hurtbox", blocking_hurtbox)),
+		"A non-pass-through enemy recognizes dash contact."
+	)
+	_expect(
+		not chest.is_dash_active()
+		and blocking_enemy.position == blocking_position_before
+		and blocking_enemy.velocity == blocking_velocity_before,
+		"A large enemy stops the dash without being pushed."
+	)
+	blocking_hurtbox.free()
+	blocking_enemy.free()
 
 	player.call("_process_momentum", 0.359)
 	_expect(
