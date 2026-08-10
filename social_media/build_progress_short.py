@@ -17,7 +17,7 @@ ATTACK = Path(r"C:\Users\chase\Videos\Threadbound Test\Threabound_Test_movingatt
 ATTACK_SINGLE = Path(
     r"C:\Users\chase\Videos\Threadbound Test\Threabound_Test_movingattack_single.avi"
 )
-MUSIC = ROOT / "Assets" / "Audio" / "Music" / "proto_weaver_fight.wav"
+MUSIC = ROOT / "Assets" / "Audio" / "Music" / "proto_weaver_fight_v2.wav"
 
 
 def text_overlay(filename: str, text: str, y: int, size: int = 76) -> Path:
