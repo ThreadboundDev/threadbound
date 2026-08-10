@@ -112,7 +112,7 @@
           "character_invariants": {
             "scarf": false
           },
-          "archived_rejected_directory": "res://Assets/Threadborne/Player/Normalized_V2/movement/old_ledge_hang"
+          "rejected_source_status": "removed_after_ledge_climb_approval"
         }
       }
     },
@@ -152,6 +152,7 @@
         "cell_size": 320,
         "authored_cell_size": 640,
         "registration_anchor": "fixed_video_canvas",
+        "source_status": "canonical_runtime_atlases",
         "selection_is_locked_per_swing": true,
         "forward_hitbox_arc_degrees": 130.0,
         "upward_ground_input_routes_to": "forward",
@@ -161,7 +162,6 @@
           "minimum_runtime_gutter": 16,
           "behavior": "standalone_double_hit",
           "double_hit": {
-            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/stationary_video_combo_02_sheet.png",
             "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
             "runtime_animation": "Ground_Attack_Combo_2_Stationary",
             "grid": [6, 4],
@@ -173,7 +173,6 @@
           "source_video": "trimmed_f362d63f-1e7c-490f-af8f-5c1280ac4393.mp4",
           "baked_source_scale": 1.15,
           "opener": {
-            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/backpedal_video_combo_01_sheet.png",
             "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png",
             "runtime_animation": "Ground_Attack_Combo_1_Backpedal",
             "grid": [5, 5],
@@ -181,7 +180,6 @@
             "strike_windows": [[3, 11]]
           },
           "finisher": {
-            "authoring_path": "res://Assets/Threadborne/New Attack/Video Attacks/backpedal_video_combo_02_sheet.png",
             "path": "res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png",
             "runtime_animation": "Ground_Attack_Combo_2_Backpedal",
             "grid": [6, 4],

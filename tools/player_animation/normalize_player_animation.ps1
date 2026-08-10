@@ -1,9 +1,6 @@
 param(
     [string]$WeaponChromaSource = "",
     [string]$MotionChromaSourceDirectory = "",
-    [string]$StationaryAttackVideo = "",
-    [string]$BackpedalAttackVideo = "",
-    [string]$FfmpegPath = "",
     [switch]$RegisterExistingMotion
 )
 
@@ -2238,139 +2235,8 @@ foreach ($ledgeClimbFrame in $ledgeClimbFrames) {
     2,
     320)
 
-function Resolve-FfmpegExecutable {
-    if ($FfmpegPath) {
-        return (Resolve-Path -LiteralPath $FfmpegPath).Path
-    }
-
-    $ffmpegCommand = Get-Command ffmpeg -ErrorAction SilentlyContinue
-    if ($ffmpegCommand) {
-        return $ffmpegCommand.Source
-    }
-
-    $knownFfmpegPaths = @(
-        "C:\Program Files\Krita (x64)\bin\ffmpeg.exe",
-        "C:\Program Files\ffmpeg\bin\ffmpeg.exe"
-    )
-    foreach ($knownPath in $knownFfmpegPaths) {
-        if (Test-Path -LiteralPath $knownPath) {
-            return $knownPath
-        }
-    }
-
-    throw "FFmpeg was not found. Pass -FfmpegPath when rebuilding video attack sheets."
-}
-
-function New-VideoAttackSheets {
-    param(
-        [Parameter(Mandatory = $true)][string]$VideoPath,
-        [Parameter(Mandatory = $true)][array]$SheetJobs
-    )
-
-    $resolvedVideoPath = (Resolve-Path -LiteralPath $VideoPath).Path
-    $resolvedFfmpeg = Resolve-FfmpegExecutable
-    $temporaryRoot = Join-Path (
-        [System.IO.Path]::GetTempPath()
-    ) ("threadbound-video-attack-" + [Guid]::NewGuid().ToString("N"))
-    New-Item -ItemType Directory -Path $temporaryRoot | Out-Null
-
-    try {
-        $framePattern = Join-Path $temporaryRoot "frame_%03d.png"
-        & $resolvedFfmpeg `
-            -hide_banner `
-            -loglevel error `
-            -i $resolvedVideoPath `
-            -fps_mode passthrough `
-            -start_number 0 `
-            $framePattern
-        if ($LASTEXITCODE -ne 0) {
-            throw "FFmpeg failed to extract frames from $resolvedVideoPath."
-        }
-
-        foreach ($job in $SheetJobs) {
-            $rawGrid = Join-Path $temporaryRoot ("raw_" + [string]$job[0])
-            $alphaGrid = Join-Path $temporaryRoot ("alpha_" + [string]$job[0])
-            $authoringPath = Join-Path $projectRoot ([string]$job[1])
-            [ThreadboundAnimationNormalizer]::BuildSelectedFrameGrid(
-                $temporaryRoot,
-                $rawGrid,
-                [int[]]$job[4],
-                [int]$job[2],
-                [int]$job[3],
-                640)
-            [ThreadboundAnimationNormalizer]::RemoveGreenKey($rawGrid, $alphaGrid)
-            # The generated attack videos already use one fixed 640 px camera
-            # and ground line. Preserve that shared origin so slash VFX cannot
-            # be mistaken for a foot anchor and shift the body between frames.
-            [ThreadboundAnimationNormalizer]::NormalizeGrid(
-                $alphaGrid,
-                $authoringPath,
-                [int]$job[2],
-                [int]$job[3],
-                640,
-                1.0)
-        }
-    }
-    finally {
-        if (Test-Path -LiteralPath $temporaryRoot) {
-            Remove-Item -LiteralPath $temporaryRoot -Recurse -Force
-        }
-    }
-}
-
-$stationaryVideoSheetJobs = @(
-    @(
-        "stationary_combo_01.png",
-        "Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_01_sheet.png",
-        5,
-        5,
-        [int[]]@(48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 69, 73, 77, 80)
-    ),
-    @(
-        "stationary_combo_02.png",
-        "Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png",
-        6,
-        4,
-        [int[]]@(0, 2, 4, 6, 8, 10, 11, 13, 15, 16, 18, 19, 21, 22, 24, 25, 27, 28, 29)
-    )
-)
-
-$backpedalVideoSheetJobs = @(
-    @(
-        "backpedal_combo_01.png",
-        "Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_01_sheet.png",
-        5,
-        5,
-        [int[]]@(0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 40)
-    ),
-    @(
-        "backpedal_combo_02.png",
-        "Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_02_sheet.png",
-        6,
-        4,
-        [int[]]@(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 40)
-    )
-)
-
-if ($StationaryAttackVideo) {
-    New-VideoAttackSheets `
-        -VideoPath $StationaryAttackVideo `
-        -SheetJobs $stationaryVideoSheetJobs
-}
-if ($BackpedalAttackVideo) {
-    New-VideoAttackSheets `
-        -VideoPath $BackpedalAttackVideo `
-        -SheetJobs $backpedalVideoSheetJobs
-}
-
 $attackJobs = @(
-    @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_01_sheet.png", "attacks\ground_combo_01.png", 6, 4, 640, 0.6428571),
-    @("Assets\Threadborne\New Attack\Video Attacks\grounded_double_attack_02_sheet.png", "attacks\ground_combo_02.png", 5, 5, 640, 0.9),
-    @("Assets\Threadborne\New Attack\Video Attacks\stationary_video_combo_02_sheet.png", "attacks\stationary_combo_02.png", 6, 4, 640, 0.9),
-    @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_01_sheet.png", "attacks\backpedal_combo_01.png", 5, 5, 640, 1.15),
-    @("Assets\Threadborne\New Attack\Video Attacks\backpedal_video_combo_02_sheet.png", "attacks\backpedal_combo_02.png", 6, 4, 640, 1.15),
-    @("Assets\Threadborne\New Attack\Video Attacks\air_double_attack_01_candidate_sheet.png", "attacks\air_double_attack.png", 6, 5, 832, 1.2)
+    @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675)
 )
 
 foreach ($job in $attackJobs) {

@@ -224,7 +224,8 @@ wall-cling and jump-landing frames, so entering and leaving the transition
 cannot pop between unrelated silhouettes. The two bridge poses were generated
 with the built-in ImageGen workflow, chroma-keyed locally, and corrected to
 remove an invented scarf before entering the runtime sheet. The rejected
-ledge-hang artwork remains archived under `movement/old_ledge_hang`.
+the rejected ledge-hang artwork was removed after the ledge-climb replacement
+was approved.
 
 ### Secondary motion and grapple tosses
 
@@ -315,11 +316,10 @@ Use `-RegisterExistingMotion` once when migrating an older 512 px generated
 motion sheet to the padded, anchor-registered layout. The full 640 px registered
 cells are reduced to 320 px by the final runtime-raster pass.
 
-Pass `-StationaryAttackVideo <path>` and `-BackpedalAttackVideo <path>` to
-re-extract the four checked-in video attack authoring sheets. The frame maps are
-defined in the script. Pass `-FfmpegPath <path>` if FFmpeg is not on `PATH` or in
-one of the known install locations. Omitting the video arguments keeps the
-checked-in authoring sheets and regenerates only the normalized runtime rasters.
+The reviewed attack atlases under `Normalized_V2/attacks` are now canonical.
+Their completed video-derived authoring sheets were removed from the game
+project after normalization, preventing those large intermediate textures from
+being imported or included by the `all_resources` export preset.
 
 Run the focused scene-level verification after importing:
 
