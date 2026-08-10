@@ -27,13 +27,16 @@ func _start_dash() -> bool:
 		return false
 	if player.has_method("spend_action_points") and not player.spend_action_points(1):
 		return false
+	var requested_direction: int = player.last_direction if player.last_direction != 0 else 1
+	if player.has_method("get_dash_direction_intent"):
+		requested_direction = int(player.get_dash_direction_intent())
+	dash_direction = signi(requested_direction) if requested_direction != 0 else 1
 	if player.has_method("prepare_for_dash"):
-		player.prepare_for_dash()
+		player.prepare_for_dash(dash_direction)
 
 	is_dashing = true
 	dash_timer = dash_duration
 	dash_cooldown_timer = dash_cooldown
-	dash_direction = player.last_direction if player.last_direction != 0 else 1
 	AudioManager.play_sfx(&"player_dash_evade")
 	if player.has_method("start_dash_iframe"):
 		player.start_dash_iframe(
@@ -53,6 +56,14 @@ func process_passive(delta: float) -> void:
 		
 		if dash_timer <= 0.0:
 			is_dashing = false
+
+func stop_dash_on_enemy_contact() -> void:
+	if not is_dashing:
+		return
+	is_dashing = false
+	dash_timer = 0.0
+	if player:
+		player.velocity.x = 0.0
 
 func get_dash_cooldown_remaining() -> float:
 	return dash_cooldown_timer

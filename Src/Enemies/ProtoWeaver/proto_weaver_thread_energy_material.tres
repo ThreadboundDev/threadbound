@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+
+[ext_resource type="Shader" path="res://Src/Enemies/ProtoWeaver/proto_weaver_thread_energy.gdshader" id="1_shader"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_thread"]
+frequency = 0.045
+fractal_octaves = 3
+fractal_lacunarity = 2.2
+fractal_gain = 0.54
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_thread"]
+width = 128
+height = 128
+seamless = true
+noise = SubResource("FastNoiseLite_thread")
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/thread_noise = SubResource("NoiseTexture2D_thread")
+shader_parameter/shadow_color = Color(0.12, 0.01, 0.018, 1)
+shader_parameter/strand_color = Color(0.92, 0.035, 0.018, 1)
+shader_parameter/core_color = Color(1, 0.93, 0.82, 1)
+shader_parameter/texture_strength = 0.42
+shader_parameter/pulse_speed = 4.8

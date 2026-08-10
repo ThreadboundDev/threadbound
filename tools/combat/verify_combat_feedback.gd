@@ -20,6 +20,7 @@ func _run_verification() -> void:
 	_verify_player_resistance_metadata()
 	_verify_neutral_special_contract()
 	_verify_dash_contract()
+	await _verify_dash_collision_runtime()
 	_verify_enemy_receiver_profiles()
 	_verify_enemy_health_bar_contract()
 	_verify_per_target_damage_hook()
@@ -526,9 +527,43 @@ func _verify_dash_contract() -> void:
 		not bool(player.call("should_ignore_enemy_contact")),
 		"Player collides with enemy contact before a dash starts."
 	)
+	player.set("is_attacking", true)
+	player.set("current_attack_is_special", true)
+	player.set("attack_timer", 0.12)
+	player.set("attack_active_started", false)
+	player.set("attack_active_finished", false)
+	_expect(
+		bool(player.call("can_start_dash")),
+		"Dash can correct a committed special during its pre-impact windup."
+	)
+	player.set("attack_timer", 0.52)
+	player.set("attack_active_started", true)
+	_expect(
+		not bool(player.call("can_start_dash")),
+		"Dash cannot erase a special while its damaging frames are active."
+	)
+	player.set("attack_timer", 1.04)
+	player.set("attack_active_finished", true)
+	_expect(
+		bool(player.call("can_start_dash")),
+		"Dash can escape the authored end of special recovery."
+	)
+	player.set("is_attacking", false)
+	player.set("current_attack_is_special", false)
+	player.set("attack_active_started", false)
+	player.set("attack_active_finished", false)
+	player.last_direction = 1
+	player.set("_dash_direction_intent", -1)
+	player.set("_dash_direction_intent_timer", 0.18)
+	_expect(
+		int(player.call("get_dash_direction_intent")) == -1,
+		"A recent opposite movement input overrides attack-locked facing for dash."
+	)
 
 	var started := bool(chest.call("_start_dash"))
 	_expect(started, "A ready chest starts a dash deterministically.")
+	_expect(chest.dash_direction == -1, "Dash uses the buffered opposite direction instead of attack facing.")
+	_expect(player.last_direction == -1, "A direction-controlled dash turns the player toward its escape route.")
 	_expect(
 		not bool(player.call("can_start_attack", false)),
 		"An active dash blocks attacks from overriding dash-owned movement."
@@ -552,7 +587,7 @@ func _verify_dash_contract() -> void:
 	)
 	_expect(
 		bool(player.call("is_dash_contact_phasing")),
-		"Dash temporarily removes the player hurtbox from enemy contact queries."
+		"Dash enables temporary contact handling."
 	)
 	var contact_enemy := ENEMY_BASE_SCENE.instantiate() as EnemyBase
 	var player_hurtbox := HurtboxComponent.new()
@@ -568,13 +603,40 @@ func _verify_dash_contract() -> void:
 		"Enemy contact recognizes an invulnerable dashing player."
 	)
 	_expect(
-		contact_enemy.position == enemy_position_before
+		not chest.is_dash_active()
+		and contact_enemy.position == enemy_position_before
 		and contact_enemy.velocity == enemy_velocity_before,
-		"Dash contact bypasses enemy separation so the player can pass through."
+		"Dash contact stops the player without pushing the enemy."
 	)
 	player_hurtbox.free()
 	contact_enemy.free()
 
+	var blocking_enemy := ENEMY_BASE_SCENE.instantiate() as EnemyBase
+	var blocking_hurtbox := HurtboxComponent.new()
+	blocking_enemy.stats = THREADLING_STATS
+	blocking_enemy.position = Vector2(24.0, 0.0)
+	blocking_enemy.velocity = Vector2(37.0, 0.0)
+	blocking_hurtbox.hurtbox_owner = player
+	player.position = Vector2(12.0, 0.0)
+	player.set("_position_before_movement", Vector2(7.0, 0.0))
+	var lingering_contact_hits := [0]
+	blocking_hurtbox.hit_received.connect(
+		func(_damage: DamageData) -> void:
+			lingering_contact_hits[0] += 1
+	)
+	var blocking_position_before := blocking_enemy.position
+	var blocking_velocity_before := blocking_enemy.velocity
+	_expect(
+		bool(blocking_enemy.call("_try_contact_hurtbox", blocking_hurtbox)),
+		"A non-pass-through enemy recognizes dash contact."
+	)
+	_expect(
+		not chest.is_dash_active()
+		and is_equal_approx(player.position.x, 7.0)
+		and blocking_enemy.position == blocking_position_before
+		and blocking_enemy.velocity == blocking_velocity_before,
+		"Enemy contact restores the player's pre-move position without pushing the enemy."
+	)
 	player.call("_process_momentum", 0.359)
 	_expect(
 		bool(player.call("should_ignore_health_damage", DamageData.new()))
@@ -589,8 +651,20 @@ func _verify_dash_contract() -> void:
 	)
 	_expect(
 		not bool(player.call("is_dash_contact_phasing")),
-		"Player hurtbox contact phasing ends with dash immunity."
+		"Dash contact handling ends with the immunity window so lingering contact can deal damage."
 	)
+	_expect(
+		bool(blocking_enemy.call("_try_contact_hurtbox", blocking_hurtbox))
+		and lingering_contact_hits[0] == 1,
+		"Contact is delivered if the player remains against the enemy when dash immunity ends."
+	)
+	_expect(
+		blocking_enemy.position == blocking_position_before
+		and blocking_enemy.velocity == blocking_velocity_before,
+		"Lingering player contact never displaces the enemy."
+	)
+	blocking_hurtbox.free()
+	blocking_enemy.free()
 
 	chest.process_passive(0.649)
 	_expect(
@@ -605,6 +679,46 @@ func _verify_dash_contract() -> void:
 	player.set("current_chest", null)
 	chest.free()
 	player.free()
+
+
+func _verify_dash_collision_runtime() -> void:
+	var player := PLAYER_SCENE.instantiate()
+	var enemy := ENEMY_BASE_SCENE.instantiate() as EnemyBase
+	enemy.stats = THREADLING_STATS
+	player.position = Vector2(300.0, 400.0)
+	enemy.position = Vector2(400.0, 400.0)
+	add_child(player)
+	add_child(enemy)
+	await get_tree().physics_frame
+
+	player.set_physics_process(false)
+	if enemy.state_machine:
+		enemy.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
+	enemy.velocity = Vector2.ZERO
+	await get_tree().physics_frame
+
+	var safe_position: Vector2 = player.global_position
+	var enemy_position_before: Vector2 = enemy.global_position
+	player.set("_position_before_movement", safe_position)
+	player.call("start_dash_iframe", 0.36, Vector2.RIGHT)
+	player.global_position = enemy.global_position
+	player.velocity = Vector2(1150.0, 0.0)
+	await get_tree().physics_frame
+
+	_expect(player.hurtbox.monitorable, "Dash immunity hides the player from solid enemy contact detection.")
+	_expect(
+		is_equal_approx(player.global_position.x, safe_position.x)
+		and is_zero_approx(player.velocity.x),
+		"A real enemy overlap does not stop dash movement at the last safe position."
+	)
+	_expect(
+		enemy.global_position == enemy_position_before,
+		"A real dash overlap transfers player movement into the enemy."
+	)
+
+	player.queue_free()
+	enemy.queue_free()
+	await get_tree().process_frame
 
 func _verify_enemy_receiver_profiles() -> void:
 	var cases: Array[Dictionary] = [
@@ -931,6 +1045,23 @@ func _verify_coalesced_feedback() -> void:
 		"Overlapping screen-shake requests settle on the camera's original offset."
 	)
 
+	_expect(
+		is_equal_approx(CombatFeedback.get_effective_hit_pause_duration(0.03), 0.05),
+		"Light hitstop reaches the minimum visible duration."
+	)
+	_expect(
+		is_equal_approx(CombatFeedback.get_effective_hit_pause_duration(0.065), 0.10725),
+		"Heavy authored hitstop scales to approximately one tenth of a second."
+	)
+	_expect(
+		is_equal_approx(CombatFeedback.get_effective_hit_pause_duration(0.20), 0.12),
+		"Hitstop is capped so repeated heavy impacts cannot become disruptive."
+	)
+	_expect(
+		is_zero_approx(CombatFeedback.get_effective_hit_pause_duration(0.0)),
+		"Explicitly disabled hitstop remains disabled."
+	)
+
 	CombatFeedback.hit_pause(self, 0.03)
 	var short_pause_end := CombatFeedback._pause_end_usec
 	CombatFeedback.hit_pause(self, 0.07)
@@ -940,7 +1071,7 @@ func _verify_coalesced_feedback() -> void:
 		long_pause_end > short_pause_end + 30000,
 		"A longer overlapping hit-pause request extends the shared deadline."
 	)
-	await get_tree().create_timer(0.11, true, false, true).timeout
+	await get_tree().create_timer(0.15, true, false, true).timeout
 	_expect(is_equal_approx(Engine.time_scale, 1.0), "Hit pause restores normal time once.")
 	camera.queue_free()
 
