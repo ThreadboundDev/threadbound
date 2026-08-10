@@ -13,6 +13,7 @@ var telegraph_duration := 0.96
 var release_duration := 0.58
 var release_impact_delay := 0.10
 var dissipate_time := 0.20
+var destination_marker_only := false
 var _destination := Vector2.ZERO
 var _direction := 1.0
 var _elapsed := 0.0
@@ -46,7 +47,8 @@ func configure(
 	visual_scale: Vector2,
 	visual_position: Vector2,
 	hit_damage: int,
-	windup_duration: float
+	windup_duration: float,
+	acts_as_destination := false
 ) -> void:
 	source = hit_source
 	_destination = destination
@@ -59,6 +61,7 @@ func configure(
 	_ghost_position = visual_position
 	damage_amount = hit_damage
 	telegraph_duration = maxf(0.05, windup_duration)
+	destination_marker_only = acts_as_destination
 
 
 func _ready() -> void:
@@ -69,12 +72,13 @@ func _ready() -> void:
 	monitoring = false
 	area_entered.connect(_on_area_entered)
 
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(350.0, 112.0)
-	var collision := CollisionShape2D.new()
-	collision.position = Vector2(_direction * 210.0, -118.0)
-	collision.shape = shape
-	add_child(collision)
+	if not destination_marker_only:
+		var shape := RectangleShape2D.new()
+		shape.size = Vector2(350.0, 112.0)
+		var collision := CollisionShape2D.new()
+		collision.position = Vector2(_direction * 210.0, -118.0)
+		collision.shape = shape
+		add_child(collision)
 
 	_ghost_glow = Sprite2D.new()
 	_ghost_glow.name = "EssenceEchoGlow"
@@ -104,7 +108,21 @@ func mark_arrival() -> void:
 	queue_redraw()
 
 
+func complete_destination() -> void:
+	if not destination_marker_only or _dissipating:
+		return
+	_triggered = true
+	_arrival_visible = true
+	_dissipating = true
+	_dissipate_elapsed = 0.0
+	monitoring = false
+	queue_redraw()
+
+
 func trigger_echo() -> void:
+	if destination_marker_only:
+		complete_destination()
+		return
 	if _triggered:
 		return
 	_triggered = true
@@ -176,6 +194,16 @@ func _process(delta: float) -> void:
 	if not _triggered:
 		var telegraph_ratio := clampf(_elapsed / telegraph_duration, 0.0, 1.0)
 		_set_ghost_frame(roundi(lerpf(0.0, float(_ghost_frame), telegraph_ratio)))
+	elif destination_marker_only:
+		_dissipate_elapsed += delta
+		var marker_dissolve := clampf(_dissipate_elapsed / maxf(0.01, dissipate_time), 0.0, 1.0)
+		if _ghost:
+			_ghost.modulate.a = lerpf(0.72, 0.0, marker_dissolve)
+		if _ghost_glow:
+			_ghost_glow.modulate.a = lerpf(0.34, 0.0, marker_dissolve)
+		if marker_dissolve >= 1.0:
+			queue_free()
+			return
 	elif not _release_started:
 		_trigger_elapsed += delta
 		_set_ghost_frame(_ghost_frame)
@@ -211,7 +239,7 @@ func _draw() -> void:
 	var distance := absf(finish.x - start.x)
 	var stitch_count := maxi(4, ceili(distance / 54.0))
 	var route_visibility := 1.0 if not _triggered else clampf(1.0 - _trigger_elapsed / 0.14, 0.0, 1.0)
-	if route_visibility > 0.0:
+	if route_visibility > 0.0 and not destination_marker_only:
 		for stitch in range(stitch_count):
 			var from_ratio := float(stitch) / float(stitch_count)
 			var to_ratio := minf(1.0, from_ratio + 0.55 / float(stitch_count))
@@ -222,6 +250,10 @@ func _draw() -> void:
 		var y := -220.0 + float(thread) * 52.0
 		var unravel := Vector2(_direction * (76.0 + float(thread) * 10.0), y)
 		draw_line(Vector2(_direction * 18.0, y + 10.0), unravel, Color(ESSENCE_YELLOW.r, ESSENCE_YELLOW.g, ESSENCE_YELLOW.b, 0.38), 1.5, true)
+	if destination_marker_only and not _dissipating:
+		for ring in range(3):
+			var radius := 82.0 + float(ring) * 22.0 + pulse * 5.0
+			draw_arc(Vector2(0.0, -118.0), radius, _elapsed * (1.2 + ring * 0.2), _elapsed * (1.2 + ring * 0.2) + 4.7, 24, Color(ESSENCE_YELLOW.r, ESSENCE_YELLOW.g, ESSENCE_YELLOW.b, 0.52 / float(ring + 1)), 2.0, true)
 
 	if _arrival_visible and route_visibility > 0.0:
 		for ray in range(8):

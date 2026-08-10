@@ -147,6 +147,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export_node_path("Marker2D") var wall_right_marker_path: NodePath
 @export_node_path("Marker2D") var center_hang_marker_path: NodePath
 @export_node_path("Marker2D") var recovery_floor_marker_path: NodePath
+@export var wall_hang_foot_offset := Vector2(0.0, -426.0)
 @export var wall_left_offset := Vector2(-720.0, -330.0)
 @export var wall_right_offset := Vector2(720.0, -330.0)
 @export var wall_thread_anchor_distance := 150.0
@@ -202,6 +203,8 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var essence_echo_cross_distance := 220.0
 @export var essence_echo_edge_padding := 72.0
 @export var essence_echo_delay := 0.50
+@export var essence_echo_floor_probe_up := 96.0
+@export var essence_echo_floor_probe_down := 360.0
 
 @export_group("Grounded Attack Poses")
 @export var stab_pose_drawback := 24.0
@@ -1412,27 +1415,19 @@ func _spawn_essence_echo_telegraph() -> void:
 		cross_direction = signf(target.global_position.x - global_position.x)
 	if cross_direction == 0.0:
 		cross_direction = float(facing) if facing != 0 else 1.0
-	var target_x := global_position.x + cross_direction * essence_echo_cross_distance * 2.0
+	var target_position := global_position + Vector2(cross_direction * essence_echo_cross_distance * 2.0, 0.0)
 	if is_instance_valid(target):
-		target_x = target.global_position.x + cross_direction * essence_echo_cross_distance
+		target_position = target.global_position
 	var home_x := _get_hang_home_position().x
 	var edge := maxf(40.0, hang_arena_half_width - essence_echo_edge_padding)
-	target_x = clampf(target_x, home_x - edge, home_x + edge)
-	_pending_essence_destination = Vector2(target_x, global_position.y)
+	target_position.x = clampf(target_position.x, home_x - edge, home_x + edge)
+	_pending_essence_destination = _resolve_essence_blink_destination(target_position)
 
 	_essence_echo_vfx = ProtoWeaverEssenceEchoVFX.new()
-	_essence_echo_vfx.echo_delay = essence_echo_delay
 	var echo_scale := _get_scale_for_sheet(stab_texture, attack_columns, attack_rows)
-	var echo_origin := global_position
-	var echo_destination := _pending_essence_destination
-	if _is_target_elevated():
-		# Keep the real boss's blink grounded, but summon the delayed duplicate
-		# on the player's elevated lane so platforms are not permanent safety.
-		echo_origin.y = target.global_position.y
-		echo_destination.y = echo_origin.y
 	_essence_echo_vfx.configure(
 		self,
-		echo_destination,
+		_pending_essence_destination,
 		int(cross_direction),
 		stab_texture,
 		attack_columns,
@@ -1441,21 +1436,38 @@ func _spawn_essence_echo_telegraph() -> void:
 		echo_scale,
 		_base_sprite_position,
 		stats.attack_damage if stats else 24,
-		get_attack_windup()
+		get_attack_windup(),
+		true
 	)
 	parent.add_child(_essence_echo_vfx)
-	_essence_echo_vfx.global_position = echo_origin
+	_essence_echo_vfx.global_position = _pending_essence_destination
+
+
+func _resolve_essence_blink_destination(snapshot: Vector2) -> Vector2:
+	if not is_inside_tree():
+		return snapshot
+	var query := PhysicsRayQueryParameters2D.create(
+		snapshot + Vector2.UP * essence_echo_floor_probe_up,
+		snapshot + Vector2.DOWN * essence_echo_floor_probe_down,
+		1
+	)
+	query.exclude = [get_rid()]
+	var result := get_world_2d().direct_space_state.intersect_ray(query)
+	if result.has("position"):
+		var floor_position: Vector2 = result["position"]
+		return Vector2(snapshot.x, floor_position.y)
+	return snapshot
 
 
 func _activate_essence_echo() -> void:
 	global_position = _pending_essence_destination
+	velocity = Vector2.ZERO
 	if is_instance_valid(target):
 		var target_direction := signi(roundi(target.global_position.x - global_position.x))
 		if target_direction != 0:
 			update_facing(target_direction)
 	if is_instance_valid(_essence_echo_vfx):
-		_essence_echo_vfx.mark_arrival()
-		_essence_echo_vfx.trigger_echo()
+		_essence_echo_vfx.complete_destination()
 	_play_boss_sfx(&"enemy_sword_attack", boss_stab_pitch * 1.08)
 	CombatFeedback.screen_shake(self, 3.0, 0.08)
 	super.activate_attack_hitbox()
@@ -1514,8 +1526,8 @@ func _start_hanging_laser_sequence() -> void:
 		_wall_side = 0
 		var center_marker := _get_phase_marker(center_hang_marker_path)
 		_hang_rotation = center_marker.global_rotation if center_marker else 0.0
-		_hang_position = center_marker.global_position if center_marker else _clamp_to_hang_arena(_get_hang_home_position() + hang_rise_offset)
-		_hang_anchor = _find_hang_anchor(_hang_position)
+		_hang_position = _get_body_position_from_hang_foot_marker(center_marker) if center_marker else _clamp_to_hang_arena(_get_hang_home_position() + hang_rise_offset)
+		_hang_anchor = center_marker.global_position if center_marker else _find_hang_anchor(_hang_position)
 	_hang_thread_attach = _get_hanging_body_attach(_hang_position)
 	_hang_thread_draw_ratio = 0.0
 	_hang_sway_timer = 0.0
@@ -1588,20 +1600,28 @@ func _configure_wall_hang_destination() -> void:
 	var marker_path := wall_left_marker_path if _wall_side < 0 else wall_right_marker_path
 	var wall_marker := _get_phase_marker(marker_path)
 	if wall_marker:
-		_hang_position = wall_marker.global_position
+		_hang_position = _get_body_position_from_hang_foot_marker(wall_marker)
 		_hang_rotation = wall_marker.global_rotation
+		_hang_anchor = wall_marker.global_position
 	else:
 		var offset := wall_left_offset if _wall_side < 0 else wall_right_offset
 		_hang_position = _get_hang_home_position() + offset
 		_hang_rotation = float(_wall_side) * PI * 0.5
 	_hang_thread_attach = _get_hanging_body_attach(_hang_position)
-	_hang_anchor = _hang_thread_attach + Vector2.UP.rotated(_hang_rotation) * wall_thread_anchor_distance
+	if not wall_marker:
+		_hang_anchor = _hang_thread_attach + Vector2.UP.rotated(_hang_rotation) * wall_thread_anchor_distance
 
 
 func _get_phase_marker(marker_path: NodePath) -> Marker2D:
 	if marker_path.is_empty():
 		return null
 	return get_node_or_null(marker_path) as Marker2D
+
+
+func _get_body_position_from_hang_foot_marker(marker: Marker2D) -> Vector2:
+	if not marker:
+		return global_position
+	return marker.global_position - wall_hang_foot_offset.rotated(marker.global_rotation)
 
 
 func _get_recovery_floor_position() -> Vector2:

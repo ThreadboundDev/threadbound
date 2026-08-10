@@ -127,6 +127,7 @@
 [ext_resource type="Script" uid="uid://dailvw5q70bvi" path="res://Src/Environment/World/SceneOrganization/scene_section.gd" id="org_section"]
 [ext_resource type="Script" uid="uid://cqrje1mdgmii4" path="res://Src/Camera/room_camera_controller.gd" id="room_camera_controller"]
 [ext_resource type="Script" uid="uid://b32r2jybfeq7x" path="res://Src/Camera/room_camera_zone.gd" id="room_camera_zone"]
+[ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="proto_weaver_hang_preview"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -270,6 +271,9 @@ size = Vector2(4473, 2307)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_merchant_camera_zone"]
 size = Vector2(5725, 1460)
+
+[sub_resource type="GDScript" id="GDScript_proto_weaver_marker_preview"]
+script/source = "@tool\nextends Sprite2D\n\nfunc _enter_tree() -> void:\n\tvisible = Engine.is_editor_hint()\n"
 
 [node name="COTFW - Demo Level" type="Node2D" unique_id=1831855878]
 
@@ -2126,15 +2130,55 @@ script = ExtResource("org_room")
 position = Vector2(4646, 4028)
 rotation = -1.5707963
 
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallLeft"]
+position = Vector2(0, 284.42)
+scale = Vector2(0.653028, 0.653028)
+self_modulate = Color(1, 0.86, 0.25, 0.52)
+texture = ExtResource("proto_weaver_hang_preview")
+hframes = 5
+vframes = 10
+frame = 47
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
 [node name="WallRight" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
 position = Vector2(6086, 4028)
 rotation = 1.5707963
 
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallRight"]
+position = Vector2(0, 284.42)
+scale = Vector2(0.653028, 0.653028)
+self_modulate = Color(1, 0.86, 0.25, 0.52)
+texture = ExtResource("proto_weaver_hang_preview")
+hframes = 5
+vframes = 10
+frame = 47
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
 [node name="CenterHang" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
 position = Vector2(5366, 3998)
 
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/CenterHang"]
+position = Vector2(0, 284.42)
+scale = Vector2(0.653028, 0.653028)
+self_modulate = Color(1, 0.86, 0.25, 0.52)
+texture = ExtResource("proto_weaver_hang_preview")
+hframes = 5
+vframes = 10
+frame = 47
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
 [node name="RecoveryFloor" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
 position = Vector2(5366, 4358)
+
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/RecoveryFloor"]
+position = Vector2(0, -172.72)
+scale = Vector2(0.653028, 0.653028)
+self_modulate = Color(1, 0.86, 0.25, 0.52)
+texture = ExtResource("proto_weaver_hang_preview")
+hframes = 5
+vframes = 10
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
 
 [node name="Lighting" type="Node2D" parent="WorldArt/Rooms/BossArena" unique_id=2092851588]
 z_index = 6

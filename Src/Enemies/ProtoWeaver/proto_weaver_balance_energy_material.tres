@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://btjikdcdgq18w"]
 
-[ext_resource type="Shader" path="res://Src/Enemies/ProtoWeaver/proto_weaver_thread_energy.gdshader" id="1_shader"]
+[ext_resource type="Shader" uid="uid://brt81cb6cjegb" path="res://Src/Enemies/ProtoWeaver/proto_weaver_thread_energy.gdshader" id="1_shader"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_balance"]
 frequency = 0.045
@@ -11,8 +11,8 @@ fractal_gain = 0.54
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_balance"]
 width = 128
 height = 128
-seamless = true
 noise = SubResource("FastNoiseLite_balance")
+seamless = true
 
 [resource]
 shader = ExtResource("1_shader")

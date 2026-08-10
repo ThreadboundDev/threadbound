@@ -143,8 +143,15 @@ func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 		"Left-wall presentation does not rotate inward by 90 degrees."
 	)
 	_expect(
-		boss.get("_hang_position").is_equal_approx(left_marker.global_position),
-		"Wall phase ignores its editor placement marker."
+		boss.get("_hang_position").is_equal_approx(
+			left_marker.global_position
+			- boss.wall_hang_foot_offset.rotated(left_marker.global_rotation)
+		),
+		"Wall phase does not derive the boss body from its editor foot marker."
+	)
+	_expect(
+		boss.get("_hang_anchor").is_equal_approx(left_marker.global_position),
+		"Wall thread anchor does not terminate at the editor foot marker."
 	)
 	_expect(
 		boss.call("_get_recovery_floor_position").is_equal_approx(recovery_marker.global_position),
@@ -315,16 +322,23 @@ func _verify_color_identities(boss: ProtoWeaver) -> void:
 	boss.target = target_marker
 	boss.call("_spawn_essence_echo_telegraph")
 	var destination := boss.get("_pending_essence_destination") as Vector2
-	_expect(destination.x > target_marker.global_position.x, "Essence Echo destination does not visibly cross the player.")
+	_expect(
+		destination.is_equal_approx(target_marker.global_position),
+		"Essence Echo does not snapshot the player's current destination."
+	)
 	var echo := boss.get("_essence_echo_vfx") as ProtoWeaverEssenceEchoVFX
-	_expect(echo != null, "Essence Echo did not leave its yellow delayed duplicate.")
+	_expect(echo != null, "Essence Echo did not create its yellow destination clone.")
 	if echo:
 		var echo_sprite := echo.get_node_or_null("EssenceEcho") as Sprite2D
-		_expect(echo_sprite != null and echo_sprite.frame == 0, "Essence Echo starts as a frozen release pose instead of mirroring the attack windup.")
-		_expect(echo.release_duration >= 0.5, "Essence Echo release animation is too fast to read as a separate attack.")
-		echo.call("_begin_echo_release")
-		echo.call("_process", echo.release_duration * 0.6)
-		_expect(echo_sprite.frame > boss.essence_echo_telegraph_hold_frame, "Essence Echo duplicate does not visibly animate through its delayed stab.")
+		_expect(echo.destination_marker_only, "Grounded Yellow clone still behaves as a second attacker.")
+		_expect(not echo.monitoring, "Yellow destination clone unexpectedly monitors for player damage.")
+		_expect(echo.global_position.is_equal_approx(destination), "Yellow clone is not placed at the boss's blink destination.")
+		_expect(echo_sprite != null and echo_sprite.frame == 0, "Yellow destination clone does not begin with a readable formation pose.")
+		var old_boss_position := boss.global_position
+		boss.call("_activate_essence_echo")
+		_expect(boss.global_position.is_equal_approx(destination), "The real boss does not blink to its Yellow clone.")
+		_expect(bool(echo.get("_dissipating")), "Yellow clone does not disappear when the real boss arrives.")
+		boss.global_position = old_boss_position
 		echo.queue_free()
 	boss.target = null
 	target_marker.queue_free()
@@ -358,13 +372,23 @@ func _verify_vertical_responses(boss: ProtoWeaver) -> void:
 	)
 
 	boss.call("_spawn_essence_echo_telegraph")
+	var elevated_destination := boss.get("_pending_essence_destination") as Vector2
 	var elevated_echo := boss.get("_essence_echo_vfx") as ProtoWeaverEssenceEchoVFX
-	_expect(elevated_echo != null, "Elevated Yellow response did not summon its delayed duplicate.")
+	_expect(elevated_echo != null, "Elevated Yellow response did not summon its destination clone.")
 	if elevated_echo:
 		_expect(
-			is_equal_approx(elevated_echo.global_position.y, elevated_target.global_position.y),
-			"Yellow duplicate remains on the ground while the player camps above it."
+			elevated_echo.destination_marker_only
+			and elevated_echo.global_position.is_equal_approx(elevated_destination)
+			and is_equal_approx(elevated_destination.y, elevated_target.global_position.y),
+			"Vertical Yellow does not place the boss's blink destination on the player's elevated lane."
 		)
+		var old_boss_position := boss.global_position
+		boss.call("_activate_essence_echo")
+		_expect(
+			boss.global_position.is_equal_approx(elevated_destination),
+			"Vertical Yellow leaves the real boss below the player instead of chasing them."
+		)
+		boss.global_position = old_boss_position
 		elevated_echo.queue_free()
 	boss.target = null
 	elevated_target.queue_free()
