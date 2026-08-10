@@ -176,6 +176,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var jump_cut_gravity_multiplier: float = 2.25
 @export var max_fall_speed: float = 1500.0
 @export var coyote_time: float = 0.1
+@export_range(0.0, 0.5, 0.01) var dash_direction_input_buffer_time := 0.22
 
 @export_group("Movement Animation")
 @export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
@@ -448,7 +449,11 @@ var _use_after_swap_timer := 0.0
 var _momentum_system_ready := false
 var _flow_vfx_dash_visual_active := false
 var _dash_iframe_timer := 0.0
+var _dash_contact_phase_timer := 0.0
 var _dash_contact_phasing_active := false
+var _dash_direction_intent := 0
+var _dash_direction_intent_timer := 0.0
+var _position_before_movement := Vector2.ZERO
 var _grapple_strike_contact_guard := false
 var _debug_momentum_was_pressed := false
 var _debug_force_doors_was_pressed := false
@@ -673,6 +678,7 @@ func _physics_process(delta: float) -> void:
 	# Horizontal movement
 	_movement_facing_before_input = last_direction
 	var horizontal_input := Input.get_axis("move_left", "move_right")
+	_update_dash_direction_intent(horizontal_input, delta)
 	if horizontal_input != 0 and not is_attacking:
 		last_direction = sign(horizontal_input)
 
@@ -759,6 +765,7 @@ func _physics_process(delta: float) -> void:
 		current_gloves.apply_grapple_velocity(delta)
 
 	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
+	_position_before_movement = global_position
 	move_and_slide()
 	if is_on_floor() and not was_on_floor and not god_mode_enabled:
 		landing_animation_timer = landing_animation_duration
@@ -2185,15 +2192,36 @@ func can_start_dash() -> bool:
 		return false
 	if not is_attacking:
 		return true
-	return _is_attack_in_dash_cancel_recovery()
+	return _is_attack_in_dash_cancel_window()
 
-func prepare_for_dash() -> void:
+func prepare_for_dash(direction: int = 0) -> void:
 	var should_cancel_attack := (
-		is_attacking and _is_attack_in_dash_cancel_recovery()
+		is_attacking and _is_attack_in_dash_cancel_window()
 	)
 	_cancel_enemy_grapple_combat()
 	if should_cancel_attack:
 		_finish_cancelled_attack()
+	if direction != 0:
+		last_direction = signi(direction)
+		if player_animation:
+			player_animation.flip_h = last_direction < 0
+		update_equipment_facing()
+	_dash_direction_intent_timer = 0.0
+
+func _update_dash_direction_intent(horizontal_input: float, delta: float) -> void:
+	if not is_zero_approx(horizontal_input):
+		_dash_direction_intent = int(signf(horizontal_input))
+		_dash_direction_intent_timer = dash_direction_input_buffer_time
+		return
+	_dash_direction_intent_timer = maxf(0.0, _dash_direction_intent_timer - delta)
+
+func get_dash_direction_intent() -> int:
+	var held_direction := Input.get_axis("move_left", "move_right")
+	if not is_zero_approx(held_direction):
+		return int(signf(held_direction))
+	if _dash_direction_intent_timer > 0.0 and _dash_direction_intent != 0:
+		return _dash_direction_intent
+	return last_direction if last_direction != 0 else 1
 
 func _is_attack_movement_committed() -> bool:
 	if not is_attacking:
@@ -2208,7 +2236,7 @@ func _is_attack_movement_committed() -> bool:
 		return not attack_active_finished
 	return false
 
-func _is_attack_in_dash_cancel_recovery() -> bool:
+func _is_attack_in_dash_cancel_window() -> bool:
 	if not is_attacking:
 		return true
 	if current_attack_is_special:
@@ -2218,7 +2246,8 @@ func _is_attack_in_dash_cancel_recovery() -> bool:
 			+ neutral_special_recovery
 		)
 		return (
-			attack_active_finished
+			attack_timer < neutral_special_windup
+			or attack_active_finished
 			and attack_timer >= attack_end - neutral_special_dash_cancel_window
 		)
 	if current_attack_uses_grapple_strike:
@@ -2227,13 +2256,30 @@ func _is_attack_in_dash_cancel_recovery() -> bool:
 			or current_grapple_strike_finished
 		)
 	if current_attack_uses_ground_combo:
-		return _has_passed_attack_strike_frames(_get_ground_combo_strike_frames())
+		var strike_frames := _get_ground_combo_strike_frames()
+		return (
+			_has_not_reached_attack_strike_frames(strike_frames)
+			or _has_passed_attack_strike_frames(strike_frames)
+		)
 	if current_attack_uses_air_double:
-		return _has_passed_attack_strike_frames([
+		var strike_frames: Array[Vector2i] = [
 			air_attack_first_strike_frames,
 			air_attack_second_strike_frames,
-		])
-	return attack_active_finished
+		]
+		return (
+			_has_not_reached_attack_strike_frames(strike_frames)
+			or _has_passed_attack_strike_frames(strike_frames)
+		)
+	return not attack_active_started or attack_active_finished
+
+func _has_not_reached_attack_strike_frames(strike_frames: Array[Vector2i]) -> bool:
+	if not player_animation:
+		return false
+	var first_active_frame := 1000000
+	for frame_window in strike_frames:
+		if frame_window.x >= 0:
+			first_active_frame = mini(first_active_frame, frame_window.x)
+	return first_active_frame < 1000000 and player_animation.frame < first_active_frame
 
 func _has_passed_attack_strike_frames(strike_frames: Array[Vector2i]) -> bool:
 	if not player_animation:
@@ -2899,28 +2945,30 @@ func start_dash_iframe(duration: float, direction := Vector2.ZERO) -> void:
 	)
 	var safe_duration := maxf(0.0, duration) * iframe_multiplier
 	_dash_iframe_timer = maxf(_dash_iframe_timer, safe_duration)
-	_set_dash_contact_phasing(_dash_iframe_timer > 0.0)
+	_dash_contact_phase_timer = maxf(
+		_dash_contact_phase_timer,
+		safe_duration
+	)
+	_set_dash_contact_phasing(_dash_contact_phase_timer > 0.0)
 	_play_dash_iframe_vfx(direction, _dash_iframe_timer)
 
 func _set_dash_contact_phasing(is_active: bool) -> void:
 	if _dash_contact_phasing_active == is_active:
 		return
 	_dash_contact_phasing_active = is_active
-	if hurtbox:
-		# Enemy contact is Area2D-based, while world collision belongs to the
-		# CharacterBody2D. Hiding only the hurtbox preserves floors and walls.
-		hurtbox.set_deferred("monitorable", not is_active)
+
 
 func is_dash_contact_phasing() -> bool:
 	return _dash_contact_phasing_active
 
-func stop_dash_on_enemy_contact(enemy_position_x: float) -> void:
+func stop_dash_on_enemy_contact(_enemy_position_x: float) -> void:
 	if current_chest and current_chest.has_method("stop_dash_on_enemy_contact"):
 		current_chest.stop_dash_on_enemy_contact()
-	var away_direction := signf(global_position.x - enemy_position_x)
-	if is_zero_approx(away_direction):
-		away_direction = -float(last_direction if last_direction != 0 else 1)
-	global_position.x += away_direction * 3.0
+	# Enemy contact is Area2D-based, so it does not participate in
+	# move_and_slide(). Restore the position from immediately before this
+	# physics step to make it behave like a solid wall during the dash.
+	global_position.x = _position_before_movement.x
+	velocity.x = 0.0
 
 func _play_dash_iframe_vfx(direction: Vector2, duration: float) -> void:
 	if not DASH_IFRAME_VFX_SCENE or not is_inside_tree():
@@ -2945,6 +2993,7 @@ func _play_dash_iframe_vfx(direction: Vector2, duration: float) -> void:
 
 func _cancel_dash_iframe() -> void:
 	_dash_iframe_timer = 0.0
+	_dash_contact_phase_timer = 0.0
 	_set_dash_contact_phasing(false)
 	if is_instance_valid(_dash_iframe_vfx_instance):
 		if _dash_iframe_vfx_instance.has_method("cancel"):
@@ -3002,7 +3051,9 @@ func get_coin_vacuum_multiplier() -> float:
 func _process_momentum(delta: float) -> void:
 	if _dash_iframe_timer > 0.0:
 		_dash_iframe_timer = maxf(0.0, _dash_iframe_timer - delta)
-		if _dash_iframe_timer <= 0.0:
+	if _dash_contact_phase_timer > 0.0:
+		_dash_contact_phase_timer = maxf(0.0, _dash_contact_phase_timer - delta)
+		if _dash_contact_phase_timer <= 0.0:
 			_set_dash_contact_phasing(false)
 
 	if _pending_use_after_swap:
@@ -3372,9 +3423,9 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 func should_ignore_health_damage(_damage: DamageData) -> bool:
 	return god_mode_enabled or _dash_iframe_timer > 0.0
 
-func should_ignore_enemy_contact(enemy: Node = null) -> bool:
+func should_ignore_enemy_contact(_enemy: Node = null) -> bool:
 	if _dash_iframe_timer > 0.0:
-		return enemy == null or bool(enemy.get("dash_pass_through"))
+		return true
 	if _grapple_strike_contact_guard:
 		return true
 	if (

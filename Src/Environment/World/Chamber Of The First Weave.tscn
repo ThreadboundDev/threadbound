@@ -2120,6 +2120,22 @@ position = Vector2(7424, 1063)
 [node name="BossArena" type="Node" parent="WorldArt/Rooms" unique_id=1632239551]
 script = ExtResource("org_room")
 
+[node name="ProtoWeaverPhaseMarkers" type="Node2D" parent="WorldArt/Rooms/BossArena"]
+
+[node name="WallLeft" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(4646, 4028)
+rotation = -1.5707963
+
+[node name="WallRight" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(6086, 4028)
+rotation = 1.5707963
+
+[node name="CenterHang" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(5366, 3998)
+
+[node name="RecoveryFloor" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(5366, 4358)
+
 [node name="Lighting" type="Node2D" parent="WorldArt/Rooms/BossArena" unique_id=2092851588]
 z_index = 6
 script = ExtResource("org_lighting")
@@ -2138,6 +2154,10 @@ script = ExtResource("org_enemy")
 
 [node name="ProtoWeaver" parent="WorldArt/Rooms/BossArena/Enemies" unique_id=337995925 instance=ExtResource("17_f4x7l")]
 position = Vector2(5366, 4358)
+wall_left_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallLeft")
+wall_right_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallRight")
+center_hang_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/CenterHang")
+recovery_floor_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/RecoveryFloor")
 threadburst_spawn_offset = Vector2(0, -8)
 threadburst_horizontal_spread = 360.0
 phase_one_health_ratio = 0.6667

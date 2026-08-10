@@ -74,6 +74,8 @@ func configure_boss_tether(anchor: Node2D, offset: Vector2, slot_index := 0) -> 
 	if slot_index % 2 == 1:
 		_tether_orbit_speed *= -1.0
 	_tether_bob_phase = randf_range(0.0, TAU)
+	# Boss-tethered flyers must be able to cross platforms while orbiting their anchor.
+	set_collision_mask_value(1, false)
 	_ensure_tether_line()
 	_update_tether_home(0.0)
 	global_position = home_position
@@ -167,7 +169,6 @@ func move_enemy(delta: float) -> void:
 	if state_machine and state_machine.current_state_name == &"Hurt":
 		velocity = velocity.move_toward(Vector2.ZERO, stats.acceleration * delta)
 		move_and_slide()
-		_process_contact_overlaps()
 		_resolve_tether_overlaps()
 		return
 
@@ -179,7 +180,6 @@ func move_enemy(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, target_y_speed, stats.acceleration * delta)
 
 	move_and_slide()
-	_process_contact_overlaps()
 	_resolve_tether_overlaps()
 
 func _play_idle_animation() -> void:

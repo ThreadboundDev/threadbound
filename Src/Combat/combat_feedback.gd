@@ -1,6 +1,10 @@
 class_name CombatFeedback
 extends Node
 
+const HIT_PAUSE_DURATION_MULTIPLIER := 1.65
+const HIT_PAUSE_MIN_VISIBLE_DURATION := 0.05
+const HIT_PAUSE_MAX_DURATION := 0.12
+
 static var _pause_end_usec := 0
 static var _pause_running := false
 static var _pause_restore_time_scale := 1.0
@@ -11,10 +15,11 @@ static func hit_pause(source_node: Node, duration: float, time_scale: float = 0.
 	if duration <= 0.0 or not source_node or not source_node.is_inside_tree():
 		return
 
+	var effective_duration := get_effective_hit_pause_duration(duration)
 	var tree := source_node.get_tree()
 	var tree_id := tree.get_instance_id()
 	var now_usec := Time.get_ticks_usec()
-	var requested_end_usec := now_usec + int(duration * 1000000.0)
+	var requested_end_usec := now_usec + int(effective_duration * 1000000.0)
 
 	if _pause_running and _pause_tree_id != tree_id:
 		Engine.time_scale = _pause_restore_time_scale
@@ -31,6 +36,15 @@ static func hit_pause(source_node: Node, duration: float, time_scale: float = 0.
 	_pause_restore_time_scale = Engine.time_scale
 	Engine.time_scale = time_scale
 	_run_hit_pause(tree, tree_id)
+
+static func get_effective_hit_pause_duration(duration: float) -> float:
+	if duration <= 0.0:
+		return 0.0
+	return clampf(
+		duration * HIT_PAUSE_DURATION_MULTIPLIER,
+		HIT_PAUSE_MIN_VISIBLE_DURATION,
+		HIT_PAUSE_MAX_DURATION
+	)
 
 static func _run_hit_pause(tree: SceneTree, tree_id: int) -> void:
 	while _pause_running and _pause_tree_id == tree_id:

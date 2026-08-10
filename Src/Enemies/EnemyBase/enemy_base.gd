@@ -15,7 +15,6 @@ const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.
 @export var start_facing: int = -1
 @export var facing_dead_zone: float = 12.0
 @export var resets_at_save_points := true
-@export var dash_pass_through := false
 
 @onready var visuals: Node2D = $Visuals
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
@@ -86,6 +85,7 @@ func _physics_process(delta: float) -> void:
 		_attack_cooldown_timer -= delta
 	if _contact_damage_cooldown_timer > 0.0:
 		_contact_damage_cooldown_timer -= delta
+	_process_contact_overlaps()
 
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
@@ -95,7 +95,6 @@ func apply_gravity(delta: float) -> void:
 func move_enemy(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
 	move_and_slide()
-	_process_contact_overlaps()
 
 func uses_polished_hurt_response() -> bool:
 	return stats != null and stats.use_polished_hurt_response
@@ -111,7 +110,6 @@ func update_polished_hurt_motion(delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0.0, deceleration * delta)
 	velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
 	move_and_slide()
-	_process_contact_overlaps()
 
 func end_polished_hurt_response() -> void:
 	pass
@@ -309,7 +307,7 @@ func _on_contact_area_entered(area: Area2D) -> void:
 	_try_contact_hurtbox(area)
 
 func _process_contact_overlaps() -> void:
-	if is_dead:
+	if is_dead or not contact_hitbox or not contact_hitbox.monitoring:
 		return
 
 	for area in contact_hitbox.get_overlapping_areas():
@@ -329,8 +327,6 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 		target_owner.has_method("is_dash_contact_phasing")
 		and bool(target_owner.call("is_dash_contact_phasing"))
 	):
-		if dash_pass_through:
-			return true
 		if target_owner.has_method("stop_dash_on_enemy_contact"):
 			target_owner.call("stop_dash_on_enemy_contact", global_position.x)
 			return true
@@ -341,7 +337,6 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 		return true
 
 	var away_from_enemy := _get_contact_away_direction(target_hurtbox)
-	_separate_from_contact(away_from_enemy)
 
 	if _contact_damage_cooldown_timer > 0.0:
 		return true
@@ -375,18 +370,6 @@ func _get_contact_away_direction(target_hurtbox: HurtboxComponent) -> Vector2:
 	if away_from_enemy.length() <= 0.01 or abs(away_from_enemy.x) <= 0.01:
 		away_from_enemy = Vector2(float(facing), 0.0)
 	return away_from_enemy.normalized()
-
-func _separate_from_contact(away_from_enemy: Vector2) -> void:
-	var direction: int = int(sign(away_from_enemy.x))
-	if direction == 0:
-		direction = facing
-
-	global_position.x -= float(direction) * 3.0
-	velocity.x = -float(direction) * stats.contact_knockback_strength * 0.35
-	if direction > 0:
-		_target_speed = min(_target_speed, 0.0)
-	else:
-		_target_speed = max(_target_speed, 0.0)
 
 func _on_hurtbox_hit_received(_damage: DamageData) -> void:
 	pass

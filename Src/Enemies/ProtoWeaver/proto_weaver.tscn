@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://6fglcvgmh18v" path="res://Assets/Enemys/proto_weaver/proto_weaver_walk.png" id="4_walk"]
 [ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="5_stab"]
 [ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_threadburst"]
+[ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_repulse"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="7_missile"]
 [ext_resource type="PackedScene" uid="uid://bbuxvfd44htht" path="res://Src/Enemies/Threadling/threadling.tscn" id="8_threadling"]
 [ext_resource type="Resource" uid="uid://dpif5qk5gouro" path="res://Src/Enemies/ProtoWeaver/proto_weaver_link_threadling_stats.tres" id="9_link_stats"]
@@ -13,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="12_hang"]
 [ext_resource type="Texture2D" uid="uid://bo6knlxuafjgq" path="res://Assets/Enemys/proto_weaver/proto_weaver_hang_thread.png" id="13_hang_thread"]
 [ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver_beam.gd" id="14_beam_script"]
+[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver_flow_aura.gd" id="15_flow_aura"]
 
 [sub_resource type="Shader" id="Shader_clean_threadburst"]
 code = "shader_type canvas_item;\nuniform bool clean_threadburst = false;\n\nvoid fragment() {\n\tvec4 pixel = texture(TEXTURE, UV) * COLOR;\n\tif (clean_threadburst) {\n\t\tbool saturated_pink = pixel.r > 0.58 && pixel.b > 0.35 && pixel.g < pixel.r * 0.82;\n\t\tif (saturated_pink) {\n\t\t\tpixel.a = 0.0;\n\t\t}\n\t}\n\tCOLOR = pixel;\n}\n"
@@ -23,11 +25,17 @@ shader = SubResource("Shader_clean_threadburst")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(196, 256)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grapple_upper"]
+size = Vector2(310, 330)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_detection"]
 size = Vector2(4300, 2050)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(336, 204)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stab_hitbox"]
+size = Vector2(350, 112)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_boss_music"]
 radius = 420.0
@@ -37,6 +45,7 @@ script = ExtResource("2_script")
 walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
 threadburst_texture = ExtResource("6_threadburst")
+repulse_texture = ExtResource("6_repulse")
 hang_texture = ExtResource("12_hang")
 hang_thread_texture = ExtResource("13_hang_thread")
 thread_missile_scene = ExtResource("7_missile")
@@ -58,17 +67,14 @@ hang_fps = 18.0
 hang_scale_multiplier = 1.4
 threadburst_every_n_attacks = 3
 ground_sweep_every_n_attacks = 4
-threadburst_min_missile_count = 3
-threadburst_max_missile_count = 4
-threadburst_low_health_max_missile_count = 6
-threadburst_spawn_offset = Vector2(0, -10)
-threadburst_horizontal_spread = 600.0
-threadburst_min_lane_spacing = 72.0
-threadburst_min_launch_speed = 760.0
-threadburst_max_launch_speed = 900.0
-threadburst_horizontal_force = 300.0
+threadburst_min_missile_count = 4
+threadburst_max_missile_count = 5
+threadburst_low_health_max_missile_count = 7
+threadburst_horizontal_spread = 920.0
+threadburst_min_lane_spacing = 135.0
 threadburst_lane_jitter = 18.0
-threadburst_velocity_jitter = 55.0
+threadburst_flight_time = 1.16
+threadburst_launch_height = 70.0
 armor_link_left_offset = Vector2(-320, -64)
 armor_link_right_offset = Vector2(320, -64)
 armor_link_respawn_time = 26.0
@@ -86,8 +92,13 @@ hang_rise_time = 0.45
 hang_return_time = 0.5
 hang_sway_pixels = 24.0
 hang_sway_speed = 2.2
-phase_one_laser_shot_count = 5
-phase_two_laser_shot_count = 7
+phase_one_health_ratio = 0.75
+phase_two_health_ratio = 0.5
+phase_three_health_ratio = 0.25
+phase_one_laser_shot_count = 4
+phase_two_laser_shot_count = 3
+phase_three_laser_event_count = 6
+phase_three_sweep_count = 2
 laser_tracking_time = 0.46
 laser_lock_time = 0.24
 laser_fire_time = 0.28
@@ -121,6 +132,9 @@ hframes = 6
 vframes = 8
 material = SubResource("ShaderMaterial_clean_threadburst")
 
+[node name="FlowAura" type="Node2D" parent="Visuals" index="2"]
+script = ExtResource("15_flow_aura")
+
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
@@ -136,10 +150,10 @@ position = Vector2(-210, -143)
 shape = SubResource("RectangleShape2D_attack")
 
 [node name="AttackHitbox" parent="." index="6"]
-position = Vector2(-210, -143)
+position = Vector2(-210, -118)
 
 [node name="CollisionShape2D" parent="AttackHitbox" index="0"]
-shape = SubResource("RectangleShape2D_attack")
+shape = SubResource("RectangleShape2D_stab_hitbox")
 
 [node name="CollisionShape2D" parent="ContactHitbox" index="0"]
 position = Vector2(0, -128)
@@ -151,30 +165,39 @@ target_path = NodePath("../Visuals/Sprite2D")
 [node name="GrappleTargetComponent" parent="." index="9"]
 weight_class = 1
 
-[node name="HangingThreadLine" type="Line2D" parent="." index="10" unique_id=1935180427]
+[node name="UpperBodyGrappleTarget" type="Area2D" parent="." index="10"]
+position = Vector2(0, -348)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBodyGrappleTarget" index="0"]
+shape = SubResource("RectangleShape2D_grapple_upper")
+
+[node name="HangingThreadLine" type="Line2D" parent="." index="11" unique_id=1935180427]
 visible = false
 z_index = -3
 width = 12.0
 texture = ExtResource("13_hang_thread")
 texture_mode = 1
 
-[node name="DetachedHead" type="Sprite2D" parent="." index="11" unique_id=321134082]
+[node name="DetachedHead" type="Sprite2D" parent="." index="12" unique_id=321134082]
 visible = false
 z_index = 1
 texture = ExtResource("12_hang")
 region_enabled = true
 region_rect = Rect2(430, 90, 420, 420)
 
-[node name="AnimatedBeam" type="Node2D" parent="." index="12"]
+[node name="AnimatedBeam" type="Node2D" parent="." index="13"]
 visible = false
 script = ExtResource("14_beam_script")
 
-[node name="BossHealthLayer" type="CanvasLayer" parent="." index="13" unique_id=1548498347]
+[node name="BossHealthLayer" type="CanvasLayer" parent="." index="14" unique_id=1548498347]
 layer = 20
 
 [node name="BossHealthBar" parent="BossHealthLayer" index="0" unique_id=632084359 instance=ExtResource("10_boss_bar")]
 
-[node name="BossMusicArea" type="Area2D" parent="." index="14" unique_id=61703702]
+[node name="BossMusicArea" type="Area2D" parent="." index="15" unique_id=61703702]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossMusicArea" index="0" unique_id=1882481179]

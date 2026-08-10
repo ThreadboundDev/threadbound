@@ -8,11 +8,14 @@ enum BeamState {
 	FIRING,
 }
 
-@export var tracking_color := Color(1.0, 0.47, 0.2, 0.72)
-@export var lock_color := Color(1.0, 0.84, 0.56, 0.94)
-@export var glow_color := Color(1.0, 0.11, 0.035, 0.24)
-@export var strand_color := Color(1.0, 0.34, 0.12, 0.86)
-@export var core_color := Color(1.0, 0.96, 0.82, 1.0)
+const POWER_RED := Color(1.0, 0.035, 0.012, 0.9)
+const BALANCE_BLUE := Color(0.035, 0.3, 1.0, 0.9)
+const ESSENCE_YELLOW := Color(1.0, 0.78, 0.08, 0.9)
+
+@export var tracking_color := Color(0.92, 0.97, 1.0, 0.68)
+@export var lock_color := Color(1.0, 0.96, 0.82, 0.94)
+@export var glow_color := Color(0.2, 0.08, 0.32, 0.2)
+@export var core_color := Color(1.0, 0.98, 0.92, 1.0)
 @export var segment_length := 42.0
 @export var beam_width := 30.0
 @export var wave_amplitude := 10.0
@@ -80,30 +83,32 @@ func _draw_tracking_line(is_locked: bool) -> void:
 	var cursor := fmod(_animation_time * 150.0, dash + gap)
 	while cursor < _beam_length:
 		var end_x := minf(_beam_length, cursor + dash)
-		draw_line(Vector2(cursor, 0.0), Vector2(end_x, 0.0), color, width, true)
+		var segment_index := floori(cursor / maxf(1.0, dash + gap))
+		var segment_color := color
+		if not is_locked:
+			segment_color = [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][segment_index % 3]
+			segment_color.a = color.a
+		draw_line(Vector2(cursor, 0.0), Vector2(end_x, 0.0), segment_color, width, true)
 		cursor += dash + gap
 	_draw_muzzle_flare(lerpf(0.55, 0.9, pulse), color)
 
 func _draw_animated_beam() -> void:
 	var pulse := 0.5 + sin(_animation_time * animation_speed) * 0.5
-	var points := _build_wave_points(0.0, wave_amplitude * 0.34, 1.0)
-	draw_polyline(points, glow_color, beam_width * lerpf(2.4, 2.9, pulse), true)
-	draw_polyline(points, strand_color, beam_width * lerpf(0.95, 1.18, pulse), true)
-	draw_polyline(points, core_color, beam_width * lerpf(0.23, 0.36, pulse), true)
+	var spine := _build_wave_points(0.0, wave_amplitude * 0.2, 1.0)
+	draw_polyline(spine, glow_color, beam_width * lerpf(2.2, 2.7, pulse), true)
+	draw_polyline(spine, Color(0.055, 0.025, 0.08, 0.96), beam_width * lerpf(1.04, 1.18, pulse), true)
 
+	var filament_colors := [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW]
 	for strand in range(3):
-		var offset := (float(strand) - 1.0) * beam_width * 0.42
+		var offset := (float(strand) - 1.0) * beam_width * 0.3
 		var strand_points := _build_wave_points(
 			offset,
-			wave_amplitude * (0.72 + float(strand) * 0.16),
-			1.7 + float(strand) * 0.31
+			wave_amplitude * (0.5 + float(strand) * 0.11),
+			1.45 + float(strand) * 0.27
 		)
-		draw_polyline(
-			strand_points,
-			Color(1.0, 0.2 + float(strand) * 0.14, 0.08, 0.72),
-			lerpf(2.0, 4.2, pulse),
-			true
-		)
+		draw_polyline(strand_points, filament_colors[strand], lerpf(4.0, 6.5, pulse), true)
+
+	draw_polyline(spine, core_color, beam_width * lerpf(0.2, 0.3, pulse), true)
 
 	_draw_muzzle_flare(1.0 + pulse * 0.28, core_color)
 	_draw_impact_flare(pulse)
@@ -125,17 +130,18 @@ func _draw_muzzle_flare(scale_factor: float, color: Color) -> void:
 	var radius := beam_width * scale_factor
 	draw_circle(Vector2.ZERO, radius * 1.45, Color(color.r, color.g, color.b, 0.13))
 	draw_circle(Vector2.ZERO, radius * 0.52, Color(color.r, color.g, color.b, 0.92))
-	for ray in range(8):
-		var angle := float(ray) * TAU / 8.0 + _animation_time * 0.7
+	for ray in range(9):
+		var angle := float(ray) * TAU / 9.0 + _animation_time * 0.7
 		var direction := Vector2.from_angle(angle)
-		draw_line(direction * radius * 0.25, direction * radius, color, 2.0, true)
+		var ray_color: Color = [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][ray % 3] if _state == BeamState.FIRING else color
+		draw_line(direction * radius * 0.25, direction * radius, ray_color, 2.0, true)
 
 func _draw_impact_flare(pulse: float) -> void:
 	var end := Vector2(_beam_length, 0.0)
 	var radius := beam_width * lerpf(0.8, 1.4, pulse)
-	draw_circle(end, radius * 1.7, Color(1.0, 0.13, 0.03, 0.16))
-	draw_circle(end, radius * 0.48, Color(1.0, 0.9, 0.68, 0.92))
-	for ray in range(6):
-		var angle := float(ray) * TAU / 6.0 - _animation_time
+	draw_circle(end, radius * 1.7, Color(0.2, 0.08, 0.32, 0.16))
+	draw_circle(end, radius * 0.48, core_color)
+	for ray in range(9):
+		var angle := float(ray) * TAU / 9.0 - _animation_time
 		var direction := Vector2.from_angle(angle)
-		draw_line(end + direction * radius * 0.4, end + direction * radius * 1.55, strand_color, 3.0, true)
+		draw_line(end + direction * radius * 0.4, end + direction * radius * 1.55, [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][ray % 3], 3.0, true)

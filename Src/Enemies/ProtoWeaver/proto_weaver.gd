@@ -5,7 +5,23 @@ enum AttackMode {
 	STAB,
 	THREADBURST,
 	GROUND_SWEEP,
+	THREAD_REPULSE,
+	ESSENCE_ECHO,
 	HANGING_LASER,
+}
+
+enum ThreadburstPattern {
+	WIDE_FAN,
+	PLAYER_SIDE,
+	SPLIT_FLANKS,
+}
+
+enum HangingEvent {
+	AIMED_LASER,
+	LASER_SWEEP,
+	RED_VOLLEY,
+	YELLOW_ECHO,
+	BLUE_WALL_SHEAR,
 }
 
 # Hand-mapped glowing-eye socket in each 1405x1405 hanging-animation cell.
@@ -64,6 +80,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var walk_texture: Texture2D
 @export var stab_texture: Texture2D
 @export var threadburst_texture: Texture2D
+@export var repulse_texture: Texture2D
 @export var hang_texture: Texture2D
 @export var hang_thread_texture: Texture2D
 @export var thread_missile_scene: PackedScene
@@ -87,17 +104,27 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var hang_scale_multiplier := 1.4
 @export var threadburst_every_n_attacks := 3
 @export var ground_sweep_every_n_attacks := 4
+@export var essence_echo_every_n_attacks := 5
 @export var threadburst_min_missile_count := 3
 @export var threadburst_max_missile_count := 5
 @export var threadburst_low_health_max_missile_count := 8
-@export var threadburst_spawn_offset := Vector2(0.0, -10.0)
-@export var threadburst_horizontal_spread := 600.0
-@export var threadburst_min_lane_spacing := 72.0
-@export var threadburst_min_launch_speed := 760.0
-@export var threadburst_max_launch_speed := 900.0
-@export var threadburst_horizontal_force := 300.0
+@export var threadburst_horizontal_spread := 920.0
+@export var threadburst_min_lane_spacing := 100.0
+@export var threadburst_max_lane_spacing := 180.0
 @export var threadburst_lane_jitter := 18.0
-@export var threadburst_velocity_jitter := 55.0
+@export var threadburst_flight_time := 1.16
+@export var threadburst_launch_height := 70.0
+@export var threadburst_far_lane_time_bonus := 0.14
+@export var threadburst_target_lead_time := 0.28
+@export var threadburst_max_target_lead := 140.0
+
+@export_group("Thread Repulse")
+@export var repulse_trigger_distance := 190.0
+@export var repulse_trigger_hold_time := 0.7
+@export var repulse_internal_cooldown := 5.0
+@export var repulse_damage := 12
+@export var repulse_radius := 200.0
+@export var repulse_backstep_speed := 310.0
 @export var armor_link_left_offset := Vector2(-420.0, -48.0)
 @export var armor_link_right_offset := Vector2(420.0, -48.0)
 @export var armor_link_respawn_time := 12.0
@@ -115,16 +142,47 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var hang_return_time := 0.5
 @export var hang_sway_pixels := 24.0
 @export var hang_sway_speed := 2.2
-@export var phase_one_health_ratio := 0.6667
-@export var phase_two_health_ratio := 0.3333
-@export var phase_one_laser_shot_count := 5
-@export var phase_two_laser_shot_count := 7
+@export_group("Wall Intermissions")
+@export_node_path("Marker2D") var wall_left_marker_path: NodePath
+@export_node_path("Marker2D") var wall_right_marker_path: NodePath
+@export_node_path("Marker2D") var center_hang_marker_path: NodePath
+@export_node_path("Marker2D") var recovery_floor_marker_path: NodePath
+@export var wall_left_offset := Vector2(-720.0, -330.0)
+@export var wall_right_offset := Vector2(720.0, -330.0)
+@export var wall_thread_anchor_distance := 150.0
+@export var wall_phase_break_distance := 260.0
+@export var wall_phase_one_max_duration := 8.0
+@export var wall_phase_two_max_duration := 11.0
+@export var wall_phase_one_break_damage := 55.0
+@export var wall_phase_two_break_damage := 80.0
+@export var wall_knockdown_duration := 1.8
+@export var wall_timeout_recovery_duration := 0.65
+@export var wall_phase_event_delay := 0.18
+@export var wall_phase_one_timing_multiplier := 1.0
+@export var wall_phase_two_timing_multiplier := 0.78
+@export var wall_blue_wave_speed := 720.0
+@export var wall_blue_wave_lifetime := 1.55
+@export var wall_blue_wave_surface_offset := 18.0
+@export_group("")
+@export var phase_one_health_ratio := 0.75
+@export var phase_two_health_ratio := 0.5
+@export var phase_three_health_ratio := 0.25
+@export var phase_one_laser_shot_count := 4
+@export var phase_two_laser_shot_count := 3
+@export var phase_three_laser_event_count := 6
+@export var phase_three_sweep_count := 2
 @export var laser_tracking_time := 0.46
 @export var laser_lock_time := 0.24
 @export var laser_fire_time := 0.28
 @export var phase_two_timing_multiplier := 0.82
+@export var phase_three_timing_multiplier := 0.74
 @export var phase_intershot_delay := 0.08
 @export var phase_landing_punish_time := 0.85
+@export var laser_aim_offset := 112.0
+@export var phase_one_sweep_lock_time := 0.48
+@export var phase_one_sweep_time := 0.95
+@export var phase_two_sweep_lock_time := 0.34
+@export var phase_two_sweep_time := 0.72
 @export var laser_damage := 30
 @export var laser_hit_width := 42.0
 @export var laser_max_distance := 980.0
@@ -140,8 +198,27 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var ground_sweep_pose_depth := 34.0
 @export var ground_sweep_pose_lean := 0.075
 
+@export_group("Essence Echo")
+@export var essence_echo_cross_distance := 220.0
+@export var essence_echo_edge_padding := 72.0
+@export var essence_echo_delay := 0.50
+
+@export_group("Grounded Attack Poses")
+@export var stab_pose_drawback := 24.0
+@export var threadburst_pose_lift := 22.0
+@export var threadburst_pose_stretch := 1.09
+@export var repulse_pose_width := 1.12
+
 @export_group("Boss Behavior")
 @export var chase_freely_after_aggro := true
+@export var vertical_response_height := 150.0
+@export var vertical_response_hold_time := 0.6
+@export var vertical_response_cooldown := 4.0
+
+@export_group("Debug Attack Lab")
+@export var debug_attack_lab_enabled := false
+@export_enum("Stab:0", "Red Threadburst:1", "Blue Ground Wave:2", "Blue Repulse:3", "Yellow Essence Echo:4")
+var debug_forced_attack_mode: int = AttackMode.THREADBURST
 
 @export_group("Boss Stagger")
 @export var stagger_initial_threshold := 105.0
@@ -164,7 +241,12 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var threadburst_telegraph_hold_time := 0.28
 @export var ground_sweep_telegraph_hold_frame := 16
 @export var ground_sweep_telegraph_hold_time := 0.42
+@export var repulse_telegraph_hold_frame := 20
+@export var repulse_telegraph_hold_time := 0.42
+@export var essence_echo_telegraph_hold_frame := 22
+@export var essence_echo_telegraph_hold_time := 0.34
 @export var cleaned_threadburst_frame_count := 26
+@export var repulse_frame_count := 26
 @export var stagger_pose_frame := 25
 
 @export_group("Boss SFX")
@@ -176,12 +258,17 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var boss_subtone_volume_offset_db := -10.0
 
 @onready var sprite: Sprite2D = $Visuals/Sprite2D as Sprite2D
+@onready var flow_aura: ProtoWeaverFlowAura = $Visuals/FlowAura as ProtoWeaverFlowAura
 @onready var hanging_thread_line: Line2D = $HangingThreadLine as Line2D
 @onready var detached_head: Sprite2D = $DetachedHead as Sprite2D
 @onready var laser_beam: ProtoWeaverBeam = $AnimatedBeam as ProtoWeaverBeam
 @onready var boss_health_layer: CanvasLayer = $BossHealthLayer as CanvasLayer
 @onready var boss_health_bar: BossHealthBar = $BossHealthLayer/BossHealthBar as BossHealthBar
 @onready var boss_music_area: Area2D = $BossMusicArea as Area2D
+@onready var body_collision_shape: CollisionShape2D = $CollisionShape2D as CollisionShape2D
+@onready var hurtbox_collision_shape: CollisionShape2D = $Hurtbox/CollisionShape2D as CollisionShape2D
+@onready var contact_collision_shape: CollisionShape2D = $ContactHitbox/CollisionShape2D as CollisionShape2D
+@onready var upper_body_grapple_target: Area2D = $UpperBodyGrappleTarget as Area2D
 
 var _animation_timer := 0.0
 var _current_frame := 0
@@ -203,9 +290,23 @@ var _hang_anchor := Vector2.ZERO
 var _hang_thread_attach := Vector2.ZERO
 var _hang_thread_draw_ratio := 0.0
 var _hang_sway_timer := 0.0
+var _hang_rotation := 0.0
+var _wall_hanging := false
+var _wall_side := 0
+var _wall_break_requested := false
+var _wall_broken_by_player := false
+var _wall_phase_timed_out := false
+var _wall_phase_elapsed := 0.0
+var _wall_break_damage := 0.0
+var _wall_event_bag: Array[int] = []
+var _last_wall_event := -1
 var _laser_target_position := Vector2.ZERO
 var _laser_firing := false
 var _laser_hit_this_shot := false
+var _laser_aim_offset := 0.0
+var _laser_pattern_bag: Array[float] = []
+var _last_laser_aim_offset := INF
+var _laser_recharge_active := false
 var _player_in_boss_music_area := false
 var _boss_music_latched := false
 var _boss_aggro_latched := false
@@ -228,6 +329,24 @@ var _stagger_pose_scale := Vector2.ONE
 var _encounter_intro_active := false
 var _intro_hud_revealed := false
 var _intro_state_machine_process_mode := Node.PROCESS_MODE_INHERIT
+var _repulse_close_time := 0.0
+var _repulse_cooldown_remaining := 0.0
+var _vertical_response_hold := 0.0
+var _vertical_response_cooldown_remaining := 0.0
+var _vertical_response_use_echo_next := false
+var _threadburst_pattern_bag: Array[int] = []
+var _last_threadburst_pattern := -1
+var _pending_essence_destination := Vector2.ZERO
+var _essence_echo_vfx: ProtoWeaverEssenceEchoVFX
+var _base_visuals_rotation := 0.0
+var _base_body_collision_position := Vector2.ZERO
+var _base_body_collision_rotation := 0.0
+var _base_hurtbox_collision_position := Vector2.ZERO
+var _base_hurtbox_collision_rotation := 0.0
+var _base_contact_collision_position := Vector2.ZERO
+var _base_contact_collision_rotation := 0.0
+var _base_grapple_position := Vector2.ZERO
+var _base_grapple_rotation := 0.0
 
 func _ready() -> void:
 	super._ready()
@@ -263,6 +382,7 @@ func _ready() -> void:
 		if walk_texture:
 			_base_cell_size = _get_sheet_cell_size(walk_texture, walk_columns, walk_rows)
 		_play_walk_animation()
+	_capture_hanging_presentation_defaults()
 
 	update_facing(facing)
 	_update_boss_health_bar()
@@ -276,6 +396,9 @@ func _process(delta: float) -> void:
 	_try_start_pending_hanging_phase()
 	_update_boss_health_bar()
 	_update_boss_health_visibility()
+	_update_repulse_opportunity(delta)
+	_update_vertical_response_opportunity(delta)
+	_update_wall_phase_timeout(delta)
 
 func update_facing(direction: int) -> void:
 	super.update_facing(direction)
@@ -298,16 +421,157 @@ func patrol(delta: float) -> void:
 	if not _should_chase_freely():
 		_prevent_moving_outside_hang_arena()
 
+
+func _update_repulse_opportunity(delta: float) -> void:
+	_repulse_cooldown_remaining = maxf(0.0, _repulse_cooldown_remaining - delta)
+	if (
+		not target
+		or is_dead
+		or _hanging_laser_busy
+		or _encounter_intro_active
+	):
+		_repulse_close_time = 0.0
+		return
+
+	var horizontal_distance := absf(target.global_position.x - global_position.x)
+	if horizontal_distance <= repulse_trigger_distance:
+		_repulse_close_time = minf(repulse_trigger_hold_time, _repulse_close_time + delta)
+	else:
+		_repulse_close_time = maxf(0.0, _repulse_close_time - delta * 2.0)
+
+
+func _can_use_thread_repulse() -> bool:
+	return (
+		_repulse_cooldown_remaining <= 0.0
+		and _repulse_close_time >= repulse_trigger_hold_time
+	)
+
+
+func _update_vertical_response_opportunity(delta: float) -> void:
+	_vertical_response_cooldown_remaining = maxf(
+		0.0,
+		_vertical_response_cooldown_remaining - delta
+	)
+	if (
+		not target
+		or is_dead
+		or _hanging_laser_busy
+		or _encounter_intro_active
+	):
+		_vertical_response_hold = 0.0
+		return
+	if _is_target_elevated():
+		_vertical_response_hold = minf(
+			vertical_response_hold_time,
+			_vertical_response_hold + delta
+		)
+	else:
+		_vertical_response_hold = maxf(0.0, _vertical_response_hold - delta * 2.0)
+
+
+func _is_target_elevated() -> bool:
+	return (
+		is_instance_valid(target)
+		and target.global_position.y <= global_position.y - vertical_response_height
+	)
+
+
+func _can_use_vertical_response() -> bool:
+	return (
+		_vertical_response_cooldown_remaining <= 0.0
+		and _vertical_response_hold >= vertical_response_hold_time
+		and _is_target_elevated()
+	)
+
+
+func _take_next_vertical_response_attack() -> int:
+	var attack_mode := AttackMode.ESSENCE_ECHO if _vertical_response_use_echo_next else AttackMode.THREADBURST
+	_vertical_response_use_echo_next = not _vertical_response_use_echo_next
+	return attack_mode
+
+
+func _capture_hanging_presentation_defaults() -> void:
+	if visuals:
+		_base_visuals_rotation = visuals.rotation
+	if body_collision_shape:
+		_base_body_collision_position = body_collision_shape.position
+		_base_body_collision_rotation = body_collision_shape.rotation
+	if hurtbox_collision_shape:
+		_base_hurtbox_collision_position = hurtbox_collision_shape.position
+		_base_hurtbox_collision_rotation = hurtbox_collision_shape.rotation
+	if contact_collision_shape:
+		_base_contact_collision_position = contact_collision_shape.position
+		_base_contact_collision_rotation = contact_collision_shape.rotation
+	if upper_body_grapple_target:
+		_base_grapple_position = upper_body_grapple_target.position
+		_base_grapple_rotation = upper_body_grapple_target.rotation
+
+
+func _update_wall_phase_timeout(delta: float) -> void:
+	if not _wall_hanging or _wall_break_requested or _hanging_laser_landing:
+		return
+	_wall_phase_elapsed += delta
+	var maximum_duration := _get_wall_phase_max_duration()
+	if maximum_duration > 0.0 and _wall_phase_elapsed >= maximum_duration:
+		_wall_phase_timed_out = true
+		_request_wall_phase_break(false)
+
+
+func _request_wall_phase_break(player_success: bool) -> void:
+	if not _wall_hanging or _wall_break_requested:
+		return
+	_wall_break_requested = true
+	_wall_broken_by_player = player_success
+	_laser_firing = false
+	if laser_beam:
+		laser_beam.hide_beam()
+	if hanging_thread_line:
+		hanging_thread_line.visible = false
+	if player_success:
+		CombatFeedback.screen_shake(self, 6.0, 0.14)
+		CombatFeedback.hit_pause(self, 0.075)
+
+
+func _is_wall_event_cancelled() -> bool:
+	return _wall_hanging and (_wall_break_requested or _hanging_laser_landing)
+
+
+func _get_wall_phase_max_duration() -> float:
+	return wall_phase_one_max_duration if _active_hanging_phase <= 0 else wall_phase_two_max_duration
+
+
+func _get_wall_break_damage_threshold() -> float:
+	return wall_phase_one_break_damage if _active_hanging_phase <= 0 else wall_phase_two_break_damage
+
 func begin_attack() -> void:
 	_attack_count += 1
-	if threadburst_every_n_attacks > 0 and _attack_count % threadburst_every_n_attacks == 0:
+	if debug_attack_lab_enabled:
+		_current_attack_mode = clampi(
+			debug_forced_attack_mode,
+			AttackMode.STAB,
+			AttackMode.ESSENCE_ECHO
+		)
+	elif _can_use_vertical_response():
+		_current_attack_mode = _take_next_vertical_response_attack()
+		_vertical_response_hold = 0.0
+		_vertical_response_cooldown_remaining = vertical_response_cooldown
+	elif _can_use_thread_repulse():
+		_current_attack_mode = AttackMode.THREAD_REPULSE
+		_repulse_close_time = 0.0
+		_repulse_cooldown_remaining = repulse_internal_cooldown
+	elif threadburst_every_n_attacks > 0 and _attack_count % threadburst_every_n_attacks == 0:
 		_current_attack_mode = AttackMode.THREADBURST
 	elif ground_sweep_every_n_attacks > 0 and _attack_count % ground_sweep_every_n_attacks == 0:
 		_current_attack_mode = AttackMode.GROUND_SWEEP
+	elif essence_echo_every_n_attacks > 0 and _attack_count % essence_echo_every_n_attacks == 0:
+		_current_attack_mode = AttackMode.ESSENCE_ECHO
 	else:
 		_current_attack_mode = AttackMode.STAB
 	if _current_attack_mode == AttackMode.GROUND_SWEEP:
 		_spawn_ground_sweep_charge()
+	elif _current_attack_mode == AttackMode.ESSENCE_ECHO:
+		_spawn_essence_echo_telegraph()
+	_show_current_attack_aura()
 
 	super.begin_attack()
 	_play_attack_animation()
@@ -320,12 +584,17 @@ func get_attack_windup() -> float:
 		return base_windup + maxf(0.0, threadburst_telegraph_hold_time)
 	if _current_attack_mode == AttackMode.GROUND_SWEEP:
 		return base_windup + maxf(0.0, ground_sweep_telegraph_hold_time)
+	if _current_attack_mode == AttackMode.THREAD_REPULSE:
+		return base_windup + maxf(0.0, repulse_telegraph_hold_time)
+	if _current_attack_mode == AttackMode.ESSENCE_ECHO:
+		return base_windup + maxf(0.0, essence_echo_telegraph_hold_time)
 	return base_windup
 
 func end_attack() -> void:
 	super.end_attack()
 	if _current_attack_mode == AttackMode.HANGING_LASER and _hanging_laser_busy:
 		return
+	_hide_attack_aura()
 	if sprite and walk_texture:
 		_play_walk_animation()
 
@@ -344,11 +613,19 @@ func activate_attack_hitbox() -> void:
 		_spawn_ground_sweep()
 		return
 
+	if _current_attack_mode == AttackMode.THREAD_REPULSE:
+		_spawn_thread_repulse()
+		return
+
+	if _current_attack_mode == AttackMode.ESSENCE_ECHO:
+		_activate_essence_echo()
+		return
+
 	_play_boss_sfx(&"enemy_sword_attack", boss_stab_pitch)
 	super.activate_attack_hitbox()
 
 func deactivate_attack_hitbox() -> void:
-	if _current_attack_mode == AttackMode.STAB:
+	if _current_attack_mode in [AttackMode.STAB, AttackMode.ESSENCE_ECHO]:
 		super.deactivate_attack_hitbox()
 
 func update_attack_motion(_delta: float) -> void:
@@ -356,11 +633,15 @@ func update_attack_motion(_delta: float) -> void:
 		set_horizontal_target_speed(0.0)
 		velocity = Vector2.ZERO
 		return
+	if _current_attack_mode == AttackMode.THREAD_REPULSE:
+		apply_gravity(_delta)
+		move_enemy(_delta)
+		return
 
 	super.update_attack_motion(_delta)
 
 func is_player_in_attack_range() -> bool:
-	return super.is_player_in_attack_range()
+	return super.is_player_in_attack_range() or _can_use_vertical_response()
 
 func is_attack_sequence_busy() -> bool:
 	return _hanging_laser_busy
@@ -409,9 +690,12 @@ func _update_boss_music_state() -> void:
 func _on_hurtbox_hit_received(damage: DamageData) -> void:
 	if boss_health_layer:
 		boss_health_layer.visible = true
-	if _hanging_laser_busy:
-		if hit_flash:
-			hit_flash.flash(Color(1.0, 0.86, 0.62, 1.0), 0.045)
+	if _hanging_laser_busy and not _laser_recharge_active:
+		if not _wall_hanging or not _is_player_close_enough_to_break_wall_phase():
+			if hit_flash:
+				hit_flash.flash(Color(1.0, 0.86, 0.62, 1.0), 0.045)
+			return
+		_receive_wall_break_hit(damage)
 		return
 
 	if _is_armored():
@@ -454,6 +738,33 @@ func _on_hurtbox_hit_received(damage: DamageData) -> void:
 		else:
 			_stagger_value = next_stagger
 	_pending_stagger_interrupt = false
+
+
+func _receive_wall_break_hit(damage: DamageData) -> void:
+	var threshold := maxf(1.0, _get_wall_break_damage_threshold())
+	_wall_break_damage = minf(threshold, _wall_break_damage + maxf(1.0, float(damage.amount)))
+	if _is_armored():
+		if hit_flash:
+			hit_flash.flash(Color(0.92, 0.92, 1.0, 1.0), 0.07)
+		var blocked_sound := AudioManager.play_sfx(&"enemy_hit", 2.0, 0.0)
+		if blocked_sound:
+			blocked_sound.pitch_scale *= 0.64
+		CombatFeedback.hit_pause(self, 0.03)
+	else:
+		health_component.apply_damage(damage)
+	_update_boss_health_bar()
+	if _wall_break_damage >= threshold and health_component.current_health > 0:
+		_request_wall_phase_break(true)
+
+
+func _is_player_close_enough_to_break_wall_phase() -> bool:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if not player:
+		player = target
+	return (
+		is_instance_valid(player)
+		and player.global_position.distance_to(global_position) <= wall_phase_break_distance
+	)
 
 func _on_damaged(damage: DamageData) -> void:
 	AudioManager.play_sfx(&"enemy_hit")
@@ -526,7 +837,7 @@ func _trigger_deferred_stagger() -> void:
 
 func _is_committed_to_attack() -> bool:
 	return (
-		_hanging_laser_busy
+		(_hanging_laser_busy and not _laser_recharge_active)
 		or _pending_hanging_phase >= 0
 		or (state_machine and state_machine.current_state_name == &"Attack")
 	)
@@ -538,12 +849,61 @@ func _get_current_stagger_threshold() -> float:
 	)
 
 func _queue_health_threshold_phase(current: int, maximum: int) -> void:
-	if maximum <= 0 or current <= 0 or _next_hanging_phase >= 2:
+	if debug_attack_lab_enabled:
+		return
+	if maximum <= 0 or current <= 0 or _next_hanging_phase >= 3:
 		return
 	var health_ratio := float(current) / float(maximum)
-	var threshold := phase_one_health_ratio if _next_hanging_phase == 0 else phase_two_health_ratio
+	var threshold := phase_one_health_ratio
+	match _next_hanging_phase:
+		1:
+			threshold = phase_two_health_ratio
+		2:
+			threshold = phase_three_health_ratio
 	if health_ratio <= threshold:
 		_pending_hanging_phase = _next_hanging_phase
+
+
+func configure_debug_attack_lab(attack_mode: int) -> void:
+	debug_attack_lab_enabled = true
+	debug_forced_attack_mode = clampi(
+		attack_mode,
+		AttackMode.STAB,
+		AttackMode.ESSENCE_ECHO
+	)
+	_pending_hanging_phase = -1
+	_repulse_close_time = 0.0
+	_repulse_cooldown_remaining = 0.0
+	_attack_cooldown_timer = 0.0
+
+
+func disable_debug_attack_lab() -> void:
+	debug_attack_lab_enabled = false
+	_attack_cooldown_timer = 0.0
+
+
+func trigger_debug_hanging_phase(phase_index: int) -> void:
+	debug_attack_lab_enabled = false
+	_pending_hanging_phase = clampi(phase_index, 0, 2)
+	_attack_cooldown_timer = 0.0
+	_try_start_pending_hanging_phase()
+
+
+func get_debug_attack_lab_name() -> String:
+	if not debug_attack_lab_enabled:
+		return "Normal Encounter"
+	match debug_forced_attack_mode:
+		AttackMode.STAB:
+			return "Neutral Stab"
+		AttackMode.THREADBURST:
+			return "RED — Threadburst"
+		AttackMode.GROUND_SWEEP:
+			return "BLUE — Ground Wave"
+		AttackMode.THREAD_REPULSE:
+			return "BLUE — Thread Repulse"
+		AttackMode.ESSENCE_ECHO:
+			return "YELLOW — Essence Echo"
+	return "Unknown"
 
 func _try_start_pending_hanging_phase() -> void:
 	if _pending_hanging_phase < 0 or _hanging_laser_busy or _encounter_intro_active or is_dead:
@@ -587,19 +947,19 @@ func _play_stagger_animation() -> void:
 	_stagger_visual_tween.tween_property(
 		sprite,
 		"position",
-		_base_sprite_position + Vector2(-float(facing) * 30.0, 22.0),
+		_base_sprite_position + Vector2(-float(facing) * 42.0, 30.0),
 		duration * 0.18
 	)
 	_stagger_visual_tween.parallel().tween_property(
 		sprite,
 		"rotation",
-		-float(facing) * 0.095,
+		-float(facing) * 0.13,
 		duration * 0.18
 	)
 	_stagger_visual_tween.parallel().tween_property(
 		sprite,
 		"scale",
-		Vector2(_stagger_pose_scale.x * 1.06, _stagger_pose_scale.y * 0.91),
+		Vector2(_stagger_pose_scale.x * 1.08, _stagger_pose_scale.y * 0.86),
 		duration * 0.18
 	)
 	_stagger_visual_tween.tween_interval(duration * 0.43)
@@ -622,6 +982,7 @@ func _on_boss_health_changed(_current: int, _maximum: int) -> void:
 	_update_boss_health_bar()
 
 func _on_boss_died(_damage: DamageData) -> void:
+	_hide_attack_aura(true)
 	for index in range(_armor_links.size()):
 		_clear_armor_link(index)
 	AudioManager.stop_boss_music()
@@ -649,6 +1010,10 @@ func _play_attack_animation() -> void:
 	var texture := stab_texture
 	if _current_attack_mode == AttackMode.THREADBURST:
 		texture = threadburst_texture
+		_set_sprite_cleanup_enabled(true)
+		_configure_sprite_sheet(texture, attack_columns, attack_rows)
+	elif _current_attack_mode == AttackMode.THREAD_REPULSE:
+		texture = repulse_texture if repulse_texture else threadburst_texture
 		_set_sprite_cleanup_enabled(true)
 		_configure_sprite_sheet(texture, attack_columns, attack_rows)
 	elif _current_attack_mode == AttackMode.HANGING_LASER:
@@ -695,7 +1060,7 @@ func _get_scale_for_sheet(texture: Texture2D, columns: int, rows: int) -> Vector
 func _update_sprite_animation(delta: float) -> void:
 	if not sprite:
 		return
-	if _stagger_visual_active:
+	if _stagger_visual_active or _laser_recharge_active:
 		return
 
 	var frame_count := _get_current_animation_frame_count()
@@ -718,7 +1083,7 @@ func _update_sprite_animation(delta: float) -> void:
 		_current_frame = next_frame % frame_count
 
 	sprite.frame = _current_frame
-	_update_ground_sweep_pose()
+	_update_grounded_attack_pose()
 
 func _update_attack_telegraph_hold(delta: float, fps: float) -> bool:
 	if not _playing_attack or _current_attack_mode == AttackMode.HANGING_LASER:
@@ -734,6 +1099,12 @@ func _update_attack_telegraph_hold(delta: float, fps: float) -> bool:
 	elif _current_attack_mode == AttackMode.GROUND_SWEEP:
 		hold_frame = ground_sweep_telegraph_hold_frame
 		hold_time = ground_sweep_telegraph_hold_time
+	elif _current_attack_mode == AttackMode.THREAD_REPULSE:
+		hold_frame = repulse_telegraph_hold_frame
+		hold_time = repulse_telegraph_hold_time
+	elif _current_attack_mode == AttackMode.ESSENCE_ECHO:
+		hold_frame = essence_echo_telegraph_hold_frame
+		hold_time = essence_echo_telegraph_hold_time
 	hold_frame = clampi(hold_frame, 0, max(0, attack_frame_count - 1))
 
 	if not _attack_hold_started:
@@ -745,16 +1116,16 @@ func _update_attack_telegraph_hold(delta: float, fps: float) -> bool:
 
 	_current_frame = hold_frame
 	sprite.frame = _current_frame
-	_update_ground_sweep_pose()
+	_update_grounded_attack_pose()
 	_attack_hold_remaining = maxf(0.0, _attack_hold_remaining - delta)
 	if _attack_hold_remaining <= 0.0:
 		_attack_hold_complete = true
 	return true
 
-func _update_ground_sweep_pose() -> void:
+func _update_grounded_attack_pose() -> void:
 	if not sprite:
 		return
-	if not _playing_attack or _current_attack_mode != AttackMode.GROUND_SWEEP:
+	if not _playing_attack or _current_attack_mode == AttackMode.HANGING_LASER:
 		_reset_sprite_attack_pose()
 		return
 
@@ -764,12 +1135,36 @@ func _update_ground_sweep_pose() -> void:
 	var pose_weight := lower * recover
 	if _attack_hold_started and not _attack_hold_complete:
 		pose_weight = 1.0
-	sprite.position = _base_sprite_position + Vector2(18.0, ground_sweep_pose_depth) * pose_weight
-	sprite.rotation = -ground_sweep_pose_lean * pose_weight
-	sprite.scale = Vector2(
-		_configured_sprite_scale.x * lerpf(1.0, 1.07, pose_weight),
-		_configured_sprite_scale.y * lerpf(1.0, 0.91, pose_weight)
-	)
+
+	match _current_attack_mode:
+		AttackMode.STAB, AttackMode.ESSENCE_ECHO:
+			sprite.position = _base_sprite_position + Vector2(-float(facing) * stab_pose_drawback, 0.0) * pose_weight
+			sprite.rotation = -float(facing) * 0.035 * pose_weight
+			sprite.scale = Vector2(
+				_configured_sprite_scale.x * lerpf(1.0, 1.04, pose_weight),
+				_configured_sprite_scale.y * lerpf(1.0, 0.98, pose_weight)
+			)
+		AttackMode.THREADBURST:
+			sprite.position = _base_sprite_position + Vector2(0.0, -threadburst_pose_lift) * pose_weight
+			sprite.rotation = float(facing) * 0.028 * pose_weight
+			sprite.scale = Vector2(
+				_configured_sprite_scale.x * lerpf(1.0, 0.94, pose_weight),
+				_configured_sprite_scale.y * lerpf(1.0, threadburst_pose_stretch, pose_weight)
+			)
+		AttackMode.GROUND_SWEEP:
+			sprite.position = _base_sprite_position + Vector2(18.0 * float(facing), ground_sweep_pose_depth) * pose_weight
+			sprite.rotation = -float(facing) * ground_sweep_pose_lean * pose_weight
+			sprite.scale = Vector2(
+				_configured_sprite_scale.x * lerpf(1.0, 1.07, pose_weight),
+				_configured_sprite_scale.y * lerpf(1.0, 0.91, pose_weight)
+			)
+		AttackMode.THREAD_REPULSE:
+			sprite.position = _base_sprite_position + Vector2(0.0, 10.0) * pose_weight
+			sprite.rotation = 0.0
+			sprite.scale = Vector2(
+				_configured_sprite_scale.x * lerpf(1.0, repulse_pose_width, pose_weight),
+				_configured_sprite_scale.y * lerpf(1.0, 0.94, pose_weight)
+			)
 
 func _reset_sprite_attack_pose() -> void:
 	if not sprite or _stagger_visual_active:
@@ -786,6 +1181,8 @@ func _get_current_animation_frame_count() -> int:
 		return hang_frame_count
 	if _current_attack_mode == AttackMode.THREADBURST:
 		return mini(attack_frame_count, cleaned_threadburst_frame_count)
+	if _current_attack_mode == AttackMode.THREAD_REPULSE:
+		return mini(attack_frame_count, repulse_frame_count)
 	return attack_frame_count
 
 func _get_current_animation_fps() -> float:
@@ -820,37 +1217,133 @@ func _spawn_threadburst_missiles() -> void:
 		parent = self
 
 	var lane_offsets := _get_threadburst_lane_offsets()
-	for x_offset in lane_offsets:
+	var landing_y := _get_threadburst_target_y()
+	# Snapshot the player at release. The old implementation anchored every
+	# lane to the boss's original spawn point, so a freely chasing boss could
+	# fire an entire volley into an empty side of the room.
+	var target_center_x := _get_threadburst_target_x()
+	var half_spread := maxf(1.0, threadburst_horizontal_spread * 0.5)
+	for lane_index in range(lane_offsets.size()):
+		var x_offset := lane_offsets[lane_index]
 		var missile := thread_missile_scene.instantiate() as ThreadMissile
 		if not missile:
 			continue
 
 		parent.add_child(missile)
-		missile.global_position = global_position + threadburst_spawn_offset + Vector2(x_offset, 0.0)
-
-		var outward_direction: float = sign(x_offset)
-		if outward_direction == 0.0:
-			outward_direction = randf_range(-0.25, 0.25)
-
-		var launch_x: float = outward_direction * threadburst_horizontal_force + randf_range(-threadburst_velocity_jitter, threadburst_velocity_jitter)
-		var launch_y: float = -randf_range(threadburst_min_launch_speed, threadburst_max_launch_speed)
-		missile.launch(Vector2(launch_x, launch_y), self)
+		var fan_ratio := 0.5
+		if lane_offsets.size() > 1:
+			fan_ratio = float(lane_index) / float(lane_offsets.size() - 1)
+		var fan_offset := lerpf(-62.0, 62.0, fan_ratio)
+		missile.global_position = global_position + Vector2(fan_offset, -threadburst_launch_height)
+		var landing_position := Vector2(target_center_x + x_offset, landing_y)
+		var distance_ratio := clampf(absf(x_offset) / half_spread, 0.0, 1.0)
+		var flight_variation := randf_range(-0.055, 0.055)
+		var flight_time := threadburst_flight_time + distance_ratio * threadburst_far_lane_time_bonus + flight_variation
+		missile.launch_to_landing(landing_position, flight_time, self)
 
 func _get_threadburst_lane_offsets() -> Array[float]:
+	var pattern := _take_next_threadburst_pattern()
 	var missile_count := _get_threadburst_missile_count()
+	# Odd volleys preserve a true center threat and balanced flanking pairs.
+	if missile_count % 2 == 0:
+		missile_count += 1
+	if pattern == ThreadburstPattern.PLAYER_SIDE:
+		missile_count = mini(missile_count, 5)
 	var offsets: Array[float] = []
-	var half_spread := threadburst_horizontal_spread * 0.5
+	var lane_spacing := randf_range(
+		threadburst_min_lane_spacing,
+		maxf(threadburst_min_lane_spacing, threadburst_max_lane_spacing)
+	)
+	# Every pattern owns a center lane. A stationary player must always have
+	# one real dodge check rather than being able to stand between the spread.
+	offsets.append(0.0)
 
-	for _i in range(missile_count):
-		var chosen_offset := randf_range(-half_spread, half_spread)
-		for _attempt in range(8):
-			chosen_offset = randf_range(-half_spread, half_spread)
-			if _has_enough_lane_spacing(chosen_offset, offsets):
-				break
-		offsets.append(chosen_offset)
+	match pattern:
+		ThreadburstPattern.WIDE_FAN:
+			for lane_index in range(1, missile_count):
+				var rank := ceili(float(lane_index) * 0.5)
+				var side := -1.0 if lane_index % 2 == 1 else 1.0
+				offsets.append(side * float(rank) * lane_spacing)
+		ThreadburstPattern.PLAYER_SIDE:
+			var target_side := signf(_get_threadburst_target_x() - global_position.x)
+			if target_side == 0.0:
+				target_side = float(facing) if facing != 0 else 1.0
+			# A one-sided rake leaves the player lane at its edge, so its dodge
+			# direction differs clearly from the centered fan.
+			for lane_index in range(1, missile_count):
+				offsets.append(target_side * float(lane_index) * lane_spacing)
+		ThreadburstPattern.SPLIT_FLANKS:
+			for lane_index in range(1, missile_count):
+				var rank := ceili(float(lane_index) * 0.5)
+				var side := -1.0 if lane_index % 2 == 1 else 1.0
+				var split_distance := lane_spacing * (1.3 if rank == 1 else 2.75 + float(rank - 2) * 1.25)
+				offsets.append(side * split_distance)
 
 	offsets.sort()
 	return offsets
+
+
+func _get_player_side_threadburst_offsets(missile_count: int, half_spread: float) -> Array[float]:
+	var offsets: Array[float] = [0.0]
+	var target_side := signf(_get_threadburst_target_x() - global_position.x)
+	if target_side == 0.0:
+		target_side = float(facing) if facing != 0 else 1.0
+	var maximum_distance := maxf(half_spread, float(maxi(0, missile_count - 1)) * threadburst_min_lane_spacing)
+	for lane_index in range(1, maxi(1, missile_count)):
+		offsets.append(target_side * minf(float(lane_index) * threadburst_min_lane_spacing, maximum_distance))
+	offsets.sort()
+	return offsets
+
+
+func _get_threadburst_target_x() -> float:
+	if is_instance_valid(target):
+		var target_x := target.global_position.x
+		if target is CharacterBody2D:
+			var target_body := target as CharacterBody2D
+			target_x += clampf(
+				target_body.velocity.x * threadburst_target_lead_time,
+				-threadburst_max_target_lead,
+				threadburst_max_target_lead
+			)
+		return target_x
+	return global_position.x + float(facing) * minf(120.0, threadburst_horizontal_spread * 0.25)
+
+
+func _get_threadburst_target_y() -> float:
+	if (_wall_hanging and is_instance_valid(target)) or _is_target_elevated():
+		# Character origins sit at their feet, so this places the needle knot on
+		# the occupied platform lane instead of harmlessly returning to ground.
+		return target.global_position.y - 8.0
+	return global_position.y - 8.0
+
+
+func _fit_threadburst_offsets_to_arena(offsets: Array[float], half_spread: float) -> void:
+	if offsets.is_empty():
+		return
+	offsets.sort()
+	var minimum_bound := -half_spread + 10.0
+	var maximum_bound := half_spread - 10.0
+	var minimum_shift: float = minimum_bound - float(offsets.front())
+	var maximum_shift: float = maximum_bound - float(offsets.back())
+	var shift := clampf(0.0, minimum_shift, maximum_shift)
+	for index in range(offsets.size()):
+		offsets[index] += shift
+
+
+func _take_next_threadburst_pattern() -> int:
+	if _threadburst_pattern_bag.is_empty():
+		_threadburst_pattern_bag = [
+			ThreadburstPattern.WIDE_FAN,
+			ThreadburstPattern.PLAYER_SIDE,
+			ThreadburstPattern.SPLIT_FLANKS,
+		]
+		_threadburst_pattern_bag.shuffle()
+		if _threadburst_pattern_bag.size() > 1 and _threadburst_pattern_bag.back() == _last_threadburst_pattern:
+			var swap_value := _threadburst_pattern_bag[0]
+			_threadburst_pattern_bag[0] = _threadburst_pattern_bag.back()
+			_threadburst_pattern_bag[_threadburst_pattern_bag.size() - 1] = swap_value
+	_last_threadburst_pattern = _threadburst_pattern_bag.pop_back()
+	return _last_threadburst_pattern
 
 func _get_threadburst_missile_count() -> int:
 	var health_ratio := 1.0
@@ -867,12 +1360,6 @@ func _get_threadburst_missile_count() -> int:
 
 	max_count = maxi(min_count, max_count)
 	return randi_range(min_count, max_count)
-
-func _has_enough_lane_spacing(candidate: float, existing_offsets: Array[float]) -> bool:
-	for offset in existing_offsets:
-		if abs(candidate - offset) < threadburst_min_lane_spacing:
-			return false
-	return true
 
 func _spawn_ground_sweep() -> void:
 	var parent := get_parent()
@@ -894,25 +1381,142 @@ func _spawn_ground_sweep_charge() -> void:
 	add_child(charge)
 	charge.configure(facing, get_attack_windup())
 
+
+func _spawn_thread_repulse() -> void:
+	var parent := get_parent()
+	if not parent:
+		return
+	var repulse := ProtoWeaverSpacingVFX.new()
+	repulse.configure(self, repulse_damage, repulse_radius)
+	parent.add_child(repulse)
+	repulse.global_position = global_position + Vector2(0.0, -112.0)
+	velocity.x = -float(facing) * repulse_backstep_speed
+	set_horizontal_target_speed(0.0)
+	_play_boss_sfx(&"enemy_stomp_attack", boss_threadburst_pitch * 1.18)
+	CombatFeedback.screen_shake(self, 4.5, 0.1)
+
+
+func _spawn_smash_charge() -> void:
+	var charge := ProtoWeaverSmashVFX.new()
+	charge.configure_charge(get_attack_windup(), facing, 5)
+	add_child(charge)
+	charge.position = Vector2.ZERO
+
+
+func _spawn_essence_echo_telegraph() -> void:
+	var parent := get_parent()
+	if not parent:
+		return
+	var cross_direction := float(facing)
+	if is_instance_valid(target):
+		cross_direction = signf(target.global_position.x - global_position.x)
+	if cross_direction == 0.0:
+		cross_direction = float(facing) if facing != 0 else 1.0
+	var target_x := global_position.x + cross_direction * essence_echo_cross_distance * 2.0
+	if is_instance_valid(target):
+		target_x = target.global_position.x + cross_direction * essence_echo_cross_distance
+	var home_x := _get_hang_home_position().x
+	var edge := maxf(40.0, hang_arena_half_width - essence_echo_edge_padding)
+	target_x = clampf(target_x, home_x - edge, home_x + edge)
+	_pending_essence_destination = Vector2(target_x, global_position.y)
+
+	_essence_echo_vfx = ProtoWeaverEssenceEchoVFX.new()
+	_essence_echo_vfx.echo_delay = essence_echo_delay
+	var echo_scale := _get_scale_for_sheet(stab_texture, attack_columns, attack_rows)
+	var echo_origin := global_position
+	var echo_destination := _pending_essence_destination
+	if _is_target_elevated():
+		# Keep the real boss's blink grounded, but summon the delayed duplicate
+		# on the player's elevated lane so platforms are not permanent safety.
+		echo_origin.y = target.global_position.y
+		echo_destination.y = echo_origin.y
+	_essence_echo_vfx.configure(
+		self,
+		echo_destination,
+		int(cross_direction),
+		stab_texture,
+		attack_columns,
+		attack_rows,
+		essence_echo_telegraph_hold_frame,
+		echo_scale,
+		_base_sprite_position,
+		stats.attack_damage if stats else 24,
+		get_attack_windup()
+	)
+	parent.add_child(_essence_echo_vfx)
+	_essence_echo_vfx.global_position = echo_origin
+
+
+func _activate_essence_echo() -> void:
+	global_position = _pending_essence_destination
+	if is_instance_valid(target):
+		var target_direction := signi(roundi(target.global_position.x - global_position.x))
+		if target_direction != 0:
+			update_facing(target_direction)
+	if is_instance_valid(_essence_echo_vfx):
+		_essence_echo_vfx.mark_arrival()
+		_essence_echo_vfx.trigger_echo()
+	_play_boss_sfx(&"enemy_sword_attack", boss_stab_pitch * 1.08)
+	CombatFeedback.screen_shake(self, 3.0, 0.08)
+	super.activate_attack_hitbox()
+
 func _spawn_smash_vfx() -> void:
 	var parent := get_parent()
 	if not parent:
 		return
 	var smash_vfx := ProtoWeaverSmashVFX.new()
+	smash_vfx.configure_impact()
 	parent.add_child(smash_vfx)
 	smash_vfx.global_position = global_position + Vector2(0.0, -4.0)
 	CombatFeedback.screen_shake(self, 5.0, 0.12)
 
+
+func _show_current_attack_aura() -> void:
+	if not flow_aura:
+		return
+	match _current_attack_mode:
+		AttackMode.THREADBURST:
+			flow_aura.show_power()
+		AttackMode.GROUND_SWEEP, AttackMode.THREAD_REPULSE:
+			flow_aura.show_balance()
+		AttackMode.ESSENCE_ECHO:
+			flow_aura.show_essence()
+		AttackMode.HANGING_LASER:
+			flow_aura.show_all_channels()
+		_:
+			flow_aura.hide_aura()
+
+
+func _hide_attack_aura(immediate := false) -> void:
+	if flow_aura:
+		flow_aura.hide_aura(immediate)
+
 func _start_hanging_laser_sequence() -> void:
+	if flow_aura:
+		flow_aura.show_all_channels()
 	_hanging_laser_busy = true
 	_hanging_laser_active = true
 	_hanging_laser_landing = false
 	_laser_firing = false
 	_laser_hit_this_shot = false
-	_hang_origin = _get_hang_home_position() if hang_return_to_home else global_position
-	_hang_position = _clamp_to_hang_arena(_get_hang_home_position() + hang_rise_offset)
-	_hang_anchor = _find_hang_anchor(_hang_position)
-	_hang_thread_attach = _hang_position + hang_thread_body_offset
+	_wall_hanging = _active_hanging_phase in [0, 1]
+	_hang_origin = _get_recovery_floor_position() if _wall_hanging else (_get_hang_home_position() if hang_return_to_home else global_position)
+	_wall_break_requested = false
+	_wall_broken_by_player = false
+	_wall_break_damage = 0.0
+	_wall_phase_timed_out = false
+	_wall_phase_elapsed = 0.0
+	_wall_event_bag.clear()
+	_last_wall_event = -1
+	if _wall_hanging:
+		_configure_wall_hang_destination()
+	else:
+		_wall_side = 0
+		var center_marker := _get_phase_marker(center_hang_marker_path)
+		_hang_rotation = center_marker.global_rotation if center_marker else 0.0
+		_hang_position = center_marker.global_position if center_marker else _clamp_to_hang_arena(_get_hang_home_position() + hang_rise_offset)
+		_hang_anchor = _find_hang_anchor(_hang_position)
+	_hang_thread_attach = _get_hanging_body_attach(_hang_position)
 	_hang_thread_draw_ratio = 0.0
 	_hang_sway_timer = 0.0
 	deactivate_attack_hitbox()
@@ -927,7 +1531,17 @@ func _run_hanging_laser_sequence() -> void:
 		return
 
 	await _grow_hanging_thread()
+	if _wall_hanging and visuals:
+		var rotation_tween := create_tween()
+		rotation_tween.tween_property(
+			visuals,
+			"rotation",
+			_hang_rotation,
+			hang_rise_time
+		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await _tween_global_position(_hang_position, hang_rise_time)
+	if _wall_hanging:
+		_apply_wall_collision_rotation(_hang_rotation)
 
 	if not is_inside_tree() or is_dead:
 		_finish_hanging_laser_sequence()
@@ -936,31 +1550,316 @@ func _run_hanging_laser_sequence() -> void:
 	if detached_head and use_detached_head:
 		detached_head.visible = true
 
-	var shot_count := phase_one_laser_shot_count
-	var timing_multiplier := 1.0
-	if _active_hanging_phase >= 1:
-		shot_count = phase_two_laser_shot_count
-		timing_multiplier = phase_two_timing_multiplier
-	for shot in range(shot_count):
+	if _wall_hanging:
+		await _run_wall_intermission_deck()
+	else:
+		await _run_final_hanging_laser_mix()
+	if not is_inside_tree() or is_dead:
+		_finish_hanging_laser_sequence()
+		return
+
+	_hanging_laser_landing = true
+	_animation_timer = 0.0
+	if _wall_hanging:
+		_apply_wall_collision_rotation(0.0)
+		if visuals:
+			var return_rotation_tween := create_tween()
+			return_rotation_tween.tween_property(
+				visuals,
+				"rotation",
+				_base_visuals_rotation,
+				hang_return_time
+			).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await _tween_global_position(_hang_origin, hang_return_time)
+	if _wall_hanging:
+		await _run_laser_recharge(
+			wall_knockdown_duration if _wall_broken_by_player else wall_timeout_recovery_duration
+		)
+	else:
+		await _run_laser_recharge()
+	_finish_hanging_laser_sequence()
+
+
+func _configure_wall_hang_destination() -> void:
+	var preferred_side := -1 if _active_hanging_phase == 0 else 1
+	if is_instance_valid(target):
+		preferred_side = -1 if target.global_position.x >= _get_hang_home_position().x else 1
+	_wall_side = preferred_side
+	var marker_path := wall_left_marker_path if _wall_side < 0 else wall_right_marker_path
+	var wall_marker := _get_phase_marker(marker_path)
+	if wall_marker:
+		_hang_position = wall_marker.global_position
+		_hang_rotation = wall_marker.global_rotation
+	else:
+		var offset := wall_left_offset if _wall_side < 0 else wall_right_offset
+		_hang_position = _get_hang_home_position() + offset
+		_hang_rotation = float(_wall_side) * PI * 0.5
+	_hang_thread_attach = _get_hanging_body_attach(_hang_position)
+	_hang_anchor = _hang_thread_attach + Vector2.UP.rotated(_hang_rotation) * wall_thread_anchor_distance
+
+
+func _get_phase_marker(marker_path: NodePath) -> Marker2D:
+	if marker_path.is_empty():
+		return null
+	return get_node_or_null(marker_path) as Marker2D
+
+
+func _get_recovery_floor_position() -> Vector2:
+	var recovery_marker := _get_phase_marker(recovery_floor_marker_path)
+	return recovery_marker.global_position if recovery_marker else _get_hang_home_position()
+
+
+func _get_hanging_body_attach(body_position: Vector2) -> Vector2:
+	return body_position + hang_thread_body_offset.rotated(_hang_rotation)
+
+
+func _apply_wall_collision_rotation(angle: float) -> void:
+	_apply_rotated_node_transform(
+		body_collision_shape,
+		_base_body_collision_position,
+		_base_body_collision_rotation,
+		angle
+	)
+	_apply_rotated_node_transform(
+		hurtbox_collision_shape,
+		_base_hurtbox_collision_position,
+		_base_hurtbox_collision_rotation,
+		angle
+	)
+	_apply_rotated_node_transform(
+		contact_collision_shape,
+		_base_contact_collision_position,
+		_base_contact_collision_rotation,
+		angle
+	)
+	_apply_rotated_node_transform(
+		upper_body_grapple_target,
+		_base_grapple_position,
+		_base_grapple_rotation,
+		angle
+	)
+
+
+func _apply_rotated_node_transform(
+	node: Node2D,
+	base_position: Vector2,
+	base_rotation: float,
+	angle: float
+) -> void:
+	if not node:
+		return
+	node.position = base_position.rotated(angle)
+	node.rotation = base_rotation + angle
+
+
+func _run_wall_intermission_deck() -> void:
+	while is_inside_tree() and not is_dead and not _wall_break_requested:
+		var event := _take_next_wall_event()
+		await _run_wall_event(event)
+		if _wall_break_requested or not is_inside_tree() or is_dead:
+			break
+		await _wait_with_wall_cancel(wall_phase_event_delay)
+
+
+func _take_next_wall_event() -> int:
+	if _wall_event_bag.is_empty():
+		if _active_hanging_phase <= 0:
+			_wall_event_bag = [
+				HangingEvent.AIMED_LASER,
+				HangingEvent.AIMED_LASER,
+				HangingEvent.RED_VOLLEY,
+				HangingEvent.YELLOW_ECHO,
+				HangingEvent.BLUE_WALL_SHEAR,
+			]
+		else:
+			_wall_event_bag = [
+				HangingEvent.AIMED_LASER,
+				HangingEvent.LASER_SWEEP,
+				HangingEvent.RED_VOLLEY,
+				HangingEvent.RED_VOLLEY,
+				HangingEvent.YELLOW_ECHO,
+				HangingEvent.BLUE_WALL_SHEAR,
+			]
+		_wall_event_bag.shuffle()
+		if _wall_event_bag.size() > 1 and _wall_event_bag.back() == _last_wall_event:
+			var swap_value := _wall_event_bag[0]
+			_wall_event_bag[0] = _wall_event_bag.back()
+			_wall_event_bag[_wall_event_bag.size() - 1] = swap_value
+	_last_wall_event = _wall_event_bag.pop_back()
+	return _last_wall_event
+
+
+func _get_wall_timing_multiplier() -> float:
+	return (
+		wall_phase_one_timing_multiplier
+		if _active_hanging_phase <= 0
+		else wall_phase_two_timing_multiplier
+	)
+
+
+func _run_wall_event(event: int) -> void:
+	var timing := _get_wall_timing_multiplier()
+	match event:
+		HangingEvent.AIMED_LASER:
+			_laser_aim_offset = _take_next_laser_aim_offset()
+			await _track_hanging_laser(laser_tracking_time * timing)
+			await _lock_hanging_laser(laser_lock_time * timing)
+			await _fire_hanging_laser(laser_fire_time)
+		HangingEvent.LASER_SWEEP:
+			await _fire_hanging_laser_sweep(
+				bool(randi() % 2),
+				phase_two_sweep_lock_time * timing,
+				phase_two_sweep_time * timing
+			)
+		HangingEvent.RED_VOLLEY:
+			_spawn_threadburst_missiles()
+			await _wait_with_wall_cancel(0.72 * timing)
+		HangingEvent.YELLOW_ECHO:
+			_spawn_wall_essence_echo()
+			await _wait_with_wall_cancel(0.95 * timing)
+		HangingEvent.BLUE_WALL_SHEAR:
+			_spawn_blue_wall_shear()
+			await _wait_with_wall_cancel(0.72 * timing)
+
+
+func _wait_with_wall_cancel(duration: float) -> void:
+	var timer := 0.0
+	while (
+		timer < duration
+		and is_inside_tree()
+		and not is_dead
+		and not _wall_break_requested
+	):
+		await get_tree().process_frame
+		timer += get_process_delta_time()
+
+
+func _spawn_wall_essence_echo() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if not player:
+		player = target
+	if not is_instance_valid(player):
+		return
+	var parent := get_parent()
+	if not parent:
+		return
+	var attack_direction := signi(roundi(player.global_position.x - global_position.x))
+	if attack_direction == 0:
+		attack_direction = -_wall_side if _wall_side != 0 else facing
+	var echo := ProtoWeaverEssenceEchoVFX.new()
+	echo.echo_delay = essence_echo_delay
+	var echo_scale := _get_scale_for_sheet(stab_texture, attack_columns, attack_rows)
+	var echo_origin := player.global_position - Vector2(float(attack_direction) * 210.0, 0.0)
+	echo.configure(
+		self,
+		player.global_position + Vector2(float(attack_direction) * 130.0, 0.0),
+		attack_direction,
+		stab_texture,
+		attack_columns,
+		attack_rows,
+		essence_echo_telegraph_hold_frame,
+		echo_scale,
+		_base_sprite_position,
+		stats.attack_damage if stats else 24,
+		maxf(0.35, essence_echo_delay)
+	)
+	parent.add_child(echo)
+	echo.global_position = echo_origin
+	echo.mark_arrival()
+	echo.trigger_echo()
+
+
+func _spawn_blue_wall_shear() -> void:
+	if _wall_side == 0:
+		return
+	var parent := get_parent()
+	if not parent:
+		return
+	var wave := ProtoWeaverGroundWave.new()
+	wave.damage_amount = ground_sweep_damage
+	wave.travel_speed = wall_blue_wave_speed
+	wave.lifetime = wall_blue_wave_lifetime
+	parent.add_child(wave)
+	wave.global_position = _hang_anchor + Vector2(
+		-float(_wall_side) * wall_blue_wave_surface_offset,
+		72.0
+	)
+	wave.launch_surface(Vector2.DOWN, _wall_side, self)
+
+
+func _run_aimed_laser_volley(shot_count: int, timing_multiplier: float) -> void:
+	for shot in range(maxi(0, shot_count)):
+		if _is_wall_event_cancelled():
+			return
+		_laser_aim_offset = _take_next_laser_aim_offset()
 		await _track_hanging_laser(laser_tracking_time * timing_multiplier)
 		await _lock_hanging_laser(laser_lock_time * timing_multiplier)
 		await _fire_hanging_laser(laser_fire_time)
 		if not is_inside_tree() or is_dead:
-			_finish_hanging_laser_sequence()
 			return
 		if shot < shot_count - 1 and phase_intershot_delay > 0.0:
 			await get_tree().create_timer(phase_intershot_delay).timeout
 
-	_hanging_laser_landing = true
-	_animation_timer = 0.0
-	await _tween_global_position(_hang_origin, hang_return_time)
-	_finish_hanging_laser_sequence()
+
+func _run_final_hanging_laser_mix() -> void:
+	var events := _build_final_laser_events()
+	var reverse_sweep := bool(randi() % 2)
+	for event_index in range(events.size()):
+		if _is_wall_event_cancelled():
+			return
+		if events[event_index]:
+			_laser_aim_offset = 0.0
+			await _fire_hanging_laser_sweep(
+				reverse_sweep,
+				phase_two_sweep_lock_time,
+				phase_two_sweep_time
+			)
+			reverse_sweep = not reverse_sweep
+		else:
+			_laser_aim_offset = _take_next_laser_aim_offset()
+			await _track_hanging_laser(laser_tracking_time * phase_three_timing_multiplier)
+			await _lock_hanging_laser(laser_lock_time * phase_three_timing_multiplier)
+			await _fire_hanging_laser(laser_fire_time)
+		if not is_inside_tree() or is_dead:
+			return
+		if event_index < events.size() - 1 and phase_intershot_delay > 0.0:
+			await get_tree().create_timer(phase_intershot_delay).timeout
+
+
+func _build_final_laser_events() -> Array[bool]:
+	var event_count := maxi(1, phase_three_laser_event_count)
+	var sweep_count := clampi(phase_three_sweep_count, 0, maxi(0, event_count - 1))
+	var aimed_count := event_count - sweep_count
+	var available_gaps: Array[int] = []
+	for gap in range(aimed_count + 1):
+		available_gaps.append(gap)
+	available_gaps.shuffle()
+	var sweep_gaps: Array[int] = available_gaps.slice(0, sweep_count)
+	var events: Array[bool] = []
+	for gap in range(aimed_count + 1):
+		if gap in sweep_gaps:
+			events.append(true)
+		if gap < aimed_count:
+			events.append(false)
+	return events
+
+
+func _take_next_laser_aim_offset() -> float:
+	if _laser_pattern_bag.is_empty():
+		_laser_pattern_bag = [-laser_aim_offset, 0.0, laser_aim_offset]
+		_laser_pattern_bag.shuffle()
+		if _laser_pattern_bag.size() > 1 and is_equal_approx(_laser_pattern_bag.back(), _last_laser_aim_offset):
+			var swap_value := _laser_pattern_bag[0]
+			_laser_pattern_bag[0] = _laser_pattern_bag.back()
+			_laser_pattern_bag[_laser_pattern_bag.size() - 1] = swap_value
+	_last_laser_aim_offset = _laser_pattern_bag.pop_back()
+	return _last_laser_aim_offset
 
 func _track_hanging_laser(duration: float) -> void:
 	if laser_beam:
 		laser_beam.show_tracking()
 	var timer := 0.0
-	while timer < duration and is_inside_tree() and not is_dead:
+	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		_update_laser_target_from_player()
 		_update_laser_line()
 		await get_tree().process_frame
@@ -974,11 +1873,13 @@ func _lock_hanging_laser(duration: float) -> void:
 		_update_laser_line()
 
 	var timer := 0.0
-	while timer < duration and is_inside_tree() and not is_dead:
+	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		await get_tree().process_frame
 		timer += get_process_delta_time()
 
 func _fire_hanging_laser(duration: float) -> void:
+	if _is_wall_event_cancelled():
+		return
 	_laser_firing = true
 	_laser_hit_this_shot = false
 	_play_boss_sfx(&"enemy_laser_attack", boss_laser_pitch)
@@ -987,7 +1888,7 @@ func _fire_hanging_laser(duration: float) -> void:
 		_update_laser_line()
 
 	var timer := 0.0
-	while timer < duration and is_inside_tree() and not is_dead:
+	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		_try_damage_player_with_laser()
 		await get_tree().process_frame
 		timer += get_process_delta_time()
@@ -995,6 +1896,86 @@ func _fire_hanging_laser(duration: float) -> void:
 	_laser_firing = false
 	if laser_beam:
 		laser_beam.hide_beam()
+
+
+func _fire_hanging_laser_sweep(reverse: bool, lock_duration: float, sweep_duration: float) -> void:
+	if _is_wall_event_cancelled():
+		return
+	var sweep_y := _hang_origin.y - 52.0
+	var left_target := Vector2(_get_hang_arena_left() - 70.0, sweep_y)
+	var right_target := Vector2(_get_hang_arena_right() + 70.0, sweep_y)
+	var start_target := right_target if reverse else left_target
+	var end_target := left_target if reverse else right_target
+
+	_laser_target_position = start_target
+	_laser_firing = false
+	_laser_hit_this_shot = false
+	if laser_beam:
+		laser_beam.show_tracking()
+		_update_laser_line()
+	await _wait_with_laser_presented(lock_duration * 0.45)
+	if not is_inside_tree() or is_dead or _is_wall_event_cancelled():
+		return
+	if laser_beam:
+		laser_beam.show_locked()
+		_update_laser_line()
+	await _wait_with_laser_presented(lock_duration * 0.55)
+	if not is_inside_tree() or is_dead or _is_wall_event_cancelled():
+		return
+
+	_laser_firing = true
+	_laser_hit_this_shot = false
+	_play_boss_sfx(&"enemy_laser_attack", boss_laser_pitch * (1.08 if reverse else 0.94))
+	if laser_beam:
+		laser_beam.show_firing()
+
+	var timer := 0.0
+	while timer < sweep_duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
+		var ratio := clampf(timer / maxf(sweep_duration, 0.001), 0.0, 1.0)
+		_laser_target_position = start_target.lerp(end_target, smoothstep(0.0, 1.0, ratio))
+		_update_laser_line()
+		_try_damage_player_with_laser()
+		await get_tree().process_frame
+		timer += get_process_delta_time()
+
+	_laser_firing = false
+	if laser_beam:
+		laser_beam.hide_beam()
+
+
+func _wait_with_laser_presented(duration: float) -> void:
+	var timer := 0.0
+	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
+		_update_laser_line()
+		await get_tree().process_frame
+		timer += get_process_delta_time()
+
+
+func _run_laser_recharge(duration_override := -1.0) -> void:
+	var recharge_duration := duration_override if duration_override >= 0.0 else phase_landing_punish_time
+	if recharge_duration <= 0.0 or not sprite:
+		return
+	_laser_recharge_active = true
+	_hanging_laser_landing = false
+	_configure_sprite_sheet(threadburst_texture, attack_columns, attack_rows)
+	_set_sprite_cleanup_enabled(true)
+	sprite.frame = clampi(stagger_pose_frame, 0, max(0, attack_columns * attack_rows - 1))
+	sprite.position = _base_sprite_position + Vector2(0.0, 24.0)
+	sprite.rotation = -float(facing) * 0.045
+	sprite.scale = Vector2(_configured_sprite_scale.x * 1.06, _configured_sprite_scale.y * 0.9)
+
+	var timer := 0.0
+	while timer < recharge_duration and is_inside_tree() and not is_dead:
+		var ratio := clampf(timer / maxf(recharge_duration, 0.001), 0.0, 1.0)
+		var pulse := 0.5 + sin(timer * 15.0) * 0.5
+		sprite.modulate = Color(1.0, lerpf(0.58, 0.96, ratio), lerpf(0.38, 0.88, ratio), 0.82 + pulse * 0.18)
+		await get_tree().process_frame
+		timer += get_process_delta_time()
+
+	_laser_recharge_active = false
+	if sprite:
+		sprite.modulate = Color.WHITE
+		_reset_sprite_attack_pose()
 
 func _play_boss_sfx(sound_name: StringName, pitch_scale: float) -> void:
 	var primary := AudioManager.play_sfx(sound_name, boss_sfx_volume_offset_db, 0.015)
@@ -1009,10 +1990,20 @@ func _should_chase_freely() -> bool:
 	return chase_freely_after_aggro and _boss_aggro_latched
 
 func _finish_hanging_laser_sequence() -> void:
+	_hide_attack_aura()
+	_laser_recharge_active = false
 	_hanging_laser_busy = false
 	_hanging_laser_active = false
 	_hanging_laser_landing = false
 	_laser_firing = false
+	_wall_hanging = false
+	_wall_break_requested = false
+	_wall_broken_by_player = false
+	_wall_break_damage = 0.0
+	_wall_phase_elapsed = 0.0
+	_wall_event_bag.clear()
+	_hang_rotation = 0.0
+	_wall_side = 0
 	global_position = _hang_origin if _hang_origin != Vector2.ZERO else global_position
 	if hanging_thread_line:
 		hanging_thread_line.visible = false
@@ -1020,9 +2011,12 @@ func _finish_hanging_laser_sequence() -> void:
 		detached_head.visible = false
 	if laser_beam:
 		laser_beam.hide_beam()
+	_apply_wall_collision_rotation(0.0)
 	if visuals:
-		visuals.position.x = 0.0
+		visuals.position = _base_visuals_position
+		visuals.rotation = _base_visuals_rotation
 	if sprite and walk_texture:
+		sprite.modulate = Color.WHITE
 		_play_walk_animation()
 	if state_machine and not is_dead:
 		state_machine.process_mode = _phase_state_machine_process_mode
@@ -1109,7 +2103,11 @@ func _update_hanging_laser_visuals(delta: float) -> void:
 	_hang_sway_timer += delta
 	var sway := sin(_hang_sway_timer * hang_sway_speed) * hang_sway_pixels
 	if visuals:
-		visuals.position.x = sway
+		visuals.position = (
+			_base_visuals_position + Vector2(0.0, sway)
+			if _wall_hanging
+			else _base_visuals_position + Vector2(sway, 0.0)
+		)
 
 	_update_hanging_thread_line()
 	_update_detached_head()
@@ -1120,10 +2118,8 @@ func _update_hanging_thread_line() -> void:
 	if not hanging_thread_line:
 		return
 
-	var visual_offset := Vector2.ZERO
-	if visuals:
-		visual_offset.x = visuals.position.x
-	var body_attach := global_position + visual_offset + hang_thread_body_offset
+	var visual_offset := visuals.position - _base_visuals_position if visuals else Vector2.ZERO
+	var body_attach := _get_hanging_body_attach(global_position) + visual_offset
 	_hang_thread_attach = body_attach
 	var end := body_attach.lerp(_hang_anchor, _hang_thread_draw_ratio)
 	hanging_thread_line.global_position = Vector2.ZERO
@@ -1191,7 +2187,7 @@ func _cast_hang_anchor_ray(from: Vector2, to: Vector2) -> Dictionary:
 func _update_laser_target_from_player() -> void:
 	var player_node := get_tree().get_first_node_in_group("player") as Node2D
 	if player_node:
-		_laser_target_position = player_node.global_position + Vector2(0.0, -42.0)
+		_laser_target_position = player_node.global_position + Vector2(_laser_aim_offset, -42.0)
 	elif _laser_target_position == Vector2.ZERO:
 		_laser_target_position = global_position + Vector2(float(facing) * laser_max_distance, -80.0)
 
@@ -1345,12 +2341,20 @@ func _update_boss_health_bar() -> void:
 		return
 
 	boss_health_bar.set_health(health_component.current_health, health_component.max_health)
-	boss_health_bar.set_stagger(
-		_stagger_value,
-		_get_current_stagger_threshold(),
-		_stagger_immunity_remaining,
-		stagger_immunity_time
-	)
+	if _wall_hanging and not _laser_recharge_active:
+		boss_health_bar.set_stagger(
+			_wall_break_damage,
+			_get_wall_break_damage_threshold(),
+			0.0,
+			wall_knockdown_duration
+		)
+	else:
+		boss_health_bar.set_stagger(
+			_stagger_value,
+			_get_current_stagger_threshold(),
+			_stagger_immunity_remaining,
+			stagger_immunity_time
+		)
 	for index in range(_armor_links.size()):
 		boss_health_bar.set_armor_link_state(
 			index,

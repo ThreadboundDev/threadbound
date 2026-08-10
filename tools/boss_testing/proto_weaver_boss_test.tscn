@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" uid="uid://drtxckog2owjg" path="res://Src/Environment/World/Chamber Of The First Weave.tscn" id="1_chamber"]
+[ext_resource type="Script" uid="uid://d06tpnxwfyr56" path="res://Src/Characters/Player/player_stats.gd" id="2_player_stats"]
+[ext_resource type="Script" path="res://tools/boss_testing/proto_weaver_boss_test.gd" id="3_test_setup"]
+
+[sub_resource type="Resource" id="Resource_demo_boss_stats"]
+resource_local_to_scene = true
+script = ExtResource("2_player_stats")
+max_health = 170
+attack_damage = 35
+skill_damage_multiplier = 1.15
+action_point_recharge_multiplier = 1.09
+momentum_generation_multiplier = 1.09
+resistance = 28
+health_upgrade_points = 3
+attack_upgrade_points = 3
+skill_damage_upgrade_points = 2
+ap_recharge_upgrade_points = 2
+momentum_generation_upgrade_points = 2
+resistance_upgrade_points = 3
+attack_windup = 0.24
+attack_active_time = 0.11
+attack_recovery = 0.18
+attack_cooldown = 0.3
+
+[node name="Proto-Weaver Boss Test" instance=ExtResource("1_chamber")]
+script = ExtResource("3_test_setup")
+
+[node name="BossArenaLock" parent="WorldArt/Rooms/BossArena/Doors" index="2"]
+cinematic_enabled = false
+
+[node name="Player" parent="." index="7"]
+position = Vector2(6200, 4358)
+player_stats = SubResource("Resource_demo_boss_stats")
+
+[node name="Camera2D" parent="." index="8"]
+position = Vector2(6200, 4358)

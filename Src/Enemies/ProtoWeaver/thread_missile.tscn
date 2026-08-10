@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/thread_missile.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://ck0ssmct7c8vs" path="res://Assets/Enemys/proto_weaver/thread_missile_vfx.png" id="2_texture"]
-
+[ext_resource type="Texture2D" path="res://Assets/VFX/ProtoWeaver/threadburst_power_spindle_v2.png" id="2_texture"]
 [sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
 radius = 16.0
 
@@ -10,9 +9,10 @@ radius = 16.0
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_script")
+velocity_rotation_offset = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.16, 0.16)
+scale = Vector2(0.34, 0.34)
 texture = ExtResource("2_texture")
 hframes = 4
 
