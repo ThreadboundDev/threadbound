@@ -124,7 +124,7 @@ func patrol(_delta: float) -> void:
 			var direction := int(sign(home_delta.x))
 			if direction != 0:
 				update_facing(direction)
-			set_horizontal_target_speed(sign(home_delta.x) * stats.move_speed * tether_return_speed_multiplier)
+			set_horizontal_target_speed(sign(home_delta.x) * get_move_speed() * tether_return_speed_multiplier)
 			_flight_target_y = _get_tether_bob_y()
 			return
 
@@ -135,7 +135,7 @@ func patrol(_delta: float) -> void:
 		facing *= -1
 		update_facing(facing)
 
-	set_horizontal_target_speed(float(facing) * stats.move_speed)
+	set_horizontal_target_speed(float(facing) * get_move_speed())
 	_flight_target_y = _get_tether_bob_y()
 
 func chase_target(_delta: float) -> void:
@@ -162,22 +162,22 @@ func chase_target(_delta: float) -> void:
 		direction = facing
 
 	update_facing(direction)
-	set_horizontal_target_speed(float(direction) * stats.chase_speed)
+	set_horizontal_target_speed(float(direction) * get_chase_speed())
 	_flight_target_y = target.global_position.y + hover_offset
 
 func move_enemy(delta: float) -> void:
 	if state_machine and state_machine.current_state_name == &"Hurt":
-		velocity = velocity.move_toward(Vector2.ZERO, stats.acceleration * delta)
+		velocity = velocity.move_toward(Vector2.ZERO, get_acceleration() * delta)
 		move_and_slide()
 		_resolve_tether_overlaps()
 		return
 
-	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
+	velocity.x = move_toward(velocity.x, _target_speed, get_acceleration() * delta)
 
 	var y_delta := _flight_target_y - global_position.y
-	var max_vertical_speed := vertical_speed * (tether_vertical_speed_multiplier if _has_tether_anchor() else 1.0)
+	var max_vertical_speed := vertical_speed * get_reposition_speed_multiplier() * (tether_vertical_speed_multiplier if _has_tether_anchor() else 1.0)
 	var target_y_speed := clampf(y_delta * 3.0, -max_vertical_speed, max_vertical_speed)
-	velocity.y = move_toward(velocity.y, target_y_speed, stats.acceleration * delta)
+	velocity.y = move_toward(velocity.y, target_y_speed, get_acceleration() * delta)
 
 	move_and_slide()
 	_resolve_tether_overlaps()
@@ -300,7 +300,7 @@ func _return_to_tether_home() -> void:
 	if direction != 0:
 		update_facing(direction)
 
-	set_horizontal_target_speed(sign(home_delta.x) * stats.chase_speed * tether_return_speed_multiplier)
+	set_horizontal_target_speed(sign(home_delta.x) * get_chase_speed() * tether_return_speed_multiplier)
 	_flight_target_y = home_position.y
 
 func _resolve_tether_overlaps() -> void:
