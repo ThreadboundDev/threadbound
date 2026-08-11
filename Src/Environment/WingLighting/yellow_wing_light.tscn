@@ -10,8 +10,8 @@ script = ExtResource("1_script")
 light_paths = Array[NodePath]([NodePath("GlobeCoreLight")])
 sprite_paths = Array[NodePath]([NodePath("AstroGlobeGlow")])
 animated_sprite_paths = Array[NodePath]([NodePath("AstroGlobeGlow")])
-base_energy = 1.05
-pulse_energy = 0.26
+base_energy = 1.18
+pulse_energy = 0.22
 pulse_speed = 0.62
 base_alpha = 1.0
 pulse_alpha = 0.0
@@ -30,7 +30,7 @@ vframes = 8
 
 [node name="GlobeCoreLight" type="PointLight2D" parent="."]
 color = Color(1, 0.83, 0.2, 1)
-energy = 1.05
+energy = 1.18
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true

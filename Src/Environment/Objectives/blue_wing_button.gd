@@ -5,6 +5,7 @@ signal active_changed(button: BlueWingButton, active: bool, activator: Node)
 
 @export var active_duration := 60.0
 @export var prompt_text := "Activate"
+@export var timer_managed_externally := false
 
 @onready var button_sprite: AnimatedSprite2D = $ButtonSprite as AnimatedSprite2D
 @onready var hurtbox: HurtboxComponent = $Hurtbox as HurtboxComponent
@@ -28,7 +29,7 @@ func _ready() -> void:
 	_update_visual()
 
 func _process(delta: float) -> void:
-	if not is_active:
+	if not is_active or timer_managed_externally:
 		return
 
 	_active_timer = maxf(0.0, _active_timer - delta)
@@ -45,11 +46,14 @@ func activate_from_grapple(source: Node = null) -> void:
 	activate(source)
 
 func activate(activator: Node = null) -> void:
-	_active_timer = active_duration
 	if is_active:
 		return
-
+	_active_timer = active_duration
 	_set_active(true, activator)
+
+func deactivate() -> void:
+	_active_timer = 0.0
+	_set_active(false, null)
 
 func _set_active(value: bool, activator: Node) -> void:
 	if is_active == value:

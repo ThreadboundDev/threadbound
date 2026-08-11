@@ -12,12 +12,17 @@ const RESOLUTIONS: Array[Vector2i] = [
 ]
 const FRAME_RATE_LIMITS: Array[int] = [0, 60, 120, 144]
 const QUALITY_PRESETS: Array[String] = ["LOW", "MEDIUM", "HIGH"]
+const DEFAULT_BRIGHTNESS := 0.8
+const MIN_BRIGHTNESS_MULTIPLIER := 0.62
+const MAX_BRIGHTNESS_MULTIPLIER := 1.15
 
 var resolution_index := 2
 var fullscreen := false
 var vsync := true
 var frame_rate_limit_index := 0
 var quality_preset_index := 2
+var brightness := DEFAULT_BRIGHTNESS
+var _preview_brightness := -1.0
 
 func _ready() -> void:
 	load_settings()
@@ -43,15 +48,45 @@ func apply_graphics_settings(
 	new_fullscreen: bool,
 	new_vsync: bool,
 	new_frame_rate_limit_index: int,
-	new_quality_preset_index: int
+	new_quality_preset_index: int,
+	new_brightness: float
 ) -> void:
 	resolution_index = clampi(new_resolution_index, 0, RESOLUTIONS.size() - 1)
 	fullscreen = new_fullscreen
 	vsync = new_vsync
 	frame_rate_limit_index = clampi(new_frame_rate_limit_index, 0, FRAME_RATE_LIMITS.size() - 1)
 	quality_preset_index = clampi(new_quality_preset_index, 0, QUALITY_PRESETS.size() - 1)
+	brightness = clampf(new_brightness, 0.0, 1.0)
+	_preview_brightness = -1.0
 	save_settings()
 	apply_settings()
+
+func preview_brightness(value: float) -> void:
+	_preview_brightness = clampf(value, 0.0, 1.0)
+	display_settings_changed.emit()
+
+func clear_brightness_preview() -> void:
+	if _preview_brightness < 0.0:
+		return
+	_preview_brightness = -1.0
+	display_settings_changed.emit()
+
+func get_effective_brightness() -> float:
+	return _preview_brightness if _preview_brightness >= 0.0 else brightness
+
+func get_brightness_multiplier() -> float:
+	var value := get_effective_brightness()
+	if value <= DEFAULT_BRIGHTNESS:
+		return lerpf(
+			MIN_BRIGHTNESS_MULTIPLIER,
+			1.0,
+			value / DEFAULT_BRIGHTNESS
+		)
+	return lerpf(
+		1.0,
+		MAX_BRIGHTNESS_MULTIPLIER,
+		(value - DEFAULT_BRIGHTNESS) / (1.0 - DEFAULT_BRIGHTNESS)
+	)
 
 func cycle_resolution(step: int) -> void:
 	set_resolution_index(resolution_index + step)
@@ -149,6 +184,11 @@ func load_settings() -> void:
 	frame_rate_limit_index = clampi(frame_rate_limit_index, 0, FRAME_RATE_LIMITS.size() - 1)
 	quality_preset_index = int(config.get_value(SECTION, "quality_preset_index", quality_preset_index))
 	quality_preset_index = clampi(quality_preset_index, 0, QUALITY_PRESETS.size() - 1)
+	brightness = clampf(
+		float(config.get_value(SECTION, "brightness", brightness)),
+		0.0,
+		1.0
+	)
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
@@ -157,6 +197,7 @@ func save_settings() -> void:
 	config.set_value(SECTION, "vsync", vsync)
 	config.set_value(SECTION, "frame_rate_limit_index", frame_rate_limit_index)
 	config.set_value(SECTION, "quality_preset_index", quality_preset_index)
+	config.set_value(SECTION, "brightness", brightness)
 	var error := config.save(SAVE_PATH)
 	if error != OK:
 		push_warning("DisplaySettings could not save graphics settings: %s." % error_string(error))

@@ -14,8 +14,8 @@ z_as_relative = false
 script = ExtResource("1_script")
 light_paths = Array[NodePath]([NodePath("CoreLight")])
 sprite_paths = Array[NodePath]([NodePath("RedHeatBloom")])
-base_energy = 1.55
-pulse_energy = 0.5
+base_energy = 1.65
+pulse_energy = 0.42
 pulse_speed = 0.85
 base_alpha = 0.18
 pulse_alpha = 0.18
@@ -35,7 +35,7 @@ texture = ExtResource("3_shrine_light")
 
 [node name="CoreLight" type="PointLight2D" parent="."]
 color = Color(1, 0.22, 0.08, 1)
-energy = 1.55
+energy = 1.65
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
