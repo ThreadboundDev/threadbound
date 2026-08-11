@@ -108,7 +108,6 @@
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_grass_medium.tscn" id="109_we2pp"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_tree_small.tscn" id="110_lmcdd"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_small.tscn" id="111_y0uyv"]
-[ext_resource type="Script" uid="uid://b0j7isyuh5gjr" path="res://Src/Enemies/essence_phase_visual.gd" id="essence_phase"]
 [ext_resource type="Texture2D" uid="uid://bvr70up0yrlt2" path="res://Assets/chamber_of_first_weave/Tiles/new_tiles_atlas_grass_mask.png" id="grass_recolor_mask"]
 [ext_resource type="Shader" uid="uid://t32t4ypnoj6e" path="res://Src/Environment/World/wing_grass_recolor.gdshader" id="grass_recolor_shader"]
 [ext_resource type="Texture2D" uid="uid://dldiybfap7cfw" path="res://Assets/chamber_of_first_weave/Follower/follower_neutral_decor_atlas.png" id="merchant_decor_atlas"]
@@ -1197,6 +1196,7 @@ position = Vector2(-8487, -776)
 [node name="EnemyEncounter" type="Node2D" parent="WorldArt/Rooms/RedWing" unique_id=1501328778]
 position = Vector2(-5760, -1792)
 script = ExtResource("org_enemy")
+enemy_influence = 1
 
 [node name="Threadling6" parent="WorldArt/Rooms/RedWing/EnemyEncounter" unique_id=1131037234 instance=ExtResource("11_be3p8")]
 tether_return_radius = 680.0
@@ -1603,6 +1603,8 @@ position = Vector2(1925, -3317)
 rotation = -3.1764991
 
 [node name="EncounterEnemies" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=472394417]
+script = ExtResource("org_enemy")
+enemy_influence = 2
 
 [node name="EnemySpawnMarkers" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=1530516668]
 
@@ -1653,7 +1655,8 @@ position = Vector2(-7149, 1091)
 position = Vector2(-5994, 3967)
 
 [node name="EnemyEncounter" type="Node2D" parent="WorldArt/Rooms/YellowWing" unique_id=356332033]
-script = ExtResource("essence_phase")
+script = ExtResource("org_enemy")
+enemy_influence = 3
 
 [node name="ThreadlingLower" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" unique_id=1239234030 instance=ExtResource("11_be3p8")]
 position = Vector2(-3900, 2300)

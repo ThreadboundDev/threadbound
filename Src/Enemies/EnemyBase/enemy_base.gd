@@ -15,6 +15,12 @@ const THREAD_KNOT_PICKUP_SCENE := preload("res://Src/Pickups/thread_knot_pickup.
 @export var start_facing: int = -1
 @export var facing_dead_zone: float = 12.0
 @export var resets_at_save_points := true
+@export var enemy_influence: EnemyInfluenceController.Influence = EnemyInfluenceController.Influence.NONE:
+	set(value):
+		enemy_influence = value
+		if is_node_ready():
+			_ensure_influence_controller()
+			_influence_controller.set_influence(enemy_influence)
 
 @onready var visuals: Node2D = $Visuals
 @onready var health_component: HealthComponent = $HealthComponent as HealthComponent
@@ -39,6 +45,7 @@ var _base_visuals_modulate := Color.WHITE
 var _base_visuals_position := Vector2.ZERO
 var _pending_hurt_duration := 0.0
 var _hurt_visual_tween: Tween
+var _influence_controller: EnemyInfluenceController
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -51,6 +58,7 @@ func _ready() -> void:
 
 	if not stats:
 		stats = EnemyStats.new()
+	_ensure_influence_controller()
 
 	if stats.use_polished_hurt_response:
 		health_component.invincible_after_hit = stats.incoming_hit_invulnerability
@@ -81,6 +89,10 @@ func _ready() -> void:
 	state_machine.initialize(self)
 
 func _physics_process(delta: float) -> void:
+	if _influence_controller:
+		_influence_controller.physics_process(delta)
+		if _influence_controller.is_phasing():
+			return
 	if _attack_cooldown_timer > 0.0:
 		_attack_cooldown_timer -= delta
 	if _contact_damage_cooldown_timer > 0.0:
@@ -93,7 +105,7 @@ func apply_gravity(delta: float) -> void:
 		velocity.y = min(velocity.y, stats.max_fall_speed)
 
 func move_enemy(delta: float) -> void:
-	velocity.x = move_toward(velocity.x, _target_speed, stats.acceleration * delta)
+	velocity.x = move_toward(velocity.x, _target_speed, get_acceleration() * delta)
 	move_and_slide()
 
 func uses_polished_hurt_response() -> bool:
@@ -134,7 +146,7 @@ func patrol(_delta: float) -> void:
 		facing *= -1
 		update_facing(facing)
 
-	set_horizontal_target_speed(float(facing) * stats.move_speed)
+	set_horizontal_target_speed(float(facing) * get_move_speed())
 
 func chase_target(_delta: float) -> void:
 	if not target:
@@ -153,7 +165,7 @@ func chase_target(_delta: float) -> void:
 		direction = facing
 
 	update_facing(direction)
-	set_horizontal_target_speed(float(direction) * stats.chase_speed)
+	set_horizontal_target_speed(float(direction) * get_chase_speed())
 
 func can_attack() -> bool:
 	return _attack_cooldown_timer <= 0.0 and not is_dead
@@ -162,7 +174,54 @@ func start_attack_cooldown(multiplier: float = 1.0) -> void:
 	if not stats:
 		return
 
-	_attack_cooldown_timer = maxf(_attack_cooldown_timer, stats.attack_cooldown * maxf(0.0, multiplier))
+	_attack_cooldown_timer = maxf(
+		_attack_cooldown_timer,
+		stats.attack_cooldown * get_attack_cooldown_multiplier() * maxf(0.0, multiplier)
+	)
+
+func get_move_speed() -> float:
+	return stats.move_speed * (
+		_influence_controller.get_move_speed_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func get_chase_speed() -> float:
+	return stats.chase_speed * (
+		_influence_controller.get_chase_speed_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func get_acceleration() -> float:
+	return stats.acceleration * (
+		_influence_controller.get_acceleration_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func get_attack_cooldown_multiplier() -> float:
+	return (
+		_influence_controller.get_attack_cooldown_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func get_patrol_wait_time() -> float:
+	return stats.patrol_wait_time * (
+		_influence_controller.get_patrol_wait_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func get_reposition_speed_multiplier() -> float:
+	return (
+		_influence_controller.get_reposition_speed_multiplier()
+		if _influence_controller else 1.0
+	)
+
+func _ensure_influence_controller() -> void:
+	if _influence_controller:
+		return
+	_influence_controller = EnemyInfluenceController.new()
+	_influence_controller.name = "EnemyInfluenceController"
+	add_child(_influence_controller)
+	_influence_controller.configure(self, enemy_influence)
 
 func is_player_in_attack_range() -> bool:
 	return target != null and attack_area.get_overlapping_bodies().has(target)
@@ -188,6 +247,8 @@ func die() -> void:
 		return
 
 	is_dead = true
+	if _influence_controller:
+		_influence_controller.on_enemy_death()
 	end_attack()
 	_stop_hurt_visual_recoil()
 	set_physics_process(false)
@@ -208,6 +269,8 @@ func dismiss_without_rewards() -> void:
 		return
 
 	is_dead = true
+	if _influence_controller:
+		_influence_controller.on_enemy_death()
 	end_attack()
 	_stop_hurt_visual_recoil()
 	set_physics_process(false)
@@ -230,6 +293,8 @@ func reset_for_save_point() -> void:
 
 	end_attack()
 	is_dead = false
+	if _influence_controller:
+		_influence_controller.on_enemy_reset()
 	target = null
 	target_lost.emit()
 	if health_component:
@@ -312,11 +377,15 @@ func _on_detection_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		target = body
 		target_acquired.emit(target)
+		if _influence_controller:
+			_influence_controller.on_target_acquired()
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	if body == target:
 		target = null
 		target_lost.emit()
+		if _influence_controller:
+			_influence_controller.on_target_lost()
 
 func _on_attack_body_entered(_body: Node2D) -> void:
 	pass

@@ -62,6 +62,14 @@ func _verify_blue_attempt_timer() -> void:
 
 func _verify_chamber_content() -> void:
 	var chamber := CHAMBER_SCENE.instantiate()
+	var red_encounter := chamber.get_node_or_null(
+		"WorldArt/Rooms/RedWing/EnemyEncounter"
+	) as EnemySection
+	_expect(
+		red_encounter != null
+		and red_encounter.enemy_influence == EnemyInfluenceController.Influence.RED,
+		"The Red room breakout must apply Red influence recursively."
+	)
 	var blue_objective := chamber.get_node_or_null(
 		"WorldArt/Rooms/BlueWing/Objective/BlueWingObjective"
 	) as BalanceWingObjective
@@ -71,10 +79,22 @@ func _verify_chamber_content() -> void:
 			blue_objective.enemy_spawn_marker_paths.size() == 6,
 			"The Blue traversal encounter must contain six authored spawns."
 		)
+	var blue_encounter := chamber.get_node_or_null(
+		"WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EncounterEnemies"
+	) as EnemySection
+	_expect(
+		blue_encounter != null
+		and blue_encounter.enemy_influence == EnemyInfluenceController.Influence.BLUE,
+		"The Blue spawn breakout must apply Blue influence to every attempt spawn."
+	)
 	var yellow_encounter := chamber.get_node_or_null(
 		"WorldArt/Rooms/YellowWing/EnemyEncounter"
+	) as EnemySection
+	_expect(
+		yellow_encounter != null
+		and yellow_encounter.enemy_influence == EnemyInfluenceController.Influence.YELLOW,
+		"The Yellow room breakout must apply Yellow influence recursively."
 	)
-	_expect(yellow_encounter is EssencePhaseVisual, "Yellow enemies must use Essence phasing.")
 	if yellow_encounter:
 		var enemy_count := 0
 		for child in yellow_encounter.get_children():
