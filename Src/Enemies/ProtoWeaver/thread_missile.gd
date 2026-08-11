@@ -133,7 +133,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _arm_after_delay() -> void:
-	await get_tree().create_timer(arming_time).timeout
+	await get_tree().create_timer(arming_time, false).timeout
 	if not _is_impacting:
 		set_deferred("monitoring", true)
 
@@ -150,5 +150,5 @@ func _start_impact() -> void:
 	if is_instance_valid(_landing_marker):
 		_landing_marker.trigger_impact()
 		_marker_released = true
-	await get_tree().create_timer(impact_duration).timeout
+	await get_tree().create_timer(impact_duration, false).timeout
 	queue_free()

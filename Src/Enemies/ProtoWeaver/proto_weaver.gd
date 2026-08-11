@@ -147,13 +147,19 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export_node_path("Marker2D") var wall_right_marker_path: NodePath
 @export_node_path("Marker2D") var center_hang_marker_path: NodePath
 @export_node_path("Marker2D") var recovery_floor_marker_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_1_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_2_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_3_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_4_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_5_path: NodePath
+@export_node_path("Marker2D") var sentinel_marker_6_path: NodePath
 @export var wall_hang_foot_offset := Vector2(0.0, -426.0)
 @export var wall_left_offset := Vector2(-720.0, -330.0)
 @export var wall_right_offset := Vector2(720.0, -330.0)
 @export var wall_thread_anchor_distance := 150.0
 @export var wall_phase_break_distance := 260.0
-@export var wall_phase_one_max_duration := 8.0
-@export var wall_phase_two_max_duration := 11.0
+@export var wall_phase_one_max_duration := 24.0
+@export var wall_phase_two_max_duration := 32.0
 @export var wall_phase_one_break_damage := 55.0
 @export var wall_phase_two_break_damage := 80.0
 @export var wall_knockdown_duration := 1.8
@@ -164,6 +170,13 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var wall_blue_wave_speed := 720.0
 @export var wall_blue_wave_lifetime := 1.55
 @export var wall_blue_wave_surface_offset := 18.0
+@export var wall_phase_one_sentinel_count := 2
+@export var wall_phase_two_sentinel_count := 4
+@export var wall_phase_three_sentinel_count := 6
+@export var wall_sentinel_trigger_radius := 235.0
+@export var wall_sentinel_rearm_time := 1.35
+@export var wall_blue_route_span := 1700.0
+@export var wall_threadburst_distance_time_bonus := 0.45
 @export_group("")
 @export var phase_one_health_ratio := 0.75
 @export var phase_two_health_ratio := 0.5
@@ -186,7 +199,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var phase_two_sweep_time := 0.72
 @export var laser_damage := 30
 @export var laser_hit_width := 42.0
-@export var laser_max_distance := 980.0
+@export var laser_max_distance := 5000.0
 @export var laser_head_offset := Vector2(0.0, -90.0)
 @export var use_detached_head := false
 @export var detached_head_source_rect := Rect2(430.0, 90.0, 420.0, 420.0)
@@ -302,6 +315,7 @@ var _wall_phase_timed_out := false
 var _wall_phase_elapsed := 0.0
 var _wall_break_damage := 0.0
 var _wall_event_bag: Array[int] = []
+var _wall_sentinels: Array[Node] = []
 var _last_wall_event := -1
 var _laser_target_position := Vector2.ZERO
 var _laser_firing := false
@@ -985,6 +999,7 @@ func _on_boss_health_changed(_current: int, _maximum: int) -> void:
 	_update_boss_health_bar()
 
 func _on_boss_died(_damage: DamageData) -> void:
+	_clear_wall_sentinels()
 	_hide_attack_aura(true)
 	for index in range(_armor_links.size()):
 		_clear_armor_link(index)
@@ -1242,6 +1257,9 @@ func _spawn_threadburst_missiles() -> void:
 		var distance_ratio := clampf(absf(x_offset) / half_spread, 0.0, 1.0)
 		var flight_variation := randf_range(-0.055, 0.055)
 		var flight_time := threadburst_flight_time + distance_ratio * threadburst_far_lane_time_bonus + flight_variation
+		if _wall_hanging:
+			var wall_travel_ratio := clampf(global_position.distance_to(landing_position) / 2200.0, 0.0, 1.0)
+			flight_time += wall_travel_ratio * wall_threadburst_distance_time_bonus
 		missile.launch_to_landing(landing_position, flight_time, self)
 
 func _get_threadburst_lane_offsets() -> Array[float]:
@@ -1565,6 +1583,7 @@ func _run_hanging_laser_sequence() -> void:
 	if _wall_hanging:
 		await _run_wall_intermission_deck()
 	else:
+		_ensure_wall_sentinel_count()
 		await _run_final_hanging_laser_mix()
 	if not is_inside_tree() or is_dead:
 		_finish_hanging_laser_sequence()
@@ -1673,6 +1692,7 @@ func _apply_rotated_node_transform(
 
 
 func _run_wall_intermission_deck() -> void:
+	_ensure_wall_sentinel_count()
 	while is_inside_tree() and not is_dead and not _wall_break_requested:
 		var event := _take_next_wall_event()
 		await _run_wall_event(event)
@@ -1735,10 +1755,10 @@ func _run_wall_event(event: int) -> void:
 			_spawn_threadburst_missiles()
 			await _wait_with_wall_cancel(0.72 * timing)
 		HangingEvent.YELLOW_ECHO:
-			_spawn_wall_essence_echo()
-			await _wait_with_wall_cancel(0.95 * timing)
+			_ensure_wall_sentinel_count()
+			await _wait_with_wall_cancel(0.62 * timing)
 		HangingEvent.BLUE_WALL_SHEAR:
-			_spawn_blue_wall_shear()
+			_spawn_blue_route_wave()
 			await _wait_with_wall_cancel(0.72 * timing)
 
 
@@ -1750,11 +1770,18 @@ func _wait_with_wall_cancel(duration: float) -> void:
 		and not is_dead
 		and not _wall_break_requested
 	):
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 
-func _spawn_wall_essence_echo() -> void:
+func _wait_for_gameplay_frame() -> void:
+	var tree := get_tree()
+	await tree.process_frame
+	while tree.paused and is_inside_tree():
+		await tree.process_frame
+
+
+func _ensure_wall_sentinel_count() -> void:
 	var player := get_tree().get_first_node_in_group("player") as Node2D
 	if not player:
 		player = target
@@ -1763,48 +1790,89 @@ func _spawn_wall_essence_echo() -> void:
 	var parent := get_parent()
 	if not parent:
 		return
-	var attack_direction := signi(roundi(player.global_position.x - global_position.x))
-	if attack_direction == 0:
-		attack_direction = -_wall_side if _wall_side != 0 else facing
-	var echo := ProtoWeaverEssenceEchoVFX.new()
-	echo.echo_delay = essence_echo_delay
+	_wall_sentinels = _wall_sentinels.filter(func(sentinel: Node) -> bool: return is_instance_valid(sentinel))
+	var desired_count := _get_wall_sentinel_count()
+	if _wall_sentinels.size() >= desired_count:
+		return
+	var route_bounds := _get_wall_route_bounds(player.global_position.x)
 	var echo_scale := _get_scale_for_sheet(stab_texture, attack_columns, attack_rows)
-	var echo_origin := player.global_position - Vector2(float(attack_direction) * 210.0, 0.0)
-	echo.configure(
-		self,
-		player.global_position + Vector2(float(attack_direction) * 130.0, 0.0),
-		attack_direction,
-		stab_texture,
-		attack_columns,
-		attack_rows,
-		essence_echo_telegraph_hold_frame,
-		echo_scale,
-		_base_sprite_position,
-		stats.attack_damage if stats else 24,
-		maxf(0.35, essence_echo_delay)
-	)
-	parent.add_child(echo)
-	echo.global_position = echo_origin
-	echo.mark_arrival()
-	echo.trigger_echo()
+	while _wall_sentinels.size() < desired_count:
+		var sentinel_index := _wall_sentinels.size()
+		var marker := _get_sentinel_marker(sentinel_index)
+		var route_ratio := lerpf(0.12, 0.88, float(sentinel_index) / float(maxi(1, desired_count - 1)))
+		var spawn_x := lerpf(route_bounds.x, route_bounds.y, route_ratio)
+		var spawn_position := marker.global_position if marker else _resolve_essence_blink_destination(Vector2(spawn_x, player.global_position.y))
+		var direction := signi(roundi(player.global_position.x - spawn_position.x))
+		if direction == 0:
+			direction = 1
+		var sentinel := ProtoWeaverEssenceSentinel.new()
+		sentinel.configure(
+			self, player, direction, stab_texture, attack_columns, attack_rows,
+			essence_echo_telegraph_hold_frame, echo_scale, _base_sprite_position,
+			stats.attack_damage if stats else 24, wall_sentinel_trigger_radius,
+			wall_sentinel_rearm_time
+		)
+		parent.add_child(sentinel)
+		sentinel.global_position = spawn_position
+		_wall_sentinels.append(sentinel)
 
 
-func _spawn_blue_wall_shear() -> void:
-	if _wall_side == 0:
+func _get_wall_sentinel_count() -> int:
+	if _active_hanging_phase <= 0:
+		return wall_phase_one_sentinel_count
+	if _active_hanging_phase == 1:
+		return wall_phase_two_sentinel_count
+	return wall_phase_three_sentinel_count
+
+
+func _get_sentinel_marker(index: int) -> Marker2D:
+	var paths: Array[NodePath] = [
+		sentinel_marker_1_path, sentinel_marker_2_path, sentinel_marker_3_path,
+		sentinel_marker_4_path, sentinel_marker_5_path, sentinel_marker_6_path,
+	]
+	if index < 0 or index >= paths.size() or paths[index].is_empty():
+		return null
+	return get_node_or_null(paths[index]) as Marker2D
+
+
+func _get_wall_route_bounds(fallback_x: float) -> Vector2:
+	var left := fallback_x - wall_blue_route_span * 0.5
+	var right := fallback_x + wall_blue_route_span * 0.5
+	var left_marker := get_node_or_null(wall_left_marker_path) as Marker2D
+	var right_marker := get_node_or_null(wall_right_marker_path) as Marker2D
+	if left_marker and right_marker:
+		left = minf(left_marker.global_position.x, right_marker.global_position.x)
+		right = maxf(left_marker.global_position.x, right_marker.global_position.x)
+	return Vector2(left, right)
+
+
+func _spawn_blue_route_wave() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if not player:
+		player = target
+	if not is_instance_valid(player):
 		return
 	var parent := get_parent()
 	if not parent:
 		return
+	var route_bounds := _get_wall_route_bounds(player.global_position.x)
+	var direction := 1 if randi() % 2 == 0 else -1
+	var spawn_x := route_bounds.x + 80.0 if direction > 0 else route_bounds.y - 80.0
+	var spawn_position := _resolve_essence_blink_destination(Vector2(spawn_x, player.global_position.y))
 	var wave := ProtoWeaverGroundWave.new()
 	wave.damage_amount = ground_sweep_damage
 	wave.travel_speed = wall_blue_wave_speed
-	wave.lifetime = wall_blue_wave_lifetime
+	wave.lifetime = maxf(wall_blue_wave_lifetime, absf(route_bounds.y - route_bounds.x) / wall_blue_wave_speed + 0.5)
 	parent.add_child(wave)
-	wave.global_position = _hang_anchor + Vector2(
-		-float(_wall_side) * wall_blue_wave_surface_offset,
-		72.0
-	)
-	wave.launch_surface(Vector2.DOWN, _wall_side, self)
+	wave.global_position = spawn_position + Vector2(0.0, -wall_blue_wave_surface_offset)
+	wave.launch(direction, self)
+
+
+func _clear_wall_sentinels() -> void:
+	for sentinel in _wall_sentinels:
+		if is_instance_valid(sentinel):
+			sentinel.call("dismiss")
+	_wall_sentinels.clear()
 
 
 func _run_aimed_laser_volley(shot_count: int, timing_multiplier: float) -> void:
@@ -1818,7 +1886,7 @@ func _run_aimed_laser_volley(shot_count: int, timing_multiplier: float) -> void:
 		if not is_inside_tree() or is_dead:
 			return
 		if shot < shot_count - 1 and phase_intershot_delay > 0.0:
-			await get_tree().create_timer(phase_intershot_delay).timeout
+			await get_tree().create_timer(phase_intershot_delay, false).timeout
 
 
 func _run_final_hanging_laser_mix() -> void:
@@ -1843,7 +1911,7 @@ func _run_final_hanging_laser_mix() -> void:
 		if not is_inside_tree() or is_dead:
 			return
 		if event_index < events.size() - 1 and phase_intershot_delay > 0.0:
-			await get_tree().create_timer(phase_intershot_delay).timeout
+			await get_tree().create_timer(phase_intershot_delay, false).timeout
 
 
 func _build_final_laser_events() -> Array[bool]:
@@ -1882,7 +1950,7 @@ func _track_hanging_laser(duration: float) -> void:
 	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		_update_laser_target_from_player()
 		_update_laser_line()
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 func _lock_hanging_laser(duration: float) -> void:
@@ -1894,7 +1962,7 @@ func _lock_hanging_laser(duration: float) -> void:
 
 	var timer := 0.0
 	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 func _fire_hanging_laser(duration: float) -> void:
@@ -1910,7 +1978,7 @@ func _fire_hanging_laser(duration: float) -> void:
 	var timer := 0.0
 	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		_try_damage_player_with_laser()
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 	_laser_firing = false
@@ -1955,7 +2023,7 @@ func _fire_hanging_laser_sweep(reverse: bool, lock_duration: float, sweep_durati
 		_laser_target_position = start_target.lerp(end_target, smoothstep(0.0, 1.0, ratio))
 		_update_laser_line()
 		_try_damage_player_with_laser()
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 	_laser_firing = false
@@ -1967,7 +2035,7 @@ func _wait_with_laser_presented(duration: float) -> void:
 	var timer := 0.0
 	while timer < duration and is_inside_tree() and not is_dead and not _is_wall_event_cancelled():
 		_update_laser_line()
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 
@@ -1989,7 +2057,7 @@ func _run_laser_recharge(duration_override := -1.0) -> void:
 		var ratio := clampf(timer / maxf(recharge_duration, 0.001), 0.0, 1.0)
 		var pulse := 0.5 + sin(timer * 15.0) * 0.5
 		sprite.modulate = Color(1.0, lerpf(0.58, 0.96, ratio), lerpf(0.38, 0.88, ratio), 0.82 + pulse * 0.18)
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 	_laser_recharge_active = false
@@ -2010,6 +2078,7 @@ func _should_chase_freely() -> bool:
 	return chase_freely_after_aggro and _boss_aggro_latched
 
 func _finish_hanging_laser_sequence() -> void:
+	_clear_wall_sentinels()
 	_hide_attack_aura()
 	_laser_recharge_active = false
 	_hanging_laser_busy = false
@@ -2163,7 +2232,7 @@ func _grow_hanging_thread() -> void:
 	while timer < hang_thread_grow_time and is_inside_tree() and not is_dead:
 		_hang_thread_draw_ratio = clampf(timer / maxf(hang_thread_grow_time, 0.001), 0.0, 1.0)
 		_update_hanging_thread_line()
-		await get_tree().process_frame
+		await _wait_for_gameplay_frame()
 		timer += get_process_delta_time()
 
 	_hang_thread_draw_ratio = 1.0

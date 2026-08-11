@@ -128,6 +128,7 @@
 [ext_resource type="Script" uid="uid://cqrje1mdgmii4" path="res://Src/Camera/room_camera_controller.gd" id="room_camera_controller"]
 [ext_resource type="Script" uid="uid://b32r2jybfeq7x" path="res://Src/Camera/room_camera_zone.gd" id="room_camera_zone"]
 [ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="proto_weaver_hang_preview"]
+[ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="proto_weaver_sentinel_preview"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -2180,6 +2181,84 @@ vframes = 10
 frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
+[node name="Sentinel1" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(3820, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel1"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
+[node name="Sentinel2" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(4440, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel2"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
+[node name="Sentinel3" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(5050, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel3"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
+[node name="Sentinel4" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(5660, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel4"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
+[node name="Sentinel5" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(6270, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel5"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
+[node name="Sentinel6" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+position = Vector2(6880, 4358)
+
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel6"]
+position = Vector2(0, -141.58)
+scale = Vector2(0.64, 0.64)
+self_modulate = Color(1, 0.78, 0.08, 0.5)
+texture = ExtResource("proto_weaver_sentinel_preview")
+hframes = 6
+vframes = 8
+frame = 0
+script = SubResource("GDScript_proto_weaver_marker_preview")
+
 [node name="Lighting" type="Node2D" parent="WorldArt/Rooms/BossArena" unique_id=2092851588]
 z_index = 6
 script = ExtResource("org_lighting")
@@ -2202,6 +2281,12 @@ wall_left_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallLeft")
 wall_right_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallRight")
 center_hang_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/CenterHang")
 recovery_floor_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/RecoveryFloor")
+sentinel_marker_1_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel1")
+sentinel_marker_2_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel2")
+sentinel_marker_3_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel3")
+sentinel_marker_4_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel4")
+sentinel_marker_5_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel5")
+sentinel_marker_6_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel6")
 threadburst_spawn_offset = Vector2(0, -8)
 threadburst_horizontal_spread = 360.0
 phase_one_health_ratio = 0.6667

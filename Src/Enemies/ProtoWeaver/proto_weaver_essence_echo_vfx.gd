@@ -132,16 +132,16 @@ func trigger_echo() -> void:
 
 
 func _run_echo_strike() -> void:
-	await get_tree().create_timer(echo_delay).timeout
+	await get_tree().create_timer(echo_delay, false).timeout
 	if not is_inside_tree():
 		return
 	_begin_echo_release()
-	await get_tree().create_timer(release_impact_delay).timeout
+	await get_tree().create_timer(release_impact_delay, false).timeout
 	if not is_inside_tree():
 		return
 	_active = true
 	monitoring = true
-	await get_tree().physics_frame
+	await _wait_for_gameplay_physics_frame()
 	if not is_inside_tree():
 		return
 	_try_hit_current_overlaps()
@@ -149,19 +149,19 @@ func _run_echo_strike() -> void:
 		_ghost.modulate = Color(1.0, 0.94, 0.58, 0.92)
 	CombatFeedback.screen_shake(source if source else self, 2.2, 0.07)
 	queue_redraw()
-	await get_tree().create_timer(active_time).timeout
+	await get_tree().create_timer(active_time, false).timeout
 	if not is_inside_tree():
 		return
 	monitoring = false
 	_active = false
 	var release_tail := maxf(0.0, release_duration - release_impact_delay - active_time)
 	if release_tail > 0.0:
-		await get_tree().create_timer(release_tail).timeout
+		await get_tree().create_timer(release_tail, false).timeout
 	if not is_inside_tree():
 		return
 	_dissipating = true
 	_dissipate_elapsed = 0.0
-	await get_tree().create_timer(dissipate_time).timeout
+	await get_tree().create_timer(dissipate_time, false).timeout
 	if is_inside_tree():
 		queue_free()
 
@@ -181,6 +181,13 @@ func _set_ghost_frame(frame_index: int) -> void:
 		_ghost.frame = safe_frame
 	if _ghost_glow:
 		_ghost_glow.frame = safe_frame
+
+
+func _wait_for_gameplay_physics_frame() -> void:
+	var tree := get_tree()
+	while tree.paused and is_inside_tree():
+		await tree.process_frame
+	await tree.physics_frame
 
 
 func _process(delta: float) -> void:

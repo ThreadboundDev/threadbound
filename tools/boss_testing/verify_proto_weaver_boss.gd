@@ -18,6 +18,7 @@ func _ready() -> void:
 	_verify_missile_landing(boss)
 	_verify_color_identities(boss)
 	_verify_vertical_responses(boss)
+	await _verify_pause_freezes_boss_attack()
 	await _verify_wall_intermission_runtime(boss)
 	await _verify_ground_wave_runtime(boss)
 
@@ -100,9 +101,15 @@ func _verify_laser_tuning(boss: ProtoWeaver) -> void:
 
 func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 	_expect(boss.wall_phase_break_distance >= 220.0, "Wall phase requires an excessively precise finishing hit.")
-	_expect(boss.wall_phase_one_max_duration >= 7.0, "First wall traversal timeout is too short.")
-	_expect(boss.wall_phase_two_max_duration > boss.wall_phase_one_max_duration, "Second wall traversal does not allow more chase time.")
+	_expect(boss.wall_phase_one_max_duration >= 20.0, "First wall traversal timeout is too short for a traversal sequence.")
+	_expect(boss.wall_phase_two_max_duration >= boss.wall_phase_one_max_duration + 6.0, "Second wall traversal does not allow meaningfully more chase time.")
 	_expect(boss.wall_phase_two_break_damage > boss.wall_phase_one_break_damage, "Second wall traversal does not require a higher break threshold.")
+	_expect(boss.wall_phase_one_sentinel_count == 2, "First wall phase should introduce two Yellow sentinels.")
+	_expect(boss.wall_phase_two_sentinel_count == 4, "Second wall phase should escalate to four Yellow sentinels.")
+	_expect(boss.wall_phase_three_sentinel_count == 6, "Final wall phase should activate all six Yellow sentinels.")
+	_expect(boss.wall_sentinel_trigger_radius >= 180.0, "Yellow sentinel trigger range is too precise to read reliably.")
+	_expect(boss.wall_blue_route_span >= 1200.0, "Blue route denial does not cover enough of the traversal lane.")
+	_expect(boss.laser_max_distance >= 4000.0, "Wall lasers do not span the boss arena.")
 	_expect(boss.wall_knockdown_duration >= 1.5, "Successful wall break does not award a meaningful punish window.")
 	_expect(
 		boss.wall_phase_two_timing_multiplier < boss.wall_phase_one_timing_multiplier,
@@ -130,6 +137,16 @@ func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 	boss.wall_left_marker_path = NodePath("VerifyWallLeft")
 	boss.wall_right_marker_path = NodePath("VerifyWallRight")
 	boss.recovery_floor_marker_path = NodePath("VerifyRecoveryFloor")
+	for marker_index in range(6):
+		var sentinel_marker := Marker2D.new()
+		sentinel_marker.name = "VerifySentinel%d" % (marker_index + 1)
+		sentinel_marker.position = Vector2(-450.0 + float(marker_index) * 180.0, 0.0)
+		boss.add_child(sentinel_marker)
+		boss.set("sentinel_marker_%d_path" % (marker_index + 1), NodePath(sentinel_marker.name))
+		_expect(
+			boss.call("_get_sentinel_marker", marker_index) == sentinel_marker,
+			"Yellow sentinel marker %d does not resolve from the boss room." % (marker_index + 1)
+		)
 
 	var target_marker := Node2D.new()
 	add_child(target_marker)
@@ -419,6 +436,43 @@ func _verify_wall_intermission_runtime(boss: ProtoWeaver) -> void:
 	)
 	boss.target = null
 	target_marker.queue_free()
+
+
+func _verify_pause_freezes_boss_attack() -> void:
+	var pause_boss := BOSS_SCENE.instantiate() as ProtoWeaver
+	add_child(pause_boss)
+	pause_boss.global_position = Vector2(400.0, 400.0)
+	var pause_target := Node2D.new()
+	add_child(pause_target)
+	pause_target.global_position = pause_boss.global_position + Vector2(180.0, 0.0)
+	pause_boss.target = pause_target
+	pause_boss.set("_active_hanging_phase", 0)
+	pause_boss.hang_thread_grow_time = 0.08
+	pause_boss.hang_rise_time = 0.16
+	pause_boss.wall_phase_one_max_duration = 1.0
+	pause_boss.call("_start_hanging_laser_sequence")
+	await get_tree().create_timer(0.03).timeout
+	get_tree().paused = true
+	var paused_position := pause_boss.global_position
+	var paused_frame := pause_boss.sprite.frame
+	var paused_wall_elapsed := float(pause_boss.get("_wall_phase_elapsed"))
+	await get_tree().create_timer(0.14, true).timeout
+	_expect(
+		pause_boss.global_position.is_equal_approx(paused_position),
+		"Proto-Weaver continues moving through an attack while the game is paused."
+	)
+	_expect(
+		pause_boss.sprite.frame == paused_frame,
+		"Proto-Weaver attack animation continues while the game is paused."
+	)
+	_expect(
+		is_equal_approx(float(pause_boss.get("_wall_phase_elapsed")), paused_wall_elapsed),
+		"Proto-Weaver intermission timer continues while the game is paused."
+	)
+	get_tree().paused = false
+	pause_boss.queue_free()
+	pause_target.queue_free()
+	await get_tree().process_frame
 
 
 func _verify_ground_wave_runtime(boss: ProtoWeaver) -> void:
