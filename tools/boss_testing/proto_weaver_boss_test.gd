@@ -12,8 +12,8 @@ func _ready() -> void:
 	_create_attack_lab_hud()
 	call_deferred("_setup_attack_lab")
 	print(
-		"Proto-Weaver test loadout: 3 Health, 3 Attack, 3 Resistance, "
-		+ "2 Skill Damage, 2 AP Recharge, 2 Momentum, Follower's Knot"
+		"Proto-Weaver test loadout: 4 Health, 4 Attack, 4 Resistance, "
+		+ "3 Skill Damage, 3 AP Recharge, 3 Momentum, Follower's Knot"
 	)
 	print(
 		"Attack Lab: 1 Red, 2 Blue, 3 Yellow, 4 Stab, "

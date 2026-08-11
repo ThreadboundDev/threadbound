@@ -18,6 +18,7 @@ func _ready() -> void:
 	_verify_missile_landing(boss)
 	_verify_color_identities(boss)
 	_verify_vertical_responses(boss)
+	await _verify_pause_freezes_boss_attack()
 	await _verify_wall_intermission_runtime(boss)
 	await _verify_ground_wave_runtime(boss)
 
@@ -100,9 +101,15 @@ func _verify_laser_tuning(boss: ProtoWeaver) -> void:
 
 func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 	_expect(boss.wall_phase_break_distance >= 220.0, "Wall phase requires an excessively precise finishing hit.")
-	_expect(boss.wall_phase_one_max_duration >= 7.0, "First wall traversal timeout is too short.")
-	_expect(boss.wall_phase_two_max_duration > boss.wall_phase_one_max_duration, "Second wall traversal does not allow more chase time.")
+	_expect(boss.wall_phase_one_max_duration >= 20.0, "First wall traversal timeout is too short for a traversal sequence.")
+	_expect(boss.wall_phase_two_max_duration >= boss.wall_phase_one_max_duration + 6.0, "Second wall traversal does not allow meaningfully more chase time.")
 	_expect(boss.wall_phase_two_break_damage > boss.wall_phase_one_break_damage, "Second wall traversal does not require a higher break threshold.")
+	_expect(boss.wall_phase_one_sentinel_count == 2, "First wall phase should introduce two Yellow sentinels.")
+	_expect(boss.wall_phase_two_sentinel_count == 4, "Second wall phase should escalate to four Yellow sentinels.")
+	_expect(boss.wall_phase_three_sentinel_count == 6, "Final wall phase should activate all six Yellow sentinels.")
+	_expect(boss.wall_sentinel_trigger_radius >= 180.0, "Yellow sentinel trigger range is too precise to read reliably.")
+	_expect(boss.wall_blue_route_span >= 1200.0, "Blue route denial does not cover enough of the traversal lane.")
+	_expect(boss.laser_max_distance >= 4000.0, "Wall lasers do not span the boss arena.")
 	_expect(boss.wall_knockdown_duration >= 1.5, "Successful wall break does not award a meaningful punish window.")
 	_expect(
 		boss.wall_phase_two_timing_multiplier < boss.wall_phase_one_timing_multiplier,
@@ -130,6 +137,16 @@ func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 	boss.wall_left_marker_path = NodePath("VerifyWallLeft")
 	boss.wall_right_marker_path = NodePath("VerifyWallRight")
 	boss.recovery_floor_marker_path = NodePath("VerifyRecoveryFloor")
+	for marker_index in range(6):
+		var sentinel_marker := Marker2D.new()
+		sentinel_marker.name = "VerifySentinel%d" % (marker_index + 1)
+		sentinel_marker.position = Vector2(-450.0 + float(marker_index) * 180.0, 0.0)
+		boss.add_child(sentinel_marker)
+		boss.set("sentinel_marker_%d_path" % (marker_index + 1), NodePath(sentinel_marker.name))
+		_expect(
+			boss.call("_get_sentinel_marker", marker_index) == sentinel_marker,
+			"Yellow sentinel marker %d does not resolve from the boss room." % (marker_index + 1)
+		)
 
 	var target_marker := Node2D.new()
 	add_child(target_marker)
@@ -143,8 +160,15 @@ func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 		"Left-wall presentation does not rotate inward by 90 degrees."
 	)
 	_expect(
-		boss.get("_hang_position").is_equal_approx(left_marker.global_position),
-		"Wall phase ignores its editor placement marker."
+		boss.get("_hang_position").is_equal_approx(
+			left_marker.global_position
+			- boss.wall_hang_foot_offset.rotated(left_marker.global_rotation)
+		),
+		"Wall phase does not derive the boss body from its editor foot marker."
+	)
+	_expect(
+		boss.get("_hang_anchor").is_equal_approx(left_marker.global_position),
+		"Wall thread anchor does not terminate at the editor foot marker."
 	)
 	_expect(
 		boss.call("_get_recovery_floor_position").is_equal_approx(recovery_marker.global_position),
@@ -315,16 +339,23 @@ func _verify_color_identities(boss: ProtoWeaver) -> void:
 	boss.target = target_marker
 	boss.call("_spawn_essence_echo_telegraph")
 	var destination := boss.get("_pending_essence_destination") as Vector2
-	_expect(destination.x > target_marker.global_position.x, "Essence Echo destination does not visibly cross the player.")
+	_expect(
+		destination.is_equal_approx(target_marker.global_position),
+		"Essence Echo does not snapshot the player's current destination."
+	)
 	var echo := boss.get("_essence_echo_vfx") as ProtoWeaverEssenceEchoVFX
-	_expect(echo != null, "Essence Echo did not leave its yellow delayed duplicate.")
+	_expect(echo != null, "Essence Echo did not create its yellow destination clone.")
 	if echo:
 		var echo_sprite := echo.get_node_or_null("EssenceEcho") as Sprite2D
-		_expect(echo_sprite != null and echo_sprite.frame == 0, "Essence Echo starts as a frozen release pose instead of mirroring the attack windup.")
-		_expect(echo.release_duration >= 0.5, "Essence Echo release animation is too fast to read as a separate attack.")
-		echo.call("_begin_echo_release")
-		echo.call("_process", echo.release_duration * 0.6)
-		_expect(echo_sprite.frame > boss.essence_echo_telegraph_hold_frame, "Essence Echo duplicate does not visibly animate through its delayed stab.")
+		_expect(echo.destination_marker_only, "Grounded Yellow clone still behaves as a second attacker.")
+		_expect(not echo.monitoring, "Yellow destination clone unexpectedly monitors for player damage.")
+		_expect(echo.global_position.is_equal_approx(destination), "Yellow clone is not placed at the boss's blink destination.")
+		_expect(echo_sprite != null and echo_sprite.frame == 0, "Yellow destination clone does not begin with a readable formation pose.")
+		var old_boss_position := boss.global_position
+		boss.call("_activate_essence_echo")
+		_expect(boss.global_position.is_equal_approx(destination), "The real boss does not blink to its Yellow clone.")
+		_expect(bool(echo.get("_dissipating")), "Yellow clone does not disappear when the real boss arrives.")
+		boss.global_position = old_boss_position
 		echo.queue_free()
 	boss.target = null
 	target_marker.queue_free()
@@ -358,13 +389,23 @@ func _verify_vertical_responses(boss: ProtoWeaver) -> void:
 	)
 
 	boss.call("_spawn_essence_echo_telegraph")
+	var elevated_destination := boss.get("_pending_essence_destination") as Vector2
 	var elevated_echo := boss.get("_essence_echo_vfx") as ProtoWeaverEssenceEchoVFX
-	_expect(elevated_echo != null, "Elevated Yellow response did not summon its delayed duplicate.")
+	_expect(elevated_echo != null, "Elevated Yellow response did not summon its destination clone.")
 	if elevated_echo:
 		_expect(
-			is_equal_approx(elevated_echo.global_position.y, elevated_target.global_position.y),
-			"Yellow duplicate remains on the ground while the player camps above it."
+			elevated_echo.destination_marker_only
+			and elevated_echo.global_position.is_equal_approx(elevated_destination)
+			and is_equal_approx(elevated_destination.y, elevated_target.global_position.y),
+			"Vertical Yellow does not place the boss's blink destination on the player's elevated lane."
 		)
+		var old_boss_position := boss.global_position
+		boss.call("_activate_essence_echo")
+		_expect(
+			boss.global_position.is_equal_approx(elevated_destination),
+			"Vertical Yellow leaves the real boss below the player instead of chasing them."
+		)
+		boss.global_position = old_boss_position
 		elevated_echo.queue_free()
 	boss.target = null
 	elevated_target.queue_free()
@@ -395,6 +436,43 @@ func _verify_wall_intermission_runtime(boss: ProtoWeaver) -> void:
 	)
 	boss.target = null
 	target_marker.queue_free()
+
+
+func _verify_pause_freezes_boss_attack() -> void:
+	var pause_boss := BOSS_SCENE.instantiate() as ProtoWeaver
+	add_child(pause_boss)
+	pause_boss.global_position = Vector2(400.0, 400.0)
+	var pause_target := Node2D.new()
+	add_child(pause_target)
+	pause_target.global_position = pause_boss.global_position + Vector2(180.0, 0.0)
+	pause_boss.target = pause_target
+	pause_boss.set("_active_hanging_phase", 0)
+	pause_boss.hang_thread_grow_time = 0.08
+	pause_boss.hang_rise_time = 0.16
+	pause_boss.wall_phase_one_max_duration = 1.0
+	pause_boss.call("_start_hanging_laser_sequence")
+	await get_tree().create_timer(0.03).timeout
+	get_tree().paused = true
+	var paused_position := pause_boss.global_position
+	var paused_frame := pause_boss.sprite.frame
+	var paused_wall_elapsed := float(pause_boss.get("_wall_phase_elapsed"))
+	await get_tree().create_timer(0.14, true).timeout
+	_expect(
+		pause_boss.global_position.is_equal_approx(paused_position),
+		"Proto-Weaver continues moving through an attack while the game is paused."
+	)
+	_expect(
+		pause_boss.sprite.frame == paused_frame,
+		"Proto-Weaver attack animation continues while the game is paused."
+	)
+	_expect(
+		is_equal_approx(float(pause_boss.get("_wall_phase_elapsed")), paused_wall_elapsed),
+		"Proto-Weaver intermission timer continues while the game is paused."
+	)
+	get_tree().paused = false
+	pause_boss.queue_free()
+	pause_target.queue_free()
+	await get_tree().process_frame
 
 
 func _verify_ground_wave_runtime(boss: ProtoWeaver) -> void:

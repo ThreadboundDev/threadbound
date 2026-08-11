@@ -5,7 +5,6 @@
 [ext_resource type="Resource" uid="uid://cgy7v0gxnbn43" path="res://Src/Enemies/ProtoWeaver/proto_weaver_stats.tres" id="3_stats"]
 [ext_resource type="Texture2D" uid="uid://6fglcvgmh18v" path="res://Assets/Enemys/proto_weaver/proto_weaver_walk.png" id="4_walk"]
 [ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="5_stab"]
-[ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_threadburst"]
 [ext_resource type="Texture2D" uid="uid://d1okkqs7hdrr2" path="res://Assets/Enemys/proto_weaver/proto_weaver_threadburst.png" id="6_repulse"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/ProtoWeaver/thread_missile.tscn" id="7_missile"]
 [ext_resource type="PackedScene" uid="uid://bbuxvfd44htht" path="res://Src/Enemies/Threadling/threadling.tscn" id="8_threadling"]
@@ -13,29 +12,43 @@
 [ext_resource type="PackedScene" uid="uid://d2yp0m1u5qw7" path="res://Src/UI/boss_health_bar.tscn" id="10_boss_bar"]
 [ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="12_hang"]
 [ext_resource type="Texture2D" uid="uid://bo6knlxuafjgq" path="res://Assets/Enemys/proto_weaver/proto_weaver_hang_thread.png" id="13_hang_thread"]
-[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver_beam.gd" id="14_beam_script"]
-[ext_resource type="Script" path="res://Src/Enemies/ProtoWeaver/proto_weaver_flow_aura.gd" id="15_flow_aura"]
-
-[sub_resource type="Shader" id="Shader_clean_threadburst"]
-code = "shader_type canvas_item;\nuniform bool clean_threadburst = false;\n\nvoid fragment() {\n\tvec4 pixel = texture(TEXTURE, UV) * COLOR;\n\tif (clean_threadburst) {\n\t\tbool saturated_pink = pixel.r > 0.58 && pixel.b > 0.35 && pixel.g < pixel.r * 0.82;\n\t\tif (saturated_pink) {\n\t\t\tpixel.a = 0.0;\n\t\t}\n\t}\n\tCOLOR = pixel;\n}\n"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_clean_threadburst"]
-shader = SubResource("Shader_clean_threadburst")
+[ext_resource type="Script" uid="uid://dyc7g4u3wjdka" path="res://Src/Enemies/ProtoWeaver/proto_weaver_beam.gd" id="14_beam_script"]
+[ext_resource type="Script" uid="uid://b3oef10663vul" path="res://Src/Enemies/ProtoWeaver/proto_weaver_flow_aura.gd" id="15_flow_aura"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(196, 256)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_grapple_upper"]
-size = Vector2(310, 330)
+[sub_resource type="Shader" id="Shader_clean_threadburst"]
+code = "shader_type canvas_item;
+uniform bool clean_threadburst = false;
+
+void fragment() {
+	vec4 pixel = texture(TEXTURE, UV) * COLOR;
+	if (clean_threadburst) {
+		bool saturated_pink = pixel.r > 0.58 && pixel.b > 0.35 && pixel.g < pixel.r * 0.82;
+		if (saturated_pink) {
+			pixel.a = 0.0;
+		}
+	}
+	COLOR = pixel;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clean_threadburst"]
+shader = SubResource("Shader_clean_threadburst")
+shader_parameter/clean_threadburst = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_detection"]
-size = Vector2(4300, 2050)
+size = Vector2(4300, 2459)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
 size = Vector2(336, 204)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_stab_hitbox"]
 size = Vector2(350, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grapple_upper"]
+size = Vector2(310, 330)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_boss_music"]
 radius = 420.0
@@ -44,7 +57,7 @@ radius = 420.0
 script = ExtResource("2_script")
 walk_texture = ExtResource("4_walk")
 stab_texture = ExtResource("5_stab")
-threadburst_texture = ExtResource("6_threadburst")
+threadburst_texture = ExtResource("6_repulse")
 repulse_texture = ExtResource("6_repulse")
 hang_texture = ExtResource("12_hang")
 hang_thread_texture = ExtResource("13_hang_thread")
@@ -67,14 +80,25 @@ hang_fps = 18.0
 hang_scale_multiplier = 1.4
 threadburst_every_n_attacks = 3
 ground_sweep_every_n_attacks = 4
+essence_echo_every_n_attacks = 5
 threadburst_min_missile_count = 4
 threadburst_max_missile_count = 5
 threadburst_low_health_max_missile_count = 7
 threadburst_horizontal_spread = 920.0
 threadburst_min_lane_spacing = 135.0
+threadburst_max_lane_spacing = 180.0
 threadburst_lane_jitter = 18.0
 threadburst_flight_time = 1.16
 threadburst_launch_height = 70.0
+threadburst_far_lane_time_bonus = 0.14
+threadburst_target_lead_time = 0.28
+threadburst_max_target_lead = 140.0
+repulse_trigger_distance = 190.0
+repulse_trigger_hold_time = 0.7
+repulse_internal_cooldown = 5.0
+repulse_damage = 12
+repulse_radius = 200.0
+repulse_backstep_speed = 310.0
 armor_link_left_offset = Vector2(-320, -64)
 armor_link_right_offset = Vector2(320, -64)
 armor_link_respawn_time = 26.0
@@ -92,6 +116,27 @@ hang_rise_time = 0.45
 hang_return_time = 0.5
 hang_sway_pixels = 24.0
 hang_sway_speed = 2.2
+wall_left_marker_path = NodePath("")
+wall_right_marker_path = NodePath("")
+center_hang_marker_path = NodePath("")
+recovery_floor_marker_path = NodePath("")
+wall_hang_foot_offset = Vector2(0, -426)
+wall_left_offset = Vector2(-720, -330)
+wall_right_offset = Vector2(720, -330)
+wall_thread_anchor_distance = 150.0
+wall_phase_break_distance = 260.0
+wall_phase_one_max_duration = 24.0
+wall_phase_two_max_duration = 32.0
+wall_phase_one_break_damage = 55.0
+wall_phase_two_break_damage = 80.0
+wall_knockdown_duration = 1.8
+wall_timeout_recovery_duration = 0.65
+wall_phase_event_delay = 0.18
+wall_phase_one_timing_multiplier = 1.0
+wall_phase_two_timing_multiplier = 0.78
+wall_blue_wave_speed = 720.0
+wall_blue_wave_lifetime = 1.55
+wall_blue_wave_surface_offset = 18.0
 phase_one_health_ratio = 0.75
 phase_two_health_ratio = 0.5
 phase_three_health_ratio = 0.25
@@ -103,15 +148,72 @@ laser_tracking_time = 0.46
 laser_lock_time = 0.24
 laser_fire_time = 0.28
 phase_two_timing_multiplier = 0.82
+phase_three_timing_multiplier = 0.74
 phase_intershot_delay = 0.08
 phase_landing_punish_time = 0.9
+laser_aim_offset = 112.0
+phase_one_sweep_lock_time = 0.48
+phase_one_sweep_time = 0.95
+phase_two_sweep_lock_time = 0.34
+phase_two_sweep_time = 0.72
 laser_damage = 30
 laser_hit_width = 42.0
-laser_max_distance = 980.0
+laser_max_distance = 5000.0
 laser_head_offset = Vector2(0, -90)
 use_detached_head = false
 detached_head_source_rect = Rect2(430, 90, 420, 420)
 detached_head_scale = Vector2(0.26, 0.26)
+ground_sweep_spawn_offset = Vector2(170, -4)
+ground_sweep_damage = 30
+ground_sweep_speed = 820.0
+ground_sweep_pose_depth = 34.0
+ground_sweep_pose_lean = 0.075
+essence_echo_cross_distance = 220.0
+essence_echo_edge_padding = 72.0
+essence_echo_delay = 0.5
+essence_echo_floor_probe_up = 96.0
+essence_echo_floor_probe_down = 360.0
+stab_pose_drawback = 24.0
+threadburst_pose_lift = 22.0
+threadburst_pose_stretch = 1.09
+repulse_pose_width = 1.12
+chase_freely_after_aggro = true
+vertical_response_height = 150.0
+vertical_response_hold_time = 0.6
+vertical_response_cooldown = 4.0
+debug_attack_lab_enabled = false
+debug_forced_attack_mode = 1
+stagger_initial_threshold = 105.0
+stagger_threshold_increase = 30.0
+stagger_threshold_cap = 195.0
+stagger_per_damage = 1.0
+stagger_hitstun_weight = 80.0
+stagger_decay_delay = 0.0
+stagger_decay_per_second = 0.0
+stagger_duration = 0.58
+stagger_immunity_time = 1.35
+committed_attack_stagger_multiplier = 0.35
+heavy_interrupt_damage = 45
+heavy_interrupt_hitstun = 0.24
+stab_telegraph_hold_frame = 22
+stab_telegraph_hold_time = 0.2
+threadburst_telegraph_hold_frame = 23
+threadburst_telegraph_hold_time = 0.28
+ground_sweep_telegraph_hold_frame = 16
+ground_sweep_telegraph_hold_time = 0.42
+repulse_telegraph_hold_frame = 20
+repulse_telegraph_hold_time = 0.42
+essence_echo_telegraph_hold_frame = 22
+essence_echo_telegraph_hold_time = 0.34
+cleaned_threadburst_frame_count = 26
+repulse_frame_count = 26
+stagger_pose_frame = 25
+boss_sfx_volume_offset_db = 1.5
+boss_stab_pitch = 0.78
+boss_threadburst_pitch = 0.72
+boss_laser_pitch = 0.68
+boss_subtone_pitch = 0.48
+boss_subtone_volume_offset_db = -10.0
 stats = ExtResource("3_stats")
 patrol_distance = 260.0
 facing_dead_zone = 18.0
@@ -125,14 +227,14 @@ shape = SubResource("RectangleShape2D_body")
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Visuals" index="1" unique_id=568550965]
+material = SubResource("ShaderMaterial_clean_threadburst")
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
 texture = ExtResource("4_walk")
 hframes = 6
 vframes = 8
-material = SubResource("ShaderMaterial_clean_threadburst")
 
-[node name="FlowAura" type="Node2D" parent="Visuals" index="2"]
+[node name="FlowAura" type="Node2D" parent="Visuals" index="2" unique_id=802891445]
 script = ExtResource("15_flow_aura")
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
@@ -140,7 +242,7 @@ position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
-position = Vector2(-50, -847)
+position = Vector2(-50, -1051.5)
 shape = SubResource("RectangleShape2D_detection")
 
 [node name="AttackArea" parent="." index="5"]
@@ -165,13 +267,13 @@ target_path = NodePath("../Visuals/Sprite2D")
 [node name="GrappleTargetComponent" parent="." index="9"]
 weight_class = 1
 
-[node name="UpperBodyGrappleTarget" type="Area2D" parent="." index="10"]
+[node name="UpperBodyGrappleTarget" type="Area2D" parent="." index="10" unique_id=545326093]
 position = Vector2(0, -348)
 collision_layer = 2
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBodyGrappleTarget" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBodyGrappleTarget" index="0" unique_id=1477676040]
 shape = SubResource("RectangleShape2D_grapple_upper")
 
 [node name="HangingThreadLine" type="Line2D" parent="." index="11" unique_id=1935180427]
@@ -188,7 +290,7 @@ texture = ExtResource("12_hang")
 region_enabled = true
 region_rect = Rect2(430, 90, 420, 420)
 
-[node name="AnimatedBeam" type="Node2D" parent="." index="13"]
+[node name="AnimatedBeam" type="Node2D" parent="." index="13" unique_id=445288343]
 visible = false
 script = ExtResource("14_beam_script")
 

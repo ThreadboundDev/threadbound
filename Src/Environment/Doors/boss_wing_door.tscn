@@ -204,7 +204,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_boss_open_00")
 }],
-"loop": true,
+"loop": 1,
 "name": &"closed",
 "speed": 5.0
 }, {
@@ -353,13 +353,13 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_boss_open_47")
 }],
-"loop": false,
+"loop": 0,
 "name": &"open",
 "speed": 18.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_blocker"]
-size = Vector2(470, 760)
+size = Vector2(395, 1042)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_interact"]
 size = Vector2(712, 805)
@@ -392,7 +392,7 @@ position = Vector2(217, 9)
 texture = ExtResource("4_7wioj")
 
 [node name="CollisionShape2D" parent="Blocker" parent_id_path=PackedInt32Array(1812810036) index="0" unique_id=781168983]
-position = Vector2(199, -27)
+position = Vector2(161.5, 20)
 shape = SubResource("RectangleShape2D_boss_blocker")
 
 [node name="InteractionShape" parent="." index="5" unique_id=1747571831]
