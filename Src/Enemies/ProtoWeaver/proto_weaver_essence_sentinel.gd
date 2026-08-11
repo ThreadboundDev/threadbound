@@ -78,7 +78,9 @@ func _make_sprite(node_name: String, color: Color, extra_scale: float) -> Sprite
 	result.hframes = _hframes
 	result.vframes = _vframes
 	result.position = _visual_position
-	result.scale = Vector2(absf(_visual_scale.x) * float(_direction), _visual_scale.y) * extra_scale
+	# Proto-Weaver's source sheets face left. Match the real boss convention:
+	# positive gameplay direction flips the art to face right.
+	result.scale = Vector2(-absf(_visual_scale.x) * float(_direction), _visual_scale.y) * extra_scale
 	result.modulate = color
 	add_child(result)
 	return result
@@ -154,7 +156,7 @@ func _wait_for_gameplay_physics_frame() -> void:
 func _update_facing() -> void:
 	for visual in [_sprite, _glow]:
 		if visual:
-			visual.scale.x = absf(visual.scale.x) * float(_direction)
+			visual.scale.x = -absf(visual.scale.x) * float(_direction)
 	var collision := get_child(0) as CollisionShape2D
 	if collision:
 		collision.position.x = float(_direction) * 210.0

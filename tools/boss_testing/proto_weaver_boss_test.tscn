@@ -7,18 +7,18 @@
 [sub_resource type="Resource" id="Resource_n6p71"]
 resource_local_to_scene = true
 script = ExtResource("2_player_stats")
-max_health = 170
-attack_damage = 35
-skill_damage_multiplier = 1.15
-action_point_recharge_multiplier = 1.09
-momentum_generation_multiplier = 1.09
-resistance = 28
-health_upgrade_points = 3
-attack_upgrade_points = 3
-skill_damage_upgrade_points = 2
-ap_recharge_upgrade_points = 2
-momentum_generation_upgrade_points = 2
-resistance_upgrade_points = 3
+max_health = 193
+attack_damage = 38
+skill_damage_multiplier = 1.22
+action_point_recharge_multiplier = 1.14
+momentum_generation_multiplier = 1.14
+resistance = 37
+health_upgrade_points = 4
+attack_upgrade_points = 4
+skill_damage_upgrade_points = 3
+ap_recharge_upgrade_points = 3
+momentum_generation_upgrade_points = 3
+resistance_upgrade_points = 4
 attack_windup = 0.24
 attack_active_time = 0.11
 attack_recovery = 0.18
@@ -43,22 +43,22 @@ position = Vector2(7529, 3067)
 position = Vector2(5355, 2228)
 
 [node name="Sentinel1" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="4"]
-position = Vector2(4627, 4315)
+position = Vector2(4630, 4368)
 
 [node name="Sentinel2" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="5"]
-position = Vector2(6535, 3276)
+position = Vector2(6548, 3354)
 
 [node name="Sentinel3" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="6"]
-position = Vector2(4251, 3791)
+position = Vector2(4094, 3857)
 
 [node name="Sentinel4" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="7"]
-position = Vector2(6828, 3798)
+position = Vector2(6831, 3858)
 
 [node name="Sentinel5" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="8"]
-position = Vector2(4230, 3053)
+position = Vector2(4239, 3100)
 
 [node name="Sentinel6" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" index="9"]
-position = Vector2(6325, 4325)
+position = Vector2(6388, 4381)
 
 [node name="ProtoWeaver" parent="WorldArt/Rooms/BossArena/Enemies" parent_id_path=PackedInt32Array(151289273) index="0" unique_id=337995925]
 wall_phase_one_sentinel_count = 2
