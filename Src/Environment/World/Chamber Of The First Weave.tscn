@@ -108,6 +108,7 @@
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_grass_medium.tscn" id="109_we2pp"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_tree_small.tscn" id="110_lmcdd"]
 [ext_resource type="PackedScene" path="res://Assets/chamber_of_first_weave/Yellow Wing/FreePlaceProps/yellow_flowers_small.tscn" id="111_y0uyv"]
+[ext_resource type="Script" uid="uid://b0j7isyuh5gjr" path="res://Src/Enemies/essence_phase_visual.gd" id="essence_phase"]
 [ext_resource type="Texture2D" uid="uid://bvr70up0yrlt2" path="res://Assets/chamber_of_first_weave/Tiles/new_tiles_atlas_grass_mask.png" id="grass_recolor_mask"]
 [ext_resource type="Shader" uid="uid://t32t4ypnoj6e" path="res://Src/Environment/World/wing_grass_recolor.gdshader" id="grass_recolor_shader"]
 [ext_resource type="Texture2D" uid="uid://dldiybfap7cfw" path="res://Assets/chamber_of_first_weave/Follower/follower_neutral_decor_atlas.png" id="merchant_decor_atlas"]
@@ -119,17 +120,16 @@
 [ext_resource type="Script" uid="uid://c3aly0fnbr8ko" path="res://Src/Environment/World/SceneOrganization/decoration_section.gd" id="org_decoration"]
 [ext_resource type="Script" uid="uid://d014l0fn2o6eh" path="res://Src/Environment/World/SceneOrganization/door_section.gd" id="org_door"]
 [ext_resource type="Script" uid="uid://55hhd6g7j02n" path="res://Src/Environment/World/SceneOrganization/enemy_section.gd" id="org_enemy"]
-[ext_resource type="Script" path="res://Src/Enemies/essence_phase_visual.gd" id="essence_phase"]
 [ext_resource type="Script" uid="uid://bgdbri872xq8y" path="res://Src/Environment/World/SceneOrganization/landmark_section.gd" id="org_landmark"]
 [ext_resource type="Script" uid="uid://cyrr1cv1gd3wv" path="res://Src/Environment/World/SceneOrganization/lighting_section.gd" id="org_lighting"]
 [ext_resource type="Script" uid="uid://dj262g3o26ro6" path="res://Src/Environment/World/SceneOrganization/objective_section.gd" id="org_objective"]
 [ext_resource type="Script" uid="uid://dyklytk6tf6ne" path="res://Src/Environment/World/SceneOrganization/portal_section.gd" id="org_portal"]
 [ext_resource type="Script" uid="uid://b4ksdwvh142u0" path="res://Src/Environment/World/SceneOrganization/room_section.gd" id="org_room"]
 [ext_resource type="Script" uid="uid://dailvw5q70bvi" path="res://Src/Environment/World/SceneOrganization/scene_section.gd" id="org_section"]
-[ext_resource type="Script" uid="uid://cqrje1mdgmii4" path="res://Src/Camera/room_camera_controller.gd" id="room_camera_controller"]
-[ext_resource type="Script" uid="uid://b32r2jybfeq7x" path="res://Src/Camera/room_camera_zone.gd" id="room_camera_zone"]
 [ext_resource type="Texture2D" uid="uid://ltmbc0guajoi" path="res://Assets/Enemys/proto_weaver/protoweaver_hang.png" id="proto_weaver_hang_preview"]
 [ext_resource type="Texture2D" uid="uid://cpmlju3w3ahpi" path="res://Assets/Enemys/proto_weaver/proto_weaver_stab_attack.png" id="proto_weaver_sentinel_preview"]
+[ext_resource type="Script" uid="uid://cqrje1mdgmii4" path="res://Src/Camera/room_camera_controller.gd" id="room_camera_controller"]
+[ext_resource type="Script" uid="uid://b32r2jybfeq7x" path="res://Src/Camera/room_camera_zone.gd" id="room_camera_zone"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cotfw_atmosphere_grade"]
 shader = ExtResource("1_t0v8a")
@@ -149,6 +149,7 @@ shader_parameter/grain_strength = 0.014
 shader = ExtResource("19_room_hue_shader")
 shader_parameter/hue_color = Color(1, 1, 1, 1)
 shader_parameter/hue_strength = 0.0
+shader_parameter/brightness_multiplier = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_far_depth_grade"]
 shader = ExtResource("15_depth")
@@ -268,14 +269,19 @@ atlas = ExtResource("merchant_nature_atlas")
 region = Rect2(768, 683, 384, 341)
 filter_clip = true
 
+[sub_resource type="GDScript" id="GDScript_proto_weaver_marker_preview"]
+script/source = "@tool
+extends Sprite2D
+
+func _enter_tree() -> void:
+	visible = Engine.is_editor_hint()
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_arena_lock"]
 size = Vector2(4473, 2307)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_merchant_camera_zone"]
 size = Vector2(5725, 1460)
-
-[sub_resource type="GDScript" id="GDScript_proto_weaver_marker_preview"]
-script/source = "@tool\nextends Sprite2D\n\nfunc _enter_tree() -> void:\n\tvisible = Engine.is_editor_hint()\n"
 
 [node name="COTFW - Demo Level" type="Node2D" unique_id=1831855878]
 
@@ -1596,26 +1602,26 @@ rotation = -1.5707964
 position = Vector2(1925, -3317)
 rotation = -3.1764991
 
-[node name="EncounterEnemies" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective"]
+[node name="EncounterEnemies" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=472394417]
 
-[node name="EnemySpawnMarkers" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective"]
+[node name="EnemySpawnMarkers" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=1530516668]
 
-[node name="LoomkinLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="LoomkinLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=874757266]
 position = Vector2(4200, 700)
 
-[node name="ThreadlingLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="ThreadlingLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=213577474]
 position = Vector2(2500, 700)
 
-[node name="ThreadlingMiddle" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="ThreadlingMiddle" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=1869528035]
 position = Vector2(3000, -1200)
 
-[node name="LoomkinUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="LoomkinUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=358295745]
 position = Vector2(1000, -2350)
 
-[node name="ThreadlingUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="ThreadlingUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=2033404672]
 position = Vector2(1600, -2800)
 
-[node name="ThreadlingFar" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+[node name="ThreadlingFar" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers" unique_id=987683578]
 position = Vector2(4600, 400)
 
 [node name="Doors" type="Node" parent="WorldArt/Rooms/BlueWing" unique_id=1953533229]
@@ -1646,20 +1652,50 @@ position = Vector2(-7149, 1091)
 [node name="YellowWingGlobeLight3" parent="WorldArt/Rooms/YellowWing/Lighting" unique_id=511251566 instance=ExtResource("34_yellow_wing_light")]
 position = Vector2(-5994, 3967)
 
-[node name="EnemyEncounter" type="Node2D" parent="WorldArt/Rooms/YellowWing"]
+[node name="EnemyEncounter" type="Node2D" parent="WorldArt/Rooms/YellowWing" unique_id=356332033]
 script = ExtResource("essence_phase")
 
-[node name="ThreadlingLower" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("11_be3p8")]
+[node name="ThreadlingLower" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" unique_id=1239234030 instance=ExtResource("11_be3p8")]
 position = Vector2(-3900, 2300)
+tether_return_radius = 680.0
+tether_break_radius = 860.0
+tether_player_engage_radius = 520.0
+tether_return_speed_multiplier = 1.25
+tether_orbit_radius_x = 560.0
+tether_orbit_radius_y = 280.0
+tether_orbit_center_offset = Vector2(0, -130)
+tether_orbit_speed_min = 0.35
+tether_orbit_speed_max = 0.62
+tether_vertical_speed_multiplier = 1.65
+tether_neighbor_spacing = 170.0
+tether_boss_keepout_radius = Vector2(320, 260)
+tether_boss_keepout_offset = Vector2(0, -125)
+tether_line_width = 3.0
+tether_line_anchor_offset = Vector2(0, -230)
 
-[node name="ThreadlingUpper" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("11_be3p8")]
+[node name="ThreadlingUpper" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" unique_id=1008761931 instance=ExtResource("11_be3p8")]
 position = Vector2(-6500, 3320)
+tether_return_radius = 680.0
+tether_break_radius = 860.0
+tether_player_engage_radius = 520.0
+tether_return_speed_multiplier = 1.25
+tether_orbit_radius_x = 560.0
+tether_orbit_radius_y = 280.0
+tether_orbit_center_offset = Vector2(0, -130)
+tether_orbit_speed_min = 0.35
+tether_orbit_speed_max = 0.62
+tether_vertical_speed_multiplier = 1.65
+tether_neighbor_spacing = 170.0
+tether_boss_keepout_radius = Vector2(320, 260)
+tether_boss_keepout_offset = Vector2(0, -125)
+tether_line_width = 3.0
+tether_line_anchor_offset = Vector2(0, -230)
 
-[node name="LoomkinArchive" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("10_4fmyt")]
+[node name="LoomkinArchive" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" unique_id=1723114039 instance=ExtResource("10_4fmyt")]
 position = Vector2(-4700, 4250)
 patrol_distance = 180.0
 
-[node name="LoomkinShrine" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("10_4fmyt")]
+[node name="LoomkinShrine" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" unique_id=1966609173 instance=ExtResource("10_4fmyt")]
 position = Vector2(-7100, 3500)
 patrol_distance = 180.0
 
@@ -2167,138 +2203,131 @@ position = Vector2(7424, 1063)
 [node name="BossArena" type="Node" parent="WorldArt/Rooms" unique_id=1632239551]
 script = ExtResource("org_room")
 
-[node name="ProtoWeaverPhaseMarkers" type="Node2D" parent="WorldArt/Rooms/BossArena"]
+[node name="ProtoWeaverPhaseMarkers" type="Node2D" parent="WorldArt/Rooms/BossArena" unique_id=2137310247]
 
-[node name="WallLeft" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="WallLeft" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=2011306696]
 position = Vector2(4646, 4028)
 rotation = -1.5707963
 
-[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallLeft"]
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallLeft" unique_id=2059613371]
+self_modulate = Color(1, 0.86, 0.25, 0.52)
 position = Vector2(0, 284.42)
 scale = Vector2(0.653028, 0.653028)
-self_modulate = Color(1, 0.86, 0.25, 0.52)
 texture = ExtResource("proto_weaver_hang_preview")
 hframes = 5
 vframes = 10
 frame = 47
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="WallRight" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="WallRight" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=992547090]
 position = Vector2(6086, 4028)
 rotation = 1.5707963
 
-[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallRight"]
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/WallRight" unique_id=1715920414]
+self_modulate = Color(1, 0.86, 0.25, 0.52)
 position = Vector2(0, 284.42)
 scale = Vector2(0.653028, 0.653028)
-self_modulate = Color(1, 0.86, 0.25, 0.52)
 texture = ExtResource("proto_weaver_hang_preview")
 hframes = 5
 vframes = 10
 frame = 47
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="CenterHang" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="CenterHang" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=570727514]
 position = Vector2(5366, 3998)
 
-[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/CenterHang"]
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/CenterHang" unique_id=1526118127]
+self_modulate = Color(1, 0.86, 0.25, 0.52)
 position = Vector2(0, 284.42)
 scale = Vector2(0.653028, 0.653028)
-self_modulate = Color(1, 0.86, 0.25, 0.52)
 texture = ExtResource("proto_weaver_hang_preview")
 hframes = 5
 vframes = 10
 frame = 47
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="RecoveryFloor" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="RecoveryFloor" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=342417868]
 position = Vector2(5366, 4358)
 
-[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/RecoveryFloor"]
+[node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/RecoveryFloor" unique_id=1858051839]
+self_modulate = Color(1, 0.86, 0.25, 0.52)
 position = Vector2(0, -172.72)
 scale = Vector2(0.653028, 0.653028)
-self_modulate = Color(1, 0.86, 0.25, 0.52)
 texture = ExtResource("proto_weaver_hang_preview")
 hframes = 5
 vframes = 10
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel1" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel1" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=843014349]
 position = Vector2(3820, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel1"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel1" unique_id=309437125]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel2" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel2" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=263925548]
 position = Vector2(4440, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel2"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel2" unique_id=1272193065]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel3" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel3" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=1287570624]
 position = Vector2(5050, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel3"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel3" unique_id=1184685056]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel4" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel4" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=779310248]
 position = Vector2(5660, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel4"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel4" unique_id=321335865]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel5" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel5" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=984777936]
 position = Vector2(6270, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel5"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel5" unique_id=2120821886]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
-[node name="Sentinel6" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers"]
+[node name="Sentinel6" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=597011234]
 position = Vector2(6880, 4358)
 
-[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel6"]
+[node name="YellowSentinelPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/Sentinel6" unique_id=38508225]
+self_modulate = Color(1, 0.78, 0.08, 0.5)
 position = Vector2(0, -141.58)
 scale = Vector2(0.64, 0.64)
-self_modulate = Color(1, 0.78, 0.08, 0.5)
 texture = ExtResource("proto_weaver_sentinel_preview")
 hframes = 6
 vframes = 8
-frame = 0
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
 [node name="Lighting" type="Node2D" parent="WorldArt/Rooms/BossArena" unique_id=2092851588]
@@ -2319,6 +2348,7 @@ script = ExtResource("org_enemy")
 
 [node name="ProtoWeaver" parent="WorldArt/Rooms/BossArena/Enemies" unique_id=337995925 instance=ExtResource("17_f4x7l")]
 position = Vector2(5366, 4358)
+threadburst_horizontal_spread = 360.0
 wall_left_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallLeft")
 wall_right_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallRight")
 center_hang_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/CenterHang")
@@ -2329,40 +2359,15 @@ sentinel_marker_3_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel3")
 sentinel_marker_4_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel4")
 sentinel_marker_5_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel5")
 sentinel_marker_6_path = NodePath("../../ProtoWeaverPhaseMarkers/Sentinel6")
-threadburst_spawn_offset = Vector2(0, -8)
-threadburst_horizontal_spread = 360.0
+wall_phase_one_sentinel_count = 2
+wall_phase_two_sentinel_count = 4
+wall_phase_three_sentinel_count = 6
+wall_sentinel_trigger_radius = 235.0
+wall_sentinel_rearm_time = 1.35
+wall_blue_route_span = 1700.0
+wall_threadburst_distance_time_bonus = 0.45
 phase_one_health_ratio = 0.6667
 phase_two_health_ratio = 0.3333
-ground_sweep_spawn_offset = Vector2(170, -4)
-ground_sweep_damage = 30
-ground_sweep_speed = 820.0
-chase_freely_after_aggro = true
-stagger_initial_threshold = 105.0
-stagger_threshold_increase = 30.0
-stagger_threshold_cap = 195.0
-stagger_per_damage = 1.0
-stagger_hitstun_weight = 80.0
-stagger_decay_delay = 0.0
-stagger_decay_per_second = 0.0
-stagger_duration = 0.58
-stagger_immunity_time = 1.35
-committed_attack_stagger_multiplier = 0.35
-heavy_interrupt_damage = 45
-heavy_interrupt_hitstun = 0.24
-stab_telegraph_hold_frame = 22
-stab_telegraph_hold_time = 0.2
-threadburst_telegraph_hold_frame = 23
-threadburst_telegraph_hold_time = 0.28
-ground_sweep_telegraph_hold_frame = 16
-ground_sweep_telegraph_hold_time = 0.42
-cleaned_threadburst_frame_count = 26
-stagger_pose_frame = 25
-boss_sfx_volume_offset_db = 1.5
-boss_stab_pitch = 0.78
-boss_threadburst_pitch = 0.72
-boss_laser_pitch = 0.68
-boss_subtone_pitch = 0.48
-boss_subtone_volume_offset_db = -10.0
 
 [node name="Doors" type="Node" parent="WorldArt/Rooms/BossArena" unique_id=1901088162]
 script = ExtResource("org_door")
@@ -2431,7 +2436,7 @@ shape = SubResource("RectangleShape2D_merchant_camera_zone")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(7, -3612)
+position = Vector2(-10, -3625)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -2439,7 +2444,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(7, -3612)
+position = Vector2(-10, -3625)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200
