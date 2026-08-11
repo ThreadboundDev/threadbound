@@ -23,6 +23,7 @@ const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 @onready var vsync_stepper: Control = $Pages/Graphics/Rows/VSync as Control
 @onready var frame_limit_stepper: Control = $Pages/Graphics/Rows/FrameRateLimit as Control
 @onready var quality_stepper: Control = $Pages/Graphics/Rows/QualityPreset as Control
+@onready var brightness_slider: BrightnessSlider = $Pages/Graphics/Rows/Brightness as BrightnessSlider
 @onready var sliders: Array[VolumeSlider] = [
 	$Pages/Audio/Rows/Master,
 	$Pages/Audio/Rows/Music,
@@ -52,6 +53,7 @@ var _pending_fullscreen := false
 var _pending_vsync := true
 var _pending_frame_rate_limit_index := 0
 var _pending_quality_preset_index := 0
+var _pending_brightness := DisplaySettings.DEFAULT_BRIGHTNESS
 var _graphics_dirty := false
 var _last_input_family: StringName = &"keyboard_mouse"
 
@@ -75,6 +77,8 @@ func _ready() -> void:
 	quality_stepper.focused.connect(_on_option_focused)
 	quality_stepper.changed.connect(_on_quality_changed)
 	quality_stepper.selected_index.connect(_on_quality_selected)
+	brightness_slider.focused.connect(_on_option_focused)
+	brightness_slider.value_changed.connect(_on_brightness_changed)
 	for slider in sliders:
 		slider.focused.connect(_on_option_focused)
 	for setting_name in gameplay_steppers:
@@ -204,19 +208,26 @@ func _on_quality_selected(_stepper: Control, index: int) -> void:
 	_refresh_graphics_options()
 	AudioManager.play_ui(&"menu_select")
 
+func _on_brightness_changed(value: float) -> void:
+	_pending_brightness = value
+	DisplaySettings.preview_brightness(value)
+	_mark_graphics_dirty()
+
 func _apply_pending_graphics() -> void:
 	DisplaySettings.apply_graphics_settings(
 		_pending_resolution_index,
 		_pending_fullscreen,
 		_pending_vsync,
 		_pending_frame_rate_limit_index,
-		_pending_quality_preset_index
+		_pending_quality_preset_index,
+		_pending_brightness
 	)
 	_graphics_dirty = false
 	_refresh_graphics_options()
 	AudioManager.play_ui(&"menu_select")
 
 func _cancel_pending_graphics() -> void:
+	DisplaySettings.clear_brightness_preview()
 	_sync_pending_graphics_from_saved()
 	_graphics_dirty = false
 	_refresh_graphics_options()
@@ -252,6 +263,8 @@ func _refresh_graphics_options() -> void:
 		frame_limit_stepper.call("set_selected_index", _pending_frame_rate_limit_index)
 	if quality_stepper:
 		quality_stepper.call("set_selected_index", _pending_quality_preset_index)
+	if brightness_slider:
+		brightness_slider.set_value(_pending_brightness)
 
 func _refresh_gameplay_options() -> void:
 	(gameplay_steppers[&"difficulty"] as Control).call("set_selected_index", GameplaySettings.difficulty_index)
@@ -264,7 +277,7 @@ func _refresh_option_items() -> void:
 	var selected_tab := TAB_ORDER[_selected_tab_index]
 	match selected_tab:
 		&"Graphics":
-			_option_items = [resolution_stepper, fullscreen_stepper, vsync_stepper, frame_limit_stepper, quality_stepper]
+			_option_items = [resolution_stepper, fullscreen_stepper, vsync_stepper, frame_limit_stepper, quality_stepper, brightness_slider]
 		&"Audio":
 			_option_items.assign(sliders)
 		&"Gameplay":
@@ -306,6 +319,7 @@ func _configure_option_rows() -> void:
 	vsync_stepper.call("configure_toggle", DisplaySettings.vsync)
 	frame_limit_stepper.call("configure_dropdown", DisplaySettings.get_frame_rate_limit_labels(), DisplaySettings.frame_rate_limit_index)
 	quality_stepper.call("configure_dropdown", DisplaySettings.QUALITY_PRESETS, DisplaySettings.quality_preset_index)
+	brightness_slider.set_value(DisplaySettings.brightness)
 
 	(gameplay_steppers[&"difficulty"] as Control).call("configure_dropdown", GameplaySettings.DIFFICULTIES, GameplaySettings.difficulty_index)
 	(gameplay_steppers[&"auto_save"] as Control).call("configure_toggle", GameplaySettings.auto_save)
@@ -322,6 +336,7 @@ func _sync_pending_graphics_from_saved() -> void:
 	_pending_vsync = DisplaySettings.vsync
 	_pending_frame_rate_limit_index = DisplaySettings.frame_rate_limit_index
 	_pending_quality_preset_index = DisplaySettings.quality_preset_index
+	_pending_brightness = DisplaySettings.brightness
 
 func _mark_graphics_dirty() -> void:
 	_graphics_dirty = (
@@ -330,6 +345,7 @@ func _mark_graphics_dirty() -> void:
 		or _pending_vsync != DisplaySettings.vsync
 		or _pending_frame_rate_limit_index != DisplaySettings.frame_rate_limit_index
 		or _pending_quality_preset_index != DisplaySettings.quality_preset_index
+		or not is_equal_approx(_pending_brightness, DisplaySettings.brightness)
 	)
 
 func _open_controls_overlay(input_family: StringName) -> void:

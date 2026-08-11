@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://btl8egmul1gab" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="7_body_font"]
 [ext_resource type="Texture2D" uid="uid://ckm3mb1nnftis" path="res://Assets/UI/WeaveMenu/weave_meditation_emblem.png" id="8_emblem"]
 [ext_resource type="Texture2D" uid="uid://dp0wutrf0rarp" path="res://Assets/UI/Main Menu/settings_menu_row_separator.png" id="9_row_separator"]
+[ext_resource type="PackedScene" path="res://Src/UI/Options/brightness_slider.tscn" id="10_brightness"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("5_title_font")
@@ -154,7 +155,8 @@ offset_right = -111.0
 offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+scale = Vector2(0.95, 0.95)
+theme_override_constants/separation = 0
 
 [node name="Resolution" parent="Pages/Graphics/Rows" unique_id=1681054434 instance=ExtResource("6_stepper")]
 layout_mode = 2
@@ -180,6 +182,10 @@ value_text = "UNLIMITED"
 layout_mode = 2
 label_text = "QUALITY PRESET"
 value_text = "HIGH"
+
+[node name="Brightness" parent="Pages/Graphics/Rows" instance=ExtResource("10_brightness")]
+custom_minimum_size = Vector2(1050, 96)
+layout_mode = 2
 
 [node name="Audio" type="Control" parent="Pages" unique_id=530541262]
 layout_mode = 1

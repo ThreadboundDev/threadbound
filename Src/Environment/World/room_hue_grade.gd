@@ -5,9 +5,16 @@ const TRANSITION_SETTLE_EPSILON := 0.001
 
 @export var player_path: NodePath = ^"../../Player"
 @export var grade_rect_path: NodePath = ^"RoomHueRect"
+@export var ambient_modulate_path: NodePath = ^"../CaveAmbient"
 @export var fade_speed := 2.8
 @export var max_strength := 0.12
 @export var neutral_color := Color(1.0, 1.0, 1.0, 1.0)
+@export_group("Room Ambient")
+@export var neutral_ambient := Color(0.48, 0.46, 0.41, 1.0)
+@export var red_ambient := Color(0.37, 0.32, 0.29, 1.0)
+@export var blue_ambient := Color(0.42, 0.46, 0.52, 1.0)
+@export var yellow_ambient := Color(0.46, 0.42, 0.32, 1.0)
+@export var boss_ambient := Color(0.55, 0.52, 0.44, 1.0)
 @export var sync_bounds_from_placeholders := true
 @export var remove_placeholder_nodes := true
 
@@ -50,9 +57,11 @@ const TRANSITION_SETTLE_EPSILON := 0.001
 
 @onready var _player := get_node_or_null(player_path) as Node2D
 @onready var _grade_rect := get_node_or_null(grade_rect_path) as ColorRect
+@onready var _ambient_modulate := get_node_or_null(ambient_modulate_path) as CanvasModulate
 
 var _current_color := Color.WHITE
 var _current_strength := 0.0
+var _current_ambient := Color.WHITE
 var _current_grass_strengths := Vector4.ZERO
 var _grass_materials: Array[ShaderMaterial] = []
 var _last_applied_color := Color(-1.0, -1.0, -1.0, -1.0)
@@ -65,8 +74,15 @@ func _ready() -> void:
 	_sync_room_bounds_from_placeholders()
 	_cache_grass_materials()
 	_current_color = neutral_color
+	_current_ambient = neutral_ambient
 	_current_grass_strengths = Vector4.ZERO
 	_apply_grade(true)
+	_apply_ambient()
+	if (
+		not Engine.is_editor_hint()
+		and not DisplaySettings.display_settings_changed.is_connected(_on_display_settings_changed)
+	):
+		DisplaySettings.display_settings_changed.connect(_on_display_settings_changed)
 	_apply_grass_static_parameters()
 	_apply_grass_grade(true)
 
@@ -82,10 +98,12 @@ func _process(delta: float) -> void:
 	var target := _target_grade_for_position(_player.global_position)
 	var target_color: Color = target["color"]
 	var target_strength: float = target["strength"]
+	var target_ambient := _target_ambient_for_position(_player.global_position)
 	var weight := clampf(fade_speed * delta, 0.0, 1.0)
 
 	_current_color = _current_color.lerp(target_color, weight)
 	_current_strength = lerpf(_current_strength, target_strength, weight)
+	_current_ambient = _current_ambient.lerp(target_ambient, weight)
 	if _colors_close(
 		_current_color,
 		target_color,
@@ -95,6 +113,7 @@ func _process(delta: float) -> void:
 	if absf(_current_strength - target_strength) <= TRANSITION_SETTLE_EPSILON:
 		_current_strength = target_strength
 	_apply_grade()
+	_apply_ambient()
 
 	var grass_target_strengths := _target_grass_strengths_for_position(
 		_player.global_position
@@ -130,6 +149,26 @@ func _target_grade_for_position(global_position: Vector2) -> Dictionary:
 		return {"color": top_left_color, "strength": max_strength}
 
 	return {"color": neutral_color, "strength": 0.0}
+
+func _target_ambient_for_position(global_position: Vector2) -> Color:
+	if center_neutral_room.has_point(global_position):
+		return neutral_ambient
+	if _room_contains(bottom_right_polygon, bottom_right_room, global_position):
+		return boss_ambient
+	if _room_contains(bottom_left_polygon, bottom_left_room, global_position):
+		return yellow_ambient
+	if _room_contains(top_right_polygon, top_right_room, global_position):
+		return blue_ambient
+	if _room_contains(top_left_polygon, top_left_room, global_position):
+		return red_ambient
+	return neutral_ambient
+
+func _apply_ambient() -> void:
+	if _ambient_modulate:
+		_ambient_modulate.color = _current_ambient
+
+func _on_display_settings_changed() -> void:
+	_apply_grade(true)
 
 func _target_grass_strengths_for_position(
 	global_position: Vector2
@@ -192,6 +231,10 @@ func _apply_grade(force := false) -> void:
 
 	shader_material.set_shader_parameter("hue_color", _current_color)
 	shader_material.set_shader_parameter("hue_strength", _current_strength)
+	var brightness_multiplier := 1.0
+	if not Engine.is_editor_hint():
+		brightness_multiplier = DisplaySettings.get_brightness_multiplier()
+	shader_material.set_shader_parameter("brightness_multiplier", brightness_multiplier)
 	_last_applied_color = _current_color
 	_last_applied_strength = _current_strength
 

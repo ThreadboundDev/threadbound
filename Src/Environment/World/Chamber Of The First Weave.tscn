@@ -119,6 +119,7 @@
 [ext_resource type="Script" uid="uid://c3aly0fnbr8ko" path="res://Src/Environment/World/SceneOrganization/decoration_section.gd" id="org_decoration"]
 [ext_resource type="Script" uid="uid://d014l0fn2o6eh" path="res://Src/Environment/World/SceneOrganization/door_section.gd" id="org_door"]
 [ext_resource type="Script" uid="uid://55hhd6g7j02n" path="res://Src/Environment/World/SceneOrganization/enemy_section.gd" id="org_enemy"]
+[ext_resource type="Script" path="res://Src/Enemies/essence_phase_visual.gd" id="essence_phase"]
 [ext_resource type="Script" uid="uid://bgdbri872xq8y" path="res://Src/Environment/World/SceneOrganization/landmark_section.gd" id="org_landmark"]
 [ext_resource type="Script" uid="uid://cyrr1cv1gd3wv" path="res://Src/Environment/World/SceneOrganization/lighting_section.gd" id="org_lighting"]
 [ext_resource type="Script" uid="uid://dj262g3o26ro6" path="res://Src/Environment/World/SceneOrganization/objective_section.gd" id="org_objective"]
@@ -135,12 +136,12 @@ shader = ExtResource("1_t0v8a")
 shader_parameter/tint_color = Color(0.24, 0.23, 0.18, 0.2)
 shader_parameter/tint_intensity = 0.38
 shader_parameter/top_light_color = Color(1, 0.84, 0.54, 1)
-shader_parameter/top_light_strength = 0.34
+shader_parameter/top_light_strength = 0.18
 shader_parameter/top_light_position = Vector2(0.5, 0.02)
 shader_parameter/top_light_radius = 0.68
-shader_parameter/edge_shadow_strength = 0.16
-shader_parameter/cavern_falloff = 0.32
-shader_parameter/shaft_strength = 0.3
+shader_parameter/edge_shadow_strength = 0.2
+shader_parameter/cavern_falloff = 0.38
+shader_parameter/shaft_strength = 0.12
 shader_parameter/shaft_spread = 0.3
 shader_parameter/grain_strength = 0.014
 
@@ -282,13 +283,13 @@ script/source = "@tool\nextends Sprite2D\n\nfunc _enter_tree() -> void:\n\tvisib
 script = ExtResource("org_lighting")
 
 [node name="CaveAmbient" type="CanvasModulate" parent="Atmosphere" unique_id=1502695573]
-color = Color(0.55, 0.52, 0.44, 1)
+color = Color(0.48, 0.46, 0.41, 1)
 
 [node name="CaveOpeningLight" type="PointLight2D" parent="Atmosphere" unique_id=1294032634]
 position = Vector2(0, -2917)
 scale = Vector2(1, 1.1421875)
 color = Color(1, 0.83, 0.52, 1)
-energy = 1.85
+energy = 2.0
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
@@ -300,7 +301,7 @@ texture_scale = 12.5
 position = Vector2(0, -2032.5)
 scale = Vector2(1, 1.3955759)
 color = Color(0.64, 0.73, 0.9, 1)
-energy = 0.58
+energy = 0.48
 range_z_min = -4096
 range_z_max = 4096
 texture = ExtResource("16_cave_light")
@@ -1581,6 +1582,8 @@ script = ExtResource("org_objective")
 
 [node name="BlueWingObjective" parent="WorldArt/Rooms/BlueWing/Objective" unique_id=1652813332 instance=ExtResource("27_balance_objective")]
 position = Vector2(2432, -1024)
+enemy_spawn_marker_paths = Array[NodePath]([NodePath("EnemySpawnMarkers/LoomkinLower"), NodePath("EnemySpawnMarkers/ThreadlingLower"), NodePath("EnemySpawnMarkers/ThreadlingMiddle"), NodePath("EnemySpawnMarkers/LoomkinUpper"), NodePath("EnemySpawnMarkers/ThreadlingUpper"), NodePath("EnemySpawnMarkers/ThreadlingFar")])
+enemy_spawn_scenes = Array[PackedScene]([ExtResource("10_4fmyt"), ExtResource("11_be3p8"), ExtResource("11_be3p8"), ExtResource("10_4fmyt"), ExtResource("11_be3p8"), ExtResource("11_be3p8")])
 
 [node name="BlueButton1" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=1721665559 instance=ExtResource("28_blue_button")]
 position = Vector2(2428, 1034)
@@ -1592,6 +1595,28 @@ rotation = -1.5707964
 [node name="BlueButton3" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective" unique_id=1661429890 instance=ExtResource("28_blue_button")]
 position = Vector2(1925, -3317)
 rotation = -3.1764991
+
+[node name="EncounterEnemies" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective"]
+
+[node name="EnemySpawnMarkers" type="Node2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective"]
+
+[node name="LoomkinLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(4200, 700)
+
+[node name="ThreadlingLower" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(2500, 700)
+
+[node name="ThreadlingMiddle" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(3000, -1200)
+
+[node name="LoomkinUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(1000, -2350)
+
+[node name="ThreadlingUpper" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(1600, -2800)
+
+[node name="ThreadlingFar" type="Marker2D" parent="WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EnemySpawnMarkers"]
+position = Vector2(4600, 400)
 
 [node name="Doors" type="Node" parent="WorldArt/Rooms/BlueWing" unique_id=1953533229]
 script = ExtResource("org_door")
@@ -1620,6 +1645,23 @@ position = Vector2(-7149, 1091)
 
 [node name="YellowWingGlobeLight3" parent="WorldArt/Rooms/YellowWing/Lighting" unique_id=511251566 instance=ExtResource("34_yellow_wing_light")]
 position = Vector2(-5994, 3967)
+
+[node name="EnemyEncounter" type="Node2D" parent="WorldArt/Rooms/YellowWing"]
+script = ExtResource("essence_phase")
+
+[node name="ThreadlingLower" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("11_be3p8")]
+position = Vector2(-3900, 2300)
+
+[node name="ThreadlingUpper" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("11_be3p8")]
+position = Vector2(-6500, 3320)
+
+[node name="LoomkinArchive" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("10_4fmyt")]
+position = Vector2(-4700, 4250)
+patrol_distance = 180.0
+
+[node name="LoomkinShrine" parent="WorldArt/Rooms/YellowWing/EnemyEncounter" instance=ExtResource("10_4fmyt")]
+position = Vector2(-7100, 3500)
+patrol_distance = 180.0
 
 [node name="Decoration" type="Node2D" parent="WorldArt/Rooms/YellowWing" unique_id=1772765278]
 z_index = 9

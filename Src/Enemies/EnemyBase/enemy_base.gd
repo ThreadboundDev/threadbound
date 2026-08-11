@@ -203,6 +203,27 @@ func die() -> void:
 		return
 	queue_free()
 
+func dismiss_without_rewards() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
+	end_attack()
+	_stop_hurt_visual_recoil()
+	set_physics_process(false)
+	hurtbox.set_deferred("monitorable", false)
+	detection_area.set_deferred("monitoring", false)
+	attack_area.set_deferred("monitoring", false)
+	contact_hitbox.set_deferred("monitoring", false)
+	velocity = Vector2.ZERO
+	AudioManager.play_sfx(&"enemy_death")
+	var dismissal_damage := DamageData.new()
+	dismissal_damage.knockback = Vector2(float(facing), -0.15)
+	_spawn_enemy_death_vfx(dismissal_damage)
+	_play_death_collapse()
+	await get_tree().create_timer(0.3).timeout
+	queue_free()
+
 func reset_for_save_point() -> void:
 	if not resets_at_save_points or is_in_group("bosses"):
 		return
