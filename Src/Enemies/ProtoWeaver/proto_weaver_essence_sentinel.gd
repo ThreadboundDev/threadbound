@@ -8,8 +8,9 @@ var target: Node2D
 var damage_amount := 24
 var trigger_radius := 235.0
 var rearm_time := 1.35
-var windup_time := 0.38
-var active_time := 0.14
+var windup_time := 0.28
+var draw_hold_time := 0.34
+var active_time := 0.11
 
 var _direction := 1
 var _texture: Texture2D
@@ -38,7 +39,8 @@ func configure(
 	visual_position: Vector2,
 	hit_damage: int,
 	activation_radius: float,
-	cooldown: float
+	cooldown: float,
+	spear_draw_hold: float
 ) -> void:
 	source = hit_source
 	target = tracked_target
@@ -52,6 +54,7 @@ func configure(
 	damage_amount = hit_damage
 	trigger_radius = activation_radius
 	rearm_time = cooldown
+	draw_hold_time = spear_draw_hold
 
 
 func _ready() -> void:
@@ -62,9 +65,11 @@ func _ready() -> void:
 	monitoring = false
 	area_entered.connect(_on_area_entered)
 	var shape := RectangleShape2D.new()
-	shape.size = Vector2(350.0, 112.0)
+	# Only the forward spear shaft/tip deals damage. The statue itself has no
+	# physical body, contact hitbox, hurtbox, or grapple target.
+	shape.size = Vector2(230.0, 46.0)
 	var collision := CollisionShape2D.new()
-	collision.position = Vector2(float(_direction) * 210.0, -118.0)
+	collision.position = Vector2(float(_direction) * 245.0, -128.0)
 	collision.shape = shape
 	add_child(collision)
 	_glow = _make_sprite("SentinelGlow", Color(1.0, 0.68, 0.03, 0.23), 1.035)
@@ -92,6 +97,8 @@ func _process(delta: float) -> void:
 		return
 	var player_delta := target.global_position - global_position
 	if player_delta.length() <= trigger_radius:
+		if source and source.has_method("request_sentinel_attack") and not bool(source.call("request_sentinel_attack")):
+			return
 		_direction = signi(player_delta.x) if absf(player_delta.x) > 1.0 else _direction
 		_update_facing()
 		_strike()
@@ -106,6 +113,9 @@ func _strike() -> void:
 	_busy = true
 	_hit_player = false
 	await _animate_frames(0, _hold_frame, windup_time)
+	if _dismissed or not is_inside_tree():
+		return
+	await get_tree().create_timer(draw_hold_time, false).timeout
 	if _dismissed or not is_inside_tree():
 		return
 	monitoring = true
@@ -159,7 +169,7 @@ func _update_facing() -> void:
 			visual.scale.x = -absf(visual.scale.x) * float(_direction)
 	var collision := get_child(0) as CollisionShape2D
 	if collision:
-		collision.position.x = float(_direction) * 210.0
+		collision.position.x = float(_direction) * 245.0
 
 
 func dismiss() -> void:

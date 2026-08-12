@@ -2366,11 +2366,11 @@ wall_phase_one_sentinel_count = 2
 wall_phase_two_sentinel_count = 4
 wall_phase_three_sentinel_count = 6
 wall_sentinel_trigger_radius = 235.0
-wall_sentinel_rearm_time = 1.35
+wall_sentinel_rearm_time = 2.25
 wall_blue_route_span = 1700.0
 wall_threadburst_distance_time_bonus = 0.45
-phase_one_health_ratio = 0.6667
-phase_two_health_ratio = 0.3333
+phase_one_health_ratio = 0.75
+phase_two_health_ratio = 0.5
 
 [node name="Doors" type="Node" parent="WorldArt/Rooms/BossArena" unique_id=1901088162]
 script = ExtResource("org_door")

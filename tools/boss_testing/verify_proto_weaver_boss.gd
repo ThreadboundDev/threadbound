@@ -15,6 +15,7 @@ func _ready() -> void:
 	_verify_grounded_tuning(boss)
 	_verify_laser_tuning(boss)
 	_verify_wall_intermission_tuning(boss)
+	_verify_final_wall_enrage_tuning(boss)
 	_verify_missile_landing(boss)
 	_verify_color_identities(boss)
 	_verify_vertical_responses(boss)
@@ -107,6 +108,14 @@ func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:
 	_expect(boss.wall_phase_one_sentinel_count == 2, "First wall phase should introduce two Yellow sentinels.")
 	_expect(boss.wall_phase_two_sentinel_count == 4, "Second wall phase should escalate to four Yellow sentinels.")
 	_expect(boss.wall_phase_three_sentinel_count == 6, "Final wall phase should activate all six Yellow sentinels.")
+	_expect(boss.wall_sentinel_damage <= 20, "Yellow sentinels deal boss-stab damage instead of statue-hazard damage.")
+	_expect(boss.wall_sentinel_rearm_time >= 2.0, "Yellow sentinels rearm too quickly to function as readable statues.")
+	_expect(boss.wall_sentinel_draw_hold_time >= 0.3, "Yellow sentinels do not hold their spear draw long enough to dodge.")
+	_expect(boss.wall_sentinel_shared_attack_gap >= 0.2, "Adjacent Yellow sentinels can activate on the same instant.")
+	_expect(boss.wall_phase_event_delay >= 0.28, "Wall hazards are sequenced without enough breathing room.")
+	_expect(boss.laser_damage <= 25 and boss.ground_sweep_damage <= 25, "Intermission laser or Blue wave damage is still tuned as a full boss punish.")
+	_expect(boss.threadburst_damage <= 21, "Red pursuit missiles deal too much damage for a multi-projectile hazard.")
+	_expect(boss.essence_echo_telegraph_hold_time >= 0.48, "Grounded Yellow blink does not hold the drawn spear long enough to read.")
 	_expect(boss.wall_sentinel_trigger_radius >= 180.0, "Yellow sentinel trigger range is too precise to read reliably.")
 	_expect(boss.wall_blue_route_span >= 1200.0, "Blue route denial does not cover enough of the traversal lane.")
 	_expect(boss.laser_max_distance >= 4000.0, "Wall lasers do not span the boss arena.")
@@ -411,6 +420,26 @@ func _verify_vertical_responses(boss: ProtoWeaver) -> void:
 	elevated_target.queue_free()
 
 
+func _verify_final_wall_enrage_tuning(boss: ProtoWeaver) -> void:
+	_expect(boss.armor_link_post_hang_grace_time >= 5.0, "Armor links can return immediately after an intermission.")
+	_expect(boss.final_wall_min_perch_time >= 12.0, "Final wall perches are too short to traverse.")
+	_expect(boss.final_wall_max_perch_time >= boss.final_wall_min_perch_time + 8.0, "Final wall enrage has no emergency relocation window.")
+	_expect(boss.final_wall_min_actions >= 8, "Final wall enrage relocates before presenting a meaningful hazard sequence.")
+	_expect(boss.final_wall_max_actions >= boss.final_wall_min_actions, "Final wall action budget is inverted.")
+	_expect(boss.final_wall_relocate_damage >= 80.0, "Final wall damage threshold makes the boss flee after a single light punish.")
+	_expect(boss.final_wall_reach_grace_time >= 3.0, "Final wall enrage can relocate immediately after the player reaches it.")
+	_expect(boss.final_wall_relocation_time >= 0.55, "Final wall relocation has no readable travel telegraph.")
+	var enrage_boss := BOSS_SCENE.instantiate() as ProtoWeaver
+	add_child(enrage_boss)
+	enrage_boss.set("_active_hanging_phase", 2)
+	enrage_boss.call("_begin_final_wall_enrage")
+	_expect(bool(enrage_boss.get("_armor_link_respawn_suppressed")), "Final wall enrage does not permanently suppress armor regeneration.")
+	_expect(bool(enrage_boss.call("_should_relocate_final_wall", enrage_boss.final_wall_min_actions, enrage_boss.final_wall_min_actions)) == false, "Final wall enrage ignores its minimum perch time.")
+	enrage_boss.set("_final_perch_elapsed", enrage_boss.final_wall_min_perch_time)
+	_expect(bool(enrage_boss.call("_should_relocate_final_wall", enrage_boss.final_wall_min_actions, enrage_boss.final_wall_min_actions)), "Final wall enrage does not relocate after its action budget.")
+	enrage_boss.queue_free()
+
+
 func _verify_wall_intermission_runtime(boss: ProtoWeaver) -> void:
 	var target_marker := Node2D.new()
 	add_child(target_marker)
@@ -506,6 +535,9 @@ func _verify_ground_wave_runtime(boss: ProtoWeaver) -> void:
 		"Blue wall shear is not rotated from ground travel onto the wall."
 	)
 	var wave_sprite := wave.get("_sprite") as Sprite2D
+	var wave_aura := wave.get("_aura_sprite") as Sprite2D
+	var wave_core := wave.get("_core_sprite") as Sprite2D
+	var wave_trails := wave.get("_trail_sprites") as Array[Sprite2D]
 	var charge_preview := charge.get("_preview_sprite") as Sprite2D
 	_expect(
 		wave_sprite != null and wave_sprite.texture != null and wave_sprite.hframes == 8,
@@ -550,6 +582,17 @@ func _verify_ground_wave_runtime(boss: ProtoWeaver) -> void:
 			leading_edges.max() - leading_edges.min() <= 1.0,
 			"Ground wave travel frames do not hold a stable painted leading edge."
 		)
+		_expect(
+			wave_aura != null and wave_core != null and wave_trails.size() == 2,
+			"Ground wave is missing its layered aura, cyan core, or threaded afterimages."
+		)
+		if wave_aura and wave_core and wave_trails.size() == 2:
+			_expect(
+				wave_aura.frame == wave_sprite.frame
+				and wave_core.frame == wave_sprite.frame
+				and wave_trails[0].frame == wave_sprite.frame,
+				"Ground wave energy layers drift away from the authored damage silhouette."
+			)
 		wave.call("_physics_process", 0.0)
 		var collision := wave.get("_collision_shape") as CollisionShape2D
 		var collision_shape := collision.shape as RectangleShape2D if collision else null
@@ -582,9 +625,22 @@ func _verify_ground_wave_runtime(boss: ProtoWeaver) -> void:
 	var beam := boss.get_node_or_null("AnimatedBeam") as Node2D
 	_expect(wave.material != null, "Ground wave is missing its Balance energy material.")
 	_expect(beam != null and beam.material == null, "Braided laser is still inheriting a single-color material.")
-	wave.queue_free()
-	charge.queue_free()
-	wall_wave.queue_free()
+	if beam is ProtoWeaverBeam:
+		_expect((beam as ProtoWeaverBeam).beam_width >= 36.0, "Tri-color laser core is still visually weaker than its damage lane.")
+		_expect((beam as ProtoWeaverBeam).z_index >= 4, "Tri-color laser renders behind the boss arena architecture.")
+		(beam as ProtoWeaverBeam).set_beam(Vector2.ZERO, Vector2(1200.0, 0.0))
+		(beam as ProtoWeaverBeam).show_tracking()
+		_expect((beam as ProtoWeaverBeam).is_presenting(), "Tri-color laser telegraph does not present its woven guide strands.")
+		(beam as ProtoWeaverBeam).show_firing()
+		(beam as ProtoWeaverBeam).queue_redraw()
+		await get_tree().process_frame
+		(beam as ProtoWeaverBeam).hide_beam()
+	if is_instance_valid(wave):
+		wave.queue_free()
+	if is_instance_valid(charge):
+		charge.queue_free()
+	if is_instance_valid(wall_wave):
+		wall_wave.queue_free()
 
 
 func _verify_full_spiral_travel_frames(texture: Texture2D) -> void:

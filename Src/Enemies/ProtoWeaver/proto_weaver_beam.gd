@@ -17,8 +17,8 @@ const ESSENCE_YELLOW := Color(1.0, 0.78, 0.08, 0.9)
 @export var glow_color := Color(0.2, 0.08, 0.32, 0.2)
 @export var core_color := Color(1.0, 0.98, 0.92, 1.0)
 @export var segment_length := 42.0
-@export var beam_width := 30.0
-@export var wave_amplitude := 10.0
+@export var beam_width := 38.0
+@export var wave_amplitude := 12.0
 @export var animation_speed := 18.0
 
 var _state := BeamState.HIDDEN
@@ -29,7 +29,9 @@ func _ready() -> void:
 	top_level = true
 	visible = false
 	set_process(false)
-	z_index = -1
+	# Keep the beam over arena architecture in the boss-test and encounter
+	# scenes while the head-attached muzzle flare still covers its origin.
+	z_index = 4
 
 func set_beam(global_start: Vector2, global_end: Vector2) -> void:
 	global_position = global_start
@@ -76,27 +78,31 @@ func _draw() -> void:
 
 func _draw_tracking_line(is_locked: bool) -> void:
 	var pulse := 0.5 + sin(_animation_time * 11.0) * 0.5
-	var color := lock_color if is_locked else tracking_color
-	var width := lerpf(3.0, 5.0, pulse) if is_locked else lerpf(1.5, 2.5, pulse)
-	var dash := maxf(12.0, segment_length)
-	var gap := dash * 0.42
-	var cursor := fmod(_animation_time * 150.0, dash + gap)
-	while cursor < _beam_length:
-		var end_x := minf(_beam_length, cursor + dash)
-		var segment_index := floori(cursor / maxf(1.0, dash + gap))
-		var segment_color := color
-		if not is_locked:
-			segment_color = [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][segment_index % 3]
-			segment_color.a = color.a
-		draw_line(Vector2(cursor, 0.0), Vector2(end_x, 0.0), segment_color, width, true)
-		cursor += dash + gap
-	_draw_muzzle_flare(lerpf(0.55, 0.9, pulse), color)
+	var guide_colors := [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW]
+	for strand in range(3):
+		var guide_color: Color = guide_colors[strand]
+		guide_color.a = lerpf(0.34, 0.52, pulse) if not is_locked else lerpf(0.58, 0.8, pulse)
+		var guide_offset := (float(strand) - 1.0) * (2.2 if is_locked else 4.5)
+		var guide_amplitude := (2.0 if is_locked else 5.5) + float(strand) * 0.65
+		var guide_points := _build_wave_points(
+			guide_offset,
+			guide_amplitude,
+			1.15 + float(strand) * 0.14
+		)
+		draw_polyline(guide_points, guide_color, lerpf(1.3, 2.3, pulse) if not is_locked else lerpf(2.1, 3.4, pulse), true)
+	if is_locked:
+		var lock_spine := _build_wave_points(0.0, 1.2, 1.0)
+		draw_polyline(lock_spine, lock_color, lerpf(2.2, 4.0, pulse), true)
+	_draw_traveling_knots(0.26 if not is_locked else 0.52, 2.0 if not is_locked else 3.2)
+	_draw_muzzle_flare(lerpf(0.55, 0.9, pulse), lock_color if is_locked else tracking_color)
 
 func _draw_animated_beam() -> void:
 	var pulse := 0.5 + sin(_animation_time * animation_speed) * 0.5
 	var spine := _build_wave_points(0.0, wave_amplitude * 0.2, 1.0)
-	draw_polyline(spine, glow_color, beam_width * lerpf(2.2, 2.7, pulse), true)
-	draw_polyline(spine, Color(0.055, 0.025, 0.08, 0.96), beam_width * lerpf(1.04, 1.18, pulse), true)
+	var echo_spine := _build_wave_points(0.0, wave_amplitude * 0.34, 0.82)
+	draw_polyline(echo_spine, Color(0.16, 0.08, 0.28, 0.14), beam_width * lerpf(2.4, 2.85, pulse), true)
+	draw_polyline(spine, glow_color, beam_width * lerpf(2.0, 2.4, pulse), true)
+	draw_polyline(spine, Color(0.018, 0.012, 0.035, 0.98), beam_width * lerpf(1.12, 1.24, pulse), true)
 
 	var filament_colors := [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW]
 	for strand in range(3):
@@ -106,12 +112,35 @@ func _draw_animated_beam() -> void:
 			wave_amplitude * (0.5 + float(strand) * 0.11),
 			1.45 + float(strand) * 0.27
 		)
-		draw_polyline(strand_points, filament_colors[strand], lerpf(4.0, 6.5, pulse), true)
+		var shadow_points := _build_wave_points(
+			offset + 2.0,
+			wave_amplitude * (0.5 + float(strand) * 0.11),
+			1.45 + float(strand) * 0.27
+		)
+		draw_polyline(shadow_points, Color(0.01, 0.012, 0.026, 0.72), lerpf(8.0, 11.0, pulse), true)
+		draw_polyline(strand_points, filament_colors[strand], lerpf(5.0, 8.0, pulse), true)
 
-	draw_polyline(spine, core_color, beam_width * lerpf(0.2, 0.3, pulse), true)
+	draw_polyline(spine, Color(1.0, 0.82, 0.62, 0.48), beam_width * lerpf(0.52, 0.64, pulse), true)
+	draw_polyline(spine, core_color, beam_width * lerpf(0.32, 0.42, pulse), true)
+	_draw_traveling_knots(0.9, lerpf(4.0, 6.0, pulse))
 
 	_draw_muzzle_flare(1.0 + pulse * 0.28, core_color)
 	_draw_impact_flare(pulse)
+
+
+func _draw_traveling_knots(alpha: float, radius: float) -> void:
+	var knot_spacing := maxf(90.0, segment_length * 2.6)
+	var travel := fmod(_animation_time * 320.0, knot_spacing)
+	var knot_index := 0
+	var cursor := travel
+	while cursor < _beam_length:
+		var color: Color = [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][knot_index % 3]
+		color.a = alpha
+		var y := sin(cursor * 0.026 - _animation_time * animation_speed) * wave_amplitude * 0.34
+		draw_circle(Vector2(cursor, y), radius * 1.8, Color(color.r, color.g, color.b, alpha * 0.15))
+		draw_circle(Vector2(cursor, y), radius, color)
+		cursor += knot_spacing
+		knot_index += 1
 
 func _build_wave_points(offset: float, amplitude: float, frequency: float) -> PackedVector2Array:
 	var points := PackedVector2Array()
@@ -141,7 +170,8 @@ func _draw_impact_flare(pulse: float) -> void:
 	var radius := beam_width * lerpf(0.8, 1.4, pulse)
 	draw_circle(end, radius * 1.7, Color(0.2, 0.08, 0.32, 0.16))
 	draw_circle(end, radius * 0.48, core_color)
-	for ray in range(9):
-		var angle := float(ray) * TAU / 9.0 - _animation_time
+	for ray in range(15):
+		var angle := float(ray) * TAU / 15.0 - _animation_time
 		var direction := Vector2.from_angle(angle)
-		draw_line(end + direction * radius * 0.4, end + direction * radius * 1.55, [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][ray % 3], 3.0, true)
+		var ray_length := radius * (1.3 + float(ray % 4) * 0.22)
+		draw_line(end + direction * radius * 0.35, end + direction * ray_length, [POWER_RED, BALANCE_BLUE, ESSENCE_YELLOW][ray % 3], 2.5, true)

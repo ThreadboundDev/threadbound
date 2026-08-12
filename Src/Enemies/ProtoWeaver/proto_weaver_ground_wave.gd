@@ -35,6 +35,10 @@ var _impact_elapsed := 0.0
 var _impact_duration := 0.22
 var _collision_shape: CollisionShape2D
 var _sprite: Sprite2D
+var _aura_sprite: Sprite2D
+var _core_sprite: Sprite2D
+var _trail_sprites: Array[Sprite2D] = []
+var _additive_material: CanvasItemMaterial
 
 
 func _ready() -> void:
@@ -43,6 +47,8 @@ func _ready() -> void:
 	z_index = 3
 	material = BALANCE_ENERGY_MATERIAL
 	area_entered.connect(_on_area_entered)
+	_additive_material = CanvasItemMaterial.new()
+	_additive_material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 
 	var shape := RectangleShape2D.new()
 	shape.size = Vector2(150.0, 122.0)
@@ -52,15 +58,37 @@ func _ready() -> void:
 	_collision_shape.scale = Vector2(0.78, 0.78 * 0.72)
 	add_child(_collision_shape)
 
-	_sprite = Sprite2D.new()
-	_sprite.name = "GroundThreadWaveSprite"
-	_sprite.texture = GROUND_WAVE_TEXTURE
-	_sprite.hframes = 8
-	_sprite.vframes = 1
-	_sprite.frame = 0
+	_aura_sprite = _create_layer_sprite("GroundThreadWaveAura", -2)
+	_aura_sprite.use_parent_material = false
+	_aura_sprite.material = _additive_material
+	_aura_sprite.modulate = Color(0.015, 0.16, 1.0, 0.62)
+
+	for trail_index in range(2):
+		var trail := _create_layer_sprite("GroundThreadWaveTrail%d" % (trail_index + 1), -1)
+		trail.use_parent_material = false
+		trail.material = _additive_material
+		trail.modulate = Color(0.02, 0.38, 1.0, 0.3 - float(trail_index) * 0.07)
+		_trail_sprites.append(trail)
+
+	_sprite = _create_layer_sprite("GroundThreadWaveSprite", 0)
 	_sprite.use_parent_material = true
-	add_child(_sprite)
+	_core_sprite = _create_layer_sprite("GroundThreadWaveCore", 1)
+	_core_sprite.use_parent_material = false
+	_core_sprite.material = _additive_material
+	_core_sprite.modulate = Color(0.72, 0.96, 1.0, 0.48)
 	_update_visual()
+
+
+func _create_layer_sprite(layer_name: String, layer_z_index: int) -> Sprite2D:
+	var layer := Sprite2D.new()
+	layer.name = layer_name
+	layer.texture = GROUND_WAVE_TEXTURE
+	layer.hframes = 8
+	layer.vframes = 1
+	layer.frame = 0
+	layer.z_index = layer_z_index
+	add_child(layer)
+	return layer
 
 
 func launch(direction: int, hit_source: Node) -> void:
@@ -119,6 +147,7 @@ func _update_visual() -> void:
 			4.0 - 77.0 * _sprite.scale.y
 		)
 		_sprite.modulate = Color(1.0, 1.0, 1.0, 1.0 - impact_ratio)
+		_sync_energy_layers(impact_ratio, true)
 		return
 
 	var growth := _get_travel_growth()
@@ -148,6 +177,30 @@ func _update_visual() -> void:
 	)
 	var life_ratio := clampf(_elapsed / maxf(lifetime, 0.001), 0.0, 1.0)
 	_sprite.modulate = Color(1.0, 1.0, 1.0, 1.0 - smoothstep(0.88, 1.0, life_ratio))
+	_sync_energy_layers(life_ratio, false)
+
+
+func _sync_energy_layers(fade_ratio: float, impacting: bool) -> void:
+	if not _sprite:
+		return
+	var alpha_fade := 1.0 - fade_ratio if impacting else 1.0 - smoothstep(0.82, 1.0, fade_ratio)
+	var pulse := 0.5 + sin(_elapsed * 18.0) * 0.5
+	if _aura_sprite:
+		_aura_sprite.frame = _sprite.frame
+		_aura_sprite.position = _sprite.position + Vector2(-9.0, 3.0)
+		_aura_sprite.scale = _sprite.scale * lerpf(1.11, 1.17, pulse)
+		_aura_sprite.modulate.a = 0.62 * alpha_fade
+	if _core_sprite:
+		_core_sprite.frame = _sprite.frame
+		_core_sprite.position = _sprite.position + Vector2(2.0, -1.0)
+		_core_sprite.scale = _sprite.scale * lerpf(0.965, 0.99, pulse)
+		_core_sprite.modulate.a = 0.48 * alpha_fade
+	for trail_index in range(_trail_sprites.size()):
+		var trail := _trail_sprites[trail_index]
+		trail.frame = _sprite.frame
+		trail.position = _sprite.position + Vector2(-26.0 - float(trail_index) * 28.0, 3.0 + float(trail_index) * 3.0)
+		trail.scale = _sprite.scale * (1.0 - float(trail_index) * 0.04)
+		trail.modulate.a = (0.3 - float(trail_index) * 0.07) * alpha_fade
 
 
 func _get_travel_growth() -> float:
