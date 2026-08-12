@@ -79,6 +79,8 @@ func _ready() -> void:
 	add_child(ignored_interaction_area)
 	var wall := _create_body(Vector2(120.0, 0.0), 1)
 	add_child(wall)
+	var grapple_capture_surface := _create_body(Vector2(80.0, 0.0), 4)
+	add_child(grapple_capture_surface)
 	await get_tree().physics_frame
 
 	_prepare_active_shot(gloves)
@@ -103,7 +105,11 @@ func _ready() -> void:
 	if gloves.grapple_state != BaseGloves.GrappleState.ATTACHED:
 		failures.append("Hookshot did not attach after crossing player/interaction areas.")
 	elif gloves.grapple_target != wall:
-		failures.append("Hookshot attached to an invisible area instead of solid environment geometry.")
+		failures.append("Hookshot did not retain the resolved solid environment target.")
+	elif not is_equal_approx(gloves.grapple_attach_position.x, 110.0):
+		failures.append(
+			"Grapple capture envelope did not resolve the needle onto solid collision."
+		)
 
 	var upward_clearance: float = gloves.call("_get_hookshot_surface_clearance", Vector2.UP)
 	if upward_clearance < 65.0:
@@ -141,6 +147,7 @@ func _ready() -> void:
 	player.queue_free()
 	ignored_interaction_area.queue_free()
 	wall.queue_free()
+	grapple_capture_surface.queue_free()
 	await get_tree().process_frame
 
 	await _verify_player_grapple_strike_integration()
@@ -262,9 +269,9 @@ func _verify_serialized_grapple_visibility(scene: PackedScene, label: String) ->
 	if active_needle.visible:
 		failures.append("%s grapple needle is visible before initialization." % label)
 	if label in ["blue", "yellow", "red"]:
-		if int(equipment.get("grapple_collision_mask")) != 3:
+		if int(equipment.get("grapple_collision_mask")) != 7:
 			failures.append(
-				"%s grapple cannot target both world geometry and enemy hurtboxes." % label
+				"%s grapple cannot target world, enemies, and grapple capture surfaces." % label
 			)
 	if label == "yellow":
 		equipment.set("_snap_pending", true)

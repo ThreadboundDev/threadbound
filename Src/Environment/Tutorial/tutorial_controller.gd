@@ -131,6 +131,7 @@ enum TutorialStep {
 @export var dash_count_cooldown := 0.45
 @export var grapple_count_cooldown := 1.25
 @export var attack_count_cooldown := 0.35
+@export var complete_prompt_seconds := 3.0
 
 @export_group("Optional Unlock Targets")
 @export var reveal_on_complete_paths: Array[NodePath] = []
@@ -305,7 +306,7 @@ func _process(delta: float) -> void:
 		TutorialStep.SAVE_POINT:
 			pass
 		TutorialStep.COMPLETE:
-			if _step_timer >= 3.0 or Input.is_action_just_pressed("interact"):
+			if Input.is_action_just_pressed("interact"):
 				_advance_step()
 	_click_advance_requested = false
 
@@ -385,6 +386,7 @@ func _set_step(step: TutorialStep) -> void:
 		TutorialStep.COMPLETE:
 			_show_prompt(complete_text)
 			_unlock_completion_targets()
+			_schedule_complete_prompt_dismissal()
 		TutorialStep.DONE:
 			if _prompt:
 				_prompt.hide_prompt()
@@ -392,6 +394,19 @@ func _set_step(step: TutorialStep) -> void:
 
 func _advance_step() -> void:
 	_set_step(_step + 1)
+
+func _schedule_complete_prompt_dismissal() -> void:
+	var timer := get_tree().create_timer(
+		maxf(complete_prompt_seconds, 0.01),
+		true,
+		false,
+		true
+	)
+	timer.timeout.connect(_dismiss_complete_prompt)
+
+func _dismiss_complete_prompt() -> void:
+	if _step == TutorialStep.COMPLETE:
+		_advance_step()
 
 func debug_complete_tutorial() -> void:
 	if not OS.is_debug_build():

@@ -374,10 +374,21 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 				continue
 			return
 
+		var surface_hit := _resolve_grapple_surface(
+			previous_tip,
+			new_tip,
+			collider,
+			grapple_raycast.get_collision_point(),
+			grapple_raycast.get_collision_normal()
+		)
+		var surface_point: Vector2 = surface_hit.position
+		var surface_normal: Vector2 = surface_hit.normal
+		var surface_collider: Object = surface_hit.collider
+
 		if not _can_attach_grapple():
 			_handle_non_attaching_collision(
-				grapple_raycast.get_collision_point(),
-				grapple_raycast.get_collision_normal()
+				surface_point,
+				surface_normal
 			)
 			_begin_red_spent()
 			return
@@ -385,11 +396,11 @@ func _check_red_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> vo
 		_notify_grapple_collider(collider)
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
-		grapple_attach_position = grapple_raycast.get_collision_point()
-		grapple_collision_normal = grapple_raycast.get_collision_normal()
-		_capture_grapple_target(collider)
-		_red_grapple_target = _find_grapple_target_component(collider)
-		_apply_red_grapple_damage(collider)
+		grapple_attach_position = surface_point
+		grapple_collision_normal = surface_normal
+		_capture_grapple_target(surface_collider)
+		_red_grapple_target = _find_grapple_target_component(surface_collider)
+		_apply_red_grapple_damage(surface_collider)
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
 		AudioManager.play_sfx(&"grapple_connect")

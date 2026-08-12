@@ -11,7 +11,7 @@
 script = ExtResource("1_ijk80")
 grapple_max_distance = 450.0
 grapple_retract_speed = 1300.0
-grapple_collision_mask = 3
+grapple_collision_mask = 7
 grapple_spent_retract_delay = 5.0
 hookshot_enabled = true
 

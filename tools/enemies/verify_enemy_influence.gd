@@ -37,6 +37,7 @@ func _verify_red_influence() -> void:
 	_expect(is_equal_approx(enemy.stats.move_speed, base_move_speed), "Influences must not mutate shared EnemyStats movement values.")
 	_expect(is_equal_approx(enemy.stats.attack_cooldown, base_attack_cooldown), "Influences must not mutate shared EnemyStats attack values.")
 	_expect(enemy.get_node_or_null("EnemyInfluenceVFX") is EnemyInfluenceVFX, "Influenced enemies must receive the shared graphic VFX controller.")
+	_verify_soul_light(enemy)
 	section.queue_free()
 	await get_tree().process_frame
 
@@ -96,6 +97,12 @@ func _detection_radius(enemy: EnemyBase) -> float:
 	if not shape_node or not shape_node.shape is CircleShape2D:
 		return 0.0
 	return (shape_node.shape as CircleShape2D).radius
+
+func _verify_soul_light(enemy: EnemyBase) -> void:
+	var soul_light := enemy.get_node_or_null("EnemySoulLight") as PointLight2D
+	_expect(soul_light != null, "Enemies must inherit the shared subtle Soul light.")
+	if soul_light:
+		_expect(soul_light.energy <= 0.2, "Enemy Soul light must remain restrained rather than reading as an aura.")
 
 func _expect(condition: bool, message: String) -> void:
 	if not condition:

@@ -448,7 +448,7 @@ animations = [{
 [node name="BlueGloves" type="Node2D" unique_id=126146949]
 script = ExtResource("1_ijk80")
 needle_rotation_offset = 0.0
-grapple_collision_mask = 3
+grapple_collision_mask = 7
 
 [node name="Equipment" type="Node2D" parent="." unique_id=1395138831]
 

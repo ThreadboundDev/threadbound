@@ -285,6 +285,7 @@ debug_god_mode={
 
 2d_physics/layer_1="Environment"
 2d_physics/layer_2="Interactibles"
+2d_physics/layer_3="GrappleSurfaces"
 
 [physics]
 

@@ -34,7 +34,9 @@ var player: CharacterBody2D = null
 @export var grapple_max_distance := 360.0
 @export var grapple_retract_speed := 1800.0
 @export var needle_rotation_offset := -PI / 2.0
-@export_flags_2d_physics var grapple_collision_mask := 1
+@export_flags_2d_physics var grapple_collision_mask := 7
+@export_flags_2d_physics var grapple_solid_surface_mask := 1
+@export var grapple_surface_resolve_depth := 128.0
 
 # Active rope visuals/physics
 @export var active_rope_segment_count := 12
@@ -1038,10 +1040,21 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 				continue
 			return
 
+		var surface_hit := _resolve_grapple_surface(
+			previous_tip,
+			new_tip,
+			collider,
+			grapple_raycast.get_collision_point(),
+			grapple_raycast.get_collision_normal()
+		)
+		var surface_point: Vector2 = surface_hit.position
+		var surface_normal: Vector2 = surface_hit.normal
+		var surface_collider: Object = surface_hit.collider
+
 		if not _can_attach_grapple():
 			_handle_non_attaching_collision(
-				grapple_raycast.get_collision_point(),
-				grapple_raycast.get_collision_normal()
+				surface_point,
+				surface_normal
 			)
 			_update_active_grapple_visuals()
 			return
@@ -1049,9 +1062,9 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 		_notify_grapple_collider(collider)
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
-		grapple_attach_position = grapple_raycast.get_collision_point()
-		grapple_collision_normal = grapple_raycast.get_collision_normal()
-		_capture_grapple_target(collider)
+		grapple_attach_position = surface_point
+		grapple_collision_normal = surface_normal
+		_capture_grapple_target(surface_collider)
 
 		grapple_tip_position = grapple_attach_position
 		grapple_tip_velocity = Vector2.ZERO
@@ -1068,6 +1081,52 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 
 		_update_active_grapple_visuals()
 		return
+
+func _resolve_grapple_surface(
+	previous_tip: Vector2,
+	new_tip: Vector2,
+	collider: Object,
+	raw_point: Vector2,
+	raw_normal: Vector2
+) -> Dictionary:
+	var result := {
+		"position": raw_point,
+		"normal": raw_normal,
+		"collider": collider,
+	}
+	var collider_node := collider as Node
+	if not collider_node:
+		return result
+
+	var uses_capture_surface := collider_node is TileMapLayer
+	if collider_node is CollisionObject2D:
+		uses_capture_surface = (
+			collider_node as CollisionObject2D
+		).get_collision_layer_value(3)
+	if not uses_capture_surface:
+		return result
+
+	var shot_direction := (new_tip - previous_tip).normalized()
+	if shot_direction.length_squared() <= 0.001:
+		return result
+
+	var query := PhysicsRayQueryParameters2D.create(
+		previous_tip,
+		raw_point + shot_direction * grapple_surface_resolve_depth,
+		grapple_solid_surface_mask
+	)
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	if player:
+		query.exclude = [player.get_rid()]
+	var solid_hit := get_world_2d().direct_space_state.intersect_ray(query)
+	if solid_hit.is_empty():
+		return result
+
+	result.position = solid_hit.position
+	result.normal = solid_hit.normal
+	result.collider = solid_hit.collider
+	return result
 
 func _is_valid_hookshot_collider(collider: Object) -> bool:
 	var collider_node := collider as Node
@@ -1091,7 +1150,10 @@ func _is_valid_hookshot_collider(collider: Object) -> bool:
 	# Solid layer-one bodies are traversable level geometry. Areas are excluded
 	# unless they explicitly advertise grapple behavior below.
 	if collider_node is CollisionObject2D and not collider_node is Area2D:
-		if (collider_node as CollisionObject2D).get_collision_layer_value(1):
+		if (
+			(collider_node as CollisionObject2D).get_collision_layer_value(1)
+			or (collider_node as CollisionObject2D).get_collision_layer_value(3)
+		):
 			return true
 
 	if collider_node.has_method("activate_from_grapple"):
