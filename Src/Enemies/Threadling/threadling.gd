@@ -45,6 +45,7 @@ var _tether_angle := 0.0
 var _tether_orbit_speed := 0.0
 var _tether_bob_phase := 0.0
 var _tether_line: Line2D = null
+var _boss_target_latched := false
 
 func _ready() -> void:
 	super._ready()
@@ -80,6 +81,24 @@ func configure_boss_tether(anchor: Node2D, offset: Vector2, slot_index := 0) -> 
 	_update_tether_home(0.0)
 	global_position = home_position
 	_flight_target_y = home_position.y
+
+
+func engage_boss_target(player: Node2D) -> void:
+	if not _has_tether_anchor() or not is_instance_valid(player):
+		return
+	_boss_target_latched = true
+	if target != player:
+		target = player
+		target_acquired.emit(target)
+		if _influence_controller:
+			_influence_controller.on_target_acquired()
+
+
+func _on_hurtbox_hit_received(_damage: DamageData) -> void:
+	if _has_tether_anchor():
+		var player := get_tree().get_first_node_in_group("player") as Node2D
+		if player:
+			engage_boss_target(player)
 
 func begin_attack() -> void:
 	super.begin_attack()
@@ -282,6 +301,8 @@ func _should_return_to_tether() -> bool:
 
 	if not target:
 		return distance_from_home > tether_return_radius
+	if _boss_target_latched:
+		return distance_from_home > tether_break_radius
 
 	var target_distance_from_home := target.global_position.distance_to(home_position)
 	if target_distance_from_home <= tether_player_engage_radius:

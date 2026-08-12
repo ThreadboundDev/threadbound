@@ -16,7 +16,7 @@ func _ready() -> void:
 		+ "3 Skill Damage, 3 AP Recharge, 3 Momentum, Follower's Knot"
 	)
 	print(
-		"Attack Lab: 1 Red, 2 Blue, 3 Yellow, 4 Stab, "
+		"Attack Lab starts on Blue VFX: 1 Red, 2 Blue, 3 Yellow, 4 Stab, "
 		+ "5 Wall I, 6 Wall II, 7 Center Finale, 0 Normal"
 	)
 
@@ -60,7 +60,9 @@ func _setup_attack_lab() -> void:
 	if _boss.stats:
 		_boss.stats = _boss.stats.duplicate(true) as EnemyStats
 		_boss.stats.attack_cooldown = 0.2
-	_select_lab_attack(ProtoWeaver.AttackMode.THREADBURST)
+	# Start on the attack whose VFX is actively being reviewed. Red remains
+	# one key away, while wall-phase keys present the tri-color laser.
+	_select_lab_attack(ProtoWeaver.AttackMode.GROUND_SWEEP)
 
 
 func _select_lab_attack(attack_mode: int) -> void:
@@ -130,8 +132,9 @@ func _update_attack_lab_hud() -> void:
 		"ATTACK LAB: %s\n"
 		+ "%s\n"
 		+ "%s\n"
-		+ "[1] Red  [2] Blue  [3] Yellow  [4] Stab  [0] Normal\n"
-		+ "[5] Wall I  [6] Wall II  [7] Center Finale"
+		+ "VFX REVIEW: [2] Blue Wave  |  [5/6/7] Tri-Color Laser\n"
+		+ "[1] Red  [3] Yellow  [4] Stab  [0] Normal\n"
+		+ "[5] Wall I  [6] Wall II  [7] Final Wall Enrage"
 	) % [selected, combat_status, wall_status]
 
 

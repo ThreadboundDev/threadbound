@@ -129,6 +129,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var armor_link_right_offset := Vector2(420.0, -48.0)
 @export var armor_link_respawn_time := 12.0
 @export var armor_link_pulse_warning_time := 3.0
+@export var armor_link_post_hang_grace_time := 5.0
 @export var hang_rise_offset := Vector2(0.0, -360.0)
 @export var hang_ceiling_offset := Vector2(0.0, -620.0)
 @export var hang_thread_body_offset := Vector2(0.0, -185.0)
@@ -164,7 +165,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var wall_phase_two_break_damage := 80.0
 @export var wall_knockdown_duration := 1.8
 @export var wall_timeout_recovery_duration := 0.65
-@export var wall_phase_event_delay := 0.18
+@export var wall_phase_event_delay := 0.3
 @export var wall_phase_one_timing_multiplier := 1.0
 @export var wall_phase_two_timing_multiplier := 0.78
 @export var wall_blue_wave_speed := 720.0
@@ -174,9 +175,20 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var wall_phase_two_sentinel_count := 4
 @export var wall_phase_three_sentinel_count := 6
 @export var wall_sentinel_trigger_radius := 235.0
-@export var wall_sentinel_rearm_time := 1.35
+@export var wall_sentinel_rearm_time := 2.25
+@export var wall_sentinel_damage := 20
+@export var wall_sentinel_draw_hold_time := 0.34
+@export var wall_sentinel_shared_attack_gap := 0.28
 @export var wall_blue_route_span := 1700.0
 @export var wall_threadburst_distance_time_bonus := 0.45
+@export_group("Final Wall Enrage")
+@export var final_wall_min_perch_time := 12.0
+@export var final_wall_max_perch_time := 21.0
+@export var final_wall_min_actions := 8
+@export var final_wall_max_actions := 10
+@export var final_wall_relocate_damage := 90.0
+@export var final_wall_reach_grace_time := 3.0
+@export var final_wall_relocation_time := 0.6
 @export_group("")
 @export var phase_one_health_ratio := 0.75
 @export var phase_two_health_ratio := 0.5
@@ -197,7 +209,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var phase_one_sweep_time := 0.95
 @export var phase_two_sweep_lock_time := 0.34
 @export var phase_two_sweep_time := 0.72
-@export var laser_damage := 30
+@export var laser_damage := 25
 @export var laser_hit_width := 42.0
 @export var laser_max_distance := 5000.0
 @export var laser_head_offset := Vector2(0.0, -90.0)
@@ -207,7 +219,9 @@ const HANG_HEAD_SOCKET_FRAMES := [
 
 @export_group("Ground Sweep")
 @export var ground_sweep_spawn_offset := Vector2(170.0, -4.0)
-@export var ground_sweep_damage := 30
+@export var ground_sweep_damage := 25
+@export var threadburst_damage := 21
+@export var essence_echo_damage := 30
 @export var ground_sweep_speed := 820.0
 @export var ground_sweep_pose_depth := 34.0
 @export var ground_sweep_pose_lean := 0.075
@@ -260,7 +274,7 @@ var debug_forced_attack_mode: int = AttackMode.THREADBURST
 @export var repulse_telegraph_hold_frame := 20
 @export var repulse_telegraph_hold_time := 0.42
 @export var essence_echo_telegraph_hold_frame := 22
-@export var essence_echo_telegraph_hold_time := 0.34
+@export var essence_echo_telegraph_hold_time := 0.5
 @export var cleaned_threadburst_frame_count := 26
 @export var repulse_frame_count := 26
 @export var stagger_pose_frame := 25
@@ -297,6 +311,8 @@ var _base_cell_size := Vector2.ONE
 var _configured_sprite_scale := Vector2.ONE
 var _armor_links: Array[EnemyBase] = [null, null]
 var _armor_link_respawn_timers := [0.0, 0.0]
+var _armor_link_post_hang_grace_remaining := 0.0
+var _armor_link_respawn_suppressed := false
 var _hanging_laser_busy := false
 var _hanging_laser_active := false
 var _hanging_laser_landing := false
@@ -316,6 +332,11 @@ var _wall_phase_elapsed := 0.0
 var _wall_break_damage := 0.0
 var _wall_event_bag: Array[int] = []
 var _wall_sentinels: Array[Node] = []
+var _wall_sentinel_shared_cooldown := 0.0
+var _final_wall_enrage := false
+var _final_perch_elapsed := 0.0
+var _final_perch_damage := 0.0
+var _final_perch_reach_elapsed := -1.0
 var _last_wall_event := -1
 var _laser_target_position := Vector2.ZERO
 var _laser_firing := false
@@ -406,6 +427,11 @@ func _ready() -> void:
 	call_deferred("_spawn_all_armor_links")
 
 func _process(delta: float) -> void:
+	_wall_sentinel_shared_cooldown = maxf(0.0, _wall_sentinel_shared_cooldown - delta)
+	if _final_wall_enrage:
+		_final_perch_elapsed += delta
+		if _final_perch_reach_elapsed >= 0.0:
+			_final_perch_reach_elapsed += delta
 	_update_sprite_animation(delta)
 	_update_hanging_laser_visuals(delta)
 	_update_armor_links(delta)
@@ -525,7 +551,7 @@ func _capture_hanging_presentation_defaults() -> void:
 
 
 func _update_wall_phase_timeout(delta: float) -> void:
-	if not _wall_hanging or _wall_break_requested or _hanging_laser_landing:
+	if not _wall_hanging or _final_wall_enrage or _wall_break_requested or _hanging_laser_landing:
 		return
 	_wall_phase_elapsed += delta
 	var maximum_duration := _get_wall_phase_max_duration()
@@ -712,7 +738,10 @@ func _on_hurtbox_hit_received(damage: DamageData) -> void:
 			if hit_flash:
 				hit_flash.flash(Color(1.0, 0.86, 0.62, 1.0), 0.045)
 			return
-		_receive_wall_break_hit(damage)
+		if _final_wall_enrage:
+			_receive_final_wall_hit(damage)
+		else:
+			_receive_wall_break_hit(damage)
 		return
 
 	if _is_armored():
@@ -772,6 +801,14 @@ func _receive_wall_break_hit(damage: DamageData) -> void:
 	_update_boss_health_bar()
 	if _wall_break_damage >= threshold and health_component.current_health > 0:
 		_request_wall_phase_break(true)
+
+
+func _receive_final_wall_hit(damage: DamageData) -> void:
+	_final_perch_damage += maxf(1.0, float(damage.amount))
+	if _final_perch_reach_elapsed < 0.0:
+		_final_perch_reach_elapsed = 0.0
+	health_component.apply_damage(damage)
+	_update_boss_health_bar()
 
 
 func _is_player_close_enough_to_break_wall_phase() -> bool:
@@ -1246,6 +1283,7 @@ func _spawn_threadburst_missiles() -> void:
 		var missile := thread_missile_scene.instantiate() as ThreadMissile
 		if not missile:
 			continue
+		missile.damage_amount = threadburst_damage
 
 		parent.add_child(missile)
 		var fan_ratio := 0.5
@@ -1453,7 +1491,7 @@ func _spawn_essence_echo_telegraph() -> void:
 		essence_echo_telegraph_hold_frame,
 		echo_scale,
 		_base_sprite_position,
-		stats.attack_damage if stats else 24,
+		essence_echo_damage,
 		get_attack_windup(),
 		true
 	)
@@ -1529,8 +1567,9 @@ func _start_hanging_laser_sequence() -> void:
 	_hanging_laser_landing = false
 	_laser_firing = false
 	_laser_hit_this_shot = false
-	_wall_hanging = _active_hanging_phase in [0, 1]
-	_hang_origin = _get_recovery_floor_position() if _wall_hanging else (_get_hang_home_position() if hang_return_to_home else global_position)
+	_final_wall_enrage = _active_hanging_phase == 2
+	_wall_hanging = _active_hanging_phase in [0, 1, 2]
+	_hang_origin = _get_recovery_floor_position()
 	_wall_break_requested = false
 	_wall_broken_by_player = false
 	_wall_break_damage = 0.0
@@ -1538,6 +1577,8 @@ func _start_hanging_laser_sequence() -> void:
 	_wall_phase_elapsed = 0.0
 	_wall_event_bag.clear()
 	_last_wall_event = -1
+	if _final_wall_enrage:
+		_begin_final_wall_enrage()
 	if _wall_hanging:
 		_configure_wall_hang_destination()
 	else:
@@ -1580,13 +1621,18 @@ func _run_hanging_laser_sequence() -> void:
 	if detached_head and use_detached_head:
 		detached_head.visible = true
 
-	if _wall_hanging:
+	if _final_wall_enrage:
+		await _run_final_wall_enrage()
+	elif _wall_hanging:
 		await _run_wall_intermission_deck()
 	else:
 		_ensure_wall_sentinel_count()
 		await _run_final_hanging_laser_mix()
 	if not is_inside_tree() or is_dead:
 		_finish_hanging_laser_sequence()
+		return
+
+	if _final_wall_enrage:
 		return
 
 	_hanging_laser_landing = true
@@ -1613,8 +1659,11 @@ func _run_hanging_laser_sequence() -> void:
 
 func _configure_wall_hang_destination() -> void:
 	var preferred_side := -1 if _active_hanging_phase == 0 else 1
+	if _final_wall_enrage and _wall_side != 0:
+		preferred_side = -_wall_side
 	if is_instance_valid(target):
-		preferred_side = -1 if target.global_position.x >= _get_hang_home_position().x else 1
+		if not _final_wall_enrage or _wall_side == 0:
+			preferred_side = -1 if target.global_position.x >= _get_hang_home_position().x else 1
 	_wall_side = preferred_side
 	var marker_path := wall_left_marker_path if _wall_side < 0 else wall_right_marker_path
 	var wall_marker := _get_phase_marker(marker_path)
@@ -1699,6 +1748,79 @@ func _run_wall_intermission_deck() -> void:
 		if _wall_break_requested or not is_inside_tree() or is_dead:
 			break
 		await _wait_with_wall_cancel(wall_phase_event_delay)
+
+
+func _begin_final_wall_enrage() -> void:
+	_armor_link_respawn_suppressed = true
+	for index in range(_armor_links.size()):
+		_clear_armor_link(index)
+		_armor_link_respawn_timers[index] = 0.0
+	_final_perch_elapsed = 0.0
+	_final_perch_damage = 0.0
+	_final_perch_reach_elapsed = -1.0
+
+
+func _run_final_wall_enrage() -> void:
+	_ensure_wall_sentinel_count()
+	while is_inside_tree() and not is_dead:
+		var action_budget := randi_range(
+			maxi(1, final_wall_min_actions),
+			maxi(final_wall_min_actions, final_wall_max_actions)
+		)
+		var completed_actions := 0
+		while is_inside_tree() and not is_dead:
+			var event := _take_next_wall_event()
+			await _run_wall_event(event)
+			completed_actions += 1
+			if not is_inside_tree() or is_dead:
+				return
+			if _should_relocate_final_wall(completed_actions, action_budget):
+				break
+			await _wait_with_wall_cancel(wall_phase_event_delay)
+		await _relocate_final_wall()
+
+
+func _should_relocate_final_wall(completed_actions: int, action_budget: int) -> bool:
+	if _final_perch_reach_elapsed >= 0.0 and _final_perch_reach_elapsed < final_wall_reach_grace_time:
+		return false
+	if _final_perch_elapsed >= final_wall_max_perch_time:
+		return true
+	if _final_perch_elapsed < final_wall_min_perch_time:
+		return false
+	return completed_actions >= action_budget or _final_perch_damage >= final_wall_relocate_damage
+
+
+func _relocate_final_wall() -> void:
+	_laser_firing = false
+	if laser_beam:
+		laser_beam.hide_beam()
+	if hanging_thread_line:
+		hanging_thread_line.visible = false
+	var old_rotation := _hang_rotation
+	_configure_wall_hang_destination()
+	var destination := _hang_position
+	var destination_rotation := _hang_rotation
+	_hang_rotation = old_rotation
+	if visuals:
+		var rotation_tween := create_tween()
+		rotation_tween.tween_property(
+			visuals,
+			"rotation",
+			destination_rotation,
+			final_wall_relocation_time
+		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await _tween_global_position(destination, final_wall_relocation_time)
+	_hang_rotation = destination_rotation
+	_hang_position = destination
+	_hang_thread_attach = _get_hanging_body_attach(_hang_position)
+	_hang_thread_draw_ratio = 1.0
+	_apply_wall_collision_rotation(_hang_rotation)
+	if hanging_thread_line:
+		hanging_thread_line.visible = true
+	_final_perch_elapsed = 0.0
+	_final_perch_damage = 0.0
+	_final_perch_reach_elapsed = -1.0
+	_wall_event_bag.clear()
 
 
 func _take_next_wall_event() -> int:
@@ -1809,8 +1931,8 @@ func _ensure_wall_sentinel_count() -> void:
 		sentinel.configure(
 			self, player, direction, stab_texture, attack_columns, attack_rows,
 			essence_echo_telegraph_hold_frame, echo_scale, _base_sprite_position,
-			stats.attack_damage if stats else 24, wall_sentinel_trigger_radius,
-			wall_sentinel_rearm_time
+			wall_sentinel_damage, wall_sentinel_trigger_radius,
+			wall_sentinel_rearm_time, wall_sentinel_draw_hold_time
 		)
 		parent.add_child(sentinel)
 		sentinel.global_position = spawn_position
@@ -1873,6 +1995,14 @@ func _clear_wall_sentinels() -> void:
 		if is_instance_valid(sentinel):
 			sentinel.call("dismiss")
 	_wall_sentinels.clear()
+	_wall_sentinel_shared_cooldown = 0.0
+
+
+func request_sentinel_attack() -> bool:
+	if _wall_sentinel_shared_cooldown > 0.0 or not _hanging_laser_busy:
+		return false
+	_wall_sentinel_shared_cooldown = wall_sentinel_shared_attack_gap
+	return true
 
 
 func _run_aimed_laser_volley(shot_count: int, timing_multiplier: float) -> void:
@@ -2086,6 +2216,7 @@ func _finish_hanging_laser_sequence() -> void:
 	_hanging_laser_landing = false
 	_laser_firing = false
 	_wall_hanging = false
+	_final_wall_enrage = false
 	_wall_break_requested = false
 	_wall_broken_by_player = false
 	_wall_break_damage = 0.0
@@ -2116,6 +2247,10 @@ func _finish_hanging_laser_sequence() -> void:
 	if contact_hitbox and not is_dead:
 		contact_hitbox.set_deferred("monitoring", _phase_contact_was_monitoring)
 	_active_hanging_phase = -1
+	_armor_link_post_hang_grace_remaining = maxf(
+		_armor_link_post_hang_grace_remaining,
+		armor_link_post_hang_grace_time
+	)
 	start_attack_cooldown(maxf(1.0, phase_landing_punish_time / maxf(stats.attack_cooldown, 0.01)))
 	if health_component:
 		_queue_health_threshold_phase(health_component.current_health, health_component.max_health)
@@ -2355,9 +2490,20 @@ func _spawn_all_armor_links() -> void:
 func _update_armor_links(delta: float) -> void:
 	if is_dead:
 		return
+	if _hanging_laser_busy or _armor_link_respawn_suppressed:
+		return
+	_armor_link_post_hang_grace_remaining = maxf(
+		0.0,
+		_armor_link_post_hang_grace_remaining - delta
+	)
+	if _armor_link_post_hang_grace_remaining > 0.0:
+		return
 
 	for index in range(_armor_links.size()):
 		if _is_armor_link_alive(index):
+			var active_link := _armor_links[index]
+			if active_link and _boss_aggro_latched and is_instance_valid(target) and active_link.has_method("engage_boss_target"):
+				active_link.call("engage_boss_target", target)
 			continue
 
 		if _armor_link_respawn_timers[index] > 0.0:
@@ -2366,7 +2512,13 @@ func _update_armor_links(delta: float) -> void:
 				_spawn_armor_link(index)
 
 func _spawn_armor_link(index: int) -> void:
-	if not armor_link_scene or is_dead:
+	if (
+		not armor_link_scene
+		or is_dead
+		or _hanging_laser_busy
+		or _armor_link_respawn_suppressed
+		or _armor_link_post_hang_grace_remaining > 0.0
+	):
 		return
 
 	_clear_armor_link(index)
