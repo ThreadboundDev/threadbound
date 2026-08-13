@@ -359,10 +359,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_blocker"]
-size = Vector2(395, 1042)
+size = Vector2(301, 1042)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss_interact"]
-size = Vector2(712, 805)
+size = Vector2(646, 805)
 
 [node name="BossWingDoor" unique_id=1356882730 instance=ExtResource("1_base_door")]
 door_kind = 1
@@ -392,11 +392,11 @@ position = Vector2(217, 9)
 texture = ExtResource("4_7wioj")
 
 [node name="CollisionShape2D" parent="Blocker" parent_id_path=PackedInt32Array(1812810036) index="0" unique_id=781168983]
-position = Vector2(161.5, 20)
+position = Vector2(114.5, 20)
 shape = SubResource("RectangleShape2D_boss_blocker")
 
 [node name="InteractionShape" parent="." index="5" unique_id=1747571831]
-position = Vector2(36, -43)
+position = Vector2(3, -43)
 shape = SubResource("RectangleShape2D_boss_interact")
 
 [node name="PromptLabel" parent="." index="7" unique_id=192562315]
