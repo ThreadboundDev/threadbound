@@ -222,14 +222,35 @@ func lock_closed_for_boss() -> void:
 			_is_opening = false
 			door_sprite.animation = closed_animation
 			door_sprite.frame = 0
-			if blocker_shape:
-				blocker_shape.set_deferred("disabled", false)
+			_arm_boss_blocker_when_clear.call_deferred()
 		, CONNECT_ONE_SHOT)
 	else:
 		_is_opening = false
-		if blocker_shape:
-			blocker_shape.set_deferred("disabled", false)
+		_arm_boss_blocker_when_clear.call_deferred()
 		_apply_visual_state()
+
+func _arm_boss_blocker_when_clear() -> void:
+	if not blocker_shape or not blocker_shape.shape:
+		return
+
+	while is_inside_tree() and _is_player_overlapping_blocker():
+		await get_tree().physics_frame
+	if is_inside_tree() and blocker_shape:
+		blocker_shape.set_deferred("disabled", false)
+
+func _is_player_overlapping_blocker() -> bool:
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = blocker_shape.shape
+	query.transform = blocker_shape.global_transform
+	query.collision_mask = 0xFFFFFFFF
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+
+	for result in get_world_2d().direct_space_state.intersect_shape(query):
+		var collider := result.get("collider") as Node
+		if collider and collider.is_in_group("player"):
+			return true
+	return false
 
 func _apply_visual_state() -> void:
 	if door_sprite:
