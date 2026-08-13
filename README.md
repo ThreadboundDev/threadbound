@@ -108,7 +108,7 @@ Useful habits:
 
 ## Tech
 
-- Engine: Godot 4.6.1 Mono
+- Engine: Godot 4.7.1 Mono
 - Primary language: GDScript
 - Repository owner: ThreadboundDev
 
