@@ -9,6 +9,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 
 @export var door_kind := DoorKind.WING
 @export var door_id: StringName = &""
+@export var persistence_id: StringName = &""
 @export var display_name := "Demo Door"
 @export_multiline var message := ""
 @export var open_after_message := true
@@ -76,6 +77,7 @@ func _ready() -> void:
 		prompt_label.z_index = 1000
 	_configure_doorway_depth_area()
 	_configure_opened_split_layers()
+	_restore_persistent_state()
 	_apply_visual_state()
 
 func _exit_tree() -> void:
@@ -127,6 +129,8 @@ func _open() -> void:
 	_message_acknowledged = false
 	if claim_thread_on_open:
 		DemoProgress.claim_thread(door_id)
+	if door_kind == DoorKind.WING and not String(persistence_id).is_empty():
+		DemoProgress.complete_world_event(persistence_id)
 
 	blocker_shape.set_deferred("disabled", true)
 	interact_shape.set_deferred("disabled", true)
@@ -154,6 +158,17 @@ func _open() -> void:
 		)
 	elif fog_panel:
 		fog_panel.visible = false
+
+func _restore_persistent_state() -> void:
+	if door_kind != DoorKind.WING:
+		return
+	if String(persistence_id).is_empty():
+		push_warning("Demo door '%s' has no persistence ID; its open state will not be saved." % get_path())
+		return
+	if DemoProgress.has_completed_world_event(persistence_id):
+		closed = false
+		_is_opening = false
+		_message_acknowledged = false
 
 func open_silently() -> void:
 	_message_acknowledged = false

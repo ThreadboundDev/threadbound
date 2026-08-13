@@ -360,6 +360,7 @@ animations = [{
 
 [node name="YellowWingDoor" unique_id=24194392 instance=ExtResource("1_base_door")]
 door_id = &"essence"
+persistence_id = &"chamber_first_weave.yellow_wing_door"
 display_name = "Thread of Essence"
 message = "To claim the Thread of Essence, one must prove intelligence within the weave."
 door_color = Color(1, 1, 1, 1)

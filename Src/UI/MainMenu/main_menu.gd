@@ -122,8 +122,7 @@ func _activate_selected() -> void:
 			_pulse_unavailable(rows[_selected_index])
 
 func _start_new_journey() -> void:
-	DemoProgress.clear_checkpoint()
-	DemoProgress.reset_demo_threads()
+	DemoProgress.clear_run()
 	AudioManager.play_ui(&"enter_world")
 	get_tree().change_scene_to_file(DEMO_SCENE)
 
