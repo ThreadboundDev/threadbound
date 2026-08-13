@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="5_selector"]
 [ext_resource type="Texture2D" uid="uid://b154g6qr4nkun" path="res://Assets/UI/Main Menu/menu_separator.png" id="6_separator"]
 [ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="7_font"]
+[ext_resource type="PackedScene" path="res://Src/UI/PlaytestSupport/playtest_support_panel.tscn" id="8_support"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("7_font")
@@ -170,11 +171,37 @@ label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PlaytestSupport" type="Control" parent="MenuRoot/Buttons"]
+anchors_preset = 0
+offset_top = 176.0
+offset_right = 780.0
+offset_bottom = 246.0
+
+[node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/PlaytestSupport"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = -38.0
+offset_right = 640.0
+offset_bottom = 112.0
+mouse_filter = 2
+texture = ExtResource("4_button")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MenuRoot/Buttons/PlaytestSupport"]
+layout_mode = 0
+offset_left = 120.0
+offset_right = 660.0
+offset_bottom = 82.0
+text = "PLAYTEST SUPPORT"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Quit" type="Control" parent="MenuRoot/Buttons" unique_id=404074249]
 anchors_preset = 0
-offset_top = 180.0
+offset_top = 274.0
 offset_right = 780.0
-offset_bottom = 250.0
+offset_bottom = 344.0
 
 [node name="Plaque" type="TextureRect" parent="MenuRoot/Buttons/Quit" unique_id=776076669]
 layout_mode = 0
@@ -195,6 +222,8 @@ text = "QUIT"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlaytestSupportPanel" parent="." instance=ExtResource("8_support")]
 
 [node name="OptionsPanel" parent="." unique_id=128449086 instance=ExtResource("2_options")]
 process_mode = 3

@@ -9,6 +9,7 @@ const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn
 
 @onready var selector: TextureRect = $Selector as TextureRect
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
+@onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
 @onready var rows: Array[Control] = [
 	$MenuButtons/Continue,
 	$MenuButtons/NewJourney,
@@ -20,14 +21,17 @@ const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn
 var _selected_index := 1
 var _row_tweens: Dictionary = {}
 var _showing_options := false
+var _showing_support := false
 
 func _ready() -> void:
 	AudioManager.play_title_screen_music()
 	DemoProgress.load_checkpoint()
 	options_panel.visible = false
+	support_panel.visible = false
 	if not DemoProgress.checkpoint_changed.is_connected(_refresh_continue_state):
 		DemoProgress.checkpoint_changed.connect(_refresh_continue_state)
 	options_panel.back_requested.connect(_hide_options)
+	support_panel.back_requested.connect(_hide_playtest_support)
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -47,6 +51,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _showing_options:
 		if event.is_action_pressed("ui_cancel"):
 			_hide_options()
+			get_viewport().set_input_as_handled()
+		return
+
+	if _showing_support:
+		if event.is_action_pressed("ui_cancel"):
+			_hide_playtest_support()
 			get_viewport().set_input_as_handled()
 		return
 
@@ -116,6 +126,8 @@ func _activate_selected() -> void:
 			_start_new_journey()
 		&"Settings":
 			_show_options()
+		&"Extras":
+			_show_playtest_support()
 		&"Quit":
 			get_tree().quit()
 		_:
@@ -136,7 +148,7 @@ func _pulse_unavailable(row: Control) -> void:
 
 func _is_row_enabled(index: int) -> bool:
 	var row_name := rows[index].name
-	return (row_name == &"Continue" and DemoProgress.has_checkpoint()) or row_name == &"NewJourney" or row_name == &"Settings" or row_name == &"Quit"
+	return (row_name == &"Continue" and DemoProgress.has_checkpoint()) or row_name == &"NewJourney" or row_name == &"Settings" or row_name == &"Extras" or row_name == &"Quit"
 
 func _refresh_continue_state() -> void:
 	for i in rows.size():
@@ -151,6 +163,21 @@ func _show_options() -> void:
 func _hide_options() -> void:
 	_showing_options = false
 	options_panel.visible = false
+	$MenuButtons.visible = true
+	_select_index(_selected_index, true)
+
+func _show_playtest_support() -> void:
+	_showing_support = true
+	$MenuButtons.visible = false
+	selector.visible = false
+	options_panel.visible = false
+	support_panel.open()
+
+func _hide_playtest_support() -> void:
+	if not _showing_support:
+		return
+	_showing_support = false
+	support_panel.visible = false
 	$MenuButtons.visible = true
 	_select_index(_selected_index, true)
 

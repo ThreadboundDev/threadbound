@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DemoEndingConfig" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/DemoEnding/demo_ending_config.gd" id="1_config"]
+[ext_resource type="Resource" path="res://Src/UI/PlaytestSupport/threadbound_playtest_support.tres" id="2_support"]
+
+[resource]
+script = ExtResource("1_config")
+playtest_support = ExtResource("2_support")
+title = "THANK YOU FOR PLAYING"
+message = "Thank you for playing the Threadbound Demo.\n\nThreadbound is still in development, and your feedback is incredibly valuable."
+personal_note = "Hey everyone,\n\nThank you so much for trying out Threadbound! This is my first adventure into game development—or really any related field. Before starting this project, I had never done any programming, game art, or level design. One day, I simply decided I wanted to make a game and, against the advice given to nearly every new developer, chose to make my \"dream game.\"\n\nI use that term lightly because, truthfully, I hate platformers and Metroidvanias. I can confidently say that I have never finished a game in either category, despite gaming for more than twenty years. So why would my dream game be something I normally dislike?\n\nThat is where my one related talent comes in: storytelling. By trade, I am a minister. That brings many opportunities and responsibilities involving public communication, and over time I have learned how to tell a story. As I developed Threadbound's world, I fell in love with writing it. The more the story took shape, the more I felt that Threadbound \"wanted\" to be a 2D action-platformer. So, here we are.\n\nI genuinely hope you enjoyed this little demo. It took somewhere between 200 and 400 hours of work, on and off—and, unashamedly, just about every AI tool I could find to help me learn how to make it. My hope is to someday build a team of real people and turn this idea into something truly beautiful.\n\nFor now, I am simply looking forward to hearing from you, the playtester. Thank you again for giving Threadbound your time.\n\nGod bless you and keep you!\n\n— Chase"
+credit_categories = PackedStringArray("CREATED, DIRECTED & DEVELOPED BY", "EARLY DEVELOPMENT SUPPORT", "ADDITIONAL ART", "TOOLS & TECHNOLOGY", "SPECIAL THANKS")
+credit_entries = PackedStringArray("Chase King", "Jeremy Wilcox\ndallen72\n\nEarly programming help, technical guidance, and game-development problem solving.", "Ben Lutz\nInterior corner tile", "Godot Engine", "Everyone who played the Threadbound Demo and shared feedback.")

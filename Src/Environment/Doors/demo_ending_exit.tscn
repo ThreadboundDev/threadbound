@@ -1,0 +1,176 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Doors/demo_ending_exit.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Environment/Blossom of Eryndor/blossom_of_eryndor_spritesheet.png" id="2_blossom"]
+[ext_resource type="Texture2D" path="res://Src/Environment/SavePoints/blossom_meditation_light_point.png" id="3_light"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="4_prompt"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="5_title_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="6_body_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_interaction"]
+size = Vector2(410, 360)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.021, 0.032, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.76, 0.64, 0.36, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.11, 0.09, 0.105, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.56, 0.47, 0.29, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_focus"]
+bg_color = Color(0.23, 0.18, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.79, 0.4, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DemoEndingExit" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Glow" type="PointLight2D" parent="."]
+position = Vector2(0, -165)
+color = Color(0.92, 0.71, 0.3, 1)
+energy = 1.6
+texture = ExtResource("3_light")
+texture_scale = 2.4
+
+[node name="Blossom" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(0, -105)
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("2_blossom")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 1024)
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -125)
+shape = SubResource("RectangleShape_interaction")
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+z_index = 1000
+offset_left = -250.0
+offset_top = -420.0
+offset_right = 250.0
+offset_bottom = -340.0
+text = "E - Choose Demo Ending"
+label_settings = ExtResource("4_prompt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChoiceLayer" type="CanvasLayer" parent="."]
+layer = 124
+process_mode = 3
+
+[node name="Root" type="Control" parent="ChoiceLayer"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Veil" type="ColorRect" parent="ChoiceLayer/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.01, 0.009, 0.015, 0.76)
+
+[node name="Panel" type="PanelContainer" parent="ChoiceLayer/Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -430.0
+offset_top = -245.0
+offset_right = 430.0
+offset_bottom = 245.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="ChoiceLayer/Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 54
+theme_override_constants/margin_top = 42
+theme_override_constants/margin_right = 54
+theme_override_constants/margin_bottom = 42
+
+[node name="Choices" type="VBoxContainer" parent="ChoiceLayer/Root/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="ChoiceLayer/Root/Panel/Margin/Choices"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.84, 0.55, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
+theme_override_font_sizes/font_size = 44
+text = "THE DEMO'S FINAL THREAD"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="ChoiceLayer/Root/Panel/Margin/Choices"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.83, 0.7, 1)
+theme_override_fonts/font = ExtResource("6_body_font")
+theme_override_font_sizes/font_size = 25
+text = "Continue to the end-of-demo presentation, or remain in the chamber to keep exploring and testing."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ContinueButton" type="Button" parent="ChoiceLayer/Root/Panel/Margin/Choices"]
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../KeepExploringButton")
+theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_focus")
+theme_override_styles/pressed = SubResource("StyleBox_button_focus")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "CONTINUE TO END DEMO"
+
+[node name="KeepExploringButton" type="Button" parent="ChoiceLayer/Root/Panel/Margin/Choices"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ContinueButton")
+theme_override_colors/font_color = Color(0.9, 0.82, 0.67, 1)
+theme_override_fonts/font = ExtResource("5_title_font")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_focus")
+theme_override_styles/pressed = SubResource("StyleBox_button_focus")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "KEEP EXPLORING"

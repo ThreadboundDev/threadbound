@@ -1,0 +1,158 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/PlaytestSupport/playtest_support_panel.gd" id="1_script"]
+[ext_resource type="Resource" path="res://Src/UI/PlaytestSupport/threadbound_playtest_support.tres" id="2_config"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="3_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf" id="4_body_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.025, 0.021, 0.032, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.67, 0.56, 0.32, 0.92)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.1, 0.08, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52, 0.44, 0.28, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_focus"]
+bg_color = Color(0.23, 0.18, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.79, 0.4, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="PlaytestSupportPanel" type="Control"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+config = ExtResource("2_config")
+
+[node name="Veil" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008, 0.007, 0.012, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -360.0
+offset_right = 500.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 52
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 52
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Title" type="Label" parent="Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.84, 0.58, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.035, 0.025, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 64
+text = "PLAYTEST SUPPORT"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.89, 0.82, 0.68, 1)
+theme_override_fonts/font = ExtResource("4_body_font")
+theme_override_font_sizes/font_size = 27
+text = "Share broader thoughts in the playtest report, or send a focused report for a specific bug."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="PlaytestReportButton" type="Button" parent="Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../BugReportButton")
+theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_focus")
+theme_override_styles/pressed = SubResource("StyleBox_button_focus")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "FILL OUT PLAYTEST REPORT"
+
+[node name="BugReportButton" type="Button" parent="Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+focus_neighbor_top = NodePath("../PlaytestReportButton")
+focus_neighbor_bottom = NodePath("../BackButton")
+theme_override_colors/font_color = Color(0.94, 0.86, 0.68, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_focus")
+theme_override_styles/pressed = SubResource("StyleBox_button_focus")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "REPORT A BUG"
+
+[node name="BackButton" type="Button" parent="Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+focus_neighbor_top = NodePath("../BugReportButton")
+theme_override_colors/font_color = Color(0.9, 0.82, 0.67, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 27
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_focus")
+theme_override_styles/pressed = SubResource("StyleBox_button_focus")
+theme_override_styles/focus = SubResource("StyleBox_button_focus")
+text = "BACK"
+
+[node name="Status" type="Label" parent="Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.7, 0.5, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/demo_ending/verify_demo_ending.gd" id="1_verify"]
+
+[node name="VerifyDemoEnding" type="Node"]
+process_mode = 3
+script = ExtResource("1_verify")

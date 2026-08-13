@@ -7,15 +7,18 @@ extends CanvasLayer
 @onready var menu_root: Control = $MenuRoot as Control
 @onready var selector: TextureRect = $MenuRoot/Selector as TextureRect
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
+@onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
 @onready var rows: Array[Control] = [
 	$MenuRoot/Buttons/Resume,
 	$MenuRoot/Buttons/Settings,
+	$MenuRoot/Buttons/PlaytestSupport,
 	$MenuRoot/Buttons/Quit,
 ]
 
 var _selected_index := 0
 var _row_tweens: Dictionary = {}
 var _showing_options := false
+var _showing_support := false
 var _closing := false
 
 func _ready() -> void:
@@ -27,7 +30,9 @@ func _ready() -> void:
 	AudioManager.play_pause_music()
 
 	options_panel.visible = false
+	support_panel.visible = false
 	options_panel.back_requested.connect(_show_main_menu)
+	support_panel.back_requested.connect(_show_main_menu)
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -42,6 +47,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if _showing_options:
+		if event.is_action_pressed("open_menu") or event.is_action_pressed("ui_cancel"):
+			_show_main_menu()
+			get_viewport().set_input_as_handled()
+		return
+	if _showing_support:
 		if event.is_action_pressed("open_menu") or event.is_action_pressed("ui_cancel"):
 			_show_main_menu()
 			get_viewport().set_input_as_handled()
@@ -106,17 +116,30 @@ func _activate_selected() -> void:
 			_resume_game()
 		&"Settings":
 			_show_options()
+		&"PlaytestSupport":
+			_show_playtest_support()
 		&"Quit":
 			get_tree().quit()
 
 func _show_options() -> void:
 	_showing_options = true
+	_showing_support = false
 	menu_root.visible = false
+	support_panel.visible = false
 	options_panel.visible = true
+
+func _show_playtest_support() -> void:
+	_showing_support = true
+	_showing_options = false
+	menu_root.visible = false
+	options_panel.visible = false
+	support_panel.open()
 
 func _show_main_menu() -> void:
 	_showing_options = false
+	_showing_support = false
 	options_panel.visible = false
+	support_panel.visible = false
 	menu_root.visible = true
 	_select_index(_selected_index, true)
 

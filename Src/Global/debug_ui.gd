@@ -3,6 +3,8 @@ extends Node
 ## Global debug UI singleton
 ## Provides a single debug label accessible from anywhere
 
+const DEMO_ENDING_SCENE := preload("res://Src/UI/DemoEnding/demo_ending.tscn")
+
 var debug_label: Label
 var target_node: Node2D = null  # Usually the player
 var canvas_layer: CanvasLayer = null
@@ -23,6 +25,21 @@ func _ready():
 	debug_label.text = "Debug"
 	debug_label.position = Vector2(10, 10)  # Top-left corner by default
 	canvas_layer.add_child(debug_label)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not OS.is_debug_build():
+		return
+	if not event is InputEventKey or not event.pressed or event.echo:
+		return
+	if event.keycode != KEY_F4:
+		return
+	if get_tree().get_first_node_in_group("demo_ending_screen"):
+		return
+
+	get_viewport().set_input_as_handled()
+	var ending := DEMO_ENDING_SCENE.instantiate()
+	ending.set("record_completion", false)
+	get_tree().root.add_child(ending)
 
 ## Update debug text - call from anywhere
 func update_debug(text: String):

@@ -5,6 +5,10 @@ extends Area2D
 @export var entrance_door_path: NodePath
 @export var camera_path: NodePath
 @export var room_grade_path: NodePath
+@export var demo_ending_exit_path: NodePath
+
+@export_group("Demo Completion")
+@export_range(0.0, 10.0, 0.1) var ending_exit_reveal_delay := 2.0
 
 @export_group("Combat Camera")
 @export var boss_camera_zoom := Vector2(0.72, 0.72)
@@ -36,6 +40,7 @@ var _player_was_physics_processing := true
 @onready var entrance_door: Node = get_node_or_null(entrance_door_path)
 @onready var boss_camera := get_node_or_null(camera_path) as Camera2D
 @onready var room_grade: Node = get_node_or_null(room_grade_path)
+@onready var demo_ending_exit: Node = get_node_or_null(demo_ending_exit_path)
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -199,6 +204,13 @@ func _on_boss_died(_damage: DamageData) -> void:
 	if entrance_door and entrance_door.has_method("open_silently"):
 		entrance_door.open_silently()
 	_tween_camera_zoom(_camera_original_zoom)
+	_reveal_demo_ending_exit.call_deferred()
+
+func _reveal_demo_ending_exit() -> void:
+	if ending_exit_reveal_delay > 0.0:
+		await get_tree().create_timer(ending_exit_reveal_delay).timeout
+	if is_inside_tree() and demo_ending_exit and demo_ending_exit.has_method("reveal"):
+		demo_ending_exit.call("reveal")
 
 func _tween_camera_zoom(target_zoom: Vector2) -> void:
 	if not boss_camera:

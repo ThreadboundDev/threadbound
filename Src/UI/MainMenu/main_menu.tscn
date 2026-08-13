@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="4_selector"]
 [ext_resource type="FontFile" uid="uid://cu5ywem1gvg6p" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="5_threadbound_font"]
 [ext_resource type="PackedScene" uid="uid://bsmheog2d3vd3" path="res://Src/UI/Options/options_panel.tscn" id="6_options"]
+[ext_resource type="PackedScene" path="res://Src/UI/PlaytestSupport/playtest_support_panel.tscn" id="7_support"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_menu"]
 font = ExtResource("5_threadbound_font")
@@ -177,7 +178,7 @@ offset_left = 180.0
 offset_top = -5.0
 offset_right = 600.0
 offset_bottom = 77.0
-text = "EXTRAS"
+text = "PLAYTEST SUPPORT"
 label_settings = SubResource("LabelSettings_menu")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -212,3 +213,6 @@ vertical_alignment = 1
 [node name="OptionsPanel" parent="." unique_id=1301740549 instance=ExtResource("6_options")]
 visible = false
 layout_mode = 1
+
+[node name="PlaytestSupportPanel" parent="." instance=ExtResource("7_support")]
+visible = false

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlaytestSupportConfig" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/PlaytestSupport/playtest_support_config.gd" id="1_config"]
+[ext_resource type="Texture2D" path="res://Assets/UI/DemoEnding/threadbound_feedback_qr.png" id="2_qr"]
+
+[resource]
+script = ExtResource("1_config")
+playtest_report_url = "https://tally.so/r/Bzo0z5"
+bug_report_url = "https://tally.so/r/81DrqP"
+feedback_qr_texture = ExtResource("2_qr")

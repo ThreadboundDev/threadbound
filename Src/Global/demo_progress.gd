@@ -3,6 +3,7 @@ extends Node
 signal threads_changed
 signal checkpoint_changed
 signal follower_dialogue_changed
+signal demo_completion_changed(completed: bool)
 
 const SAVE_PATH := "user://demo_save.cfg"
 const TEMP_SAVE_PATH := "user://demo_save.tmp"
@@ -17,6 +18,8 @@ var _checkpoint_id: StringName = &""
 var _checkpoint_position := Vector2.ZERO
 var _tutorial_completed := false
 var _tutorial_completion_recorded := false
+var _demo_completed := false
+var _playtest_welcome_acknowledged := false
 
 func _ready() -> void:
 	load_checkpoint()
@@ -104,6 +107,8 @@ func load_checkpoint() -> bool:
 	)
 	_tutorial_completion_recorded = config.has_section_key("progress", "tutorial_completed")
 	_tutorial_completed = bool(config.get_value("progress", "tutorial_completed", false))
+	_demo_completed = bool(config.get_value("progress", "demo_completed", false))
+	_playtest_welcome_acknowledged = bool(config.get_value("progress", "playtest_welcome_acknowledged", false))
 	_claimed_threads.clear()
 	for thread_id in config.get_value("progress", "claimed_threads", PackedStringArray()):
 		_claimed_threads[StringName(str(thread_id))] = true
@@ -125,6 +130,8 @@ func clear_run() -> void:
 	_checkpoint_position = Vector2.ZERO
 	_tutorial_completed = false
 	_tutorial_completion_recorded = false
+	_demo_completed = false
+	_playtest_welcome_acknowledged = false
 	_claimed_threads.clear()
 	_heard_follower_dialogue.clear()
 	_completed_world_events.clear()
@@ -136,6 +143,7 @@ func clear_run() -> void:
 	checkpoint_changed.emit()
 	threads_changed.emit()
 	follower_dialogue_changed.emit()
+	demo_completion_changed.emit(false)
 
 func has_checkpoint() -> bool:
 	return not _checkpoint_scene_path.is_empty()
@@ -162,6 +170,25 @@ func is_tutorial_completed() -> bool:
 func has_tutorial_completion_record() -> bool:
 	return _tutorial_completion_recorded
 
+func mark_demo_completed() -> void:
+	if _demo_completed:
+		return
+	_demo_completed = true
+	_write_progress()
+	demo_completion_changed.emit(true)
+
+func is_demo_completed() -> bool:
+	return _demo_completed
+
+func acknowledge_playtest_welcome() -> void:
+	if _playtest_welcome_acknowledged:
+		return
+	_playtest_welcome_acknowledged = true
+	_write_progress()
+
+func has_acknowledged_playtest_welcome() -> bool:
+	return _playtest_welcome_acknowledged
+
 func _write_progress() -> void:
 	var config := ConfigFile.new()
 	config.set_value("meta", "save_version", SAVE_VERSION)
@@ -170,6 +197,8 @@ func _write_progress() -> void:
 	config.set_value("checkpoint", "position_x", _checkpoint_position.x)
 	config.set_value("checkpoint", "position_y", _checkpoint_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)
+	config.set_value("progress", "demo_completed", _demo_completed)
+	config.set_value("progress", "playtest_welcome_acknowledged", _playtest_welcome_acknowledged)
 	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
 	config.set_value("progress", "follower_dialogue", _get_follower_dialogue_strings())
 	config.set_value("world", "completed_events", _get_completed_world_event_strings())
