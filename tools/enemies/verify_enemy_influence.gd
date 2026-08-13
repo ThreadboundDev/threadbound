@@ -75,6 +75,14 @@ func _verify_yellow_combat_guard() -> void:
 	_expect(controller != null, "Yellow enemies must use the reusable influence controller.")
 	if controller:
 		_expect(bool(controller.call("_can_begin_yellow_phase")), "Yellow enemies must be allowed to phase while patrolling without a target.")
+		var vfx := enemy.get_node_or_null("EnemyInfluenceVFX") as EnemyInfluenceVFX
+		if vfx:
+			vfx.call("_update_yellow_history", 0.1)
+			vfx.begin_yellow_unravel()
+			_expect(
+				(vfx.get("_yellow_afterimages") as Array).size() == 3,
+				"Yellow unravel must leave three stepped positional afterimages."
+			)
 		var combat_target := Node2D.new()
 		enemy.target = combat_target
 		_expect(not bool(controller.call("_can_begin_yellow_phase")), "Yellow enemies must never begin a phase while fighting the player.")
