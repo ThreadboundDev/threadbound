@@ -12,6 +12,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Ground_Attack_Combo_2": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2_Stationary": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ground_Attack_Combo_2_Backpedal": {"frames": 19, "fps": 30.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Hurt": {"frames": 11, "fps": 60.0, "loop": false, "cell": Vector2(480, 480)},
 	&"Jump_Apex": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Ascent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
@@ -34,6 +35,7 @@ func _ready() -> void:
 	add_child(player)
 	if sprite != null:
 		_verify_sprite(sprite, failures)
+		_verify_hurt_animation(player, sprite, failures)
 		_verify_moving_combo_atlas_maps(sprite, failures)
 		_verify_movement_visual_tuning(player, failures)
 		_verify_ground_attack_variant_locking(player, sprite, failures)
@@ -182,6 +184,55 @@ func _verify_moving_combo_atlas_maps(
 						expected_indices[frame_index],
 					]
 				)
+
+func _verify_hurt_animation(
+	player: CharacterBody2D,
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	var frames := sprite.sprite_frames
+	if not frames.has_animation(&"Hurt"):
+		return
+
+	var expected_indices := PackedInt32Array([4, 5, 10, 15, 20, 25, 30, 35, 40, 45, 47])
+	for frame_index in expected_indices.size():
+		var texture := frames.get_frame_texture(&"Hurt", frame_index) as AtlasTexture
+		if texture == null or texture.atlas == null:
+			failures.append("Hurt frame %d is not backed by the hurt atlas." % frame_index)
+			continue
+		if not texture.atlas.resource_path.ends_with("/hurt.png"):
+			failures.append(
+				"Hurt frame %d uses %s instead of the hurt atlas." %
+				[frame_index, texture.atlas.resource_path]
+			)
+			continue
+		var atlas_index := (
+			int(texture.region.position.y / 480.0) * 5
+			+ int(texture.region.position.x / 480.0)
+		)
+		if atlas_index != expected_indices[frame_index]:
+			failures.append(
+				"Hurt frame %d maps to atlas cell %d; expected %d." %
+				[frame_index, atlas_index, expected_indices[frame_index]]
+			)
+
+	player.is_hurt = true
+	player._hurt_animation_active = true
+	player.update_animations(0.0)
+	if sprite.animation != &"Hurt":
+		failures.append("Hurt does not take animation priority while the player is hurt.")
+	if not sprite.scale.is_equal_approx(Vector2(0.539, 0.539)):
+		failures.append("Hurt does not apply its normalized visual scale.")
+	player.is_hurt = false
+	player.update_animations(0.0)
+	if sprite.animation == &"Hurt":
+		failures.append("Hurt remains active after the hurt state clears.")
+	player.is_hurt = true
+	player._hurt_animation_active = false
+	player.update_animations(0.0)
+	if sprite.animation == &"Hurt":
+		failures.append("Airborne damage incorrectly forces the grounded Hurt animation.")
+	player.is_hurt = false
 
 func _verify_ledge_climb_sheet(failures: Array[String]) -> void:
 	var path := "res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png"
