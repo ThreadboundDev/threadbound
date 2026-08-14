@@ -104,9 +104,11 @@ var _stat_nodes: Array[Control] = []
 var _selected_pulse_tween: Tween
 var _center_idle_tween: Tween
 var _displayed_knot_count := -1
+var _stick_navigation_armed := true
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_to_group("interaction_prompt_owners")
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_cache_stat_nodes()
 	_layout_radial_graph()
@@ -121,24 +123,57 @@ func set_player(player: Node) -> void:
 	_refresh()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
-		_select_index(_selected_index - 1)
+	if event is InputEventJoypadMotion and event.axis in [JOY_AXIS_LEFT_X, JOY_AXIS_LEFT_Y]:
+		var stick_direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		if stick_direction.length() <= 0.35:
+			_stick_navigation_armed = true
+		elif _stick_navigation_armed and stick_direction.length() >= 0.65:
+			_stick_navigation_armed = false
+			_select_in_direction(stick_direction.normalized())
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_down") or event.is_action_pressed("move_down"):
-		_select_index(_selected_index + 1)
+		return
+
+	if event.is_action_pressed("ui_up") or (event is InputEventKey and event.is_action_pressed("move_up")):
+		_select_in_direction(Vector2.UP)
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_left") or event.is_action_pressed("move_left"):
-		_select_index(_selected_index - 1)
+	elif event.is_action_pressed("ui_down") or (event is InputEventKey and event.is_action_pressed("move_down")):
+		_select_in_direction(Vector2.DOWN)
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_right") or event.is_action_pressed("move_right"):
-		_select_index(_selected_index + 1)
+	elif event.is_action_pressed("ui_left") or (event is InputEventKey and event.is_action_pressed("move_left")):
+		_select_in_direction(Vector2.LEFT)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_right") or (event is InputEventKey and event.is_action_pressed("move_right")):
+		_select_in_direction(Vector2.RIGHT)
 		get_viewport().set_input_as_handled()
 	elif _is_confirm_event(event):
 		_activate_selected()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_cancel"):
+	elif event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause_menu"):
 		back_requested.emit()
 		get_viewport().set_input_as_handled()
+
+func _select_in_direction(direction: Vector2) -> void:
+	if _stat_nodes.is_empty() or direction.length_squared() <= 0.0:
+		return
+	var current_center := _stat_nodes[_selected_index].position + _stat_nodes[_selected_index].size * 0.5
+	var best_index := -1
+	var best_score := -INF
+	for i in _stat_nodes.size():
+		if i == _selected_index:
+			continue
+		var candidate_center := _stat_nodes[i].position + _stat_nodes[i].size * 0.5
+		var offset := candidate_center - current_center
+		if offset.length_squared() <= 0.0:
+			continue
+		var alignment := offset.normalized().dot(direction.normalized())
+		if alignment <= 0.2:
+			continue
+		var score := alignment * 1000.0 - offset.length()
+		if score > best_score:
+			best_score = score
+			best_index = i
+	if best_index >= 0:
+		_select_index(best_index)
 
 func _cache_stat_nodes() -> void:
 	_stat_nodes.clear()
@@ -291,7 +326,7 @@ func _update_prompt() -> void:
 	prompt_description_label.text = String(data["description"])
 	prompt_quote_label.text = String(data["quote"])
 	prompt_cost_label.text = str(weave_upgrade_cost)
-	prompt_input_label.text = _get_action_display(&"interact", "E")
+	InteractionPromptFormatter.apply_action_glyph(prompt_input_label, &"ui_accept", "ENTER", 42)
 	if prompt_input_action_label:
 		prompt_input_action_label.text = "WEAVE THREAD"
 
@@ -381,7 +416,16 @@ func _get_player_stat_preview(stat_id: StringName) -> String:
 	return "--"
 
 func _refresh_input_labels() -> void:
-	back_input_label.text = _get_action_display(&"ui_cancel", "ESC")
+	InteractionPromptFormatter.apply_action_glyphs(
+		back_input_label,
+		[&"pause_menu", &"ui_cancel"],
+		"ESC",
+		34
+	)
+
+func refresh_interaction_prompt() -> void:
+	_refresh_input_labels()
+	_update_prompt()
 
 func _get_action_display(action: StringName, fallback: String) -> String:
 	var manager := get_node_or_null("/root/InputBindingManager")

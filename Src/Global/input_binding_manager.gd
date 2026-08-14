@@ -5,6 +5,8 @@ signal bindings_changed
 const SAVE_PATH := "user://controls.cfg"
 const KEYBOARD_SECTION := "keyboard_mouse"
 const CONTROLLER_SECTION := "controller"
+const META_SECTION := "binding_metadata"
+const CONTROLLER_SCHEMA_VERSION := 2
 
 var _keyboard_defaults: Dictionary = {}
 var _controller_defaults: Dictionary = {}
@@ -126,7 +128,10 @@ func load_bindings() -> void:
 				_remove_keyboard_mouse_events(StringName(action))
 				InputMap.action_add_event(StringName(action), event)
 
-	if config.has_section(CONTROLLER_SECTION):
+	var controller_schema_is_current := int(
+		config.get_value(META_SECTION, "controller_schema_version", 0)
+	) == CONTROLLER_SCHEMA_VERSION
+	if controller_schema_is_current and config.has_section(CONTROLLER_SECTION):
 		for action in config.get_section_keys(CONTROLLER_SECTION):
 			if not InputMap.has_action(action):
 				continue
@@ -136,10 +141,25 @@ func load_bindings() -> void:
 				_remove_controller_events(StringName(action))
 				InputMap.action_add_event(StringName(action), event)
 
+	_sync_controller_action_binding(&"Jump", &"ui_accept")
+	_sync_controller_action_binding(&"Jump", &"interact")
+	_sync_controller_action_binding(&"Meditate", &"menu_tab_left")
+	_sync_controller_action_binding(&"Grapple", &"menu_tab_right")
+
 	bindings_changed.emit()
+	if not controller_schema_is_current:
+		save_bindings()
+
+func _sync_controller_action_binding(source_action: StringName, target_action: StringName) -> void:
+	var source_event := get_primary_controller_event(source_action)
+	if not source_event or not InputMap.has_action(target_action):
+		return
+	_remove_controller_events(target_action)
+	InputMap.action_add_event(target_action, source_event.duplicate())
 
 func save_bindings() -> void:
 	var config := ConfigFile.new()
+	config.set_value(META_SECTION, "controller_schema_version", CONTROLLER_SCHEMA_VERSION)
 	for action in InputMap.get_actions():
 		var event := get_primary_keyboard_event(StringName(action))
 		if event:

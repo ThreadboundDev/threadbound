@@ -22,6 +22,7 @@ var _revealed := false
 var _choice_open := false
 
 func _ready() -> void:
+	add_to_group("interaction_prompt_owners")
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -32,7 +33,7 @@ func _ready() -> void:
 	monitoring = false
 	interaction_shape.disabled = true
 	prompt_label.visible = false
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(prompt_action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, prompt_action_text)
 	var input_manager := get_node_or_null("/root/InputBindingManager")
 	if input_manager and input_manager.has_signal("bindings_changed"):
 		input_manager.bindings_changed.connect(_refresh_prompt)
@@ -94,7 +95,10 @@ func _begin_idle_pulse() -> void:
 	pulse.tween_property(glow, "energy", 1.65, 1.1)
 
 func _refresh_prompt() -> void:
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(prompt_action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, prompt_action_text)
+
+func refresh_interaction_prompt() -> void:
+	_refresh_prompt()
 
 func _on_body_entered(body: Node2D) -> void:
 	if not _revealed or not body.is_in_group("player"):

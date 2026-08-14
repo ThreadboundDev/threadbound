@@ -211,18 +211,27 @@ static func _get_controller_axis_glyph_path(axis: int, _axis_value: float, input
 	match input_family:
 		&"ps5":
 			root = PS5_ROOT
-			file_name = "PS5_Left_Stick.png" if axis < 2 else "PS5_Right_Stick.png"
+			file_name = _get_axis_glyph_name(axis, "PS5_Left_Stick.png", "PS5_Right_Stick.png", "PS5_L2.png", "PS5_R2.png")
 		&"nintendo":
 			root = SWITCH_ROOT
-			file_name = "Switch_Left_Stick.png" if axis < 2 else "Switch_Right_Stick.png"
+			file_name = _get_axis_glyph_name(axis, "Switch_Left_Stick.png", "Switch_Right_Stick.png", "Switch_LT.png", "Switch_RT.png")
 		&"steam":
 			root = STEAM_ROOT
-			file_name = "SteamDeck_Left_Stick.png" if axis < 2 else "SteamDeck_Right_Stick.png"
+			file_name = _get_axis_glyph_name(axis, "SteamDeck_Left_Stick.png", "SteamDeck_Right_Stick.png", "SteamDeck_L2.png", "SteamDeck_R2.png")
 		_:
 			root = XBOX_ROOT
-			file_name = "XboxSeriesX_Left_Stick.png" if axis < 2 else "XboxSeriesX_Right_Stick.png"
+			file_name = _get_axis_glyph_name(axis, "XboxSeriesX_Left_Stick.png", "XboxSeriesX_Right_Stick.png", "XboxSeriesX_LT.png", "XboxSeriesX_RT.png")
 	var path := "%s/%s" % [root, file_name]
 	return path if ResourceLoader.exists(path) else ""
+
+static func _get_axis_glyph_name(axis: int, left_stick: String, right_stick: String, left_trigger: String, right_trigger: String) -> String:
+	match axis:
+		JOY_AXIS_TRIGGER_LEFT:
+			return left_trigger
+		JOY_AXIS_TRIGGER_RIGHT:
+			return right_trigger
+		_:
+			return left_stick if axis < JOY_AXIS_RIGHT_X else right_stick
 
 static func _format_key_event(event: InputEventKey) -> String:
 	var keycode: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode

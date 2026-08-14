@@ -34,6 +34,7 @@ var menu_tween: Tween
 # This ensures immediate response regardless of Engine.time_scale.
 var slot_data: Array = []  # [{slot: Control, idx: int}]
 var hovered_slot: Control = null
+var controller_hover_active := false
 var pulse_tweens: Dictionary = {}
 
 func _ready() -> void:
@@ -96,6 +97,11 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			select_equip(int(entry["idx"]))
 			return
+	if event is InputEventJoypadButton and event.is_action_pressed("ui_accept") and hovered_slot:
+		var hovered_entry := _get_entry_for_slot(hovered_slot)
+		if not hovered_entry.is_empty():
+			get_viewport().set_input_as_handled()
+			select_equip(int(hovered_entry["idx"]))
 
 func _process(_delta: float) -> void:
 	var real_delta = _get_real_delta()
@@ -111,10 +117,16 @@ func _process(_delta: float) -> void:
 # get_local_mouse_position() handles anchors and canvas transforms correctly —
 # background.global_position is unreliable for FULL_RECT anchored Controls.
 func _update_hover() -> void:
-	var mouse_position := get_viewport().get_mouse_position()
 	var new_hover: Control = null
-
-	var entry := _get_slot_entry_at(mouse_position)
+	var aim := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	var entry: Dictionary = {}
+	if aim.length() >= 0.35:
+		controller_hover_active = true
+		entry = _get_slot_entry_in_direction(aim.normalized())
+	elif controller_hover_active:
+		return
+	else:
+		entry = _get_slot_entry_at(get_viewport().get_mouse_position())
 	if not entry.is_empty():
 		new_hover = entry["slot"] as Control
 
@@ -132,6 +144,27 @@ func _get_slot_entry_at(mouse_position: Vector2) -> Dictionary:
 	for entry in slot_data:
 		var slot := entry["slot"] as Control
 		if slot.visible and slot.get_global_rect().has_point(mouse_position):
+			return entry
+	return {}
+
+func _get_slot_entry_in_direction(direction: Vector2) -> Dictionary:
+	var center := background.get_global_rect().get_center()
+	var best_entry: Dictionary = {}
+	var best_dot := -2.0
+	for entry in slot_data:
+		var slot := entry["slot"] as Control
+		if not slot.visible:
+			continue
+		var slot_direction := (slot.get_global_rect().get_center() - center).normalized()
+		var alignment := slot_direction.dot(direction)
+		if alignment > best_dot:
+			best_dot = alignment
+			best_entry = entry
+	return best_entry
+
+func _get_entry_for_slot(target: Control) -> Dictionary:
+	for entry in slot_data:
+		if entry["slot"] == target:
 			return entry
 	return {}
 
@@ -212,6 +245,7 @@ func _restore_time() -> void:
 func update_hold_state(held: bool) -> void:
 	if held and not is_held:
 		is_held = true
+		controller_hover_active = false
 		slow_bank = max_slow_bank  # always start with a full bank
 
 		# Kill any restore tween before setting time scale — an ongoing
@@ -237,6 +271,11 @@ func update_hold_state(held: bool) -> void:
 
 	elif not held and is_held:
 		is_held = false
+		if controller_hover_active and hovered_slot:
+			var hovered_entry := _get_entry_for_slot(hovered_slot)
+			if not hovered_entry.is_empty():
+				select_equip(int(hovered_entry["idx"]))
+				return
 		_close_menu()
 
 # === CLOSE & VISUALS ===
@@ -245,6 +284,7 @@ func _close_menu() -> void:
 	is_slowing = false
 	# Reset hover state immediately so icons don't stay highlighted
 	hovered_slot = null
+	controller_hover_active = false
 	_reset_slot_visuals()
 	_fade_out_menu()
 	_fade_out_blur()

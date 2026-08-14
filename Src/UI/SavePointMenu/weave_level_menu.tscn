@@ -127,13 +127,13 @@ color = Color(0.58, 0.42, 0.18, 0.85)
 anchors_preset = 0
 offset_left = 92.0
 offset_top = 992.0
-offset_right = 430.0
+offset_right = 612.0
 offset_bottom = 1044.0
 mouse_filter = 2
 
 [node name="BackInputLabel" type="Label" parent="BackHint" unique_id=2004617393]
 layout_mode = 0
-offset_right = 54.0
+offset_right = 176.0
 offset_bottom = 46.0
 text = "ESC"
 label_settings = SubResource("LabelSettings_small")
@@ -142,8 +142,8 @@ vertical_alignment = 1
 
 [node name="BackTextLabel" type="Label" parent="BackHint" unique_id=999102803]
 layout_mode = 0
-offset_left = 66.0
-offset_right = 338.0
+offset_left = 190.0
+offset_right = 520.0
 offset_bottom = 46.0
 text = "LEAVE MEDITATION"
 label_settings = SubResource("LabelSettings_small")
