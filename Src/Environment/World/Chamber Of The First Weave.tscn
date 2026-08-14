@@ -2472,4 +2472,5 @@ limit_top = -5000
 limit_right = 8200
 limit_bottom = 4900
 position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 script = ExtResource("room_camera_controller")

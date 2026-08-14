@@ -67,6 +67,42 @@ func _verify_chamber_wiring() -> void:
 	) as RoomCameraZone2D
 	_expect(camera != null, "Chamber camera uses the room camera controller.")
 	_expect(zone != null, "Chamber exposes an editable merchant camera zone.")
+	if camera:
+		_expect(
+			camera.position_smoothing_enabled,
+			"Chamber camera keeps rendered motion smoothing enabled."
+		)
+		_expect(
+			is_equal_approx(camera.position_smoothing_speed, 10.0),
+			"Chamber camera uses the tuned smoothing speed."
+		)
+		_expect(
+			camera.horizontal_dead_zone > 0.0,
+			"Chamber camera composes movement through a horizontal dead zone."
+		)
+		_expect(
+			camera.look_ahead_distance > 0.0,
+			"Chamber camera has directional look-ahead."
+		)
+		_expect(
+			camera.dash_look_ahead_distance > 0.0,
+			"Chamber camera adds lead at dash speeds."
+		)
+		_expect(
+			camera.fall_look_ahead_distance > 0.0,
+			"Chamber camera has faster downward framing for falls."
+		)
+	var remote_follow := chamber.get_node(
+		"Player/RemoteTransform2D"
+	) as RemoteTransform2D
+	_expect(remote_follow != null, "Player exposes cinematic camera ownership.")
+	if remote_follow:
+		remote_follow.update_position = false
+		_expect(
+			camera.is_follow_suspended(),
+			"Disabled RemoteTransform2D suspends normal camera composition."
+		)
+		remote_follow.update_position = true
 	if zone:
 		_expect(zone.has_valid_boundary(), "Merchant camera zone has a valid boundary.")
 		_expect(
