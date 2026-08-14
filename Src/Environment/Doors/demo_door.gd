@@ -64,6 +64,7 @@ var _doorway_depth_originals: Dictionary = {}
 
 func _ready() -> void:
 	add_to_group("demo_doors")
+	add_to_group("interaction_prompt_owners")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	if doorway_depth_area:
@@ -82,6 +83,9 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	_restore_all_doorway_depth()
+
+func refresh_interaction_prompt() -> void:
+	_refresh_prompt_label()
 
 func interact(_interacting_player: Node) -> void:
 	if not interaction_enabled:
@@ -473,7 +477,7 @@ func _refresh_prompt_label() -> void:
 	var raw_text := prompt_open_text if _message_acknowledged else prompt_read_text
 	var fallback := "Open" if _message_acknowledged else "Read"
 	var action_text := InteractionPromptFormatter.prompt_action_from_text(raw_text, fallback)
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, action_text)
 
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):

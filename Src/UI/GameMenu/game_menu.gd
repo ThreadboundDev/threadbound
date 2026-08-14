@@ -16,19 +16,20 @@ const CONTROL_BINDINGS := [
 	{"node": "Interact", "label": "INTERACT", "actions": [&"interact"], "keyboard_input": "E"},
 	{"node": "LookUp", "label": "LOOK UP", "actions": [&"move_up"], "keyboard_input": "W HELD"},
 	{"node": "LookDown", "label": "LOOK DOWN", "actions": [&"move_down"], "keyboard_input": "S HELD"},
-	{"node": "Jump", "label": "JUMP", "actions": [&"Jump"], "layout_nodes": {&"ps5": "CrossButton"}},
+	{"node": "Jump", "label": "JUMP", "controller_label": "JUMP / CONFIRM", "actions": [&"Jump"], "layout_nodes": {&"ps5": "CrossButton"}},
 	{"node": "Dash", "label": "DASH", "actions": [&"Dash"], "layout_nodes": {&"ps5": "CircleButton"}},
-	{"node": "Grapple", "label": "GRAPPLE", "actions": [&"Grapple"], "keyboard_input": "RMB", "layout_nodes": {&"ps5": "R2Button"}},
+	{"node": "Grapple", "label": "GRAPPLE", "controller_label": "GRAPPLE / CYCLE RIGHT", "actions": [&"Grapple"], "keyboard_input": "RMB", "layout_nodes": {&"ps5": "R1Button"}},
 	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB", "layout_nodes": {&"ps5": "SquareButton"}},
 	{"node": "SpecialAttack", "label": "SPECIAL + DIRECTION", "actions": [&"SpecialAttack"], "keyboard_input": "Q", "layout_nodes": {&"ps5": "TriangleButton"}},
-	{"node": "Meditate", "label": "MEDITATE (HOLD)", "actions": [&"Meditate"], "keyboard_input": "V"},
+	{"node": "Meditate", "label": "MEDITATE (HOLD)", "controller_label": "MEDITATE / CYCLE LEFT", "actions": [&"Meditate"], "keyboard_input": "V", "layout_nodes": {&"ps5": "L1Button"}},
+	{"node": "HotSwap", "label": "HOT SWAP (HOLD)", "actions": [&"open_menu"], "layout_nodes": {&"ps5": "CreateButton"}},
 	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"], "layout_nodes": {&"ps5": "DPadUp"}},
 	{"node": "Map", "label": "MAP", "actions": [&"open_map"], "layout_nodes": {&"ps5": "DPadLeft"}},
 	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"], "layout_nodes": {&"ps5": "DPadDown"}},
 	{"node": "Controls", "label": "CONTROLS", "actions": [&"open_controls"], "layout_nodes": {&"ps5": "DPadRight"}},
-	{"node": "Pause", "label": "PAUSE", "actions": [&"ui_cancel"], "layout_nodes": {&"ps5": "OptionsButton"}},
-	{"node": "CycleLeft", "label": "CYCLE LEFT", "actions": [&"menu_tab_left"], "layout_nodes": {&"ps5": "L1Button"}},
-	{"node": "CycleRight", "label": "CYCLE RIGHT", "actions": [&"menu_tab_right"], "layout_nodes": {&"ps5": "R1Button"}},
+	{"node": "Pause", "label": "PAUSE", "actions": [&"pause_menu"], "layout_nodes": {&"ps5": "OptionsButton"}},
+	{"node": "CycleLeft", "label": "CYCLE LEFT", "actions": [&"menu_tab_left"]},
+	{"node": "CycleRight", "label": "CYCLE RIGHT", "actions": [&"menu_tab_right"]},
 ]
 const REBINDABLE_KEYBOARD_NODES := [
 	"MoveLeft",
@@ -41,6 +42,8 @@ const REBINDABLE_KEYBOARD_NODES := [
 	"Grapple",
 	"Attack",
 	"SpecialAttack",
+	"Meditate",
+	"HotSwap",
 	"Inventory",
 	"Map",
 	"Lore",
@@ -58,6 +61,8 @@ const REBINDABLE_CONTROLLER_NODES := [
 	"Grapple",
 	"Attack",
 	"SpecialAttack",
+	"Meditate",
+	"HotSwap",
 	"Inventory",
 	"Map",
 	"Lore",
@@ -266,6 +271,7 @@ var _pending_rebind_event: InputEvent = null
 var _pending_conflict_action: StringName = &""
 var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
+var _inventory_focused_slot: Control = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
 
@@ -323,7 +329,7 @@ func _process(_delta: float) -> void:
 	if TAB_ORDER[_selected_index] == &"Map":
 		_update_map_tracker()
 	if inventory_tooltip and inventory_tooltip.visible:
-		_position_inventory_tooltip()
+		_position_inventory_tooltip(_inventory_focused_slot if _controls_input_family != &"keyboard_mouse" else null)
 
 func _input(event: InputEvent) -> void:
 	if _rebinding_action == &"":
@@ -359,7 +365,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 
-	if event.is_action_pressed("ui_cancel"):
+	if TAB_ORDER[_selected_index] == &"Inventory" and _handle_inventory_controller_navigation(event):
+		get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause_menu"):
 		_close()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("menu_tab_left"):
@@ -368,16 +378,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("menu_tab_right"):
 		_select_tab(_selected_index + 1)
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("open_inventory"):
+	elif event is InputEventKey and event.is_action_pressed("open_inventory"):
 		_select_named_tab(&"Inventory")
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("open_map"):
+	elif event is InputEventKey and event.is_action_pressed("open_map"):
 		_select_named_tab(&"Map")
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("open_lore"):
+	elif event is InputEventKey and event.is_action_pressed("open_lore"):
 		_select_named_tab(&"Lore")
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("open_controls"):
+	elif event is InputEventKey and event.is_action_pressed("open_controls"):
 		_select_named_tab(&"Controls")
 		get_viewport().set_input_as_handled()
 
@@ -463,18 +473,100 @@ func _on_inventory_slot_gui_input(event: InputEvent, slot: Node) -> void:
 			_show_inventory_tooltip(item)
 			_try_equip_inventory_item(item)
 
-func _show_inventory_tooltip(item: Dictionary) -> void:
+func _handle_inventory_controller_navigation(event: InputEvent) -> bool:
+	if not (event is InputEventJoypadButton or event is InputEventJoypadMotion):
+		return false
+	if event.is_action_pressed("ui_up"):
+		_move_inventory_focus(Vector2.UP)
+		return true
+	if event.is_action_pressed("ui_down"):
+		_move_inventory_focus(Vector2.DOWN)
+		return true
+	if event.is_action_pressed("ui_left"):
+		_move_inventory_focus(Vector2.LEFT)
+		return true
+	if event.is_action_pressed("ui_right"):
+		_move_inventory_focus(Vector2.RIGHT)
+		return true
+	if event.is_action_pressed("ui_accept") and _inventory_focused_slot:
+		var item: Dictionary = _inventory_focused_slot.get_meta("inventory_item", {})
+		if not item.is_empty():
+			_try_equip_inventory_item(item)
+			_show_inventory_tooltip(item, _inventory_focused_slot)
+		return true
+	return false
+
+func _get_populated_inventory_slots() -> Array[Control]:
+	var result: Array[Control] = []
+	if not inventory_slots_root:
+		return result
+	for child in inventory_slots_root.get_children():
+		if child is Control and not (child as Control).get_meta("inventory_item", {}).is_empty():
+			result.append(child as Control)
+	return result
+
+func _move_inventory_focus(direction: Vector2) -> void:
+	var slots := _get_populated_inventory_slots()
+	if slots.is_empty():
+		_set_inventory_focus(null)
+		return
+	if not _inventory_focused_slot or not slots.has(_inventory_focused_slot):
+		_set_inventory_focus(slots[0])
+		return
+	var origin := _inventory_focused_slot.get_global_rect().get_center()
+	var best: Control = null
+	var best_score := INF
+	for slot in slots:
+		if slot == _inventory_focused_slot:
+			continue
+		var offset := slot.get_global_rect().get_center() - origin
+		var forward := offset.dot(direction)
+		if forward <= 1.0:
+			continue
+		var sideways := absf(offset.cross(direction))
+		var score := forward + sideways * 2.5
+		if score < best_score:
+			best_score = score
+			best = slot
+	if best:
+		_set_inventory_focus(best)
+
+func _set_inventory_focus(slot: Control) -> void:
+	_inventory_focused_slot = slot
+	_update_inventory_focus_visuals()
+	if not slot:
+		_hide_inventory_tooltip()
+		return
+	var item: Dictionary = slot.get_meta("inventory_item", {})
+	if not item.is_empty():
+		_show_inventory_tooltip(item, slot)
+		AudioManager.play_ui(&"ui_click")
+
+func _update_inventory_focus_visuals() -> void:
+	if not inventory_slots_root:
+		return
+	for child in inventory_slots_root.get_children():
+		if not child is Control:
+			continue
+		var frame := child.get_node_or_null("InventoryFrame") as TextureRect
+		if frame and not child.get_meta("inventory_item", {}).is_empty():
+			frame.modulate = Color(1.3, 1.16, 0.62, 1.0) if child == _inventory_focused_slot else Color.WHITE
+
+func _show_inventory_tooltip(item: Dictionary, anchor: Control = null) -> void:
 	if not inventory_tooltip:
 		return
 	inventory_tooltip.visible = true
 	inventory_tooltip_title.text = String(item.get("name", "ITEM")).to_upper()
 	inventory_tooltip_description.text = String(item.get("description", "")).to_upper()
-	_position_inventory_tooltip()
+	_position_inventory_tooltip(anchor)
 
-func _position_inventory_tooltip() -> void:
+func _position_inventory_tooltip(anchor: Control = null) -> void:
 	if not inventory_tooltip:
 		return
-	var target_position := inventory_tooltip.get_global_mouse_position() + inventory_tooltip_mouse_offset
+	var target_position := (
+		anchor.get_global_rect().end + inventory_tooltip_mouse_offset
+		if anchor else inventory_tooltip.get_global_mouse_position() + inventory_tooltip_mouse_offset
+	)
 	var viewport_rect := get_viewport().get_visible_rect()
 	var tooltip_size := inventory_tooltip.size
 	target_position.x = minf(target_position.x, viewport_rect.end.x - tooltip_size.x - 8.0)
@@ -508,6 +600,9 @@ func _select_tab(index: int, instant := false) -> void:
 	title_label.text = String(TAB_ORDER[_selected_index]).to_upper()
 	if TAB_ORDER[_selected_index] == &"Inventory":
 		_update_inventory_threads()
+		if _controls_input_family != &"keyboard_mouse":
+			var slots := _get_populated_inventory_slots()
+			_set_inventory_focus(slots[0] if not slots.is_empty() else null)
 	elif TAB_ORDER[_selected_index] == &"Map":
 		_update_map_tracker()
 	elif TAB_ORDER[_selected_index] == &"Controls":
@@ -634,7 +729,11 @@ func _update_control_binding_labels() -> void:
 		if not binding_node:
 			continue
 
-		var action_text := String(binding["label"]).to_upper()
+		var action_text := String(
+			binding.get("controller_label", binding["label"])
+			if _controls_input_family != &"keyboard_mouse"
+			else binding["label"]
+		).to_upper()
 		var input_text := _format_control_binding(binding, _controls_input_family)
 		if binding_node.has_method("set"):
 			binding_node.set("action_text", action_text)
@@ -874,9 +973,6 @@ func _setup_controller_binding_callouts(active_layout: Control) -> void:
 		if not text_box.mouse_exited.is_connected(exited_callable):
 			text_box.mouse_exited.connect(exited_callable)
 		_ensure_callout_highlight(text_box)
-
-	if _selected_controller_binding_node.is_empty():
-		_selected_controller_binding_node = _get_first_controller_binding_node()
 
 func _ensure_callout_highlight(text_box: Control) -> void:
 	var highlight := text_box.get_node_or_null("Highlight") as ColorRect
@@ -1173,10 +1269,17 @@ func _handle_controller_rebind_input(event: InputEvent) -> void:
 		AudioManager.play_ui(&"ui_click")
 		return
 
-	var conflict := InputBindingManager.get_controller_conflict(clean_event, [_rebinding_action])
+	var shared_button_group := _build_shared_button_group(_rebinding_node, clean_event)
+	var grouped_actions: Array[StringName] = []
+	if shared_button_group.is_empty():
+		grouped_actions.append(_rebinding_action)
+	else:
+		for action in shared_button_group:
+			grouped_actions.append(StringName(action))
+	var conflict := InputBindingManager.get_controller_conflict(clean_event, grouped_actions)
 	if conflict != &"":
 		_pending_rebind_event = clean_event
-		_pending_rebind_group = {}
+		_pending_rebind_group = shared_button_group
 		_pending_conflict_action = conflict
 		_show_rebind_prompt(
 			"INPUT ALREADY USED",
@@ -1186,8 +1289,27 @@ func _handle_controller_rebind_input(event: InputEvent) -> void:
 		AudioManager.play_ui(&"ui_click")
 		return
 
-	InputBindingManager.rebind_controller_action(_rebinding_action, clean_event, false)
+	if not shared_button_group.is_empty():
+		InputBindingManager.rebind_controller_action_group(shared_button_group, false)
+	else:
+		InputBindingManager.rebind_controller_action(_rebinding_action, clean_event, false)
 	_finish_rebind()
+
+func _build_shared_button_group(node_name: String, event: InputEvent) -> Dictionary:
+	var actions: Array[StringName] = []
+	match node_name:
+		"Jump":
+			actions = [&"Jump", &"ui_accept", &"interact"]
+		"Meditate":
+			actions = [&"Meditate", &"menu_tab_left"]
+		"Grapple":
+			actions = [&"Grapple", &"menu_tab_right"]
+		_:
+			return {}
+	var group := {}
+	for action in actions:
+		group[action] = event.duplicate()
+	return group
 
 func _apply_pending_rebind(overwrite_conflict: bool) -> void:
 	if not _pending_rebind_group.is_empty():
@@ -1436,6 +1558,9 @@ func _update_inventory_threads() -> void:
 		_set_inventory_slot_item(slot as Control, visible_items[item_index])
 		item_index += 1
 	_update_inventory_stats()
+	if _inventory_focused_slot and not _get_populated_inventory_slots().has(_inventory_focused_slot):
+		_inventory_focused_slot = null
+	_update_inventory_focus_visuals()
 
 func _get_visible_inventory_items() -> Array[Dictionary]:
 	var visible_items: Array[Dictionary] = []

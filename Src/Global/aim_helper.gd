@@ -8,6 +8,8 @@ static func get_aim_direction(context: Node2D, origin: Vector2, fallback: Vector
 	var stick_direction := get_right_stick_direction(deadzone)
 	if stick_direction.length() > 0.0:
 		return stick_direction
+	if _is_controller_active():
+		return fallback.normalized() if fallback.length() > 0.0 else Vector2.RIGHT
 
 	if context:
 		var mouse_direction := context.get_global_mouse_position() - origin
@@ -18,6 +20,17 @@ static func get_aim_direction(context: Node2D, origin: Vector2, fallback: Vector
 		return fallback.normalized()
 
 	return Vector2.RIGHT
+
+static func _is_controller_active() -> bool:
+	var tree := Engine.get_main_loop() as SceneTree
+	if not tree or not tree.root:
+		return false
+	var input_tracker := tree.root.get_node_or_null("CustomCursor")
+	return (
+		input_tracker != null
+		and input_tracker.has_method("is_controller_active")
+		and bool(input_tracker.call("is_controller_active"))
+	)
 
 static func get_right_stick_direction(deadzone: float = DEFAULT_AIM_DEADZONE) -> Vector2:
 	for device_id in Input.get_connected_joypads():

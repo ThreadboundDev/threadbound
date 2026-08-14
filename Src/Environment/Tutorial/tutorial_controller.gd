@@ -7,9 +7,11 @@ const TutorialPromptOverlayScene := preload("res://Src/UI/Tutorial/tutorial_prom
 const INPUT_PLACEHOLDER_ACTIONS := {
 	"{move_left}": "move_left",
 	"{move_right}": "move_right",
+	"{aim}": "aim_right",
 	"{move_up}": "move_up",
 	"{move_down}": "move_down",
 	"{jump}": "Jump",
+	"{confirm}": "ui_accept",
 	"{dash}": "Dash",
 	"{grapple}": "Grapple",
 	"{attack}": "Attack",
@@ -20,7 +22,7 @@ const INPUT_PLACEHOLDER_ACTIONS := {
 	"{map}": "open_map",
 	"{lore}": "open_lore",
 	"{controls}": "open_controls",
-	"{pause}": "ui_cancel",
+	"{pause}": "pause_menu",
 }
 
 const INPUT_PLACEHOLDER_FALLBACKS := {
@@ -29,6 +31,7 @@ const INPUT_PLACEHOLDER_FALLBACKS := {
 	"{move_up}": "W",
 	"{move_down}": "S",
 	"{jump}": "SPACE",
+	"{confirm}": "ENTER",
 	"{dash}": "SHIFT",
 	"{grapple}": "RMB",
 	"{attack}": "LMB",
@@ -97,20 +100,20 @@ enum TutorialStep {
 @export var save_menu_prompt_size := Vector2(620.0, 116.0)
 
 @export_group("Step Text")
-@export_multiline var hp_text := "This is your health. If it empties, your Threadborne falls. Click or press {interact} to continue."
-@export_multiline var action_points_text := "These are Action Points. Weapon skills, air jumps, grapples, dashes, and other abilities spend them, then they recharge over time. Click or press {interact} to continue."
-@export_multiline var momentum_text := "This is Momentum. Movement, jumps, dashes, grapples, and attacks fill it. When full, you enter Flow State. Click or press {interact} to continue."
+@export_multiline var hp_text := "This is your health. If it empties, your Threadborne falls. Click or press {confirm} to continue."
+@export_multiline var action_points_text := "These are Action Points. Weapon skills, air jumps, grapples, dashes, and other abilities spend them, then they recharge over time. Click or press {confirm} to continue."
+@export_multiline var momentum_text := "This is Momentum. Movement, jumps, dashes, grapples, and attacks fill it. When full, you enter Flow State. Click or press {confirm} to continue."
 @export_multiline var move_text := "Press {move_left} or {move_right} to move across the room."
 @export_multiline var jump_text := "Press {jump} to jump {jump_goal} times. {jump_progress}/{jump_goal}"
 @export_multiline var air_jump_text := "Press {jump} while airborne to air jump {air_jump_goal} times. {air_jump_progress}/{air_jump_goal}"
 @export_multiline var dash_text := "Press {dash} to dash {dash_goal} times. {dash_progress}/{dash_goal}"
-@export_multiline var grapple_text := "Press {grapple} to fire the grapple {grapple_goal} times. {grapple_progress}/{grapple_goal}"
+@export_multiline var grapple_text := "Aim with {aim}, then press {grapple} to fire the grapple {grapple_goal} times. {grapple_progress}/{grapple_goal}"
 @export_multiline var attack_text := "Press {attack} to attack with the shuttle {attack_goal} times. {attack_progress}/{attack_goal}"
 @export_multiline var smash_text := "While grounded, press {special_attack} to perform a Thread Smash. It costs 2 Action Points, briefly commits you in place, and deals heavy area damage."
 @export_multiline var menu_text := "Press {inventory}, {map}, {controls}, or {pause} to open your menus."
 @export_multiline var combat_text := "Press {attack} to defeat the Threadling. Movement and attacks both build momentum."
 @export_multiline var meditation_text := "Now that you are safe, hold {meditate} to meditate. Meditation rapidly restores Action Points and can spend Momentum to recover health up to 75%."
-@export_multiline var thread_knot_text := "These are Thread Knots. They are used to purchase items and level up. Click or press {interact} to continue."
+@export_multiline var thread_knot_text := "These are Thread Knots. They are used to purchase items and level up. Click or press {confirm} to continue."
 @export_multiline var save_point_text := "Press {interact} near the Blossom to rest, recover, save, and reset the world."
 @export_multiline var save_point_weave_text := "Choose WEAVE to spend a Thread Knot and strengthen your Threadborne."
 @export_multiline var save_point_reflect_text := "Now choose REFLECT—the Blossom's Rest option—to fully recover, save your checkpoint, and reset the world."
@@ -388,8 +391,12 @@ func _set_step(step: TutorialStep) -> void:
 			_unlock_completion_targets()
 			_schedule_complete_prompt_dismissal()
 		TutorialStep.DONE:
+			_current_prompt_text = ""
+			_current_prompt_pointer = false
+			_current_world_pointer_target = null
 			if _prompt:
-				_prompt.hide_prompt()
+				_prompt.hide_prompt(true)
+			tutorial_enabled = false
 			tutorial_completed.emit()
 
 func _advance_step() -> void:
@@ -626,15 +633,22 @@ func _menu_input_pressed() -> bool:
 		Input.is_action_just_pressed("open_inventory")
 		or Input.is_action_just_pressed("open_map")
 		or Input.is_action_just_pressed("open_controls")
-		or Input.is_action_just_pressed("ui_cancel")
+		or Input.is_action_just_pressed("pause_menu")
 	)
 
 func _hud_advance_pressed() -> bool:
 	return (
 		_click_advance_requested
-		or Input.is_action_just_pressed("interact")
-		or Input.is_action_just_pressed("Attack")
+		or Input.is_action_just_pressed("ui_accept")
 	)
+
+func is_consuming_ui_accept() -> bool:
+	return _step in [
+		TutorialStep.HUD_HP,
+		TutorialStep.HUD_ACTION_POINTS,
+		TutorialStep.HUD_MOMENTUM,
+		TutorialStep.THREAD_KNOTS,
+	]
 
 func _spawn_tutorial_enemy() -> void:
 	if _tutorial_enemy and is_instance_valid(_tutorial_enemy):

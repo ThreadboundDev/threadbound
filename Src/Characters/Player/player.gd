@@ -806,7 +806,7 @@ func _process(_delta: float) -> void:
 			_debug_force_open_demo_doors()
 		_debug_force_doors_was_pressed = debug_force_doors_pressed
 
-	if Input.is_action_just_pressed("ui_cancel") and not death_reset_started and not _should_block_pause_open():
+	if Input.is_action_just_pressed("pause_menu") and not death_reset_started and not _should_block_pause_open():
 		_open_pause_menu()
 
 	var requested_game_menu_tab := _get_requested_game_menu_tab()
@@ -1429,6 +1429,9 @@ func update_animations(dir: float) -> void:
 		if current_body_anim != HURT_ANIMATION:
 			current_body_anim = HURT_ANIMATION
 			player_animation.play(HURT_ANIMATION)
+			current_equip_anim = HURT_ANIMATION
+			if current_gloves and current_gloves.has_method("play_equipment_anim"):
+				current_gloves.play_equipment_anim(HURT_ANIMATION)
 		return
 
 	if current_attack_uses_grapple_strike and not current_grapple_strike_animation_started:
@@ -2228,7 +2231,18 @@ func _can_process_jump_input(attack_requested_this_frame: bool) -> bool:
 	return (
 		not attack_requested_this_frame
 		and not _is_attack_movement_committed()
+		and not _tutorial_is_consuming_ui_accept()
+		and not is_near_interactable
 	)
+
+func _tutorial_is_consuming_ui_accept() -> bool:
+	for controller in get_tree().get_nodes_in_group("tutorial_controllers"):
+		if (
+			controller.has_method("is_consuming_ui_accept")
+			and bool(controller.call("is_consuming_ui_accept"))
+		):
+			return true
+	return false
 
 func can_start_dash() -> bool:
 	if (

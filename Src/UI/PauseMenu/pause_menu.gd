@@ -47,12 +47,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if _showing_options:
-		if event.is_action_pressed("open_menu") or event.is_action_pressed("ui_cancel"):
+		if event.is_action_pressed("pause_menu") or event.is_action_pressed("ui_cancel"):
 			_show_main_menu()
 			get_viewport().set_input_as_handled()
 		return
 	if _showing_support:
-		if event.is_action_pressed("open_menu") or event.is_action_pressed("ui_cancel"):
+		if event.is_action_pressed("pause_menu") or event.is_action_pressed("ui_cancel"):
 			_show_main_menu()
 			get_viewport().set_input_as_handled()
 		return
@@ -66,7 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif _is_confirm_event(event):
 		_activate_selected()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("open_menu") or event.is_action_pressed("ui_cancel"):
+	elif event.is_action_pressed("pause_menu") or event.is_action_pressed("ui_cancel"):
 		_resume_game()
 		get_viewport().set_input_as_handled()
 

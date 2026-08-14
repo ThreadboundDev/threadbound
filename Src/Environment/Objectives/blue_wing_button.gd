@@ -98,4 +98,4 @@ func _refresh_prompt_label() -> void:
 		return
 
 	var action_text := InteractionPromptFormatter.prompt_action_from_text(prompt_text, "Activate")
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, action_text)

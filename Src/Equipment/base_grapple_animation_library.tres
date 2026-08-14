@@ -411,6 +411,47 @@ tracks/2/keys = {
 "values": [Vector2(0.7356647, 0.779596), Vector2(0.71977466, 0.66528046), Vector2(0.8075866, 0.6686914), Vector2(0.8288568, 0.7012554), Vector2(0.8680553, 0.70300853), Vector2(0.87374604, 0.83534956), Vector2(0.8252252, 0.6584387), Vector2(0.9084878, 0.6401134), Vector2(0.8568776, 0.682472), Vector2(0.7431016, 0.75498635), Vector2(1.0068669, 0.6401695), Vector2(0.930078, 0.60579693), Vector2(0.93245274, 0.7466218), Vector2(0.85955054, 0.6080655), Vector2(0.783947, 0.7412712), Vector2(0.8764596, 0.648664), Vector2(0.83650005, 0.79288274), Vector2(0.81152827, 0.6774383), Vector2(0.8685044, 0.72991204)]
 }
 
+[sub_resource type="Animation" id="Animation_20_hurt"]
+resource_name = "Hurt"
+length = 0.183333333
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equipment/RightHandAnchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.03333333, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.13333334, 0.15, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-49, -24), Vector2(-65, -26), Vector2(-75, -23), Vector2(-71, -12), Vector2(-62, -11), Vector2(-50, -18), Vector2(-39, -22), Vector2(-34, -23), Vector2(-31, -20), Vector2(-30, -20), Vector2(-30, -19)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.03333333, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.13333334, 0.15, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.25323585, -0.4353409, -0.48664665, 0.026394159, 0.34009472, 0.2947874, 0.42014974, 0.32799244, 0.45633635, 0.26086235, 0.32994246]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Equipment/RightHandAnchor/WristWrapPivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.03333333, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.13333334, 0.15, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.6010911, 1.319428), Vector2(1.7733357, 1.2552814), Vector2(1.5944952, 1.0280714), Vector2(1.7122356, 1.1436164), Vector2(1.6216171, 1.1793367), Vector2(1.7899865, 1.1359518), Vector2(1.5831821, 1.2612444), Vector2(1.7467123, 1.1613635), Vector2(1.803942, 1.1286294), Vector2(1.662883, 1.323777), Vector2(1.7301675, 1.2023705)]
+}
+
 [sub_resource type="Animation" id="Animation_10_idle"]
 resource_name = "Idle"
 length = 1.375
@@ -878,6 +919,7 @@ _data = {
 &"Ground_Attack_Combo_2": SubResource("Animation_07_ground_attack_combo_2"),
 &"Ground_Attack_Combo_2_Backpedal": SubResource("Animation_08_ground_attack_combo_2_backpedal"),
 &"Ground_Attack_Combo_2_Stationary": SubResource("Animation_09_ground_attack_combo_2_stationary"),
+&"Hurt": SubResource("Animation_20_hurt"),
 &"Idle": SubResource("Animation_10_idle"),
 &"Jump_Apex": SubResource("Animation_11_jump_apex"),
 &"Jump_Ascent": SubResource("Animation_12_jump_ascent"),

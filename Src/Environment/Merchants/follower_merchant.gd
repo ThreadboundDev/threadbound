@@ -269,7 +269,7 @@ func _refresh_prompt_label() -> void:
 		return
 
 	var action_text := InteractionPromptFormatter.prompt_action_from_text(prompt_action_text, "Talk")
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, action_text)
 
 func _face_player() -> void:
 	if not follower_sprite or not _player or not (_player is Node2D):

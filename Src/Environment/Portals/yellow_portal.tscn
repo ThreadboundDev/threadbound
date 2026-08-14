@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" path="res://Assets/Environment/yellow_portal_spritesheet.png" id="1_portal_sheet"]
 [ext_resource type="Script" path="res://Src/Environment/Portals/yellow_portal.gd" id="2_script"]
+[ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="3_label_settings"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_portal_00"]
 atlas = ExtResource("1_portal_sheet")
@@ -117,3 +118,15 @@ shape = SubResource("CapsuleShape2D_portal")
 
 [node name="ExitPoint" type="Marker2D" parent="."]
 position = Vector2(0, 160)
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+z_index = 1000
+offset_left = -190.0
+offset_top = -230.0
+offset_right = 190.0
+offset_bottom = -150.0
+text = "Teleport"
+label_settings = ExtResource("3_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1

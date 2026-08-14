@@ -7,11 +7,12 @@ const BLUR_SHADER := preload("res://Src/Environment/World/menu_blur.gdshader")
 
 @export var world_fade_duration := 1.15
 @export var prompt_fade_duration := 0.45
+@export var stitch_reveal_duration := 3.4
 @export var blur_alpha := 1.0
-@export var veil_alpha := 1.0
+@export var veil_alpha := 0.82
 
 @onready var blur_rect: ColorRect = $BlurRect as ColorRect
-@onready var sprite_sheet_player: Control = $SpriteSheetPlayer as Control
+@onready var stitched_artwork: TextureRect = $StitchedArtwork as TextureRect
 @onready var veil_rect: ColorRect = $VeilRect as ColorRect
 @onready var prompt_label: Label = $PromptLabel as Label
 
@@ -52,8 +53,8 @@ func _configure_blur() -> void:
 func _prepare_visuals() -> void:
 	blur_rect.modulate.a = 0.0
 	veil_rect.modulate.a = 0.0
-	sprite_sheet_player.modulate.a = 0.0
-	sprite_sheet_player.visible = false
+	stitched_artwork.visible = false
+	_set_reveal_progress(0.0)
 	prompt_label.modulate.a = 0.0
 	prompt_label.visible = false
 
@@ -64,7 +65,7 @@ func _run_game_over_sequence() -> void:
 	if _finished:
 		return
 
-	_play_sprite_sheet()
+	_play_stitch_reveal()
 
 func _start_world_fade() -> Tween:
 	var tween := create_tween()
@@ -74,19 +75,27 @@ func _start_world_fade() -> Tween:
 	tween.tween_property(veil_rect, "modulate:a", veil_alpha, world_fade_duration)
 	return tween
 
-func _play_sprite_sheet() -> void:
-	if not sprite_sheet_player:
+func _play_stitch_reveal() -> void:
+	if not stitched_artwork:
 		_finish()
 		return
 
-	var finished_callable := Callable(self, "_on_sprite_sheet_finished")
-	if sprite_sheet_player.has_signal("animation_finished") and not sprite_sheet_player.is_connected("animation_finished", finished_callable):
-		sprite_sheet_player.connect("animation_finished", finished_callable)
-
-	sprite_sheet_player.call("play")
-
-func _on_sprite_sheet_finished() -> void:
+	stitched_artwork.visible = true
+	_set_reveal_progress(0.0)
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_method(_set_reveal_progress, 0.0, 1.0, stitch_reveal_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	if _finished:
+		return
 	_hold_final_frame()
+
+func _set_reveal_progress(progress: float) -> void:
+	if not stitched_artwork or not stitched_artwork.material:
+		return
+	var shader_material := stitched_artwork.material as ShaderMaterial
+	if shader_material:
+		shader_material.set_shader_parameter("reveal_progress", progress)
 
 func _hold_final_frame() -> void:
 	if _hold_started:
@@ -96,7 +105,7 @@ func _hold_final_frame() -> void:
 	if _finished:
 		return
 
-	sprite_sheet_player.call("skip_to_last_frame")
+	_set_reveal_progress(1.0)
 
 	_waiting_for_continue = true
 	_show_continue_prompt()
@@ -125,8 +134,7 @@ func _finish() -> void:
 
 	_finished = true
 	_waiting_for_continue = false
-	if sprite_sheet_player:
-		sprite_sheet_player.call("skip_to_last_frame")
+	_set_reveal_progress(1.0)
 	get_tree().paused = false
 	completed.emit()
 	queue_free()

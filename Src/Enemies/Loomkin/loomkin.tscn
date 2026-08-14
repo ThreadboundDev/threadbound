@@ -7,7 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://bqj7h4s5owxpp" path="res://Assets/Enemys/Loomkin/loomkin_attack.png" id="5_attack"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(193.005, 149.795)
+size = Vector2(90, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(145, 132)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(104, 116)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grapple"]
+size = Vector2(158, 142)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 380.0
@@ -31,7 +40,7 @@ stats = ExtResource("3_stats")
 patrol_distance = 220.0
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(0, -62)
+position = Vector2(0, -55)
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Body" parent="Visuals" index="0"]
@@ -46,7 +55,15 @@ vframes = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -62)
-shape = SubResource("RectangleShape2D_body")
+shape = SubResource("RectangleShape2D_hurtbox")
+
+[node name="GrappleHitbox" type="Area2D" parent="." index="4"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleHitbox"]
+position = Vector2(0, -62)
+shape = SubResource("RectangleShape2D_grapple")
 
 [node name="CollisionShape2D" parent="DetectionArea" index="0"]
 shape = SubResource("CircleShape2D_detection")
@@ -64,8 +81,8 @@ position = Vector2(-76, -58)
 shape = SubResource("RectangleShape2D_attack")
 
 [node name="CollisionShape2D" parent="ContactHitbox" index="0"]
-position = Vector2(0, -62)
-shape = SubResource("RectangleShape2D_body")
+position = Vector2(0, -58)
+shape = SubResource("RectangleShape2D_contact")
 
 [node name="HitFlashComponent" parent="." index="7"]
 target_path = NodePath("../Visuals/Sprite2D")

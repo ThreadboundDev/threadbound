@@ -55,6 +55,7 @@ var _remote_update_position := true
 var _remote_path := NodePath("")
 
 func _ready() -> void:
+	add_to_group("interaction_prompt_owners")
 	if editor_preview_sprite:
 		editor_preview_sprite.visible = false
 	if prompt_label:
@@ -437,4 +438,7 @@ func _refresh_prompt_label() -> void:
 	var action_text := prompt_action_text
 	if action_text.is_empty():
 		action_text = InteractionPromptFormatter.prompt_action_from_text(prompt_label.text, "Save")
-	prompt_label.text = InteractionPromptFormatter.format_interact_prompt(action_text)
+	InteractionPromptFormatter.apply_interact_prompt(prompt_label, action_text)
+
+func refresh_interaction_prompt() -> void:
+	_refresh_prompt_label()
