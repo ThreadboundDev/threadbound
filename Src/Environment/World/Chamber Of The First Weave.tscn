@@ -2254,7 +2254,7 @@ frame = 47
 script = SubResource("GDScript_proto_weaver_marker_preview")
 
 [node name="RecoveryFloor" type="Marker2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers" unique_id=342417868]
-position = Vector2(5366, 4358)
+position = Vector2(5368, 4400)
 
 [node name="BossHangPreviewEditorOnly" type="Sprite2D" parent="WorldArt/Rooms/BossArena/ProtoWeaverPhaseMarkers/RecoveryFloor" unique_id=1858051839]
 self_modulate = Color(1, 0.86, 0.25, 0.52)
@@ -2359,8 +2359,9 @@ death_columns = 5
 death_rows = 10
 death_frame_count = 50
 death_fps = 15.0
-death_reposition_duration = 1.1
+death_reposition_duration = 1.75
 death_reposition_arc_height = 240.0
+death_sprite_floor_offset = Vector2(0, 20)
 death_final_hold_duration = 0.25
 threadburst_horizontal_spread = 360.0
 wall_left_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallLeft")

@@ -83,6 +83,7 @@ func _verify_death_animation(boss: ProtoWeaver) -> void:
 	_expect(boss.death_texture != null, "Proto-Weaver death texture is not configured.")
 	_expect(boss.death_columns == 5 and boss.death_rows == 10, "Death atlas is not configured as a 5x10 sheet.")
 	_expect(boss.death_frame_count == 50, "Death animation does not use all 50 authored frames.")
+	_expect(boss.death_reposition_duration >= 1.7, "Death leap is too fast for the camera-focused presentation.")
 	var duration := boss.get_death_presentation_duration()
 	_expect(duration >= 4.0, "Proto-Weaver death presentation resolves too quickly.")
 	_expect(boss.stats.death_cleanup_delay >= duration, "Boss is cleaned up before its death animation can finish.")

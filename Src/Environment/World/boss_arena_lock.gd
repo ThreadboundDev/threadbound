@@ -14,7 +14,6 @@ extends Area2D
 @export var death_camera_zoom := Vector2(0.94, 0.94)
 @export var death_camera_focus_offset := Vector2(0.0, -145.0)
 @export_range(0.05, 2.0, 0.05) var death_camera_focus_duration := 0.65
-@export_range(1.0, 20.0, 0.5) var death_camera_follow_speed := 8.0
 @export_range(0.05, 2.0, 0.05) var death_camera_return_duration := 0.85
 
 @export_group("Combat Camera")
@@ -237,11 +236,8 @@ func _run_boss_death_cinematic() -> void:
 		var delta := get_process_delta_time()
 		elapsed += delta
 		if boss_camera and boss is Node2D and is_instance_valid(boss):
-			var desired_position := (boss as Node2D).global_position + death_camera_focus_offset
-			var follow_weight := 1.0 - exp(-death_camera_follow_speed * delta)
-			boss_camera.global_position = boss_camera.global_position.lerp(
-				desired_position,
-				follow_weight
+			boss_camera.global_position = (
+				(boss as Node2D).global_position + death_camera_focus_offset
 			)
 	if not is_inside_tree():
 		return
