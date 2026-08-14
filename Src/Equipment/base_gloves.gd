@@ -949,12 +949,23 @@ func _start_grapple_fire() -> void:
 
 func _begin_grapple_retract() -> void:
 	if grapple_state != GrappleState.STOWED:
+		_request_player_ledge_assist()
 		_clear_grapple_strike_state()
 		AudioManager.stop_loop(&"grapple_hanging")
 		grapple_state = GrappleState.RETRACTING
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attached = false
 		grapple_tip_velocity = Vector2.ZERO
+
+func _request_player_ledge_assist() -> void:
+	if (
+		grapple_state != GrappleState.ATTACHED
+		or not player
+		or has_enemy_grapple_target()
+		or not player.has_method("request_grapple_ledge_assist")
+	):
+		return
+	player.call("request_grapple_ledge_assist", grapple_attach_position)
 
 func _start_grapple_attachment_tracking() -> void:
 	grapple_attachment_state = GrappleAttachmentState.UNARMED

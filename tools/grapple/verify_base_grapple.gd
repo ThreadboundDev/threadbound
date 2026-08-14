@@ -141,6 +141,10 @@ func _ready() -> void:
 		gloves.call("_apply_hookshot_pull", 0.02)
 	if gloves.grapple_state != BaseGloves.GrappleState.RETRACTING:
 		failures.append("A blocked hookshot did not release after its no-progress timeout.")
+	if player._grapple_ledge_assist_timer <= 0.0:
+		failures.append("A released surface grapple did not arm ledge assistance.")
+	if player._grapple_ledge_assist_direction != 1:
+		failures.append("Grapple ledge assistance did not preserve the anchor direction.")
 
 	await _verify_enemy_grapple_strike(player, gloves)
 

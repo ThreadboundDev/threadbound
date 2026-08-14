@@ -348,6 +348,8 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var ledge_forward_reach := 42.0
 @export var ledge_head_height := 72.0
 @export var ledge_hang_offset := Vector2(28.0, 66.0)
+@export var grapple_ledge_assist_duration := 0.18
+@export var grapple_ledge_assist_forward_bonus := 18.0
 @export var ledge_climb_horizontal_offset := 40.0
 @export var ledge_climb_vertical_offset := 48.0
 @export_range(0.05, 0.5, 0.01) var ledge_climb_duration := 0.2
@@ -425,6 +427,8 @@ var is_ledge_hanging := false
 var is_ledge_climbing := false
 var _ledge_direction := 0
 var _ledge_top := Vector2.ZERO
+var _grapple_ledge_assist_timer := 0.0
+var _grapple_ledge_assist_direction := 0
 var _ledge_climb_elapsed := 0.0
 var _ledge_climb_start := Vector2.ZERO
 var _ledge_climb_target := Vector2.ZERO
@@ -638,6 +642,7 @@ func _physics_process(delta: float) -> void:
 	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
+	_grapple_ledge_assist_timer = maxf(_grapple_ledge_assist_timer - delta, 0.0)
 
 	if is_dead:
 		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
@@ -1121,17 +1126,38 @@ func handle_wall_cling(delta: float) -> void:
 func _try_grab_ledge() -> bool:
 	if is_on_floor() or is_ledge_hanging or is_ledge_climbing or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0:
 		return false
-	var direction := last_direction
-	if is_on_wall():
+	var grapple_assist_active := _grapple_ledge_assist_timer > 0.0
+	var direction := (
+		_grapple_ledge_assist_direction
+		if grapple_assist_active
+		else last_direction
+	)
+	if not grapple_assist_active and is_on_wall():
 		var normal_x := get_wall_normal().x
 		if absf(normal_x) > 0.1:
 			direction = int(-signf(normal_x))
+	if direction == 0:
+		return false
+	var forward_reach := ledge_forward_reach
+	var wall_sample_offsets: Array[float] = [-12.0]
+	if grapple_assist_active:
+		forward_reach += grapple_ledge_assist_forward_bonus
+		wall_sample_offsets.append_array([0.0, 12.0, 24.0])
 	var space := get_world_2d().direct_space_state
-	var wall_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -12.0), global_position + Vector2(direction * ledge_forward_reach, -12.0), collision_mask, [get_rid()])
-	var wall_hit := space.intersect_ray(wall_query)
+	var wall_hit: Dictionary = {}
+	for sample_offset in wall_sample_offsets:
+		var wall_query := PhysicsRayQueryParameters2D.create(
+			global_position + Vector2(0.0, sample_offset),
+			global_position + Vector2(direction * forward_reach, sample_offset),
+			collision_mask,
+			[get_rid()]
+		)
+		wall_hit = space.intersect_ray(wall_query)
+		if not wall_hit.is_empty():
+			break
 	if wall_hit.is_empty():
 		return false
-	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * ledge_forward_reach, -ledge_head_height), collision_mask, [get_rid()])
+	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * forward_reach, -ledge_head_height), collision_mask, [get_rid()])
 	if not space.intersect_ray(clearance_query).is_empty():
 		return false
 	# Sample just beyond the wall face. Using the full reach places the vertical
@@ -1146,10 +1172,18 @@ func _try_grab_ledge() -> bool:
 	_ledge_top = top_hit.position
 	is_ledge_hanging = true
 	is_wall_clinging = false
+	_grapple_ledge_assist_timer = 0.0
 	velocity = Vector2.ZERO
 	global_position = _ledge_top + Vector2(-direction * ledge_hang_offset.x, ledge_hang_offset.y)
 	player_animation.flip_h = direction < 0
 	return true
+
+func request_grapple_ledge_assist(grapple_position: Vector2) -> void:
+	var horizontal_delta := grapple_position.x - global_position.x
+	if absf(horizontal_delta) <= 0.01:
+		return
+	_grapple_ledge_assist_direction = int(signf(horizontal_delta))
+	_grapple_ledge_assist_timer = grapple_ledge_assist_duration
 
 func _process_ledge_hang() -> bool:
 	if not is_ledge_hanging:
