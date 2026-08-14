@@ -1,6 +1,9 @@
 extends Node
 
 const PLAYER_SCENE := preload("res://Src/Characters/Player/player.tscn")
+const BASE_GRAPPLE_ANIMATION_LIBRARY := preload(
+	"res://Src/Equipment/base_grapple_animation_library.tres"
+)
 
 const EXPECTED_ANIMATIONS := {
 	&"Air_Double_Attack": {"frames": 27, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
@@ -46,6 +49,7 @@ func _ready() -> void:
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
 	_verify_grapple_gutter_cleanup(failures)
+	_verify_neutral_special_grapple_pose_sampling(failures)
 	_verify_sheet_cell_gutters(
 		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
 		Vector2i(6, 4),
@@ -69,6 +73,24 @@ func _ready() -> void:
 	for failure in failures:
 		push_error(failure)
 	get_tree().quit(1)
+
+func _verify_neutral_special_grapple_pose_sampling(failures: Array[String]) -> void:
+	var animation := BASE_GRAPPLE_ANIMATION_LIBRARY.get_animation(&"Neutral_Special_Attack")
+	if animation == null:
+		failures.append("Base grapple is missing its neutral-special follow animation.")
+		return
+
+	for track_index in animation.get_track_count():
+		if animation.track_get_interpolation_type(track_index) != Animation.INTERPOLATION_NEAREST:
+			failures.append(
+				"Base grapple neutral-special track %d interpolates between sprite frames." %
+				track_index
+			)
+		if animation.value_track_get_update_mode(track_index) != Animation.UPDATE_DISCRETE:
+			failures.append(
+				"Base grapple neutral-special track %d does not update on discrete frames." %
+				track_index
+			)
 
 func _verify_editor_authored_animations(
 	sprite: AnimatedSprite2D,

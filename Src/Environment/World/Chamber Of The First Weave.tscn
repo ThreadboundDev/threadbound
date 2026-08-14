@@ -2458,7 +2458,7 @@ shape = SubResource("RectangleShape2D_merchant_camera_zone")
 
 [node name="Player" parent="." unique_id=564650951 instance=ExtResource("14_yhgke")]
 z_index = 10
-position = Vector2(1797, 4076)
+position = Vector2(3, -3612)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player" unique_id=55278919]
 remote_path = NodePath("../../Camera2D")
@@ -2466,7 +2466,7 @@ update_rotation = false
 update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
-position = Vector2(1797, 4076)
+position = Vector2(3, -3612)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200
