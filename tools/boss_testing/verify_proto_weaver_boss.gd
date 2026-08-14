@@ -15,6 +15,7 @@ func _ready() -> void:
 	_verify_grounded_tuning(boss)
 	_verify_laser_tuning(boss)
 	_verify_wall_intermission_tuning(boss)
+	_verify_wall_debug_shortcuts(boss)
 	_verify_final_wall_enrage_tuning(boss)
 	_verify_missile_landing(boss)
 	_verify_color_identities(boss)
@@ -22,9 +23,10 @@ func _ready() -> void:
 	await _verify_pause_freezes_boss_attack()
 	await _verify_wall_intermission_runtime(boss)
 	await _verify_ground_wave_runtime(boss)
+	await _verify_death_animation(boss)
 
 	if _failures.is_empty():
-		print("Proto-Weaver verification passed: grapple coverage, grounded identities, lane missiles, laser sweeps, and recharge tuning are configured.")
+		print("Proto-Weaver verification passed: grapple coverage, grounded identities, lane missiles, laser sweeps, recharge tuning, and death presentation are configured.")
 		get_tree().quit(0)
 		return
 
@@ -77,6 +79,32 @@ func _verify_grounded_tuning(boss: ProtoWeaver) -> void:
 		_expect(hit_height <= range_height * 0.6, "Stab damage still reaches vertically through most of its AI detection range.")
 
 
+func _verify_death_animation(boss: ProtoWeaver) -> void:
+	_expect(boss.death_texture != null, "Proto-Weaver death texture is not configured.")
+	_expect(boss.death_columns == 5 and boss.death_rows == 10, "Death atlas is not configured as a 5x10 sheet.")
+	_expect(boss.death_frame_count == 50, "Death animation does not use all 50 authored frames.")
+	var duration := boss.get_death_presentation_duration()
+	_expect(duration >= 4.0, "Proto-Weaver death presentation resolves too quickly.")
+	_expect(boss.stats.death_cleanup_delay >= duration, "Boss is cleaned up before its death animation can finish.")
+	_expect(boss.stats.thread_knot_drop_count == 0, "Proto-Weaver still drops thread knots into the death cinematic.")
+	var debug_kill_triggered := bool(DebugUI.call("_kill_proto_weaver"))
+	_expect(debug_kill_triggered, "F3 debug shortcut could not find and defeat the Proto-Weaver.")
+	_expect(boss.health_component.is_dead, "F3 debug shortcut bypassed the normal health death state.")
+	_expect(bool(boss.get("_death_animation_active")), "Death presentation does not begin its reposition phase.")
+	_expect(not bool(boss.get("_death_atlas_playing")), "Death atlas starts before the boss returns to center stage.")
+	await get_tree().create_timer(boss.death_reposition_duration + 0.1).timeout
+	var sprite := boss.get_node_or_null("Visuals/Sprite2D") as Sprite2D
+	_expect(sprite != null and sprite.texture == boss.death_texture, "Death presentation does not switch to the authored atlas.")
+	_expect(sprite != null and sprite.hframes == 5 and sprite.vframes == 10, "Death presentation uses the wrong atlas layout.")
+	var base_sprite_position := boss.get("_base_sprite_position") as Vector2
+	_expect(
+		sprite != null and sprite.position.is_equal_approx(base_sprite_position + boss.death_sprite_floor_offset),
+		"Death atlas does not apply its floor-alignment offset."
+	)
+	boss.call("_update_sprite_animation", float(boss.death_frame_count) / boss.death_fps + 0.1)
+	_expect(sprite != null and sprite.frame == 49, "Death animation does not hold on its final authored frame.")
+
+
 func _verify_laser_tuning(boss: ProtoWeaver) -> void:
 	_expect(is_equal_approx(boss.phase_one_health_ratio, 0.75), "First hanging phase does not begin at 75% health.")
 	_expect(is_equal_approx(boss.phase_two_health_ratio, 0.5), "Second hanging phase does not begin at 50% health.")
@@ -98,6 +126,19 @@ func _verify_laser_tuning(boss: ProtoWeaver) -> void:
 			sweep_count += 1
 			_expect(event_index == 0 or not events[event_index - 1], "Final hanging event deck produced consecutive sweeps.")
 		_expect(sweep_count == boss.phase_three_sweep_count, "Final hanging event deck has the wrong sweep count.")
+
+
+func _verify_wall_debug_shortcuts(boss: ProtoWeaver) -> void:
+	var original_target := boss.target
+	boss.target = null
+	for phase_index in range(3):
+		boss.trigger_debug_hanging_phase(phase_index)
+		_expect(
+			int(boss.get("_pending_hanging_phase")) == phase_index,
+			"Wall debug shortcut does not select wall phase %d." % (phase_index + 1)
+		)
+	boss.set("_pending_hanging_phase", -1)
+	boss.target = original_target
 
 
 func _verify_wall_intermission_tuning(boss: ProtoWeaver) -> void:

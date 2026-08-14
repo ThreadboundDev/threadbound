@@ -8,7 +8,14 @@ extends Area2D
 @export var demo_ending_exit_path: NodePath
 
 @export_group("Demo Completion")
-@export_range(0.0, 10.0, 0.1) var ending_exit_reveal_delay := 2.0
+@export_range(0.0, 10.0, 0.05) var ending_exit_reveal_delay := 0.15
+
+@export_group("Boss Death Cinematic")
+@export var death_camera_zoom := Vector2(0.94, 0.94)
+@export var death_camera_focus_offset := Vector2(0.0, -145.0)
+@export_range(0.05, 2.0, 0.05) var death_camera_focus_duration := 0.65
+@export_range(1.0, 20.0, 0.5) var death_camera_follow_speed := 8.0
+@export_range(0.05, 2.0, 0.05) var death_camera_return_duration := 0.85
 
 @export_group("Combat Camera")
 @export var boss_camera_zoom := Vector2(0.72, 0.72)
@@ -201,10 +208,55 @@ func _tween_cinematic_camera(
 	await _cinematic_tween.finished
 
 func _on_boss_died(_damage: DamageData) -> void:
+	_run_boss_death_cinematic.call_deferred()
+
+func _run_boss_death_cinematic() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player:
+		_lock_player_control(player)
+		_disable_camera_follow(player)
+
+	var presentation_duration := 0.0
+	if boss and boss.has_method("get_death_presentation_duration"):
+		presentation_duration = float(boss.call("get_death_presentation_duration"))
+
+	if boss_camera:
+		var zoom_tween := create_tween()
+		zoom_tween.set_trans(Tween.TRANS_CUBIC)
+		zoom_tween.set_ease(Tween.EASE_IN_OUT)
+		zoom_tween.tween_property(
+			boss_camera,
+			"zoom",
+			death_camera_zoom,
+			death_camera_focus_duration
+		)
+
+	var elapsed := 0.0
+	while elapsed < presentation_duration and is_inside_tree():
+		await get_tree().process_frame
+		var delta := get_process_delta_time()
+		elapsed += delta
+		if boss_camera and boss is Node2D and is_instance_valid(boss):
+			var desired_position := (boss as Node2D).global_position + death_camera_focus_offset
+			var follow_weight := 1.0 - exp(-death_camera_follow_speed * delta)
+			boss_camera.global_position = boss_camera.global_position.lerp(
+				desired_position,
+				follow_weight
+			)
+	if not is_inside_tree():
+		return
+
+	if boss_camera and is_instance_valid(player):
+		await _tween_cinematic_camera(
+			player.global_position,
+			_camera_original_zoom,
+			death_camera_return_duration
+		)
+	_restore_camera_follow()
+	_restore_player_control()
 	if entrance_door and entrance_door.has_method("open_silently"):
 		entrance_door.open_silently()
-	_tween_camera_zoom(_camera_original_zoom)
-	_reveal_demo_ending_exit.call_deferred()
+	_reveal_demo_ending_exit()
 
 func _reveal_demo_ending_exit() -> void:
 	if ending_exit_reveal_delay > 0.0:

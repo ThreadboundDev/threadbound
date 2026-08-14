@@ -5,9 +5,10 @@ The demo ending is an isolated presentation flow and is not part of the canonica
 ## Player Flow
 
 1. The Proto-Weaver encounter resolves normally.
-2. After a short delay, the ending blossom appears at the right side of the boss arena.
-3. Interacting with it offers **Continue to End Demo** or **Keep Exploring**.
-4. Continuing opens the thank-you screen with feedback, credits, and main-menu options.
+2. On defeat, the boss detaches, retreats to the center floor, and plays its authored death animation while the camera focuses on it.
+3. The camera returns to the player and the ending blossom appears at the right side of the boss arena. The boss does not drop thread knots during this presentation.
+4. Interacting with the blossom offers **Continue to End Demo** or **Keep Exploring**.
+5. Continuing opens the thank-you screen with feedback, credits, and main-menu options.
 
 ## Editing Content
 
@@ -39,7 +40,10 @@ Both Tally forms use the Threadbound title artwork, a dark theme, and gold accen
 
 ## Debug Testing
 
-In debug builds, press `F4` from any scene to open the ending screen immediately. Debug opening does not record demo completion.
+In debug builds:
+
+- Press `F3` to defeat the active Proto-Weaver through its normal health/death signal path.
+- Press `F4` from any scene to open the ending screen immediately. Debug opening does not record demo completion.
 
 Run the automated check with:
 

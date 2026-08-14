@@ -22,7 +22,7 @@ func _ready():
 	# Create debug label
 	debug_label = Label.new()
 	debug_label.add_theme_font_size_override("font_size", 18)
-	debug_label.text = "Debug"
+	debug_label.text = "Debug: F3 Kill Proto-Weaver | F4 End Demo"
 	debug_label.position = Vector2(10, 10)  # Top-left corner by default
 	canvas_layer.add_child(debug_label)
 
@@ -31,15 +31,35 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
-	if event.keycode != KEY_F4:
-		return
-	if get_tree().get_first_node_in_group("demo_ending_screen"):
-		return
+	match event.keycode:
+		KEY_F3:
+			if _kill_proto_weaver():
+				get_viewport().set_input_as_handled()
+		KEY_F4:
+			if get_tree().get_first_node_in_group("demo_ending_screen"):
+				return
+			get_viewport().set_input_as_handled()
+			var ending := DEMO_ENDING_SCENE.instantiate()
+			ending.set("record_completion", false)
+			get_tree().root.add_child(ending)
 
-	get_viewport().set_input_as_handled()
-	var ending := DEMO_ENDING_SCENE.instantiate()
-	ending.set("record_completion", false)
-	get_tree().root.add_child(ending)
+func _kill_proto_weaver() -> bool:
+	var boss := get_tree().get_first_node_in_group("proto_weaver") as Node2D
+	if not boss:
+		update_debug("F3: No Proto-Weaver found")
+		return false
+	var health_component := boss.get("health_component") as HealthComponent
+	if not health_component or health_component.is_dead:
+		update_debug("F3: Proto-Weaver is already defeated")
+		return false
+
+	var damage := DamageData.new()
+	damage.amount = health_component.current_health
+	damage.source = target_node
+	damage.hit_position = boss.global_position
+	health_component.apply_damage(damage)
+	update_debug("F3: Proto-Weaver death triggered")
+	return true
 
 ## Update debug text - call from anywhere
 func update_debug(text: String):

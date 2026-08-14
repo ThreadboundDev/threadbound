@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bo6knlxuafjgq" path="res://Assets/Enemys/proto_weaver/proto_weaver_hang_thread.png" id="13_hang_thread"]
 [ext_resource type="Script" uid="uid://dyc7g4u3wjdka" path="res://Src/Enemies/ProtoWeaver/proto_weaver_beam.gd" id="14_beam_script"]
 [ext_resource type="Script" uid="uid://b3oef10663vul" path="res://Src/Enemies/ProtoWeaver/proto_weaver_flow_aura.gd" id="15_flow_aura"]
+[ext_resource type="Texture2D" path="res://Assets/Enemys/proto_weaver/death.png" id="16_death"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(196, 256)
@@ -61,6 +62,7 @@ threadburst_texture = ExtResource("6_repulse")
 repulse_texture = ExtResource("6_repulse")
 hang_texture = ExtResource("12_hang")
 hang_thread_texture = ExtResource("13_hang_thread")
+death_texture = ExtResource("16_death")
 thread_missile_scene = ExtResource("7_missile")
 armor_link_scene = ExtResource("8_threadling")
 armor_link_stats = ExtResource("9_link_stats")

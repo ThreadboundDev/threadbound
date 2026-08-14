@@ -83,6 +83,7 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var repulse_texture: Texture2D
 @export var hang_texture: Texture2D
 @export var hang_thread_texture: Texture2D
+@export var death_texture: Texture2D
 @export var thread_missile_scene: PackedScene
 @export var armor_link_scene: PackedScene
 @export var armor_link_stats: EnemyStats
@@ -102,6 +103,16 @@ const HANG_HEAD_SOCKET_FRAMES := [
 @export var hang_frame_count := 48
 @export var hang_fps := 18.0
 @export var hang_scale_multiplier := 1.4
+@export_group("Death Presentation")
+@export var death_columns := 5
+@export var death_rows := 10
+@export var death_frame_count := 50
+@export var death_fps := 15.0
+@export var death_reposition_duration := 1.1
+@export var death_reposition_arc_height := 240.0
+@export var death_sprite_floor_offset := Vector2(0.0, 20.0)
+@export var death_final_hold_duration := 0.25
+@export_group("")
 @export var threadburst_every_n_attacks := 3
 @export var ground_sweep_every_n_attacks := 4
 @export var essence_echo_every_n_attacks := 5
@@ -345,6 +356,8 @@ var _laser_aim_offset := 0.0
 var _laser_pattern_bag: Array[float] = []
 var _last_laser_aim_offset := INF
 var _laser_recharge_active := false
+var _death_animation_active := false
+var _death_atlas_playing := false
 var _player_in_boss_music_area := false
 var _boss_music_latched := false
 var _boss_aggro_latched := false
@@ -1044,6 +1057,97 @@ func _on_boss_died(_damage: DamageData) -> void:
 	_update_boss_health_bar()
 	_update_boss_health_visibility()
 
+func get_death_presentation_duration() -> float:
+	if death_fps <= 0.0:
+		return death_reposition_duration + death_final_hold_duration
+	return (
+		death_reposition_duration
+		+ float(maxi(1, death_frame_count)) / death_fps
+		+ death_final_hold_duration
+	)
+
+func get_death_presentation_position() -> Vector2:
+	return _get_recovery_floor_position()
+
+func _play_death_collapse() -> void:
+	if not sprite or not death_texture:
+		super._play_death_collapse()
+		return
+
+	_death_animation_active = true
+	_death_atlas_playing = false
+	_playing_attack = false
+	_animation_timer = 0.0
+	_current_frame = 0
+	_attack_hold_started = false
+	_attack_hold_complete = true
+	_stagger_visual_active = false
+	_laser_recharge_active = false
+	_hanging_laser_busy = false
+	_hanging_laser_active = false
+	_laser_firing = false
+	_wall_hanging = false
+	_final_wall_enrage = false
+	if _stagger_visual_tween and _stagger_visual_tween.is_valid():
+		_stagger_visual_tween.kill()
+	if hanging_thread_line:
+		hanging_thread_line.visible = false
+	if detached_head:
+		detached_head.visible = false
+	if laser_beam:
+		laser_beam.hide_beam()
+	if body_collision_shape:
+		body_collision_shape.set_deferred("disabled", true)
+	if upper_body_grapple_target:
+		upper_body_grapple_target.set_deferred("monitoring", false)
+		upper_body_grapple_target.set_deferred("monitorable", false)
+	_set_sprite_cleanup_enabled(false)
+	visuals.position = _base_visuals_position
+	visuals.rotation = _base_visuals_rotation
+	visuals.modulate = Color.WHITE
+	sprite.position = _base_sprite_position
+	sprite.modulate = Color.WHITE
+	_run_death_presentation.call_deferred()
+
+func _run_death_presentation() -> void:
+	if not is_inside_tree() or not _death_animation_active:
+		return
+
+	var destination := get_death_presentation_position()
+	var start := global_position
+	var midpoint := start.lerp(destination, 0.5)
+	midpoint.y = minf(start.y, destination.y) - death_reposition_arc_height
+	var half_duration := maxf(0.01, death_reposition_duration * 0.5)
+	var motion_tween := create_tween()
+	motion_tween.set_trans(Tween.TRANS_SINE)
+	motion_tween.set_ease(Tween.EASE_OUT)
+	motion_tween.tween_property(self, "global_position", midpoint, half_duration)
+	motion_tween.set_ease(Tween.EASE_IN)
+	motion_tween.tween_property(self, "global_position", destination, half_duration)
+	var rotation_tween := create_tween()
+	rotation_tween.set_trans(Tween.TRANS_CUBIC)
+	rotation_tween.set_ease(Tween.EASE_OUT)
+	rotation_tween.tween_property(
+		visuals,
+		"rotation",
+		_base_visuals_rotation,
+		death_reposition_duration
+	)
+	await motion_tween.finished
+	if not is_inside_tree() or not _death_animation_active:
+		return
+
+	global_position = destination
+	visuals.rotation = _base_visuals_rotation
+	_configure_sprite_sheet(death_texture, death_columns, death_rows)
+	sprite.position = _base_sprite_position + death_sprite_floor_offset
+	sprite.rotation = 0.0
+	sprite.modulate = Color.WHITE
+	sprite.frame = 0
+	_animation_timer = 0.0
+	_current_frame = 0
+	_death_atlas_playing = true
+
 func _play_walk_animation() -> void:
 	if _stagger_visual_active:
 		return
@@ -1114,6 +1218,16 @@ func _get_scale_for_sheet(texture: Texture2D, columns: int, rows: int) -> Vector
 
 func _update_sprite_animation(delta: float) -> void:
 	if not sprite:
+		return
+	if _death_animation_active:
+		if not _death_atlas_playing:
+			return
+		_animation_timer += delta
+		_current_frame = mini(
+			int(floor(_animation_timer * maxf(0.0, death_fps))),
+			maxi(0, death_frame_count - 1)
+		)
+		sprite.frame = _current_frame
 		return
 	if _stagger_visual_active or _laser_recharge_active:
 		return
@@ -2224,7 +2338,8 @@ func _finish_hanging_laser_sequence() -> void:
 	_wall_event_bag.clear()
 	_hang_rotation = 0.0
 	_wall_side = 0
-	global_position = _hang_origin if _hang_origin != Vector2.ZERO else global_position
+	if not _death_animation_active:
+		global_position = _hang_origin if _hang_origin != Vector2.ZERO else global_position
 	if hanging_thread_line:
 		hanging_thread_line.visible = false
 	if detached_head:
@@ -2232,10 +2347,10 @@ func _finish_hanging_laser_sequence() -> void:
 	if laser_beam:
 		laser_beam.hide_beam()
 	_apply_wall_collision_rotation(0.0)
-	if visuals:
+	if visuals and not _death_animation_active:
 		visuals.position = _base_visuals_position
 		visuals.rotation = _base_visuals_rotation
-	if sprite and walk_texture:
+	if sprite and walk_texture and not _death_animation_active:
 		sprite.modulate = Color.WHITE
 		_play_walk_animation()
 	if state_machine and not is_dead:

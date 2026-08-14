@@ -370,7 +370,7 @@ layer = 80
 
 [node name="CombatHUD" parent="HUD" unique_id=2033688288 instance=ExtResource("2_gtqxp")]
 
-[node name="PlaytestWelcome" parent="." instance=ExtResource("30_playtest_welcome")]
+[node name="PlaytestWelcome" parent="." unique_id=612862172 instance=ExtResource("30_playtest_welcome")]
 
 [node name="TutorialController" type="Node" parent="." unique_id=1344745018]
 script = ExtResource("31_tutorial")
@@ -2355,6 +2355,13 @@ script = ExtResource("org_enemy")
 
 [node name="ProtoWeaver" parent="WorldArt/Rooms/BossArena/Enemies" unique_id=337995925 instance=ExtResource("17_f4x7l")]
 position = Vector2(5366, 4358)
+death_columns = 5
+death_rows = 10
+death_frame_count = 50
+death_fps = 15.0
+death_reposition_duration = 1.1
+death_reposition_arc_height = 240.0
+death_final_hold_duration = 0.25
 threadburst_horizontal_spread = 360.0
 wall_left_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallLeft")
 wall_right_marker_path = NodePath("../../ProtoWeaverPhaseMarkers/WallRight")
@@ -2388,8 +2395,8 @@ scale = Vector2(1.675, 1.675)
 prompt_read_text = "Up - Read"
 prompt_open_text = "Up - Face Boss"
 
-[node name="DemoEndingExit" parent="WorldArt/Rooms/BossArena/Doors" instance=ExtResource("30_demo_ending_exit")]
-position = Vector2(7120, 4380)
+[node name="DemoEndingExit" parent="WorldArt/Rooms/BossArena/Doors" unique_id=1023865114 instance=ExtResource("30_demo_ending_exit")]
+position = Vector2(5883, 4382)
 
 [node name="BossArenaLock" type="Area2D" parent="WorldArt/Rooms/BossArena/Doors" unique_id=1044286421]
 position = Vector2(5410, 3490)
