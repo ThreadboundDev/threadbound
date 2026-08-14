@@ -18,6 +18,7 @@ const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
 const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
 const SIT_ANIMATION := &"Sit"
+const HURT_ANIMATION := &"Hurt"
 const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
@@ -183,6 +184,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
 @export_range(0.5, 1.0, 0.01) var landing_visual_scale_multiplier := 0.88
 @export_range(0.5, 1.0, 0.01) var grapple_strike_visual_scale_multiplier := 0.82
+@export_range(0.5, 1.0, 0.01) var hurt_visual_scale_multiplier := 0.77
 @export var landing_visual_offset := Vector2(0.0, 5.0)
 
 # Base grapple movement while rope is taut.
@@ -481,6 +483,7 @@ var _movement_facing_before_input := 1
 
 var is_attacking := false
 var is_hurt := false
+var _hurt_animation_active := false
 var is_dead := false
 var god_mode_enabled := false
 var death_reset_started := false
@@ -1380,6 +1383,19 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = _player_default_visual_scale
 	if player_animation.position != _player_default_visual_position:
 		player_animation.position = _player_default_visual_position
+	if (
+		is_hurt
+		and _hurt_animation_active
+		and player_animation.sprite_frames.has_animation(HURT_ANIMATION)
+	):
+		_set_flow_vfx_dash_visual_active(false)
+		player_animation.rotation = 0.0
+		player_animation.scale = _player_default_visual_scale * hurt_visual_scale_multiplier
+		player_animation.speed_scale = 1.0
+		if current_body_anim != HURT_ANIMATION:
+			current_body_anim = HURT_ANIMATION
+			player_animation.play(HURT_ANIMATION)
+		return
 
 	if current_attack_uses_grapple_strike and not current_grapple_strike_animation_started:
 		var strike_ready := (
@@ -3463,6 +3479,7 @@ func receive_ignored_health_hit(damage: DamageData) -> void:
 func _on_damaged(damage: DamageData) -> void:
 	_cancel_dash_iframe()
 	_cancel_enemy_grapple_combat()
+	_hurt_animation_active = is_on_floor()
 	is_hurt = true
 	hurt_timer = damage.hitstun if damage.hitstun > 0.0 else player_stats.hurt_time
 	is_attacking = false

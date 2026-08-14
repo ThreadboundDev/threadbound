@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://bgb0imhrnad4l" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png" id="113_backpedal_combo_02"]
 [ext_resource type="Texture2D" uid="uid://baofhtnig7xun" path="res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png" id="114_ledge_climb"]
 [ext_resource type="Texture2D" uid="uid://cjie8wsp1aqxu" path="res://Assets/Threadborne/sit.png" id="115_sit"]
+[ext_resource type="Texture2D" uid="uid://pw38m1wllt3t" path="res://Assets/Threadborne/hurt.png" id="116_hurt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -1075,6 +1076,50 @@ region = Rect2(512, 4608, 512, 512)
 atlas = ExtResource("115_sit")
 region = Rect2(1024, 4608, 512, 512)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_4"]
+atlas = ExtResource("116_hurt")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_5"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 480, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_10"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 960, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_15"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 1440, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_20"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 1920, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_25"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 2400, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_30"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 2880, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_35"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 3360, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_40"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 3840, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_45"]
+atlas = ExtResource("116_hurt")
+region = Rect2(0, 4320, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hurt_47"]
+atlas = ExtResource("116_hurt")
+region = Rect2(960, 4320, 480, 480)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wall_cling_cycle_0"]
 atlas = ExtResource("9_4x0hb")
 region = Rect2(0, 0, 320, 320)
@@ -2075,6 +2120,44 @@ animations = [{
 "loop": 0,
 "name": &"Sit",
 "speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_40")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hurt_47")
+}],
+"loop": 0,
+"name": &"Hurt",
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
