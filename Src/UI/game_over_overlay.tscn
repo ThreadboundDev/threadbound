@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Src/UI/game_over_overlay.gd" id="1_overlay"]
-[ext_resource type="Script" path="res://Src/UI/game_over_sprite_sheet_player.gd" id="3_sheet_player"]
-[ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_sprite_sheet.png" id="4_sprite_sheet"]
+[ext_resource type="Shader" path="res://Src/UI/game_over_stitch_reveal.gdshader" id="3_stitch_shader"]
+[ext_resource type="Texture2D" path="res://Assets/UI/Game Over Screen/game_over_stitched_v2.png" id="4_stitched_art"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_title_label_settings.tres" id="5_threadbound_label_settings"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_stitch_reveal"]
+shader = ExtResource("3_stitch_shader")
+shader_parameter/reveal_progress = 0.0
+shader_parameter/edge_width = 0.045
+shader_parameter/stitch_glow = Color(1, 0.68, 0.22, 1)
 
 [node name="GameOverOverlay" type="CanvasLayer"]
 layer = 120
@@ -11,6 +17,7 @@ process_mode = 3
 script = ExtResource("1_overlay")
 world_fade_duration = 1.8
 prompt_fade_duration = 0.55
+stitch_reveal_duration = 3.4
 
 [node name="BlurRect" type="ColorRect" parent="."]
 process_mode = 3
@@ -32,7 +39,8 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(0, 0, 0, 1)
 
-[node name="SpriteSheetPlayer" type="Control" parent="."]
+[node name="StitchedArtwork" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_stitch_reveal")
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,12 +48,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("3_sheet_player")
-sprite_sheet_texture = ExtResource("4_sprite_sheet")
-columns = 6
-rows = 6
-frame_count = 36
-frames_per_second = 10.0
+texture = ExtResource("4_stitched_art")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="PromptLabel" type="Label" parent="."]
 process_mode = 3
