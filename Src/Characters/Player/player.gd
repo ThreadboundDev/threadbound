@@ -735,7 +735,7 @@ func _physics_process(delta: float) -> void:
 			_play_flow_vfx_jump(velocity)
 
 	# Dash / Dodge
-	if Input.is_action_just_pressed("Dash"):
+	if Input.is_action_just_pressed("Dash") and not _is_menu_close_input_guard_active():
 		if current_chest:
 			current_chest.handle_secondary(delta, BaseEquipment.ActionState.PRESSED)
 
@@ -844,6 +844,9 @@ func _is_non_pause_menu_open() -> bool:
 func _should_block_pause_open() -> bool:
 	if _is_non_pause_menu_open():
 		return true
+	return _is_menu_close_input_guard_active()
+
+func _is_menu_close_input_guard_active() -> bool:
 	if not get_tree().has_meta(PAUSE_OPEN_BLOCK_UNTIL_META):
 		return false
 

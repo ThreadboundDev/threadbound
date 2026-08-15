@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
+const PAUSE_OPEN_BLOCK_MSEC := 180
+
 @export var selector_offset := Vector2(20.0, -15.0)
 @export var selected_scale := Vector2(1.04, 1.04)
 @export var normal_scale := Vector2.ONE
@@ -150,6 +153,7 @@ func _resume_game() -> void:
 	_closing = true
 	AudioManager.stop_pause_music()
 	_set_player_flow_audio_suspended(false)
+	get_tree().set_meta(PAUSE_OPEN_BLOCK_UNTIL_META, Time.get_ticks_msec() + PAUSE_OPEN_BLOCK_MSEC)
 	get_tree().paused = false
 	queue_free()
 
