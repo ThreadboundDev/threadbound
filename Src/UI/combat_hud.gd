@@ -35,7 +35,7 @@ const VALID_ACTION_POINT_TYPES := [
 @onready var thread_knot_label: Label = $ThreadKnotCounter/CountLabel as Label
 @onready var thread_knot_counter: Control = $ThreadKnotCounter as Control
 @onready var lore_pickup: Control = $LorePickup as Control
-@onready var lore_pickup_kind: Label = $LorePickup/Kind as Label
+@onready var lore_pickup_kind: RichTextLabel = $LorePickup/Kind as RichTextLabel
 @onready var lore_pickup_title: Label = $LorePickup/Title as Label
 @onready var trial_timer: Control = $TrialTimer as Control
 @onready var trial_timer_label: Label = $TrialTimer/Label as Label
@@ -218,8 +218,17 @@ func set_trial_timer(seconds_remaining: float, active: bool) -> void:
 		trial_timer_label.text = "TRIAL OF BALANCE   %02d:%02d" % [total_seconds / 60, total_seconds % 60]
 
 func _on_lore_unlocked(lore_id: StringName) -> void:
-	var lore_input := InteractionPromptFormatter.get_action_display(&"open_lore", "L")
-	show_lore_pickup(LoreCatalog.get_title(lore_id), "LORE ADDED  •  %s TO VIEW" % lore_input)
+	var input_family := InteractionPromptFormatter.get_active_input_family()
+	var lore_glyph := InputGlyphFormatter.get_action_display_bbcode(
+		&"open_lore",
+		"L",
+		input_family,
+		24
+	)
+	show_lore_pickup(
+		LoreCatalog.get_title(lore_id),
+		"LORE ADDED  •  %s  TO VIEW" % lore_glyph
+	)
 
 func _show_starting_lore_hint() -> void:
 	if (
