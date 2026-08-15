@@ -2473,6 +2473,24 @@ func _apply_current_glove_visual_tuning(
 func _on_player_animation_frame_changed() -> void:
 	if is_attacking:
 		_apply_attack_visual_tuning()
+	if current_body_anim in ["Jump_Ascent", "Jump_Apex", "Jump_Descent"]:
+		_sync_current_glove_pose_to_body_frame()
+
+func _sync_current_glove_pose_to_body_frame() -> void:
+	if (
+		not current_gloves
+		or not current_gloves.has_method("sync_equipment_anim_to_body_frame")
+		or not player_animation
+		or not player_animation.sprite_frames
+	):
+		return
+	var body_fps := player_animation.sprite_frames.get_animation_speed(current_body_anim)
+	current_gloves.call(
+		"sync_equipment_anim_to_body_frame",
+		current_body_anim,
+		player_animation.frame,
+		body_fps
+	)
 
 func _select_ground_attack_visual_mode(dir: float) -> StringName:
 	if absf(dir) <= 0.01 or absf(velocity.x) < STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED:

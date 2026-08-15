@@ -231,6 +231,20 @@ func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> voi
 	if animation_player and animation_player.has_animation(body_anim):
 		play_equipment_anim(body_anim)
 
+func sync_equipment_anim_to_body_frame(
+	body_anim: String,
+	body_frame: int,
+	body_fps: float
+) -> void:
+	if (
+		not animation_player
+		or body_fps <= 0.0
+		or not animation_player.has_animation(body_anim)
+		or animation_player.current_animation != body_anim
+	):
+		return
+	animation_player.seek(float(body_frame) / body_fps, true)
+
 func _is_action_equipment_anim(anim_name: String) -> bool:
 	return (
 		anim_name == "Dash"
