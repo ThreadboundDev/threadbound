@@ -71,13 +71,21 @@ func _verify_menu_layout() -> void:
 	menu.set_context(merchant, player)
 	await get_tree().process_frame
 	_expect(menu._choice_rows.size() == 3, "Interaction hub contains Talk, Buy, and Leave.")
-	_expect(menu._shop_rows.size() == 3, "Shop contains the three focused demo offerings.")
+	_expect(menu._shop_rows.size() == menu.ITEMS.size(), "Shop renders every configured demo offering.")
+	var backdrop := menu.get_node("Root/Background") as TextureRect
+	var dim := menu.get_node("Dim") as ColorRect
+	var dialogue := menu.get_node("Root/DialoguePanel") as Control
+	_expect(not backdrop.visible, "Follower interaction hub preserves the visible room behind its lower third.")
+	_expect(dim.color.a < 0.3, "Follower conversation uses only a restrained scene dim.")
+	_expect(dialogue.get_global_rect().position.y > 500.0, "Follower conversation is presented in the lower third.")
 	menu._show_talk()
 	await get_tree().process_frame
 	var footer := menu.get_node("Root/FooterLabel") as RichTextLabel
 	_expect("BACK" in footer.text, "Talk view labels the mapped Tab/back action.")
 	menu._show_shop()
 	await get_tree().process_frame
+	_expect(backdrop.visible, "Buying transitions into the full-screen merchant presentation.")
+	_expect(dim.color.a > 0.5, "The full-screen shop retains its stronger backdrop dim.")
 	var rows := menu.get_node("Root/ShopPanel/Rows") as VBoxContainer
 	var description := menu.get_node("Root/ShopPanel/DescriptionPanel") as Control
 	_expect(rows.get_global_rect().end.y <= description.get_global_rect().position.y, "Shop rows do not overlap the description panel.")

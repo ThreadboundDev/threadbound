@@ -75,6 +75,8 @@ const ITEMS := [
 @export var normal_color := Color(0.76, 0.67, 0.50, 1.0)
 @export var disabled_color := Color(0.38, 0.34, 0.28, 0.78)
 
+@onready var dim: ColorRect = $Dim as ColorRect
+@onready var background: TextureRect = $Root/Background as TextureRect
 @onready var title_label: Label = %TitleLabel as Label
 @onready var currency_panel: Control = %CurrencyPanel as Control
 @onready var thread_knot_label: Label = %ThreadKnotLabel as Label
@@ -181,6 +183,7 @@ func _handle_shop_input(event: InputEvent) -> void:
 
 func _show_hub() -> void:
 	_screen = Screen.HUB
+	_set_full_screen_presentation(false, true)
 	title_label.text = "THE FOLLOWER"
 	dialogue_panel.visible = true
 	choices_root.visible = true
@@ -193,6 +196,7 @@ func _show_hub() -> void:
 
 func _show_talk() -> void:
 	_screen = Screen.TALK
+	_set_full_screen_presentation(false)
 	title_label.text = "THE FOLLOWER"
 	dialogue_panel.visible = true
 	choices_root.visible = false
@@ -204,6 +208,7 @@ func _show_talk() -> void:
 
 func _show_shop() -> void:
 	_screen = Screen.SHOP
+	_set_full_screen_presentation(true)
 	title_label.text = "FOLLOWER'S WARES"
 	dialogue_panel.visible = false
 	choices_root.visible = false
@@ -216,6 +221,7 @@ func _show_shop() -> void:
 
 func _show_farewell() -> void:
 	_screen = Screen.FAREWELL
+	_set_full_screen_presentation(false)
 	title_label.text = "THE FOLLOWER"
 	dialogue_panel.visible = true
 	choices_root.visible = false
@@ -224,6 +230,41 @@ func _show_farewell() -> void:
 	status_label.text = ""
 	dialogue_label.text = _merchant.get_farewell_line() if _merchant and _merchant.has_method("get_farewell_line") else "Until next time."
 	_refresh_footer()
+
+func _set_full_screen_presentation(is_full_screen: bool, show_choices := false) -> void:
+	dim.color = Color(0, 0, 0, 0.62) if is_full_screen else Color(0, 0, 0, 0.18)
+	background.visible = is_full_screen
+	title_label.visible = is_full_screen
+	status_label.visible = is_full_screen
+
+	if is_full_screen:
+		dialogue_panel.position = Vector2.ZERO
+		dialogue_panel.set_anchors_preset(Control.PRESET_CENTER)
+		dialogue_panel.offset_left = -420.0
+		dialogue_panel.offset_top = -222.0
+		dialogue_panel.offset_right = 420.0
+		dialogue_panel.offset_bottom = 62.0
+		footer_label.offset_top = 326.0
+		footer_label.offset_bottom = 384.0
+		return
+
+	# Conversation remains grounded in the room: a restrained lower-third keeps
+	# both characters visible while leaving enough space for the opening choices.
+	dialogue_panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	dialogue_panel.offset_left = -700.0
+	dialogue_panel.offset_top = -330.0
+	dialogue_panel.offset_right = 700.0 if not show_choices else 140.0
+	dialogue_panel.offset_bottom = -42.0
+	choices_root.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	choices_root.offset_left = 160.0
+	choices_root.offset_top = -290.0
+	choices_root.offset_right = 680.0
+	choices_root.offset_bottom = -70.0
+	footer_label.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	footer_label.offset_left = -410.0
+	footer_label.offset_top = -58.0
+	footer_label.offset_right = 410.0
+	footer_label.offset_bottom = -10.0
 
 func _build_hub_choices() -> void:
 	_choice_rows.clear()

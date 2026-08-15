@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://Src/UI/MerchantMenu/merchant_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/UI/Main Menu/menu_background.png" id="2_background"]
@@ -26,6 +26,18 @@ font_size = 24
 font_color = Color(0.94, 0.82, 0.54, 1)
 outline_size = 3
 outline_color = Color(0.025, 0.018, 0.012, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_dialogue"]
+bg_color = Color(0.025, 0.021, 0.016, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.39, 0.18, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="MerchantMenu" type="CanvasLayer"]
 process_mode = 3
@@ -120,7 +132,7 @@ text = "0"
 label_settings = SubResource("LabelSettings_title")
 vertical_alignment = 1
 
-[node name="DialoguePanel" type="ColorRect" parent="Root"]
+[node name="DialoguePanel" type="Panel" parent="Root"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -135,7 +147,7 @@ offset_bottom = 62.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.035, 0.028, 0.02, 0.9)
+theme_override_styles/panel = SubResource("StyleBox_dialogue")
 
 [node name="SpeakerLabel" type="Label" parent="Root/DialoguePanel"]
 layout_mode = 0
