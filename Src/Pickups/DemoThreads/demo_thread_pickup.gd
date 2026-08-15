@@ -43,9 +43,10 @@ func _on_body_entered(body: Node) -> void:
 
 func _collect() -> void:
 	_collected = true
+	var is_first_thread := DemoProgress.claimed_count([&"power", &"balance", &"essence"]) == 0
 	DemoProgress.claim_thread(thread_id)
 	AudioManager.play_ui(&"loot_special_item")
-	_show_collect_message()
+	_show_collect_message(is_first_thread)
 	if collision_shape:
 		collision_shape.set_deferred("disabled", true)
 
@@ -60,15 +61,30 @@ func _collect() -> void:
 	tween.set_parallel(false)
 	tween.tween_callback(queue_free)
 
-func _show_collect_message() -> void:
+func _show_collect_message(is_first_thread := false) -> void:
 	var message := collect_message
 	if message.is_empty():
 		message = "%s claimed." % display_name
+	var hud := get_tree().get_first_node_in_group("combat_hud")
+	if hud and hud.has_method("show_thread_reward"):
+		hud.show_thread_reward(display_name)
+	if is_first_thread and not DemoProgress.has_completed_world_event(&"tutorial.first_thread_guidance"):
+		DemoProgress.complete_world_event(&"tutorial.first_thread_guidance")
+		var hot_swap := InteractionPromptFormatter.get_action_display(&"open_menu", "TAB")
+		var inventory := InteractionPromptFormatter.get_action_display(&"open_inventory", "I")
+		message += "\n\nA NEW WAY OF WEAVING\nHold %s to open Hot Swap. Select the new gloves or return to Base at any time. Open Inventory with %s to inspect and equip your unlocked gear." % [hot_swap, inventory]
 
 	var box := get_tree().get_first_node_in_group("demo_message_box")
 	if not box:
 		box = MESSAGE_BOX_SCENE.instantiate()
 		get_tree().root.add_child(box)
+	if is_first_thread and box.has_method("configure_layout"):
+		box.configure_layout({
+			"panel_rect": Rect2(-640.0, -250.0, 1280.0, 220.0),
+			"text_margins": Vector4(38.0, 24.0, 38.0, 24.0),
+			"display_time": 9.0,
+			"fade_time": 0.2,
+		})
 
 	if box.has_method("show_message"):
 		box.show_message(message)

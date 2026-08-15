@@ -29,6 +29,7 @@ func _process(delta: float) -> void:
 	if not _attempt_active or _spawned:
 		return
 	_attempt_time_remaining = maxf(0.0, _attempt_time_remaining - delta)
+	_update_timer_hud()
 	if _attempt_time_remaining <= 0.0:
 		_reset_attempt()
 
@@ -74,21 +75,29 @@ func _check_completion() -> void:
 
 	_spawned = true
 	_attempt_active = false
+	_update_timer_hud()
 	_dismiss_encounter_enemies()
 	_spawn_thread_of_balance(_last_activator)
 
 func _begin_attempt() -> void:
 	_attempt_active = true
 	_attempt_time_remaining = attempt_duration
+	_update_timer_hud()
 	_dismiss_encounter_enemies()
 	_spawn_encounter_enemies()
 
 func _reset_attempt() -> void:
 	_attempt_active = false
 	_attempt_time_remaining = 0.0
+	_update_timer_hud()
 	for button in _buttons:
 		button.deactivate()
 	_dismiss_encounter_enemies()
+
+func _update_timer_hud() -> void:
+	var hud := get_tree().get_first_node_in_group("combat_hud")
+	if hud and hud.has_method("set_trial_timer"):
+		hud.set_trial_timer(_attempt_time_remaining, _attempt_active and not _spawned)
 
 func _spawn_encounter_enemies() -> void:
 	var encounter_parent := get_node_or_null(encounter_parent_path)

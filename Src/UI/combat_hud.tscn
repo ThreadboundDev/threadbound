@@ -17,9 +17,25 @@
 [ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="18_knot_icon"]
 [ext_resource type="LabelSettings" path="res://Assets/UI/Fonts/almendra_prompt_label_settings.tres" id="19_label_settings"]
 [ext_resource type="Shader" path="res://Src/UI/hud_pattern_recolor.gdshader" id="20_pattern_recolor"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra/Almendra-Bold.ttf" id="21_lore_font"]
+[ext_resource type="FontFile" path="res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf" id="22_lore_title_font"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pattern_recolor"]
 shader = ExtResource("20_pattern_recolor")
+
+[sub_resource type="LabelSettings" id="LabelSettings_lore_kind"]
+font = ExtResource("21_lore_font")
+font_size = 22
+font_color = Color(0.82, 0.64, 0.3, 1)
+outline_size = 3
+outline_color = Color(0.03, 0.02, 0.01, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lore_title"]
+font = ExtResource("22_lore_title_font")
+font_size = 28
+font_color = Color(0.94, 0.85, 0.68, 1)
+outline_size = 3
+outline_color = Color(0.03, 0.02, 0.01, 1)
 
 [node name="CombatHUD" type="Control" unique_id=187202720]
 layout_mode = 3
@@ -242,6 +258,106 @@ offset_top = 8.0
 offset_right = 334.0
 offset_bottom = 76.0
 text = "× 12,480"
+label_settings = ExtResource("19_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LorePickup" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -448.0
+offset_top = -222.0
+offset_right = -8.0
+offset_bottom = -126.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="LorePickup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.045, 0.035, 0.025, 0.94)
+
+[node name="Accent" type="ColorRect" parent="LorePickup"]
+layout_mode = 0
+offset_right = 6.0
+offset_bottom = 96.0
+mouse_filter = 2
+color = Color(0.82, 0.61, 0.22, 1)
+
+[node name="PageIcon" type="Label" parent="LorePickup"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 13.0
+offset_right = 82.0
+offset_bottom = 82.0
+text = "▤"
+label_settings = ExtResource("19_label_settings")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Kind" type="Label" parent="LorePickup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 10.0
+offset_right = 420.0
+offset_bottom = 42.0
+text = "LORE ADDED"
+label_settings = SubResource("LabelSettings_lore_kind")
+modulate = Color(0.82, 0.64, 0.3, 1)
+
+[node name="Title" type="Label" parent="LorePickup"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 40.0
+offset_right = 420.0
+offset_bottom = 84.0
+text = "WHAT IS A THREADBOUND?"
+label_settings = SubResource("LabelSettings_lore_title")
+autowrap_mode = 3
+
+[node name="TrialTimer" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.0
+offset_bottom = 112.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Backing" type="ColorRect" parent="TrialTimer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 78.0
+grow_horizontal = 2
+color = Color(0.025, 0.04, 0.055, 0.9)
+
+[node name="Label" type="Label" parent="TrialTimer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -142.0
+offset_top = 5.0
+offset_right = 142.0
+offset_bottom = 72.0
+grow_horizontal = 2
+text = "BALANCE  00:45"
 label_settings = ExtResource("19_label_settings")
 horizontal_alignment = 1
 vertical_alignment = 1

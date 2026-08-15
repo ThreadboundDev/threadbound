@@ -363,6 +363,7 @@ door_id = &"power"
 persistence_id = &"chamber_first_weave.red_wing_door"
 display_name = "Thread of Power"
 message = "To claim the Thread of Power, one must defeat all enemies that bind the wing."
+lore_id = &"trial_power"
 door_color = Color(1, 1, 1, 1)
 prompt_read_text = "Up - Read"
 prompt_open_text = "Up - Open"

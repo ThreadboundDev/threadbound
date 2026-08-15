@@ -37,6 +37,38 @@ const ITEMS := [
 		"icon_path": "res://Assets/UI/Hud/V2/pattern_demo_overlay_v2.png",
 		"description": "A balanced woven Pattern: +10% AP recharge and +10% momentum generation."
 	},
+	{
+		"id": &"lore_eryndor",
+		"name": "THE UNFINISHED REALM",
+		"type": "LORE",
+		"cost": 2,
+		"icon_path": "",
+		"description": "A Follower's account of Eryndor. Adds a permanent entry to Lore."
+	},
+	{
+		"id": &"lore_threadling",
+		"name": "FIELD NOTE: THREADLING",
+		"type": "LORE",
+		"cost": 3,
+		"icon_path": "",
+		"description": "The Follower's observations on Threadlings. Adds a permanent entry to Lore."
+	},
+	{
+		"id": &"lore_tensioner",
+		"name": "FIELD NOTE: TENSIONER",
+		"type": "LORE",
+		"cost": 4,
+		"icon_path": "",
+		"description": "The Follower's observations on Tensioners. Adds a permanent entry to Lore."
+	},
+	{
+		"id": &"lore_loomkin",
+		"name": "FIELD NOTE: LOOMKIN",
+		"type": "LORE",
+		"cost": 4,
+		"icon_path": "",
+		"description": "The Follower's observations on Loomkin. Adds a permanent entry to Lore."
+	},
 ]
 
 @export var selected_color := Color(1.0, 0.86, 0.52, 1.0)
@@ -265,7 +297,7 @@ func _build_shop_rows() -> void:
 
 func _create_item_row(item: Dictionary) -> Control:
 	var row := Control.new()
-	row.custom_minimum_size = Vector2(820.0, 88.0)
+	row.custom_minimum_size = Vector2(820.0, 62.0)
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
 	var background := ColorRect.new()
 	background.name = "Background"
@@ -273,34 +305,47 @@ func _create_item_row(item: Dictionary) -> Control:
 	background.color = Color(0.05, 0.045, 0.035, 0.82)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(background)
-	var icon := TextureRect.new()
-	icon.name = "Icon"
-	icon.position = Vector2(16.0, 10.0)
-	icon.size = Vector2(68.0, 68.0)
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	icon.texture = load(String(item["icon_path"]))
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(icon)
+	var icon_path := String(item["icon_path"])
+	if icon_path.is_empty():
+		var page_icon := Label.new()
+		page_icon.name = "Icon"
+		page_icon.position = Vector2(16.0, 5.0)
+		page_icon.size = Vector2(52.0, 52.0)
+		page_icon.text = "▤"
+		page_icon.label_settings = _make_label_settings(34, normal_color, true)
+		page_icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		page_icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		page_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(page_icon)
+	else:
+		var icon := TextureRect.new()
+		icon.name = "Icon"
+		icon.position = Vector2(16.0, 5.0)
+		icon.size = Vector2(52.0, 52.0)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.texture = load(icon_path)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(icon)
 	var name_label := Label.new()
 	name_label.name = "Name"
-	name_label.position = Vector2(104.0, 7.0)
-	name_label.size = Vector2(440.0, 40.0)
+	name_label.position = Vector2(84.0, 2.0)
+	name_label.size = Vector2(480.0, 32.0)
 	name_label.text = String(item["name"])
-	name_label.label_settings = _make_label_settings(25, normal_color, true)
+	name_label.label_settings = _make_label_settings(22, normal_color, true)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(name_label)
 	var type_label := Label.new()
 	type_label.name = "Type"
-	type_label.position = Vector2(104.0, 46.0)
-	type_label.size = Vector2(360.0, 28.0)
+	type_label.position = Vector2(84.0, 34.0)
+	type_label.size = Vector2(400.0, 24.0)
 	type_label.text = String(item["type"])
-	type_label.label_settings = _make_label_settings(16, Color(0.58, 0.50, 0.36, 1.0), false)
+	type_label.label_settings = _make_label_settings(14, Color(0.58, 0.50, 0.36, 1.0), false)
 	type_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(type_label)
 	var cost_label := Label.new()
 	cost_label.name = "Cost"
-	cost_label.position = Vector2(610.0, 18.0)
+	cost_label.position = Vector2(610.0, 6.0)
 	cost_label.size = Vector2(174.0, 50.0)
 	cost_label.text = "%d KNOTS" % int(item["cost"])
 	cost_label.label_settings = _make_label_settings(22, normal_color, true)
@@ -348,7 +393,7 @@ func _purchase_selected() -> void:
 	var item: Dictionary = ITEMS[_shop_index]
 	var item_id := StringName(item["id"])
 	var cost := int(item["cost"])
-	var one_time := String(item["type"]) in ["ONE TIME", "PATTERN"]
+	var one_time := String(item["type"]) in ["ONE TIME", "PATTERN", "LORE"]
 	if _is_sold_out(item_id):
 		_set_status("This thread has already been claimed.")
 		return
@@ -416,7 +461,7 @@ func _refresh_footer() -> void:
 	if not footer_label:
 		return
 	var confirm := InputGlyphFormatter.get_action_display_bbcode(&"interact", "ENTER", _input_family, 30)
-	var cancel := InputGlyphFormatter.get_action_display_bbcode(&"open_menu", "ESC", _input_family, 30)
+	var cancel := InputGlyphFormatter.get_action_display_bbcode(&"ui_cancel", "ESC", _input_family, 30)
 	match _screen:
 		Screen.HUB:
 			footer_label.text = "%s SELECT     %s LEAVE" % [confirm, cancel]
@@ -440,4 +485,4 @@ func _is_confirm_event(event: InputEvent) -> bool:
 	return event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or event.is_action_pressed("Attack")
 
 func _is_cancel_event(event: InputEvent) -> bool:
-	return event.is_action_pressed("ui_cancel") or event.is_action_pressed("open_menu")
+	return event.is_action_pressed("ui_cancel")

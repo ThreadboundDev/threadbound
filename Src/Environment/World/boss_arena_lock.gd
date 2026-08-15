@@ -250,6 +250,7 @@ func _run_boss_death_cinematic() -> void:
 		)
 	_restore_camera_follow()
 	_restore_player_control()
+	DemoProgress.unlock_lore(&"proto_weaver")
 	if entrance_door and entrance_door.has_method("open_silently"):
 		entrance_door.open_silently()
 	_reveal_demo_ending_exit()

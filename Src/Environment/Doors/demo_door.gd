@@ -12,6 +12,7 @@ const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 @export var persistence_id: StringName = &""
 @export var display_name := "Demo Door"
 @export_multiline var message := ""
+@export var lore_id: StringName = &""
 @export var open_after_message := true
 @export var claim_thread_on_open := false
 @export var interaction_enabled := true
@@ -99,6 +100,8 @@ func interact(_interacting_player: Node) -> void:
 
 	if not _message_acknowledged:
 		_show_message(message)
+		if not String(lore_id).is_empty():
+			DemoProgress.unlock_lore(lore_id)
 		_message_acknowledged = true
 		_refresh_prompt_label()
 		return
