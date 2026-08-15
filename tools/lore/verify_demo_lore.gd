@@ -87,11 +87,16 @@ func _verify_hud() -> void:
 	var controller_lore_glyph := InputGlyphFormatter.get_action_display_bbcode(&"open_lore", "D-PAD DOWN", &"xbox", 24)
 	_expect(keyboard_lore_glyph.contains("[img="), "Lore notification resolves the keyboard L glyph.")
 	_expect(controller_lore_glyph.contains("[img="), "Lore notification resolves the controller D-pad Down glyph.")
+	add_child(hud)
+	hud.call("show_lore_pickup", "The World That Remembers", "LORE ADDED  •  %s  TO VIEW" % controller_lore_glyph)
+	_expect(lore_prompt.text.contains("[img="), "HUD lore toast preserves its renderable lowercase image tag.")
+	_expect(not lore_prompt.text.contains("[IMG="), "HUD lore toast never exposes uppercased glyph markup.")
+	_expect((hud.get_node("LorePickup/Title") as Label).text == "THE WORLD THAT REMEMBERS", "Purchased lore toast shows only the catalog entry title.")
 	_expect(hud.has_node("TrialTimer/Title"), "HUD labels the Blue trial clearly.")
 	_expect(hud.has_node("TrialTimer/Countdown"), "HUD includes the Blue trial countdown.")
 	_expect(hud.has_method("show_lore_pickup"), "HUD can present lore pickups.")
 	_expect(hud.has_method("set_trial_timer"), "HUD can update the Blue trial countdown.")
-	hud.free()
+	hud.queue_free()
 
 func _verify_first_thread_guidance() -> void:
 	var keyboard_hot_swap := InputGlyphFormatter.get_action_display_bbcode(

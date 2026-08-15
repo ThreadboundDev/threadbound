@@ -192,7 +192,9 @@ func show_lore_pickup(title: String, kind := "LORE ADDED") -> void:
 		return
 	if _lore_pickup_tween:
 		_lore_pickup_tween.kill()
-	lore_pickup_kind.text = kind.to_upper()
+	# Uppercasing BBCode also uppercases its case-sensitive [img] tags and asset
+	# path, causing the notification to print the markup instead of its glyph.
+	lore_pickup_kind.text = kind if kind.contains("[img") else kind.to_upper()
 	lore_pickup_title.text = title.to_upper()
 	lore_pickup.visible = true
 	lore_pickup.modulate.a = 0.0
