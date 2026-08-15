@@ -26,6 +26,7 @@ var _showing_options := false
 var _showing_support := false
 var _confirming_new_journey := false
 var _confirmation_index := 1
+var _starting_new_journey := false
 
 func _ready() -> void:
 	AudioManager.play_title_screen_music()
@@ -154,11 +155,25 @@ func _activate_selected() -> void:
 			_pulse_unavailable(rows[_selected_index])
 
 func _start_new_journey() -> void:
+	if _starting_new_journey:
+		return
+	_starting_new_journey = true
+	_confirming_new_journey = false
+	confirmation_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	call_deferred("_perform_new_journey_transition")
+
+func _perform_new_journey_transition() -> void:
 	DemoProgress.clear_run()
 	AudioManager.play_ui(&"enter_world")
-	get_tree().change_scene_to_file(DEMO_SCENE)
+	var error := get_tree().change_scene_to_file(DEMO_SCENE)
+	if error != OK:
+		_starting_new_journey = false
+		confirmation_layer.mouse_filter = Control.MOUSE_FILTER_STOP
+		push_error("MainMenu: Failed to start a New Journey: %s" % error_string(error))
 
 func _request_new_journey() -> void:
+	if _starting_new_journey:
+		return
 	if not DemoProgress.has_checkpoint():
 		_start_new_journey()
 		return
