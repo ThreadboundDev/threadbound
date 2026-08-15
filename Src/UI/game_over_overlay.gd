@@ -23,6 +23,7 @@ var _waiting_for_continue := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_to_group(&"game_over_overlay")
 	AudioManager.play_game_over_music()
 	get_tree().paused = true
 	_configure_blur()

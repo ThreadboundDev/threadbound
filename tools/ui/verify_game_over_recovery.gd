@@ -11,6 +11,7 @@ func _ready() -> void:
 		overlay.respawn_input_delay = 0.01
 		add_child(overlay)
 		await get_tree().create_timer(0.25, true, false, true).timeout
+		_expect(overlay.is_in_group(&"game_over_overlay"), "Death cycle %d registers the overlay for orphan recovery." % (cycle + 1))
 		_expect(overlay._waiting_for_continue, "Death cycle %d arms respawn before the reveal completes." % (cycle + 1))
 		_expect(overlay.prompt_label.visible, "Death cycle %d shows its respawn prompt." % (cycle + 1))
 		_expect("RESPAWN" in overlay.prompt_label.text, "Game-over prompt explicitly identifies the respawn action.")
