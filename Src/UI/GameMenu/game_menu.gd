@@ -4,6 +4,7 @@ class_name GameMenu
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
 const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
+const INVENTORY_SELECTION_POINTER_TEXTURE := preload("res://Assets/UI/Main Menu/menu_selection_pointer.png")
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -274,6 +275,7 @@ var _pending_conflict_action: StringName = &""
 var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
 var _inventory_focused_slot: Control = null
+var _inventory_selection_pointer: TextureRect = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
 var _lore_list_label: Label
@@ -426,6 +428,7 @@ func _setup_inventory_ui() -> void:
 				(slot as Control).mouse_entered.connect(_on_inventory_slot_mouse_entered.bind(slot))
 				(slot as Control).mouse_exited.connect(_on_inventory_slot_mouse_exited.bind(slot))
 				(slot as Control).gui_input.connect(_on_inventory_slot_gui_input.bind(slot))
+	_ensure_inventory_selection_pointer()
 	if equipment_slots_root:
 		for slot in equipment_slots_root.get_children():
 			if slot is Control and EQUIPPED_SLOT_ITEMS.has(slot.name):
@@ -476,9 +479,15 @@ func _on_inventory_slot_mouse_entered(slot: Node) -> void:
 	var item: Dictionary = slot.get_meta("inventory_item", {})
 	if item.is_empty():
 		return
+	if slot is Control:
+		_inventory_focused_slot = slot as Control
+		_update_inventory_focus_visuals()
 	_show_inventory_tooltip(item)
 
-func _on_inventory_slot_mouse_exited(_slot: Node) -> void:
+func _on_inventory_slot_mouse_exited(slot: Node) -> void:
+	if slot == _inventory_focused_slot and _controls_input_family == &"keyboard_mouse":
+		_inventory_focused_slot = null
+		_update_inventory_focus_visuals()
 	_hide_inventory_tooltip()
 
 func _on_inventory_slot_gui_input(event: InputEvent, slot: Node) -> void:
@@ -566,6 +575,39 @@ func _update_inventory_focus_visuals() -> void:
 		var frame := child.get_node_or_null("InventoryFrame") as TextureRect
 		if frame and not child.get_meta("inventory_item", {}).is_empty():
 			frame.modulate = Color(1.3, 1.16, 0.62, 1.0) if child == _inventory_focused_slot else Color.WHITE
+	_update_inventory_selection_pointer()
+
+func _ensure_inventory_selection_pointer() -> void:
+	if _inventory_selection_pointer or not inventory_slots_root:
+		return
+	_inventory_selection_pointer = TextureRect.new()
+	_inventory_selection_pointer.name = "SelectionPointer"
+	_inventory_selection_pointer.texture = INVENTORY_SELECTION_POINTER_TEXTURE
+	_inventory_selection_pointer.size = Vector2(64.0, 43.0)
+	_inventory_selection_pointer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_inventory_selection_pointer.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_inventory_selection_pointer.flip_h = true
+	_inventory_selection_pointer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_inventory_selection_pointer.z_index = 20
+	_inventory_selection_pointer.visible = false
+	inventory_slots_root.add_child(_inventory_selection_pointer)
+
+func _update_inventory_selection_pointer() -> void:
+	if not _inventory_selection_pointer:
+		return
+	if not _inventory_focused_slot or not is_instance_valid(_inventory_focused_slot):
+		_inventory_selection_pointer.visible = false
+		return
+	var item: Dictionary = _inventory_focused_slot.get_meta("inventory_item", {})
+	if item.is_empty():
+		_inventory_selection_pointer.visible = false
+		return
+	var slot_rect := _inventory_focused_slot.get_global_rect()
+	_inventory_selection_pointer.visible = true
+	_inventory_selection_pointer.global_position = Vector2(
+		slot_rect.position.x - _inventory_selection_pointer.size.x - 4.0,
+		slot_rect.position.y + slot_rect.size.y * 0.5 - _inventory_selection_pointer.size.y
+	)
 
 func _show_inventory_tooltip(item: Dictionary, anchor: Control = null) -> void:
 	if not inventory_tooltip:

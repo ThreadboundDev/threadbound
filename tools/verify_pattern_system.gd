@@ -66,6 +66,13 @@ func _verify() -> void:
 	var menu := menu_scene.instantiate() as GameMenu
 	add_child(menu)
 	await get_tree().process_frame
+	var inventory_pointer := menu.get_node_or_null(
+		"MenuRoot/Pages/InventoryPage/InventorySlots/SelectionPointer"
+	) as TextureRect
+	_check(inventory_pointer != null, "Inventory creates the established menu selection pointer")
+	if inventory_pointer:
+		_check(inventory_pointer.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Inventory pointer never blocks slot input")
+		_check(inventory_pointer.flip_h, "Inventory pointer faces inward toward the selected slot")
 	var pattern_slot := menu.get_node_or_null("MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot") as Control
 	_check(pattern_slot != null, "Inventory has a Pattern equipment slot")
 	if pattern_slot:
