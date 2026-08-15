@@ -381,6 +381,8 @@ func _end_save_point_interaction() -> void:
 	if _remote_transform and is_instance_valid(_remote_transform):
 		_remote_transform.update_position = _remote_update_position
 		_remote_transform.remote_path = _remote_path
+	if _camera and is_instance_valid(_camera) and _camera.has_method("resume_player_follow"):
+		_camera.resume_player_follow()
 
 	var finished_player := _active_player
 	if finished_player and finished_player.has_method("end_save_point_interaction"):

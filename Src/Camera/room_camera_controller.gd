@@ -83,6 +83,20 @@ func refresh_active_zone() -> void:
 	_active_zone = null
 
 
+func resume_player_follow() -> void:
+	if not is_instance_valid(_player):
+		return
+	_reset_follow_state(_player.global_position)
+	_active_zone = _find_zone_for_position(_player.global_position)
+	if is_instance_valid(_active_zone):
+		_follow_target = _active_zone.clamp_camera_center(
+			_follow_target,
+			_get_world_viewport_half_size()
+		)
+	global_position = _follow_target
+	reset_smoothing()
+
+
 func get_follow_target() -> Vector2:
 	return _follow_target
 
