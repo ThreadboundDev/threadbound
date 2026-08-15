@@ -58,6 +58,7 @@ const REPEAT_DIALOGUE := [
 var _player: Node
 var _menu: Node
 var _repeat_dialogue_index := 0
+var _interaction_armed := true
 
 func _ready() -> void:
 	add_to_group("merchants")
@@ -76,9 +77,10 @@ func _process(_delta: float) -> void:
 	_face_player()
 
 func interact(interacting_player: Node) -> void:
-	if interacting_player != _player or _menu:
+	if interacting_player != _player or _menu or not _interaction_armed:
 		return
 
+	_interaction_armed = false
 	_open_merchant_menu(interacting_player)
 
 func try_purchase(item_id: StringName, player: Node, cost: int, one_time := false) -> bool:
@@ -158,9 +160,14 @@ func _dialogue_entry_is_available(entry: Dictionary) -> bool:
 
 func _on_menu_closed() -> void:
 	_menu = null
-	if _player and prompt_label:
-		_refresh_prompt_label()
-		prompt_label.visible = true
+	# Do not immediately offer the same conversation again while the player is
+	# still standing inside the interaction radius. Leaving and re-entering the
+	# area explicitly rearms the merchant.
+	_interaction_armed = false
+	if prompt_label:
+		prompt_label.visible = false
+	if _player and _player.has_method("_on_interactable_exited"):
+		_player._on_interactable_exited(self)
 
 func _apply_purchase_effect(item_id: StringName, player: Node, cost: int) -> bool:
 	match item_id:
@@ -267,6 +274,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 
 	_player = body
+	_interaction_armed = true
 	if prompt_label:
 		_refresh_prompt_label()
 		prompt_label.visible = true
@@ -283,6 +291,7 @@ func _on_body_exited(body: Node) -> void:
 	if body.has_method("_on_interactable_exited"):
 		body._on_interactable_exited(self)
 	_player = null
+	_interaction_armed = true
 	_apply_default_facing()
 
 func _refresh_prompt_label() -> void:

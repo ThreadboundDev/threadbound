@@ -12,9 +12,21 @@ const CHAMBER_SCENE := preload("res://Src/Environment/World/Chamber Of The First
 class FakePlayer:
 	extends Node
 	var thread_knot_count := 20
+	var current_interactable: Node
+	var interaction_enter_count := 0
+	var interaction_exit_count := 0
 
 	func can_weave_stat_upgrade(cost: int) -> bool:
 		return thread_knot_count >= cost
+
+	func _on_interactable_entered(area: Area2D) -> void:
+		current_interactable = area
+		interaction_enter_count += 1
+
+	func _on_interactable_exited(area: Area2D) -> void:
+		if current_interactable == area:
+			current_interactable = null
+		interaction_exit_count += 1
 
 class FakeMerchant:
 	extends Node
@@ -41,6 +53,7 @@ func _ready() -> void:
 
 func _verify() -> void:
 	_verify_dialogue_catalog()
+	_verify_merchant_interaction_rearm()
 	await _verify_menu_layout()
 	_verify_decor_atlas()
 	_verify_animated_loom()
@@ -60,6 +73,26 @@ func _verify_dialogue_catalog() -> void:
 	for required_id in [&"guidance", &"power", &"balance", &"essence", &"three_threads", &"proto_weaver"]:
 		_expect(ids.has(required_id), "Dialogue catalog contains %s." % required_id)
 	merchant.free()
+
+func _verify_merchant_interaction_rearm() -> void:
+	var merchant := MERCHANT_SCENE.instantiate() as FollowerMerchant
+	var player := FakePlayer.new()
+	player.add_to_group("player")
+	add_child(merchant)
+	add_child(player)
+	merchant._on_body_entered(player)
+	_expect(merchant._interaction_armed and player.current_interactable == merchant, "Entering the merchant radius arms conversation.")
+	merchant._interaction_armed = false
+	merchant._on_menu_closed()
+	_expect(not merchant._interaction_armed, "Closing merchant dialogue keeps conversation disarmed.")
+	_expect(player.current_interactable == null and player.interaction_exit_count == 1, "Closing merchant dialogue unregisters the prompt until the player leaves.")
+	merchant.interact(player)
+	_expect(merchant._menu == null, "A closed merchant conversation cannot immediately reopen in the same area visit.")
+	merchant._on_body_exited(player)
+	merchant._on_body_entered(player)
+	_expect(merchant._interaction_armed and player.current_interactable == merchant, "Leaving and re-entering the merchant radius rearms conversation.")
+	merchant.queue_free()
+	player.queue_free()
 
 func _verify_menu_layout() -> void:
 	var menu := MENU_SCENE.instantiate()
