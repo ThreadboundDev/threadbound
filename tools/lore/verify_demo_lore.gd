@@ -6,6 +6,7 @@ func _ready() -> void:
 	_verify_catalog()
 	_verify_progress_api()
 	_verify_scenes()
+	_verify_lore_index_layout()
 	_verify_hud()
 	_verify_first_thread_guidance()
 	_verify_controller_defaults()
@@ -97,6 +98,21 @@ func _verify_hud() -> void:
 	_expect(hud.has_method("show_lore_pickup"), "HUD can present lore pickups.")
 	_expect(hud.has_method("set_trial_timer"), "HUD can update the Blue trial countdown.")
 	hud.queue_free()
+
+func _verify_lore_index_layout() -> void:
+	var menu := (load("res://Src/UI/GameMenu/game_menu.tscn") as PackedScene).instantiate() as GameMenu
+	add_child(menu)
+	var list_layout := menu.get_node("MenuRoot/Pages/LorePage/LoreListLayout") as Control
+	var list_label := list_layout.get_child(0) as Label
+	_expect(list_label.autowrap_mode == TextServer.AUTOWRAP_OFF, "Lore index keeps every entry on one line.")
+	var list_font := list_label.label_settings.font
+	var list_font_size := list_label.label_settings.font_size
+	var longest_width := 0.0
+	for lore_id in LoreCatalog.ORDER:
+		var display_text := "› ◆ %s" % LoreCatalog.get_title(lore_id).to_upper()
+		longest_width = maxf(longest_width, list_font.get_string_size(display_text, HORIZONTAL_ALIGNMENT_LEFT, -1.0, list_font_size).x)
+	_expect(longest_width <= list_label.size.x, "The longest demo lore title fits inside the single-line index.")
+	menu.queue_free()
 
 func _verify_first_thread_guidance() -> void:
 	var keyboard_hot_swap := InputGlyphFormatter.get_action_display_bbcode(

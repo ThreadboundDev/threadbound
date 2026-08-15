@@ -734,9 +734,10 @@ func _setup_lore_ui() -> void:
 	lore_page.add_child(left_panel)
 	_lore_list_label = Label.new()
 	_lore_list_label.position = Vector2(30.0, 28.0)
-	_lore_list_label.size = Vector2(500.0, 720.0)
-	_lore_list_label.label_settings = _make_lore_label_settings(28, Color(0.82, 0.75, 0.61))
-	_lore_list_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_lore_list_label.size = Vector2(590.0, 720.0)
+	_lore_list_label.label_settings = _make_lore_label_settings(26, Color(0.82, 0.75, 0.61))
+	_lore_list_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_lore_list_label.clip_text = true
 	left_panel.add_child(_lore_list_label)
 	var detail_panel := Control.new()
 	detail_panel.name = "LoreDetailLayout"
