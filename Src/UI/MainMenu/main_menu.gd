@@ -10,6 +10,8 @@ const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn
 @onready var selector: TextureRect = $Selector as TextureRect
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
+@onready var confirmation_layer: Control = $NewJourneyConfirmation as Control
+@onready var confirmation_choices: Array[Control] = [$NewJourneyConfirmation/Panel/Confirm, $NewJourneyConfirmation/Panel/Cancel]
 @onready var rows: Array[Control] = [
 	$MenuButtons/Continue,
 	$MenuButtons/NewJourney,
@@ -22,12 +24,15 @@ var _selected_index := 1
 var _row_tweens: Dictionary = {}
 var _showing_options := false
 var _showing_support := false
+var _confirming_new_journey := false
+var _confirmation_index := 1
 
 func _ready() -> void:
 	AudioManager.play_title_screen_music()
 	DemoProgress.load_checkpoint()
 	options_panel.visible = false
 	support_panel.visible = false
+	confirmation_layer.visible = false
 	if not DemoProgress.checkpoint_changed.is_connected(_refresh_continue_state):
 		DemoProgress.checkpoint_changed.connect(_refresh_continue_state)
 	options_panel.back_requested.connect(_hide_options)
@@ -38,6 +43,9 @@ func _ready() -> void:
 		row.pivot_offset = row.size * 0.5
 		row.mouse_entered.connect(_select_index.bind(i))
 		row.gui_input.connect(_on_row_gui_input.bind(i))
+	for i in confirmation_choices.size():
+		confirmation_choices[i].mouse_entered.connect(_select_confirmation.bind(i))
+		confirmation_choices[i].gui_input.connect(_on_confirmation_gui_input.bind(i))
 
 	_select_index(_selected_index, true)
 	_refresh_continue_state()
@@ -45,7 +53,19 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
 		get_viewport().set_input_as_handled()
-		_start_new_journey()
+		_request_new_journey()
+		return
+
+	if _confirming_new_journey:
+		if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right") or event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down"):
+			_select_confirmation(1 - _confirmation_index)
+			get_viewport().set_input_as_handled()
+		elif _is_confirm_event(event):
+			_activate_confirmation()
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed("ui_cancel"):
+			_hide_new_journey_confirmation()
+			get_viewport().set_input_as_handled()
 		return
 
 	if _showing_options:
@@ -123,7 +143,7 @@ func _activate_selected() -> void:
 			else:
 				_pulse_unavailable(rows[_selected_index])
 		&"NewJourney":
-			_start_new_journey()
+			_request_new_journey()
 		&"Settings":
 			_show_options()
 		&"Extras":
@@ -137,6 +157,46 @@ func _start_new_journey() -> void:
 	DemoProgress.clear_run()
 	AudioManager.play_ui(&"enter_world")
 	get_tree().change_scene_to_file(DEMO_SCENE)
+
+func _request_new_journey() -> void:
+	if not DemoProgress.has_checkpoint():
+		_start_new_journey()
+		return
+	_confirming_new_journey = true
+	_confirmation_index = 1
+	confirmation_layer.visible = true
+	$MenuButtons.visible = false
+	selector.visible = false
+	_select_confirmation(_confirmation_index, true)
+
+func _hide_new_journey_confirmation() -> void:
+	_confirming_new_journey = false
+	confirmation_layer.visible = false
+	$MenuButtons.visible = true
+	_select_index(_selected_index, true)
+
+func _select_confirmation(index: int, instant := false) -> void:
+	_confirmation_index = clampi(index, 0, confirmation_choices.size() - 1)
+	for i in confirmation_choices.size():
+		var choice := confirmation_choices[i]
+		var backing := choice.get_node("Backing") as ColorRect
+		var label := choice.get_node("Label") as Label
+		var selected := i == _confirmation_index
+		backing.color = Color(0.30, 0.20, 0.07, 0.96) if selected else Color(0.07, 0.055, 0.035, 0.94)
+		label.modulate = Color(1.0, 0.88, 0.64, 1.0) if selected else Color(0.68, 0.61, 0.5, 1.0)
+	if not instant:
+		AudioManager.play_ui(&"ui_click")
+
+func _activate_confirmation() -> void:
+	if _confirmation_index == 0:
+		_start_new_journey()
+	else:
+		_hide_new_journey_confirmation()
+
+func _on_confirmation_gui_input(event: InputEvent, index: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_select_confirmation(index, true)
+		_activate_confirmation()
 
 func _pulse_unavailable(row: Control) -> void:
 	if _row_tweens.has(row):

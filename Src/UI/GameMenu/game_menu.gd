@@ -22,7 +22,7 @@ const CONTROL_BINDINGS := [
 	{"node": "Attack", "label": "ATTACK", "actions": [&"Attack"], "keyboard_input": "LMB", "layout_nodes": {&"ps5": "SquareButton"}},
 	{"node": "SpecialAttack", "label": "SPECIAL + DIRECTION", "actions": [&"SpecialAttack"], "keyboard_input": "Q", "layout_nodes": {&"ps5": "TriangleButton"}},
 	{"node": "Meditate", "label": "MEDITATE (HOLD)", "controller_label": "MEDITATE / CYCLE LEFT", "actions": [&"Meditate"], "keyboard_input": "V", "layout_nodes": {&"ps5": "L1Button"}},
-	{"node": "HotSwap", "label": "HOT SWAP (HOLD)", "actions": [&"open_menu"], "layout_nodes": {&"ps5": "CreateButton"}},
+	{"node": "HotSwap", "label": "HOT SWAP (HOLD)", "actions": [&"open_menu"], "layout_nodes": {&"ps5": "L2Button"}},
 	{"node": "Inventory", "label": "INVENTORY", "actions": [&"open_inventory"], "layout_nodes": {&"ps5": "DPadUp"}},
 	{"node": "Map", "label": "MAP", "actions": [&"open_map"], "layout_nodes": {&"ps5": "DPadLeft"}},
 	{"node": "Lore", "label": "LORE", "actions": [&"open_lore"], "layout_nodes": {&"ps5": "DPadDown"}},
@@ -228,6 +228,8 @@ const EQUIPPED_SLOT_ITEMS := {
 @onready var inventory_tooltip_title: Label = $MenuRoot/Pages/InventoryPage/ItemTooltip/Title as Label
 @onready var inventory_tooltip_description: Label = $MenuRoot/Pages/InventoryPage/ItemTooltip/Description as Label
 @onready var inventory_thread_knot_count: Label = $MenuRoot/Pages/InventoryPage/CurrenciesPanel/ThreadKnots/Count as Label
+@onready var lore_page: Control = $MenuRoot/Pages/LorePage as Control
+@onready var lore_placeholder: Label = $MenuRoot/Pages/LorePage/Body as Label
 @onready var inventory_health_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Health as Label
 @onready var inventory_attack_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/Attack as Label
 @onready var inventory_skill_damage_label: Label = $MenuRoot/Pages/InventoryPage/IdentityStatsPanel/StatsGrid/SkillDamage as Label
@@ -274,6 +276,13 @@ var _inventory_category: StringName = &"all"
 var _inventory_focused_slot: Control = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
+var _lore_list_label: Label
+var _lore_title_label: Label
+var _lore_category_label: Label
+var _lore_body_label: Label
+var _lore_footer_label: Label
+var _lore_entries: Array[StringName] = []
+var _lore_index := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -291,6 +300,8 @@ func _ready() -> void:
 		tab.mouse_exited.connect(_on_tab_mouse_exited.bind(i))
 	if not DemoProgress.threads_changed.is_connected(_update_inventory_threads):
 		DemoProgress.threads_changed.connect(_update_inventory_threads)
+	if not DemoProgress.lore_changed.is_connected(_refresh_lore_page):
+		DemoProgress.lore_changed.connect(_refresh_lore_page)
 	if not InputBindingManager.bindings_changed.is_connected(_update_control_binding_labels):
 		InputBindingManager.bindings_changed.connect(_update_control_binding_labels)
 	if EquipManager and not EquipManager.equip_changed.is_connected(_on_equip_changed):
@@ -306,6 +317,7 @@ func _ready() -> void:
 		controls_reset_defaults.mouse_exited.connect(_on_controls_reset_defaults_mouse_exited)
 	_setup_keyboard_binding_rows()
 	_setup_inventory_ui()
+	_setup_lore_ui()
 	_ensure_inventory_pattern_portrait()
 	_hide_rebind_prompt()
 	_update_equipped_slot_items()
@@ -366,6 +378,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 
 	if TAB_ORDER[_selected_index] == &"Inventory" and _handle_inventory_controller_navigation(event):
+		get_viewport().set_input_as_handled()
+		return
+	if TAB_ORDER[_selected_index] == &"Lore" and _handle_lore_navigation(event):
 		get_viewport().set_input_as_handled()
 		return
 
@@ -605,6 +620,8 @@ func _select_tab(index: int, instant := false) -> void:
 			_set_inventory_focus(slots[0] if not slots.is_empty() else null)
 	elif TAB_ORDER[_selected_index] == &"Map":
 		_update_map_tracker()
+	elif TAB_ORDER[_selected_index] == &"Lore":
+		_refresh_lore_page(true)
 	elif TAB_ORDER[_selected_index] == &"Controls":
 		_refresh_controls_page()
 
@@ -615,6 +632,100 @@ func _select_tab(index: int, instant := false) -> void:
 
 	if not instant:
 		AudioManager.play_ui(&"ui_click")
+
+func _setup_lore_ui() -> void:
+	if not lore_page or _lore_list_label:
+		return
+	lore_placeholder.visible = false
+	var left_panel := ColorRect.new()
+	left_panel.position = Vector2(36.0, 42.0)
+	left_panel.size = Vector2(560.0, 780.0)
+	left_panel.color = Color(0.035, 0.03, 0.022, 0.86)
+	left_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lore_page.add_child(left_panel)
+	_lore_list_label = Label.new()
+	_lore_list_label.position = Vector2(30.0, 28.0)
+	_lore_list_label.size = Vector2(500.0, 720.0)
+	_lore_list_label.label_settings = _make_lore_label_settings(28, Color(0.82, 0.75, 0.61))
+	_lore_list_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	left_panel.add_child(_lore_list_label)
+	var detail_panel := ColorRect.new()
+	detail_panel.position = Vector2(626.0, 42.0)
+	detail_panel.size = Vector2(1218.0, 780.0)
+	detail_panel.color = Color(0.052, 0.044, 0.03, 0.9)
+	detail_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lore_page.add_child(detail_panel)
+	_lore_category_label = Label.new()
+	_lore_category_label.position = Vector2(48.0, 34.0)
+	_lore_category_label.size = Vector2(1120.0, 38.0)
+	_lore_category_label.label_settings = _make_lore_label_settings(21, Color(0.72, 0.55, 0.25))
+	detail_panel.add_child(_lore_category_label)
+	_lore_title_label = Label.new()
+	_lore_title_label.position = Vector2(48.0, 78.0)
+	_lore_title_label.size = Vector2(1120.0, 78.0)
+	_lore_title_label.label_settings = _make_lore_label_settings(42, Color(0.95, 0.86, 0.68), true)
+	detail_panel.add_child(_lore_title_label)
+	_lore_body_label = Label.new()
+	_lore_body_label.position = Vector2(52.0, 182.0)
+	_lore_body_label.size = Vector2(1090.0, 470.0)
+	_lore_body_label.label_settings = _make_lore_label_settings(30, Color(0.82, 0.77, 0.68))
+	_lore_body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	detail_panel.add_child(_lore_body_label)
+	_lore_footer_label = Label.new()
+	_lore_footer_label.position = Vector2(48.0, 690.0)
+	_lore_footer_label.size = Vector2(1120.0, 48.0)
+	_lore_footer_label.label_settings = _make_lore_label_settings(20, Color(0.58, 0.52, 0.42))
+	_lore_footer_label.text = "UP / DOWN  SELECT ENTRY     NEW ENTRIES ARE MARKED ◆"
+	detail_panel.add_child(_lore_footer_label)
+	_refresh_lore_page()
+
+func _make_lore_label_settings(font_size: int, color: Color, title_font := false) -> LabelSettings:
+	var settings := LabelSettings.new()
+	settings.font = load("res://Assets/UI/Fonts/Almendra_SC/AlmendraSC-Regular.ttf") if title_font else load("res://Assets/UI/Fonts/Almendra/Almendra-Regular.ttf")
+	settings.font_size = font_size
+	settings.font_color = color
+	settings.outline_size = 3
+	settings.outline_color = Color(0.02, 0.015, 0.01, 1.0)
+	return settings
+
+func _handle_lore_navigation(event: InputEvent) -> bool:
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
+		_lore_index = wrapi(_lore_index - 1, 0, maxi(1, _lore_entries.size()))
+		_refresh_lore_page(true)
+		AudioManager.play_ui(&"ui_click")
+		return true
+	if event.is_action_pressed("ui_down") or event.is_action_pressed("move_down"):
+		_lore_index = wrapi(_lore_index + 1, 0, maxi(1, _lore_entries.size()))
+		_refresh_lore_page(true)
+		AudioManager.play_ui(&"ui_click")
+		return true
+	return false
+
+func _refresh_lore_page(mark_selected_read := false) -> void:
+	if not _lore_list_label:
+		return
+	_lore_entries = LoreCatalog.get_unlocked_entries()
+	if _lore_entries.is_empty():
+		_lore_list_label.text = "NO LORE RECORDED"
+		_lore_title_label.text = ""
+		_lore_category_label.text = ""
+		_lore_body_label.text = ""
+		return
+	_lore_index = clampi(_lore_index, 0, _lore_entries.size() - 1)
+	var selected_id := _lore_entries[_lore_index]
+	var lines := PackedStringArray()
+	for index in _lore_entries.size():
+		var lore_id := _lore_entries[index]
+		var cursor := "› " if index == _lore_index else "  "
+		var unread := "◆ " if not DemoProgress.is_lore_read(lore_id) else "  "
+		lines.append("%s%s%s" % [cursor, unread, LoreCatalog.get_title(lore_id).to_upper()])
+	_lore_list_label.text = "\n".join(lines)
+	var entry := LoreCatalog.get_entry(selected_id)
+	_lore_category_label.text = String(entry.get("category", "LORE")).to_upper()
+	_lore_title_label.text = String(entry.get("title", "")).to_upper()
+	_lore_body_label.text = String(entry.get("body", ""))
+	if mark_selected_read:
+		DemoProgress.mark_lore_read(selected_id)
 
 func _update_controls_only_visibility() -> void:
 	if title_label:
@@ -822,7 +933,7 @@ func _format_input_event(event: InputEvent, input_family: StringName) -> String:
 	if event is InputEventJoypadButton:
 		return _format_joypad_button(event.button_index, input_family)
 	if event is InputEventJoypadMotion:
-		return _format_joypad_motion(event.axis, event.axis_value)
+		return _format_joypad_motion(event.axis, event.axis_value, input_family)
 	return ""
 
 func _format_key_event(event: InputEventKey) -> String:
@@ -899,7 +1010,11 @@ func _format_joypad_button(button_index: int, input_family: StringName) -> Strin
 				14: return "D-Pad Right"
 				_: return "Button %d" % button_index
 
-func _format_joypad_motion(axis: int, axis_value: float) -> String:
+func _format_joypad_motion(
+	axis: int,
+	axis_value: float,
+	input_family: StringName
+) -> String:
 	match axis:
 		0:
 			return "Left Stick Left" if axis_value < 0.0 else "Left Stick Right"
@@ -909,6 +1024,10 @@ func _format_joypad_motion(axis: int, axis_value: float) -> String:
 			return "Right Stick Left" if axis_value < 0.0 else "Right Stick Right"
 		3:
 			return "Right Stick Up" if axis_value < 0.0 else "Right Stick Down"
+		JOY_AXIS_TRIGGER_LEFT:
+			return "ZL" if input_family == &"nintendo" else "LT" if input_family == &"xbox" else "L2"
+		JOY_AXIS_TRIGGER_RIGHT:
+			return "ZR" if input_family == &"nintendo" else "RT" if input_family == &"xbox" else "R2"
 		_:
 			return "Axis %d" % axis
 

@@ -4635,7 +4635,6 @@ label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
 [node name="L2Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=135895320]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4648,7 +4647,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-action_text = "Unassigned"
+action_text = "Hot Swap (Hold)"
 input_text = "L2"
 text_box_offset = Vector2(-314, -24)
 line_texture = ExtResource("17_line")
@@ -4692,7 +4691,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Unassigned"
+text = "Hot Swap (Hold)"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
@@ -4758,7 +4757,6 @@ label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 
 [node name="R2Button" type="Control" parent="MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/PS5" unique_id=1223305246]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4771,8 +4769,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("19_callout")
-action_text = "Grapple"
-input_text = "RB"
+action_text = "Unassigned"
+input_text = "R2"
 text_box_offset = Vector2(28, -24)
 line_texture = ExtResource("17_line")
 endpoint_texture = ExtResource("18_endpoint")
@@ -4815,7 +4813,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Grapple"
+text = "Unassigned"
 label_settings = SubResource("LabelSettings_body")
 vertical_alignment = 1
 

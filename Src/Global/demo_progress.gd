@@ -4,15 +4,19 @@ signal threads_changed
 signal checkpoint_changed
 signal follower_dialogue_changed
 signal demo_completion_changed(completed: bool)
+signal lore_changed
+signal lore_unlocked(lore_id: StringName)
 
 const SAVE_PATH := "user://demo_save.cfg"
 const TEMP_SAVE_PATH := "user://demo_save.tmp"
 const BACKUP_SAVE_PATH := "user://demo_save.backup.cfg"
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 
 var _claimed_threads: Dictionary = {}
 var _heard_follower_dialogue: Dictionary = {}
 var _completed_world_events: Dictionary = {}
+var _unlocked_lore: Dictionary = {&"threadbound": true}
+var _read_lore: Dictionary = {}
 var _checkpoint_scene_path := ""
 var _checkpoint_id: StringName = &""
 var _checkpoint_position := Vector2.ZERO
@@ -36,6 +40,29 @@ func claim_thread(thread_id: StringName) -> void:
 
 func has_thread(thread_id: StringName) -> bool:
 	return _claimed_threads.has(thread_id)
+
+func unlock_lore(lore_id: StringName, notify := true) -> bool:
+	if String(lore_id).is_empty() or _unlocked_lore.has(lore_id):
+		return false
+	_unlocked_lore[lore_id] = true
+	_write_progress()
+	lore_changed.emit()
+	if notify:
+		lore_unlocked.emit(lore_id)
+	return true
+
+func has_lore(lore_id: StringName) -> bool:
+	return _unlocked_lore.has(lore_id)
+
+func mark_lore_read(lore_id: StringName) -> void:
+	if not has_lore(lore_id) or _read_lore.has(lore_id):
+		return
+	_read_lore[lore_id] = true
+	_write_progress()
+	lore_changed.emit()
+
+func is_lore_read(lore_id: StringName) -> bool:
+	return _read_lore.has(lore_id)
 
 func remaining_threads(required_threads: Array[StringName]) -> Array[StringName]:
 	var remaining: Array[StringName] = []
@@ -118,6 +145,13 @@ func load_checkpoint() -> bool:
 	_completed_world_events.clear()
 	for event_id in config.get_value("world", "completed_events", PackedStringArray()):
 		_completed_world_events[StringName(str(event_id))] = true
+	_unlocked_lore.clear()
+	for lore_id in config.get_value("lore", "unlocked", PackedStringArray(["threadbound"])):
+		_unlocked_lore[StringName(str(lore_id))] = true
+	_unlocked_lore[&"threadbound"] = true
+	_read_lore.clear()
+	for lore_id in config.get_value("lore", "read", PackedStringArray()):
+		_read_lore[StringName(str(lore_id))] = true
 	checkpoint_changed.emit()
 	return has_checkpoint()
 
@@ -135,6 +169,8 @@ func clear_run() -> void:
 	_claimed_threads.clear()
 	_heard_follower_dialogue.clear()
 	_completed_world_events.clear()
+	_unlocked_lore = {&"threadbound": true}
+	_read_lore.clear()
 	var dir := DirAccess.open("user://")
 	if dir:
 		for path in [SAVE_PATH, TEMP_SAVE_PATH, BACKUP_SAVE_PATH]:
@@ -143,6 +179,7 @@ func clear_run() -> void:
 	checkpoint_changed.emit()
 	threads_changed.emit()
 	follower_dialogue_changed.emit()
+	lore_changed.emit()
 	demo_completion_changed.emit(false)
 
 func has_checkpoint() -> bool:
@@ -202,6 +239,8 @@ func _write_progress() -> void:
 	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
 	config.set_value("progress", "follower_dialogue", _get_follower_dialogue_strings())
 	config.set_value("world", "completed_events", _get_completed_world_event_strings())
+	config.set_value("lore", "unlocked", _get_lore_strings(_unlocked_lore))
+	config.set_value("lore", "read", _get_lore_strings(_read_lore))
 	var error := config.save(TEMP_SAVE_PATH)
 	if error != OK:
 		push_warning("DemoProgress could not save progress: %s." % error_string(error))
@@ -247,3 +286,9 @@ func _get_completed_world_event_strings() -> PackedStringArray:
 	for event_id in _completed_world_events:
 		completed.append(String(event_id))
 	return completed
+
+func _get_lore_strings(source: Dictionary) -> PackedStringArray:
+	var result := PackedStringArray()
+	for lore_id in source:
+		result.append(String(lore_id))
+	return result

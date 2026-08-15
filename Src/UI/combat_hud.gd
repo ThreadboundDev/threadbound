@@ -34,6 +34,11 @@ const VALID_ACTION_POINT_TYPES := [
 ]
 @onready var thread_knot_label: Label = $ThreadKnotCounter/CountLabel as Label
 @onready var thread_knot_counter: Control = $ThreadKnotCounter as Control
+@onready var lore_pickup: Control = $LorePickup as Control
+@onready var lore_pickup_kind: Label = $LorePickup/Kind as Label
+@onready var lore_pickup_title: Label = $LorePickup/Title as Label
+@onready var trial_timer: Control = $TrialTimer as Control
+@onready var trial_timer_label: Label = $TrialTimer/Label as Label
 
 @export_group("Identity and Pattern")
 @export var default_identity_color := Color(0.72, 0.73, 0.72, 1.0)
@@ -59,6 +64,8 @@ var _momentum_state: StringName = &"Low"
 var _momentum_flow_active := false
 var _thread_knot_counter_tween: Tween
 var _thread_knot_reveal_armed := false
+var _lore_pickup_tween: Tween
+var _lore_pickup_resting_position := Vector2.ZERO
 
 @export var max_health := 100:
 	set(value):
@@ -113,6 +120,13 @@ func _ready() -> void:
 		thread_knot_counter.pivot_offset = thread_knot_counter.size * 0.5
 		thread_knot_counter.visible = false
 		thread_knot_counter.modulate.a = 0.0
+	if lore_pickup:
+		lore_pickup.visible = false
+		_lore_pickup_resting_position = lore_pickup.position
+	if trial_timer:
+		trial_timer.visible = false
+	if not DemoProgress.lore_unlocked.is_connected(_on_lore_unlocked):
+		DemoProgress.lore_unlocked.connect(_on_lore_unlocked)
 	if identity_base:
 		_sync_identity_pattern_palette()
 	_create_action_point_cooldown_overlay()
@@ -121,6 +135,7 @@ func _ready() -> void:
 	_sync_health()
 	_sync_thread_knot_counter()
 	call_deferred("_arm_thread_knot_reveal")
+	call_deferred("_show_starting_lore_hint")
 
 func set_health(current: int, maximum: int = max_health) -> void:
 	max_health = maximum
@@ -171,6 +186,50 @@ func set_thread_knots(count: int) -> void:
 	thread_knot_count = count
 	if _thread_knot_reveal_armed and thread_knot_count > previous_count:
 		_reveal_thread_knot_counter()
+
+func show_lore_pickup(title: String, kind := "LORE ADDED") -> void:
+	if not lore_pickup:
+		return
+	if _lore_pickup_tween:
+		_lore_pickup_tween.kill()
+	lore_pickup_kind.text = kind.to_upper()
+	lore_pickup_title.text = title.to_upper()
+	lore_pickup.visible = true
+	lore_pickup.modulate.a = 0.0
+	lore_pickup.position = _lore_pickup_resting_position + Vector2(32.0, 0.0)
+	_lore_pickup_tween = create_tween()
+	_lore_pickup_tween.set_parallel(true)
+	_lore_pickup_tween.tween_property(lore_pickup, "modulate:a", 1.0, 0.16)
+	_lore_pickup_tween.tween_property(lore_pickup, "position", _lore_pickup_resting_position, 0.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_lore_pickup_tween.set_parallel(false)
+	_lore_pickup_tween.tween_interval(3.5)
+	_lore_pickup_tween.tween_property(lore_pickup, "modulate:a", 0.0, 0.3)
+	_lore_pickup_tween.tween_callback(func() -> void: lore_pickup.visible = false)
+
+func show_thread_reward(title: String) -> void:
+	show_lore_pickup(title, "A NEW THREAD ANSWERS")
+
+func set_trial_timer(seconds_remaining: float, active: bool) -> void:
+	if not trial_timer:
+		return
+	trial_timer.visible = active
+	if active:
+		var total_seconds := maxi(0, ceili(seconds_remaining))
+		trial_timer_label.text = "TRIAL OF BALANCE   %02d:%02d" % [total_seconds / 60, total_seconds % 60]
+
+func _on_lore_unlocked(lore_id: StringName) -> void:
+	var lore_input := InteractionPromptFormatter.get_action_display(&"open_lore", "L")
+	show_lore_pickup(LoreCatalog.get_title(lore_id), "LORE ADDED  •  %s TO VIEW" % lore_input)
+
+func _show_starting_lore_hint() -> void:
+	if (
+		not DemoProgress.has_lore(&"threadbound")
+		or DemoProgress.is_lore_read(&"threadbound")
+		or DemoProgress.has_completed_world_event(&"tutorial.starting_lore_notified")
+	):
+		return
+	DemoProgress.complete_world_event(&"tutorial.starting_lore_notified")
+	_on_lore_unlocked(&"threadbound")
 
 func set_identity_color(color: Color) -> void:
 	default_identity_color = color

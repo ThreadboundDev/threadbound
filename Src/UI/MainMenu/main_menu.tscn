@@ -15,6 +15,20 @@ font_color = Color(0.82, 0.76, 0.64, 1)
 outline_size = 5
 outline_color = Color(0.04, 0.03, 0.025, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_warning"]
+font = ExtResource("5_threadbound_font")
+font_size = 28
+font_color = Color(0.84, 0.77, 0.64, 1)
+outline_size = 4
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_confirmation"]
+font = ExtResource("5_threadbound_font")
+font_size = 30
+font_color = Color(0.88, 0.8, 0.65, 1)
+outline_size = 4
+outline_color = Color(0.04, 0.03, 0.025, 1)
+
 [node name="MainMenu" type="Control" unique_id=1105765620]
 layout_mode = 3
 anchors_preset = 15
@@ -216,3 +230,121 @@ layout_mode = 1
 
 [node name="PlaytestSupportPanel" parent="." instance=ExtResource("7_support")]
 visible = false
+
+[node name="NewJourneyConfirmation" type="Control" parent="."]
+visible = false
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Shade" type="ColorRect" parent="NewJourneyConfirmation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.01, 0.008, 0.006, 0.82)
+
+[node name="Panel" type="ColorRect" parent="NewJourneyConfirmation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -240.0
+offset_right = 540.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.045, 0.035, 0.024, 0.98)
+
+[node name="Title" type="Label" parent="NewJourneyConfirmation/Panel"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 1020.0
+offset_bottom = 118.0
+text = "BEGIN A NEW JOURNEY?"
+label_settings = SubResource("LabelSettings_menu")
+horizontal_alignment = 1
+
+[node name="Warning" type="Label" parent="NewJourneyConfirmation/Panel"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 142.0
+offset_right = 980.0
+offset_bottom = 246.0
+text = "Starting a new journey will erase your current run progress.\nControls, display, audio, and gameplay settings will remain."
+label_settings = SubResource("LabelSettings_warning")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Confirm" type="Control" parent="NewJourneyConfirmation/Panel"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 320.0
+offset_right = 510.0
+offset_bottom = 408.0
+mouse_filter = 0
+
+[node name="Backing" type="ColorRect" parent="NewJourneyConfirmation/Panel/Confirm"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07, 0.055, 0.035, 0.94)
+
+[node name="Label" type="Label" parent="NewJourneyConfirmation/Panel/Confirm"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "ERASE AND BEGIN"
+label_settings = SubResource("LabelSettings_confirmation")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Cancel" type="Control" parent="NewJourneyConfirmation/Panel"]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 320.0
+offset_right = 950.0
+offset_bottom = 408.0
+mouse_filter = 0
+
+[node name="Backing" type="ColorRect" parent="NewJourneyConfirmation/Panel/Cancel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.30, 0.20, 0.07, 0.96)
+
+[node name="Label" type="Label" parent="NewJourneyConfirmation/Panel/Cancel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "KEEP CURRENT JOURNEY"
+label_settings = SubResource("LabelSettings_confirmation")
+horizontal_alignment = 1
+vertical_alignment = 1

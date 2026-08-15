@@ -123,6 +123,7 @@ func interact(interacting_player: Node) -> void:
 		return
 	if interacting_player != _interactable_player:
 		return
+	DemoProgress.unlock_lore(&"blossom")
 
 	activated.emit(self, interacting_player)
 	if interacting_player.has_method("begin_save_point_interaction"):

@@ -6,7 +6,7 @@ const SAVE_PATH := "user://controls.cfg"
 const KEYBOARD_SECTION := "keyboard_mouse"
 const CONTROLLER_SECTION := "controller"
 const META_SECTION := "binding_metadata"
-const CONTROLLER_SCHEMA_VERSION := 2
+const CONTROLLER_SCHEMA_VERSION := 3
 
 var _keyboard_defaults: Dictionary = {}
 var _controller_defaults: Dictionary = {}

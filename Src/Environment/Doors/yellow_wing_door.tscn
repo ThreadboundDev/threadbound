@@ -363,6 +363,7 @@ door_id = &"essence"
 persistence_id = &"chamber_first_weave.yellow_wing_door"
 display_name = "Thread of Essence"
 message = "To claim the Thread of Essence, one must prove intelligence within the weave."
+lore_id = &"trial_essence"
 door_color = Color(1, 1, 1, 1)
 prompt_read_text = "Up - Read"
 prompt_open_text = "Up - Open"

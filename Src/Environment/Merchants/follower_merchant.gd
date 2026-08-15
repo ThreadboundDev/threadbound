@@ -102,6 +102,9 @@ func try_purchase(item_id: StringName, player: Node, cost: int, one_time := fals
 func has_purchased(item_id: StringName) -> bool:
 	if item_id == &"merchant_knot_pattern" and EquipManager:
 		return EquipManager.owns_pattern(&"merchant_knot")
+	var lore_id := _lore_id_for_item(item_id)
+	if not String(lore_id).is_empty():
+		return DemoProgress.has_lore(lore_id)
 	return purchased_one_time_items.get(item_id, false)
 
 func get_opening_line() -> String:
@@ -191,7 +194,25 @@ func _apply_purchase_effect(item_id: StringName, player: Node, cost: int) -> boo
 			if unlocked:
 				AudioManager.play_ui(&"loot_special_item")
 			return unlocked
+		&"lore_eryndor", &"lore_threadling", &"lore_tensioner", &"lore_loomkin":
+			var lore_id := _lore_id_for_item(item_id)
+			var unlocked := DemoProgress.unlock_lore(lore_id)
+			if unlocked:
+				AudioManager.play_ui(&"loot_special_item")
+			return unlocked
 	return false
+
+func _lore_id_for_item(item_id: StringName) -> StringName:
+	match item_id:
+		&"lore_eryndor":
+			return &"eryndor"
+		&"lore_threadling":
+			return &"field_threadling"
+		&"lore_tensioner":
+			return &"field_tensioner"
+		&"lore_loomkin":
+			return &"field_loomkin"
+	return &""
 
 func _can_afford(player: Node, cost: int) -> bool:
 	if player.has_method("can_weave_stat_upgrade"):

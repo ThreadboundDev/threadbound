@@ -41,6 +41,7 @@ func _ready() -> void:
 		_verify_hurt_animation(player, sprite, failures)
 		_verify_moving_combo_atlas_maps(sprite, failures)
 		_verify_movement_visual_tuning(player, failures)
+		_verify_jump_glove_frame_sync(player, sprite, failures)
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
@@ -89,8 +90,33 @@ func _verify_neutral_special_grapple_pose_sampling(failures: Array[String]) -> v
 		if animation.value_track_get_update_mode(track_index) != Animation.UPDATE_DISCRETE:
 			failures.append(
 				"Base grapple neutral-special track %d does not update on discrete frames." %
-				track_index
+					track_index
 			)
+
+func _verify_jump_glove_frame_sync(
+	player: Node,
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	player.call("play_character_anim", "Jump_Ascent")
+	var gloves := player.get("current_gloves") as Node2D
+	if gloves == null:
+		failures.append("Jump glove frame sync could not find the equipped gloves.")
+		return
+	var glove_player := gloves.get_node_or_null("Equipment/AnimationPlayer") as AnimationPlayer
+	var hand_anchor := gloves.get_node_or_null("Equipment/RightHandAnchor") as Node2D
+	if glove_player == null or hand_anchor == null:
+		failures.append("Jump glove frame sync is missing its animation nodes.")
+		return
+	sprite.set_frame_and_progress(1, 0.75)
+	player.call("_sync_current_glove_pose_to_body_frame")
+	if not is_equal_approx(glove_player.current_animation_position, 0.125):
+		failures.append("Jump glove playback did not lock to displayed body frame 1.")
+	if not hand_anchor.position.is_equal_approx(Vector2(-18, -15)):
+		failures.append(
+			"Jump frame 1 glove is at %s instead of its authored wrist position." %
+				hand_anchor.position
+		)
 
 func _verify_editor_authored_animations(
 	sprite: AnimatedSprite2D,
