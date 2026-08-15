@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://b80ii7uu4ronc" path="res://Assets/UI/Inventory/weaver_shuttle_icon.png" id="28_icon_shuttle"]
 [ext_resource type="Texture2D" uid="uid://cu8r61v1bje2i" path="res://Assets/UI/Inventory/base_chest_icon.png" id="29_icon_chest"]
 [ext_resource type="Texture2D" uid="uid://dee3sugg66wxt" path="res://Assets/UI/Inventory/thread_knot_icon.png" id="30_thread_knot_icon"]
+[ext_resource type="Texture2D" uid="uid://bp64y7s2houka" path="res://Assets/UI/Main Menu/menu_selection_pointer.png" id="31_selection_pointer"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_title_font")
@@ -1165,6 +1166,20 @@ offset_top = 8.0
 offset_right = 1684.0
 offset_bottom = 758.0
 mouse_filter = 2
+
+[node name="SelectionPointer" type="TextureRect" parent="MenuRoot/Pages/InventoryPage/InventorySlots"]
+unique_name_in_owner = true
+z_index = 20
+layout_mode = 0
+offset_left = -32.0
+offset_top = 184.0
+offset_right = 64.0
+offset_bottom = 248.0
+mouse_filter = 2
+texture = ExtResource("31_selection_pointer")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
 
 [node name="PowerSlot" type="Control" parent="MenuRoot/Pages/InventoryPage/InventorySlots" unique_id=1569096927]
 anchors_preset = 0

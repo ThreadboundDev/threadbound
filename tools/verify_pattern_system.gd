@@ -73,6 +73,19 @@ func _verify() -> void:
 	if inventory_pointer:
 		_check(inventory_pointer.mouse_filter == Control.MOUSE_FILTER_IGNORE, "Inventory pointer never blocks slot input")
 		_check(inventory_pointer.flip_h, "Inventory pointer faces inward toward the selected slot")
+		_check(inventory_pointer.size == Vector2(96.0, 64.0), "Inventory pointer uses its compact editor-authored size")
+		var balance_slot := menu.get_node("MenuRoot/Pages/InventoryPage/InventorySlots/BalanceSlot") as Control
+		menu._inventory_focused_slot = balance_slot
+		menu._update_inventory_selection_pointer()
+		var expected_tip := Vector2(
+			balance_slot.global_position.x + menu.inventory_pointer_slot_offset.x,
+			balance_slot.global_position.y + balance_slot.size.y * 0.5 + menu.inventory_pointer_slot_offset.y
+		)
+		var actual_tip := inventory_pointer.global_position + Vector2(
+			inventory_pointer.size.x * menu.inventory_pointer_tip_x_ratio,
+			inventory_pointer.size.y * menu.inventory_pointer_tip_y_ratio
+		)
+		_check(actual_tip.distance_to(expected_tip) <= 0.1, "Inventory pointer tip tracks the selected slot center")
 	var pattern_slot := menu.get_node_or_null("MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot") as Control
 	_check(pattern_slot != null, "Inventory has a Pattern equipment slot")
 	if pattern_slot:

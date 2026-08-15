@@ -4,7 +4,6 @@ class_name GameMenu
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
 const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
-const INVENTORY_SELECTION_POINTER_TEXTURE := preload("res://Assets/UI/Main Menu/menu_selection_pointer.png")
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -197,6 +196,10 @@ const EQUIPPED_SLOT_ITEMS := {
 @export var binding_hover_color := Color(0.52, 0.36, 0.12, 0.36)
 @export var binding_edit_color := Color(0.82, 0.54, 0.16, 0.54)
 @export var inventory_tooltip_mouse_offset := Vector2(28.0, 12.0)
+@export_group("Inventory Selection Pointer")
+@export_range(0.0, 1.0, 0.01) var inventory_pointer_tip_x_ratio := 0.89
+@export_range(0.0, 1.0, 0.01) var inventory_pointer_tip_y_ratio := 0.83
+@export var inventory_pointer_slot_offset := Vector2(-6.0, 0.0)
 @export_group("Map Tracker")
 @export var map_world_bounds := Rect2(-9500.0, -4500.0, 17700.0, 9400.0)
 @export var map_tracker_clamp_to_map := true
@@ -225,6 +228,7 @@ const EQUIPPED_SLOT_ITEMS := {
 @onready var equipment_slots_root: Control = $MenuRoot/Pages/InventoryPage/EquipmentSlots as Control
 @onready var inventory_player_portrait: AnimatedSprite2D = $MenuRoot/Pages/InventoryPage/CharacterPanel/PlayerPortrait as AnimatedSprite2D
 @onready var inventory_slots_root: Control = $MenuRoot/Pages/InventoryPage/InventorySlots as Control
+@onready var _inventory_selection_pointer: TextureRect = %SelectionPointer as TextureRect
 @onready var inventory_tooltip: Control = $MenuRoot/Pages/InventoryPage/ItemTooltip as Control
 @onready var inventory_tooltip_title: Label = $MenuRoot/Pages/InventoryPage/ItemTooltip/Title as Label
 @onready var inventory_tooltip_description: Label = $MenuRoot/Pages/InventoryPage/ItemTooltip/Description as Label
@@ -275,7 +279,6 @@ var _pending_conflict_action: StringName = &""
 var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
 var _inventory_focused_slot: Control = null
-var _inventory_selection_pointer: TextureRect = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
 var _lore_list_label: Label
@@ -578,19 +581,10 @@ func _update_inventory_focus_visuals() -> void:
 	_update_inventory_selection_pointer()
 
 func _ensure_inventory_selection_pointer() -> void:
-	if _inventory_selection_pointer or not inventory_slots_root:
+	if not _inventory_selection_pointer:
+		push_warning("GameMenu is missing its editor-authored inventory SelectionPointer node.")
 		return
-	_inventory_selection_pointer = TextureRect.new()
-	_inventory_selection_pointer.name = "SelectionPointer"
-	_inventory_selection_pointer.texture = INVENTORY_SELECTION_POINTER_TEXTURE
-	_inventory_selection_pointer.size = Vector2(64.0, 43.0)
-	_inventory_selection_pointer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_inventory_selection_pointer.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_inventory_selection_pointer.flip_h = true
 	_inventory_selection_pointer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_inventory_selection_pointer.z_index = 20
-	_inventory_selection_pointer.visible = false
-	inventory_slots_root.add_child(_inventory_selection_pointer)
 
 func _update_inventory_selection_pointer() -> void:
 	if not _inventory_selection_pointer:
@@ -603,11 +597,16 @@ func _update_inventory_selection_pointer() -> void:
 		_inventory_selection_pointer.visible = false
 		return
 	var slot_rect := _inventory_focused_slot.get_global_rect()
-	_inventory_selection_pointer.visible = true
-	_inventory_selection_pointer.global_position = Vector2(
-		slot_rect.position.x - _inventory_selection_pointer.size.x - 4.0,
-		slot_rect.position.y + slot_rect.size.y * 0.5 - _inventory_selection_pointer.size.y
+	var target_tip := Vector2(
+		slot_rect.position.x + inventory_pointer_slot_offset.x,
+		slot_rect.position.y + slot_rect.size.y * 0.5 + inventory_pointer_slot_offset.y
 	)
+	var pointer_tip := Vector2(
+		_inventory_selection_pointer.size.x * inventory_pointer_tip_x_ratio,
+		_inventory_selection_pointer.size.y * inventory_pointer_tip_y_ratio
+	)
+	_inventory_selection_pointer.visible = true
+	_inventory_selection_pointer.global_position = target_tip - pointer_tip
 
 func _show_inventory_tooltip(item: Dictionary, anchor: Control = null) -> void:
 	if not inventory_tooltip:
