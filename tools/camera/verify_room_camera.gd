@@ -10,6 +10,7 @@ var _failures := PackedStringArray()
 func _ready() -> void:
 	_verify_rectangle_zone()
 	_verify_polygon_zone()
+	_verify_zone_exit_restores_follow()
 	_verify_chamber_wiring()
 	_finish()
 
@@ -34,6 +35,37 @@ func _verify_rectangle_zone() -> void:
 		"Rectangle clamp keeps the viewport inside every edge."
 	)
 	zone.queue_free()
+
+
+func _verify_zone_exit_restores_follow() -> void:
+	var test_root := Node2D.new()
+	var player := CharacterBody2D.new()
+	player.name = "Player"
+	var remote_follow := RemoteTransform2D.new()
+	remote_follow.name = "RemoteTransform2D"
+	player.add_child(remote_follow)
+	var camera := RoomCameraController.new()
+	camera.name = "Camera2D"
+	var zone := RoomCameraZone2D.new()
+	var shape_node := CollisionShape2D.new()
+	var rectangle := RectangleShape2D.new()
+	rectangle.size = Vector2(4000.0, 4000.0)
+	shape_node.shape = rectangle
+	zone.add_child(shape_node)
+	test_root.add_child(player)
+	test_root.add_child(camera)
+	test_root.add_child(zone)
+	add_child(test_root)
+
+	player.global_position = Vector2(1000.0, 0.0)
+	camera._process(1.0 / 60.0)
+	_expect(camera.get_active_zone() == zone, "Camera activates the merchant-style room zone.")
+
+	player.global_position = Vector2(5000.0, 0.0)
+	camera._process(1.0 / 60.0)
+	_expect(camera.get_active_zone() == null, "Camera releases a room zone when the player exits it.")
+	_expect(camera.global_position.x > 4000.0, "Camera resumes following the player outside the room zone.")
+	test_root.queue_free()
 
 
 func _verify_polygon_zone() -> void:

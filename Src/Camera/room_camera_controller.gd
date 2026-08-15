@@ -7,7 +7,7 @@ extends Camera2D
 
 @export var player_path: NodePath = ^"../Player"
 @export var camera_follow_path: NodePath = ^"../Player/RemoteTransform2D"
-@export var retain_last_zone_between_rooms := true
+@export var retain_last_zone_between_rooms := false
 
 @export_group("Follow Composition")
 @export_range(0.0, 256.0, 1.0) var horizontal_dead_zone := 28.0
@@ -66,8 +66,6 @@ func _process(delta: float) -> void:
 		_active_zone = matching_zone
 	elif not retain_last_zone_between_rooms:
 		_active_zone = null
-	if not is_instance_valid(_active_zone):
-		return
 
 	if is_instance_valid(_active_zone):
 		_follow_target = _active_zone.clamp_camera_center(
