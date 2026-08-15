@@ -500,6 +500,7 @@ var attack_vfx_started := false
 var attack_active_finished := false
 var _player_default_visual_scale := Vector2.ONE
 var _player_default_visual_position := Vector2.ZERO
+var _current_gloves_default_transform := Transform2D.IDENTITY
 var current_attack_is_special := false
 var current_attack_uses_ground_combo := false
 var current_attack_uses_air_double := false
@@ -611,6 +612,8 @@ func equip_gloves(glove_scene: PackedScene) -> void:
 
 	current_gloves = glove_scene.instantiate()
 	equipment_mount.add_child(current_gloves)
+	if current_gloves is Node2D:
+		_current_gloves_default_transform = (current_gloves as Node2D).transform
 
 	current_gloves.player = self
 
@@ -1417,6 +1420,7 @@ func update_animations(dir: float) -> void:
 		player_animation.scale = _player_default_visual_scale
 	if player_animation.position != _player_default_visual_position:
 		player_animation.position = _player_default_visual_position
+	_apply_current_glove_visual_tuning(1.0, Vector2.ZERO)
 	if (
 		is_hurt
 		and _hurt_animation_active
@@ -2434,6 +2438,37 @@ func _apply_attack_visual_tuning() -> void:
 		visual_offset.x = -visual_offset.x
 	player_animation.scale = _player_default_visual_scale * scale_multiplier
 	player_animation.position = _player_default_visual_position + visual_offset
+	_apply_current_glove_visual_tuning(scale_multiplier, visual_offset)
+
+func _apply_current_glove_visual_tuning(
+	scale_multiplier: float,
+	visual_offset: Vector2
+) -> void:
+	var glove_visual := current_gloves as Node2D
+	if not is_instance_valid(glove_visual) or not equipment_mount:
+		return
+
+	# The authored hand keys are player-local positions matched to the body at
+	# its default scale. Apply the body's temporary visual transform around the
+	# same sprite pivot, converted through the possibly mirrored equipment mount.
+	# Active grapple rope/needle visuals are top-level and remain in world space.
+	var visual_origin := (
+		_player_default_visual_position
+		+ visual_offset
+		- _player_default_visual_position * scale_multiplier
+	)
+	var body_tuning := Transform2D(
+		Vector2(scale_multiplier, 0.0),
+		Vector2(0.0, scale_multiplier),
+		visual_origin
+	)
+	var mount_transform := equipment_mount.transform
+	glove_visual.transform = (
+		mount_transform.affine_inverse()
+		* body_tuning
+		* mount_transform
+		* _current_gloves_default_transform
+	)
 
 func _on_player_animation_frame_changed() -> void:
 	if is_attacking:
@@ -2539,7 +2574,11 @@ func _get_special_body_animation() -> String:
 	return "Ground_Attack_Combo_1"
 
 func _get_equipment_attack_follow_anim() -> String:
-	return current_attack_body_anim
+	# Follow the visual variant currently playing on the body. Ground attacks can
+	# swap from their logical combo animation to stationary/backpedal visuals;
+	# replaying current_attack_body_anim here would immediately overwrite the
+	# matching authored glove pose with the moving pose.
+	return current_body_anim
 
 func _is_grapple_restricting() -> bool:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
