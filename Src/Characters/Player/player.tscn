@@ -2756,7 +2756,7 @@ _data = {
 script = ExtResource("1_cvnsp")
 base_gloves_scene = ExtResource("2_8cvsi")
 player_stats = ExtResource("83_stats")
-thread_knot_count = 9999
+thread_knot_count = 0
 equipment_left_offset = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
