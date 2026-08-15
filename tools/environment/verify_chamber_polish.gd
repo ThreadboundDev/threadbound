@@ -79,6 +79,14 @@ func _verify_chamber_content() -> void:
 			blue_objective.enemy_spawn_marker_paths.size() == 6,
 			"The Blue traversal encounter must contain six authored spawns."
 		)
+		var blue_button := blue_objective.get_node_or_null("BlueButton1") as BlueWingButton
+		_expect(blue_button != null, "The Blue objective must retain its first activation button.")
+		if blue_button:
+			var prompt := blue_button.get_node_or_null("PromptLabel") as Label
+			_expect(
+				prompt != null and prompt.size.x >= 280.0 and prompt.size.y >= 64.0,
+				"The Blue button prompt must fit its input glyph and action text on one line."
+			)
 	var blue_encounter := chamber.get_node_or_null(
 		"WorldArt/Rooms/BlueWing/Objective/BlueWingObjective/EncounterEnemies"
 	) as EnemySection
