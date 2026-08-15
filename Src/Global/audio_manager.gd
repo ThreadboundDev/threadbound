@@ -168,6 +168,11 @@ func play_game_over_music(fade_duration := DEFAULT_MUSIC_FADE_DURATION) -> Audio
 	_clear_paused_music_resume()
 	return play_music(&"music_game_over", 0.0, fade_duration)
 
+func stop_game_over_music() -> void:
+	_game_over_music_active = false
+	if _current_music_name == &"music_game_over":
+		stop_music()
+
 func play_music(
 	sound_name: StringName,
 	volume_offset_db := 0.0,

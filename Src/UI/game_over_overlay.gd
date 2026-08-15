@@ -8,6 +8,7 @@ const BLUR_SHADER := preload("res://Src/Environment/World/menu_blur.gdshader")
 @export var world_fade_duration := 1.15
 @export var prompt_fade_duration := 0.45
 @export var stitch_reveal_duration := 3.4
+@export_range(0.0, 3.0, 0.05) var respawn_input_delay := 0.75
 @export var blur_alpha := 1.0
 @export var veil_alpha := 0.82
 
@@ -26,6 +27,7 @@ func _ready() -> void:
 	get_tree().paused = true
 	_configure_blur()
 	_prepare_visuals()
+	_schedule_respawn_fallback()
 	call_deferred("_run_game_over_sequence")
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -39,6 +41,23 @@ func _unhandled_input(event: InputEvent) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and get_tree():
 		get_tree().paused = false
+	elif what == NOTIFICATION_EXIT_TREE:
+		if get_tree():
+			get_tree().paused = false
+		AudioManager.stop_game_over_music()
+
+func _schedule_respawn_fallback() -> void:
+	if respawn_input_delay <= 0.0:
+		_arm_respawn_fallback()
+		return
+	var timer := get_tree().create_timer(respawn_input_delay, true, false, true)
+	timer.timeout.connect(_arm_respawn_fallback)
+
+func _arm_respawn_fallback() -> void:
+	if _finished or not is_inside_tree():
+		return
+	_waiting_for_continue = true
+	_show_continue_prompt()
 
 func _configure_blur() -> void:
 	var shader_material := ShaderMaterial.new()
@@ -111,6 +130,8 @@ func _hold_final_frame() -> void:
 	_show_continue_prompt()
 
 func _show_continue_prompt() -> void:
+	if prompt_label.visible:
+		return
 	prompt_label.visible = true
 	var tween := create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -135,6 +156,7 @@ func _finish() -> void:
 	_finished = true
 	_waiting_for_continue = false
 	_set_reveal_progress(1.0)
+	AudioManager.stop_game_over_music()
 	get_tree().paused = false
 	completed.emit()
 	queue_free()
