@@ -73,6 +73,12 @@ func _verify_menu_layout() -> void:
 	_expect(menu._choice_rows.size() == 3, "Interaction hub contains Talk, Buy, and Leave.")
 	_expect(menu._shop_rows.size() == menu.ITEMS.size(), "Shop renders every configured demo offering.")
 	_expect(menu.ITEMS.all(func(item: Dictionary) -> bool: return item.get("id") not in [&"small_heal", &"vitality_thread"]), "Temporary healing and vitality offerings are absent from the demo shop.")
+	var costs := {}
+	for item in menu.ITEMS:
+		costs[item.get("id")] = item.get("cost")
+	_expect(costs.get(&"lore_eryndor") == 5, "Eryndor world lore costs five Thread Knots.")
+	for enemy_lore_id in [&"lore_threadling", &"lore_tensioner", &"lore_loomkin"]:
+		_expect(costs.get(enemy_lore_id) == 2, "%s costs two Thread Knots." % enemy_lore_id)
 	var backdrop := menu.get_node("Root/Background") as TextureRect
 	var dim := menu.get_node("Dim") as ColorRect
 	var dialogue := menu.get_node("Root/DialoguePanel") as Control
