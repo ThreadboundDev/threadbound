@@ -236,19 +236,19 @@ func _set_full_screen_presentation(is_full_screen: bool, show_choices := false) 
 	# both characters visible while leaving enough space for the opening choices.
 	dialogue_panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	dialogue_panel.offset_left = -700.0
-	dialogue_panel.offset_top = -330.0
+	dialogue_panel.offset_top = -378.0
 	dialogue_panel.offset_right = 700.0 if not show_choices else 140.0
-	dialogue_panel.offset_bottom = -42.0
+	dialogue_panel.offset_bottom = -90.0
 	choices_root.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	choices_root.offset_left = 160.0
-	choices_root.offset_top = -290.0
+	choices_root.offset_top = -338.0
 	choices_root.offset_right = 680.0
-	choices_root.offset_bottom = -70.0
+	choices_root.offset_bottom = -118.0
 	footer_label.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	footer_label.offset_left = -410.0
-	footer_label.offset_top = -58.0
+	footer_label.offset_top = -82.0
 	footer_label.offset_right = 410.0
-	footer_label.offset_bottom = -10.0
+	footer_label.offset_bottom = -24.0
 
 func _build_hub_choices() -> void:
 	_choice_rows.clear()

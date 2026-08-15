@@ -82,12 +82,16 @@ func _verify_menu_layout() -> void:
 	var backdrop := menu.get_node("Root/Background") as TextureRect
 	var dim := menu.get_node("Dim") as ColorRect
 	var dialogue := menu.get_node("Root/DialoguePanel") as Control
+	var choices := menu.get_node("Root/Choices") as Control
+	var footer := menu.get_node("Root/FooterLabel") as RichTextLabel
 	_expect(not backdrop.visible, "Follower interaction hub preserves the visible room behind its lower third.")
 	_expect(dim.color.a < 0.3, "Follower conversation uses only a restrained scene dim.")
 	_expect(dialogue.get_global_rect().position.y > 500.0, "Follower conversation is presented in the lower third.")
+	_expect(dialogue.get_global_rect().end.y < footer.get_global_rect().position.y, "Follower dialogue leaves a clear lane above its input glyphs.")
+	_expect(choices.get_global_rect().end.y < footer.get_global_rect().position.y, "Follower choices leave a clear lane above their input glyphs.")
+	_expect(footer.get_global_rect().end.y <= get_viewport().get_visible_rect().end.y, "Follower input glyphs remain fully inside the viewport.")
 	menu._show_talk()
 	await get_tree().process_frame
-	var footer := menu.get_node("Root/FooterLabel") as RichTextLabel
 	_expect("BACK" in footer.text, "Talk view labels the mapped Tab/back action.")
 	menu._show_shop()
 	await get_tree().process_frame
