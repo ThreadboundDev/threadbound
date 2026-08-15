@@ -113,7 +113,7 @@ func _interact_with_boss_door() -> void:
 	var remaining := DemoProgress.remaining_threads(required_threads)
 	if remaining.is_empty():
 		if not _message_acknowledged:
-			_show_message("The three threads answer. The way forward opens.")
+			_show_message("The three fragments answer. The way forward opens.")
 			_message_acknowledged = true
 			_refresh_prompt_label()
 			return
@@ -124,7 +124,7 @@ func _interact_with_boss_door() -> void:
 	_message_acknowledged = false
 	_refresh_prompt_label()
 	var count := remaining.size()
-	var noun := "thread remains" if count == 1 else "threads remain"
+	var noun := "fragment remains" if count == 1 else "fragments remain"
 	_show_message("%s\n\n%d %s." % [message, count, noun])
 
 func _open() -> void:

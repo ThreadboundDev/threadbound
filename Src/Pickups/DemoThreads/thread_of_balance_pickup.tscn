@@ -11,8 +11,8 @@ collision_layer = 0
 collision_mask = 1
 script = ExtResource("1_script")
 thread_id = &"balance"
-display_name = "Thread of Balance"
-collect_message = "Thread of Balance claimed."
+display_name = "Fragment of Balance"
+collect_message = "Fragment of Balance claimed."
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 70

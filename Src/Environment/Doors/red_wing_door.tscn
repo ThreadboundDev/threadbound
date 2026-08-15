@@ -361,8 +361,8 @@ animations = [{
 [node name="RedWingDoor" unique_id=92597966 instance=ExtResource("1_base_door")]
 door_id = &"power"
 persistence_id = &"chamber_first_weave.red_wing_door"
-display_name = "Thread of Power"
-message = "To claim the Thread of Power, one must defeat all enemies that bind the wing."
+display_name = "Trial of Power"
+message = "To claim the Fragment of Power, one must defeat all enemies that bind the wing."
 lore_id = &"trial_power"
 door_color = Color(1, 1, 1, 1)
 prompt_read_text = "Up - Read"
