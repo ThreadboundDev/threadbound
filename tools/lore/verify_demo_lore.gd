@@ -23,7 +23,11 @@ func _verify_catalog() -> void:
 		_expect(not entry.is_empty(), "Lore entry %s exists." % lore_id)
 		_expect(not String(entry.get("title", "")).is_empty(), "Lore entry %s has a title." % lore_id)
 		_expect(not String(entry.get("body", "")).is_empty(), "Lore entry %s has body text." % lore_id)
-	_expect(LoreCatalog.ORDER.size() == 10, "The demo catalog contains all ten planned entries.")
+	_expect(LoreCatalog.ORDER.size() == 13, "The demo catalog contains all thirteen planned entries.")
+	for fragment_id in [&"fragment_power", &"fragment_balance", &"fragment_essence"]:
+		var fragment := LoreCatalog.get_entry(fragment_id)
+		_expect(fragment.get("category") == "LOOSE THREADS", "%s is grouped with the loose Fragments." % fragment_id)
+		_expect("greater Thread" in String(fragment.get("body", "")), "%s distinguishes its Fragment from the primordial Thread." % fragment_id)
 
 func _verify_progress_api() -> void:
 	for method_name in [&"unlock_lore", &"has_lore", &"mark_lore_read", &"is_lore_read"]:
@@ -56,6 +60,21 @@ func _verify_scenes() -> void:
 	main_menu.call("_hide_new_journey_confirmation")
 	DemoProgress.set("_checkpoint_scene_path", original_checkpoint_path)
 	main_menu.queue_free()
+	var expected_fragments := {
+		&"power": ["Fragment of Power", &"fragment_power"],
+		&"balance": ["Fragment of Balance", &"fragment_balance"],
+		&"essence": ["Fragment of Essence", &"fragment_essence"],
+	}
+	for scene_path in [
+		"res://Src/Pickups/DemoThreads/thread_of_power_pickup.tscn",
+		"res://Src/Pickups/DemoThreads/thread_of_balance_pickup.tscn",
+		"res://Src/Pickups/DemoThreads/thread_of_essence_pickup.tscn",
+	]:
+		var pickup := (load(scene_path) as PackedScene).instantiate() as DemoThreadPickup
+		var expected: Array = expected_fragments[pickup.thread_id]
+		_expect(pickup.display_name == expected[0], "%s uses Fragment terminology." % pickup.thread_id)
+		_expect(pickup.FRAGMENT_LORE_IDS.get(pickup.thread_id) == expected[1], "%s unlocks its matching Fragment lore." % pickup.thread_id)
+		pickup.free()
 
 func _verify_hud() -> void:
 	var hud_scene := load("res://Src/UI/combat_hud.tscn") as PackedScene

@@ -23,7 +23,7 @@ const ITEMS := [
 	},
 	{
 		"id": &"lore_eryndor",
-		"name": "THE UNFINISHED REALM",
+		"name": "THE WORLD THAT REMEMBERS",
 		"type": "LORE",
 		"cost": 5,
 		"icon_path": "",

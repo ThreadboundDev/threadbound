@@ -366,8 +366,8 @@ size = Vector2(646, 805)
 
 [node name="BossWingDoor" unique_id=1356882730 instance=ExtResource("1_base_door")]
 door_kind = 1
-display_name = "Tri-Thread Door"
-message = "The tri-thread seal holds. Collect the three threads to open the way forward."
+display_name = "Triune Door"
+message = "The triune seal holds. Collect the three fragments to open the way forward."
 open_after_message = false
 door_color = Color(1, 1, 1, 1)
 fog_panel_enabled = false

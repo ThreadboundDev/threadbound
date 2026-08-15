@@ -2,6 +2,11 @@ extends Area2D
 class_name DemoThreadPickup
 
 const MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
+const FRAGMENT_LORE_IDS := {
+	&"power": &"fragment_power",
+	&"balance": &"fragment_balance",
+	&"essence": &"fragment_essence",
+}
 
 @export var thread_id: StringName = &""
 @export var display_name := "Thread"
@@ -24,6 +29,7 @@ func _ready() -> void:
 	if sprite:
 		_base_sprite_position = sprite.position
 	if DemoProgress.has_thread(thread_id):
+		_unlock_fragment_lore(false)
 		queue_free()
 
 func _process(delta: float) -> void:
@@ -47,6 +53,7 @@ func _collect() -> void:
 	DemoProgress.claim_thread(thread_id)
 	AudioManager.play_ui(&"loot_special_item")
 	_show_collect_message(is_first_thread)
+	_unlock_fragment_lore(true)
 	if collision_shape:
 		collision_shape.set_deferred("disabled", true)
 
@@ -93,3 +100,8 @@ func _show_collect_message(is_first_thread := false) -> void:
 
 	if box.has_method("show_message"):
 		box.show_message(message, is_first_thread)
+
+func _unlock_fragment_lore(notify: bool) -> void:
+	var fragment_lore_id := StringName(FRAGMENT_LORE_IDS.get(thread_id, &""))
+	if not String(fragment_lore_id).is_empty():
+		DemoProgress.unlock_lore(fragment_lore_id, notify)

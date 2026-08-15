@@ -92,6 +92,16 @@ Nor were they meant to be separated from:
 - Eryndor
 - or the harmony of the world.
 
+### Loose Fragments
+
+When the primordial Threads were separated from Eryndor, the wound left behind
+loose strands that still carry a faint resonance of Power, Balance, or Essence.
+These remnants are known as Fragments.
+
+A Fragment is not the primordial Thread itself. Claiming one neither divides nor
+diminishes the greater force held by its Bearer. It is an echo left loose within
+the wounded Weave: finite, potent, and no longer bound to a master's will.
+
 ---
 
 ## Original Harmony

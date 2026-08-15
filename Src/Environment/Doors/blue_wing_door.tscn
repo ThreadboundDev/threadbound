@@ -361,8 +361,8 @@ animations = [{
 [node name="BlueWingDoor" unique_id=52065655 instance=ExtResource("1_base_door")]
 door_id = &"balance"
 persistence_id = &"chamber_first_weave.blue_wing_door"
-display_name = "Thread of Balance"
-message = "To claim the Thread of Balance, one must display control over momentum."
+display_name = "Trial of Balance"
+message = "To claim the Fragment of Balance, one must display control over momentum."
 lore_id = &"trial_balance"
 door_color = Color(1, 1, 1, 1)
 prompt_read_text = "Up - Read"

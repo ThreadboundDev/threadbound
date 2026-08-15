@@ -7,7 +7,7 @@ const PROGRESSION_DIALOGUE := [
 	{
 		"id": &"guidance",
 		"thread": &"",
-		"text": "Three threads bind the way ahead: Power, Balance, Essence. Each wing asks a different question. None will tell you what your answer means."
+		"text": "Three fragments bind the way ahead: Power, Balance, Essence. Each wing asks a different question. None will tell you what your answer means."
 	},
 	{
 		"id": &"power",
@@ -27,7 +27,7 @@ const PROGRESSION_DIALOGUE := [
 	{
 		"id": &"three_threads",
 		"requires_all": true,
-		"text": "Three threads gathered, and still you remain unfinished. Good. Finished things have so few choices left."
+		"text": "Three fragments gathered, and still you remain unfinished. Good. Finished things have so few choices left."
 	},
 	{
 		"id": &"proto_weaver",
