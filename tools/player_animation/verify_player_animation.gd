@@ -650,6 +650,11 @@ func _verify_ground_attack_variant_locking(
 	player.call("update_animations", 1.0)
 	if sprite.animation != STATIONARY_ANIMATION:
 		failures.append("A stationary swing did not use its locked visual variant.")
+	if player.call("_get_equipment_attack_follow_anim") != String(STATIONARY_ANIMATION):
+		failures.append("Stationary attack selected the moving glove follow pose.")
+	var equipped_gloves := player.get("current_gloves") as Node2D
+	if equipped_gloves == null or not equipped_gloves.scale.is_equal_approx(Vector2(1.4, 1.4)):
+		failures.append("Stationary attack did not scale its glove pose with the body.")
 	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
 		failures.append("Moving-to-stationary visual selection did not preserve frame progress.")
 	var expected_stationary_scale := Vector2(0.7, 0.7) * 1.4
@@ -675,6 +680,10 @@ func _verify_ground_attack_variant_locking(
 	player.call("update_animations", -1.0)
 	if sprite.animation != BACKPEDAL_ANIMATION:
 		failures.append("A new backpedal swing did not use the backpedal visual variant.")
+	if player.call("_get_equipment_attack_follow_anim") != String(BACKPEDAL_ANIMATION):
+		failures.append("Backpedal attack selected the moving glove follow pose.")
+	if equipped_gloves == null or not equipped_gloves.scale.is_equal_approx(Vector2(1.25, 1.25)):
+		failures.append("Backpedal attack did not scale its glove pose with the body.")
 	if sprite.frame != TEST_FRAME or not is_equal_approx(sprite.frame_progress, TEST_PROGRESS):
 		failures.append("Stationary-to-backpedal visual selection did not preserve frame progress.")
 
