@@ -491,6 +491,7 @@ var _hurt_animation_active := false
 var is_dead := false
 var god_mode_enabled := false
 var death_reset_started := false
+var _death_recovery_forced := false
 var attack_direction := Vector2.RIGHT
 var attack_timer := 0.0
 var attack_cooldown_timer := 0.0
@@ -3661,9 +3662,21 @@ func _show_game_over_after_death() -> void:
 	get_tree().root.add_child(overlay)
 
 	if overlay.has_signal("completed"):
-		await overlay.completed
+		overlay.completed.connect(_reload_scene_after_death, CONNECT_ONE_SHOT)
+	_monitor_game_over_recovery.call_deferred()
 
-	_reload_scene_after_death()
+func _monitor_game_over_recovery() -> void:
+	while is_inside_tree() and death_reset_started and not _death_recovery_forced:
+		await get_tree().create_timer(0.5, true, false, true).timeout
+		if not is_inside_tree() or not death_reset_started:
+			return
+		if get_tree().get_first_node_in_group(&"game_over_overlay") != null:
+			continue
+		_death_recovery_forced = true
+		get_tree().paused = false
+		AudioManager.stop_game_over_music()
+		_reload_scene_after_death()
+		return
 
 func _reload_scene_after_death() -> void:
 	if not is_inside_tree():
