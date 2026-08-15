@@ -86,6 +86,19 @@ func _verify() -> void:
 			inventory_pointer.size.y * menu.inventory_pointer_tip_y_ratio
 		)
 		_check(actual_tip.distance_to(expected_tip) <= 0.1, "Inventory pointer tip tracks the selected slot center")
+	var left_page_hint := menu.get_node_or_null("MenuRoot/PageCycleLeftHint") as RichTextLabel
+	var right_page_hint := menu.get_node_or_null("MenuRoot/PageCycleRightHint") as RichTextLabel
+	_check(left_page_hint != null and not left_page_hint.text.is_empty(), "Game Menu shows the live cycle-left binding glyph")
+	_check(right_page_hint != null and not right_page_hint.text.is_empty(), "Game Menu shows the live cycle-right binding glyph")
+	var power_slot := menu.get_node("MenuRoot/Pages/InventoryPage/InventorySlots/PowerSlot") as Control
+	menu._set_inventory_focus(power_slot)
+	menu._enter_inventory_category_focus()
+	_check(menu._inventory_category_focus and menu._inventory_focused_slot == null, "Up from the inventory grid focuses its category tabs")
+	menu._move_inventory_category_focus(1)
+	_check(menu._inventory_category == &"key_items", "Left and right navigate inventory category tabs")
+	menu._leave_inventory_category_focus()
+	_check(not menu._inventory_category_focus and menu._inventory_focused_slot != null, "Down from category tabs returns focus to the item grid")
+	menu._select_inventory_category(&"all")
 	var pattern_slot := menu.get_node_or_null("MenuRoot/Pages/InventoryPage/EquipmentSlots/PatternSlot") as Control
 	_check(pattern_slot != null, "Inventory has a Pattern equipment slot")
 	if pattern_slot:

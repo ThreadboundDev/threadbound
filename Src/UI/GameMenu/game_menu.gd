@@ -213,6 +213,8 @@ const EQUIPPED_SLOT_ITEMS := {
 	$MenuRoot/Tabs/LoreTab,
 	$MenuRoot/Tabs/ControlsTab,
 ]
+@onready var page_cycle_left_hint: RichTextLabel = %PageCycleLeftHint as RichTextLabel
+@onready var page_cycle_right_hint: RichTextLabel = %PageCycleRightHint as RichTextLabel
 @onready var pages: Array[Control] = [
 	$MenuRoot/Pages/InventoryPage,
 	$MenuRoot/Pages/MapPage,
@@ -278,6 +280,7 @@ var _pending_rebind_event: InputEvent = null
 var _pending_conflict_action: StringName = &""
 var _pending_rebind_group: Dictionary = {}
 var _inventory_category: StringName = &"all"
+var _inventory_category_focus := false
 var _inventory_focused_slot: Control = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
@@ -309,6 +312,8 @@ func _ready() -> void:
 		DemoProgress.lore_changed.connect(_refresh_lore_page)
 	if not InputBindingManager.bindings_changed.is_connected(_update_control_binding_labels):
 		InputBindingManager.bindings_changed.connect(_update_control_binding_labels)
+	if not InputBindingManager.bindings_changed.is_connected(_update_page_cycle_hints):
+		InputBindingManager.bindings_changed.connect(_update_page_cycle_hints)
 	if EquipManager and not EquipManager.equip_changed.is_connected(_on_equip_changed):
 		EquipManager.equip_changed.connect(_on_equip_changed)
 	if EquipManager and not EquipManager.pattern_changed.is_connected(_on_pattern_changed):
@@ -328,6 +333,7 @@ func _ready() -> void:
 	_update_equipped_slot_items()
 	_update_inventory_threads()
 	_update_map_tracker()
+	_update_page_cycle_hints()
 
 func _ensure_keyboard_binding_row(node_name: String, template_name: String, row_position: Vector2) -> void:
 	var bindings := get_node_or_null("MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Bindings")
@@ -476,7 +482,7 @@ func _update_inventory_category_tabs() -> void:
 	for i in inventory_category_tabs.size():
 		var is_selected := INVENTORY_CATEGORIES[i] == _inventory_category
 		inventory_category_tabs[i].modulate = selected_tab_color if is_selected else normal_tab_color
-		inventory_category_tabs[i].scale = selected_tab_scale if is_selected else normal_tab_scale
+		inventory_category_tabs[i].scale = Vector2(1.12, 1.12) if is_selected and _inventory_category_focus else selected_tab_scale if is_selected else normal_tab_scale
 
 func _on_inventory_slot_mouse_entered(slot: Node) -> void:
 	var item: Dictionary = slot.get_meta("inventory_item", {})
@@ -503,8 +509,23 @@ func _on_inventory_slot_gui_input(event: InputEvent, slot: Node) -> void:
 func _handle_inventory_controller_navigation(event: InputEvent) -> bool:
 	if not (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		return false
+	if _inventory_category_focus:
+		if event.is_action_pressed("ui_left"):
+			_move_inventory_category_focus(-1)
+			return true
+		if event.is_action_pressed("ui_right"):
+			_move_inventory_category_focus(1)
+			return true
+		if event.is_action_pressed("ui_down"):
+			_leave_inventory_category_focus()
+			return true
+		if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_accept"):
+			return true
 	if event.is_action_pressed("ui_up"):
-		_move_inventory_focus(Vector2.UP)
+		if _find_inventory_focus(Vector2.UP) == null:
+			_enter_inventory_category_focus()
+		else:
+			_move_inventory_focus(Vector2.UP)
 		return true
 	if event.is_action_pressed("ui_down"):
 		_move_inventory_focus(Vector2.DOWN)
@@ -523,6 +544,25 @@ func _handle_inventory_controller_navigation(event: InputEvent) -> bool:
 		return true
 	return false
 
+func _enter_inventory_category_focus() -> void:
+	_inventory_category_focus = true
+	_set_inventory_focus(null)
+	_update_inventory_category_tabs()
+	AudioManager.play_ui(&"ui_click")
+
+func _leave_inventory_category_focus() -> void:
+	_inventory_category_focus = false
+	_update_inventory_category_tabs()
+	var slots := _get_populated_inventory_slots()
+	_set_inventory_focus(slots[0] if not slots.is_empty() else null)
+
+func _move_inventory_category_focus(direction: int) -> void:
+	var category_index := INVENTORY_CATEGORIES.find(_inventory_category)
+	category_index = wrapi(category_index + direction, 0, INVENTORY_CATEGORIES.size())
+	_select_inventory_category(INVENTORY_CATEGORIES[category_index])
+	_inventory_category_focus = true
+	_update_inventory_category_tabs()
+
 func _get_populated_inventory_slots() -> Array[Control]:
 	var result: Array[Control] = []
 	if not inventory_slots_root:
@@ -540,6 +580,14 @@ func _move_inventory_focus(direction: Vector2) -> void:
 	if not _inventory_focused_slot or not slots.has(_inventory_focused_slot):
 		_set_inventory_focus(slots[0])
 		return
+	var best := _find_inventory_focus(direction)
+	if best:
+		_set_inventory_focus(best)
+
+func _find_inventory_focus(direction: Vector2) -> Control:
+	var slots := _get_populated_inventory_slots()
+	if not _inventory_focused_slot or not slots.has(_inventory_focused_slot):
+		return null
 	var origin := _inventory_focused_slot.get_global_rect().get_center()
 	var best: Control = null
 	var best_score := INF
@@ -555,8 +603,7 @@ func _move_inventory_focus(direction: Vector2) -> void:
 		if score < best_score:
 			best_score = score
 			best = slot
-	if best:
-		_set_inventory_focus(best)
+	return best
 
 func _set_inventory_focus(slot: Control) -> void:
 	_inventory_focused_slot = slot
@@ -655,6 +702,7 @@ func _select_tab(index: int, instant := false) -> void:
 	_selected_index = wrapi(index, 0, TAB_ORDER.size())
 	title_label.text = String(TAB_ORDER[_selected_index]).to_upper()
 	if TAB_ORDER[_selected_index] == &"Inventory":
+		_inventory_category_focus = false
 		_update_inventory_threads()
 		if _controls_input_family != &"keyboard_mouse":
 			var slots := _get_populated_inventory_slots()
@@ -794,6 +842,19 @@ func _set_controls_input_family(input_family: StringName) -> void:
 		input_family = &"keyboard_mouse"
 	_controls_input_family = input_family
 	_refresh_controls_page()
+	_update_page_cycle_hints()
+
+func _update_page_cycle_hints() -> void:
+	if not page_cycle_left_hint or not page_cycle_right_hint:
+		return
+	page_cycle_left_hint.text = "[center]%s[/center]" % InputGlyphFormatter.get_action_display_bbcode(
+		&"menu_tab_left", "Q", _controls_input_family, 38
+	)
+	page_cycle_right_hint.text = "[center]%s[/center]" % InputGlyphFormatter.get_action_display_bbcode(
+		&"menu_tab_right", "E", _controls_input_family, 38
+	)
+	page_cycle_left_hint.visible = not _controls_only
+	page_cycle_right_hint.visible = not _controls_only
 
 func _refresh_controls_page() -> void:
 	for family in controls_device_art:

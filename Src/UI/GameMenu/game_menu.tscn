@@ -424,6 +424,32 @@ label_settings = SubResource("LabelSettings_tab")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PageCycleLeftHint" type="RichTextLabel" parent="MenuRoot"]
+unique_name_in_owner = true
+z_index = 30
+layout_mode = 0
+offset_left = 455.0
+offset_top = 177.0
+offset_right = 515.0
+offset_bottom = 227.0
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="PageCycleRightHint" type="RichTextLabel" parent="MenuRoot"]
+unique_name_in_owner = true
+z_index = 30
+layout_mode = 0
+offset_left = 1405.0
+offset_top = 177.0
+offset_right = 1465.0
+offset_bottom = 227.0
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
 [node name="ControlsRebindPrompt" type="Control" parent="MenuRoot" unique_id=1256672615]
 visible = false
 z_index = 50
