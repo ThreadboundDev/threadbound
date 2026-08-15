@@ -61,6 +61,12 @@ func _verify_hud() -> void:
 	var hud := hud_scene.instantiate()
 	_expect(hud.has_node("LorePickup/PageIcon"), "HUD lore pickup includes a page icon.")
 	_expect(hud.has_node("LorePickup/Title"), "HUD lore pickup includes the entry name.")
+	var lore_prompt := hud.get_node("LorePickup/Kind") as RichTextLabel
+	_expect(lore_prompt != null and lore_prompt.bbcode_enabled, "HUD lore pickup supports input glyph BBCode.")
+	var keyboard_lore_glyph := InputGlyphFormatter.get_action_display_bbcode(&"open_lore", "L", &"keyboard_mouse", 24)
+	var controller_lore_glyph := InputGlyphFormatter.get_action_display_bbcode(&"open_lore", "D-PAD DOWN", &"xbox", 24)
+	_expect(keyboard_lore_glyph.contains("[img="), "Lore notification resolves the keyboard L glyph.")
+	_expect(controller_lore_glyph.contains("[img="), "Lore notification resolves the controller D-pad Down glyph.")
 	_expect(hud.has_node("TrialTimer/Label"), "HUD includes the Blue trial countdown.")
 	_expect(hud.has_method("show_lore_pickup"), "HUD can present lore pickups.")
 	_expect(hud.has_method("set_trial_timer"), "HUD can update the Blue trial countdown.")

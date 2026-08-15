@@ -23,13 +23,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pattern_recolor"]
 shader = ExtResource("20_pattern_recolor")
 
-[sub_resource type="LabelSettings" id="LabelSettings_lore_kind"]
-font = ExtResource("21_lore_font")
-font_size = 22
-font_color = Color(0.82, 0.64, 0.3, 1)
-outline_size = 3
-outline_color = Color(0.03, 0.02, 0.01, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_lore_title"]
 font = ExtResource("22_lore_title_font")
 font_size = 28
@@ -306,15 +299,22 @@ label_settings = ExtResource("19_label_settings")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Kind" type="Label" parent="LorePickup"]
+[node name="Kind" type="RichTextLabel" parent="LorePickup"]
 layout_mode = 0
 offset_left = 88.0
-offset_top = 10.0
+offset_top = 7.0
 offset_right = 420.0
-offset_bottom = 42.0
+offset_bottom = 45.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.82, 0.64, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0.03, 0.02, 0.01, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("21_lore_font")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
 text = "LORE ADDED"
-label_settings = SubResource("LabelSettings_lore_kind")
-modulate = Color(0.82, 0.64, 0.3, 1)
 
 [node name="Title" type="Label" parent="LorePickup"]
 layout_mode = 0
