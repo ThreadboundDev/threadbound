@@ -99,7 +99,14 @@ func _verify_menu_layout() -> void:
 	_expect(dim.color.a > 0.5, "The full-screen shop retains its stronger backdrop dim.")
 	var rows := menu.get_node("Root/ShopPanel/Rows") as VBoxContainer
 	var description := menu.get_node("Root/ShopPanel/DescriptionPanel") as Control
+	var title := menu.get_node("Root/TitleLabel") as Control
+	var status := menu.get_node("Root/StatusLabel") as Control
+	_expect(title.get_global_rect().end.y + 24.0 <= rows.get_global_rect().position.y, "Shop offerings sit clearly below the merchant title.")
 	_expect(rows.get_global_rect().end.y <= description.get_global_rect().position.y, "Shop rows do not overlap the description panel.")
+	_expect(description.get_global_rect().end.y <= status.get_global_rect().position.y, "Shop description leaves room for purchase status.")
+	_expect(status.get_global_rect().end.y <= footer.get_global_rect().position.y, "Shop status remains clear of its input glyphs.")
+	var menu_root := menu.get_node("Root") as Control
+	_expect(footer.get_global_rect().end.y <= menu_root.get_global_rect().end.y, "Shop input glyphs remain fully inside the menu canvas.")
 	_expect(menu.ITEMS.all(func(item: Dictionary) -> bool: return item.get("id") not in [&"ap_refresh", &"momentum_boost"]), "Immediate AP and momentum purchases are removed.")
 	menu.queue_free()
 	merchant.queue_free()

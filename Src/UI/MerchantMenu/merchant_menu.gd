@@ -228,8 +228,9 @@ func _set_full_screen_presentation(is_full_screen: bool, show_choices := false) 
 		dialogue_panel.offset_top = -222.0
 		dialogue_panel.offset_right = 420.0
 		dialogue_panel.offset_bottom = 62.0
-		footer_label.offset_top = 326.0
-		footer_label.offset_bottom = 384.0
+		footer_label.set_anchors_preset(Control.PRESET_CENTER)
+		footer_label.offset_top = 442.0
+		footer_label.offset_bottom = 494.0
 		return
 
 	# Conversation remains grounded in the room: a restrained lower-third keeps
