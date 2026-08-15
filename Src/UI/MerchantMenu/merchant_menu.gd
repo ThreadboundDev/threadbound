@@ -25,7 +25,7 @@ const ITEMS := [
 		"id": &"lore_eryndor",
 		"name": "THE UNFINISHED REALM",
 		"type": "LORE",
-		"cost": 2,
+		"cost": 5,
 		"icon_path": "",
 		"description": "A Follower's account of Eryndor. Adds a permanent entry to Lore."
 	},
@@ -33,7 +33,7 @@ const ITEMS := [
 		"id": &"lore_threadling",
 		"name": "FIELD NOTE: THREADLING",
 		"type": "LORE",
-		"cost": 3,
+		"cost": 2,
 		"icon_path": "",
 		"description": "The Follower's observations on Threadlings. Adds a permanent entry to Lore."
 	},
@@ -41,7 +41,7 @@ const ITEMS := [
 		"id": &"lore_tensioner",
 		"name": "FIELD NOTE: TENSIONER",
 		"type": "LORE",
-		"cost": 4,
+		"cost": 2,
 		"icon_path": "",
 		"description": "The Follower's observations on Tensioners. Adds a permanent entry to Lore."
 	},
@@ -49,7 +49,7 @@ const ITEMS := [
 		"id": &"lore_loomkin",
 		"name": "FIELD NOTE: LOOMKIN",
 		"type": "LORE",
-		"cost": 4,
+		"cost": 2,
 		"icon_path": "",
 		"description": "The Follower's observations on Loomkin. Adds a permanent entry to Lore."
 	},
