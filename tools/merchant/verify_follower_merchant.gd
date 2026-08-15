@@ -72,6 +72,7 @@ func _verify_menu_layout() -> void:
 	await get_tree().process_frame
 	_expect(menu._choice_rows.size() == 3, "Interaction hub contains Talk, Buy, and Leave.")
 	_expect(menu._shop_rows.size() == menu.ITEMS.size(), "Shop renders every configured demo offering.")
+	_expect(menu.ITEMS.all(func(item: Dictionary) -> bool: return item.get("id") not in [&"small_heal", &"vitality_thread"]), "Temporary healing and vitality offerings are absent from the demo shop.")
 	var backdrop := menu.get_node("Root/Background") as TextureRect
 	var dim := menu.get_node("Dim") as ColorRect
 	var dialogue := menu.get_node("Root/DialoguePanel") as Control
