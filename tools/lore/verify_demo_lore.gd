@@ -7,6 +7,7 @@ func _ready() -> void:
 	_verify_progress_api()
 	_verify_scenes()
 	_verify_hud()
+	_verify_first_thread_guidance()
 	_verify_controller_defaults()
 	if _failures.is_empty():
 		print("Demo lore and guidance verification passed.")
@@ -72,6 +73,34 @@ func _verify_hud() -> void:
 	_expect(hud.has_method("show_lore_pickup"), "HUD can present lore pickups.")
 	_expect(hud.has_method("set_trial_timer"), "HUD can update the Blue trial countdown.")
 	hud.free()
+
+func _verify_first_thread_guidance() -> void:
+	var keyboard_hot_swap := InputGlyphFormatter.get_action_display_bbcode(
+		&"open_menu", "TAB", &"keyboard_mouse", 30
+	)
+	var keyboard_inventory := InputGlyphFormatter.get_action_display_bbcode(
+		&"open_inventory", "I", &"keyboard_mouse", 30
+	)
+	var controller_hot_swap := InputGlyphFormatter.get_action_display_bbcode(
+		&"open_menu", "L2", &"xbox", 30
+	)
+	var controller_inventory := InputGlyphFormatter.get_action_display_bbcode(
+		&"open_inventory", "D-PAD UP", &"xbox", 30
+	)
+	_expect(keyboard_hot_swap.contains("[img="), "First-Thread guidance resolves the keyboard Hot Swap glyph.")
+	_expect(keyboard_inventory.contains("[img="), "First-Thread guidance resolves the keyboard Inventory glyph.")
+	_expect(controller_hot_swap.contains("[img="), "First-Thread guidance resolves the controller Hot Swap glyph.")
+	_expect(controller_inventory.contains("[img="), "First-Thread guidance resolves the controller Inventory glyph.")
+
+	var box_scene := load("res://Src/UI/demo_message_box.tscn") as PackedScene
+	var box := box_scene.instantiate()
+	add_child(box)
+	box.call("show_message", "Hold %s for Hot Swap." % keyboard_hot_swap, true)
+	var plain_label := box.get_node("Panel/MarginContainer/MessageLabel") as Label
+	var rich_label := box.get_node_or_null("Panel/MarginContainer/RichMessageLabel") as RichTextLabel
+	_expect(rich_label != null and rich_label.bbcode_enabled, "Demo guidance supports inline input glyphs.")
+	_expect(not plain_label.visible and rich_label.visible, "Glyph guidance uses the rich message presentation.")
+	box.free()
 
 func _verify_controller_defaults() -> void:
 	var hot_swap_on_l2 := false

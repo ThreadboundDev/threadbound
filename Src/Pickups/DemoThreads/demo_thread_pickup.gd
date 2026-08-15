@@ -70,9 +70,14 @@ func _show_collect_message(is_first_thread := false) -> void:
 		hud.show_thread_reward(display_name)
 	if is_first_thread and not DemoProgress.has_completed_world_event(&"tutorial.first_thread_guidance"):
 		DemoProgress.complete_world_event(&"tutorial.first_thread_guidance")
-		var hot_swap := InteractionPromptFormatter.get_action_display(&"open_menu", "TAB")
-		var inventory := InteractionPromptFormatter.get_action_display(&"open_inventory", "I")
-		message += "\n\nA NEW WAY OF WEAVING\nHold %s to open Hot Swap. Select the new gloves or return to Base at any time. Open Inventory with %s to inspect and equip your unlocked gear." % [hot_swap, inventory]
+		var input_family := InteractionPromptFormatter.get_active_input_family()
+		var hot_swap := InputGlyphFormatter.get_action_display_bbcode(
+			&"open_menu", "TAB", input_family, 30
+		)
+		var inventory := InputGlyphFormatter.get_action_display_bbcode(
+			&"open_inventory", "I", input_family, 30
+		)
+		message += "\n\n[b]A NEW WAY OF WEAVING[/b]\nHold %s to open Hot Swap. Select the new gloves or return to Base at any time. Open Inventory with %s to inspect and equip your unlocked gear." % [hot_swap, inventory]
 
 	var box := get_tree().get_first_node_in_group("demo_message_box")
 	if not box:
@@ -87,4 +92,4 @@ func _show_collect_message(is_first_thread := false) -> void:
 		})
 
 	if box.has_method("show_message"):
-		box.show_message(message)
+		box.show_message(message, is_first_thread)
