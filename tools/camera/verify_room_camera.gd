@@ -65,6 +65,14 @@ func _verify_zone_exit_restores_follow() -> void:
 	camera._process(1.0 / 60.0)
 	_expect(camera.get_active_zone() == null, "Camera releases a room zone when the player exits it.")
 	_expect(camera.global_position.x > 4000.0, "Camera resumes following the player outside the room zone.")
+
+	remote_follow.update_position = false
+	camera.global_position = Vector2(-3000.0, -3000.0)
+	player.global_position = Vector2(6200.0, 400.0)
+	remote_follow.update_position = true
+	camera.resume_player_follow()
+	_expect(camera.global_position.is_equal_approx(player.global_position), "Camera immediately reacquires the player after cinematic ownership returns.")
+	_expect(camera.get_follow_target().is_equal_approx(player.global_position), "Camera clears stale cinematic follow state after a save point.")
 	test_root.queue_free()
 
 
