@@ -637,10 +637,10 @@ func _setup_lore_ui() -> void:
 	if not lore_page or _lore_list_label:
 		return
 	lore_placeholder.visible = false
-	var left_panel := ColorRect.new()
+	var left_panel := Control.new()
+	left_panel.name = "LoreListLayout"
 	left_panel.position = Vector2(36.0, 42.0)
 	left_panel.size = Vector2(560.0, 780.0)
-	left_panel.color = Color(0.035, 0.03, 0.022, 0.86)
 	left_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lore_page.add_child(left_panel)
 	_lore_list_label = Label.new()
@@ -649,10 +649,10 @@ func _setup_lore_ui() -> void:
 	_lore_list_label.label_settings = _make_lore_label_settings(28, Color(0.82, 0.75, 0.61))
 	_lore_list_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	left_panel.add_child(_lore_list_label)
-	var detail_panel := ColorRect.new()
+	var detail_panel := Control.new()
+	detail_panel.name = "LoreDetailLayout"
 	detail_panel.position = Vector2(626.0, 42.0)
 	detail_panel.size = Vector2(1218.0, 780.0)
-	detail_panel.color = Color(0.052, 0.044, 0.03, 0.9)
 	detail_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lore_page.add_child(detail_panel)
 	_lore_category_label = Label.new()
