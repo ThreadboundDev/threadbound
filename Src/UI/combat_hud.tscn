@@ -30,6 +30,32 @@ font_color = Color(0.94, 0.85, 0.68, 1)
 outline_size = 3
 outline_color = Color(0.03, 0.02, 0.01, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trial_timer"]
+bg_color = Color(0.025, 0.032, 0.04, 0.78)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.43, 0.25, 0.72)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_trial_title"]
+font = ExtResource("22_lore_title_font")
+font_size = 26
+font_color = Color(0.86, 0.78, 0.62, 1)
+outline_size = 2
+outline_color = Color(0.03, 0.025, 0.02, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_trial_countdown"]
+font = ExtResource("21_lore_font")
+font_size = 28
+font_color = Color(0.97, 0.88, 0.68, 1)
+outline_size = 2
+outline_color = Color(0.03, 0.025, 0.02, 1)
+
 [node name="CombatHUD" type="Control" unique_id=187202720]
 layout_mode = 3
 anchors_preset = 15
@@ -331,33 +357,61 @@ visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 34.0
-offset_bottom = 112.0
+offset_top = 26.0
+offset_bottom = 88.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Backing" type="ColorRect" parent="TrialTimer"]
+[node name="Backing" type="Panel" parent="TrialTimer"]
 layout_mode = 1
 anchors_preset = 10
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -150.0
-offset_right = 150.0
-offset_bottom = 78.0
+offset_left = -240.0
+offset_right = 240.0
+offset_bottom = 62.0
 grow_horizontal = 2
-color = Color(0.025, 0.04, 0.055, 0.9)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trial_timer")
 
-[node name="Label" type="Label" parent="TrialTimer"]
+[node name="Title" type="Label" parent="TrialTimer"]
 layout_mode = 1
 anchors_preset = 10
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -142.0
-offset_top = 5.0
-offset_right = 142.0
-offset_bottom = 72.0
+offset_left = -218.0
+offset_top = 4.0
+offset_right = 102.0
+offset_bottom = 58.0
 grow_horizontal = 2
-text = "BALANCE  00:45"
-label_settings = ExtResource("19_label_settings")
-horizontal_alignment = 1
+text = "TRIAL OF BALANCE"
+label_settings = SubResource("LabelSettings_trial_title")
+vertical_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="TrialTimer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 112.0
+offset_top = 15.0
+offset_right = 113.0
+offset_bottom = 47.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.55, 0.43, 0.25, 0.62)
+
+[node name="Countdown" type="Label" parent="TrialTimer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 126.0
+offset_top = 4.0
+offset_right = 218.0
+offset_bottom = 58.0
+grow_horizontal = 2
+text = "00:45"
+label_settings = SubResource("LabelSettings_trial_countdown")
+horizontal_alignment = 2
 vertical_alignment = 1

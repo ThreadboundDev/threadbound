@@ -38,7 +38,7 @@ const VALID_ACTION_POINT_TYPES := [
 @onready var lore_pickup_kind: RichTextLabel = $LorePickup/Kind as RichTextLabel
 @onready var lore_pickup_title: Label = $LorePickup/Title as Label
 @onready var trial_timer: Control = $TrialTimer as Control
-@onready var trial_timer_label: Label = $TrialTimer/Label as Label
+@onready var trial_timer_label: Label = $TrialTimer/Countdown as Label
 
 @export_group("Identity and Pattern")
 @export var default_identity_color := Color(0.72, 0.73, 0.72, 1.0)
@@ -215,7 +215,7 @@ func set_trial_timer(seconds_remaining: float, active: bool) -> void:
 	trial_timer.visible = active
 	if active:
 		var total_seconds := maxi(0, ceili(seconds_remaining))
-		trial_timer_label.text = "TRIAL OF BALANCE   %02d:%02d" % [total_seconds / 60, total_seconds % 60]
+		trial_timer_label.text = "%02d:%02d" % [total_seconds / 60, total_seconds % 60]
 
 func _on_lore_unlocked(lore_id: StringName) -> void:
 	var input_family := InteractionPromptFormatter.get_active_input_family()

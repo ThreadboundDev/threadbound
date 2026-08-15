@@ -26,6 +26,7 @@ func _ready() -> void:
 	_verify_action_point_variants(hud)
 	_verify_identity_and_pattern_hooks(hud)
 	_verify_momentum_flow(hud)
+	_verify_trial_timer(hud)
 	await _verify_thread_knot_counter(hud)
 	_verify_boss_health_bar()
 	await _verify_boss_camera_zoom()
@@ -122,6 +123,20 @@ func _verify_momentum_flow(hud: CombatHUD) -> void:
 	_expect(hud.momentum_bar.fill_rect.size.x >= 374.0, "Momentum rail uses the wider V4 layout.")
 	var rail_gap := hud.momentum_bar.fill_rect.position.y - hud.health_bar.fill_rect.end.y
 	_expect(rail_gap <= 12.0, "Health and momentum rails remain visually grouped.")
+
+func _verify_trial_timer(hud: CombatHUD) -> void:
+	hud.set_trial_timer(43.0, true)
+	var backing := hud.get_node("TrialTimer/Backing") as Control
+	var title := hud.get_node("TrialTimer/Title") as Label
+	var countdown := hud.get_node("TrialTimer/Countdown") as Label
+	_expect(hud.trial_timer.visible, "Active Blue trial reveals its timer.")
+	_expect(title.text == "TRIAL OF BALANCE", "Blue trial title remains explicit.")
+	_expect(countdown.text == "00:43", "Blue trial countdown uses minute-second formatting.")
+	_expect(backing.size.x >= 460.0, "Trial banner has enough width for both text fields.")
+	_expect(title.position.x + title.size.x < countdown.position.x, "Trial title and countdown do not overlap.")
+	_expect(backing.size.y <= 64.0, "Trial banner stays compact over gameplay.")
+	hud.set_trial_timer(0.0, false)
+	_expect(not hud.trial_timer.visible, "Inactive Blue trial hides its timer.")
 
 func _verify_thread_knot_counter(hud: CombatHUD) -> void:
 	hud.thread_knot_visible_seconds = 0.05
