@@ -14,22 +14,6 @@ const PAUSE_OPEN_BLOCK_MSEC := 180
 const HUB_CHOICES := ["TALK", "BUY", "LEAVE"]
 const ITEMS := [
 	{
-		"id": &"small_heal",
-		"name": "MENDED PETAL",
-		"type": "MENDING SERVICE",
-		"cost": 2,
-		"icon_path": "res://Assets/UI/Merchant/merchant_icon_heal.png",
-		"description": "Restore up to 35 health immediately."
-	},
-	{
-		"id": &"vitality_thread",
-		"name": "VITAL THREAD",
-		"type": "ONE TIME",
-		"cost": 8,
-		"icon_path": "res://Assets/UI/Merchant/merchant_icon_stat_boost.png",
-		"description": "Permanently strengthens health once."
-	},
-	{
 		"id": &"merchant_knot_pattern",
 		"name": "FOLLOWER'S KNOT",
 		"type": "PATTERN",
