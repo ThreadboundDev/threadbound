@@ -925,10 +925,12 @@ func _start_grapple_fire() -> void:
 	grapple_start_position = get_grapple_origin_global_position()
 	grapple_tip_position = grapple_start_position
 
-	grapple_direction = AimHelperScript.get_aim_direction(
+	grapple_direction = AimHelperScript.get_grapple_aim_direction(
 		self,
 		grapple_start_position,
-		grapple_direction
+		grapple_direction,
+		grapple_max_distance,
+		grapple_collision_mask
 	)
 
 	var speed_multiplier: float = 1.0

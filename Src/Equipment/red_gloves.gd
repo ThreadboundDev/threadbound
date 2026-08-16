@@ -285,10 +285,12 @@ func _release_charge() -> void:
 		_cancel_charge()
 		return
 
-	grapple_direction = AimHelperScript.get_aim_direction(
+	grapple_direction = AimHelperScript.get_grapple_aim_direction(
 		self,
 		get_grapple_origin_global_position(),
-		grapple_direction
+		grapple_direction,
+		grapple_max_distance,
+		grapple_collision_mask
 	).normalized()
 	if grapple_direction.length() <= 0.001:
 		grapple_direction = Vector2.RIGHT
