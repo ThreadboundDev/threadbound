@@ -1521,7 +1521,7 @@ func _build_shared_button_group(node_name: String, event: InputEvent) -> Diction
 	var actions: Array[StringName] = []
 	match node_name:
 		"Jump":
-			actions = [&"Jump", &"ui_accept", &"interact"]
+			actions = [&"Jump", &"ui_accept"]
 		"Meditate":
 			actions = [&"Meditate", &"menu_tab_left"]
 		"Grapple":

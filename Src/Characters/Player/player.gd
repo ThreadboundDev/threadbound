@@ -2240,7 +2240,6 @@ func _can_process_jump_input(attack_requested_this_frame: bool) -> bool:
 		not attack_requested_this_frame
 		and not _is_attack_movement_committed()
 		and not _tutorial_is_consuming_ui_accept()
-		and not is_near_interactable
 	)
 
 func _tutorial_is_consuming_ui_accept() -> bool:

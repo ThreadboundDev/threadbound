@@ -6,7 +6,7 @@ const SAVE_PATH := "user://controls.cfg"
 const KEYBOARD_SECTION := "keyboard_mouse"
 const CONTROLLER_SECTION := "controller"
 const META_SECTION := "binding_metadata"
-const CONTROLLER_SCHEMA_VERSION := 3
+const CONTROLLER_SCHEMA_VERSION := 4
 
 var _keyboard_defaults: Dictionary = {}
 var _controller_defaults: Dictionary = {}
@@ -142,7 +142,6 @@ func load_bindings() -> void:
 				InputMap.action_add_event(StringName(action), event)
 
 	_sync_controller_action_binding(&"Jump", &"ui_accept")
-	_sync_controller_action_binding(&"Jump", &"interact")
 	_sync_controller_action_binding(&"Meditate", &"menu_tab_left")
 	_sync_controller_action_binding(&"Grapple", &"menu_tab_right")
 
