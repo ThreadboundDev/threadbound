@@ -462,13 +462,13 @@ rotation = -2.178171
 scale = Vector2(0.965, 0.965)
 
 [node name="WristWrapSprite" type="Sprite2D" parent="Equipment/RightHandAnchor/WristWrapPivot" unique_id=948017537]
-position = Vector2(-1.9073486e-06, 2)
-rotation = -1.7453293
-scale = Vector2(0.034, 0.034)
+position = Vector2(0.59, 1.28)
+rotation = -1.4799545
+scale = Vector2(0.026601326, 0.028217172)
 texture = ExtResource("2_f1fjg")
 
 [node name="RopeHangAnchor" type="Node2D" parent="Equipment/RightHandAnchor" unique_id=1340712378]
-position = Vector2(2.3841858e-06, 2.9999993)
+position = Vector2(3.0000024, 0.9999993)
 script = ExtResource("3_ap6kl")
 flipped_attach_correction = Vector2(0, 20)
 
@@ -478,6 +478,7 @@ scale = Vector2(0.038, 0.038)
 texture = ExtResource("4_bvg2p")
 
 [node name="NeedleAttachPoint" type="Marker2D" parent="Equipment/RightHandAnchor/RopeHangAnchor/DanglingNeedleSprite" unique_id=1185569862]
+visible = false
 z_index = 1
 position = Vector2(500, 0.295)
 scale = Vector2(38.40123, 38.931286)

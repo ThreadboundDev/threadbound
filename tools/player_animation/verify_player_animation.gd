@@ -8,6 +8,12 @@ const COLORED_GRAPPLE_SCENES := {
 	"Blue": preload("res://Src/Equipment/blue_gloves.tscn"),
 	"Yellow": preload("res://Src/Equipment/yellow_gloves.tscn"),
 }
+const COLORED_WRIST_SCENES := {
+	"Red": preload("res://Src/Equipment/red_gloves.tscn"),
+	"Blue": preload("res://Src/Equipment/blue_gloves.tscn"),
+	"Yellow": preload("res://Src/Equipment/yellow_gloves.tscn"),
+}
+const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
 
 const EXPECTED_ANIMATIONS := {
 	&"Air_Double_Attack": {"frames": 27, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
@@ -56,6 +62,7 @@ func _ready() -> void:
 	_verify_grapple_gutter_cleanup(failures)
 	_verify_neutral_special_grapple_pose_sampling(failures)
 	_verify_colored_grapple_art_alignment(failures)
+	_verify_colored_wrist_art_corrections(failures)
 	_verify_sheet_cell_gutters(
 		"res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
 		Vector2i(6, 4),
@@ -97,6 +104,23 @@ func _verify_colored_grapple_art_alignment(failures: Array[String]) -> void:
 				if "DanglingNeedleSprite" in track_path or "NeedleAttachPoint" in track_path:
 					failures.append("%s art-specific needle correction is unexpectedly animation-keyed." % variant_name)
 		gloves.free()
+
+func _verify_colored_wrist_art_corrections(failures: Array[String]) -> void:
+	var base_gloves := BASE_GLOVES_SCENE.instantiate()
+	var base_pivot := base_gloves.get_node("Equipment/RightHandAnchor/WristWrapPivot") as Node2D
+	for variant_name in COLORED_WRIST_SCENES:
+		var gloves := (COLORED_WRIST_SCENES[variant_name] as PackedScene).instantiate()
+		var pivot := gloves.get_node("Equipment/RightHandAnchor/WristWrapPivot") as Node2D
+		var pose_player := gloves.get_node("Equipment/AnimationPlayer") as AnimationPlayer
+		if not pivot.transform.is_equal_approx(base_pivot.transform):
+			failures.append("%s wrist artwork correction leaked onto the shared animated pivot." % variant_name)
+		for animation_name in pose_player.get_animation_list():
+			var animation := pose_player.get_animation(animation_name)
+			for track_index in animation.get_track_count():
+				if "WristWrapSprite" in String(animation.track_get_path(track_index)):
+					failures.append("%s art-specific wrist correction is unexpectedly animation-keyed." % variant_name)
+		gloves.free()
+	base_gloves.free()
 
 func _verify_neutral_special_grapple_pose_sampling(failures: Array[String]) -> void:
 	var animation := BASE_GRAPPLE_ANIMATION_LIBRARY.get_animation(&"Neutral_Special_Attack")

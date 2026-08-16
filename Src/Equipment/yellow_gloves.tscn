@@ -462,8 +462,8 @@ rotation = -2.178171
 scale = Vector2(0.965, 0.965)
 
 [node name="WristWrapSprite" type="Sprite2D" parent="Equipment/RightHandAnchor/WristWrapPivot" unique_id=948017537]
-position = Vector2(-1.9073486e-06, 2)
-rotation = -1.7453293
+position = Vector2(1.85, 1.1)
+rotation = -1.7770666
 scale = Vector2(0.032, 0.032)
 texture = ExtResource("2_f1fjg")
 
