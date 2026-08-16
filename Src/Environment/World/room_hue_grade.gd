@@ -23,7 +23,11 @@ const TRANSITION_SETTLE_EPSILON := 0.001
 @export var top_right_room := Rect2(Vector2(0.0, -3480.0), Vector2(8200.0, 5980.0))
 @export var bottom_left_room := Rect2(Vector2(-5700.0, 2500.0), Vector2(5700.0, 3700.0))
 @export var bottom_right_room := Rect2(Vector2(0.0, 2500.0), Vector2(8200.0, 3700.0))
-@export var center_neutral_room := Rect2(Vector2(-1000.0, 1680.0), Vector2(2000.0, 1620.0))
+# The center shaft remains part of the neutral chamber all the way from the
+# tutorial descent to the lower crossroads. Without this override, crossing
+# above y=1680 incorrectly applies a wing grade based only on which side of
+# x=0 the player occupies.
+@export var center_neutral_room := Rect2(Vector2(-1000.0, -5000.0), Vector2(2000.0, 8300.0))
 @export var top_left_polygon := PackedVector2Array()
 @export var top_right_polygon := PackedVector2Array()
 @export var bottom_left_polygon := PackedVector2Array()

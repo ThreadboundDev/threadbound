@@ -89,6 +89,7 @@ func _ready() -> void:
 	state_machine.initialize(self)
 
 func _physics_process(delta: float) -> void:
+	_refresh_target_availability()
 	if _influence_controller:
 		_influence_controller.physics_process(delta)
 		if _influence_controller.is_phasing():
@@ -375,17 +376,58 @@ func _get_scaled_contact_damage() -> int:
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		target = body
-		target_acquired.emit(target)
-		if _influence_controller:
-			_influence_controller.on_target_acquired()
+		# Enemy movement collides with level geometry, while player damage is
+		# handled by the dedicated Area2D hitboxes. Ignoring the player body here
+		# prevents CharacterBody2D floor resolution from balancing enemies on the
+		# Threadborne's head.
+		add_collision_exception_with(body)
+		_try_acquire_target(body)
 
 func _on_detection_body_exited(body: Node2D) -> void:
 	if body == target:
-		target = null
-		target_lost.emit()
-		if _influence_controller:
-			_influence_controller.on_target_lost()
+		_release_target()
+
+func _refresh_target_availability() -> void:
+	if target and not _can_target_player(target):
+		_release_target()
+		set_horizontal_target_speed(0.0)
+		if state_machine and state_machine.current_state_name != &"Dead":
+			state_machine.transition_to(&"Idle")
+		return
+
+	if target or not detection_area or not detection_area.monitoring:
+		return
+	for body in detection_area.get_overlapping_bodies():
+		var candidate := body as Node2D
+		if candidate and candidate.is_in_group("player"):
+			add_collision_exception_with(candidate)
+			if _try_acquire_target(candidate):
+				return
+
+func _try_acquire_target(candidate: Node2D) -> bool:
+	if target or not _can_target_player(candidate):
+		return false
+	target = candidate
+	target_acquired.emit(target)
+	if _influence_controller:
+		_influence_controller.on_target_acquired()
+	return true
+
+func _can_target_player(candidate: Node2D) -> bool:
+	if not candidate or not is_instance_valid(candidate) or not candidate.is_in_group("player"):
+		return false
+	return not (
+		candidate.has_method("is_enemy_targeting_suspended")
+		and bool(candidate.call("is_enemy_targeting_suspended"))
+	)
+
+func _release_target() -> void:
+	if not target:
+		return
+	target = null
+	target_lost.emit()
+	if _influence_controller:
+		_influence_controller.on_target_lost()
 
 func _on_attack_body_entered(_body: Node2D) -> void:
 	pass
@@ -413,6 +455,11 @@ func _try_contact_hurtbox(area: Area2D) -> bool:
 		return false
 
 	var target_owner := target_hurtbox.hurtbox_owner
+	if (
+		target_owner.has_method("is_enemy_targeting_suspended")
+		and bool(target_owner.call("is_enemy_targeting_suspended"))
+	):
+		return true
 	if (
 		target_owner.has_method("is_dash_contact_phasing")
 		and bool(target_owner.call("is_dash_contact_phasing"))

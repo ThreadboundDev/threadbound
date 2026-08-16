@@ -2265,6 +2265,9 @@ func can_start_dash() -> bool:
 		return true
 	return _is_attack_in_dash_cancel_window()
 
+func is_enemy_targeting_suspended() -> bool:
+	return save_point_interaction_active or is_dead
+
 func prepare_for_dash(direction: int = 0) -> void:
 	var should_cancel_attack := (
 		is_attacking and _is_attack_in_dash_cancel_window()
