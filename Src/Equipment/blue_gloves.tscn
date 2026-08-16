@@ -473,18 +473,17 @@ script = ExtResource("3_ap6kl")
 flipped_attach_correction = Vector2(0, 20)
 
 [node name="DanglingNeedleSprite" type="Sprite2D" parent="Equipment/RightHandAnchor/RopeHangAnchor" unique_id=577003920]
-position = Vector2(-1.3723125, 46.859985)
-rotation = 1.5707964
+position = Vector2(-57, 1.495)
 scale = Vector2(0.038, 0.038)
 texture = ExtResource("4_bvg2p")
 
 [node name="NeedleAttachPoint" type="Marker2D" parent="Equipment/RightHandAnchor/RopeHangAnchor/DanglingNeedleSprite" unique_id=1185569862]
-visible = false
 z_index = 1
-position = Vector2(-625, 0)
+position = Vector2(500, 0.295)
 scale = Vector2(38.40123, 38.931286)
 
 [node name="DanglingRopeLine" type="Line2D" parent="Equipment/RightHandAnchor/RopeHangAnchor" unique_id=1070539106]
+z_index = -1
 position = Vector2(8.565001, 1.3900001)
 rotation = 1.5707964
 points = PackedVector2Array(0, 8, 0, 16, 0, 24, 0, 32, 0, 48)
