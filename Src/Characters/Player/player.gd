@@ -13,6 +13,7 @@ const RADIAL_MENU_SCENE := preload("res://Src/UI/radial_menu.tscn")
 const DEMO_MESSAGE_BOX_SCENE := preload("res://Src/UI/demo_message_box.tscn")
 const NEUTRAL_SPECIAL_VFX_SCENE := preload("res://Src/VFX/neutral_special_vfx.tscn")
 const DASH_IFRAME_VFX_SCENE := preload("res://Src/VFX/dash_iframe_vfx.tscn")
+const RECOVERY_THREAD_KNOT_PILE_SCENE := preload("res://Src/Pickups/recovery_thread_knot_pile.tscn")
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const AimHelperScript := preload("res://Src/Global/aim_helper.gd")
 const MEDITATION_SHADER := preload("res://Src/Characters/Player/save_point_meditation.gdshader")
@@ -166,6 +167,8 @@ const ATTACK_PROFILE_AIR_SECOND := {
 	set(value):
 		thread_knot_count = maxi(0, value)
 		_sync_hud()
+		if _thread_knot_progress_ready:
+			DemoProgress.set_held_thread_knots(thread_knot_count)
 
 # ===============================
 # MOVEMENT TUNABLES
@@ -474,6 +477,8 @@ var _debug_identity_mix := Vector3.ZERO
 var _footstep_timer := 0.0
 var _coin_pickup_audio_timer := 0.0
 var _thread_knot_tutorial_shown := false
+var _thread_knot_progress_ready := false
+var _last_safe_knot_drop_position := Vector2.ZERO
 var _debug_no_clip_enabled := false
 var _debug_original_collision_layer := 0
 var _debug_original_collision_mask := 0
@@ -581,6 +586,10 @@ func _ready() -> void:
 	_ensure_action_point_timers()
 	add_to_group("player")
 	_apply_demo_checkpoint_spawn()
+	thread_knot_count = DemoProgress.get_held_thread_knots()
+	_thread_knot_progress_ready = true
+	_last_safe_knot_drop_position = global_position
+	_spawn_recovery_thread_knot_pile.call_deferred()
 	print("✅ Player ready - Scene-based equipment system active")
 
 	if ability_cooldown_timer:
@@ -779,6 +788,8 @@ func _physics_process(delta: float) -> void:
 	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
 	_position_before_movement = global_position
 	move_and_slide()
+	if is_on_floor() and not god_mode_enabled:
+		_last_safe_knot_drop_position = global_position
 	if is_on_floor() and not was_on_floor and not god_mode_enabled:
 		landing_animation_timer = landing_animation_duration
 		_play_flow_vfx_land(pre_collision_downward_speed)
@@ -2857,6 +2868,15 @@ func collect_thread_knots(amount: int) -> void:
 		if not _try_show_tutorial_thread_knot_prompt():
 			_show_first_thread_knot_message()
 
+func recover_dropped_thread_knots() -> int:
+	var recovered_amount := DemoProgress.claim_recovery_thread_knots()
+	if recovered_amount <= 0:
+		return 0
+	_thread_knot_progress_ready = false
+	thread_knot_count = DemoProgress.get_held_thread_knots()
+	_thread_knot_progress_ready = true
+	return recovered_amount
+
 func _try_show_tutorial_thread_knot_prompt() -> bool:
 	for controller in get_tree().get_nodes_in_group("tutorial_controllers"):
 		if controller.has_method("handle_first_thread_knot_tutorial"):
@@ -3637,6 +3657,8 @@ func _on_died(_damage: DamageData) -> void:
 		if handled_by_tutorial:
 			return
 
+	_drop_held_thread_knots()
+
 	_exit_flow_state()
 	_cancel_dash_iframe()
 	_cancel_enemy_grapple_combat()
@@ -3652,6 +3674,33 @@ func _on_died(_damage: DamageData) -> void:
 	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
 	call_deferred("_show_game_over_after_death")
+
+func _drop_held_thread_knots() -> void:
+	var current_scene := get_tree().current_scene
+	var scene_path := current_scene.scene_file_path if current_scene else ""
+	DemoProgress.drop_thread_knots(
+		thread_knot_count,
+		scene_path,
+		_last_safe_knot_drop_position
+	)
+	_thread_knot_progress_ready = false
+	thread_knot_count = 0
+	_thread_knot_progress_ready = true
+
+func _spawn_recovery_thread_knot_pile() -> void:
+	if not is_inside_tree():
+		return
+	var current_scene := get_tree().current_scene
+	if not current_scene:
+		return
+	if not DemoProgress.has_recovery_thread_knots(current_scene.scene_file_path):
+		return
+	if get_tree().get_first_node_in_group("recovery_thread_knot_piles"):
+		return
+
+	var pile := RECOVERY_THREAD_KNOT_PILE_SCENE.instantiate() as Node2D
+	current_scene.add_child(pile)
+	pile.global_position = DemoProgress.get_recovery_position()
 
 func _show_game_over_after_death() -> void:
 	if death_reset_delay > 0.0:

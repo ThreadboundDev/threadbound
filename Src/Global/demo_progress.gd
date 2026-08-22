@@ -10,7 +10,7 @@ signal lore_unlocked(lore_id: StringName)
 const SAVE_PATH := "user://demo_save.cfg"
 const TEMP_SAVE_PATH := "user://demo_save.tmp"
 const BACKUP_SAVE_PATH := "user://demo_save.backup.cfg"
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 
 var _claimed_threads: Dictionary = {}
 var _heard_follower_dialogue: Dictionary = {}
@@ -24,6 +24,10 @@ var _tutorial_completed := false
 var _tutorial_completion_recorded := false
 var _demo_completed := false
 var _playtest_welcome_acknowledged := false
+var _held_thread_knots := 0
+var _recovery_thread_knots := 0
+var _recovery_scene_path := ""
+var _recovery_position := Vector2.ZERO
 
 func _ready() -> void:
 	load_checkpoint()
@@ -136,6 +140,15 @@ func load_checkpoint() -> bool:
 	_tutorial_completed = bool(config.get_value("progress", "tutorial_completed", false))
 	_demo_completed = bool(config.get_value("progress", "demo_completed", false))
 	_playtest_welcome_acknowledged = bool(config.get_value("progress", "playtest_welcome_acknowledged", false))
+	_held_thread_knots = maxi(0, int(config.get_value("currency", "held_thread_knots", 0)))
+	_recovery_thread_knots = maxi(0, int(config.get_value("currency", "recovery_thread_knots", 0)))
+	_recovery_scene_path = str(config.get_value("currency", "recovery_scene_path", ""))
+	_recovery_position = Vector2(
+		float(config.get_value("currency", "recovery_position_x", 0.0)),
+		float(config.get_value("currency", "recovery_position_y", 0.0))
+	)
+	if _recovery_thread_knots <= 0:
+		_clear_recovery_thread_knots_in_memory()
 	_claimed_threads.clear()
 	for thread_id in config.get_value("progress", "claimed_threads", PackedStringArray()):
 		_claimed_threads[StringName(str(thread_id))] = true
@@ -166,6 +179,8 @@ func clear_run() -> void:
 	_tutorial_completion_recorded = false
 	_demo_completed = false
 	_playtest_welcome_acknowledged = false
+	_held_thread_knots = 0
+	_clear_recovery_thread_knots_in_memory()
 	_claimed_threads.clear()
 	_heard_follower_dialogue.clear()
 	_completed_world_events.clear()
@@ -226,6 +241,54 @@ func acknowledge_playtest_welcome() -> void:
 func has_acknowledged_playtest_welcome() -> bool:
 	return _playtest_welcome_acknowledged
 
+func set_held_thread_knots(amount: int) -> void:
+	var normalized_amount := maxi(0, amount)
+	if _held_thread_knots == normalized_amount:
+		return
+	_held_thread_knots = normalized_amount
+	_write_progress()
+
+func get_held_thread_knots() -> int:
+	return _held_thread_knots
+
+func drop_thread_knots(amount: int, scene_path: String, drop_position: Vector2) -> void:
+	_held_thread_knots = 0
+	_recovery_thread_knots = maxi(0, amount)
+	if _recovery_thread_knots > 0 and not scene_path.is_empty():
+		_recovery_scene_path = scene_path
+		_recovery_position = drop_position
+	else:
+		_clear_recovery_thread_knots_in_memory()
+	_write_progress()
+
+func has_recovery_thread_knots(scene_path: String = "") -> bool:
+	if _recovery_thread_knots <= 0 or _recovery_scene_path.is_empty():
+		return false
+	return scene_path.is_empty() or scene_path == _recovery_scene_path
+
+func get_recovery_thread_knots() -> int:
+	return _recovery_thread_knots
+
+func get_recovery_scene_path() -> String:
+	return _recovery_scene_path
+
+func get_recovery_position() -> Vector2:
+	return _recovery_position
+
+func claim_recovery_thread_knots() -> int:
+	if _recovery_thread_knots <= 0:
+		return 0
+	var recovered_amount := _recovery_thread_knots
+	_held_thread_knots += recovered_amount
+	_clear_recovery_thread_knots_in_memory()
+	_write_progress()
+	return recovered_amount
+
+func _clear_recovery_thread_knots_in_memory() -> void:
+	_recovery_thread_knots = 0
+	_recovery_scene_path = ""
+	_recovery_position = Vector2.ZERO
+
 func _write_progress() -> void:
 	var config := ConfigFile.new()
 	config.set_value("meta", "save_version", SAVE_VERSION)
@@ -237,6 +300,11 @@ func _write_progress() -> void:
 	config.set_value("progress", "demo_completed", _demo_completed)
 	config.set_value("progress", "playtest_welcome_acknowledged", _playtest_welcome_acknowledged)
 	config.set_value("progress", "claimed_threads", _get_claimed_thread_strings())
+	config.set_value("currency", "held_thread_knots", _held_thread_knots)
+	config.set_value("currency", "recovery_thread_knots", _recovery_thread_knots)
+	config.set_value("currency", "recovery_scene_path", _recovery_scene_path)
+	config.set_value("currency", "recovery_position_x", _recovery_position.x)
+	config.set_value("currency", "recovery_position_y", _recovery_position.y)
 	config.set_value("progress", "follower_dialogue", _get_follower_dialogue_strings())
 	config.set_value("world", "completed_events", _get_completed_world_event_strings())
 	config.set_value("lore", "unlocked", _get_lore_strings(_unlocked_lore))
