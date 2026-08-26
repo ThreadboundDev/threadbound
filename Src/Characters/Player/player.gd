@@ -24,6 +24,8 @@ const STATIONARY_ATTACK_SUFFIX := "_Stationary"
 const BACKPEDAL_ATTACK_SUFFIX := "_Backpedal"
 const STATIONARY_ATTACK_MIN_HORIZONTAL_SPEED := 5.0
 const LEDGE_CLIMB_ANIMATION := &"Ledge_Climb"
+const POGO_ATTACK_ANIMATION := &"Pogo_Attack"
+const POGO_REBOUND_ANIMATION := &"Pogo_Rebound"
 const NEUTRAL_SPECIAL_CHARGE_FIRST_FRAME := 8
 const NEUTRAL_SPECIAL_WEAPON_ANCHORS := [
 	Vector2(-72.0, -108.0),
@@ -182,6 +184,21 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var coyote_time: float = 0.1
 @export_range(0.0, 0.5, 0.01) var dash_direction_input_buffer_time := 0.22
 
+@export_group("Prototype Swimming")
+@export_range(0.1, 1.0, 0.05) var prototype_swim_horizontal_multiplier := 0.55
+@export var prototype_swim_vertical_speed := 360.0
+@export var prototype_swim_acceleration := 1100.0
+@export var prototype_swim_surface_depth := 18.0
+@export var prototype_swim_surface_buoyancy := 900.0
+@export var prototype_swim_exit_jump_speed := 1040.0
+@export_range(0.0, 64.0, 1.0) var prototype_swim_exit_surface_range := 28.0
+@export_range(0.05, 0.4, 0.01) var prototype_swim_exit_lock_duration := 0.18
+
+@export_group("One-Way Platforms")
+@export_range(0.1, 0.5, 0.01) var one_way_drop_double_tap_window := 0.24
+@export_range(0.05, 0.5, 0.01) var one_way_drop_ignore_duration := 0.18
+@export_range(1.0, 48.0, 1.0) var one_way_drop_nudge := 18.0
+
 @export_group("Movement Animation")
 @export_range(0.0, 400.0, 5.0) var jump_apex_velocity_threshold := 140.0
 @export_range(0.0, 1.0, 0.01) var landing_animation_duration := 0.28
@@ -189,6 +206,11 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.5, 1.0, 0.01) var grapple_strike_visual_scale_multiplier := 0.82
 @export_range(0.5, 1.0, 0.01) var hurt_visual_scale_multiplier := 0.77
 @export var landing_visual_offset := Vector2(0.0, 5.0)
+
+@export_group("Pogo")
+@export var pogo_rebound_speed := 1040.0
+@export_range(0.05, 0.5, 0.01) var pogo_rebound_animation_duration := 0.17
+@export_range(0.0, 0.3, 0.01) var pogo_rebound_gravity_grace := 0.12
 
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
@@ -240,6 +262,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.1, 2.0, 0.05) var ground_combo_stationary_visual_scale_multiplier := 1.4
 @export_range(0.1, 2.0, 0.05) var ground_combo_backpedal_visual_scale_multiplier := 1.25
 @export_range(0.1, 2.0, 0.05) var air_attack_visual_scale_multiplier := 1.0
+@export_range(0.1, 2.0, 0.05) var pogo_attack_visual_scale_multiplier := 1.5
 
 @export_group("Ground Attack Combo")
 @export_range(0.05, 1.0, 0.01) var ground_combo_reset_window := 0.45
@@ -416,6 +439,7 @@ const MOMENTUM_STATE_LOW := &"Low"
 const MOMENTUM_STATE_MID := &"Mid"
 const MOMENTUM_STATE_HIGH := &"High"
 const MOMENTUM_STATE_FLOW := &"Flow"
+const GREYBOX_ONE_WAY_PHYSICS_LAYER := 1
 
 var coyote_timer: float = 0.0
 var last_direction: int = 1
@@ -482,12 +506,18 @@ var _last_safe_knot_drop_position := Vector2.ZERO
 var _debug_no_clip_enabled := false
 var _debug_original_collision_layer := 0
 var _debug_original_collision_mask := 0
+var _prototype_water_surfaces: Dictionary = {}
+var _prototype_swim_exit_lock_timer := 0.0
+var _one_way_down_tap_timer := 0.0
+var _one_way_drop_ignore_timer := 0.0
 
 var current_body_anim := ""
 var current_equip_anim := ""
 var current_weapon_pose_anim := ""
 var current_attack_body_anim := "Ground_Attack_Combo_1"
 var landing_animation_timer := 0.0
+var pogo_rebound_animation_timer := 0.0
+var pogo_rebound_gravity_timer := 0.0
 var _movement_facing_before_input := 1
 
 var is_attacking := false
@@ -652,10 +682,17 @@ func unequip_gloves() -> void:
 # ===============================
 func _physics_process(delta: float) -> void:
 	_process_debug_inputs()
+	_process_one_way_drop_input(delta)
 	_process_audio_timers(delta)
 	_process_momentum(delta)
 	_process_action_point_recharge(delta)
 	_grapple_ledge_assist_timer = maxf(_grapple_ledge_assist_timer - delta, 0.0)
+	pogo_rebound_animation_timer = maxf(
+		pogo_rebound_animation_timer - delta,
+		0.0
+	)
+	pogo_rebound_gravity_timer = maxf(pogo_rebound_gravity_timer - delta, 0.0)
+	_prototype_swim_exit_lock_timer = maxf(_prototype_swim_exit_lock_timer - delta, 0.0)
 
 	if is_dead:
 		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
@@ -687,6 +724,11 @@ func _physics_process(delta: float) -> void:
 		coyote_timer = coyote_time
 		has_wall_jumped = false
 		air_jump_available = true
+	elif is_in_prototype_water():
+		_process_prototype_swim_vertical(delta)
+		coyote_timer = coyote_time
+		has_wall_jumped = false
+		air_jump_available = true
 	elif not is_on_floor():
 		velocity.y += _get_current_gravity() * delta
 		velocity.y = min(velocity.y, max_fall_speed)
@@ -714,6 +756,8 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0.0
 	elif not grapple_restricting and not is_hurt:
 		var control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
+		if is_in_prototype_water():
+			control = prototype_swim_horizontal_multiplier
 		velocity.x = speed * get_momentum_move_speed_multiplier() * horizontal_input * control
 	elif is_hurt:
 		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
@@ -734,7 +778,13 @@ func _physics_process(delta: float) -> void:
 		and _can_process_jump_input(attack_requested_this_frame)
 	):
 		var velocity_before_jump := velocity
-		if is_wall_clinging:
+		if is_in_prototype_water():
+			if _is_at_prototype_water_surface():
+				velocity.y = -prototype_swim_exit_jump_speed
+				_prototype_swim_exit_lock_timer = prototype_swim_exit_lock_duration
+			else:
+				velocity.y = -prototype_swim_vertical_speed
+		elif is_wall_clinging:
 			is_wall_clinging = false
 			wall_cling_timer = 0.0
 		elif current_gloves and current_gloves.has_method("jump_off_grapple") and current_gloves.jump_off_grapple():
@@ -1171,8 +1221,9 @@ func _try_grab_ledge() -> bool:
 			[get_rid()]
 		)
 		wall_hit = space.intersect_ray(wall_query)
-		if not wall_hit.is_empty():
+		if _is_valid_ledge_wall_hit(wall_hit):
 			break
+		wall_hit = {}
 	if wall_hit.is_empty():
 		return false
 	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * forward_reach, -ledge_head_height), collision_mask, [get_rid()])
@@ -1184,7 +1235,7 @@ func _try_grab_ledge() -> bool:
 	var top_x: float = (wall_hit.position as Vector2).x + direction * 2.0
 	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, global_position.y - ledge_head_height - 30.0), Vector2(top_x, global_position.y + 12.0), collision_mask, [get_rid()])
 	var top_hit := space.intersect_ray(top_query)
-	if top_hit.is_empty():
+	if not _is_valid_ledge_top_hit(top_hit):
 		return false
 	_ledge_direction = direction
 	_ledge_top = top_hit.position
@@ -1195,6 +1246,20 @@ func _try_grab_ledge() -> bool:
 	global_position = _ledge_top + Vector2(-direction * ledge_hang_offset.x, ledge_hang_offset.y)
 	player_animation.flip_h = direction < 0
 	return true
+
+
+func _is_valid_ledge_wall_hit(hit: Dictionary) -> bool:
+	if hit.is_empty():
+		return false
+	var normal: Vector2 = hit.get("normal", Vector2.ZERO)
+	return absf(normal.x) >= 0.65 and absf(normal.x) > absf(normal.y)
+
+
+func _is_valid_ledge_top_hit(hit: Dictionary) -> bool:
+	if hit.is_empty():
+		return false
+	var normal: Vector2 = hit.get("normal", Vector2.ZERO)
+	return normal.y <= -0.65 and absf(normal.y) > absf(normal.x)
 
 func request_grapple_ledge_assist(grapple_position: Vector2) -> void:
 	var horizontal_delta := grapple_position.x - global_position.x
@@ -1218,15 +1283,35 @@ func _process_ledge_hang() -> bool:
 
 func _start_ledge_climb(jump_after: bool) -> void:
 	_ledge_climb_start = global_position
+	var surface_clearance := maxf(
+		ledge_climb_vertical_offset,
+		_get_player_collision_bottom_offset() + 2.0
+	)
 	_ledge_climb_target = _ledge_top + Vector2(
 		_ledge_direction * ledge_climb_horizontal_offset,
-		-ledge_climb_vertical_offset
+		-surface_clearance
 	)
 	_ledge_climb_elapsed = 0.0
 	_ledge_climb_jump_after = jump_after
 	is_ledge_hanging = false
 	is_ledge_climbing = true
 	velocity = Vector2.ZERO
+
+
+func _get_player_collision_bottom_offset() -> float:
+	var body_collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if body_collision == null or body_collision.shape == null:
+		return ledge_climb_vertical_offset
+	var local_bottom := body_collision.position.y
+	if body_collision.shape is RectangleShape2D:
+		local_bottom += (body_collision.shape as RectangleShape2D).size.y * 0.5
+	elif body_collision.shape is CapsuleShape2D:
+		local_bottom += (body_collision.shape as CapsuleShape2D).height * 0.5
+	elif body_collision.shape is CircleShape2D:
+		local_bottom += (body_collision.shape as CircleShape2D).radius
+	else:
+		return ledge_climb_vertical_offset
+	return local_bottom
 
 func _process_ledge_climb(delta: float) -> bool:
 	if not is_ledge_climbing:
@@ -1379,11 +1464,98 @@ func _apply_meditation_heal_pulse() -> bool:
 
 func _get_current_gravity() -> float:
 	if velocity.y < 0.0:
+		# A pogo is triggered by Attack + Down, so requiring Jump to be held here
+		# would immediately apply jump-cut gravity and flatten the rebound.
+		if pogo_rebound_gravity_timer > 0.0:
+			return gravity
 		if not Input.is_action_pressed("Jump"):
 			return gravity * jump_cut_gravity_multiplier
 		return gravity
 
 	return gravity * fall_gravity_multiplier
+
+
+func enter_prototype_water(volume: Node, surface_y: float) -> void:
+	_prototype_water_surfaces[volume] = surface_y
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+
+
+func exit_prototype_water(volume: Node) -> void:
+	_prototype_water_surfaces.erase(volume)
+
+
+func is_in_prototype_water() -> bool:
+	for volume in _prototype_water_surfaces.keys():
+		if not is_instance_valid(volume):
+			_prototype_water_surfaces.erase(volume)
+	return not _prototype_water_surfaces.is_empty()
+
+
+func _process_prototype_swim_vertical(delta: float) -> void:
+	if _prototype_swim_exit_lock_timer > 0.0:
+		return
+	var vertical_input := Input.get_axis("move_up", "move_down")
+	if Input.is_action_pressed("Jump"):
+		vertical_input = -1.0
+	if absf(vertical_input) > 0.01:
+		velocity.y = move_toward(
+			velocity.y,
+			vertical_input * prototype_swim_vertical_speed,
+			prototype_swim_acceleration * delta
+		)
+		return
+	var surface_y := INF
+	for value in _prototype_water_surfaces.values():
+		surface_y = minf(surface_y, float(value))
+	var float_height := surface_y + prototype_swim_surface_depth
+	var height_error := float_height - global_position.y
+	var target_velocity := clampf(
+		height_error * 5.0,
+		-prototype_swim_vertical_speed,
+		prototype_swim_vertical_speed
+	)
+	velocity.y = move_toward(
+		velocity.y,
+		target_velocity,
+		prototype_swim_surface_buoyancy * delta
+	)
+
+
+func _is_at_prototype_water_surface() -> bool:
+	if not is_in_prototype_water():
+		return false
+	var surface_y := INF
+	for value in _prototype_water_surfaces.values():
+		surface_y = minf(surface_y, float(value))
+	var float_height := surface_y + prototype_swim_surface_depth
+	return absf(global_position.y - float_height) <= prototype_swim_exit_surface_range
+
+
+func _process_one_way_drop_input(delta: float) -> void:
+	_one_way_down_tap_timer = maxf(_one_way_down_tap_timer - delta, 0.0)
+	if _one_way_drop_ignore_timer > 0.0:
+		_one_way_drop_ignore_timer = maxf(_one_way_drop_ignore_timer - delta, 0.0)
+		if _one_way_drop_ignore_timer <= 0.0 and not _debug_no_clip_enabled:
+			set_collision_mask_value(GREYBOX_ONE_WAY_PHYSICS_LAYER, true)
+	if _debug_no_clip_enabled or is_in_prototype_water():
+		return
+	if not Input.is_action_just_pressed("move_down"):
+		return
+	if _one_way_down_tap_timer > 0.0 and is_on_floor():
+		_begin_one_way_drop()
+		_one_way_down_tap_timer = 0.0
+	else:
+		_one_way_down_tap_timer = one_way_drop_double_tap_window
+
+
+func _begin_one_way_drop() -> void:
+	set_collision_mask_value(GREYBOX_ONE_WAY_PHYSICS_LAYER, false)
+	_one_way_drop_ignore_timer = one_way_drop_ignore_duration
+	global_position.y += one_way_drop_nudge
+	velocity.y = maxf(velocity.y, 80.0)
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
 
 # ===============================
 # ANIMATION
@@ -1391,6 +1563,14 @@ func _get_current_gravity() -> float:
 func play_character_anim(body_anim: String) -> void:
 	var body_changed := current_body_anim != body_anim
 	var equipment_anim := body_anim
+	if StringName(body_anim) == POGO_ATTACK_ANIMATION:
+		equipment_anim = "Air_Double_Attack"
+	elif StringName(body_anim) == POGO_REBOUND_ANIMATION:
+		equipment_anim = "Jump_Ascent"
+	elif body_anim == "Swim":
+		# Swimming currently changes only the body silhouette. Reuse the run
+		# equipment pose until dedicated water equipment frames are authored.
+		equipment_anim = "Run"
 
 	if body_changed:
 		current_body_anim = body_anim
@@ -1471,6 +1651,15 @@ func update_animations(dir: float) -> void:
 		_apply_attack_visual_tuning()
 		_play_attack_visual_animation(_get_ground_combo_visual_animation(dir))
 		return
+	if (
+		pogo_rebound_animation_timer > 0.0
+		and player_animation.sprite_frames.has_animation(POGO_REBOUND_ANIMATION)
+	):
+		_set_flow_vfx_dash_visual_active(false)
+		player_animation.rotation = 0.0
+		player_animation.speed_scale = 1.0
+		play_character_anim(String(POGO_REBOUND_ANIMATION))
+		return
 	
 	var is_dashing := false
 	var is_grapple_strike_dash := false
@@ -1506,6 +1695,15 @@ func update_animations(dir: float) -> void:
 			0.0
 		)
 		play_character_anim("Wall_Cling")
+
+	elif is_in_prototype_water():
+		player_animation.rotation = 0.0
+		if absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Swim"):
+			play_character_anim("Swim")
+		elif absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Run"):
+			play_character_anim("Run")
+		elif player_animation.sprite_frames.has_animation("Jump_Apex"):
+			play_character_anim("Jump_Apex")
 
 	elif not is_on_floor():
 		player_animation.rotation = 0.0
@@ -2065,11 +2263,15 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 	attack_active_started = false
 	attack_active_finished = false
 	air_attack_active_strike = -1
-	current_attack_body_anim = "Air_Double_Attack"
 
 	if direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		direction = Vector2(float(last_direction), 0.0)
 	attack_direction = direction.normalized()
+	current_attack_body_anim = (
+		String(POGO_ATTACK_ANIMATION)
+		if attack_direction.y > 0.55
+		else "Air_Double_Attack"
+	)
 	if abs(attack_direction.x) > ATTACK_DIRECTION_DEADZONE:
 		last_direction = int(sign(attack_direction.x))
 
@@ -2134,7 +2336,10 @@ func _retry_active_attack_overlaps() -> void:
 
 func _finish_air_double_attack() -> void:
 	attack_hitbox.disable()
-	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
+	# A successful pogo can finish from Area2D.area_entered while Godot is
+	# flushing physics queries. Defer the shape reset so PhysicsServer does not
+	# reject the mutation during that callback.
+	attack_collision_polygon.set_deferred("polygon", _default_attack_hitbox_polygon)
 	is_attacking = false
 	current_attack_uses_air_double = false
 	air_attack_active_strike = -1
@@ -2449,6 +2654,8 @@ func _apply_attack_visual_tuning() -> void:
 			scale_multiplier = ground_combo_2_moving_visual_scale_multiplier
 		else:
 			scale_multiplier = ground_combo_forward_visual_scale_multiplier
+	elif current_attack_body_anim == "Pogo_Attack":
+		scale_multiplier = pogo_attack_visual_scale_multiplier
 	elif current_attack_body_anim == "Air_Double_Attack":
 		scale_multiplier = air_attack_visual_scale_multiplier
 	if player_animation.flip_h:
@@ -2490,7 +2697,7 @@ func _apply_current_glove_visual_tuning(
 func _on_player_animation_frame_changed() -> void:
 	if is_attacking:
 		_apply_attack_visual_tuning()
-	if current_body_anim in ["Jump_Ascent", "Jump_Apex", "Jump_Descent"]:
+	if current_body_anim in ["Jump_Ascent", "Jump_Apex", "Jump_Descent", "Pogo_Rebound"]:
 		_sync_current_glove_pose_to_body_frame()
 
 func _sync_current_glove_pose_to_body_frame() -> void:
@@ -2501,10 +2708,15 @@ func _sync_current_glove_pose_to_body_frame() -> void:
 		or not player_animation.sprite_frames
 	):
 		return
+	var equipment_anim := (
+		"Jump_Ascent"
+		if StringName(current_body_anim) == POGO_REBOUND_ANIMATION
+		else current_body_anim
+	)
 	var body_fps := player_animation.sprite_frames.get_animation_speed(current_body_anim)
 	current_gloves.call(
 		"sync_equipment_anim_to_body_frame",
-		current_body_anim,
+		equipment_anim,
 		player_animation.frame,
 		body_fps
 	)
@@ -2613,6 +2825,8 @@ func _get_equipment_attack_follow_anim() -> String:
 	# swap from their logical combo animation to stationary/backpedal visuals;
 	# replaying current_attack_body_anim here would immediately overwrite the
 	# matching authored glove pose with the moving pose.
+	if StringName(current_body_anim) == POGO_ATTACK_ANIMATION:
+		return "Air_Double_Attack"
 	return current_body_anim
 
 func _is_grapple_restricting() -> bool:
@@ -3559,10 +3773,28 @@ func _update_momentum_state() -> void:
 	momentum_state_changed.emit(_momentum_state, _flow_state_active)
 
 func _on_attack_hit_landed(_hurtbox: HurtboxComponent, _damage: DamageData) -> void:
-	if attack_direction.y > 0.55 and not is_on_floor():
-		report_momentum_action(MOMENTUM_CATEGORY_POGO)
-	else:
-		report_momentum_action(MOMENTUM_CATEGORY_ATTACK, 1.25)
+	if (
+		current_attack_uses_air_double
+		and attack_direction.y > 0.55
+		and not is_on_floor()
+	):
+		_perform_pogo_rebound()
+		return
+	report_momentum_action(MOMENTUM_CATEGORY_ATTACK, 1.25)
+
+func _perform_pogo_rebound() -> void:
+	velocity.y = -pogo_rebound_speed
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+	landing_animation_timer = 0.0
+	pogo_rebound_animation_timer = pogo_rebound_animation_duration
+	pogo_rebound_gravity_timer = pogo_rebound_gravity_grace
+	report_momentum_action(MOMENTUM_CATEGORY_POGO)
+	_finish_air_double_attack()
+	# A successful pogo is the recovery for the aerial strike, allowing the
+	# player to immediately aim another strike without restoring AP or jumps.
+	attack_cooldown_timer = 0.0
+	play_character_anim(String(POGO_REBOUND_ANIMATION))
 
 func _on_health_changed(_current: int, _maximum: int) -> void:
 	_sync_hud()

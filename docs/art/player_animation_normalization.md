@@ -49,12 +49,19 @@ transparent sheet cells:
 | Stationary double hit | 0.90, rendered at 1.40 | 320 px |
 | Backpedal combo variants | 1.15, rendered at 1.25 | 320 px |
 | Air double attack | 1.20 | 416 px |
+| Pogo downward strike | 1.20 | 416 px |
 | Meditation sit | 0.50 | 512 px |
 
 The air double attack uses a 416 px runtime cell, leaving a 16 px gutter around
 its 384 px rendered source. The stationary double hit and backpedal variants use
 the runtime presentation multipliers listed above; the moving combo family and
 other animation families retain a `1.0` visual multiplier.
+
+The pogo uses its own 11-frame `pogo_attack_v1.png` atlas rather than borrowing
+the opening air-double-attack arc. Its silhouette commits vertically: a short
+airborne wind-up leads into a long downward ivory smear beneath the character,
+two impact-ready frames, and a compressed follow-through. The gameplay hit
+window, damage, AP behavior, rebound velocity, and recovery remain unchanged.
 
 Both moving combo steps use the consistently scaled `ground_combo_02` atlas.
 The older `ground_combo_01` atlas remains as authoring reference, but is no

@@ -35,12 +35,14 @@
 [ext_resource type="Texture2D" uid="uid://byaf0fqi4v452" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png" id="102_smash_attack"]
 [ext_resource type="Texture2D" uid="uid://b8b4gnm2ky5ho" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png" id="106_video_attack_02"]
 [ext_resource type="Texture2D" uid="uid://885f7jiibwkb" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png" id="109_air_attack_01"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png" id="110_pogo_attack"]
 [ext_resource type="Texture2D" uid="uid://djqbhb6nvbbro" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png" id="111_stationary_combo_02"]
 [ext_resource type="Texture2D" uid="uid://cxpvotgaiojrn" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png" id="112_backpedal_combo_01"]
 [ext_resource type="Texture2D" uid="uid://bgb0imhrnad4l" path="res://Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png" id="113_backpedal_combo_02"]
 [ext_resource type="Texture2D" uid="uid://baofhtnig7xun" path="res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png" id="114_ledge_climb"]
 [ext_resource type="Texture2D" uid="uid://cjie8wsp1aqxu" path="res://Assets/Threadborne/sit.png" id="115_sit"]
 [ext_resource type="Texture2D" uid="uid://pw38m1wllt3t" path="res://Assets/Threadborne/hurt.png" id="116_hurt"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/movement/swim_surface_v2.png" id="117_swim_surface"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -155,6 +157,74 @@ region = Rect2(416, 1664, 416, 416)
 [sub_resource type="AtlasTexture" id="AtlasTexture_air_attack_01_26"]
 atlas = ExtResource("109_air_attack_01")
 region = Rect2(832, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_0"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(0, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_1"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(416, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_2"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(832, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_3"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(1248, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_4"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(1664, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_5"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(2080, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_6"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(0, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_7"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(416, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_8"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(832, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_9"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(1248, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogo_attack_10"]
+atlas = ExtResource("110_pogo_attack")
+region = Rect2(1664, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_0"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_1"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_2"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_3"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_4"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_5"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 0, 416, 416)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_grapple_diagonal_cycle_0"]
 atlas = ExtResource("3_puhm8")
@@ -1226,6 +1296,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogo_attack_10")
+}],
+"loop": 0,
+"name": &"Pogo_Attack",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("99_dash")
 }],
 "loop": 1,
@@ -1808,6 +1916,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jump_ascent_cycle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jump_ascent_cycle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jump_ascent_cycle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jump_ascent_cycle_3")
+}],
+"loop": 0,
+"name": &"Pogo_Rebound",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ledge_climb_0")
 }, {
 "duration": 1.0,
@@ -2009,6 +2134,29 @@ animations = [{
 "loop": 1,
 "name": &"Run",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_5")
+}],
+"loop": 1,
+"name": &"Swim",
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -2753,6 +2901,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=994170439 groups=["player"]]
+collision_mask = 9
 script = ExtResource("1_cvnsp")
 base_gloves_scene = ExtResource("2_8cvsi")
 player_stats = ExtResource("83_stats")

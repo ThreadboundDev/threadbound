@@ -58,6 +58,12 @@ These are always available regardless of equipment.
 ### Pogo Strike
 - Downward attack that bounces off enemies or surfaces  
 - Functions as both combat and traversal  
+- Baseline action that costs no AP and does not restore AP, grapple, or air jump
+- Successful contact immediately recovers the aerial strike for continued pogo chains
+- Rebound launches at normal-jump strength and briefly ignores jump-cut gravity, since pogo uses Attack + Down rather than requiring Jump to remain held
+- Horizontal momentum and air control remain available during the rebound
+- Uses frames 1–11 of the aerial double attack as a dedicated single-strike clip
+- Red greybox hazards are pogoable during block-tool traversal prototyping
 
 ### Thread Interaction (Grapple)
 - Can cancel into or out of attacks  
