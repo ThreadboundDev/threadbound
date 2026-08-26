@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueIrrigationChannel" instance=ExtResource("1")]
+room_id = "blue_irrigation_channel"
+display_name = "Irrigation Channel"
+macro_focus = Vector2(930, 790)
+planning_bounds = Vector2(7500, 3800)
+design_intent = "Descending and winding underground waterworks that form the long initial route to the Shrine and a later swim return to the Village."

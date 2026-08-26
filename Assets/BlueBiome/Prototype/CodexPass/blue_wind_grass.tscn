@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_wind_plants.png" id="1_plants"]
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_native_wind.gdshader" id="2_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wind"]
+shader = ExtResource("2_wind")
+shader_parameter/sway_strength = 5.0
+shader_parameter/sway_speed = 1.15
+shader_parameter/gust_strength = 18.0
+shader_parameter/gust_frequency = 0.22
+shader_parameter/phase_offset = 1.7
+
+[node name="BlueWindGrass" type="Sprite2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wind")
+texture = ExtResource("1_plants")
+centered = false
+offset = Vector2(0, -724)
+scale = Vector2(0.36, 0.36)
+z_index = 36

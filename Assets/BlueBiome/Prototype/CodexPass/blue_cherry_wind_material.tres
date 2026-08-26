@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_native_wind.gdshader" id="1"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/sway_strength = 2.6
+shader_parameter/sway_speed = 0.72
+shader_parameter/gust_strength = 6.5
+shader_parameter/gust_frequency = 0.11
+shader_parameter/phase_offset = 1.9

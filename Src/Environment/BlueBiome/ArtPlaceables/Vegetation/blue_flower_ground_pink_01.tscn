@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Vegetation/blue_flower_ground_pink_01.png" id="1_texture"]
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_native_wind.gdshader" id="2_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flower"]
+shader = ExtResource("2_wind")
+shader_parameter/sway_strength = 2.1
+shader_parameter/sway_speed = 0.68
+shader_parameter/gust_strength = 5.5
+shader_parameter/gust_frequency = 0.12
+shader_parameter/phase_offset = 1.1
+
+[node name="BlueFlowerGroundPink01" type="Node2D"]
+
+[node name="Artwork" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_flower")
+position = Vector2(0, -112.64)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("1_texture")
+z_index = 37
+

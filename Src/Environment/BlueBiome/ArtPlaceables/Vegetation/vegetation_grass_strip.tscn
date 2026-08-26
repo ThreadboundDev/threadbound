@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_wind_grass.tscn" id="1"]
+
+[node name="VegetationGrassStrip" type="Node2D"]
+
+[node name="Artwork" parent="." instance=ExtResource("1")]
+scale = Vector2(0.28, 0.28)

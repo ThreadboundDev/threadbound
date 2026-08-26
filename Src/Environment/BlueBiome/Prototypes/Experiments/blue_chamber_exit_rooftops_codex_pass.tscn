@@ -1,0 +1,350 @@
+[gd_scene format=4 uid="uid://cu1upn6g07505"]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1_drcwn"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_water.tscn" id="2_ctnnh"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_marker.tscn" id="5_cgpsc"]
+[ext_resource type="Texture2D" uid="uid://dph7gno0ff0mt" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_back_village.png" id="6_ivsw7"]
+[ext_resource type="Texture2D" uid="uid://bsu7ghqakddjp" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_far_far_lake_tall_v2.png" id="7_qoe68"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key_material.tres" id="8_qoe68"]
+[ext_resource type="Texture2D" uid="uid://d16nwdwo8r1ys" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_near_silhouettes_keyed.png" id="9_3gx4o"]
+[ext_resource type="Texture2D" uid="uid://c6lyumvvrp44o" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_panorama_left.png" id="10_pan_left"]
+[ext_resource type="Texture2D" uid="uid://cfq15w24e6xxb" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_panorama_center.png" id="11_pan_center"]
+[ext_resource type="Texture2D" uid="uid://bn2jexwduaiig" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chamber_panorama_right.png" id="12_pan_right"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Water/blue_reflective_water.tscn" id="16_water"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_panorama_edge_blend_material.tres" id="17_pan_blend"]
+[ext_resource type="PackedScene" uid="uid://bk6sithumcg8y" path="res://Src/UI/combat_hud.tscn" id="21_4pxk6"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_broad.tscn" id="22_cloud_broad"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_wisp.tscn" id="23_cloud_wisp"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_tower.tscn" id="24_cloud_tower"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_low_bank.tscn" id="25_cloud_low"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_soft_bank.tscn" id="26_cloud_soft"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_small.tscn" id="27_cloud_small"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_streak.tscn" id="28_cloud_streak"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_puff.tscn" id="29_cloud_puff"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
+size = Vector2(7467, 4220)
+
+[node name="BlueChamberExitRooftops" unique_id=32262651 instance=ExtResource("1_drcwn")]
+room_id = "blue_chamber_exit_rooftops"
+display_name = "Chamber Exit / Rooftops"
+macro_focus = Vector2(285, 490)
+planning_bounds = Vector2(4800, 3200)
+design_intent = "Enter from the Chamber, climb through compact rooftops, and earn the first broad view of the lake."
+
+[node name="MacroReference" parent="." index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.22)
+position = Vector2(-3420, -5880)
+scale = Vector2(12, 12)
+source_focus = Vector2(285, 490)
+
+[node name="GreyboxTerrain" parent="Geometry" index="0"]
+self_modulate = Color(1, 1, 1, 0.38)
+tile_map_data = PackedByteArray("AADu/wAAAAAAAAAAAADv/wAAAAAAAAAAAADw/wAAAAAAAAAAAADx/wAAAAAAAAAAAADy/wAAAAAAAAAAAADz/wAAAAAAAAAAAAD2/woAAAAAAAAAAAD3/woAAAAAAAAAAAD4/woAAAAAAAAAAAD5/woAAAAAAAAAAAD6/woAAAAAAAAAAAD7/woAAAAAAAAAAAD8/woAAAAAAAAAAAD8/wkAAAAAAAAAAAAAAAgAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAAAAAAAAAADu/wEAAAAAAAAAAADv/wIAAAAAAAAAAADv/wMAAAAAAAAAAADw/wMAAAAAAAAAAADw/wQAAAAAAAAAAADx/wQAAAAAAAAAAADx/wUAAAAAAAAAAADy/wUAAAAAAAAAAADy/wYAAAAAAAAAAADz/wYAAAAAAAAAAADz/wcAAAAAAAAAAAD0/wcAAAAAAAAAAAD0/wgAAAAAAAAAAADv/wEAAAAAAAAAAADw/wEAAAAAAAAAAADx/wEAAAAAAAAAAADx/wIAAAAAAAAAAADy/wIAAAAAAAAAAADz/wIAAAAAAAAAAADz/wMAAAAAAAAAAADu/wIAAAAAAAAAAADu/wMAAAAAAAAAAADu/wQAAAAAAAAAAADu/wUAAAAAAAAAAADu/wYAAAAAAAAAAADu/wcAAAAAAAAAAADu/wgAAAAAAAAAAADu/wkAAAAAAAAAAADu/woAAAAAAAAAAADu/wsAAAAAAAAAAADv/wQAAAAAAAAAAADv/wUAAAAAAAAAAADv/wYAAAAAAAAAAADv/wcAAAAAAAAAAADv/wgAAAAAAAAAAADv/wkAAAAAAAAAAADv/woAAAAAAAAAAADv/wsAAAAAAAAAAADw/wIAAAAAAAAAAADw/wUAAAAAAAAAAADw/wYAAAAAAAAAAADw/wcAAAAAAAAAAADw/wgAAAAAAAAAAADw/wkAAAAAAAAAAADw/woAAAAAAAAAAADw/wsAAAAAAAAAAADx/wMAAAAAAAAAAADx/wYAAAAAAAAAAADx/wcAAAAAAAAAAADx/wgAAAAAAAAAAADx/wkAAAAAAAAAAADx/woAAAAAAAAAAADx/wsAAAAAAAAAAADy/wMAAAAAAAAAAADy/wQAAAAAAAAAAADy/wcAAAAAAAAAAADy/wgAAAAAAAAAAADy/wkAAAAAAAAAAADy/woAAAAAAAAAAADy/wsAAAAAAAAAAADz/wQAAAAAAAAAAADz/wUAAAAAAAAAAADz/wgAAAAAAAAAAADz/wkAAAAAAAAAAADz/woAAAAAAAAAAADz/wsAAAAAAAAAAAD0/wMAAAAAAAAAAAD0/wQAAAAAAAAAAAD0/wUAAAAAAAAAAAD0/wYAAAAAAAAAAAD0/wkAAAAAAAAAAAD0/woAAAAAAAAAAAD0/wsAAAAAAAAAAAD1/wMAAAAAAAAAAAD1/wQAAAAAAAAAAAD1/wUAAAAAAAAAAAD1/wYAAAAAAAAAAAD1/wcAAAAAAAAAAAD1/wgAAAAAAAAAAAD1/wkAAAAAAAAAAAD1/woAAAAAAAAAAAD1/wsAAAAAAAAAAADy/wEAAAAAAAAAAADz/wEAAAAAAAAAAAD2/wsAAAAAAAAAAAD3/wsAAAAAAAAAAAD4/wsAAAAAAAAAAAD5/wsAAAAAAAAAAAD6/wsAAAAAAAAAAAD7/wsAAAAAAAAAAAD8/wsAAAAAAAAAAAD9/woAAAAAAAAAAAD9/wsAAAAAAAAAAAD+/woAAAAAAAAAAAD+/wsAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD9/wkAAAAAAAAAAAD+/wkAAAAAAAAAAAD//wkAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAsAAAAAAAAAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAABAAoAAAAAAAAAAAABAAsAAAAAAAAAAAACAAgAAAAAAAAAAAACAAkAAAAAAAAAAAACAAoAAAAAAAAAAAACAAsAAAAAAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAEAAsAAAAAAAAAAAAFAAgAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAGAAgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAAAAAAAAAAGAAsAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAAAAAAAAAAIAAcAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAoAAAAAAAAAAAAIAAsAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAJAAsAAAAAAAAAAAAKAAcAAAAAAAAAAAAKAAgAAAAAAAAAAAAKAAkAAAAAAAAAAAAKAAoAAAAAAAAAAAAKAAsAAAAAAAAAAAALAAcAAAAAAAAAAAALAAgAAAAAAAAAAAALAAkAAAAAAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAkAAAAAAAAAAAAMAAoAAAAAAAAAAAAMAAsAAAAAAAAAAAANAAcAAAAAAAAAAAANAAgAAAAAAAAAAAANAAkAAAAAAAAAAAANAAoAAAAAAAAAAAANAAsAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAcAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAAAAAAAAAAIAPv/AAABAAAAAAAJAPv/AAABAAAAAAAKAPv/AAABAAAAAAALAPv/AAABAAAAAAAMAPv/AAABAAAAAAANAPv/AAABAAAAAAALAPf/AAABAAAAAAAKAPf/AAABAAAAAAAJAPf/AAABAAAAAAAIAPf/AAABAAAAAAAHAPf/AAABAAAAAAAGAPf/AAABAAAAAAAFAPf/AAABAAAAAAAEAPf/AAABAAAAAAADAPf/AAABAAAAAAD+//v/AAABAAAAAAD///v/AAABAAAAAAAAAPv/AAABAAAAAAABAPv/AAABAAAAAAD6//7/AAABAAAAAAD7//7/AAABAAAAAAD8//7/AAABAAAAAAD9//7/AAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAABAAAAAAAHAAMAAAABAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAAJAP//AAABAAAAAAAKAP//AAABAAAAAAALAP//AAABAAAAAAAMAP//AAABAAAAAAANAP//AAABAAAAAADz//H/AAAAAAAAAADz//L/AAAAAAAAAAD0//H/AAAAAAAAAAD0//L/AAAAAAAAAAD0//P/AAAAAAAAAAD1//H/AAAAAAAAAAD1//L/AAAAAAAAAAD1//P/AAAAAAAAAAD2//H/AAAAAAAAAAD2//L/AAAAAAAAAAD2//P/AAAAAAAAAAD3//H/AAAAAAAAAAD3//L/AAAAAAAAAAD3//P/AAAAAAAAAAD4//H/AAAAAAAAAAD4//L/AAAAAAAAAAD4//P/AAAAAAAAAAD5//H/AAAAAAAAAAD5//L/AAAAAAAAAAD5//P/AAAAAAAAAAD6//H/AAAAAAAAAAD6//L/AAAAAAAAAAD6//P/AAAAAAAAAAD7//H/AAAAAAAAAAD7//L/AAAAAAAAAAD7//P/AAAAAAAAAAD8//H/AAAAAAAAAAD8//L/AAAAAAAAAAD8//P/AAAAAAAAAAD9//H/AAAAAAAAAAD9//L/AAAAAAAAAAD9//P/AAAAAAAAAAD+//H/AAAAAAAAAAD+//L/AAAAAAAAAAD+//P/AAAAAAAAAAD///H/AAAAAAAAAAD///L/AAAAAAAAAAD///P/AAAAAAAAAAAAAPH/AAAAAAAAAAAAAPL/AAAAAAAAAAAAAPP/AAAAAAAAAAABAPH/AAAAAAAAAAABAPL/AAAAAAAAAAABAPP/AAAAAAAAAAACAPH/AAAAAAAAAAACAPL/AAAAAAAAAAACAPP/AAAAAAAAAAADAPH/AAAAAAAAAAADAPL/AAAAAAAAAAADAPP/AAAAAAAAAAAEAPH/AAAAAAAAAAAEAPL/AAAAAAAAAAAEAPP/AAAAAAAAAAAFAPH/AAAAAAAAAAAFAPL/AAAAAAAAAAAFAPP/AAAAAAAAAAAGAPH/AAAAAAAAAAAGAPL/AAAAAAAAAAAGAPP/AAAAAAAAAAAHAPH/AAAAAAAAAAAHAPL/AAAAAAAAAAAHAPP/AAAAAAAAAAAIAPH/AAAAAAAAAAAIAPL/AAAAAAAAAAAIAPP/AAAAAAAAAAAJAPH/AAAAAAAAAAAJAPL/AAAAAAAAAAAJAPP/AAAAAAAAAAAKAPH/AAAAAAAAAAAKAPL/AAAAAAAAAAAKAPP/AAAAAAAAAAALAPH/AAAAAAAAAAALAPL/AAAAAAAAAAALAPP/AAAAAAAAAAAMAPH/AAAAAAAAAAAMAPL/AAAAAAAAAAAMAPP/AAAAAAAAAADv//H/AAAAAAAAAADv//L/AAAAAAAAAADw//H/AAAAAAAAAADw//L/AAAAAAAAAADx//H/AAAAAAAAAADx//L/AAAAAAAAAADy//H/AAAAAAAAAADy//L/AAAAAAAAAADr//j/AAAAAAAAAADs//j/AAAAAAAAAADt//j/AAAAAAAAAADu//b/AAAAAAAAAADu//f/AAAAAAAAAADu//j/AAAAAAAAAADn/wAAAAAAAAAAAADn/wEAAAAAAAAAAADn/wIAAAAAAAAAAADn/wMAAAAAAAAAAADn/wQAAAAAAAAAAADn/wUAAAAAAAAAAADn/wYAAAAAAAAAAADn/wcAAAAAAAAAAADn/wgAAAAAAAAAAADn/wkAAAAAAAAAAADn/woAAAAAAAAAAADo/wAAAAAAAAAAAADo/wEAAAAAAAAAAADo/wIAAAAAAAAAAADo/wMAAAAAAAAAAADo/wQAAAAAAAAAAADo/wUAAAAAAAAAAADo/wYAAAAAAAAAAADo/wcAAAAAAAAAAADo/wgAAAAAAAAAAADo/wkAAAAAAAAAAADo/woAAAAAAAAAAADp/wAAAAAAAAAAAADp/wEAAAAAAAAAAADp/wIAAAAAAAAAAADp/wMAAAAAAAAAAADp/wQAAAAAAAAAAADp/wUAAAAAAAAAAADp/wYAAAAAAAAAAADp/wcAAAAAAAAAAADp/wgAAAAAAAAAAADp/wkAAAAAAAAAAADp/woAAAAAAAAAAADq/wAAAAAAAAAAAADq/wEAAAAAAAAAAADq/wIAAAAAAAAAAADq/wMAAAAAAAAAAADq/wQAAAAAAAAAAADq/wUAAAAAAAAAAADq/wYAAAAAAAAAAADq/wcAAAAAAAAAAADq/wgAAAAAAAAAAADq/wkAAAAAAAAAAADq/woAAAAAAAAAAADr/wAAAAAAAAAAAADr/wEAAAAAAAAAAADr/wIAAAAAAAAAAADr/wMAAAAAAAAAAADr/wQAAAAAAAAAAADr/wUAAAAAAAAAAADr/wYAAAAAAAAAAADr/wcAAAAAAAAAAADr/wgAAAAAAAAAAADr/wkAAAAAAAAAAADr/woAAAAAAAAAAADs/wAAAAAAAAAAAADs/wEAAAAAAAAAAADs/wIAAAAAAAAAAADs/wMAAAAAAAAAAADs/wQAAAAAAAAAAADs/wUAAAAAAAAAAADs/wYAAAAAAAAAAADs/wcAAAAAAAAAAADs/wgAAAAAAAAAAADs/wkAAAAAAAAAAADs/woAAAAAAAAAAADt/wAAAAAAAAAAAADt/wEAAAAAAAAAAADt/wIAAAAAAAAAAADt/wMAAAAAAAAAAADt/wQAAAAAAAAAAADt/wUAAAAAAAAAAADt/wYAAAAAAAAAAADt/wcAAAAAAAAAAADt/wgAAAAAAAAAAADt/wkAAAAAAAAAAADt/woAAAAAAAAAAADm//H/AAAAAAAAAADm//L/AAAAAAAAAADm//P/AAAAAAAAAADm//T/AAAAAAAAAADm//X/AAAAAAAAAADm//b/AAAAAAAAAADm//f/AAAAAAAAAADm//j/AAAAAAAAAADn//H/AAAAAAAAAADn//L/AAAAAAAAAADn//P/AAAAAAAAAADn//T/AAAAAAAAAADn//X/AAAAAAAAAADn//b/AAAAAAAAAADn//f/AAAAAAAAAADn//j/AAAAAAAAAADo//H/AAAAAAAAAADo//L/AAAAAAAAAADo//P/AAAAAAAAAADo//T/AAAAAAAAAADo//X/AAAAAAAAAADo//b/AAAAAAAAAADo//f/AAAAAAAAAADo//j/AAAAAAAAAADp//H/AAAAAAAAAADp//L/AAAAAAAAAADp//P/AAAAAAAAAADp//T/AAAAAAAAAADp//X/AAAAAAAAAADp//b/AAAAAAAAAADp//f/AAAAAAAAAADp//j/AAAAAAAAAADq//P/AAAAAAAAAADq//j/AAAAAAAAAAARAPz/AAABAAAAAAASAPz/AAABAAAAAAATAPz/AAABAAAAAAAUAPz/AAABAAAAAAAVAPz/AAABAAAAAAATAAAAAAABAAAAAAAUAAAAAAABAAAAAAAVAAAAAAABAAAAAAAWAAAAAAABAAAAAAAXAAAAAAABAAAAAAARAAQAAAABAAAAAAASAAQAAAABAAAAAAATAAQAAAABAAAAAAAUAAQAAAABAAAAAAAVAAQAAAAAAAAAAAAWAAQAAAAAAAAA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AADu/wwAAAAAAAAAAADt/wwAAAAAAAAAAADt/wsAAAAAAAAAAADs/wwAAAAAAAAAAADr/wwAAAAAAAAAAADq/wwAAAAAAAAAAADp/wwAAAAAAAAAAADo/wwAAAAAAAAAAADo/wsAAAAAAAAAAADn/wsAAAAAAAAAAADn/wwAAAAAAAAAAADp/wsAAAAAAAAAAADq/wsAAAAAAAAAAADr/wsAAAAAAAAAAADs/wsAAAAAAAAAAAAYAAsAAAAAAAAAAAAZAAsAAAAAAAAAAAAaAAsAAAAAAAAAAAAZAAoAAAAAAAAAAAAZAAkAAAAAAAAAAAAaAAkAAAAAAAAAAAAaAAgAAAAAAAAAAAAaAAoAAAAAAAAAAAAZAAgAAAAAAAAAAAAYAAgAAAAAAAAAAAAYAAkAAAAAAAAAAAAYAAoAAAAAAAAAAAAVAAcAAAAAAAAAAAAWAAcAAAAAAAAAAAAXAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAVAAYAAAAAAAAAAAAWAAYAAAAAAAAAAAAXAAYAAAAAAAAAAAAYAAYAAAAAAAAAAAAYAAcAAAAAAAAAAAAZAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAaAAYAAAAAAAAAAAAZAAYAAAAAAAAAAAAZAAUAAAAAAAAAAAAZAAQAAAAAAAAAAAAaAAQAAAAAAAAAAAAaAAUAAAAAAAAAAAAYAAUAAAAAAAAAAAAXAAUAAAAAAAAAAAAWAAUAAAAAAAAAAAAVAAUAAAAAAAAAAAAYAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAaAP//AAAAAAAAAAAZAP//AAAAAAAAAAAYAP//AAAAAAAAAAAWAPX/AAAAAAAAAAAWAPb/AAAAAAAAAAAWAPf/AAAAAAAAAAAWAPj/AAAAAAAAAAAWAPn/AAAAAAAAAAAXAPn/AAAAAAAAAAAXAPj/AAAAAAAAAAAXAPf/AAAAAAAAAAAXAPb/AAAAAAAAAAAXAPX/AAAAAAAAAAAYAPX/AAAAAAAAAAAYAPb/AAAAAAAAAAAYAPf/AAAAAAAAAAAYAPj/AAAAAAAAAAAYAPn/AAAAAAAAAAAWAPT/AAAAAAAAAAAWAPP/AAAAAAAAAAAXAPP/AAAAAAAAAAAYAPP/AAAAAAAAAAAZAPP/AAAAAAAAAAAaAPP/AAAAAAAAAAAbAPP/AAAAAAAAAAAcAPP/AAAAAAAAAAAdAPP/AAAAAAAAAAAeAPP/AAAAAAAAAAAfAPP/AAAAAAAAAAAgAPP/AAAAAAAAAAAhAPP/AAAAAAAAAAAhAPT/AAAAAAAAAAAgAPT/AAAAAAAAAAAfAPT/AAAAAAAAAAAeAPT/AAAAAAAAAAAdAPT/AAAAAAAAAAAcAPT/AAAAAAAAAAAbAPT/AAAAAAAAAAAaAPT/AAAAAAAAAAAZAPT/AAAAAAAAAAAYAPT/AAAAAAAAAAAXAPT/AAAAAAAAAAAZAPX/AAAAAAAAAAAZAPb/AAAAAAAAAAAZAPf/AAAAAAAAAAAZAPj/AAAAAAAAAAAZAPn/AAAAAAAAAAAaAPX/AAAAAAAAAAAaAPb/AAAAAAAAAAAaAPf/AAAAAAAAAAAaAPj/AAAAAAAAAAAaAPn/AAAAAAAAAAAbAPX/AAAAAAAAAAAbAPb/AAAAAAAAAAAbAPf/AAAAAAAAAAAbAPj/AAAAAAAAAAAbAPn/AAAAAAAAAAAcAPX/AAAAAAAAAAAcAPb/AAAAAAAAAAAcAPf/AAAAAAAAAAAcAPj/AAAAAAAAAAAcAPn/AAAAAAAAAAAdAPX/AAAAAAAAAAAdAPb/AAAAAAAAAAAdAPf/AAAAAAAAAAAdAPj/AAAAAAAAAAAdAPn/AAAAAAAAAAAeAPX/AAAAAAAAAAAeAPb/AAAAAAAAAAAeAPf/AAAAAAAAAAAeAPj/AAAAAAAAAAAeAPn/AAAAAAAAAAAfAPX/AAAAAAAAAAAfAPb/AAAAAAAAAAAfAPf/AAAAAAAAAAAfAPj/AAAAAAAAAAAfAPn/AAAAAAAAAAAgAPX/AAAAAAAAAAAgAPb/AAAAAAAAAAAgAPf/AAAAAAAAAAAgAPj/AAAAAAAAAAAgAPn/AAAAAAAAAAAhAPX/AAAAAAAAAAAhAPb/AAAAAAAAAAAhAPf/AAAAAAAAAAAhAPj/AAAAAAAAAAAhAPn/AAAAAAAAAAAUAPX/AAAAAAAAAAAUAPb/AAAAAAAAAAAUAPf/AAAAAAAAAAAUAPj/AAAAAAAAAAAUAPn/AAAAAAAAAAAVAPX/AAAAAAAAAAAVAPb/AAAAAAAAAAAVAPf/AAAAAAAAAAAVAPj/AAAAAAAAAAAVAPn/AAAAAAAAAAAPAPP/AAAAAAAAAAAQAPP/AAAAAAAAAAARAPP/AAAAAAAAAAASAPP/AAAAAAAAAAASAPT/AAAAAAAAAAATAPP/AAAAAAAAAAATAPT/AAAAAAAAAAAUAPP/AAAAAAAAAAAUAPT/AAAAAAAAAAAVAPP/AAAAAAAAAAAVAPT/AAAAAAAAAAAYAPr/AAAAAAAAAAAYAPv/AAAAAAAAAAAZAPr/AAAAAAAAAAAZAPv/AAAAAAAAAAAaAPr/AAAAAAAAAAAaAPv/AAAAAAAAAAD0//n/AAAAAAAAAAAWAPz/AAABAAAAAAAXAPz/AAABAAAAAAAYAPz/AAAAAAAAAAAZAPz/AAAAAAAAAAAaAPz/AAAAAAAAAAD5/wUAAAABAAAAAAD6/wUAAAABAAAAAAD7/wUAAAABAAAAAAD8/wUAAAABAAAAAAD9/wUAAAABAAAAAAD+/wUAAAABAAAAAAD//wUAAAABAAAAAAAAAAUAAAABAAAAAAD4/wUAAAABAAAAAADq//r/AAABAAAAAADr//r/AAABAAAAAADs//r/AAABAAAAAADt//r/AAABAAAAAADu//r/AAABAAAAAADv//r/AAABAAAAAADw//r/AAABAAAAAADp//r/AAABAAAAAAA=")
+
+[node name="WestUpperWater" parent="WaterVolumes" index="0" unique_id=1870258596 instance=ExtResource("2_ctnnh")]
+position = Vector2(-2605, -1118)
+scale = Vector2(1.612796, 1.0856298)
+
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/WestUpperWater" index="1" instance=ExtResource("16_water")]
+
+[node name="CentralLowerWater" parent="WaterVolumes" index="1" unique_id=530565777 instance=ExtResource("2_ctnnh")]
+position = Vector2(-373, 1070)
+scale = Vector2(3.0076203, 1.8169442)
+water_color = Color(0.08, 0.48, 0.95, 1)
+
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/CentralLowerWater" index="1" instance=ExtResource("16_water")]
+
+[node name="LakeOverlookWater" parent="WaterVolumes" index="2" unique_id=639432123 instance=ExtResource("2_ctnnh")]
+position = Vector2(2383, 1450)
+scale = Vector2(3.644846, 1.5492944)
+
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/LakeOverlookWater" index="1" instance=ExtResource("16_water")]
+
+[node name="PlayerStart" parent="Markers" index="0"]
+position = Vector2(-3085, -354)
+
+[node name="PlannedExitA" parent="Markers" index="1"]
+position = Vector2(3143, 350)
+
+[node name="PlannedExitB" parent="Markers" index="2"]
+position = Vector2(3270, -292)
+
+[node name="LAKE GOES HERE" parent="Markers" index="3" unique_id=898821291 instance=ExtResource("5_cgpsc")]
+position = Vector2(3250, -1109)
+label_text = "Lake Glimpse"
+marker_color = Color(0.3, 0.78, 1, 0.9)
+
+[node name="Player" parent="." index="5"]
+position = Vector2(-2987, -121)
+collision_mask = 1
+
+[node name="EnvironmentArt" type="Node2D" parent="." index="6" unique_id=127426889]
+
+[node name="FarBackground" type="Node2D" parent="EnvironmentArt" index="0" unique_id=2116053550]
+
+[node name="AtmosphereFill" type="Polygon2D" parent="EnvironmentArt/FarBackground" index="0" unique_id=1384330449]
+z_index = -110
+color = Color(0.43, 0.7, 0.91, 1)
+polygon = PackedVector2Array(-3187, -2529, 4280, -2529, 4280, 1691, -3187, 1691)
+
+[node name="FarFarLake" type="Parallax2D" parent="EnvironmentArt/FarBackground" index="1" unique_id=788293426]
+z_index = -100
+scroll_scale = Vector2(0.03, 0.03)
+scroll_offset = Vector2(-1216, -639)
+
+[node name="Vista" type="Sprite2D" parent="EnvironmentArt/FarBackground/FarFarLake" index="0" unique_id=1718456418]
+position = Vector2(1129, -1200)
+scale = Vector2(7, 7)
+texture = ExtResource("7_qoe68")
+region_enabled = true
+region_rect = Rect2(0, 290, 1254, 674)
+
+[node name="CloudLayers" type="Node2D" parent="EnvironmentArt/FarBackground" index="2" unique_id=957612405]
+
+[node name="FarClouds" type="Parallax2D" parent="EnvironmentArt/FarBackground/CloudLayers" index="0" unique_id=1017225635]
+z_index = -90
+scroll_scale = Vector2(0.055, 0.035)
+scroll_offset = Vector2(316, 659)
+
+[node name="Far_WestUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="0" instance=ExtResource("22_cloud_broad")]
+position = Vector2(-2700, -2000)
+rotation = -0.012
+scale = Vector2(0.7, 0.7)
+drift_speed = 1.7
+motion_phase = 0.4
+billow_amount = 1.35
+billow_speed = 0.22
+vertical_float_amount = 3.5
+vertical_float_speed = 0.13
+
+[node name="Far_WestMid_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="1" instance=ExtResource("23_cloud_wisp")]
+position = Vector2(-1650, -1250)
+rotation = 0.014
+scale = Vector2(-0.62, 0.62)
+drift_speed = 2.0
+motion_phase = 1.2
+billow_amount = 1.7
+billow_speed = 0.27
+vertical_float_amount = 4.2
+vertical_float_speed = 0.16
+
+[node name="Far_UpperLeft_Small" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="2" instance=ExtResource("27_cloud_small")]
+position = Vector2(-650, -2100)
+rotation = 0.009
+scale = Vector2(0.55, 0.55)
+drift_speed = 1.8
+motion_phase = 2.0
+billow_amount = 1.15
+billow_speed = 0.2
+vertical_float_amount = 2.8
+vertical_float_speed = 0.11
+
+[node name="Far_CenterLow_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="3" instance=ExtResource("26_cloud_soft")]
+position = Vector2(350, -750)
+rotation = -0.018
+scale = Vector2(0.64, 0.64)
+drift_speed = 2.2
+motion_phase = 2.8
+billow_amount = 1.55
+billow_speed = 0.24
+vertical_float_amount = 3.8
+vertical_float_speed = 0.14
+
+[node name="Far_UpperCenter_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="4" instance=ExtResource("24_cloud_tower")]
+position = Vector2(1350, -1800)
+rotation = -0.008
+scale = Vector2(0.68, 0.68)
+drift_speed = 1.6
+motion_phase = 3.5
+billow_amount = 1.45
+billow_speed = 0.19
+vertical_float_amount = 3.0
+vertical_float_speed = 0.1
+
+[node name="Far_EastLow_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="5" instance=ExtResource("29_cloud_puff")]
+position = Vector2(2400, -600)
+rotation = 0.017
+scale = Vector2(-0.56, 0.56)
+drift_speed = 2.3
+motion_phase = 4.1
+billow_amount = 1.8
+billow_speed = 0.3
+vertical_float_amount = 4.5
+vertical_float_speed = 0.18
+
+[node name="Far_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="6" instance=ExtResource("28_cloud_streak")]
+position = Vector2(3400, -2050)
+rotation = 0.012
+scale = Vector2(-0.6, 0.6)
+drift_speed = 1.9
+motion_phase = 4.9
+billow_amount = 1.2
+billow_speed = 0.21
+vertical_float_amount = 2.6
+vertical_float_speed = 0.12
+
+[node name="Far_EastLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="7" instance=ExtResource("25_cloud_low")]
+position = Vector2(3700, 600)
+rotation = -0.014
+scale = Vector2(0.58, 0.58)
+drift_speed = 2.4
+motion_phase = 5.6
+billow_amount = 1.6
+billow_speed = 0.26
+vertical_float_amount = 4.0
+vertical_float_speed = 0.15
+
+[node name="MidClouds" type="Parallax2D" parent="EnvironmentArt/FarBackground/CloudLayers" index="1" unique_id=917156840]
+z_index = -89
+scroll_scale = Vector2(0.09, 0.055)
+scroll_offset = Vector2(316, 659)
+
+[node name="Mid_WestUpper_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="0" instance=ExtResource("29_cloud_puff")]
+position = Vector2(-2600, -700)
+rotation = 0.018
+scale = Vector2(0.78, 0.78)
+drift_speed = 4.0
+motion_phase = 0.7
+billow_amount = 2.2
+billow_speed = 0.34
+vertical_float_amount = 5.4
+vertical_float_speed = 0.2
+
+[node name="Mid_WestLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="1" instance=ExtResource("25_cloud_low")]
+position = Vector2(-1700, 450)
+rotation = -0.012
+scale = Vector2(0.68, 0.68)
+drift_speed = 4.6
+motion_phase = 1.5
+billow_amount = 2.5
+billow_speed = 0.38
+vertical_float_amount = 6.0
+vertical_float_speed = 0.23
+
+[node name="Mid_UpperLeft_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="2" instance=ExtResource("24_cloud_tower")]
+position = Vector2(-800, -1600)
+rotation = -0.021
+scale = Vector2(-0.62, 0.62)
+drift_speed = 4.1
+motion_phase = 2.2
+billow_amount = 2.0
+billow_speed = 0.31
+vertical_float_amount = 4.8
+vertical_float_speed = 0.19
+
+[node name="Mid_CenterLower_Small" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="3" instance=ExtResource("27_cloud_small")]
+position = Vector2(200, 900)
+rotation = 0.014
+scale = Vector2(0.6, 0.6)
+drift_speed = 5.0
+motion_phase = 2.9
+billow_amount = 1.75
+billow_speed = 0.29
+vertical_float_amount = 4.0
+vertical_float_speed = 0.17
+
+[node name="Mid_CenterUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="4" instance=ExtResource("22_cloud_broad")]
+position = Vector2(1100, -1100)
+rotation = -0.009
+scale = Vector2(0.72, 0.72)
+drift_speed = 4.3
+motion_phase = 3.6
+billow_amount = 2.35
+billow_speed = 0.36
+vertical_float_amount = 5.6
+vertical_float_speed = 0.21
+
+[node name="Mid_EastLower_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="5" instance=ExtResource("26_cloud_soft")]
+position = Vector2(2100, 300)
+rotation = 0.023
+scale = Vector2(-0.66, 0.66)
+drift_speed = 5.2
+motion_phase = 4.3
+billow_amount = 2.6
+billow_speed = 0.4
+vertical_float_amount = 6.3
+vertical_float_speed = 0.24
+
+[node name="Mid_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="6" instance=ExtResource("28_cloud_streak")]
+position = Vector2(3050, -1600)
+rotation = 0.011
+scale = Vector2(0.7, 0.7)
+drift_speed = 4.2
+motion_phase = 5.0
+billow_amount = 1.9
+billow_speed = 0.32
+vertical_float_amount = 4.6
+vertical_float_speed = 0.18
+
+[node name="Mid_EastLower_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="7" instance=ExtResource("23_cloud_wisp")]
+position = Vector2(3500, 1050)
+rotation = -0.016
+scale = Vector2(0.64, 0.64)
+drift_speed = 4.8
+motion_phase = 5.8
+billow_amount = 2.15
+billow_speed = 0.35
+vertical_float_amount = 5.1
+vertical_float_speed = 0.22
+
+[node name="Area2D" type="CollisionShape2D" parent="EnvironmentArt/FarBackground/CloudLayers" index="2" unique_id=1674205997]
+position = Vector2(546.5, -419)
+shape = SubResource("RectangleShape2D_m3ycw")
+
+[node name="Background" type="Node2D" parent="EnvironmentArt" index="1" unique_id=1665354911]
+visible = false
+
+[node name="BackVillage" type="Parallax2D" parent="EnvironmentArt/Background" index="0" unique_id=947649090]
+z_index = -80
+scroll_scale = Vector2(0.12, 0.08)
+repeat_size = Vector2(1438, 0)
+repeat_times = 5
+
+[node name="Village" type="Sprite2D" parent="EnvironmentArt/Background/BackVillage" index="0" unique_id=415063778]
+position = Vector2(0, 260)
+scale = Vector2(0.86, 0.86)
+texture = ExtResource("6_ivsw7")
+
+[node name="NearSilhouettes" type="Parallax2D" parent="EnvironmentArt/Background" index="1" unique_id=289534329]
+visible = false
+z_index = -40
+scroll_scale = Vector2(0.3, 0.18)
+repeat_size = Vector2(1843, 0)
+repeat_times = 3
+
+[node name="RoofAndTrees" type="Sprite2D" parent="EnvironmentArt/Background/NearSilhouettes" index="0" unique_id=214050461]
+modulate = Color(0.48, 0.58, 0.72, 0.52)
+material = ExtResource("8_qoe68")
+position = Vector2(0, 210)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("9_3gx4o")
+
+[node name="RoomPanorama" type="Parallax2D" parent="EnvironmentArt/Background" index="2" unique_id=1954199586]
+visible = false
+z_index = -100
+scroll_scale = Vector2(0.72, 0.52)
+
+[node name="ChamberSideVillage" type="Sprite2D" parent="EnvironmentArt/Background/RoomPanorama" index="0" unique_id=1807659208]
+material = ExtResource("17_pan_blend")
+position = Vector2(-2500, 0)
+scale = Vector2(1.42, 1.42)
+texture = ExtResource("10_pan_left")
+
+[node name="CentralRooftops" type="Sprite2D" parent="EnvironmentArt/Background/RoomPanorama" index="1" unique_id=1757005382]
+material = ExtResource("17_pan_blend")
+scale = Vector2(1.42, 1.42)
+texture = ExtResource("11_pan_center")
+
+[node name="LakeOverlook" type="Sprite2D" parent="EnvironmentArt/Background/RoomPanorama" index="2" unique_id=1213785764]
+material = ExtResource("17_pan_blend")
+position = Vector2(2475, 0)
+scale = Vector2(1.42, 1.42)
+texture = ExtResource("12_pan_right")
+
+[node name="HUD" type="CanvasLayer" parent="." index="7" unique_id=319228893]
+layer = 80
+visible = false
+
+[node name="CombatHUD" parent="HUD" index="0" unique_id=187202720 instance=ExtResource("21_4pxk6")]

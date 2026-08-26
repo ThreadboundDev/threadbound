@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueHiddenCistern" instance=ExtResource("1")]
+room_id = "blue_hidden_cistern"
+display_name = "Hidden Cistern"
+macro_focus = Vector2(535, 810)
+planning_bounds = Vector2(3200, 2400)
+design_intent = "Optional challenge pocket containing secrets or rewards without blocking the critical route."

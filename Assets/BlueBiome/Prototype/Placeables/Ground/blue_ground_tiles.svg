@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="256" viewBox="0 0 512 256">
+  <defs>
+    <linearGradient id="stone" x2="0" y2="1"><stop stop-color="#334657"/><stop offset="1" stop-color="#172431"/></linearGradient>
+    <linearGradient id="stone2" x2="0" y2="1"><stop stop-color="#3b4d5e"/><stop offset="1" stop-color="#1b2935"/></linearGradient>
+  </defs>
+  <rect width="512" height="256" fill="#16232f"/>
+  <!-- Four top-cap variants. Each keeps a strong readable contour but changes its stone rhythm. -->
+  <g stroke="#111b24" stroke-width="4" stroke-linejoin="round">
+    <path fill="url(#stone)" d="M0 18L18 12 39 17 61 9 83 15 107 10 128 16V128H0Z"/>
+    <path fill="url(#stone2)" d="M128 15L147 8 169 14 188 11 211 18 235 9 256 14V128H128Z"/>
+    <path fill="url(#stone)" d="M256 17L276 12 297 19 320 10 343 15 365 8 384 16V128H256Z"/>
+    <path fill="url(#stone2)" d="M384 14L405 9 427 16 449 11 472 18 494 10 512 15V128H384Z"/>
+  </g>
+  <g fill="none" stroke="#617383" stroke-width="3" opacity=".7">
+    <path d="M10 55L45 48 67 66 111 54M18 96L57 84 92 99 121 87"/>
+    <path d="M139 52L174 66 205 49 244 62M133 94L169 83 202 101 247 87"/>
+    <path d="M265 58L298 47 332 66 374 52M274 96L309 84 345 101 379 88"/>
+    <path d="M394 53L427 67 462 48 503 62M390 95L427 82 466 101 507 86"/>
+  </g>
+  <!-- Grass, moss and blossom accents keep the blue field from becoming monochrome. -->
+  <g stroke-linecap="round">
+    <path d="M8 17l5-13m5 11l6-10m10 10l2-12m54 10l5-10m7 11l7-12" stroke="#6d9a68" stroke-width="4"/>
+    <path d="M143 12l4-10m8 10l7-9m62 11l4-11m7 10l8-8" stroke="#77a86e" stroke-width="4"/>
+    <path d="M271 15l6-12m8 10l4-9m60 10l6-11m8 10l7-8" stroke="#68975f" stroke-width="4"/>
+    <path d="M400 12l5-9m9 10l7-11m61 13l5-12m8 10l6-8" stroke="#79a96f" stroke-width="4"/>
+    <g fill="#e59ab7" stroke="#7e466c" stroke-width="1"><circle cx="52" cy="11" r="4"/><circle cx="215" cy="10" r="3"/><circle cx="326" cy="10" r="4"/><circle cx="470" cy="11" r="3"/></g>
+  </g>
+  <!-- Four fill variants. -->
+  <g stroke="#101923" stroke-width="4">
+    <path fill="#213341" d="M0 128h128v128H0z"/><path fill="#263947" d="M128 128h128v128H128z"/>
+    <path fill="#1d303e" d="M256 128h128v128H256z"/><path fill="#293b48" d="M384 128h128v128H384z"/>
+  </g>
+  <g fill="none" stroke="#526675" stroke-width="3" opacity=".55">
+    <path d="M5 160l35-20 32 25 51-17M8 214l43-24 32 25 40-17"/>
+    <path d="M133 153l38 24 36-31 44 19M135 222l35-26 42 22 39-28"/>
+    <path d="M262 167l36-25 40 30 40-20M263 218l47-24 34 26 34-19"/>
+    <path d="M390 151l31 25 38-31 48 21M392 218l41-27 36 29 38-25"/>
+  </g>
+</svg>

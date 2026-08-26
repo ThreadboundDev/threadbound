@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Buildings/tower_house_keyed.png" id="1"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key_material.tres" id="2"]
+
+[node name="BuildingTowerHouse" type="Node2D"]
+
+[node name="Artwork" type="Sprite2D" parent="."]
+material = ExtResource("2")
+position = Vector2(0, 302)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("1")

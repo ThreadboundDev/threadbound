@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="TileSet" path="res://Src/Environment/BlueBiome/ArtPlaceables/Ground/blue_ground_art_tileset.tres" id="1"]
+
+[node name="BlueGroundArt" type="TileMapLayer"]
+z_index = 31
+tile_set = ExtResource("1")
