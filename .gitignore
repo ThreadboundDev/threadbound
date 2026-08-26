@@ -38,5 +38,10 @@ Assets/UI/Main Menu/*.mp4
 # Local IDE/editor folders
 .idea/
 
+# Local Godot AI editor bridge. This is development-machine tooling, not a
+# game/runtime dependency.
+/addons/godot_ai/
+/godot-ai-LICENSE.txt
+
 # Local linked worktrees and generated task scratch space
 /tmp/

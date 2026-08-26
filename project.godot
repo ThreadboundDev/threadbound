@@ -51,7 +51,7 @@ movie_writer/fps=144
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addons/grapple_pose_authoring/plugin.cfg")
+enabled=PackedStringArray("res://addons/grapple_pose_authoring/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/room_greybox/plugin.cfg")
 
 [global_group]
 
@@ -291,11 +291,13 @@ debug_god_mode={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":92,"key_label":0,"unicode":92,"location":0,"echo":false,"script":null)
 ]
 }
+
 [layer_names]
 
 2d_physics/layer_1="Environment"
 2d_physics/layer_2="Interactibles"
 2d_physics/layer_3="GrappleSurfaces"
+2d_physics/layer_4="GreyboxOneWay"
 
 [physics]
 

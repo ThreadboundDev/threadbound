@@ -237,8 +237,15 @@ Each region should reinforce its thread:
 \- Are alternate routes meaningful?  
 
 \- Does the level support continuous movement?  
-
 \- Does the environment reflect the player’s identity?  
+
+\---
+
+\## Regional Key Items — Pending Review
+
+Current design conversations distinguish optional equipment from possible regional key items. Red may break cracked surfaces, Yellow may pass shimmering translucent barriers, and Blue may enable swimming. These abilities are not equipment.
+
+Whether Blue or Yellow may deliberately gate regional/story progression is unresolved. Until a dedicated design review updates this document, the existing no-hard-gating rule remains the implementation standard. See `blue_biome_direction.md` for the recorded working direction.
 
 
 
@@ -269,4 +276,3 @@ Level design in Threadbound is about:
 > The world is not an obstacle.  
 
 > It is something to be woven through.
-
