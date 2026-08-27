@@ -34,6 +34,7 @@ const EXPECTED_ANIMATIONS := {
 	&"Pogo_Rebound": {"frames": 4, "fps": 24.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ledge_Climb": {"frames": 4, "fps": 20.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Run": {"frames": 11, "fps": 24.0, "loop": true, "cell": Vector2(548, 548)},
+	&"Swim": {"frames": 38, "fps": 24.0, "loop": true, "cell": Vector2(416, 416)},
 	&"Sit": {"frames": 48, "fps": 18.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
 }

@@ -42,7 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://baofhtnig7xun" path="res://Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png" id="114_ledge_climb"]
 [ext_resource type="Texture2D" uid="uid://cjie8wsp1aqxu" path="res://Assets/Threadborne/sit.png" id="115_sit"]
 [ext_resource type="Texture2D" uid="uid://pw38m1wllt3t" path="res://Assets/Threadborne/hurt.png" id="116_hurt"]
-[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/movement/swim_surface_v2.png" id="117_swim_surface"]
+[ext_resource type="Texture2D" path="res://Assets/Threadborne/Player/Normalized_V2/movement/swim_surface_video_v1.png" id="117_swim_surface"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(37, 126.244995)
@@ -225,6 +225,134 @@ region = Rect2(1664, 0, 416, 416)
 [sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_5"]
 atlas = ExtResource("117_swim_surface")
 region = Rect2(2080, 0, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_6"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_7"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_8"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_9"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_10"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_11"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 416, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_12"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_13"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_14"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_15"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_16"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_17"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 832, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_18"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_19"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_20"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_21"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_22"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_23"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 1248, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_24"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_25"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_26"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_27"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_28"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_29"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 1664, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_30"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_31"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_32"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(832, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_33"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1248, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_34"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(1664, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_35"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(2080, 2080, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_36"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(0, 2496, 416, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_37"]
+atlas = ExtResource("117_swim_surface")
+region = Rect2(416, 2496, 416, 416)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_grapple_diagonal_cycle_0"]
 atlas = ExtResource("3_puhm8")
@@ -2153,10 +2281,106 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_swim_surface_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_29")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swim_surface_37")
 }],
 "loop": 1,
 "name": &"Swim",
-"speed": 9.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
