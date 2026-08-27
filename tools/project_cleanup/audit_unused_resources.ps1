@@ -22,6 +22,9 @@ $assetExtensions = [System.Collections.Generic.HashSet[string]]::new(
 )
 
 $protectedPrefixes = @(
+    "ArtSource/",
+    "Media/",
+    "Assets/UI/Merchant/",
     "Assets/chamber_of_first_weave/Blue Wing/blue_wing_decor_atlas.",
     "Assets/chamber_of_first_weave/Red Wing/red_wing_decor_atlas.",
     "Assets/chamber_of_first_weave/Yellow Wing/yellow_wing_decor_atlas.",
@@ -45,7 +48,7 @@ $explicitPrefixes = @(
     "Assets/UI/controller/Controller Glyphs and Images/Xelu_Free_Controller&Key_Prompts/PS4/",
     "Assets/UI/controller/Controller Glyphs and Images/Xelu_Free_Controller&Key_Prompts/Xbox 360/",
     "Assets/UI/controller/Controller Glyphs and Images/Xelu_Free_Controller&Key_Prompts/Xbox One/",
-    "cleanup_reports/delete_candidates_20260702/",
+    "docs/archive/project_cleanup/delete_candidates_20260702/",
     "docs/archive/2026-06-06_obsolete_archetype_reference/",
     "docs/archive/2026-06-07_experimental_rigging_scene/",
     "docs/art/concept_art/"
@@ -182,7 +185,7 @@ foreach ($relativePath in $trackedFiles) {
         $reverseReferences[$reference].Add($relativePath)
     }
     if (
-        -not $relativePath.StartsWith("cleanup_reports/") -and
+        -not $relativePath.StartsWith("docs/archive/project_cleanup/") -and
         -not $relativePath.StartsWith(".godot/")
     ) {
         [void]$referenceText.AppendLine($text.Replace("\", "/").ToLowerInvariant())

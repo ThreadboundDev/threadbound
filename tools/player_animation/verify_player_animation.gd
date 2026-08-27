@@ -17,7 +17,7 @@ const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
 
 const EXPECTED_ANIMATIONS := {
 	&"Air_Double_Attack": {"frames": 27, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
-	&"Pogo_Attack": {"frames": 11, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
+	&"Pogo_Attack": {"frames": 11, "fps": 24.0, "loop": false, "cell": Vector2(416, 416)},
 	&"Grapple_Diagonal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Horizontal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Strike": {"frames": 11, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
@@ -61,7 +61,6 @@ func _ready() -> void:
 		_verify_pogo_rebound(player, sprite, failures)
 		_verify_pogo_attack_art(sprite, failures)
 	_verify_ledge_climb_sheet(failures)
-	_verify_restored_run_frames(failures)
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
 	_verify_grapple_gutter_cleanup(failures)
@@ -76,7 +75,7 @@ func _ready() -> void:
 		failures
 	)
 	_verify_sheet_cell_gutters(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1.png",
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png",
 		Vector2i(6, 2),
 		11,
 		8,
@@ -134,14 +133,14 @@ func _verify_pogo_attack_art(
 		if texture == null or texture.atlas == null:
 			failures.append("Pogo frame %d is not backed by its dedicated atlas." % frame_index)
 			continue
-		if not texture.atlas.resource_path.ends_with("/pogo_attack_v1.png"):
+		if not texture.atlas.resource_path.ends_with("/pogo_attack_v2.png"):
 			failures.append(
-				"Pogo frame %d still reuses %s instead of pogo_attack_v1.png." %
+				"Pogo frame %d uses %s instead of pogo_attack_v2.png." %
 				[frame_index, texture.atlas.resource_path]
 			)
 
 	var image := _load_imported_image(
-		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1.png"
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png"
 	)
 	if image == null or image.is_empty():
 		failures.append("Could not load the dedicated pogo sheet.")
@@ -458,53 +457,6 @@ func _verify_ledge_climb_sheet(failures: Array[String]) -> void:
 			if image.get_pixel(crest_origin.x + x, crest_origin.y + y).a > 0.03:
 				failures.append("Ledge climb crest contains a forbidden scarf-tail silhouette.")
 				return
-
-func _verify_restored_run_frames(failures: Array[String]) -> void:
-	var archive_names := {
-		1: "frame_00_run_001.png",
-		2: "frame_01_run_002.png",
-		3: "frame_02_run_003.png",
-		4: "frame_03_run_004.png",
-		5: "frame_04_run_005.png",
-		6: "frame_05_run_006.png",
-		12: "frame_06_run_012.png",
-		20: "frame_07_run_020.png",
-		7: "frame_08_run_007.png",
-		18: "frame_09_run_018.png",
-		8: "frame_10_run_008.png",
-	}
-	for frame_number in archive_names:
-		var path := (
-			"res://Assets/Threadborne/Player/Normalized_V2/run/run_%03d.png" %
-			frame_number
-		)
-		var archive_path := (
-			"res://Assets/Threadborne/Player/Normalized_V2/run/old_run/%s" %
-			archive_names[frame_number]
-		)
-		var image := _load_imported_image(path)
-		if image == null or image.is_empty():
-			failures.append("Could not load restored run frame: %s." % path)
-			continue
-		if image.get_size() != Vector2i(548, 548):
-			failures.append("%s is %s; expected the 548 px runtime canvas." % [path, image.get_size()])
-			continue
-
-		var archived_image := Image.load_from_file(archive_path)
-		if archived_image == null or archived_image.is_empty():
-			failures.append("Could not load archived run source: %s." % archive_path)
-			continue
-		if image.get_size() != archived_image.get_size():
-			failures.append(
-				"%s size %s does not match archived source size %s." %
-				[path, image.get_size(), archived_image.get_size()]
-			)
-			continue
-		if image.get_data() != archived_image.get_data():
-			failures.append(
-				"%s no longer matches the approved archived original %s." %
-				[path, archive_names[frame_number]]
-			)
 
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
 	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.88):

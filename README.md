@@ -59,9 +59,13 @@ Important Godot scenes and systems:
 ```text
 threadbound/
   addons/      Godot plugins
-  Assets/      Runtime art, UI, animation, audio, tiles, and source exports
+  ArtSource/   Editable artwork and non-runtime authoring inputs
+  Assets/      Game-ready art, UI, animation, audio, and tiles
+  Builds/      Ignored local exports created when needed
   docs/        Design, gameplay, narrative, art direction, and archive notes
+  Media/       Development captures and social-media production files
   Src/         Godot scenes, scripts, resources, shaders, and gameplay systems
+  tools/       Verification, cleanup, and local development utilities
 ```
 
 The current naming direction is documented in [Project Structure and Naming](docs/design/project_structure_and_naming.md).
