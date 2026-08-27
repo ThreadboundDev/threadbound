@@ -14,6 +14,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 
 	assert(visual.material is ShaderMaterial)
+	assert(visual.z_index == 21)
+	assert(not visual.z_as_relative)
 	assert(visual.size.is_equal_approx(water.size))
 	assert(is_equal_approx(visual.position.x, -water.size.x * 0.5))
 	assert(is_equal_approx(visual.position.y, -water.size.y * 0.5))
@@ -27,4 +29,3 @@ func _ready() -> void:
 	room.free()
 	print("BLUE_REFLECTIVE_WATER_VERIFY_OK")
 	get_tree().quit()
-

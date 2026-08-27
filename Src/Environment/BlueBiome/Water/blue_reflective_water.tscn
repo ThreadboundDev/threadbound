@@ -4,7 +4,8 @@
 [ext_resource type="Material" path="res://Assets/BlueBiome/Art/Water/blue_reflective_water_material.tres" id="2_material"]
 
 [node name="ReflectiveWaterVisual" type="ColorRect"]
-z_index = 1
+z_index = 21
+z_as_relative = false
 material = ExtResource("2_material")
 offset_left = -256.0
 offset_top = -128.0
