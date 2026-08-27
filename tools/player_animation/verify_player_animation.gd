@@ -301,6 +301,13 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 					[animation_name, frame_index, texture.region.size, expected.cell]
 				)
 
+	var corrected_swim_frame := frames.get_frame_texture(&"Swim", 13) as AtlasTexture
+	var adjacent_swim_frame := frames.get_frame_texture(&"Swim", 14) as AtlasTexture
+	if corrected_swim_frame == null or adjacent_swim_frame == null:
+		failures.append("The corrected swim transition frames are missing.")
+	elif corrected_swim_frame.region != adjacent_swim_frame.region:
+		failures.append("Swim frame 13 still uses the vertically displaced atlas sample.")
+
 func _verify_moving_combo_atlas_maps(
 	sprite: AnimatedSprite2D,
 	failures: Array[String]
@@ -475,6 +482,10 @@ func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> vo
 		failures.append("Meditation healing must stop at 75% health.")
 	if not is_equal_approx(float(player.get("meditation_flow_interval_multiplier")), 0.75):
 		failures.append("Flow meditation must use the approved 25% faster pulse cadence.")
+	if not is_equal_approx(float(player.get("prototype_swim_visual_scale_multiplier")), 0.78):
+		failures.append("Swimming must use the corrected 0.78 visual scale multiplier.")
+	if not is_equal_approx(float(player.get("prototype_swim_visual_pitch_degrees")), 6.0):
+		failures.append("Swimming must use the approved six-degree forward pitch.")
 
 	var meditation_timers: Array[float] = [8.0, 3.0, 6.0, 0.0, 0.0, 0.0]
 	player.set("_action_point_recharge_timers", meditation_timers)

@@ -256,7 +256,7 @@ region = Rect2(0, 832, 416, 416)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_13"]
 atlas = ExtResource("117_swim_surface")
-region = Rect2(416, 832, 416, 416)
+region = Rect2(832, 832, 416, 416)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swim_surface_14"]
 atlas = ExtResource("117_swim_surface")

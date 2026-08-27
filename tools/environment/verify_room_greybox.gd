@@ -123,8 +123,18 @@ func _ready() -> void:
 	player.set("current_attack_uses_grapple_strike", false)
 	player.call("update_animations", 1.0)
 	assert(player.current_body_anim == "Swim", "Moving in water should use the swim animation.")
+	var player_sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	assert(
+		player_sprite.scale.is_equal_approx(Vector2(0.546, 0.546)),
+		"Swimming should use the corrected smaller presentation scale."
+	)
+	assert(
+		is_equal_approx(player_sprite.rotation_degrees, 6.0),
+		"Right-facing swimming should pitch forward by six degrees."
+	)
 	player.call("update_animations", 0.0)
 	assert(player.current_body_anim == "Jump_Apex", "Floating in water should use Jump_Apex.")
+	assert(is_zero_approx(player_sprite.rotation), "Floating should clear the swim pitch.")
 	player.call("exit_prototype_water", water)
 	assert(not player.call("is_in_prototype_water"))
 	print("ROOM_GREYBOX_VERIFY_OK")

@@ -193,6 +193,8 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var prototype_swim_exit_jump_speed := 1040.0
 @export_range(0.0, 64.0, 1.0) var prototype_swim_exit_surface_range := 28.0
 @export_range(0.05, 0.4, 0.01) var prototype_swim_exit_lock_duration := 0.18
+@export_range(0.5, 1.0, 0.01) var prototype_swim_visual_scale_multiplier := 0.78
+@export_range(0.0, 15.0, 0.5) var prototype_swim_visual_pitch_degrees := 6.0
 
 @export_group("One-Way Platforms")
 @export_range(0.1, 0.5, 0.01) var one_way_drop_double_tap_window := 0.24
@@ -1697,12 +1699,24 @@ func update_animations(dir: float) -> void:
 		play_character_anim("Wall_Cling")
 
 	elif is_in_prototype_water():
-		player_animation.rotation = 0.0
 		if absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Swim"):
+			var swim_pitch_sign := -1.0 if player_animation.flip_h else 1.0
+			player_animation.rotation = (
+				deg_to_rad(prototype_swim_visual_pitch_degrees) * swim_pitch_sign
+			)
+			player_animation.scale = (
+				_player_default_visual_scale * prototype_swim_visual_scale_multiplier
+			)
+			_apply_current_glove_visual_tuning(
+				prototype_swim_visual_scale_multiplier,
+				Vector2.ZERO
+			)
 			play_character_anim("Swim")
 		elif absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Run"):
+			player_animation.rotation = 0.0
 			play_character_anim("Run")
 		elif player_animation.sprite_frames.has_animation("Jump_Apex"):
+			player_animation.rotation = 0.0
 			play_character_anim("Jump_Apex")
 
 	elif not is_on_floor():
