@@ -47,20 +47,20 @@ tile_map_data = PackedByteArray("AADu/wAAAAAAAAAAAADv/wAAAAAAAAAAAADw/wAAAAAAAAA
 position = Vector2(-2605, -1118)
 scale = Vector2(1.612796, 1.0856298)
 
-[node name="ReflectiveWaterVisual" parent="WaterVolumes/WestUpperWater" index="1" instance=ExtResource("16_water")]
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/WestUpperWater" index="1" unique_id=1688901201 instance=ExtResource("16_water")]
 
 [node name="CentralLowerWater" parent="WaterVolumes" index="1" unique_id=530565777 instance=ExtResource("2_ctnnh")]
 position = Vector2(-373, 1070)
 scale = Vector2(3.0076203, 1.8169442)
 water_color = Color(0.08, 0.48, 0.95, 1)
 
-[node name="ReflectiveWaterVisual" parent="WaterVolumes/CentralLowerWater" index="1" instance=ExtResource("16_water")]
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/CentralLowerWater" index="1" unique_id=220935955 instance=ExtResource("16_water")]
 
 [node name="LakeOverlookWater" parent="WaterVolumes" index="2" unique_id=639432123 instance=ExtResource("2_ctnnh")]
 position = Vector2(2383, 1450)
 scale = Vector2(3.644846, 1.5492944)
 
-[node name="ReflectiveWaterVisual" parent="WaterVolumes/LakeOverlookWater" index="1" instance=ExtResource("16_water")]
+[node name="ReflectiveWaterVisual" parent="WaterVolumes/LakeOverlookWater" index="1" unique_id=2066049865 instance=ExtResource("16_water")]
 
 [node name="PlayerStart" parent="Markers" index="0"]
 position = Vector2(-3085, -354)
@@ -108,91 +108,89 @@ z_index = -90
 scroll_scale = Vector2(0.055, 0.035)
 scroll_offset = Vector2(316, 659)
 
-[node name="Far_WestUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="0" instance=ExtResource("22_cloud_broad")]
+[node name="Far_WestUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="0" unique_id=651317708 instance=ExtResource("22_cloud_broad")]
 position = Vector2(-2700, -2000)
 rotation = -0.012
 scale = Vector2(0.7, 0.7)
 drift_speed = 1.7
-motion_phase = 0.4
 billow_amount = 1.35
 billow_speed = 0.22
+motion_phase = 0.4
 vertical_float_amount = 3.5
 vertical_float_speed = 0.13
 
-[node name="Far_WestMid_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="1" instance=ExtResource("23_cloud_wisp")]
+[node name="Far_WestMid_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="1" unique_id=806035212 instance=ExtResource("23_cloud_wisp")]
 position = Vector2(-1650, -1250)
 rotation = 0.014
 scale = Vector2(-0.62, 0.62)
 drift_speed = 2.0
-motion_phase = 1.2
 billow_amount = 1.7
 billow_speed = 0.27
+motion_phase = 1.2
 vertical_float_amount = 4.2
 vertical_float_speed = 0.16
 
-[node name="Far_UpperLeft_Small" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="2" instance=ExtResource("27_cloud_small")]
+[node name="Far_UpperLeft_Small" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="2" unique_id=1282012778 instance=ExtResource("27_cloud_small")]
 position = Vector2(-650, -2100)
 rotation = 0.009
 scale = Vector2(0.55, 0.55)
 drift_speed = 1.8
-motion_phase = 2.0
 billow_amount = 1.15
 billow_speed = 0.2
+motion_phase = 2.0
 vertical_float_amount = 2.8
 vertical_float_speed = 0.11
 
-[node name="Far_CenterLow_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="3" instance=ExtResource("26_cloud_soft")]
+[node name="Far_CenterLow_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="3" unique_id=1695787752 instance=ExtResource("26_cloud_soft")]
 position = Vector2(350, -750)
 rotation = -0.018
 scale = Vector2(0.64, 0.64)
 drift_speed = 2.2
-motion_phase = 2.8
 billow_amount = 1.55
 billow_speed = 0.24
+motion_phase = 2.8
 vertical_float_amount = 3.8
 vertical_float_speed = 0.14
 
-[node name="Far_UpperCenter_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="4" instance=ExtResource("24_cloud_tower")]
+[node name="Far_UpperCenter_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="4" unique_id=1195156174 instance=ExtResource("24_cloud_tower")]
 position = Vector2(1350, -1800)
 rotation = -0.008
 scale = Vector2(0.68, 0.68)
 drift_speed = 1.6
-motion_phase = 3.5
 billow_amount = 1.45
 billow_speed = 0.19
-vertical_float_amount = 3.0
+motion_phase = 3.5
 vertical_float_speed = 0.1
 
-[node name="Far_EastLow_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="5" instance=ExtResource("29_cloud_puff")]
+[node name="Far_EastLow_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="5" unique_id=157488828 instance=ExtResource("29_cloud_puff")]
 position = Vector2(2400, -600)
 rotation = 0.017
 scale = Vector2(-0.56, 0.56)
 drift_speed = 2.3
-motion_phase = 4.1
 billow_amount = 1.8
 billow_speed = 0.3
+motion_phase = 4.1
 vertical_float_amount = 4.5
-vertical_float_speed = 0.18
 
-[node name="Far_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="6" instance=ExtResource("28_cloud_streak")]
+[node name="Far_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="6" unique_id=1248402426 instance=ExtResource("28_cloud_streak")]
 position = Vector2(3400, -2050)
 rotation = 0.012
 scale = Vector2(-0.6, 0.6)
 drift_speed = 1.9
-motion_phase = 4.9
 billow_amount = 1.2
 billow_speed = 0.21
+motion_phase = 4.9
 vertical_float_amount = 2.6
 vertical_float_speed = 0.12
 
-[node name="Far_EastLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="7" instance=ExtResource("25_cloud_low")]
+[node name="Far_EastLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="7" unique_id=182629616 instance=ExtResource("25_cloud_low")]
 position = Vector2(3700, 600)
 rotation = -0.014
 scale = Vector2(0.58, 0.58)
 drift_speed = 2.4
-motion_phase = 5.6
 billow_amount = 1.6
 billow_speed = 0.26
+motion_phase = 5.6
 vertical_float_amount = 4.0
 vertical_float_speed = 0.15
 
@@ -201,91 +199,88 @@ z_index = -89
 scroll_scale = Vector2(0.09, 0.055)
 scroll_offset = Vector2(316, 659)
 
-[node name="Mid_WestUpper_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="0" instance=ExtResource("29_cloud_puff")]
-position = Vector2(-2600, -700)
+[node name="Mid_WestUpper_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="0" unique_id=922734869 instance=ExtResource("29_cloud_puff")]
+position = Vector2(-2499.0002, -882)
 rotation = 0.018
 scale = Vector2(0.78, 0.78)
 drift_speed = 4.0
-motion_phase = 0.7
 billow_amount = 2.2
 billow_speed = 0.34
+motion_phase = 0.7
 vertical_float_amount = 5.4
 vertical_float_speed = 0.2
 
-[node name="Mid_WestLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="1" instance=ExtResource("25_cloud_low")]
+[node name="Mid_WestLower_LowBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="1" unique_id=1692910874 instance=ExtResource("25_cloud_low")]
 position = Vector2(-1700, 450)
 rotation = -0.012
 scale = Vector2(0.68, 0.68)
 drift_speed = 4.6
-motion_phase = 1.5
 billow_amount = 2.5
 billow_speed = 0.38
+motion_phase = 1.5
 vertical_float_amount = 6.0
 vertical_float_speed = 0.23
 
-[node name="Mid_UpperLeft_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="2" instance=ExtResource("24_cloud_tower")]
+[node name="Mid_UpperLeft_Tower" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="2" unique_id=1644163972 instance=ExtResource("24_cloud_tower")]
 position = Vector2(-800, -1600)
 rotation = -0.021
 scale = Vector2(-0.62, 0.62)
 drift_speed = 4.1
-motion_phase = 2.2
-billow_amount = 2.0
 billow_speed = 0.31
+motion_phase = 2.2
 vertical_float_amount = 4.8
 vertical_float_speed = 0.19
 
-[node name="Mid_CenterLower_Small" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="3" instance=ExtResource("27_cloud_small")]
+[node name="Mid_CenterLower_Small" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="3" unique_id=1596302539 instance=ExtResource("27_cloud_small")]
 position = Vector2(200, 900)
 rotation = 0.014
 scale = Vector2(0.6, 0.6)
 drift_speed = 5.0
-motion_phase = 2.9
 billow_amount = 1.75
 billow_speed = 0.29
+motion_phase = 2.9
 vertical_float_amount = 4.0
 vertical_float_speed = 0.17
 
-[node name="Mid_CenterUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="4" instance=ExtResource("22_cloud_broad")]
+[node name="Mid_CenterUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="4" unique_id=1855100277 instance=ExtResource("22_cloud_broad")]
 position = Vector2(1100, -1100)
 rotation = -0.009
 scale = Vector2(0.72, 0.72)
 drift_speed = 4.3
-motion_phase = 3.6
 billow_amount = 2.35
 billow_speed = 0.36
+motion_phase = 3.6
 vertical_float_amount = 5.6
 vertical_float_speed = 0.21
 
-[node name="Mid_EastLower_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="5" instance=ExtResource("26_cloud_soft")]
+[node name="Mid_EastLower_SoftBank" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="5" unique_id=360365700 instance=ExtResource("26_cloud_soft")]
 position = Vector2(2100, 300)
 rotation = 0.023
 scale = Vector2(-0.66, 0.66)
 drift_speed = 5.2
-motion_phase = 4.3
 billow_amount = 2.6
 billow_speed = 0.4
+motion_phase = 4.3
 vertical_float_amount = 6.3
 vertical_float_speed = 0.24
 
-[node name="Mid_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="6" instance=ExtResource("28_cloud_streak")]
+[node name="Mid_LakeUpper_Streak" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="6" unique_id=859948495 instance=ExtResource("28_cloud_streak")]
 position = Vector2(3050, -1600)
 rotation = 0.011
 scale = Vector2(0.7, 0.7)
 drift_speed = 4.2
-motion_phase = 5.0
 billow_amount = 1.9
-billow_speed = 0.32
+motion_phase = 5.0
 vertical_float_amount = 4.6
-vertical_float_speed = 0.18
 
-[node name="Mid_EastLower_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="7" instance=ExtResource("23_cloud_wisp")]
+[node name="Mid_EastLower_Wisp" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="7" unique_id=1658527929 instance=ExtResource("23_cloud_wisp")]
 position = Vector2(3500, 1050)
 rotation = -0.016
 scale = Vector2(0.64, 0.64)
 drift_speed = 4.8
-motion_phase = 5.8
 billow_amount = 2.15
 billow_speed = 0.35
+motion_phase = 5.8
 vertical_float_amount = 5.1
 vertical_float_speed = 0.22
 
