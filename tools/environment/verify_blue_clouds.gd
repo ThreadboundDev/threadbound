@@ -45,8 +45,13 @@ func _ready() -> void:
 	var room := ROOM.instantiate()
 	var far_clouds := room.get_node("EnvironmentArt/FarBackground/CloudLayers/FarClouds")
 	var mid_clouds := room.get_node("EnvironmentArt/FarBackground/CloudLayers/MidClouds")
+	var player_start := room.get_node("Markers/PlayerStart") as Node2D
 	assert(far_clouds.get_child_count() == 8)
 	assert(mid_clouds.get_child_count() == 8)
+	for group: AnchoredParallax2D in [far_clouds, mid_clouds]:
+		group._apply_anchor_offset()
+		var expected_offset := -player_start.position * (Vector2.ONE - group.scroll_scale)
+		assert(group.scroll_offset.is_equal_approx(expected_offset))
 	var phases: Dictionary = {}
 	for group: Node in [far_clouds, mid_clouds]:
 		for child: BlueDriftingCloud2D in group.get_children():

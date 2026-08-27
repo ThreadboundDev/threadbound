@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_small.tscn" id="27_cloud_small"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_streak.tscn" id="28_cloud_streak"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_puff.tscn" id="29_cloud_puff"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/anchored_parallax_2d.gd" id="30_cloud_anchor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(7467, 4220)
@@ -95,7 +96,7 @@ scroll_scale = Vector2(0.03, 0.03)
 scroll_offset = Vector2(-1216, -639)
 
 [node name="Vista" type="Sprite2D" parent="EnvironmentArt/FarBackground/FarFarLake" index="0" unique_id=1718456418]
-position = Vector2(1129, -1200)
+position = Vector2(1820, -27.000122)
 scale = Vector2(7, 7)
 texture = ExtResource("7_qoe68")
 region_enabled = true
@@ -106,7 +107,8 @@ region_rect = Rect2(0, 290, 1254, 674)
 [node name="FarClouds" type="Parallax2D" parent="EnvironmentArt/FarBackground/CloudLayers" index="0" unique_id=1017225635]
 z_index = -90
 scroll_scale = Vector2(0.055, 0.035)
-scroll_offset = Vector2(316, 659)
+script = ExtResource("30_cloud_anchor")
+placement_anchor_path = NodePath("../../../../Markers/PlayerStart")
 
 [node name="Far_WestUpper_Broad" parent="EnvironmentArt/FarBackground/CloudLayers/FarClouds" index="0" unique_id=651317708 instance=ExtResource("22_cloud_broad")]
 position = Vector2(-2700, -2000)
@@ -197,10 +199,11 @@ vertical_float_speed = 0.15
 [node name="MidClouds" type="Parallax2D" parent="EnvironmentArt/FarBackground/CloudLayers" index="1" unique_id=917156840]
 z_index = -89
 scroll_scale = Vector2(0.09, 0.055)
-scroll_offset = Vector2(316, 659)
+script = ExtResource("30_cloud_anchor")
+placement_anchor_path = NodePath("../../../../Markers/PlayerStart")
 
 [node name="Mid_WestUpper_Puff" parent="EnvironmentArt/FarBackground/CloudLayers/MidClouds" index="0" unique_id=922734869 instance=ExtResource("29_cloud_puff")]
-position = Vector2(-2499.0002, -882)
+position = Vector2(-2600, -700)
 rotation = 0.018
 scale = Vector2(0.78, 0.78)
 drift_speed = 4.0
