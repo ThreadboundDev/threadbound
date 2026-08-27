@@ -1,0 +1,23 @@
+extends Node
+
+const TILE_SET := preload("res://Src/Environment/BlueBiome/ArtPlaceables/Ground/blue_ground_art_tileset.tres")
+const ATLAS_SIZE := Vector2i(512, 512)
+const TILE_SIZE := Vector2i(128, 128)
+
+
+func _ready() -> void:
+	assert(TILE_SET.tile_size == TILE_SIZE)
+	assert(TILE_SET.has_source(0))
+	var atlas := TILE_SET.get_source(0) as TileSetAtlasSource
+	assert(atlas != null)
+	assert(atlas.texture != null)
+	assert(Vector2i(atlas.texture.get_size()) == ATLAS_SIZE)
+	assert(atlas.texture_region_size == TILE_SIZE)
+	assert(atlas.get_tiles_count() == 16)
+	for y in range(4):
+		for x in range(4):
+			assert(atlas.has_tile(Vector2i(x, y)))
+	var image := atlas.texture.get_image()
+	assert(image.detect_alpha() != Image.ALPHA_NONE)
+	print("BLUE_GROUND_TILES_VERIFY_OK")
+	get_tree().quit()
