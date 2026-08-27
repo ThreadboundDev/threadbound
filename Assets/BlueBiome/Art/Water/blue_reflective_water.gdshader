@@ -74,13 +74,24 @@ void fragment() {
 	float coarse_breakup = smoothstep(0.32, 0.76, broken_wave);
 	float breakup = mix(1.0, horizontal_bands * 0.58 + coarse_breakup * 0.42, breakup_strength);
 	float depth_fade = 1.0 - smoothstep(0.58, 1.0, UV.y);
-	float reflection_mix = reflection_strength * depth_fade * mix(0.38, 1.0, breakup);
+	// Let the painted shallow color meet the air cleanly. Reflections fade in
+	// below the surface instead of compressing into a dark outline at UV.y = 0.
+	float surface_reflection_fade = smoothstep(0.035, 0.13, UV.y);
+	float reflection_mix = (
+		reflection_strength
+		* depth_fade
+		* surface_reflection_fade
+		* mix(0.38, 1.0, breakup)
+	);
 	vec3 water = mix(gradient, reflected, reflection_mix);
 
-	float surface_wave = sin(UV.x * 19.0 + time * 4.0) * 0.004;
-	float surface_line = 1.0 - smoothstep(0.008, 0.035, abs(UV.y - 0.018 - surface_wave));
-	float broken_glints = smoothstep(0.42, 0.82, sin(UV.x * 57.0 - time * 6.0) * 0.5 + 0.5);
-	water = mix(water, glint_color.rgb, surface_line * broken_glints * surface_glint_strength);
+	// Broad, broken glints suggest the moving surface without drawing a solid
+	// white/cyan contour across the top of every water volume.
+	float surface_band = 1.0 - smoothstep(0.015, 0.13, UV.y);
+	float glint_flow = sin(UV.x * 37.0 - time * 5.0 + broken_wave * 2.2) * 0.5 + 0.5;
+	float broken_glints = smoothstep(0.67, 0.94, glint_flow);
+	float soft_glint = surface_band * broken_glints * surface_glint_strength * 0.34;
+	water = mix(water, glint_color.rgb, soft_glint);
 
 	COLOR = vec4(water, 1.0);
 }
