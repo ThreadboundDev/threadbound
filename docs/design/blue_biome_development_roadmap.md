@@ -29,6 +29,22 @@ The first focused design question is: **what does entering, leaving, or moving
 through water do to a bumper launch, and what does the player control during
 that transition?**
 
+#### Exploratory Bumper Art Concept: Water-Pod Flower
+
+The current visual idea for a finished Blue bumper is a large, single-stemmed
+flower with a hanging bell or pod silhouette. Its pod is translucent and holds
+visible water, potentially rendered with the existing Blue water texture or
+material. Striking the pod makes it pop, releases a splash, and propels the
+player. The pod later reforms or refills when the bumper regenerates.
+
+This is a promising direction because it gives the launch a readable source of
+stored pressure, connects the traversal object directly to Blue's water
+identity, and supports a clear ready-to-use versus spent silhouette. It remains
+an exploratory concept until bumper playtests establish the required size,
+orientation, timing, regeneration, and readability. The visual design should
+avoid resembling an ordinary enemy or safe background flower, especially when
+placed near hazards and dense vegetation.
+
 Before changing bumper or water code, document the proposed behavior, affected
 systems, files, edge cases, and verification plan for approval.
 
