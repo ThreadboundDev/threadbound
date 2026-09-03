@@ -217,6 +217,9 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.05, 0.5, 0.01) var pogo_rebound_animation_duration := 0.17
 @export_range(0.0, 0.3, 0.01) var pogo_rebound_gravity_grace := 0.12
 
+@export_group("Traversal Launches")
+@export_range(0.0, 0.3, 0.01) var traversal_launch_gravity_grace := 0.12
+
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
 @export var base_grapple_steer_speed: float = 120.0
@@ -3865,6 +3868,27 @@ func _perform_pogo_rebound() -> void:
 	# player to immediately aim another strike without restoring AP or jumps.
 	attack_cooldown_timer = 0.0
 	play_character_anim(String(POGO_REBOUND_ANIMATION))
+
+
+func apply_traversal_launch(direction: Vector2, jump_height_multiplier: float = 1.0) -> void:
+	var launch_direction := direction.normalized()
+	if launch_direction == Vector2.ZERO:
+		launch_direction = Vector2.UP
+	var base_jump_speed := prototype_swim_exit_jump_speed
+	if current_boots and "base_jump_force" in current_boots:
+		base_jump_speed = float(current_boots.base_jump_force)
+	# Ballistic height is proportional to velocity squared, so sqrt(2) speed
+	# reaches twice the normal jump apex under the same gravity.
+	var launch_speed := base_jump_speed * sqrt(maxf(jump_height_multiplier, 0.0))
+	_finish_cancelled_attack()
+	velocity = launch_direction * launch_speed
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+	landing_animation_timer = 0.0
+	pogo_rebound_gravity_timer = maxf(
+		pogo_rebound_gravity_timer,
+		traversal_launch_gravity_grace
+	)
 
 func _on_health_changed(_current: int, _maximum: int) -> void:
 	_sync_hud()

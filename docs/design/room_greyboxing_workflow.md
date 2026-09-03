@@ -6,39 +6,21 @@ The Room Greybox editor dock exists to turn an idea into a playable room as quic
 
 - Dark-grey terrain tiles: standard terrain and collision, painted on a 128 px grid through Godot's native TileMap palette.
 - Dark-grey one-way tile: jump-through platform with a pale top edge, painted from the same palette.
+- Dark-grey large block: freely resized solid rectangular geometry.
+- Dark-grey one-way block: freely resized jump-through rectangular geometry.
 - Blue water: playable prototype swim volume.
 - Red hazard: damage and knockback volume; free placement by default so slopes, spikes, and irregular danger zones are not constrained to the grid.
-- Green marker: player start.
-- Purple marker: room transition.
-- Orange marker: enemy intent.
-- Cyan marker: grapple opportunity.
-- White marker: point note or landmark.
-- Translucent annotation region: intended structure, surface treatment, hazard art, vegetation, or foreground treatment.
+- White bumper: harmless solid traversal block; attacks wear it down, and the breaking hit launches the attacker opposite the attack direction.
 
-Select the intended room or geometry container, open **Room Greybox** in the bottom panel, and press **Create / Select Terrain Tiles**. Choose the solid or one-way tile in Godot's TileMap palette, then paint and erase directly in the 2D viewport. Pressing the button again selects the room's existing `GreyboxTerrain` layer.
+Select the intended room or geometry container, open **Room Greybox** in the bottom panel, and press **Terrain Tiles**. Choose the solid or one-way tile in Godot's TileMap palette, then paint and erase directly in the 2D viewport. Pressing the button again selects the room's existing `GreyboxTerrain` layer.
 
-Water and hazards remain independent resizable volumes and do not snap to the terrain grid. The optional Large Block remains available for unusually large rectangular masses, but tile painting is the default terrain workflow. Newly created elements are added beside the currently selected greybox element rather than inside it, preventing accidental chains of nested blocks.
+Use **Large Block** or **One-Way Block** for quickly placed rectangular geometry that is easier to resize than repaint. Water, hazards, and bumpers remain independent resizable pieces and do not snap to the terrain grid. Newly created elements are added beside the currently selected greybox element rather than inside it, preventing accidental chains of nested blocks.
 
 Press F6 to run the current room.
 
-The dock deliberately does not place finished artwork. Instead, intent buttons
-create freely positioned, resizable `GreyboxAnnotationArea2D` regions beneath a
-dedicated `Annotations` node. Each region records a title, notes, category,
-intended collision, art layer, and orientation. A Rope Bridge region, for
-example, defaults to one-way collision, Gameplay Edge, and Span; stacked
-Building Base, Building Middle, and Building Rooftop regions communicate how a
-future layered structure should be painted.
-
-Annotations never participate in physics. Build and test all actual traversal
-with terrain, water, slopes, and generic spike hazards. Treat unmarked exposed
-terrain as ordinary ground, wall, or ceiling according to orientation. Mark
-only exceptions or authored intentions. Use **Collision preview: Faint** while
-annotating a room and **Strong** while revising traversal.
-
-Greybox slopes are free-place triangular collision pieces with left- and
-right-rising variants. They currently use the established player movement
-unchanged. Test their feel before adding any slope-specific acceleration,
-friction, or jump behavior.
+The dock deliberately contains only pieces needed to build and test traversal.
+Finished artwork, annotations, markers, slopes, and production-art generation
+are handled outside this focused palette.
 
 ## Blue Macro Reference
 
@@ -78,9 +60,17 @@ One-way tiles use a full one-way terrain polygon for landing and ledge probes pl
 
 ## Prototype Hazards
 
-The **Spike Hazard (free placement)** button creates a reusable triangular spike strip. Hazards reuse the shared damage pipeline and expose size, spike width, damage, knockback, and retrigger delay. Their free placement is intentional: resize and rotate the same strip for floors, walls, or ceilings.
+The **Hazard** button creates a reusable triangular spike strip. Hazards reuse the shared damage pipeline and expose size, spike width, damage, knockback, and retrigger delay. Their free placement is intentional: resize and rotate the same strip for floors, walls, or ceilings.
 
-Threadglass buttons create art-intent regions rather than finished hazards.
-Place and test a generic spike hazard first, then overlap it with the relevant
-Threadglass Floor, Wall, Ceiling, or Waterline annotation. Waterline art never
-replaces the separate live water volume.
+## Prototype Bumpers
+
+The **Bumper** button creates a reusable white traversal block. Bumpers
+are harmless solid surfaces: touching or landing on one never deals damage.
+Each instance exposes its size, hits required to break, launch strength in
+normal jump heights, and regeneration delay. The attack that removes the final
+hit launches the player opposite the attack direction. Because ballistic height
+depends on velocity squared, a value of `2.0` computes the speed required for a
+two-jump apex rather than simply doubling jump velocity.
+
+Use one-hit bumpers for fast traversal chains and multi-hit bumpers for route
+timing, gates, or optional pockets that remain accessible until regeneration.

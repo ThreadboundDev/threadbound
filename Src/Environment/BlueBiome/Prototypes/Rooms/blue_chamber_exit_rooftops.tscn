@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_water.tscn" id="2_ti6hj"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_hazard.tscn" id="3_lwefl"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_bumper.tscn" id="4_bumper"]
 
 [node name="BlueChamberExitRooftops" unique_id=32262651 instance=ExtResource("1")]
 room_id = "blue_chamber_exit_rooftops"
@@ -53,3 +54,10 @@ scale = Vector2(0.7558869, 0.6209833)
 [node name="Hazard2" parent="." index="7" unique_id=1223924502 instance=ExtResource("3_lwefl")]
 position = Vector2(706, -495)
 scale = Vector2(0.7448141, 1)
+
+[node name="PrototypeBumper" parent="." index="8" instance=ExtResource("4_bumper")]
+position = Vector2(-2460, -145)
+size = Vector2(160, 96)
+hits_to_break = 1
+launch_jump_heights = 2.0
+regeneration_delay = 3.0

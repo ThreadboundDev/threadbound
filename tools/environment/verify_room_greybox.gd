@@ -3,6 +3,7 @@ extends Node
 const BLOCK := preload("res://Src/Environment/Greybox/greybox_block.tscn")
 const WATER := preload("res://Src/Environment/Greybox/greybox_water.tscn")
 const HAZARD := preload("res://Src/Environment/Greybox/greybox_hazard.tscn")
+const BUMPER := preload("res://Src/Environment/Greybox/greybox_bumper.tscn")
 const TILE_LAYER := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
 const ANNOTATION := preload("res://Src/Environment/Greybox/greybox_annotation_area.tscn")
 const ART_REGION := preload("res://Src/Environment/Greybox/art_generation_region.tscn")
@@ -61,6 +62,19 @@ func _ready() -> void:
 	assert(pogo_receiver != null, "Red hazards must expose a pogo attack receiver.")
 	assert(pogo_receiver.hurtbox_owner == hazard)
 	assert(pogo_receiver.collision_layer == 2)
+
+	var bumper := BUMPER.instantiate() as GreyboxBumper2D
+	add_child(bumper)
+	bumper.position = Vector2(250, 0)
+	bumper.size = Vector2(224, 80)
+	bumper.hits_to_break = 2
+	bumper.launch_jump_heights = 2.0
+	bumper.regeneration_delay = 0.05
+	assert((bumper.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
+	assert((bumper.get_node("HitReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
+	assert(bumper.collision_layer == 1, "The bumper must be harmless solid terrain.")
+	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
+	assert(bumper_receiver.collision_layer == 2)
 
 	var annotation := ANNOTATION.instantiate() as GreyboxAnnotationArea2D
 	add_child(annotation)
@@ -122,6 +136,29 @@ func _ready() -> void:
 	assert(player.get("current_action_points") == 4, "Pogo must not change AP.")
 	assert(not player.get("air_jump_available"), "Pogo must not restore the air jump.")
 	assert(not player.get("current_attack_uses_air_double"))
+	var bumper_hit := DamageData.new()
+	bumper_hit.source = player
+	bumper_hit.knockback = Vector2.DOWN * 250.0
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	bumper_receiver.receive_hit(bumper_hit)
+	assert(bumper.get_hits_remaining() == 1)
+	assert(not bumper.is_broken())
+	bumper_receiver.receive_hit(bumper_hit)
+	assert(bumper.is_broken())
+	await get_tree().process_frame
+	var expected_bumper_speed := float(player.current_boots.base_jump_force) * sqrt(2.0)
+	assert(
+		is_equal_approx(player.velocity.y, -expected_bumper_speed),
+		"A downward breaking hit must launch the player to a two-jump apex."
+	)
+	assert(is_zero_approx(player.velocity.x))
+	assert(player.pogo_rebound_gravity_timer > 0.0)
+	player.process_mode = Node.PROCESS_MODE_INHERIT
+	await get_tree().create_timer(0.06).timeout
+	await get_tree().process_frame
+	assert(not bumper.is_broken())
+	assert(bumper.get_hits_remaining() == 2)
+	player.debug_blue_water_power_unlocked = true
 	player.call("enter_prototype_water", water, 100.0)
 	assert(player.call("is_in_prototype_water"))
 	player.global_position.y = 100.0 + player.prototype_swim_surface_depth
@@ -158,6 +195,7 @@ func _ready() -> void:
 	block.queue_free()
 	water.queue_free()
 	hazard.queue_free()
+	bumper.queue_free()
 	annotation.queue_free()
 	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
 	add_child(art_region)
