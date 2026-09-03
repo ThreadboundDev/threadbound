@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/room_greybox/room_greybox_dock.gd" id="1"]
 
 [node name="RoomGreyboxDock" type="Control"]
-custom_minimum_size = Vector2(0, 390)
+custom_minimum_size = Vector2(0, 330)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,27 +34,27 @@ theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="Margin/Rows/Geometry"]
 layout_mode = 2
-text = "Playable geometry"
+text = "Gameplay"
 
 [node name="TerrainTiles" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Create / Select Terrain Tiles"
+text = "Terrain Tiles"
 
 [node name="Solid" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Optional Large Block"
+text = "Large Block"
 
 [node name="Water" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Water (free placement)"
+text = "Water (free)"
 
 [node name="Hazard" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Hazard (free placement)"
+text = "Spike Hazard (free)"
 
 [node name="SlopeLeft" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
@@ -66,140 +66,145 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Slope ↗"
 
-[node name="GroundArtRow" type="HBoxContainer" parent="Margin/Rows"]
+[node name="TraversalIntent" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="Margin/Rows/GroundArtRow"]
+[node name="Label" type="Label" parent="Margin/Rows/TraversalIntent"]
 layout_mode = 2
-text = "Ground artwork"
+text = "Traversal intent"
 
-[node name="GroundArt" type="Button" parent="Margin/Rows/GroundArtRow"]
+[node name="RopeBridge" type="Button" parent="Margin/Rows/TraversalIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Create / Select Ground Art"
+text = "Rope Bridge"
 
-[node name="GenerateGroundArt" type="Button" parent="Margin/Rows/GroundArtRow"]
+[node name="PlatformShort" type="Button" parent="Margin/Rows/TraversalIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Generate From Collision"
+text = "Short Platform"
 
-[node name="PlayablePlatforms" type="HBoxContainer" parent="Margin/Rows"]
+[node name="PlatformLong" type="Button" parent="Margin/Rows/TraversalIntent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Long Platform"
+
+[node name="StructureIntent" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="Margin/Rows/PlayablePlatforms"]
+[node name="Label" type="Label" parent="Margin/Rows/StructureIntent"]
 layout_mode = 2
-text = "Playable platforms"
+text = "Structure intent"
 
-[node name="PlatformShort" type="Button" parent="Margin/Rows/PlayablePlatforms"]
+[node name="BuildingBase" type="Button" parent="Margin/Rows/StructureIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Short wood platform"
+text = "Building Base"
 
-[node name="PlatformLong" type="Button" parent="Margin/Rows/PlayablePlatforms"]
+[node name="BuildingMiddle" type="Button" parent="Margin/Rows/StructureIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Long wood platform"
+text = "Building Middle"
 
-[node name="ThreadglassHazards" type="HBoxContainer" parent="Margin/Rows"]
+[node name="BuildingTop" type="Button" parent="Margin/Rows/StructureIntent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Building Rooftop"
+
+[node name="Pavilion" type="Button" parent="Margin/Rows/StructureIntent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Open Pavilion"
+
+[node name="ArtIntent" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="Margin/Rows/ThreadglassHazards"]
+[node name="Label" type="Label" parent="Margin/Rows/ArtIntent"]
 layout_mode = 2
-text = "Threadglass hazards"
+text = "Art intent"
 
-[node name="ThreadglassFloor" type="Button" parent="Margin/Rows/ThreadglassHazards"]
+[node name="StoneGround" type="Button" parent="Margin/Rows/ArtIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Floor bed"
+text = "Stone Ground"
 
-[node name="ThreadglassWall" type="Button" parent="Margin/Rows/ThreadglassHazards"]
+[node name="Vegetation" type="Button" parent="Margin/Rows/ArtIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Wall cluster"
+text = "Vegetation"
 
-[node name="ThreadglassHanging" type="Button" parent="Margin/Rows/ThreadglassHazards"]
+[node name="Foreground" type="Button" parent="Margin/Rows/ArtIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Hanging cluster"
+text = "Foreground Silhouette"
 
-[node name="ThreadglassWater" type="Button" parent="Margin/Rows/ThreadglassHazards"]
+[node name="CustomArea" type="Button" parent="Margin/Rows/ArtIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Waterline reeds"
+text = "Custom Area"
 
-[node name="ThreadglassPogo" type="Button" parent="Margin/Rows/ThreadglassHazards"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Pogo crown"
-
-[node name="Buildings" type="HBoxContainer" parent="Margin/Rows"]
+[node name="HazardIntent" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="Margin/Rows/Buildings"]
+[node name="Label" type="Label" parent="Margin/Rows/HazardIntent"]
 layout_mode = 2
-text = "Buildings (art only)"
+text = "Hazard art intent"
 
-[node name="WideHouse" type="Button" parent="Margin/Rows/Buildings"]
+[node name="ThreadglassFloor" type="Button" parent="Margin/Rows/HazardIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Wide house"
+text = "Threadglass Floor"
 
-[node name="TowerHouse" type="Button" parent="Margin/Rows/Buildings"]
+[node name="ThreadglassWall" type="Button" parent="Margin/Rows/HazardIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Tower house"
+text = "Threadglass Wall"
 
-[node name="StiltHouse" type="Button" parent="Margin/Rows/Buildings"]
+[node name="ThreadglassCeiling" type="Button" parent="Margin/Rows/HazardIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Stilt house"
+text = "Threadglass Ceiling"
 
-[node name="Pavilion" type="Button" parent="Margin/Rows/Buildings"]
+[node name="ThreadglassWater" type="Button" parent="Margin/Rows/HazardIntent"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Open pavilion"
+text = "Threadglass Waterline"
 
-[node name="ArtSurfaces" type="HBoxContainer" parent="Margin/Rows"]
+[node name="Markers" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="Margin/Rows/ArtSurfaces"]
+[node name="Label" type="Label" parent="Margin/Rows/Markers"]
 layout_mode = 2
-text = "Free-place art"
+text = "Point markers"
 
-[node name="RoofMedium" type="Button" parent="Margin/Rows/ArtSurfaces"]
+[node name="PlayerStart" type="Button" parent="Margin/Rows/Markers"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Medium roof"
+text = "Player Start"
 
-[node name="RoofLong" type="Button" parent="Margin/Rows/ArtSurfaces"]
+[node name="Exit" type="Button" parent="Margin/Rows/Markers"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Long roof"
+text = "Room Exit"
 
-[node name="StoneGround" type="Button" parent="Margin/Rows/ArtSurfaces"]
+[node name="Enemy" type="Button" parent="Margin/Rows/Markers"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Stone ground"
+text = "Enemy"
 
-[node name="Grass" type="Button" parent="Margin/Rows/ArtSurfaces"]
+[node name="Grapple" type="Button" parent="Margin/Rows/Markers"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Grass"
+text = "Grapple"
 
-[node name="Cherry" type="Button" parent="Margin/Rows/ArtSurfaces"]
+[node name="Note" type="Button" parent="Margin/Rows/Markers"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Cherry tree"
-
-[node name="CherryShrub" type="Button" parent="Margin/Rows/ArtSurfaces"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Cherry shrub"
+text = "Point Note"
 
 [node name="Preview" type="HBoxContainer" parent="Margin/Rows"]
 layout_mode = 2
@@ -219,78 +224,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Faint"
 
-[node name="HouseLayers" type="HBoxContainer" parent="Margin/Rows"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="Margin/Rows/HouseLayers"]
-layout_mode = 2
-text = "House layers (art only)"
-
-[node name="Railing" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Railing"
-
-[node name="Posts" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Posts"
-
-[node name="Brace" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Brace"
-
-[node name="RopeBridge" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Rope bridge art"
-
-[node name="Cloth" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Hanging cloth"
-
-[node name="ForegroundFrame" type="Button" parent="Margin/Rows/HouseLayers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Foreground frame"
-
-[node name="Markers" type="HBoxContainer" parent="Margin/Rows"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="Margin/Rows/Markers"]
-layout_mode = 2
-text = "Markers"
-
-[node name="PlayerStart" type="Button" parent="Margin/Rows/Markers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Player start"
-
-[node name="Exit" type="Button" parent="Margin/Rows/Markers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Room exit"
-
-[node name="Enemy" type="Button" parent="Margin/Rows/Markers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Enemy"
-
-[node name="Grapple" type="Button" parent="Margin/Rows/Markers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Grapple"
-
-[node name="Annotation" type="Button" parent="Margin/Rows/Markers"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Annotation"
-
 [node name="Status" type="Label" parent="Margin/Rows"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Terrain paints on a 128 px grid. Water and hazards are free placement. F6 plays the room."
+text = "Unmarked terrain is interpreted as ordinary ground, wall, or ceiling. Annotation areas describe exceptions and intended artwork."

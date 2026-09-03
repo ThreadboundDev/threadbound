@@ -3,7 +3,9 @@ extends EditorPlugin
 
 const DOCK_SCENE := preload("res://addons/room_greybox/room_greybox_dock.tscn")
 const TILE_LAYER_SCENE := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
+const ANNOTATION_AREA_SCENE := preload("res://Src/Environment/Greybox/greybox_annotation_area.tscn")
 const GROUND_ART_LAYER_SCENE := preload("res://Src/Environment/BlueBiome/ArtPlaceables/Ground/blue_ground_art_layer.tscn")
+const GROUND_ART_SOURCE_ID := 1
 
 var dock: Control
 
@@ -98,6 +100,35 @@ func add_gameplay_scene(scene_path: String, base_name: String, properties: Dicti
 	dock.call("set_status", "Added playable %s. Its artwork and collision share one movable root." % instance.name, false)
 
 
+func add_annotation_area(properties: Dictionary) -> void:
+	var root := EditorInterface.get_edited_scene_root()
+	if root == null:
+		dock.call("set_status", "Open or create a 2D scene first.", true)
+		return
+	var annotation_parent := root.find_child("Annotations", false, false) as Node2D
+	if annotation_parent == null:
+		annotation_parent = Node2D.new()
+		annotation_parent.name = "Annotations"
+		root.add_child(annotation_parent)
+		annotation_parent.owner = root
+	var selected := EditorInterface.get_selection().get_selected_nodes()
+	var annotation := ANNOTATION_AREA_SCENE.instantiate() as GreyboxAnnotationArea2D
+	var title := str(properties.get("title", "Annotation"))
+	annotation.name = _unique_child_name(annotation_parent, title.replace(" ", ""))
+	annotation_parent.add_child(annotation)
+	annotation.owner = root
+	for property_name in properties:
+		annotation.set(property_name, properties[property_name])
+	if selected.size() == 1 and selected[0] is Node2D:
+		annotation.global_position = (selected[0] as Node2D).global_position
+	_select_node(annotation)
+	dock.call(
+		"set_status",
+		"Added %s annotation. Resize it and edit its title, intent, layer, orientation, or notes in the Inspector." % title,
+		false
+	)
+
+
 func set_greybox_preview_alpha(alpha: float) -> void:
 	var root := EditorInterface.get_edited_scene_root()
 	if root == null:
@@ -170,15 +201,27 @@ func generate_ground_art_from_collision() -> void:
 	layer.clear()
 	var painted := 0
 	for cell in terrain.get_used_cells():
-		if terrain.get_cell_source_id(cell) < 0:
+		var collision_source := terrain.get_cell_source_id(cell)
+		if collision_source < 0:
 			continue
-		var above := cell + Vector2i.UP
-		var row := 0 if terrain.get_cell_source_id(above) < 0 else 1
-		var variant := posmod(cell.x * 3 + cell.y * 5, 4)
-		layer.set_cell(cell, 0, Vector2i(variant, row), 0)
+		layer.set_cell(cell, GROUND_ART_SOURCE_ID, _ground_art_atlas_cell(terrain, cell, collision_source), 0)
 		painted += 1
 	_select_node(layer)
 	dock.call("set_status", "Generated %d varied ground-art tiles. Edit or repaint them freely; physics is unchanged." % painted, false)
+
+
+func _ground_art_atlas_cell(terrain: TileMapLayer, cell: Vector2i, collision_source: int) -> Vector2i:
+	var has_left := terrain.get_cell_source_id(cell + Vector2i.LEFT) >= 0
+	var has_right := terrain.get_cell_source_id(cell + Vector2i.RIGHT) >= 0
+	if collision_source == 1:
+		if not has_left and not has_right:
+			return Vector2i(3, 3)
+		return Vector2i(0 if not has_left else (2 if not has_right else 1), 3)
+	var has_above := terrain.get_cell_source_id(cell + Vector2i.UP) >= 0
+	var has_below := terrain.get_cell_source_id(cell + Vector2i.DOWN) >= 0
+	var column := 0 if not has_left else (2 if not has_right else 1)
+	var row := 0 if not has_above else (2 if not has_below else 1)
+	return Vector2i(column, row)
 
 
 func _get_or_create_ground_art(root: Node) -> TileMapLayer:
@@ -212,6 +255,7 @@ func _preferred_parent(root: Node) -> Node:
 			or selected_node is GreyboxWater2D
 			or selected_node is GreyboxHazard2D
 			or selected_node is GreyboxMarker2D
+			or selected_node is GreyboxAnnotationArea2D
 			or selected_node is TileMapLayer
 		):
 			return selected_node.get_parent()

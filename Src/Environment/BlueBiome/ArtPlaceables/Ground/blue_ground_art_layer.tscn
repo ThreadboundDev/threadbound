@@ -1,7 +1,10 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="TileSet" path="res://Src/Environment/BlueBiome/ArtPlaceables/Ground/blue_ground_art_tileset.tres" id="1"]
+[ext_resource type="TileSet" path="res://Assets/BlueBiome/Art/TerrainPaintTests/blue_biome_krita_tileset_poc_01.tres" id="1"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Ground/blue_ground_art_from_collision.gd" id="2_script"]
 
 [node name="BlueGroundArt" type="TileMapLayer"]
 z_index = 31
 tile_set = ExtResource("1")
+collision_enabled = false
+script = ExtResource("2_script")

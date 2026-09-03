@@ -6,29 +6,6 @@ const WATER := "res://Src/Environment/Greybox/greybox_water.tscn"
 const HAZARD := "res://Src/Environment/Greybox/greybox_hazard.tscn"
 const SLOPE := "res://Src/Environment/Greybox/greybox_slope.tscn"
 const MARKER := "res://Src/Environment/Greybox/greybox_marker.tscn"
-const ART_WIDE_HOUSE := "res://Src/Environment/BlueBiome/ArtPlaceables/Buildings/building_wide_house.tscn"
-const ART_TOWER_HOUSE := "res://Src/Environment/BlueBiome/ArtPlaceables/Buildings/building_tower_house.tscn"
-const ART_STILT_HOUSE := "res://Src/Environment/BlueBiome/ArtPlaceables/Buildings/building_stilt_house.tscn"
-const ART_PAVILION := "res://Src/Environment/BlueBiome/ArtPlaceables/Buildings/building_open_pavilion.tscn"
-const ART_ROOF_MEDIUM := "res://Src/Environment/BlueBiome/ArtPlaceables/Surfaces/surface_roof_medium.tscn"
-const ART_ROOF_LONG := "res://Src/Environment/BlueBiome/ArtPlaceables/Surfaces/surface_roof_long.tscn"
-const ART_STONE := "res://Src/Environment/BlueBiome/ArtPlaceables/Surfaces/surface_stone_ground.tscn"
-const ART_GRASS := "res://Src/Environment/BlueBiome/ArtPlaceables/Vegetation/vegetation_grass_strip.tscn"
-const ART_CHERRY := "res://Src/Environment/BlueBiome/ArtPlaceables/Vegetation/vegetation_cherry_wind.tscn"
-const ART_CHERRY_SHRUB := "res://Src/Environment/BlueBiome/ArtPlaceables/Vegetation/vegetation_cherry_shrub.tscn"
-const WOOD_PLATFORM_SHORT := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/wood_platform_short.tscn"
-const WOOD_PLATFORM_LONG := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/wood_platform_long.tscn"
-const ART_RAILING := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/platform_railing.tscn"
-const ART_POSTS := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/platform_posts.tscn"
-const ART_BRACE := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/platform_brace.tscn"
-const ART_ROPE_BRIDGE := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/platform_rope_bridge.tscn"
-const ART_CLOTH := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/platform_cloth.tscn"
-const ART_FOREGROUND_FRAME := "res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/house_foreground_frame.tscn"
-const THREADGLASS_FLOOR := "res://Src/Environment/BlueBiome/Hazards/threadglass_floor_bed.tscn"
-const THREADGLASS_WALL := "res://Src/Environment/BlueBiome/Hazards/threadglass_wall_cluster.tscn"
-const THREADGLASS_HANGING := "res://Src/Environment/BlueBiome/Hazards/threadglass_hanging_cluster.tscn"
-const THREADGLASS_WATER := "res://Src/Environment/BlueBiome/Hazards/threadglass_waterline_reeds.tscn"
-const THREADGLASS_POGO := "res://Src/Environment/BlueBiome/Hazards/threadglass_pogo_crown.tscn"
 
 var plugin: EditorPlugin
 @onready var status: Label = %Status
@@ -42,53 +19,37 @@ func _ready() -> void:
 	%TerrainTiles.pressed.connect(_select_or_add_terrain)
 	%Solid.pressed.connect(_add.bind(SOLID, "LargeBlock", true, {}))
 	%Water.pressed.connect(_add.bind(WATER, "Water", false, {}))
-	%Hazard.pressed.connect(_add.bind(HAZARD, "Hazard", false, {}))
+	%Hazard.pressed.connect(_add.bind(HAZARD, "SpikeHazard", false, {}))
 	%SlopeLeft.pressed.connect(_add_gameplay.bind(SLOPE, "SlopeLeft", {"rises_right": false}))
 	%SlopeRight.pressed.connect(_add_gameplay.bind(SLOPE, "SlopeRight", {"rises_right": true}))
-	%GroundArt.pressed.connect(_select_or_add_ground_art)
-	%GenerateGroundArt.pressed.connect(_generate_ground_art)
-	%PlatformShort.pressed.connect(_add_gameplay.bind(WOOD_PLATFORM_SHORT, "WoodPlatformShort", {}))
-	%PlatformLong.pressed.connect(_add_gameplay.bind(WOOD_PLATFORM_LONG, "WoodPlatformLong", {}))
-	%ThreadglassFloor.pressed.connect(_add_gameplay.bind(THREADGLASS_FLOOR, "ThreadglassFloor", {}))
-	%ThreadglassWall.pressed.connect(_add_gameplay.bind(THREADGLASS_WALL, "ThreadglassWall", {}))
-	%ThreadglassHanging.pressed.connect(_add_gameplay.bind(THREADGLASS_HANGING, "ThreadglassHanging", {}))
-	%ThreadglassWater.pressed.connect(_add_gameplay.bind(THREADGLASS_WATER, "ThreadglassWater", {}))
-	%ThreadglassPogo.pressed.connect(_add_gameplay.bind(THREADGLASS_POGO, "ThreadglassPogo", {}))
+
+	%RopeBridge.pressed.connect(_annotation.bind("Rope Bridge", "Structure", "One-way", "Gameplay Edge", "Span", Vector2(640, 96), Color(0.24, 0.88, 1.0, 0.2), "Suspended bridge spanning this region."))
+	%PlatformShort.pressed.connect(_annotation.bind("Short Platform", "Surface", "One-way", "Gameplay Edge", "Floor", Vector2(256, 72), Color(0.3, 0.9, 1.0, 0.2), "Short traversable platform."))
+	%PlatformLong.pressed.connect(_annotation.bind("Long Platform", "Surface", "One-way", "Gameplay Edge", "Floor", Vector2(512, 72), Color(0.3, 0.9, 1.0, 0.2), "Long traversable platform."))
+	%BuildingBase.pressed.connect(_annotation.bind("Building Base", "Structure", "Solid", "Gameplay Backing", "Floor", Vector2(512, 288), Color(0.95, 0.68, 0.25, 0.2), "Lower structural mass and entrances."))
+	%BuildingMiddle.pressed.connect(_annotation.bind("Building Middle", "Structure", "None", "Gameplay Backing", "Unspecified", Vector2(512, 288), Color(0.95, 0.72, 0.3, 0.2), "Middle building layer behind gameplay."))
+	%BuildingTop.pressed.connect(_annotation.bind("Building Rooftop", "Structure", "One-way", "Gameplay Edge", "Floor", Vector2(512, 160), Color(1.0, 0.78, 0.32, 0.2), "Playable building top or roofline."))
+	%Pavilion.pressed.connect(_annotation.bind("Open Pavilion", "Structure", "None", "Gameplay Backing", "Unspecified", Vector2(512, 320), Color(1.0, 0.7, 0.3, 0.2), "Open pavilion structure; preserve sightlines through it."))
+	%StoneGround.pressed.connect(_annotation.bind("Stone Ground Treatment", "Surface", "Solid", "Gameplay Edge", "Floor", Vector2(512, 128), Color(0.55, 0.68, 0.82, 0.2), "Painted stone surface treatment over base terrain."))
+	%Vegetation.pressed.connect(_annotation.bind("Vegetation", "Vegetation", "None", "Near", "Floor", Vector2(384, 192), Color(0.35, 1.0, 0.48, 0.2), "Grass, flowers, shrubs, or trees. Describe varieties in Notes."))
+	%Foreground.pressed.connect(_annotation.bind("Foreground Silhouette", "Atmosphere", "None", "Foreground", "Unspecified", Vector2(512, 320), Color(0.58, 0.48, 1.0, 0.2), "Dark framing art that may overlap the camera edge."))
+	%ThreadglassFloor.pressed.connect(_annotation.bind("Threadglass Floor Hazard", "Hazard", "Hazard", "Gameplay Edge", "Floor", Vector2(384, 96), Color(1.0, 0.2, 0.2, 0.22), "Regional hazard skin over a tested greybox spike volume."))
+	%ThreadglassWall.pressed.connect(_annotation.bind("Threadglass Wall Hazard", "Hazard", "Hazard", "Gameplay Edge", "Wall Left", Vector2(96, 384), Color(1.0, 0.2, 0.2, 0.22), "Regional hazard attached to a wall."))
+	%ThreadglassCeiling.pressed.connect(_annotation.bind("Threadglass Ceiling Hazard", "Hazard", "Hazard", "Gameplay Edge", "Ceiling", Vector2(384, 96), Color(1.0, 0.2, 0.2, 0.22), "Hanging regional hazard."))
+	%ThreadglassWater.pressed.connect(_annotation.bind("Threadglass Waterline Hazard", "Hazard", "Hazard", "Gameplay Edge", "Floor", Vector2(384, 112), Color(1.0, 0.2, 0.2, 0.22), "Hazard reeds at the waterline; water remains a separate live volume."))
+	%CustomArea.pressed.connect(_annotation.bind("Custom Annotation", "General", "None", "Gameplay Backing", "Unspecified", Vector2(384, 192), Color(0.95, 0.95, 1.0, 0.18), "Describe the intended artwork or gameplay purpose here."))
+
 	%PlayerStart.pressed.connect(_add_marker.bind("Player Start", Color(0.25, 1.0, 0.45, 0.9)))
 	%Exit.pressed.connect(_add_marker.bind("Room Exit", Color(0.75, 0.35, 1.0, 0.9)))
 	%Enemy.pressed.connect(_add_marker.bind("Enemy", Color(1.0, 0.45, 0.2, 0.9)))
 	%Grapple.pressed.connect(_add_marker.bind("Grapple", Color(0.2, 0.9, 1.0, 0.9)))
-	%Annotation.pressed.connect(_add_marker.bind("Annotation", Color(1.0, 1.0, 1.0, 0.9)))
-	%WideHouse.pressed.connect(_add_art.bind(ART_WIDE_HOUSE, "WideHouse"))
-	%TowerHouse.pressed.connect(_add_art.bind(ART_TOWER_HOUSE, "TowerHouse"))
-	%StiltHouse.pressed.connect(_add_art.bind(ART_STILT_HOUSE, "StiltHouse"))
-	%Pavilion.pressed.connect(_add_art.bind(ART_PAVILION, "Pavilion"))
-	%RoofMedium.pressed.connect(_add_art.bind(ART_ROOF_MEDIUM, "RoofMedium"))
-	%RoofLong.pressed.connect(_add_art.bind(ART_ROOF_LONG, "RoofLong"))
-	%StoneGround.pressed.connect(_add_art.bind(ART_STONE, "StoneGround"))
-	%Grass.pressed.connect(_add_art.bind(ART_GRASS, "Grass"))
-	%Cherry.pressed.connect(_add_art.bind(ART_CHERRY, "CherryTree"))
-	%CherryShrub.pressed.connect(_add_art.bind(ART_CHERRY_SHRUB, "CherryShrub"))
-	%Railing.pressed.connect(_add_art.bind(ART_RAILING, "Railing"))
-	%Posts.pressed.connect(_add_art.bind(ART_POSTS, "Posts"))
-	%Brace.pressed.connect(_add_art.bind(ART_BRACE, "Brace"))
-	%RopeBridge.pressed.connect(_add_art.bind(ART_ROPE_BRIDGE, "RopeBridgeArt"))
-	%Cloth.pressed.connect(_add_art.bind(ART_CLOTH, "Cloth"))
-	%ForegroundFrame.pressed.connect(_add_art.bind(ART_FOREGROUND_FRAME, "ForegroundFrame"))
+	%Note.pressed.connect(_add_marker.bind("Note", Color(1.0, 1.0, 1.0, 0.9)))
 	%CollisionStrong.pressed.connect(_set_collision_preview.bind(1.0))
 	%CollisionFaint.pressed.connect(_set_collision_preview.bind(0.18))
 
 
 func _select_or_add_terrain() -> void:
 	plugin.call("select_or_add_terrain_layer")
-
-
-func _select_or_add_ground_art() -> void:
-	plugin.call("select_or_add_ground_art_layer")
-
-
-func _generate_ground_art() -> void:
-	plugin.call("generate_ground_art_from_collision")
 
 
 func _add(path: String, node_name: String, snap: bool, properties: Dictionary) -> void:
@@ -104,12 +65,30 @@ func _add_marker(label_text: String, color: Color) -> void:
 	_add(MARKER, label_text.replace(" ", ""), true, {"label_text": label_text, "marker_color": color})
 
 
-func _add_art(path: String, node_name: String) -> void:
-	plugin.call("add_art_scene", path, node_name)
-
-
 func _add_gameplay(path: String, node_name: String, properties: Dictionary) -> void:
 	plugin.call("add_gameplay_scene", path, node_name, properties)
+
+
+func _annotation(
+	title: String,
+	category: String,
+	collision: String,
+	layer: String,
+	orientation: String,
+	size: Vector2,
+	color: Color,
+	notes: String
+) -> void:
+	plugin.call("add_annotation_area", {
+		"title": title,
+		"category": category,
+		"intended_collision": collision,
+		"art_layer": layer,
+		"orientation": orientation,
+		"size": size,
+		"annotation_color": color,
+		"notes": notes,
+	})
 
 
 func _set_collision_preview(alpha: float) -> void:

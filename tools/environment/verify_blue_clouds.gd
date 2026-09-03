@@ -10,7 +10,7 @@ const CLOUDS := [
 	preload("res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_streak.tscn"),
 	preload("res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_puff.tscn"),
 ]
-const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/Experiments/blue_chamber_exit_rooftops_codex_pass.tscn")
+const ROOM := preload("res://Src/Environment/BlueBiome/Production/blue_chamber_exit_production.tscn")
 
 const EXPECTED_TEXTURES := [
 	"blue_cloud_cell_01.png",

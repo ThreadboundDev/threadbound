@@ -4,15 +4,17 @@ This folder is the single entry point for building the Blue Biome in Godot.
 
 - `ArtPlaceables/Buildings`: free-place exterior building art.
 - `ArtPlaceables/Background/Clouds`: individually placeable drifting cloud variants.
-- `ArtPlaceables/Ground`: the paintable ground-art TileMapLayer and TileSet.
+- `ArtPlaceables/Ground`: the paintable ground-art TileMapLayer backed by the current 512-pixel authored atlas.
 - `ArtPlaceables/Platforms`: playable wood platforms plus modular house layers.
-- `ArtPlaceables/Surfaces`: free-place roof and stone overlays.
+- `ArtPlaceables/Rooftops`: current free-place rooftop pieces.
 - `ArtPlaceables/Vegetation`: grass and cherry-blossom accents.
 - `Buildings`: interactive layered/cutaway buildings.
 - `Hazards`: reusable Threadglass gameplay hazards.
 - `Prototypes/Rooms`: clean room shells for the macro route.
-- `Prototypes/Experiments`: exploratory assembled rooms; preserve these while iterating.
 - `References`: the scalable macro-map reference scene.
+
+Superseded full-room paintovers, modular terrain generations, preview scenes, and
+the first grid-based generation pass have been removed from the runtime project.
 
 The **Room Greybox** editor dock is the fastest placement route. Gameplay geometry and artwork remain separate: grey collision defines movement, while the placeable art can be aligned freely over it.
 

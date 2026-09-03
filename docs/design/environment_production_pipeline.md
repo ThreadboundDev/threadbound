@@ -25,6 +25,21 @@ Separate finished rooms into far background, midground, gameplay layer, and fore
 
 AI-assisted interpretation may help develop paint-overs or asset ideas, but it should follow the approved room geometry and the biome visual bible rather than reinventing the region for every room.
 
+## Polygon-Guided Asset Pass
+
+For large irregular rooms, author one `ArtGenerationRegion2D` at a time around
+a logical section of approved collision. The polygon is a measurement and art
+handoff tool, not collision. Export its exact world polygon, bounds, target
+pixel size, layer, orientation, and overlap requirement before generating art.
+
+Keep one active region whenever practical. Generate and place that asset,
+review it in-game at native scale, then archive or replace the region before
+moving to the next section. Place seams in quiet material and preserve overlap
+for masking. Gameplay collision remains authoritative throughout this pass.
+
+Blue Biome assets must follow
+`res://Docs/art/blue_biome_palette_and_rendering_rules.md`.
+
 ## Collision and Placeable Art
 
 Gameplay collision and illustrated architecture are separate authoring layers.

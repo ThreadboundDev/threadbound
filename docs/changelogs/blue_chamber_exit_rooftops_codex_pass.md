@@ -338,3 +338,50 @@ Remove the experimental scene, this changelog, and
   scale, mirroring, and minor rotation profiles across the composition.
 - Expanded verification to assert both organized depth groups, all sixteen
   placements, descriptive naming, and unique motion phases.
+
+## 2026-08-27 — Pass 23: Traversal Response and Annotation Art Trial
+
+- Split pogo timing from the generic two-strike aerial attack. The downward
+  hitbox now becomes active on the first authored pogo frame and remains one
+  continuous committed contact window until rebound or recovery.
+- Added a debug-only Blue water-power state. Water rejects the locked player
+  upward and away without registering swimming; `Page Up` toggles unlocked
+  prototype swimming and prints the active state.
+- Moved full-body Flow echo sampling onto the physics clock and removed body
+  drift. Runtime sampling produced ten evenly registered stamps with zero
+  vertical spread during a flat run.
+- Generated a transparent, room-scale painted concept from the current
+  annotations. Runtime comparison showed that image generation preserved the
+  broad composition but not collision-edge precision, so it is retained as a
+  hidden reference instead of being trusted as gameplay art.
+- Added the first reliable annotation-driven hybrid dressing pass using the
+  existing high-resolution pavilion, stilt house, tower house, wide house, and
+  rope-bridge scenes. These remain collision-free and sit behind the greybox
+  collision authority, leaving the open sky and upper-right lake reveal clear.
+- Runtime checks confirmed frame-zero pogo activation, locked/unlocked water
+  behavior, stable Flow stamp registration, successful room loading, and no
+  new current-run game errors.
+
+## 2026-08-27 — Pass 24: Measured Collision Art and Water-Safe Dressing
+
+- Replaced the hidden-by-default approximation with a `BlueGroundArt` layer
+  baked from all 751 authored `GreyboxTerrain` cells at identical grid
+  coordinates. The greybox layer remains the collision authority and is hidden
+  visually; the generated art layer has collision disabled.
+- Corrected the ground-art atlas source from nonexistent source `0` to source
+  `1`, then replaced random atlas selection with measured neighbor topology for
+  solid corners, edges, fills, and one-way platform strips.
+- Fitted the pavilion, stilt house, tower house, and east transition house from
+  the exact unions of their saved annotation rectangles, source texture pixel
+  dimensions, internal sprite scales, and sprite anchor offsets.
+- Removed the obsolete macro-reference node from the playable room and limited
+  annotation-region rendering to the editor so planning labels no longer leak
+  into gameplay.
+- Changed room-specific prototype spike presentation from red to deep lake teal
+  with a pale cyan edge. Damage, knockback, and pogo behavior are unchanged.
+- Kept both water regions entirely shader-driven. No water was baked into the
+  collision art or building dressing; runtime verification confirmed the live
+  water surface still masks the submerged player and sits cleanly against the
+  measured terrain edge.
+- Runtime checks covered the chamber entrance, west water pocket, environmental
+  hazards, scene loading, and current-run logs with no new errors.

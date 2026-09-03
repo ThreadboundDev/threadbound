@@ -2,7 +2,7 @@ extends Node
 
 const WATER_VOLUME := preload("res://Src/Environment/Greybox/greybox_water.tscn")
 const REFLECTIVE_VISUAL := preload("res://Src/Environment/BlueBiome/Water/blue_reflective_water.tscn")
-const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/Experiments/blue_chamber_exit_rooftops_codex_pass.tscn")
+const ROOM := preload("res://Src/Environment/BlueBiome/Production/blue_chamber_exit_production.tscn")
 
 
 func _ready() -> void:

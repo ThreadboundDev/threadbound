@@ -12,7 +12,8 @@ The Room Greybox editor dock exists to turn an idea into a playable room as quic
 - Purple marker: room transition.
 - Orange marker: enemy intent.
 - Cyan marker: grapple opportunity.
-- White marker: annotation or landmark.
+- White marker: point note or landmark.
+- Translucent annotation region: intended structure, surface treatment, hazard art, vegetation, or foreground treatment.
 
 Select the intended room or geometry container, open **Room Greybox** in the bottom panel, and press **Create / Select Terrain Tiles**. Choose the solid or one-way tile in Godot's TileMap palette, then paint and erase directly in the 2D viewport. Pressing the button again selects the room's existing `GreyboxTerrain` layer.
 
@@ -20,26 +21,19 @@ Water and hazards remain independent resizable volumes and do not snap to the te
 
 Press F6 to run the current room.
 
-The dock also exposes Blue Biome art-only placeables. Buildings, roof skins,
-stone ground, grass, and cherry elements are added without collision, without
-grid snapping, and under a dedicated `ArtPlaceables` node. When a gameplay
-surface is selected, newly added art begins at that surface's global position
-for quick alignment. Use **Collision preview: Faint** while dressing a room and
-**Strong** while revising traversal; this changes only editor/runtime visual
-opacity and never disables collision.
+The dock deliberately does not place finished artwork. Instead, intent buttons
+create freely positioned, resizable `GreyboxAnnotationArea2D` regions beneath a
+dedicated `Annotations` node. Each region records a title, notes, category,
+intended collision, art layer, and orientation. A Rope Bridge region, for
+example, defaults to one-way collision, Gameplay Edge, and Span; stacked
+Building Base, Building Middle, and Building Rooftop regions communicate how a
+future layered structure should be painted.
 
-Use **Generate From Collision** to copy the current solid silhouette into the
-decorative `BlueGroundArt` layer. The generator chooses among four top-cap and
-four fill variants so the first pass does not repeat one obvious stone stamp.
-The generated layer has no physics and can be repainted, erased, or covered by
-free-place grass, blossoms, roofs, and architecture without affecting play.
-
-Short and long wood platforms are modular gameplay pieces. Each has a thin
-one-way landing surface and an independent grapple target; railings, posts,
-braces, cloth, rope-bridge artwork, and the foreground house frame remain
-collision-free dressing. The foreground frame renders above the player so a
-character passing through an open pavilion can sit visually between the rear
-facade and the nearest beams.
+Annotations never participate in physics. Build and test all actual traversal
+with terrain, water, slopes, and generic spike hazards. Treat unmarked exposed
+terrain as ordinary ground, wall, or ceiling according to orientation. Mark
+only exceptions or authored intentions. Use **Collision preview: Faint** while
+annotating a room and **Strong** while revising traversal.
 
 Greybox slopes are free-place triangular collision pieces with left- and
 right-rising variants. They currently use the established player movement
@@ -84,11 +78,9 @@ One-way tiles use a full one-way terrain polygon for landing and ledge probes pl
 
 ## Prototype Hazards
 
-Hazards reuse the shared damage pipeline and expose damage, knockback, and retrigger delay. Their free placement is intentional.
+The **Spike Hazard (free placement)** button creates a reusable triangular spike strip. Hazards reuse the shared damage pipeline and expose size, spike width, damage, knockback, and retrigger delay. Their free placement is intentional: resize and rotate the same strip for floors, walls, or ceilings.
 
-The Blue Biome row provides five finished-art Threadglass variants: floor bed,
-wall cluster, hanging cluster, waterline reeds, and pogo crown. They are still
-free-place hazards and may be scaled or rotated. Use the pogo crown when the
-intended downward strike should be visually explicit; use the other shapes for
-danger and optional pogo routing only when their landing silhouette remains
-clear at gameplay speed.
+Threadglass buttons create art-intent regions rather than finished hazards.
+Place and test a generic spike hazard first, then overlap it with the relevant
+Threadglass Floor, Wall, Ceiling, or Waterline annotation. Waterline art never
+replaces the separate live water volume.

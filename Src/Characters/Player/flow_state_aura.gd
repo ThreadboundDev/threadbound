@@ -32,12 +32,14 @@ const ESSENCE_YELLOW := Color(1.0, 0.79, 0.2, 1.0)
 @export var run_trail_max_speed := 780.0
 @export var run_trail_interval := 0.14
 @export var ambient_wisp_interval := 0.09
+@export var use_multimesh_soul_trail := false
 
 @export_group("Events")
 @export var maximum_ephemeral_sprites := 32
 @export var minimum_landing_effect_speed := 160.0
 
 @onready var silhouette_shell: Sprite2D = $AuraBack/SilhouetteShell
+@onready var soul_trail: FlowMultiMeshTrail = $AuraBack/SoulTrail
 @onready var flow_light: PointLight2D = $AuraBack/FlowLight
 @onready var transition_core: AnimatedSprite2D = $TransitionLayer/TransitionCore
 @onready var transition_accents: Array[AnimatedSprite2D] = [
@@ -283,10 +285,13 @@ func _process(delta: float) -> void:
 	)
 
 	if active:
-		_update_run_trails(delta)
+		if not use_multimesh_soul_trail:
+			_update_run_trails(delta)
 		_update_ambient_wisps(delta)
 	elif not _meditation_active:
 		_update_buildup(delta)
+	if soul_trail:
+		soul_trail.set_trail_active(active and use_multimesh_soul_trail)
 
 	_update_aura_visuals()
 	_refresh_processing_state()
@@ -405,6 +410,8 @@ func _apply_identity_channels() -> void:
 		transition_accents[index].material = _make_tint_material(color, 0.94, 1.08)
 
 	flow_light.color = _get_identity_glow_color(effective_channels)
+	if soul_trail:
+		soul_trail.set_trail_color(flow_light.color)
 	_update_silhouette_identity_material()
 	_update_aura_visuals()
 
@@ -656,6 +663,11 @@ func _spawn_buildup_mote(strength: float) -> void:
 	fade_tween.tween_property(sprite, "modulate:a", 0.0, lifetime * 0.78)
 	fade_tween.finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
 
+func enable_multimesh_soul_trail(is_enabled: bool) -> void:
+	use_multimesh_soul_trail = is_enabled
+	if soul_trail:
+		soul_trail.set_trail_active(active and use_multimesh_soul_trail)
+
 func _update_run_trails(delta: float) -> void:
 	var player_body := get_parent() as CharacterBody2D
 	if not player_body:
@@ -694,6 +706,18 @@ func _update_run_trails(delta: float) -> void:
 	tween.tween_property(sprite, "scale", Vector2(0.23, 0.1), 0.2)
 	tween.tween_property(sprite, "modulate:a", 0.0, 0.2)
 	tween.finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
+
+func _update_soul_trail() -> void:
+	var player_body := get_parent() as CharacterBody2D
+	if not player_body or not soul_trail:
+		return
+	soul_trail.minimum_speed = run_trail_min_speed
+	soul_trail.maximum_speed = run_trail_max_speed
+	soul_trail.sample_motion(
+		_player_visual,
+		player_body.velocity,
+		clampf(_aura_visibility, 0.35, 1.0)
+	)
 
 func _update_ambient_wisps(delta: float) -> void:
 	if _aura_visibility < 0.35:
@@ -949,3 +973,10 @@ func _refresh_processing_state() -> void:
 	)
 	visible = needs_processing
 	set_process(needs_processing)
+
+func _physics_process(_delta: float) -> void:
+	# Body echoes sample the same clock that advances CharacterBody2D motion.
+	# Mixing render-frame sampling with physics motion caused the trail to
+	# alternate between stale and current transforms under camera smoothing.
+	if active and use_multimesh_soul_trail:
+		_update_soul_trail()

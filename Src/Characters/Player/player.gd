@@ -185,6 +185,9 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.0, 0.5, 0.01) var dash_direction_input_buffer_time := 0.22
 
 @export_group("Prototype Swimming")
+@export var debug_blue_water_power_unlocked := false
+@export var prototype_water_reject_vertical_speed := 920.0
+@export var prototype_water_reject_horizontal_speed := 260.0
 @export_range(0.1, 1.0, 0.05) var prototype_swim_horizontal_multiplier := 0.55
 @export var prototype_swim_vertical_speed := 360.0
 @export var prototype_swim_acceleration := 1100.0
@@ -284,6 +287,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_group("Air Double Attack")
 @export var air_attack_first_strike_frames := Vector2i(5, 7)
 @export var air_attack_second_strike_frames := Vector2i(16, 18)
+@export var pogo_attack_active_frames := Vector2i(0, 10)
 @export_range(45.0, 180.0, 1.0) var air_attack_hitbox_arc_degrees := 90.0
 @export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 160.0
 @export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
@@ -510,6 +514,7 @@ var _debug_original_collision_layer := 0
 var _debug_original_collision_mask := 0
 var _prototype_water_surfaces: Dictionary = {}
 var _prototype_swim_exit_lock_timer := 0.0
+var _debug_blue_water_toggle_was_pressed := false
 var _one_way_down_tap_timer := 0.0
 var _one_way_drop_ignore_timer := 0.0
 
@@ -1019,6 +1024,7 @@ func _process_debug_inputs() -> void:
 	_update_debug_momentum_fill()
 	_update_debug_thread_knots()
 	_update_debug_flow_vfx_controls()
+	_update_debug_blue_water_power()
 
 func _update_god_mode_toggle() -> void:
 	if not OS.is_debug_build():
@@ -1124,6 +1130,22 @@ func _update_debug_flow_vfx_controls() -> void:
 	_debug_identity_essence_was_pressed = essence_pressed
 	_debug_identity_reset_was_pressed = reset_pressed
 	_debug_flow_toggle_was_pressed = flow_pressed
+
+
+func _update_debug_blue_water_power() -> void:
+	if not OS.is_debug_build():
+		return
+	var pressed := Input.is_key_pressed(KEY_PAGEUP)
+	if pressed and not _debug_blue_water_toggle_was_pressed:
+		debug_blue_water_power_unlocked = not debug_blue_water_power_unlocked
+		if not debug_blue_water_power_unlocked and is_in_prototype_water():
+			_reject_from_prototype_water(null)
+			_prototype_water_surfaces.clear()
+		print(
+			"Debug Blue Water Power: ",
+			"UNLOCKED (swimming enabled)" if debug_blue_water_power_unlocked else "LOCKED (water rejects player)"
+		)
+	_debug_blue_water_toggle_was_pressed = pressed
 
 func _apply_debug_identity_mix() -> void:
 	if not OS.is_debug_build():
@@ -1478,6 +1500,9 @@ func _get_current_gravity() -> float:
 
 
 func enter_prototype_water(volume: Node, surface_y: float) -> void:
+	if not debug_blue_water_power_unlocked:
+		_reject_from_prototype_water(volume)
+		return
 	_prototype_water_surfaces[volume] = surface_y
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
@@ -1485,6 +1510,21 @@ func enter_prototype_water(volume: Node, surface_y: float) -> void:
 
 func exit_prototype_water(volume: Node) -> void:
 	_prototype_water_surfaces.erase(volume)
+
+
+func _reject_from_prototype_water(volume: Node) -> void:
+	var horizontal_direction := -float(last_direction)
+	if is_instance_valid(volume):
+		horizontal_direction = signf(global_position.x - volume.global_position.x)
+	if is_zero_approx(horizontal_direction):
+		horizontal_direction = -1.0 if last_direction > 0 else 1.0
+	velocity = Vector2(
+		horizontal_direction * prototype_water_reject_horizontal_speed,
+		-prototype_water_reject_vertical_speed
+	)
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
+	play_character_anim("Jump_Ascent")
 
 
 func is_in_prototype_water() -> bool:
@@ -2313,12 +2353,28 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 
+	# Pogo is a committed downward strike, not the delayed first half of the
+	# generic aerial double attack. Make contact live on the first authored pose
+	# so traversal responds to intent instead of requiring animation memorization.
+	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION):
+		air_attack_active_strike = 0
+		attack_hitbox.enable()
+		_play_double_attack_strike_audio(0)
+
 func _update_air_double_attack() -> void:
-	var next_strike := _get_strike_for_frame(
-		player_animation.frame,
-		air_attack_first_strike_frames,
-		air_attack_second_strike_frames
-	)
+	var next_strike := -1
+	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION):
+		next_strike = _get_strike_for_frame(
+			player_animation.frame,
+			pogo_attack_active_frames,
+			Vector2i(-1, -1)
+		)
+	else:
+		next_strike = _get_strike_for_frame(
+			player_animation.frame,
+			air_attack_first_strike_frames,
+			air_attack_second_strike_frames
+		)
 
 	if next_strike != air_attack_active_strike:
 		attack_hitbox.disable()

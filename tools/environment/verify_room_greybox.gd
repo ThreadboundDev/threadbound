@@ -4,6 +4,8 @@ const BLOCK := preload("res://Src/Environment/Greybox/greybox_block.tscn")
 const WATER := preload("res://Src/Environment/Greybox/greybox_water.tscn")
 const HAZARD := preload("res://Src/Environment/Greybox/greybox_hazard.tscn")
 const TILE_LAYER := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
+const ANNOTATION := preload("res://Src/Environment/Greybox/greybox_annotation_area.tscn")
+const ART_REGION := preload("res://Src/Environment/Greybox/art_generation_region.tscn")
 const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/blue_village_room_01.tscn")
 
 
@@ -59,6 +61,20 @@ func _ready() -> void:
 	assert(pogo_receiver != null, "Red hazards must expose a pogo attack receiver.")
 	assert(pogo_receiver.hurtbox_owner == hazard)
 	assert(pogo_receiver.collision_layer == 2)
+
+	var annotation := ANNOTATION.instantiate() as GreyboxAnnotationArea2D
+	add_child(annotation)
+	annotation.title = "Rope Bridge"
+	annotation.size = Vector2(640, 96)
+	annotation.intended_collision = "One-way"
+	annotation.art_layer = "Gameplay Edge"
+	annotation.orientation = "Span"
+	assert(annotation.collision_layer == 0)
+	assert(annotation.collision_mask == 0)
+	assert(not annotation.monitoring)
+	assert(not annotation.monitorable)
+	assert(annotation.get_node("CollisionShape2D").disabled)
+	assert((annotation.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(640, 96))
 
 	var room := ROOM.instantiate()
 	add_child(room)
@@ -142,6 +158,16 @@ func _ready() -> void:
 	block.queue_free()
 	water.queue_free()
 	hazard.queue_free()
+	annotation.queue_free()
+	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
+	add_child(art_region)
+	art_region.section_name = "Test Terrain"
+	art_region.pixels_per_world_unit = 2.0
+	var spec := art_region.get_generation_spec()
+	assert(spec.section_name == "Test Terrain")
+	assert(spec.target_pixel_size == {"width": 2048, "height": 1024})
+	assert(not art_region.visible or Engine.is_editor_hint())
+	art_region.queue_free()
 	tile_layer.queue_free()
 	await get_tree().process_frame
 	get_tree().quit()
