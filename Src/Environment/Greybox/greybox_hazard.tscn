@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_hazard.gd" id="1"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="2_hurtbox"]
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(192, 64)
+
+[node name="GreyboxHazard" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="PogoReceiver" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_hurtbox")
+hurtbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PogoReceiver"]
+shape = SubResource("1")

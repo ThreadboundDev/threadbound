@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://docs/design/references/blue_biome_macro_map.png" id="1"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/References/blue_macro_reference.gd" id="2"]
+
+[node name="MacroReference" type="Sprite2D"]
+texture = ExtResource("1")
+centered = false
+z_index = -1000
+show_behind_parent = true
+script = ExtResource("2")

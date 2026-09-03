@@ -25,10 +25,13 @@ Later priorities:
 ## Project Structure
 
 ```text
-docs/   Design, gameplay, narrative, art direction, and archives
-Assets/ Game art, animation exports, UI art, and source art files
-Src/    Godot scenes, scripts, shaders, and gameplay systems
-addons/ Godot plugins
+addons/    Godot plugins
+ArtSource/ Editable artwork and non-runtime authoring inputs
+Assets/    Game-ready art, animation exports, UI, audio, and tiles
+docs/      Design, gameplay, narrative, art direction, and archives
+Media/     Development captures and social-media production files
+Src/       Godot scenes, scripts, shaders, and gameplay systems
+tools/     Verification, cleanup, and local development utilities
 ```
 
 ## Documentation Guidelines

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/player_animation/verify_pogo_attack.gd" id="1"]
+
+[node name="VerifyPogoAttack" type="Node"]
+script = ExtResource("1")

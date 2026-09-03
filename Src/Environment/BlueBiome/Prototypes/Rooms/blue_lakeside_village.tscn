@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueLakesideVillage" instance=ExtResource("1")]
+room_id = "blue_lakeside_village"
+display_name = "Lakeside Village"
+macro_focus = Vector2(620, 535)
+planning_bounds = Vector2(7200, 3600)
+design_intent = "Central regional space connecting rooftops, shore, Fields, and the dock leading toward Hermit's Lake."

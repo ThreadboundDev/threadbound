@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Vegetation/blue_grass_short_01.png" id="1_texture"]
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_native_wind.gdshader" id="2_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grass"]
+shader = ExtResource("2_wind")
+shader_parameter/sway_strength = 3.2
+shader_parameter/sway_speed = 0.82
+shader_parameter/gust_strength = 8.0
+shader_parameter/gust_frequency = 0.13
+shader_parameter/phase_offset = 0.7
+
+[node name="BlueGrassShort01" type="Node2D"]
+
+[node name="Artwork" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_grass")
+position = Vector2(0, -128)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_texture")
+z_index = 36
+

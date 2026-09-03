@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key.gdshader" id="1_key"]
+
+[resource]
+shader = ExtResource("1_key")
+shader_parameter/green_threshold = 0.62
+shader_parameter/dominance = 1.32
+shader_parameter/edge_softness = 0.08

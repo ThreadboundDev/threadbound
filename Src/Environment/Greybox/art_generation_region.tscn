@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/art_generation_region.gd" id="1_script"]
+
+[node name="ArtGenerationRegion" type="Polygon2D"]
+polygon = PackedVector2Array(0, 0, 1024, 0, 1024, 512, 0, 512)
+color = Color(0.96, 0.38, 0.82, 0.16)
+script = ExtResource("1_script")

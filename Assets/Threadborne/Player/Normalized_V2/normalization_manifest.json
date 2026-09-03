@@ -1,5 +1,5 @@
 {
-  "version": 13,
+  "version": 14,
   "canonical_model": {
     "proportion_reference": "res://docs/art/concept_art/Idle right first.png",
     "palette_reference": "res://docs/art/concept_art/Idle right first.png",
@@ -23,8 +23,7 @@
       "playback_order": [1, 2, 3, 4, 5, 6, 12, 20, 7, 18, 8],
       "frame_size": [548, 548],
       "registration_anchor": "original_hand_adjusted",
-      "restored_original_frames": true,
-      "archived_original_directory": "res://Assets/Threadborne/Player/Normalized_V2/run/old_run"
+      "runtime_frames_are_canonical": true
     },
     "jump": {
       "directory": "res://Assets/Threadborne/Player/Normalized_V2/jump",

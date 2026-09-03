@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueOldShrine" instance=ExtResource("1")]
+room_id = "blue_old_shrine"
+display_name = "Old Shrine"
+macro_focus = Vector2(1410, 440)
+planning_bounds = Vector2(3600, 2800)
+design_intent = "Hermit's abandoned home and the unresolved encounter that awards the unnamed swimming key item."

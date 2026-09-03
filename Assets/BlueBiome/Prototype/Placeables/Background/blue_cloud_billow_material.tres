@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Prototype/Placeables/Background/blue_cloud_billow.gdshader" id="1"]
+
+[resource]
+shader = ExtResource("1")
+shader_parameter/billow_amount = 2.0
+shader_parameter/billow_speed = 0.32
+shader_parameter/billow_phase = 0.0

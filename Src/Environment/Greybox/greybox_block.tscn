@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_block.gd" id="1"]
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(256, 128)
+
+[node name="GreyboxBlock" type="StaticBody2D"]
+z_index = 30
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
