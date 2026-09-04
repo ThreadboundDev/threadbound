@@ -20,18 +20,7 @@ func _ready() -> void:
 	%OneWay.pressed.connect(_add.bind(SOLID, "OneWayBlock", true, {"one_way": true}))
 	%Water.pressed.connect(_add.bind(WATER, "Water", false, {}))
 	%Hazard.pressed.connect(_add.bind(HAZARD, "SpikeHazard", false, {}))
-	%RecoilBumper.pressed.connect(_add.bind(
-		BUMPER,
-		"RecoilBumper",
-		false,
-		{"launch_mode": GreyboxBumper2D.LaunchMode.RECOIL}
-	))
-	%ThroughBumper.pressed.connect(_add.bind(
-		BUMPER,
-		"ThroughBumper",
-		false,
-		{"launch_mode": GreyboxBumper2D.LaunchMode.THROUGH}
-	))
+	%WaterBulb.pressed.connect(_add.bind(BUMPER, "WaterBulb", false, {}))
 
 
 func _select_or_add_terrain() -> void:

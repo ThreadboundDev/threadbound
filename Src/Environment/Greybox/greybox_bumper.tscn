@@ -6,17 +6,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bumper"]
 size = Vector2(128, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_receiver"]
-size = Vector2(160, 160)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(128, 128)
 
-[node name="GreyboxBumper" type="StaticBody2D"]
-collision_layer = 1
-collision_mask = 0
+[node name="GreyboxBumper" type="Node2D"]
 z_index = 30
 script = ExtResource("1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_bumper")
 
 [node name="HitReceiver" type="Area2D" parent="."]
 collision_layer = 2
@@ -27,10 +22,18 @@ hurtbox_owner_path = NodePath("..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceiver"]
 shape = SubResource("RectangleShape2D_bumper")
 
-[node name="DashReceiver" type="Area2D" parent="."]
+[node name="ContactReceiver" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 1
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DashReceiver"]
-shape = SubResource("RectangleShape2D_dash_receiver")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactReceiver"]
+shape = SubResource("RectangleShape2D_contact")
+
+[node name="GrappleTarget" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+shape = SubResource("RectangleShape2D_bumper")

@@ -1221,6 +1221,10 @@ func _apply_god_mode_flight(delta: float) -> void:
 # WALL CLING
 # ===============================
 func handle_wall_cling(delta: float) -> void:
+	if _traversal_launch_control_recovery_timer > 0.0:
+		is_wall_clinging = false
+		wall_cling_timer = 0.0
+		return
 	var on_wall = is_on_wall_only()
 	var pushing_into_wall = false
 	
@@ -1246,7 +1250,7 @@ func handle_wall_cling(delta: float) -> void:
 		wall_cling_timer = 0.0
 
 func _try_grab_ledge() -> bool:
-	if is_on_floor() or is_ledge_hanging or is_ledge_climbing or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0:
+	if is_on_floor() or is_ledge_hanging or is_ledge_climbing or god_mode_enabled or is_hurt or is_attacking or velocity.y < -80.0 or _traversal_launch_control_recovery_timer > 0.0:
 		return false
 	var grapple_assist_active := _grapple_ledge_assist_timer > 0.0
 	var direction := (
@@ -2575,6 +2579,7 @@ func can_start_dash() -> bool:
 		or is_meditating
 		or is_ledge_hanging
 		or is_ledge_climbing
+		or _traversal_launch_control_recovery_timer > 0.0
 	):
 		return false
 	if not is_attacking:
@@ -2588,6 +2593,11 @@ func is_dash_active() -> bool:
 		and current_chest.has_method("is_dash_active")
 		and bool(current_chest.call("is_dash_active"))
 	)
+
+
+func cancel_dash_for_traversal_launch() -> void:
+	if current_chest and current_chest.has_method("stop_dash_on_enemy_contact"):
+		current_chest.call("stop_dash_on_enemy_contact")
 
 func is_enemy_targeting_suspended() -> bool:
 	return save_point_interaction_active or is_dead
@@ -3921,6 +3931,7 @@ func apply_traversal_launch(
 	# reaches twice the normal jump apex under the same gravity.
 	var launch_speed := base_jump_speed * sqrt(maxf(jump_height_multiplier, 0.0))
 	_finish_cancelled_attack()
+	cancel_dash_for_traversal_launch()
 	if was_grounded and ground_scoot_speed > 0.0:
 		var horizontal_direction := signf(launch_direction.x)
 		if is_zero_approx(horizontal_direction):

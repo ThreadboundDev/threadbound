@@ -70,30 +70,15 @@ func _ready() -> void:
 	bumper.hits_to_break = 2
 	bumper.launch_jump_heights = 2.0
 	bumper.regeneration_delay = 0.05
-	assert((bumper.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
 	assert((bumper.get_node("HitReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
 	assert(
-		(bumper.get_node("DashReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(256, 112),
-		"Dash detection must extend beyond the solid bumper collision."
+		(bumper.get_node("ContactReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80),
+		"Water-bulb contact must follow its authored size."
 	)
-	assert(bumper.collision_layer == 1, "The bumper must be harmless solid terrain.")
+	assert(bumper is Node2D and not bumper is CollisionObject2D, "Water bulbs must not be solid or walkable.")
 	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
 	assert(bumper_receiver.collision_layer == 2)
-	assert(
-		bumper.get_launch_direction_for_attack(Vector2.RIGHT) == Vector2.LEFT,
-		"Recoil bumpers must reverse the attack direction."
-	)
-	assert(
-		bumper.bumper_color.r > bumper.bumper_color.g * 2.0,
-		"Recoil bumpers must read as red in the greybox."
-	)
-	var through_bumper := BUMPER.instantiate() as GreyboxBumper2D
-	through_bumper.launch_mode = GreyboxBumper2D.LaunchMode.THROUGH
-	add_child(through_bumper)
-	assert(
-		through_bumper.get_launch_direction_for_attack(Vector2.RIGHT) == Vector2.RIGHT,
-		"Through bumpers must preserve the attack direction."
-	)
+	assert((bumper.get_node("GrappleTarget") as Area2D).collision_layer == 4)
 
 	var annotation := ANNOTATION.instantiate() as GreyboxAnnotationArea2D
 	add_child(annotation)
@@ -117,13 +102,6 @@ func _ready() -> void:
 	assert(room.get_node("Hazards/PrototypeReeds") is GreyboxHazard2D)
 	assert(room.get_node("Geometry/GreyboxTerrain") is TileMapLayer)
 	var attack_hitbox := player.get_node("AttackHitbox") as HitboxComponent
-	var ignored_through_hit := DamageData.new()
-	ignored_through_hit.source = player
-	through_bumper.call("_on_hit_received", ignored_through_hit)
-	assert(
-		not through_bumper.is_broken(),
-		"Ordinary attacks must not activate through bumpers."
-	)
 	assert(player.get_collision_mask_value(1))
 	assert(player.get_collision_mask_value(4))
 	assert((int(player.current_gloves.get("grapple_collision_mask")) & 8) != 0)
@@ -210,34 +188,37 @@ func _ready() -> void:
 		"Ordinary air control must not erase the airborne bumper launch."
 	)
 	var dash_bumper := BUMPER.instantiate() as GreyboxBumper2D
-	dash_bumper.launch_mode = GreyboxBumper2D.LaunchMode.THROUGH
 	dash_bumper.regeneration_delay = 0.0
 	add_child(dash_bumper)
 	player.process_mode = Node.PROCESS_MODE_DISABLED
 	player.current_chest.set("is_dashing", true)
 	player.velocity = Vector2.RIGHT * 1150.0
-	dash_bumper.call("_on_dash_body_entered", player)
+	dash_bumper.call("_on_body_entered", player)
 	await get_tree().process_frame
-	assert(dash_bumper.is_broken(), "An active dash must trigger a through bumper.")
+	assert(dash_bumper.is_broken(), "An active dash must pop a water bulb.")
 	assert(
 		player.velocity.x > 0.0,
-		"A through bumper must continue an active dash along its incoming direction."
-	)
-	var dash_recoil_bumper := BUMPER.instantiate() as GreyboxBumper2D
-	dash_recoil_bumper.launch_mode = GreyboxBumper2D.LaunchMode.RECOIL
-	dash_recoil_bumper.regeneration_delay = 0.0
-	add_child(dash_recoil_bumper)
-	player.current_chest.set("is_dashing", true)
-	player.velocity = Vector2.RIGHT * 1150.0
-	dash_recoil_bumper.call("_on_dash_body_entered", player)
-	await get_tree().process_frame
-	assert(dash_recoil_bumper.is_broken(), "An active dash must trigger a recoil bumper.")
-	assert(
-		player.velocity.x < 0.0,
-		"A recoil bumper must reverse an active dash's incoming direction."
+		"A water bulb must continue an active dash along its incoming direction."
 	)
 	player.current_chest.set("is_dashing", false)
 	player.process_mode = Node.PROCESS_MODE_INHERIT
+	var grapple_bulb := BUMPER.instantiate() as GreyboxBumper2D
+	grapple_bulb.regeneration_delay = 0.0
+	add_child(grapple_bulb)
+	var velocity_before_grapple_pop: Vector2 = player.velocity
+	assert(grapple_bulb.activate_from_grapple(player), "A water bulb must consume grapple contact.")
+	assert(grapple_bulb.is_broken(), "Grapple contact must pop a water bulb.")
+	assert(player.velocity == velocity_before_grapple_pop, "Grapple pop must not propel the player.")
+	var bonk_bulb := BUMPER.instantiate() as GreyboxBumper2D
+	bonk_bulb.regeneration_delay = 0.0
+	add_child(bonk_bulb)
+	player.global_position = bonk_bulb.global_position
+	bonk_bulb.call("_on_body_entered", player)
+	assert(not bonk_bulb.is_broken(), "Ordinary contact must not consume a water bulb.")
+	assert(
+		player.global_position != bonk_bulb.global_position,
+		"Spawn overlap must eject the player through the nearest bulb edge."
+	)
 	await get_tree().create_timer(0.06).timeout
 	await get_tree().process_frame
 	assert(not bumper.is_broken())
@@ -280,9 +261,9 @@ func _ready() -> void:
 	water.queue_free()
 	hazard.queue_free()
 	bumper.queue_free()
-	through_bumper.queue_free()
 	dash_bumper.queue_free()
-	dash_recoil_bumper.queue_free()
+	grapple_bulb.queue_free()
+	bonk_bulb.queue_free()
 	annotation.queue_free()
 	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
 	add_child(art_region)

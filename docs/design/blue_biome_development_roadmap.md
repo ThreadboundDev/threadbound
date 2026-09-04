@@ -78,17 +78,18 @@ reuse—not its desert presentation, exact controls, or art assets. Blue's water
 pods, still-water theme, player attacks, and existing movement kit should give
 the system its own identity.
 
-The first greybox comparison uses two clearly labeled modes:
+The greybox prototype consolidates these actions into one non-solid Water Bulb:
 
-- **Recoil:** attacks or active dashes pop the bulb and reverse the incoming
-  direction, then blend smoothly back into ordinary movement input.
-- **Through:** only an active dash pops the bulb. It preserves the incoming
-  direction so the player continues through the bulb in the spirit of the
-  hanging sand-ball reference; ordinary attacks do not activate it.
+- **Attack:** pop and recoil opposite the strike direction.
+- **Dash:** pop and continue along the incoming dash direction.
+- **Grapple:** pop remotely without changing player momentum, clearing the
+  bulb's contact response for passage.
+- **Ordinary contact or spawn overlap:** gently eject the player through the
+  nearest edge without consuming the bulb.
 
-Playtest both modes without water first. Compare predictability, chaining,
-ground usefulness, aerial control, recovery, and whether each mode supports a
-meaningfully different room-design role before selecting or combining them.
+The bulb cannot be stood on or used as a ledge. Its action-dependent response
+keeps one recognizable environmental object while preserving distinct player
+choices.
 
 Before changing bumper or water code, document the proposed behavior, affected
 systems, files, edge cases, and verification plan for approval.

@@ -1086,7 +1086,11 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 			_update_active_grapple_visuals()
 			return
 
-		_notify_grapple_collider(collider)
+		if _notify_grapple_collider(collider):
+			grapple_tip_position = surface_point
+			_begin_grapple_retract()
+			_update_active_grapple_visuals()
+			return
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = surface_point
@@ -1223,18 +1227,18 @@ func _update_moving_grapple_target() -> void:
 	else:
 		grapple_target = null
 
-func _notify_grapple_collider(collider: Object) -> void:
+func _notify_grapple_collider(collider: Object) -> bool:
 	if not collider:
-		return
+		return false
 
 	if collider.has_method("activate_from_grapple"):
-		collider.activate_from_grapple(player)
-		return
+		return bool(collider.activate_from_grapple(player))
 
 	if collider is Node:
 		var parent := (collider as Node).get_parent()
 		if parent and parent.has_method("activate_from_grapple"):
-			parent.activate_from_grapple(player)
+			return bool(parent.activate_from_grapple(player))
+	return false
 
 # ===============================
 # ACTIVE GRAPPLE VISUAL UPDATE
