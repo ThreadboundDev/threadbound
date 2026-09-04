@@ -80,10 +80,11 @@ the system its own identity.
 
 The first greybox comparison uses two clearly labeled modes:
 
-- **Recoil:** reverse the attack direction, then blend smoothly back into
-  ordinary movement input.
-- **Through:** preserve the attack direction so the player continues through
-  the bulb in the spirit of the hanging sand-ball reference.
+- **Recoil:** attacks or active dashes pop the bulb and reverse the incoming
+  direction, then blend smoothly back into ordinary movement input.
+- **Through:** only an active dash pops the bulb. It preserves the incoming
+  direction so the player continues through the bulb in the spirit of the
+  hanging sand-ball reference; ordinary attacks do not activate it.
 
 Playtest both modes without water first. Compare predictability, chaining,
 ground usefulness, aerial control, recovery, and whether each mode supports a

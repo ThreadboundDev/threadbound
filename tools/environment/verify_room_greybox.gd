@@ -72,6 +72,10 @@ func _ready() -> void:
 	bumper.regeneration_delay = 0.05
 	assert((bumper.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
 	assert((bumper.get_node("HitReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
+	assert(
+		(bumper.get_node("DashReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(256, 112),
+		"Dash detection must extend beyond the solid bumper collision."
+	)
 	assert(bumper.collision_layer == 1, "The bumper must be harmless solid terrain.")
 	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
 	assert(bumper_receiver.collision_layer == 2)
@@ -113,9 +117,17 @@ func _ready() -> void:
 	assert(room.get_node("Hazards/PrototypeReeds") is GreyboxHazard2D)
 	assert(room.get_node("Geometry/GreyboxTerrain") is TileMapLayer)
 	var attack_hitbox := player.get_node("AttackHitbox") as HitboxComponent
+	var ignored_through_hit := DamageData.new()
+	ignored_through_hit.source = player
+	through_bumper.call("_on_hit_received", ignored_through_hit)
+	assert(
+		not through_bumper.is_broken(),
+		"Ordinary attacks must not activate through bumpers."
+	)
 	assert(player.get_collision_mask_value(1))
 	assert(player.get_collision_mask_value(4))
 	assert((int(player.current_gloves.get("grapple_collision_mask")) & 8) != 0)
+	assert(player.has_method("is_dash_active"))
 	assert(player.call("_is_valid_ledge_wall_hit", {"normal": Vector2.LEFT}))
 	assert(not player.call("_is_valid_ledge_wall_hit", {"normal": Vector2.UP}), "Platform centers must not count as climbable walls.")
 	assert(player.call("_is_valid_ledge_top_hit", {"normal": Vector2.UP}))
@@ -197,6 +209,35 @@ func _ready() -> void:
 		player.velocity.x > 0.0,
 		"Ordinary air control must not erase the airborne bumper launch."
 	)
+	var dash_bumper := BUMPER.instantiate() as GreyboxBumper2D
+	dash_bumper.launch_mode = GreyboxBumper2D.LaunchMode.THROUGH
+	dash_bumper.regeneration_delay = 0.0
+	add_child(dash_bumper)
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	player.current_chest.set("is_dashing", true)
+	player.velocity = Vector2.RIGHT * 1150.0
+	dash_bumper.call("_on_dash_body_entered", player)
+	await get_tree().process_frame
+	assert(dash_bumper.is_broken(), "An active dash must trigger a through bumper.")
+	assert(
+		player.velocity.x > 0.0,
+		"A through bumper must continue an active dash along its incoming direction."
+	)
+	var dash_recoil_bumper := BUMPER.instantiate() as GreyboxBumper2D
+	dash_recoil_bumper.launch_mode = GreyboxBumper2D.LaunchMode.RECOIL
+	dash_recoil_bumper.regeneration_delay = 0.0
+	add_child(dash_recoil_bumper)
+	player.current_chest.set("is_dashing", true)
+	player.velocity = Vector2.RIGHT * 1150.0
+	dash_recoil_bumper.call("_on_dash_body_entered", player)
+	await get_tree().process_frame
+	assert(dash_recoil_bumper.is_broken(), "An active dash must trigger a recoil bumper.")
+	assert(
+		player.velocity.x < 0.0,
+		"A recoil bumper must reverse an active dash's incoming direction."
+	)
+	player.current_chest.set("is_dashing", false)
+	player.process_mode = Node.PROCESS_MODE_INHERIT
 	await get_tree().create_timer(0.06).timeout
 	await get_tree().process_frame
 	assert(not bumper.is_broken())
@@ -240,6 +281,8 @@ func _ready() -> void:
 	hazard.queue_free()
 	bumper.queue_free()
 	through_bumper.queue_free()
+	dash_bumper.queue_free()
+	dash_recoil_bumper.queue_free()
 	annotation.queue_free()
 	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
 	add_child(art_region)

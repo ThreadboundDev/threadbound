@@ -2581,6 +2581,14 @@ func can_start_dash() -> bool:
 		return true
 	return _is_attack_in_dash_cancel_window()
 
+
+func is_dash_active() -> bool:
+	return (
+		current_chest
+		and current_chest.has_method("is_dash_active")
+		and bool(current_chest.call("is_dash_active"))
+	)
+
 func is_enemy_targeting_suspended() -> bool:
 	return save_point_interaction_active or is_dead
 

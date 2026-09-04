@@ -40,6 +40,7 @@ signal regenerated
 
 @onready var solid_collision: CollisionShape2D = $CollisionShape2D
 @onready var hit_receiver_collision: CollisionShape2D = $HitReceiver/CollisionShape2D
+@onready var dash_receiver_collision: CollisionShape2D = $DashReceiver/CollisionShape2D
 
 var _hits_remaining := 1
 var _is_broken := false
@@ -50,6 +51,7 @@ func _ready() -> void:
 	_refresh()
 	if not Engine.is_editor_hint():
 		$HitReceiver.hit_received.connect(_on_hit_received)
+		$DashReceiver.body_entered.connect(_on_dash_body_entered)
 
 
 func _refresh() -> void:
@@ -58,6 +60,7 @@ func _refresh() -> void:
 		return
 	_set_rectangle_size(solid_collision, size)
 	_set_rectangle_size(hit_receiver_collision, size)
+	_set_rectangle_size(dash_receiver_collision, size + Vector2(32.0, 32.0))
 
 
 func _set_rectangle_size(collision_shape: CollisionShape2D, rectangle_size: Vector2) -> void:
@@ -102,28 +105,47 @@ func _draw() -> void:
 
 
 func _on_hit_received(damage: DamageData) -> void:
-	if _is_broken:
+	if _is_broken or launch_mode == LaunchMode.THROUGH:
 		return
+	_accept_activation(damage, false)
+
+
+func _on_dash_body_entered(body: Node2D) -> void:
+	if (
+		_is_broken
+		or not body.is_in_group("player")
+		or not body.has_method("is_dash_active")
+		or not bool(body.call("is_dash_active"))
+	):
+		return
+	var dash_hit := DamageData.new()
+	dash_hit.source = body
+	dash_hit.knockback = body.velocity
+	_accept_activation(dash_hit, true)
+
+
+func _accept_activation(damage: DamageData, force_full_launch: bool) -> void:
 	_hits_remaining = maxi(_hits_remaining - 1, 0)
 	hit_count_changed.emit(_hits_remaining)
 	queue_redraw()
 	if _hits_remaining > 0:
 		return
-	_break(damage)
+	_break(damage, force_full_launch)
 
 
-func _break(damage: DamageData) -> void:
+func _break(damage: DamageData, force_full_launch := false) -> void:
 	_is_broken = true
 	solid_collision.set_deferred("disabled", true)
 	hit_receiver_collision.set_deferred("disabled", true)
+	dash_receiver_collision.set_deferred("disabled", true)
 	queue_redraw()
 	broken.emit()
-	_launch_attacker(damage)
+	_launch_attacker(damage, force_full_launch)
 	if regeneration_delay > 0.0:
 		get_tree().create_timer(regeneration_delay).timeout.connect(_regenerate)
 
 
-func _launch_attacker(damage: DamageData) -> void:
+func _launch_attacker(damage: DamageData, force_full_launch := false) -> void:
 	if damage == null or not is_instance_valid(damage.source):
 		return
 	var source := damage.source
@@ -134,7 +156,7 @@ func _launch_attacker(damage: DamageData) -> void:
 		incoming_direction = (global_position - (source as Node2D).global_position).normalized()
 	if incoming_direction == Vector2.ZERO:
 		incoming_direction = Vector2.DOWN
-	var was_grounded: bool = source.is_on_floor()
+	var was_grounded: bool = source.is_on_floor() and not force_full_launch
 	var launch_direction := get_launch_direction_for_attack(incoming_direction)
 	# Wait until the hitbox has emitted hit_landed so an ordinary pogo callback
 	# cannot overwrite this stronger, direction-aware traversal launch.
@@ -163,6 +185,7 @@ func _regenerate() -> void:
 	_hits_remaining = hits_to_break
 	solid_collision.set_deferred("disabled", false)
 	hit_receiver_collision.set_deferred("disabled", false)
+	dash_receiver_collision.set_deferred("disabled", false)
 	queue_redraw()
 	regenerated.emit()
 

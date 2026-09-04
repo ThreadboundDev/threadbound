@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_bumper.gd" id="1"]
 [ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="2_hurtbox"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bumper"]
 size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dash_receiver"]
+size = Vector2(160, 160)
 
 [node name="GreyboxBumper" type="StaticBody2D"]
 collision_layer = 1
@@ -23,3 +26,11 @@ hurtbox_owner_path = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceiver"]
 shape = SubResource("RectangleShape2D_bumper")
+
+[node name="DashReceiver" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashReceiver"]
+shape = SubResource("RectangleShape2D_dash_receiver")
