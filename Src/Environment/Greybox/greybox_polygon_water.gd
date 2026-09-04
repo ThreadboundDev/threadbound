@@ -18,18 +18,28 @@ extends Area2D
 
 @onready var collision: CollisionPolygon2D = $CollisionPolygon2D
 
+var _last_collision_points := PackedVector2Array()
+
 
 func _ready() -> void:
 	_refresh()
+	set_process(true)
 	if not Engine.is_editor_hint():
 		body_entered.connect(_on_body_entered)
 		body_exited.connect(_on_body_exited)
+
+
+func _process(_delta: float) -> void:
+	if not is_node_ready() or collision.polygon == _last_collision_points:
+		return
+	points = collision.polygon.duplicate()
 
 
 func _refresh() -> void:
 	queue_redraw()
 	if is_node_ready():
 		collision.polygon = points
+		_last_collision_points = points.duplicate()
 
 
 func _draw() -> void:

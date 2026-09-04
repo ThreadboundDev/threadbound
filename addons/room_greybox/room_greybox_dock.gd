@@ -2,7 +2,7 @@
 extends Control
 
 const SOLID := "res://Src/Environment/Greybox/greybox_block.tscn"
-const WATER := "res://Src/Environment/Greybox/greybox_water.tscn"
+const WATER := "res://Src/Environment/Greybox/greybox_polygon_water.tscn"
 const HAZARD := "res://Src/Environment/Greybox/greybox_hazard.tscn"
 const BUMPER := "res://Src/Environment/Greybox/greybox_bumper.tscn"
 
@@ -18,13 +18,26 @@ func _ready() -> void:
 	%TerrainTiles.pressed.connect(_select_or_add_terrain)
 	%Solid.pressed.connect(_add.bind(SOLID, "LargeBlock", true, {}))
 	%OneWay.pressed.connect(_add.bind(SOLID, "OneWayBlock", true, {"one_way": true}))
-	%Water.pressed.connect(_add.bind(WATER, "Water", false, {}))
+	%Water.pressed.connect(_add_polygon_water)
 	%Hazard.pressed.connect(_add.bind(HAZARD, "SpikeHazard", false, {}))
 	%WaterBulb.pressed.connect(_add.bind(BUMPER, "WaterBulb", false, {}))
 
 
 func _select_or_add_terrain() -> void:
 	plugin.call("select_or_add_terrain_layer")
+
+
+func _add_polygon_water() -> void:
+	_add(WATER, "Water", false, {})
+	var selected := EditorInterface.get_selection().get_selected_nodes()
+	if selected.size() != 1:
+		return
+	var polygon := selected[0].get_node_or_null("CollisionPolygon2D")
+	if polygon:
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(polygon)
+		EditorInterface.edit_node(polygon)
+		set_status("Polygon water added. Edit its points in the 2D toolbar.", false)
 
 
 func _add(path: String, node_name: String, snap: bool, properties: Dictionary) -> void:

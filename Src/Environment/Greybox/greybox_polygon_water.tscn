@@ -8,6 +8,7 @@ collision_layer = 0
 collision_mask = 1
 monitorable = false
 script = ExtResource("1")
+editor_description = "Select CollisionPolygon2D, choose Edit Points in the 2D toolbar, and shape the water volume."
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-512, -192, 512, -192, 512, 192, -512, 192)

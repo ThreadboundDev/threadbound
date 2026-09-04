@@ -73,6 +73,7 @@ func _preferred_parent(root: Node) -> Node:
 		if (
 			selected_node is GreyboxBlock2D
 			or selected_node is GreyboxWater2D
+			or selected_node is GreyboxPolygonWater2D
 			or selected_node is GreyboxHazard2D
 			or selected_node is GreyboxBumper2D
 			or selected_node is TileMapLayer

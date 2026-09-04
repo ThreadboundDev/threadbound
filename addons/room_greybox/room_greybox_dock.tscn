@@ -54,7 +54,7 @@ text = "One-Way Block"
 [node name="Water" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Water"
+text = "Polygon Water"
 
 [node name="Hazard" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
