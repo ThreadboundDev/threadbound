@@ -30,6 +30,14 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if is_node_ready() and (
+		collision.position != Vector2.ZERO
+		or not is_zero_approx(collision.rotation)
+		or collision.scale != Vector2.ONE
+	):
+		collision.position = Vector2.ZERO
+		collision.rotation = 0.0
+		collision.scale = Vector2.ONE
 	if not is_node_ready() or collision.polygon == _last_collision_points:
 		return
 	points = collision.polygon.duplicate()

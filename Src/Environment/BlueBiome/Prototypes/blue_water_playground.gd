@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player: CharacterBody2D = $Player
-@onready var speed_label: Label = $HUD/Panel/Margin/Readout
+@onready var speed_label: Label = get_node_or_null("HUD/Panel/Margin/Readout") as Label
 
 
 func _ready() -> void:
@@ -9,6 +9,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if speed_label == null:
+		return
 	var location := "WATER" if player.is_in_prototype_water() else "AIR"
 	speed_label.text = (
 		"BLUE WATER PLAYGROUND\n"

@@ -29,15 +29,10 @@ func _select_or_add_terrain() -> void:
 
 func _add_polygon_water() -> void:
 	_add(WATER, "Water", false, {})
-	var selected := EditorInterface.get_selection().get_selected_nodes()
-	if selected.size() != 1:
-		return
-	var polygon := selected[0].get_node_or_null("CollisionPolygon2D")
-	if polygon:
-		EditorInterface.get_selection().clear()
-		EditorInterface.get_selection().add_node(polygon)
-		EditorInterface.edit_node(polygon)
-		set_status("Polygon water added. Edit its points in the 2D toolbar.", false)
+	set_status(
+		"Polygon water added. Move Water first, then select its CollisionPolygon2D to edit points.",
+		false
+	)
 
 
 func _add(path: String, node_name: String, snap: bool, properties: Dictionary) -> void:
