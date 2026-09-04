@@ -45,6 +45,39 @@ orientation, timing, regeneration, and readability. The visual design should
 avoid resembling an ordinary enemy or safe background flower, especially when
 placed near hazards and dense vegetation.
 
+#### Traversal Reference: Ori's Burrow and Sand Balls
+
+Reference: [Making Ori and The Will of the Wisps' Best Level](https://www.youtube.com/watch?v=gIdHTL18kTU&t=415s),
+especially the discussion of burrow, hanging sand balls, backtracking, and
+difficulty layering from roughly 2:37 through 9:24.
+
+The intended lesson for Blue is broader than copying a launch object:
+
+- Treat water as an active traversal medium, analogous to how sand supports
+  movement throughout the referenced level rather than acting as scenery.
+- Let the player approach compact water-filled bulbs from useful angles and
+  leave with a decisive, readable trajectory.
+- Preserve directional continuity and player agency. The reference sand balls
+  can be entered from any side and send the player straight through; Blue
+  should prototype that behavior alongside the current opposite-attack recoil
+  before choosing the final input model.
+- Use water volumes and bulbs together. A bulb can bridge gaps between water,
+  redirect a route, extend height or distance, create an optional mastery path,
+  or provide a return route through a space.
+- Combine the mechanic with established elements instead of exhausting every
+  bulb variation in isolation. Bumpers, hazards, enemies, disappearing or
+  changing routes, and water geometry should produce distinct situations.
+- Design for backtracking. A room-changing traversal element must leave a
+  legible return path or regenerate so the player is never stranded.
+- Layer difficulty gradually: first enter or strike a safe bulb, then aim a
+  launch, then chain bulbs, and only later add hazards, enemies, or demanding
+  route choices.
+
+The design target is the reference's feeling of flow, control, and mechanical
+reuse—not its desert presentation, exact controls, or art assets. Blue's water
+pods, still-water theme, player attacks, and existing movement kit should give
+the system its own identity.
+
 Before changing bumper or water code, document the proposed behavior, affected
 systems, files, edge cases, and verification plan for approval.
 
