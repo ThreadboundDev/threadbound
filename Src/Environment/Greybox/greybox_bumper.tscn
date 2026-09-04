@@ -31,7 +31,7 @@ monitorable = false
 shape = SubResource("RectangleShape2D_contact")
 
 [node name="GrappleTarget" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 0
 monitorable = true
 

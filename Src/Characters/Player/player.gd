@@ -191,6 +191,13 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.1, 1.0, 0.05) var prototype_swim_horizontal_multiplier := 0.55
 @export var prototype_swim_vertical_speed := 360.0
 @export var prototype_swim_acceleration := 1100.0
+@export var prototype_swim_max_speed := 1050.0
+@export var prototype_swim_idle_drag := 180.0
+@export_range(0.0, 1.0, 0.05) var prototype_swim_wall_speed_retention := 0.55
+@export var prototype_swim_wall_impact_threshold := 240.0
+@export_range(1.0, 2.0, 0.05) var prototype_swim_breach_multiplier := 1.12
+@export var prototype_swim_breach_min_speed := 760.0
+@export var prototype_swim_breach_max_speed := 1550.0
 @export var prototype_swim_surface_depth := 18.0
 @export var prototype_swim_surface_buoyancy := 900.0
 @export var prototype_swim_exit_jump_speed := 1040.0
@@ -747,7 +754,6 @@ func _physics_process(delta: float) -> void:
 		has_wall_jumped = false
 		air_jump_available = true
 	elif is_in_prototype_water():
-		_process_prototype_swim_vertical(delta)
 		coyote_timer = coyote_time
 		has_wall_jumped = false
 		air_jump_available = true
@@ -794,8 +800,9 @@ func _physics_process(delta: float) -> void:
 	elif not grapple_restricting and not is_hurt:
 		var control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
 		if is_in_prototype_water():
-			control = prototype_swim_horizontal_multiplier
-		velocity.x = speed * get_momentum_move_speed_multiplier() * horizontal_input * control
+			_process_prototype_swim_movement(delta, horizontal_input)
+		else:
+			velocity.x = speed * get_momentum_move_speed_multiplier() * horizontal_input * control
 	elif is_hurt:
 		velocity.x = move_toward(velocity.x, 0.0, speed * get_momentum_move_speed_multiplier() * delta)
 
@@ -816,11 +823,9 @@ func _physics_process(delta: float) -> void:
 	):
 		var velocity_before_jump := velocity
 		if is_in_prototype_water():
-			if _is_at_prototype_water_surface():
-				velocity.y = -prototype_swim_exit_jump_speed
-				_prototype_swim_exit_lock_timer = prototype_swim_exit_lock_duration
-			else:
-				velocity.y = -prototype_swim_vertical_speed
+			# Jump is already folded into directional swim steering above. Keeping
+			# the current velocity here lets a practiced approach determine breach height.
+			pass
 		elif is_wall_clinging:
 			is_wall_clinging = false
 			wall_cling_timer = 0.0
@@ -872,9 +877,12 @@ func _physics_process(delta: float) -> void:
 	):
 		current_gloves.apply_grapple_velocity(delta)
 
+	var pre_move_velocity := velocity
 	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
 	_position_before_movement = global_position
 	move_and_slide()
+	if is_in_prototype_water():
+		_apply_prototype_water_wall_loss(pre_move_velocity)
 	if is_on_floor() and not god_mode_enabled:
 		_last_safe_knot_drop_position = global_position
 	if is_on_floor() and not was_on_floor and not god_mode_enabled:
@@ -1544,6 +1552,14 @@ func enter_prototype_water(volume: Node, surface_y: float) -> void:
 
 func exit_prototype_water(volume: Node) -> void:
 	_prototype_water_surfaces.erase(volume)
+	if _prototype_water_surfaces.is_empty() and velocity.y < 0.0:
+		var breach_speed := clampf(
+			maxf(velocity.length(), prototype_swim_breach_min_speed) * prototype_swim_breach_multiplier,
+			prototype_swim_breach_min_speed,
+			prototype_swim_breach_max_speed
+		)
+		velocity = velocity.normalized() * breach_speed
+		_prototype_swim_exit_lock_timer = prototype_swim_exit_lock_duration
 
 
 func _reject_from_prototype_water(volume: Node) -> void:
@@ -1596,6 +1612,46 @@ func _process_prototype_swim_vertical(delta: float) -> void:
 		target_velocity,
 		prototype_swim_surface_buoyancy * delta
 	)
+
+
+func _process_prototype_swim_movement(delta: float, horizontal_input: float) -> void:
+	if _prototype_swim_exit_lock_timer > 0.0:
+		return
+	var vertical_input := Input.get_axis("move_up", "move_down")
+	if Input.is_action_pressed("Jump"):
+		vertical_input = -1.0
+	var input_direction := Vector2(horizontal_input, vertical_input)
+	if input_direction.length_squared() > 1.0:
+		input_direction = input_direction.normalized()
+	if input_direction.length_squared() > 0.001:
+		var target_speed := maxf(velocity.length(), prototype_swim_vertical_speed)
+		target_speed = minf(target_speed, prototype_swim_max_speed)
+		velocity = velocity.move_toward(input_direction * target_speed, prototype_swim_acceleration * delta)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, prototype_swim_idle_drag * delta)
+
+
+func _apply_prototype_water_wall_loss(pre_move_velocity: Vector2) -> void:
+	if pre_move_velocity.length() < prototype_swim_wall_impact_threshold:
+		return
+	for collision_index in get_slide_collision_count():
+		var collision := get_slide_collision(collision_index)
+		if collision and pre_move_velocity.dot(collision.get_normal()) < -prototype_swim_wall_impact_threshold:
+			velocity *= prototype_swim_wall_speed_retention
+			return
+
+
+func apply_water_bulb_boost(direction: Vector2, multiplier: float, minimum_speed: float) -> void:
+	var boost_direction := direction.normalized()
+	if boost_direction == Vector2.ZERO:
+		boost_direction = velocity.normalized()
+	if boost_direction == Vector2.ZERO:
+		boost_direction = Vector2.UP
+	var boosted_speed := maxf(velocity.length() * multiplier, minimum_speed)
+	velocity = boost_direction * minf(boosted_speed, prototype_swim_breach_max_speed)
+	cancel_dash_for_traversal_launch()
+	is_wall_clinging = false
+	wall_cling_timer = 0.0
 
 
 func _is_at_prototype_water_surface() -> bool:

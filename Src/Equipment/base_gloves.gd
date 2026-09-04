@@ -1495,11 +1495,20 @@ func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 func thread_mechanic(delta: float) -> void:
 	if action_anim_lock_timer > 0.0:
 		action_anim_lock_timer -= delta
+	var grapple_blocked: bool = bool(
+		player != null
+		and player.has_method("is_in_prototype_water")
+		and player.is_in_prototype_water()
+	)
+	if grapple_blocked:
+		if grapple_state != GrappleState.STOWED:
+			_begin_grapple_retract()
 
 	# Always check climbing while grapple is attached.
-	_handle_rope_climb(delta)
+	if not grapple_blocked:
+		_handle_rope_climb(delta)
 
-	if InputMap.has_action(grapple_input_action):
+	if not grapple_blocked and InputMap.has_action(grapple_input_action):
 		if Input.is_action_just_pressed(grapple_input_action):
 			if grapple_state == GrappleState.STOWED:
 				if not player.has_method("spend_action_points") or player.spend_action_points(1):

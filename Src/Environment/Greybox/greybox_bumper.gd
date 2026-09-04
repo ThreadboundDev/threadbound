@@ -20,6 +20,10 @@ signal regenerated
 @export_range(0.0, 1200.0, 10.0, "or_greater") var ground_scoot_speed := 320.0
 @export_range(0.0, 1200.0, 10.0, "or_greater") var contact_bonk_speed := 240.0
 @export_range(0.0, 128.0, 1.0, "or_greater") var contact_clearance := 40.0
+@export_range(0.0, 3000.0, 10.0, "or_greater") var required_break_speed := 700.0
+@export_range(1.0, 3.0, 0.05, "or_greater") var momentum_multiplier := 1.2
+@export_range(0.0, 1200.0, 10.0, "or_greater") var minimum_exit_speed := 820.0
+@export_range(0.0, 1.0, 0.05) var failure_speed_retention := 0.65
 @export_range(0.0, 30.0, 0.1, "or_greater") var regeneration_delay := 3.0
 @export_group("Prototype Appearance")
 @export var bumper_color := Color(0.94, 0.96, 1.0, 0.96):
@@ -73,7 +77,7 @@ func _draw() -> void:
 	var display_color := bumper_color.darkened((1.0 - health_ratio) * 0.28)
 	draw_rect(rect, display_color, true)
 	draw_rect(rect, outline_color, false, 4.0)
-	var mode_label := "WATER BULB"
+	var mode_label := "BULB  %d" % roundi(required_break_speed)
 	var label_size := ThemeDB.fallback_font.get_string_size(mode_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
 	draw_string(ThemeDB.fallback_font, Vector2(-label_size.x * 0.5, 6.0), mode_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color(0.03, 0.08, 0.13, 0.92))
 	if hits_to_break > 1:
@@ -85,28 +89,53 @@ func _draw() -> void:
 
 
 func _on_hit_received(damage: DamageData) -> void:
-	if not _is_broken:
-		_accept_activation(damage, false, true)
+	# Momentum gates are traversal checks. Weapon damage cannot bypass them.
+	pass
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if _is_broken or not body.is_in_group("player"):
 		return
-	if body.has_method("is_dash_active") and bool(body.call("is_dash_active")):
-		var dash_hit := DamageData.new()
-		dash_hit.source = body
-		dash_hit.knockback = body.velocity
-		_accept_activation(dash_hit, true, false)
+	var moving_body := body as CharacterBody2D
+	var impact_speed: float = moving_body.velocity.length() if moving_body else 0.0
+	if impact_speed >= required_break_speed:
+		_break_from_momentum(body)
 		return
-	_bonk_body_out(body)
+	_rebound_body(body)
 
 
 func activate_from_grapple(_source: Node = null) -> bool:
-	if not _is_broken:
-		_hits_remaining = 0
-		hit_count_changed.emit(_hits_remaining)
-		_break(null, false, false)
-	return true
+	return false
+
+
+func _break_from_momentum(body: Node2D) -> void:
+	_is_broken = true
+	_hits_remaining = 0
+	hit_count_changed.emit(_hits_remaining)
+	_set_receivers_disabled(true)
+	queue_redraw()
+	broken.emit()
+	var moving_body := body as CharacterBody2D
+	var direction: Vector2 = moving_body.velocity.normalized() if moving_body else Vector2.ZERO
+	if direction == Vector2.ZERO:
+		direction = (body.global_position - global_position).normalized()
+	if body.has_method("apply_water_bulb_boost"):
+		body.call_deferred("apply_water_bulb_boost", direction, momentum_multiplier, minimum_exit_speed)
+	if regeneration_delay > 0.0:
+		get_tree().create_timer(regeneration_delay).timeout.connect(_regenerate)
+
+
+func _rebound_body(body: Node2D) -> void:
+	var moving_body := body as CharacterBody2D
+	var incoming: Vector2 = moving_body.velocity if moving_body else Vector2.ZERO
+	var direction: Vector2 = -incoming.normalized()
+	if direction == Vector2.ZERO:
+		direction = (body.global_position - global_position).normalized()
+	if direction == Vector2.ZERO:
+		direction = Vector2.UP
+	_bonk_body_out(body)
+	if moving_body:
+		moving_body.velocity = direction * maxf(contact_bonk_speed, incoming.length() * failure_speed_retention)
 
 
 func _accept_activation(damage: DamageData, force_full_launch: bool, recoil: bool) -> void:
