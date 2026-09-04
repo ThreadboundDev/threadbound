@@ -190,11 +190,12 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var prototype_water_reject_horizontal_speed := 260.0
 @export_range(0.1, 1.0, 0.05) var prototype_swim_horizontal_multiplier := 0.55
 @export var prototype_swim_vertical_speed := 360.0
-@export var prototype_swim_acceleration := 260.0
-@export var prototype_swim_speed_gain_rate := 0.7
-@export var prototype_swim_min_speed := 420.0
-@export var prototype_swim_max_speed := 2200.0
-@export var prototype_swim_turn_speed_degrees := 210.0
+@export var prototype_swim_acceleration := 130.0
+@export var prototype_swim_speed_gain_rate := 0.35
+@export var prototype_swim_min_speed := 210.0
+@export var prototype_swim_max_speed := 1100.0
+@export var prototype_swim_turn_speed_degrees := 120.0
+@export var prototype_swim_low_speed_resistance := 90.0
 @export var prototype_swim_idle_drag := 0.0
 @export_range(0.0, 1.0, 0.05) var prototype_swim_wall_speed_retention := 0.55
 @export var prototype_swim_wall_impact_threshold := 240.0
@@ -1640,8 +1641,15 @@ func _process_prototype_swim_movement(delta: float, horizontal_input: float) -> 
 		var turn_limit := deg_to_rad(prototype_swim_turn_speed_degrees) * delta
 		var turn_angle := clampf(current_direction.angle_to(input_direction), -turn_limit, turn_limit)
 		var steered_direction := current_direction.rotated(turn_angle).normalized()
+		var speed_ratio := clampf(current_speed / prototype_swim_max_speed, 0.0, 1.0)
+		var resistance := lerpf(prototype_swim_low_speed_resistance, 0.0, speed_ratio * speed_ratio)
 		var propulsion := prototype_swim_acceleration + current_speed * prototype_swim_speed_gain_rate
-		var next_speed := minf(current_speed + propulsion * delta, prototype_swim_max_speed)
+		var next_speed := current_speed
+		if current_speed < prototype_swim_max_speed:
+			next_speed = minf(
+				current_speed + maxf(propulsion - resistance, 0.0) * delta,
+				prototype_swim_max_speed
+			)
 		velocity = steered_direction * next_speed
 	elif prototype_swim_idle_drag > 0.0:
 		velocity = velocity.move_toward(Vector2.ZERO, prototype_swim_idle_drag * delta)

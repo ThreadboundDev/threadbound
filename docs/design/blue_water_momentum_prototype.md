@@ -8,6 +8,9 @@ water-mechanics test room and should remain unchanged while this prototype is tu
 - Polygon water supports freely shaped test volumes.
 - Directional input bends the existing trajectory and adds propulsion. Acceleration
   grows with current speed until a high safety ceiling, so clean routes compound.
+- Low-speed resistance makes the water feel thick at entry, then fades along a
+  squared curve as momentum builds. Normal propulsion caps at the swim ceiling;
+  bulb boosts use the higher breach ceiling and can exceed that baseline cap.
 - Releasing input coasts without stopping; striking terrain is the primary way to
   lose speed after the Hermit's water traversal item removes water resistance.
 - Crossing any water boundary preserves the current trajectory and applies a
