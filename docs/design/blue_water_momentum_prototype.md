@@ -16,6 +16,9 @@ water-mechanics test room and should remain unchanged while this prototype is tu
 - Crossing any water boundary preserves the current trajectory and applies a
   bounded momentum multiplier. Upward steering at an edge therefore becomes a
   speed-scaled jump without replacing the velocity with a fixed jump value.
+- A breach owns movement briefly after crossing the boundary, then blends normal
+  air control back in. This prevents ordinary horizontal input from erasing the
+  launch while still allowing double jump and grapple to redirect the route.
 - Grapple retracts and cannot fire while the player is submerged. It is available
   immediately after a breach.
 - Water bulbs are momentum gates. Their displayed number is the required impact

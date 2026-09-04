@@ -202,6 +202,9 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(1.0, 2.0, 0.05) var prototype_swim_breach_multiplier := 1.12
 @export var prototype_swim_breach_min_speed := 760.0
 @export var prototype_swim_breach_max_speed := 2600.0
+@export_range(0.0, 0.5, 0.01) var prototype_swim_breach_control_lock := 0.22
+@export_range(0.0, 1.0, 0.01) var prototype_swim_breach_control_recovery := 0.45
+@export_range(0.0, 0.5, 0.01) var prototype_swim_breach_gravity_grace := 0.12
 @export var prototype_swim_surface_depth := 18.0
 @export var prototype_swim_surface_buoyancy := 900.0
 @export var prototype_swim_exit_jump_speed := 1040.0
@@ -1569,6 +1572,18 @@ func exit_prototype_water(volume: Node) -> void:
 		)
 		velocity = velocity.normalized() * breach_speed
 		_prototype_swim_exit_lock_timer = prototype_swim_exit_lock_duration
+		_traversal_launch_control_lock_timer = maxf(
+			_traversal_launch_control_lock_timer,
+			prototype_swim_breach_control_lock
+		)
+		_traversal_launch_control_recovery_timer = maxf(
+			_traversal_launch_control_recovery_timer,
+			prototype_swim_breach_control_lock + prototype_swim_breach_control_recovery
+		)
+		pogo_rebound_gravity_timer = maxf(
+			pogo_rebound_gravity_timer,
+			prototype_swim_breach_gravity_grace
+		)
 
 
 func _reject_from_prototype_water(volume: Node) -> void:
