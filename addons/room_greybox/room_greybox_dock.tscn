@@ -61,10 +61,15 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Hazard"
 
-[node name="Bumper" type="Button" parent="Margin/Rows/Geometry"]
+[node name="RecoilBumper" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Bumper"
+text = "Recoil Bumper (Red)"
+
+[node name="ThroughBumper" type="Button" parent="Margin/Rows/Geometry"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Through Bumper (White)"
 
 [node name="Status" type="Label" parent="Margin/Rows"]
 unique_name_in_owner = true

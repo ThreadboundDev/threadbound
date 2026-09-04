@@ -10,7 +10,8 @@ The Room Greybox editor dock exists to turn an idea into a playable room as quic
 - Dark-grey one-way block: freely resized jump-through rectangular geometry.
 - Blue water: playable prototype swim volume.
 - Red hazard: damage and knockback volume; free placement by default so slopes, spikes, and irregular danger zones are not constrained to the grid.
-- White bumper: harmless solid traversal block; attacks wear it down, and the breaking hit launches the attacker opposite the attack direction.
+- Red recoil bumper: harmless solid traversal block that launches the attacker opposite the attack direction.
+- White through bumper: harmless solid traversal block that continues the attacker along the attack direction.
 
 Select the intended room or geometry container, open **Room Greybox** in the bottom panel, and press **Terrain Tiles**. Choose the solid or one-way tile in Godot's TileMap palette, then paint and erase directly in the 2D viewport. Pressing the button again selects the room's existing `GreyboxTerrain` layer.
 
@@ -64,7 +65,8 @@ The **Hazard** button creates a reusable triangular spike strip. Hazards reuse t
 
 ## Prototype Bumpers
 
-The **Bumper** button creates a reusable white traversal block. Bumpers
+The **Recoil Bumper** and **Through Bumper** buttons create reusable red and
+white traversal blocks. Bumpers
 are harmless solid surfaces: touching or landing on one never deals damage.
 Each instance exposes its size, hits required to break, launch strength in
 normal jump heights, and regeneration delay. The attack that removes the final

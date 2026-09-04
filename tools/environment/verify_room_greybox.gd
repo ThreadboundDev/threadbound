@@ -79,6 +79,10 @@ func _ready() -> void:
 		bumper.get_launch_direction_for_attack(Vector2.RIGHT) == Vector2.LEFT,
 		"Recoil bumpers must reverse the attack direction."
 	)
+	assert(
+		bumper.bumper_color.r > bumper.bumper_color.g * 2.0,
+		"Recoil bumpers must read as red in the greybox."
+	)
 	var through_bumper := BUMPER.instantiate() as GreyboxBumper2D
 	through_bumper.launch_mode = GreyboxBumper2D.LaunchMode.THROUGH
 	add_child(through_bumper)

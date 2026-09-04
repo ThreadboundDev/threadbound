@@ -29,7 +29,7 @@ signal regenerated
 @export_range(0.0, 1200.0, 10.0, "or_greater") var ground_scoot_speed := 320.0
 @export_range(0.0, 30.0, 0.1, "or_greater") var regeneration_delay := 3.0
 @export_group("Prototype Appearance")
-@export var bumper_color := Color(0.94, 0.96, 1.0, 0.96):
+@export var bumper_color := Color(0.92, 0.18, 0.22, 0.96):
 	set(value):
 		bumper_color = value
 		queue_redraw()
@@ -75,7 +75,7 @@ func _draw() -> void:
 	var health_ratio := float(_hits_remaining) / float(maxi(hits_to_break, 1))
 	var mode_color := bumper_color
 	if launch_mode == LaunchMode.THROUGH:
-		mode_color = bumper_color.lerp(Color(0.28, 0.95, 1.0, bumper_color.a), 0.55)
+		mode_color = Color(0.94, 0.96, 1.0, bumper_color.a)
 	var display_color := mode_color.darkened((1.0 - health_ratio) * 0.28)
 	draw_rect(rect, display_color, true)
 	draw_rect(rect, outline_color, false, 4.0)
@@ -88,7 +88,7 @@ func _draw() -> void:
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
 		18,
-		Color(0.03, 0.08, 0.13, 0.92)
+		Color(1.0, 1.0, 1.0, 0.96) if launch_mode == LaunchMode.RECOIL else Color(0.03, 0.08, 0.13, 0.92)
 	)
 	if hits_to_break > 1:
 		var pip_spacing := 14.0
