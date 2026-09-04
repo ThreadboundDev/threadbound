@@ -55,9 +55,17 @@ scale = Vector2(0.7558869, 0.6209833)
 position = Vector2(706, -495)
 scale = Vector2(0.7448141, 1)
 
-[node name="PrototypeBumper" parent="." index="8" instance=ExtResource("4_bumper")]
+[node name="RecoilBumper" parent="." index="8" instance=ExtResource("4_bumper")]
 position = Vector2(-2460, -145)
 size = Vector2(160, 96)
 hits_to_break = 1
+launch_jump_heights = 2.0
+regeneration_delay = 3.0
+
+[node name="ThroughBumper" parent="." index="9" instance=ExtResource("4_bumper")]
+position = Vector2(-2180, -145)
+size = Vector2(160, 96)
+hits_to_break = 1
+launch_mode = 1
 launch_jump_heights = 2.0
 regeneration_delay = 3.0

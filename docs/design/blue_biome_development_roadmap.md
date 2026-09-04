@@ -78,6 +78,17 @@ reuse—not its desert presentation, exact controls, or art assets. Blue's water
 pods, still-water theme, player attacks, and existing movement kit should give
 the system its own identity.
 
+The first greybox comparison uses two clearly labeled modes:
+
+- **Recoil:** reverse the attack direction, then blend smoothly back into
+  ordinary movement input.
+- **Through:** preserve the attack direction so the player continues through
+  the bulb in the spirit of the hanging sand-ball reference.
+
+Playtest both modes without water first. Compare predictability, chaining,
+ground usefulness, aerial control, recovery, and whether each mode supports a
+meaningfully different room-design role before selecting or combining them.
+
 Before changing bumper or water code, document the proposed behavior, affected
 systems, files, edge cases, and verification plan for approval.
 

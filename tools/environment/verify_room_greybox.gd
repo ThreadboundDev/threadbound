@@ -75,6 +75,17 @@ func _ready() -> void:
 	assert(bumper.collision_layer == 1, "The bumper must be harmless solid terrain.")
 	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
 	assert(bumper_receiver.collision_layer == 2)
+	assert(
+		bumper.get_launch_direction_for_attack(Vector2.RIGHT) == Vector2.LEFT,
+		"Recoil bumpers must reverse the attack direction."
+	)
+	var through_bumper := BUMPER.instantiate() as GreyboxBumper2D
+	through_bumper.launch_mode = GreyboxBumper2D.LaunchMode.THROUGH
+	add_child(through_bumper)
+	assert(
+		through_bumper.get_launch_direction_for_attack(Vector2.RIGHT) == Vector2.RIGHT,
+		"Through bumpers must preserve the attack direction."
+	)
 
 	var annotation := ANNOTATION.instantiate() as GreyboxAnnotationArea2D
 	add_child(annotation)
@@ -164,6 +175,13 @@ func _ready() -> void:
 		player.velocity.x < 0.0,
 		"Ordinary movement processing must not erase the grounded bumper scoot."
 	)
+	var recoil_speed_after_lock := absf(player.velocity.x)
+	await get_tree().create_timer(player.traversal_launch_control_lock_duration + 0.02).timeout
+	await get_tree().physics_frame
+	assert(
+		absf(player.velocity.x) < recoil_speed_after_lock,
+		"Recoil must blend smoothly back toward player input after its lock."
+	)
 	player.call("apply_traversal_launch", Vector2.RIGHT, 2.0, false, bumper.ground_scoot_speed)
 	var airborne_launch_speed := float(player.current_boots.base_jump_force) * sqrt(2.0)
 	assert(
@@ -217,6 +235,7 @@ func _ready() -> void:
 	water.queue_free()
 	hazard.queue_free()
 	bumper.queue_free()
+	through_bumper.queue_free()
 	annotation.queue_free()
 	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
 	add_child(art_region)

@@ -220,6 +220,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_group("Traversal Launches")
 @export_range(0.0, 0.3, 0.01) var traversal_launch_gravity_grace := 0.12
 @export_range(0.0, 0.5, 0.01) var traversal_launch_control_lock_duration := 0.16
+@export_range(0.0, 0.5, 0.01) var traversal_launch_control_recovery_duration := 0.20
 
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
@@ -530,6 +531,7 @@ var landing_animation_timer := 0.0
 var pogo_rebound_animation_timer := 0.0
 var pogo_rebound_gravity_timer := 0.0
 var _traversal_launch_control_lock_timer := 0.0
+var _traversal_launch_control_recovery_timer := 0.0
 var _movement_facing_before_input := 1
 
 var is_attacking := false
@@ -708,6 +710,10 @@ func _physics_process(delta: float) -> void:
 		_traversal_launch_control_lock_timer - delta,
 		0.0
 	)
+	_traversal_launch_control_recovery_timer = maxf(
+		_traversal_launch_control_recovery_timer - delta,
+		0.0
+	)
 	_prototype_swim_exit_lock_timer = maxf(_prototype_swim_exit_lock_timer - delta, 0.0)
 
 	if is_dead:
@@ -769,6 +775,17 @@ func _physics_process(delta: float) -> void:
 		# Preserve externally authored traversal impulses long enough for them to
 		# move the body before ordinary input regains control.
 		pass
+	elif _traversal_launch_control_recovery_timer > 0.0 and not grapple_restricting and not is_hurt:
+		var recovery_control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
+		if is_in_prototype_water():
+			recovery_control = prototype_swim_horizontal_multiplier
+		var recovery_target := speed * get_momentum_move_speed_multiplier() * horizontal_input * recovery_control
+		var recovery_step := (
+			absf(velocity.x - recovery_target)
+			* delta
+			/ maxf(_traversal_launch_control_recovery_timer, delta)
+		)
+		velocity.x = move_toward(velocity.x, recovery_target, recovery_step)
 	elif current_attack_uses_grapple_strike and current_grapple_strike_landed:
 		# Preserve the authored recoil through the short attack recovery.
 		pass
@@ -3907,6 +3924,10 @@ func apply_traversal_launch(
 	wall_cling_timer = 0.0
 	landing_animation_timer = 0.0
 	_traversal_launch_control_lock_timer = traversal_launch_control_lock_duration
+	_traversal_launch_control_recovery_timer = (
+		traversal_launch_control_lock_duration
+		+ traversal_launch_control_recovery_duration
+	)
 	pogo_rebound_gravity_timer = maxf(
 		pogo_rebound_gravity_timer,
 		traversal_launch_gravity_grace

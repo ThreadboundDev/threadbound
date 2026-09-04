@@ -2,6 +2,11 @@
 class_name GreyboxBumper2D
 extends StaticBody2D
 
+enum LaunchMode {
+	RECOIL,
+	THROUGH,
+}
+
 signal hit_count_changed(hits_remaining: int)
 signal broken
 signal regenerated
@@ -15,6 +20,10 @@ signal regenerated
 		hits_to_break = maxi(value, 1)
 		if not _is_broken:
 			_hits_remaining = hits_to_break
+		queue_redraw()
+@export var launch_mode := LaunchMode.RECOIL:
+	set(value):
+		launch_mode = value
 		queue_redraw()
 @export_range(0.1, 8.0, 0.05, "or_greater") var launch_jump_heights := 2.0
 @export_range(0.0, 1200.0, 10.0, "or_greater") var ground_scoot_speed := 320.0
@@ -64,9 +73,23 @@ func _draw() -> void:
 		return
 	var rect := Rect2(-size * 0.5, size)
 	var health_ratio := float(_hits_remaining) / float(maxi(hits_to_break, 1))
-	var display_color := bumper_color.darkened((1.0 - health_ratio) * 0.28)
+	var mode_color := bumper_color
+	if launch_mode == LaunchMode.THROUGH:
+		mode_color = bumper_color.lerp(Color(0.28, 0.95, 1.0, bumper_color.a), 0.55)
+	var display_color := mode_color.darkened((1.0 - health_ratio) * 0.28)
 	draw_rect(rect, display_color, true)
 	draw_rect(rect, outline_color, false, 4.0)
+	var mode_label := "RECOIL" if launch_mode == LaunchMode.RECOIL else "THROUGH"
+	var label_size := ThemeDB.fallback_font.get_string_size(mode_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
+	draw_string(
+		ThemeDB.fallback_font,
+		Vector2(-label_size.x * 0.5, 6.0),
+		mode_label,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		18,
+		Color(0.03, 0.08, 0.13, 0.92)
+	)
 	if hits_to_break > 1:
 		var pip_spacing := 14.0
 		var pip_width := float(hits_to_break - 1) * pip_spacing
@@ -112,15 +135,25 @@ func _launch_attacker(damage: DamageData) -> void:
 	if incoming_direction == Vector2.ZERO:
 		incoming_direction = Vector2.DOWN
 	var was_grounded: bool = source.is_on_floor()
+	var launch_direction := get_launch_direction_for_attack(incoming_direction)
 	# Wait until the hitbox has emitted hit_landed so an ordinary pogo callback
 	# cannot overwrite this stronger, direction-aware traversal launch.
 	source.call_deferred(
 		"apply_traversal_launch",
-		-incoming_direction,
+		launch_direction,
 		launch_jump_heights,
 		was_grounded,
 		ground_scoot_speed
 	)
+
+
+func get_launch_direction_for_attack(attack_direction: Vector2) -> Vector2:
+	var normalized_direction := attack_direction.normalized()
+	if normalized_direction == Vector2.ZERO:
+		normalized_direction = Vector2.DOWN
+	if launch_mode == LaunchMode.THROUGH:
+		return normalized_direction
+	return -normalized_direction
 
 
 func _regenerate() -> void:
