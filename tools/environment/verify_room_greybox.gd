@@ -154,6 +154,27 @@ func _ready() -> void:
 	assert(is_zero_approx(player.velocity.x))
 	assert(player.pogo_rebound_gravity_timer > 0.0)
 	player.process_mode = Node.PROCESS_MODE_INHERIT
+	player.call("apply_traversal_launch", Vector2.LEFT, 2.0, true, bumper.ground_scoot_speed)
+	assert(
+		is_equal_approx(player.velocity.x, -bumper.ground_scoot_speed),
+		"A grounded bumper hit must scoot the player opposite the attack direction."
+	)
+	await get_tree().physics_frame
+	assert(
+		player.velocity.x < 0.0,
+		"Ordinary movement processing must not erase the grounded bumper scoot."
+	)
+	player.call("apply_traversal_launch", Vector2.RIGHT, 2.0, false, bumper.ground_scoot_speed)
+	var airborne_launch_speed := float(player.current_boots.base_jump_force) * sqrt(2.0)
+	assert(
+		is_equal_approx(player.velocity.x, airborne_launch_speed),
+		"An airborne bumper hit must apply the full launch opposite the attack direction."
+	)
+	await get_tree().physics_frame
+	assert(
+		player.velocity.x > 0.0,
+		"Ordinary air control must not erase the airborne bumper launch."
+	)
 	await get_tree().create_timer(0.06).timeout
 	await get_tree().process_frame
 	assert(not bumper.is_broken())

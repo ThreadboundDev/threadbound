@@ -219,6 +219,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 
 @export_group("Traversal Launches")
 @export_range(0.0, 0.3, 0.01) var traversal_launch_gravity_grace := 0.12
+@export_range(0.0, 0.5, 0.01) var traversal_launch_control_lock_duration := 0.16
 
 # Base grapple movement while rope is taut.
 @export_group("Base Grapple Movement")
@@ -528,6 +529,7 @@ var current_attack_body_anim := "Ground_Attack_Combo_1"
 var landing_animation_timer := 0.0
 var pogo_rebound_animation_timer := 0.0
 var pogo_rebound_gravity_timer := 0.0
+var _traversal_launch_control_lock_timer := 0.0
 var _movement_facing_before_input := 1
 
 var is_attacking := false
@@ -702,6 +704,10 @@ func _physics_process(delta: float) -> void:
 		0.0
 	)
 	pogo_rebound_gravity_timer = maxf(pogo_rebound_gravity_timer - delta, 0.0)
+	_traversal_launch_control_lock_timer = maxf(
+		_traversal_launch_control_lock_timer - delta,
+		0.0
+	)
 	_prototype_swim_exit_lock_timer = maxf(_prototype_swim_exit_lock_timer - delta, 0.0)
 
 	if is_dead:
@@ -759,7 +765,11 @@ func _physics_process(delta: float) -> void:
 	if current_gloves and current_gloves.has_method("is_base_grapple_restricting"):
 		grapple_restricting = current_gloves.is_base_grapple_restricting()
 
-	if current_attack_uses_grapple_strike and current_grapple_strike_landed:
+	if _traversal_launch_control_lock_timer > 0.0:
+		# Preserve externally authored traversal impulses long enough for them to
+		# move the body before ordinary input regains control.
+		pass
+	elif current_attack_uses_grapple_strike and current_grapple_strike_landed:
 		# Preserve the authored recoil through the short attack recovery.
 		pass
 	elif _is_attack_movement_committed():
@@ -3870,7 +3880,12 @@ func _perform_pogo_rebound() -> void:
 	play_character_anim(String(POGO_REBOUND_ANIMATION))
 
 
-func apply_traversal_launch(direction: Vector2, jump_height_multiplier: float = 1.0) -> void:
+func apply_traversal_launch(
+	direction: Vector2,
+	jump_height_multiplier: float = 1.0,
+	was_grounded := false,
+	ground_scoot_speed := 0.0
+) -> void:
 	var launch_direction := direction.normalized()
 	if launch_direction == Vector2.ZERO:
 		launch_direction = Vector2.UP
@@ -3881,10 +3896,17 @@ func apply_traversal_launch(direction: Vector2, jump_height_multiplier: float = 
 	# reaches twice the normal jump apex under the same gravity.
 	var launch_speed := base_jump_speed * sqrt(maxf(jump_height_multiplier, 0.0))
 	_finish_cancelled_attack()
-	velocity = launch_direction * launch_speed
+	if was_grounded and ground_scoot_speed > 0.0:
+		var horizontal_direction := signf(launch_direction.x)
+		if is_zero_approx(horizontal_direction):
+			horizontal_direction = -float(last_direction)
+		velocity = Vector2(horizontal_direction * ground_scoot_speed, minf(velocity.y, 0.0))
+	else:
+		velocity = launch_direction * launch_speed
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 	landing_animation_timer = 0.0
+	_traversal_launch_control_lock_timer = traversal_launch_control_lock_duration
 	pogo_rebound_gravity_timer = maxf(
 		pogo_rebound_gravity_timer,
 		traversal_launch_gravity_grace

@@ -17,6 +17,7 @@ signal regenerated
 			_hits_remaining = hits_to_break
 		queue_redraw()
 @export_range(0.1, 8.0, 0.05, "or_greater") var launch_jump_heights := 2.0
+@export_range(0.0, 1200.0, 10.0, "or_greater") var ground_scoot_speed := 320.0
 @export_range(0.0, 30.0, 0.1, "or_greater") var regeneration_delay := 3.0
 @export_group("Prototype Appearance")
 @export var bumper_color := Color(0.94, 0.96, 1.0, 0.96):
@@ -110,12 +111,15 @@ func _launch_attacker(damage: DamageData) -> void:
 		incoming_direction = (global_position - (source as Node2D).global_position).normalized()
 	if incoming_direction == Vector2.ZERO:
 		incoming_direction = Vector2.DOWN
+	var was_grounded: bool = source.is_on_floor()
 	# Wait until the hitbox has emitted hit_landed so an ordinary pogo callback
 	# cannot overwrite this stronger, direction-aware traversal launch.
 	source.call_deferred(
 		"apply_traversal_launch",
 		-incoming_direction,
-		launch_jump_heights
+		launch_jump_heights,
+		was_grounded,
+		ground_scoot_speed
 	)
 
 
