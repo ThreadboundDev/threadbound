@@ -19,6 +19,8 @@ func _ready() -> void:
 	%Solid.pressed.connect(_add.bind(SOLID, "LargeBlock", true, {}))
 	%OneWay.pressed.connect(_add.bind(SOLID, "OneWayBlock", true, {"one_way": true}))
 	%Water.pressed.connect(_add_polygon_water)
+	%EditWaterShape.pressed.connect(_edit_water_shape)
+	%MoveWater.pressed.connect(_select_water_root)
 	%Hazard.pressed.connect(_add.bind(HAZARD, "SpikeHazard", false, {}))
 	%WaterBulb.pressed.connect(_add.bind(BUMPER, "WaterBulb", false, {}))
 
@@ -30,9 +32,17 @@ func _select_or_add_terrain() -> void:
 func _add_polygon_water() -> void:
 	_add(WATER, "Water", false, {})
 	set_status(
-		"Polygon water added. Move Water first, then select its CollisionPolygon2D to edit points.",
+		"Water added. Move it now, then press Edit Water Points to draw its shape.",
 		false
 	)
+
+
+func _edit_water_shape() -> void:
+	plugin.call("select_polygon_water_shape")
+
+
+func _select_water_root() -> void:
+	plugin.call("select_polygon_water_root")
 
 
 func _add(path: String, node_name: String, snap: bool, properties: Dictionary) -> void:

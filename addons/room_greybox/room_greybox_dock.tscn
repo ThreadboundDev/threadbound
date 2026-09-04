@@ -56,6 +56,16 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Polygon Water"
 
+[node name="EditWaterShape" type="Button" parent="Margin/Rows/Geometry"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Edit Water Points"
+
+[node name="MoveWater" type="Button" parent="Margin/Rows/Geometry"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Move Water"
+
 [node name="Hazard" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2

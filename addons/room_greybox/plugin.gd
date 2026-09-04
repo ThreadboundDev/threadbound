@@ -33,6 +33,8 @@ func add_greybox_scene(scene_path: String, base_name: String, snap_to_grid: bool
 	var parent := _preferred_parent(root)
 	parent.add_child(instance)
 	instance.owner = root
+	if instance is GreyboxPolygonWater2D:
+		root.set_editable_instance(instance, true)
 	if instance is Node2D:
 		var position := _placement_position(root, parent)
 		if snap_to_grid:
@@ -40,6 +42,40 @@ func add_greybox_scene(scene_path: String, base_name: String, snap_to_grid: bool
 		(instance as Node2D).position = position
 	_select_node(instance)
 	dock.call("set_status", "Added %s. Move and resize it in the Inspector." % instance.name, false)
+
+
+func select_polygon_water_shape() -> void:
+	var water := _selected_polygon_water()
+	if water == null:
+		dock.call("set_status", "Select a Polygon Water first.", true)
+		return
+	var polygon := water.get_node_or_null("CollisionPolygon2D") as CollisionPolygon2D
+	if polygon == null:
+		dock.call("set_status", "Selected water has no editable polygon.", true)
+		return
+	_select_node(polygon)
+	dock.call("set_status", "Draw or move polygon points in the 2D view. Use Move Water when finished.", false)
+
+
+func select_polygon_water_root() -> void:
+	var water := _selected_polygon_water()
+	if water == null:
+		dock.call("set_status", "Select a water polygon or its Water parent first.", true)
+		return
+	_select_node(water)
+	dock.call("set_status", "Move the complete Water object; its fill and collision stay together.", false)
+
+
+func _selected_polygon_water() -> GreyboxPolygonWater2D:
+	var selected := EditorInterface.get_selection().get_selected_nodes()
+	if selected.size() != 1:
+		return null
+	var node := selected[0] as Node
+	if node is GreyboxPolygonWater2D:
+		return node as GreyboxPolygonWater2D
+	if node is CollisionPolygon2D and node.get_parent() is GreyboxPolygonWater2D:
+		return node.get_parent() as GreyboxPolygonWater2D
+	return null
 
 
 func select_or_add_terrain_layer() -> void:
