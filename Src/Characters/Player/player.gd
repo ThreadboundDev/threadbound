@@ -190,14 +190,17 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var prototype_water_reject_horizontal_speed := 260.0
 @export_range(0.1, 1.0, 0.05) var prototype_swim_horizontal_multiplier := 0.55
 @export var prototype_swim_vertical_speed := 360.0
-@export var prototype_swim_acceleration := 1100.0
-@export var prototype_swim_max_speed := 1050.0
-@export var prototype_swim_idle_drag := 180.0
+@export var prototype_swim_acceleration := 260.0
+@export var prototype_swim_speed_gain_rate := 0.7
+@export var prototype_swim_min_speed := 420.0
+@export var prototype_swim_max_speed := 2200.0
+@export var prototype_swim_turn_speed_degrees := 210.0
+@export var prototype_swim_idle_drag := 0.0
 @export_range(0.0, 1.0, 0.05) var prototype_swim_wall_speed_retention := 0.55
 @export var prototype_swim_wall_impact_threshold := 240.0
 @export_range(1.0, 2.0, 0.05) var prototype_swim_breach_multiplier := 1.12
 @export var prototype_swim_breach_min_speed := 760.0
-@export var prototype_swim_breach_max_speed := 1550.0
+@export var prototype_swim_breach_max_speed := 2600.0
 @export var prototype_swim_surface_depth := 18.0
 @export var prototype_swim_surface_buoyancy := 900.0
 @export var prototype_swim_exit_jump_speed := 1040.0
@@ -1546,13 +1549,18 @@ func enter_prototype_water(volume: Node, surface_y: float) -> void:
 		_reject_from_prototype_water(volume)
 		return
 	_prototype_water_surfaces[volume] = surface_y
+	if velocity.length() < prototype_swim_min_speed:
+		var entry_direction := velocity.normalized()
+		if entry_direction == Vector2.ZERO:
+			entry_direction = Vector2.DOWN
+		velocity = entry_direction * prototype_swim_min_speed
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 
 
 func exit_prototype_water(volume: Node) -> void:
 	_prototype_water_surfaces.erase(volume)
-	if _prototype_water_surfaces.is_empty() and velocity.y < 0.0:
+	if _prototype_water_surfaces.is_empty() and velocity.length_squared() > 0.001:
 		var breach_speed := clampf(
 			maxf(velocity.length(), prototype_swim_breach_min_speed) * prototype_swim_breach_multiplier,
 			prototype_swim_breach_min_speed,
@@ -1624,10 +1632,18 @@ func _process_prototype_swim_movement(delta: float, horizontal_input: float) -> 
 	if input_direction.length_squared() > 1.0:
 		input_direction = input_direction.normalized()
 	if input_direction.length_squared() > 0.001:
-		var target_speed := maxf(velocity.length(), prototype_swim_vertical_speed)
-		target_speed = minf(target_speed, prototype_swim_max_speed)
-		velocity = velocity.move_toward(input_direction * target_speed, prototype_swim_acceleration * delta)
-	else:
+		input_direction = input_direction.normalized()
+		var current_speed := maxf(velocity.length(), prototype_swim_min_speed)
+		var current_direction := velocity.normalized()
+		if current_direction == Vector2.ZERO:
+			current_direction = input_direction
+		var turn_limit := deg_to_rad(prototype_swim_turn_speed_degrees) * delta
+		var turn_angle := clampf(current_direction.angle_to(input_direction), -turn_limit, turn_limit)
+		var steered_direction := current_direction.rotated(turn_angle).normalized()
+		var propulsion := prototype_swim_acceleration + current_speed * prototype_swim_speed_gain_rate
+		var next_speed := minf(current_speed + propulsion * delta, prototype_swim_max_speed)
+		velocity = steered_direction * next_speed
+	elif prototype_swim_idle_drag > 0.0:
 		velocity = velocity.move_toward(Vector2.ZERO, prototype_swim_idle_drag * delta)
 
 

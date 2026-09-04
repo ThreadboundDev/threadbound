@@ -6,9 +6,13 @@ water-mechanics test room and should remain unchanged while this prototype is tu
 ## Current traversal rules
 
 - Polygon water supports freely shaped test volumes.
-- Directional input steers existing velocity instead of replacing it instantly.
-- Releasing input applies light drag; striking terrain drains speed.
-- An upward breach preserves velocity and applies a bounded launch multiplier.
+- Directional input bends the existing trajectory and adds propulsion. Acceleration
+  grows with current speed until a high safety ceiling, so clean routes compound.
+- Releasing input coasts without stopping; striking terrain is the primary way to
+  lose speed after the Hermit's water traversal item removes water resistance.
+- Crossing any water boundary preserves the current trajectory and applies a
+  bounded momentum multiplier. Upward steering at an edge therefore becomes a
+  speed-scaled jump without replacing the velocity with a fixed jump value.
 - Grapple retracts and cannot fire while the player is submerged. It is available
   immediately after a breach.
 - Water bulbs are momentum gates. Their displayed number is the required impact
