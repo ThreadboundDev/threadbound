@@ -7,9 +7,6 @@ extends ColorRect
 		fallback_size = Vector2(maxf(value.x, 16.0), maxf(value.y, 16.0))
 		_sync_to_water_volume()
 
-var _last_synced_size := Vector2.ZERO
-
-
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_sync_to_water_volume()
@@ -27,11 +24,10 @@ func _sync_to_water_volume() -> void:
 		var parent_size: Variant = water_volume.get("size")
 		if parent_size is Vector2:
 			target_size = parent_size
-	if target_size.is_equal_approx(_last_synced_size):
-		return
-	_last_synced_size = target_size
-	offset_left = -target_size.x * 0.5
-	offset_top = -target_size.y * 0.5
-	offset_right = target_size.x * 0.5
-	offset_bottom = target_size.y * 0.5
-
+	# The parent volume owns world scaling. A stale child scale or position makes
+	# this Control stretch from its top-left pivot and visibly leave the hitbox.
+	# Reassert the complete local rect, not only its size, on every editor sync.
+	scale = Vector2.ONE
+	rotation = 0.0
+	position = -target_size * 0.5
+	size = target_size

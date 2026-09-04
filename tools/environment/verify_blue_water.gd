@@ -19,6 +19,15 @@ func _ready() -> void:
 	assert(visual.size.is_equal_approx(water.size))
 	assert(is_equal_approx(visual.position.x, -water.size.x * 0.5))
 	assert(is_equal_approx(visual.position.y, -water.size.y * 0.5))
+	visual.position = Vector2(170.0, -40.0)
+	visual.scale = Vector2(2.75, 0.6)
+	visual.call("_sync_to_water_volume")
+	assert(visual.scale == Vector2.ONE, "Water artwork must not keep an independent scale.")
+	assert(
+		visual.position.is_equal_approx(-water.size * 0.5),
+		"Water artwork must recenter over its collision after a stale transform."
+	)
+	assert(visual.size.is_equal_approx(water.size))
 	assert((visual.material as ShaderMaterial).shader.code.contains("hint_screen_texture"))
 	assert((visual.material as ShaderMaterial).shader.code.contains("horizontal_blur_px"))
 
