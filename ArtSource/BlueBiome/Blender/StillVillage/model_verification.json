@@ -1,0 +1,62 @@
+[
+  {
+    "id": "stone_cap_short",
+    "meshes": 9,
+    "triangles": 980
+  },
+  {
+    "id": "stone_cap_long",
+    "meshes": 15,
+    "triangles": 1796
+  },
+  {
+    "id": "timber_deck",
+    "meshes": 15,
+    "triangles": 2900
+  },
+  {
+    "id": "curved_brace",
+    "meshes": 8,
+    "triangles": 820
+  },
+  {
+    "id": "support_post",
+    "meshes": 8,
+    "triangles": 920
+  },
+  {
+    "id": "bulb_hanger",
+    "meshes": 7,
+    "triangles": 1616
+  },
+  {
+    "id": "dry_channel",
+    "meshes": 11,
+    "triangles": 1036
+  },
+  {
+    "id": "stopped_waterwheel",
+    "meshes": 19,
+    "triangles": 1592
+  },
+  {
+    "id": "shore_stone",
+    "meshes": 6,
+    "triangles": 264
+  },
+  {
+    "id": "grass_clump",
+    "meshes": 13,
+    "triangles": 624
+  },
+  {
+    "id": "cherry_cluster",
+    "meshes": 49,
+    "triangles": 4320
+  },
+  {
+    "id": "cloth_awning",
+    "meshes": 4,
+    "triangles": 2992
+  }
+]
