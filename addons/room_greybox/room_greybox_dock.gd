@@ -19,6 +19,7 @@ func _ready() -> void:
 	%Solid.pressed.connect(_add.bind(SOLID, "LargeBlock", true, {}))
 	%OneWay.pressed.connect(_add.bind(SOLID, "OneWayBlock", true, {"one_way": true}))
 	%Water.pressed.connect(_add_polygon_water)
+	%AirPocket.pressed.connect(_add.bind(WATER, "AirPocket", false, {"air_pocket": true}))
 	%EditWaterShape.pressed.connect(_edit_water_shape)
 	%MoveWater.pressed.connect(_select_water_root)
 	%Hazard.pressed.connect(_add.bind(HAZARD, "SpikeHazard", false, {}))

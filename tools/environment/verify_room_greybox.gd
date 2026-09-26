@@ -52,7 +52,7 @@ func _ready() -> void:
 	assert((water.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(640, 320))
 	assert(is_equal_approx(water.get_surface_global_y(), 180.0), "Scaled water surface is incorrect.")
 	assert(water.z_index < tile_layer.z_index)
-	assert(water.water_color.a == 1.0)
+	assert(water.water_color.a > 0.0 and water.water_color.a < 1.0, "Traversable water keeps the player visible.")
 
 	var hazard := HAZARD.instantiate() as GreyboxHazard2D
 	add_child(hazard)
@@ -75,7 +75,10 @@ func _ready() -> void:
 		(bumper.get_node("ContactReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80),
 		"Water-bulb contact must follow its authored size."
 	)
-	assert(bumper is Node2D and not bumper is CollisionObject2D, "Water bulbs must not be solid or walkable.")
+	assert(
+		bumper is Node2D and not bumper.is_class("CollisionObject2D"),
+		"Water bulbs must not be solid or walkable."
+	)
 	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
 	assert(bumper_receiver.collision_layer == 2)
 	assert((bumper.get_node("GrappleTarget") as Area2D).collision_layer == 4)
@@ -142,6 +145,7 @@ func _ready() -> void:
 	assert(not player.get("air_jump_available"), "Pogo must not restore the air jump.")
 	assert(not player.get("current_attack_uses_air_double"))
 	var bumper_hit := DamageData.new()
+	bumper_hit.is_melee = true
 	bumper_hit.source = player
 	bumper_hit.knockback = Vector2.DOWN * 250.0
 	player.process_mode = Node.PROCESS_MODE_DISABLED
@@ -239,6 +243,8 @@ func _ready() -> void:
 	player.set("is_hurt", false)
 	player.set("pogo_rebound_animation_timer", 0.0)
 	player.set("current_attack_uses_grapple_strike", false)
+	player.velocity = Vector2(150, 0)
+	(player.get_node("Player Animation") as AnimatedSprite2D).flip_h = false
 	player.call("update_animations", 1.0)
 	assert(player.current_body_anim == "Swim", "Moving in water should use the swim animation.")
 	var player_sprite := player.get_node("Player Animation") as AnimatedSprite2D
@@ -250,8 +256,9 @@ func _ready() -> void:
 		is_equal_approx(player_sprite.rotation_degrees, 6.0),
 		"Right-facing swimming should pitch forward by six degrees."
 	)
+	player.velocity = Vector2.ZERO
 	player.call("update_animations", 0.0)
-	assert(player.current_body_anim == "Jump_Apex", "Floating in water should use Jump_Apex.")
+	assert(player.current_body_anim == "Swim_Idle", "Floating in water should use Swim_Idle.")
 	assert(is_zero_approx(player_sprite.rotation), "Floating should clear the swim pitch.")
 	player.call("exit_prototype_water", water)
 	assert(not player.call("is_in_prototype_water"))

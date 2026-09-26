@@ -6,7 +6,7 @@ extends Area2D
 	set(value):
 		size = Vector2(maxf(value.x, 16.0), maxf(value.y, 16.0))
 		_refresh()
-@export var water_color := Color(0.08, 0.38, 0.72, 1.0):
+@export var water_color := Color(0.08, 0.55, 0.98, 0.34):
 	set(value):
 		water_color = value
 		queue_redraw()
@@ -27,15 +27,16 @@ func _refresh() -> void:
 	var rectangle := collision.shape as RectangleShape2D
 	if rectangle == null:
 		rectangle = RectangleShape2D.new()
-		collision.shape = rectangle
+	else:
+		rectangle = rectangle.duplicate() as RectangleShape2D
+	collision.shape = rectangle
 	rectangle.size = size
 
 
 func _draw() -> void:
 	var rect := Rect2(-size * 0.5, size)
-	# Prototype water is a surface, not a dive volume. Keep it opaque so the
-	# submerged portion of the player is cleanly masked instead of showing legs.
-	draw_rect(rect, Color(water_color.r, water_color.g, water_color.b, 1.0), true)
+	# This is traversable water: keep the submerged player and boundaries visible.
+	draw_rect(rect, water_color, true)
 	draw_rect(rect, Color(0.45, 0.85, 1.0, 0.95), false, 4.0)
 	for x in range(int(-size.x * 0.5), int(size.x * 0.5), 32):
 		draw_line(Vector2(x, -size.y * 0.5 + 8.0), Vector2(x + 16.0, -size.y * 0.5 + 4.0), Color(0.7, 0.95, 1.0, 0.8), 3.0)

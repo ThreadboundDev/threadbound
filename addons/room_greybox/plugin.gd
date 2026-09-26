@@ -29,10 +29,9 @@ func add_greybox_scene(scene_path: String, base_name: String, snap_to_grid: bool
 		dock.call("set_status", "Could not load %s" % scene_path, true)
 		return
 	var instance := packed.instantiate()
-	instance.name = _unique_child_name(root, base_name)
 	var parent := _preferred_parent(root)
-	parent.add_child(instance)
-	instance.owner = root
+	instance.name = _unique_child_name(parent, base_name)
+	_add_owned_node(parent, instance, root)
 	if instance is GreyboxPolygonWater2D:
 		root.set_editable_instance(instance, true)
 	if instance is Node2D:
@@ -90,8 +89,7 @@ func select_or_add_terrain_layer() -> void:
 		return
 	var layer := TILE_LAYER_SCENE.instantiate() as TileMapLayer
 	var parent := _preferred_parent(root)
-	parent.add_child(layer)
-	layer.owner = root
+	_add_owned_node(parent, layer, root)
 	_select_node(layer)
 	dock.call("set_status", "Terrain created. Choose a solid or one-way tile and paint in the 2D view.", false)
 
@@ -106,6 +104,8 @@ func _preferred_parent(root: Node) -> Node:
 	var selected := EditorInterface.get_selection().get_selected_nodes()
 	if selected.size() == 1 and selected[0] is Node2D:
 		var selected_node := selected[0] as Node2D
+		if selected_node is CollisionPolygon2D and selected_node.get_parent() is GreyboxPolygonWater2D:
+			return selected_node.get_parent().get_parent()
 		if (
 			selected_node is GreyboxBlock2D
 			or selected_node is GreyboxWater2D
@@ -117,6 +117,15 @@ func _preferred_parent(root: Node) -> Node:
 			return selected_node.get_parent()
 		return selected_node
 	return root
+
+func _add_owned_node(parent: Node, node: Node, root: Node) -> void:
+	var undo := get_undo_redo()
+	undo.create_action("Add " + str(node.name))
+	undo.add_do_method(parent, "add_child", node)
+	undo.add_do_property(node, "owner", root)
+	undo.add_do_reference(node)
+	undo.add_undo_method(parent, "remove_child", node)
+	undo.commit_action()
 
 
 func _placement_position(root: Node, parent: Node) -> Vector2:

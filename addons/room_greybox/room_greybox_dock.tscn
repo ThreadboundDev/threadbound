@@ -59,7 +59,12 @@ text = "Polygon Water"
 [node name="EditWaterShape" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Edit Water Points"
+text = "Edit Water / Air Points"
+
+[node name="AirPocket" type="Button" parent="Margin/Rows/Geometry"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Air Pocket"
 
 [node name="MoveWater" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
