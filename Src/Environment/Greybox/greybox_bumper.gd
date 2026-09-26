@@ -2,6 +2,8 @@
 class_name GreyboxBumper2D
 extends Node2D
 
+const EDITOR_BULB_FRAMES = preload("res://Assets/BlueBiome/StillVillage/Bulb/PetalV2/bulb_frames.tres")
+
 signal hit_count_changed(hits_remaining: int)
 signal broken
 signal regenerated
@@ -20,10 +22,8 @@ signal regenerated
 @export_range(0.0, 1200.0, 10.0, "or_greater") var ground_scoot_speed := 320.0
 @export_range(0.0, 1200.0, 10.0, "or_greater") var contact_bonk_speed := 240.0
 @export_range(0.0, 128.0, 1.0, "or_greater") var contact_clearance := 40.0
-@export_range(0.0, 3000.0, 10.0, "or_greater") var required_break_speed := 700.0
+@export_range(0.0, 1600.0, 10.0, "or_greater") var dash_lift_speed := 1000.0
 @export_range(1.0, 3.0, 0.05, "or_greater") var momentum_multiplier := 1.2
-@export_range(0.0, 1200.0, 10.0, "or_greater") var minimum_exit_speed := 820.0
-@export_range(0.0, 1.0, 0.05) var failure_speed_retention := 0.65
 @export_range(0.0, 30.0, 0.1, "or_greater") var regeneration_delay := 3.0
 @export_group("Prototype Appearance")
 @export var bumper_color := Color(0.94, 0.96, 1.0, 0.96):
@@ -41,6 +41,8 @@ signal regenerated
 
 var _hits_remaining := 1
 var _is_broken := false
+## Presentation direction, published before broken; zero means a remote pop.
+var release_direction := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -62,10 +64,14 @@ func _refresh() -> void:
 
 
 func _set_rectangle_size(collision_shape: CollisionShape2D, rectangle_size: Vector2) -> void:
+	if Engine.is_editor_hint():
+		collision_shape.self_modulate = Color(1,1,1,0)
 	var rectangle := collision_shape.shape as RectangleShape2D
 	if rectangle == null:
 		rectangle = RectangleShape2D.new()
-		collision_shape.shape = rectangle
+	else:
+		rectangle = rectangle.duplicate() as RectangleShape2D
+	collision_shape.shape = rectangle
 	rectangle.size = rectangle_size
 
 
@@ -73,11 +79,18 @@ func _draw() -> void:
 	if _is_broken:
 		return
 	var rect := Rect2(-size * 0.5, size)
+	if Engine.is_editor_hint():
+		var texture: Texture2D = EDITOR_BULB_FRAMES.get_frame_texture(&"rush", 0)
+		var art_scale := size.x / 202.6667
+		draw_texture_rect(texture, Rect2(Vector2(-196.0,-311.4667)*art_scale, Vector2(360,480)*art_scale), false)
+		draw_rect(rect, Color(0.4,0.9,1,0.8), false, 2.0)
+		draw_string(ThemeDB.fallback_font, Vector2(-size.x*.5,size.y*.5+26), "WATER BULB", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color.WHITE)
+		return
 	var health_ratio := float(_hits_remaining) / float(maxi(hits_to_break, 1))
 	var display_color := bumper_color.darkened((1.0 - health_ratio) * 0.28)
 	draw_rect(rect, display_color, true)
 	draw_rect(rect, outline_color, false, 4.0)
-	var mode_label := "BULB  %d" % roundi(required_break_speed)
+	var mode_label := "BULB"
 	var label_size := ThemeDB.fallback_font.get_string_size(mode_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18)
 	draw_string(ThemeDB.fallback_font, Vector2(-label_size.x * 0.5, 6.0), mode_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color(0.03, 0.08, 0.13, 0.92))
 	if hits_to_break > 1:
@@ -89,56 +102,43 @@ func _draw() -> void:
 
 
 func _on_hit_received(damage: DamageData) -> void:
-	# Momentum gates are traversal checks. Weapon damage cannot bypass them.
-	pass
+	if _is_broken or damage == null:
+		return
+	# Ranged hits may share a player source, so classify the hit, not its owner.
+	_accept_activation(damage if damage.is_melee else null, true, true)
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if _is_broken or not body.is_in_group("player"):
 		return
-	var moving_body := body as CharacterBody2D
-	var impact_speed: float = moving_body.velocity.length() if moving_body else 0.0
-	if impact_speed >= required_break_speed:
-		_break_from_momentum(body)
-		return
-	_rebound_body(body)
+	if body.has_method("is_dash_active") and body.call("is_dash_active"):
+		var moving_body := body as CharacterBody2D
+		if moving_body and body.has_method("apply_water_bulb_dash_boost"):
+			var incoming := moving_body.velocity
+			var boosted := incoming * momentum_multiplier
+			boosted.y = minf(boosted.y, -dash_lift_speed)
+			release_direction = boosted.normalized()
+			_hits_remaining = 0
+			hit_count_changed.emit(0)
+			_break(null)
+			body.call_deferred("apply_water_bulb_dash_boost", incoming, momentum_multiplier, dash_lift_speed)
+			return
+	# Ordinary contact is harmless and never spends the bulb.
+	_bonk_body_out(body)
 
 
 func activate_from_grapple(_source: Node = null) -> bool:
-	return false
-
-
-func _break_from_momentum(body: Node2D) -> void:
-	_is_broken = true
+	if _is_broken:
+		return false
 	_hits_remaining = 0
-	hit_count_changed.emit(_hits_remaining)
-	_set_receivers_disabled(true)
-	queue_redraw()
-	broken.emit()
-	var moving_body := body as CharacterBody2D
-	var direction: Vector2 = moving_body.velocity.normalized() if moving_body else Vector2.ZERO
-	if direction == Vector2.ZERO:
-		direction = (body.global_position - global_position).normalized()
-	if body.has_method("apply_water_bulb_boost"):
-		body.call_deferred("apply_water_bulb_boost", direction, momentum_multiplier, minimum_exit_speed)
-	if regeneration_delay > 0.0:
-		get_tree().create_timer(regeneration_delay).timeout.connect(_regenerate)
-
-
-func _rebound_body(body: Node2D) -> void:
-	var moving_body := body as CharacterBody2D
-	var incoming: Vector2 = moving_body.velocity if moving_body else Vector2.ZERO
-	var direction: Vector2 = -incoming.normalized()
-	if direction == Vector2.ZERO:
-		direction = (body.global_position - global_position).normalized()
-	if direction == Vector2.ZERO:
-		direction = Vector2.UP
-	_bonk_body_out(body)
-	if moving_body:
-		moving_body.velocity = direction * maxf(contact_bonk_speed, incoming.length() * failure_speed_retention)
+	release_direction = Vector2.ZERO
+	hit_count_changed.emit(0)
+	_break(null)
+	return true
 
 
 func _accept_activation(damage: DamageData, force_full_launch: bool, recoil: bool) -> void:
+	release_direction = Vector2.ZERO
 	_hits_remaining = maxi(_hits_remaining - 1, 0)
 	hit_count_changed.emit(_hits_remaining)
 	queue_redraw()
@@ -150,9 +150,9 @@ func _break(damage: DamageData, force_full_launch := false, recoil := true) -> v
 	_is_broken = true
 	_set_receivers_disabled(true)
 	queue_redraw()
-	broken.emit()
 	if damage:
 		_launch_attacker(damage, force_full_launch, recoil)
+	broken.emit()
 	if regeneration_delay > 0.0:
 		get_tree().create_timer(regeneration_delay).timeout.connect(_regenerate)
 
@@ -169,6 +169,7 @@ func _launch_attacker(damage: DamageData, force_full_launch: bool, recoil: bool)
 	if incoming_direction == Vector2.ZERO:
 		incoming_direction = Vector2.DOWN
 	var launch_direction := -incoming_direction if recoil else incoming_direction
+	release_direction = launch_direction
 	var was_grounded: bool = source.is_on_floor() and not force_full_launch
 	source.call_deferred("apply_traversal_launch", launch_direction, launch_jump_heights, was_grounded, ground_scoot_speed)
 
