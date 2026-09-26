@@ -201,6 +201,10 @@ func play_equipment_anim(anim_name: String) -> void:
 
 func _play_grapple_fire_animation() -> void:
 	action_anim_lock_timer = grapple_fire_anim_lock_time
+	if player:
+		var live_visual = player.get("live_3d_visual")
+		if live_visual and live_visual.has_method("play_grapple_throw"):
+			live_visual.play_grapple_throw()
 
 	var use_diagonal: bool = abs(grapple_direction.y) > 0.35
 	if player and absf(grapple_direction.x) > 0.05:
@@ -273,6 +277,12 @@ func exit_save_point_pose() -> void:
 # BASIC HELPERS
 # ===============================
 func get_grapple_origin_global_position() -> Vector2:
+	if player:
+		var live_visual = player.get("live_3d_visual")
+		if live_visual and live_visual.has_method("get_grapple_origin_player_offset"):
+			var live_offset: Vector2 = live_visual.call("get_grapple_origin_player_offset")
+			if live_offset.length_squared() > 0.001:
+				return player.to_global(live_offset)
 	if grapple_origin:
 		return grapple_origin.global_position
 
@@ -280,6 +290,14 @@ func get_grapple_origin_global_position() -> Vector2:
 		return player.global_position
 
 	return global_position
+
+
+func get_active_grapple_direction() -> Vector2:
+	if grapple_direction.length_squared() > 0.001:
+		return grapple_direction.normalized()
+	if player:
+		return Vector2(float(player.last_direction), 0.0)
+	return Vector2.RIGHT
 
 func is_grapple_attached() -> bool:
 	return grapple_state == GrappleState.ATTACHED

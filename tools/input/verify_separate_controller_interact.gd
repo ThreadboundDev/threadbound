@@ -9,9 +9,8 @@ func _ready() -> void:
 	assert(jump_event.button_index == JOY_BUTTON_A, "Jump should remain Cross/A")
 	assert(accept_event is InputEventJoypadButton, "UI Confirm should remain a face button")
 	assert(accept_event.button_index == JOY_BUTTON_A, "UI Confirm should share Cross/A with Jump")
-	assert(interact_event is InputEventJoypadMotion, "Interact should use a trigger")
-	assert(interact_event.axis == JOY_AXIS_TRIGGER_RIGHT, "Interact should use R2/Right Trigger")
-	assert(interact_event.axis_value > 0.0, "Interact should use the pressed trigger direction")
+	assert(interact_event is InputEventJoypadButton, "Interact should use a stick button")
+	assert(interact_event.button_index == JOY_BUTTON_RIGHT_STICK, "Interact should use R3/Right Stick")
 
 	var jump_source := FileAccess.get_file_as_string("res://Src/Characters/Player/player.gd")
 	var jump_guard_start := jump_source.find("func _can_process_jump_input")

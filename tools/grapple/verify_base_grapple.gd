@@ -18,19 +18,33 @@ const GRAPPLE_EQUIPMENT_SCENES := [
 	{"label": "yellow", "scene": preload("res://Src/Equipment/yellow_gloves.tscn")},
 ]
 
+class GrapplePlayerDouble extends CharacterBody2D:
+	var _grapple_ledge_assist_timer := 0.0
+	var _grapple_ledge_assist_direction := 0
+
+	func request_grapple_ledge_assist(grapple_position: Vector2) -> void:
+		var horizontal_delta := grapple_position.x - global_position.x
+		if is_zero_approx(horizontal_delta):
+			return
+		_grapple_ledge_assist_direction = int(signf(horizontal_delta))
+		_grapple_ledge_assist_timer = 0.25
+
+
 var failures: Array[String] = []
 
 func _ready() -> void:
 	var player := _create_player()
 	add_child(player)
-	_verify_frame_aligned_pose_libraries(player)
+	var full_player := PLAYER_SCENE.instantiate()
+	_verify_frame_aligned_pose_libraries(full_player)
 	if not is_equal_approx(
-		float(player.grapple_strike_visual_scale_multiplier),
+		float(full_player.grapple_strike_visual_scale_multiplier),
 		0.82
 	):
 		failures.append(
 			"Grapple strike body animation is not normalized to the approved 0.82 scale."
 		)
+	full_player.free()
 
 	for equipment in GRAPPLE_EQUIPMENT_SCENES:
 		_verify_serialized_grapple_visibility(
@@ -667,7 +681,7 @@ func _expect_integration(condition: bool, message: String) -> void:
 		failures.append(message)
 
 func _create_player() -> CharacterBody2D:
-	var player := CharacterBody2D.new()
+	var player := GrapplePlayerDouble.new()
 	player.name = "Player"
 	player.add_to_group("player")
 

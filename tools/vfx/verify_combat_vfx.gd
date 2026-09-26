@@ -201,6 +201,10 @@ func _verify_flow_state_vfx() -> void:
 			"Flow silhouette shell uses the distance-field energy shader."
 		)
 	_expect(
+		bool(flow_vfx.get("use_multimesh_soul_trail")),
+		"Flow State uses pose-matched body afterimages by default."
+	)
+	_expect(
 		flow_vfx.get_node_or_null("AuraBack/ConceptAura") == null,
 		"Flow State VFX omits the detached yellow concept composition."
 	)
@@ -229,8 +233,10 @@ func _verify_flow_state_vfx() -> void:
 			"Meditation uses a clearly visible half-strength Flow target."
 		)
 		_expect(
-			(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy > 0.1,
-			"Meditation displays a restrained character-bound glow."
+			is_zero_approx(
+				(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy
+			),
+			"Meditation does not add a detached 2D point light."
 		)
 		flow_vfx.call(&"set_meditation_active", false)
 	if flow_vfx.has_method(&"set_flow_active"):
@@ -239,12 +245,14 @@ func _verify_flow_state_vfx() -> void:
 		flow_vfx.set("_activation_burst", 0.0)
 		flow_vfx.call(&"_update_aura_visuals")
 		_expect(
-			(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy >= 0.48,
-			"Full Flow supplies a strong character-bound glow."
+			is_zero_approx(
+				(flow_vfx.get_node("AuraBack/FlowLight") as PointLight2D).energy
+			),
+			"Full Flow relies on its model-matched outline instead of a 2D point light."
 		)
 		_expect(
-			(flow_vfx.get_node("TransitionLayer/TransitionCore") as CanvasItem).visible,
-			"Full Flow retains a brief visible ignition burst."
+			not (flow_vfx.get_node("TransitionLayer/TransitionCore") as CanvasItem).visible,
+			"Full Flow does not spawn the retired white ignition burst."
 		)
 		var power_channels: Array[Color] = [Color(0.94, 0.2, 0.17, 1.0)]
 		flow_vfx.call(&"set_identity_channels", power_channels)
@@ -273,18 +281,9 @@ func _verify_flow_state_vfx() -> void:
 				if child is AnimatedSprite2D:
 					attack_layers.append(child as AnimatedSprite2D)
 		_expect(
-			not attack_layers.is_empty(),
-			"Flow attack swing spawns visible crescent layers."
+			attack_layers.is_empty(),
+			"Flow attacks do not spawn detached 2D crescent layers."
 		)
-		for attack_layer in attack_layers:
-			_expect(
-				attack_layer.flip_h,
-				"Flow attack crescent is horizontally mirrored into weapon-travel orientation."
-			)
-			_expect(
-				attack_layer.modulate.a <= 0.32,
-				"Flow attack crescent layers retain the reduced combat-readable opacity."
-			)
 
 	for method_name in [&"play_dash", &"play_jump", &"play_land"]:
 		if flow_vfx.has_method(method_name):

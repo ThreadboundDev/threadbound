@@ -3,12 +3,13 @@ class_name FlowMultiMeshTrail
 
 const TRAIL_SHADER := preload("res://Src/VFX/Flow/flow_multimesh_trail.gdshader")
 
-@export_range(8, 48, 1) var capacity := 22
-@export var stamp_spacing := 24.0
-@export var stamp_lifetime := 0.58
+@export_range(3, 48, 1) var capacity := 5
+@export var stamp_spacing := 72.0
+@export var stamp_lifetime := 0.30
+@export var minimum_capture_interval := 0.12
 @export var minimum_speed := 175.0
 @export var maximum_speed := 900.0
-@export_range(0.0, 1.0, 0.01) var maximum_opacity := 0.38
+@export_range(0.0, 1.0, 0.01) var maximum_opacity := 0.20
 @export var upward_drift := 0.0
 @export var fade_distance := 280.0
 
@@ -22,7 +23,9 @@ var _ages: Array[float] = []
 var _lifetimes: Array[float] = []
 var _drift: Array[Vector2] = []
 var _materials: Array[ShaderMaterial] = []
-var _source_visual: AnimatedSprite2D
+var _source_visual: Node2D
+var _capture_cooldown := 0.0
+var _snapshot_textures: Array[ImageTexture] = []
 
 func _ready() -> void:
 	top_level = true
@@ -33,6 +36,7 @@ func _ready() -> void:
 	set_physics_process(true)
 
 func _physics_process(delta: float) -> void:
+	_capture_cooldown = maxf(_capture_cooldown - delta, 0.0)
 	for index in _sprites.size():
 		var sprite := _sprites[index]
 		if not sprite.visible:
@@ -63,7 +67,7 @@ func set_trail_color(color: Color) -> void:
 	_trail_color = color
 	_trail_color.a = 1.0
 
-func sample_motion(player_visual: AnimatedSprite2D, velocity: Vector2, strength: float) -> void:
+func sample_motion(player_visual: Node2D, velocity: Vector2, strength: float) -> void:
 	_source_visual = player_visual
 	if not _enabled or not is_instance_valid(player_visual):
 		_has_last_position = false
@@ -76,16 +80,12 @@ func sample_motion(player_visual: AnimatedSprite2D, velocity: Vector2, strength:
 	if not _has_last_position:
 		_last_stamp_position = world_position
 		_has_last_position = true
-		_emit_stamp(player_visual, velocity, strength)
 		return
 	var distance := _last_stamp_position.distance_to(world_position)
 	if distance < stamp_spacing:
 		return
-	var steps := mini(int(floor(distance / stamp_spacing)), 4)
-	var direction := _last_stamp_position.direction_to(world_position)
-	for step in range(steps):
-		_last_stamp_position += direction * stamp_spacing
-		_emit_stamp(player_visual, velocity, strength, _last_stamp_position)
+	if _emit_stamp(player_visual, velocity, strength):
+		_last_stamp_position = world_position
 
 func _build_pool() -> void:
 	for index in capacity:
@@ -99,33 +99,43 @@ func _build_pool() -> void:
 		add_child(sprite)
 		_sprites.append(sprite)
 		_materials.append(stamp_material)
+		_snapshot_textures.append(null)
 		_ages.append(stamp_lifetime)
 		_lifetimes.append(stamp_lifetime)
 		_drift.append(Vector2.ZERO)
 
 func _emit_stamp(
-	player_visual: AnimatedSprite2D,
+	player_visual: Node2D,
 	_velocity: Vector2,
 	strength: float,
 	position_override := Vector2.INF
-) -> void:
-	if player_visual.sprite_frames == null:
-		return
-	var frame_texture := player_visual.sprite_frames.get_frame_texture(
-		player_visual.animation,
-		player_visual.frame
-	)
+) -> bool:
+	if _capture_cooldown > 0.0:
+		return false
+	var frame_texture := _get_visual_texture(player_visual)
 	if frame_texture == null:
-		return
+		return false
+	var snapshot_image := frame_texture.get_image()
+	if snapshot_image == null or snapshot_image.is_empty():
+		return false
 	var sprite := _sprites[_write_index]
-	sprite.texture = frame_texture
+	var snapshot := _snapshot_textures[_write_index]
+	if (
+		snapshot == null
+		or Vector2i(snapshot.get_size()) != snapshot_image.get_size()
+	):
+		snapshot = ImageTexture.create_from_image(snapshot_image)
+		_snapshot_textures[_write_index] = snapshot
+	else:
+		snapshot.update(snapshot_image)
+	sprite.texture = snapshot
 	sprite.position = player_visual.global_position if position_override == Vector2.INF else position_override
 	sprite.rotation = player_visual.global_rotation
 	sprite.scale = player_visual.global_scale
-	sprite.offset = player_visual.offset
-	sprite.centered = player_visual.centered
-	sprite.flip_h = player_visual.flip_h
-	sprite.flip_v = player_visual.flip_v
+	sprite.offset = _get_visual_offset(player_visual)
+	sprite.centered = _get_visual_centered(player_visual)
+	sprite.flip_h = _get_visual_flip_h(player_visual)
+	sprite.flip_v = _get_visual_flip_v(player_visual)
 	sprite.modulate = _trail_color
 	sprite.modulate.a = maximum_opacity * clampf(strength, 0.45, 1.0)
 	sprite.visible = true
@@ -138,3 +148,42 @@ func _emit_stamp(
 	_materials[_write_index].set_shader_parameter(&"progress", 0.0)
 	_materials[_write_index].set_shader_parameter(&"noise_seed", randf() * 100.0)
 	_write_index = (_write_index + 1) % capacity
+	_capture_cooldown = minimum_capture_interval
+	return true
+
+func _get_visual_texture(visual: Node2D) -> Texture2D:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).texture
+	if visual is AnimatedSprite2D:
+		var animated := visual as AnimatedSprite2D
+		if animated.sprite_frames:
+			return animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+	return null
+
+func _get_visual_offset(visual: Node2D) -> Vector2:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).offset
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).offset
+	return Vector2.ZERO
+
+func _get_visual_centered(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).centered
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).centered
+	return true
+
+func _get_visual_flip_h(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).flip_h
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).flip_h
+	return false
+
+func _get_visual_flip_v(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).flip_v
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).flip_v
+	return false

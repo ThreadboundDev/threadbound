@@ -131,6 +131,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @onready var attack_swing_root: Node2D = $EquipmentMount/AttackSwingRoot
 @onready var attack_hitbox_anchor: Node2D = $EquipmentMount/AttackSwingRoot/AttackHitboxAnchor/HitboxTransform
 @onready var wall_cling_vfx: AnimatedSprite2D = $WallClingVFX as AnimatedSprite2D
+@onready var live_3d_visual: PlayerLive3DVisual = get_node_or_null("Live3DVisual") as PlayerLive3DVisual
 
 # ===============================
 # EQUIPMENT SCENES
@@ -141,6 +142,12 @@ const ATTACK_PROFILE_AIR_SECOND := {
 # Basic combat resource values for the HUD. Gameplay costs can build on these.
 @export_range(1, 9999, 1) var max_health := 100
 @export_range(0.0, 5.0, 0.05) var death_reset_delay := 0.45
+
+@export_group("Crouch and Block")
+@export_range(0.4, 0.9, 0.05) var crouch_height_ratio := 0.62
+@export_range(0.1, 1.0, 0.05) var crouch_move_speed_ratio := 0.45
+@export_range(0.0, 1.0, 0.05) var block_move_speed_ratio := 0.30
+@export_range(0.0, 1.0, 0.05) var block_damage_taken_ratio := 0.25
 
 @export_range(1, 6, 1) var max_action_points := 6:
 	set(value):
@@ -197,6 +204,11 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var prototype_swim_turn_speed_degrees := 120.0
 @export var prototype_swim_low_speed_resistance := 90.0
 @export var prototype_swim_idle_drag := 0.0
+@export_group("Lake Swimming")
+@export var lake_swim_speed := 480.0
+@export var lake_swim_acceleration := 2200.0
+@export var lake_swim_braking := 2600.0
+@export var lake_swim_burst_resistance := 650.0
 @export_range(0.0, 1.0, 0.05) var prototype_swim_wall_speed_retention := 0.55
 @export var prototype_swim_wall_impact_threshold := 240.0
 @export_range(1.0, 2.0, 0.05) var prototype_swim_breach_multiplier := 1.12
@@ -263,6 +275,7 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.0, 0.5, 0.01) var neutral_special_dash_cancel_window := 0.22
 @export_range(0.1, 1.0, 0.01) var neutral_special_visual_scale_multiplier := 1.0
 @export var neutral_special_visual_offset := Vector2(0.0, -20.0)
+@export var neutral_special_chest_vfx_offset := Vector2(0.0, -58.0)
 @export_range(0.0, 0.58, 0.005) var neutral_special_vfx_lead_time := 0.245
 @export_range(64.0, 360.0, 1.0) var neutral_special_aoe_radius := 220.0
 @export_range(0.1, 0.9, 0.01) var neutral_special_full_force_radius_ratio := 0.45
@@ -290,10 +303,14 @@ const ATTACK_PROFILE_AIR_SECOND := {
 
 @export_group("Ground Attack Combo")
 @export_range(0.05, 1.0, 0.01) var ground_combo_reset_window := 0.45
-@export var ground_combo_1_first_strike_frames := Vector2i(3, 5)
+@export_range(1.0, 2.5, 0.05) var ground_combo_playback_speed := 2.0
+@export var ground_combo_1_first_strike_frames := Vector2i(16, 24)
 @export var ground_combo_1_second_strike_frames := Vector2i(-1, -1)
-@export var ground_combo_2_first_strike_frames := Vector2i(2, 4)
-@export var ground_combo_2_second_strike_frames := Vector2i(9, 11)
+@export var ground_combo_2_first_strike_frames := Vector2i(37, 42)
+@export var ground_combo_2_second_strike_frames := Vector2i(-1, -1)
+@export var ground_combo_3_first_strike_frames := Vector2i(79, 90)
+@export var ground_combo_3_second_strike_frames := Vector2i(-1, -1)
+@export var crouch_attack_strike_frames := Vector2i(12, 20)
 @export var stationary_combo_2_first_strike_frames := Vector2i(5, 9)
 @export var stationary_combo_2_second_strike_frames := Vector2i(10, 15)
 @export var backpedal_combo_1_first_strike_frames := Vector2i(3, 11)
@@ -301,14 +318,15 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export var backpedal_combo_2_first_strike_frames := Vector2i(5, 12)
 @export var backpedal_combo_2_second_strike_frames := Vector2i(13, 16)
 @export_range(45.0, 180.0, 1.0) var ground_combo_hitbox_arc_degrees := 130.0
-@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 145.0
+@export_range(32.0, 300.0, 1.0) var ground_combo_forward_hitbox_radius := 205.0
 
-@export_group("Air Double Attack")
-@export var air_attack_first_strike_frames := Vector2i(5, 7)
-@export var air_attack_second_strike_frames := Vector2i(16, 18)
+@export_group("Neutral Air Attack")
+@export_range(1.0, 2.5, 0.05) var air_attack_playback_speed := 1.0
+@export var air_attack_first_strike_frames := Vector2i(7, 11)
+
 @export var pogo_attack_active_frames := Vector2i(0, 10)
 @export_range(45.0, 180.0, 1.0) var air_attack_hitbox_arc_degrees := 90.0
-@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 160.0
+@export_range(32.0, 300.0, 1.0) var air_attack_hitbox_radius := 195.0
 @export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
 @export_range(0.5, 1.5, 0.01) var double_attack_second_strike_pitch := 1.08
 
@@ -531,6 +549,10 @@ var _last_safe_knot_drop_position := Vector2.ZERO
 var _debug_no_clip_enabled := false
 var _debug_original_collision_layer := 0
 var _debug_original_collision_mask := 0
+var bank_dive_active := false
+var _bank_dive_elapsed := 0.0
+var _bank_dive_direction := 1
+
 var _prototype_water_surfaces: Dictionary = {}
 var _prototype_swim_exit_lock_timer := 0.0
 var _debug_blue_water_toggle_was_pressed := false
@@ -550,6 +572,14 @@ var _movement_facing_before_input := 1
 
 var is_attacking := false
 var is_hurt := false
+var is_crouching := false
+var is_blocking := false
+var _stance_transition_anim: StringName = &""
+var _last_incoming_hit_blocked := false
+var _body_collision_standing_size := Vector2.ZERO
+var _body_collision_standing_position := Vector2.ZERO
+var _hurtbox_collision_standing_size := Vector2.ZERO
+var _hurtbox_collision_standing_position := Vector2.ZERO
 var _hurt_animation_active := false
 var is_dead := false
 var god_mode_enabled := false
@@ -566,7 +596,16 @@ var _player_default_visual_scale := Vector2.ONE
 var _player_default_visual_position := Vector2.ZERO
 var _current_gloves_default_transform := Transform2D.IDENTITY
 var current_attack_is_special := false
+var current_attack_is_spin := false
+
+@export_group("Directional Spin Special")
+@export var spin_special_duration := 0.85
+@export var spin_special_active_frames := Vector2i(8, 25)
+@export var spin_special_dash_speed := 420.0
+@export var spin_special_radius := 175.0
+@export var spin_special_damage_multiplier := 1.8
 var current_attack_uses_ground_combo := false
+var current_attack_started_crouched := false
 var current_attack_uses_air_double := false
 var current_attack_uses_grapple_strike := false
 var current_grapple_strike_landed := false
@@ -618,6 +657,7 @@ func _ready() -> void:
 	_debug_original_collision_mask = collision_mask
 	_player_default_visual_scale = player_animation.scale
 	_player_default_visual_position = player_animation.position
+	_capture_standing_collision_shapes()
 	_default_attack_hitbox_polygon = attack_collision_polygon.polygon
 	if not player_animation.frame_changed.is_connected(_on_player_animation_frame_changed):
 		player_animation.frame_changed.connect(_on_player_animation_frame_changed)
@@ -742,6 +782,8 @@ func _physics_process(delta: float) -> void:
 	if save_point_interaction_active:
 		_process_save_point_interaction(delta)
 		return
+	if _process_bank_dive(delta):
+		return
 	if _process_ledge_climb(delta):
 		update_animations(0.0)
 		return
@@ -754,6 +796,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var was_on_floor := is_on_floor()
+	_update_defensive_stance()
 
 	# Gravity + coyote time
 	if god_mode_enabled:
@@ -777,7 +820,7 @@ func _physics_process(delta: float) -> void:
 	_movement_facing_before_input = last_direction
 	var horizontal_input := Input.get_axis("move_left", "move_right")
 	_update_dash_direction_intent(horizontal_input, delta)
-	if horizontal_input != 0 and not is_attacking:
+	if horizontal_input != 0 and not is_attacking and not is_blocking:
 		last_direction = sign(horizontal_input)
 
 	var grapple_restricting := false
@@ -802,10 +845,16 @@ func _physics_process(delta: float) -> void:
 	elif current_attack_uses_grapple_strike and current_grapple_strike_landed:
 		# Preserve the authored recoil through the short attack recovery.
 		pass
+	elif is_attacking and current_attack_is_spin:
+		velocity.x = float(last_direction) * spin_special_dash_speed if attack_active_started and not attack_active_finished else 0.0
 	elif _is_attack_movement_committed():
 		velocity.x = 0.0
 	elif not grapple_restricting and not is_hurt:
 		var control := 1.0 if is_on_floor() else air_control_mult * get_momentum_air_control_multiplier()
+		if is_crouching and is_on_floor():
+			control *= crouch_move_speed_ratio
+		if is_blocking and is_on_floor():
+			control *= block_move_speed_ratio
 		if is_in_prototype_water():
 			_process_prototype_swim_movement(delta, horizontal_input)
 		else:
@@ -1236,7 +1285,7 @@ func _apply_god_mode_flight(delta: float) -> void:
 # WALL CLING
 # ===============================
 func handle_wall_cling(delta: float) -> void:
-	if _traversal_launch_control_recovery_timer > 0.0:
+	if is_in_prototype_water() or _traversal_launch_control_recovery_timer > 0.0:
 		is_wall_clinging = false
 		wall_cling_timer = 0.0
 		return
@@ -1310,6 +1359,7 @@ func _try_grab_ledge() -> bool:
 	var top_hit := space.intersect_ray(top_query)
 	if not _is_valid_ledge_top_hit(top_hit):
 		return false
+	var grabbed_from_water := is_in_prototype_water()
 	_ledge_direction = direction
 	_ledge_top = top_hit.position
 	is_ledge_hanging = true
@@ -1318,6 +1368,7 @@ func _try_grab_ledge() -> bool:
 	velocity = Vector2.ZERO
 	global_position = _ledge_top + Vector2(-direction * ledge_hang_offset.x, ledge_hang_offset.y)
 	player_animation.flip_h = direction < 0
+	play_character_anim("Water_Ledge_Grab" if grabbed_from_water else "Wall_Cling")
 	return true
 
 
@@ -1548,26 +1599,82 @@ func _get_current_gravity() -> float:
 	return gravity * fall_gravity_multiplier
 
 
+func can_start_bank_dive() -> bool:
+	return (is_on_floor() and debug_blue_water_power_unlocked and not bank_dive_active
+		and not is_in_prototype_water() and not is_dead and not is_hurt
+		and not is_attacking and not is_crouching and _dash_iframe_timer <= 0.0 and not save_point_interaction_active
+		and not is_near_interactable and not is_ledge_hanging and not is_ledge_climbing)
+
+func start_bank_dive(direction: int) -> bool:
+	if not can_start_bank_dive():
+		return false
+	# Reject a blocked launch without teleporting through bank walls.
+	if test_move(global_transform, Vector2(float(direction) * 48.0, -38.0)):
+		return false
+	bank_dive_active = true
+	_bank_dive_elapsed = 0.0
+	_bank_dive_direction = direction
+	_stance_transition_anim = &""
+	last_direction = direction
+	is_blocking = false
+	is_crouching = false
+	velocity = Vector2.ZERO
+	if live_3d_visual:
+		live_3d_visual.play_water_entry()
+	return true
+
+func _process_bank_dive(delta: float) -> bool:
+	if not bank_dive_active:
+		return false
+	_bank_dive_elapsed += delta
+	if is_hurt or is_dead or _bank_dive_elapsed > 1.2:
+		_finish_bank_dive()
+		return false
+	if _bank_dive_elapsed < 0.12:
+		return true
+	if velocity == Vector2.ZERO:
+		velocity = Vector2(float(_bank_dive_direction) * 430.0, -280.0)
+	velocity.y += 1500.0 * delta
+	move_and_slide()
+	if is_on_wall() or (_bank_dive_elapsed > 0.22 and is_on_floor()):
+		_finish_bank_dive()
+	elif is_in_prototype_water() and _bank_dive_elapsed > 0.28:
+		velocity = Vector2(float(_bank_dive_direction), 0.65).normalized() * maxf(velocity.length(), prototype_swim_min_speed)
+		_finish_bank_dive()
+	return true
+
+func _finish_bank_dive() -> void:
+	bank_dive_active = false
+	current_body_anim = ""
+	if live_3d_visual:
+		live_3d_visual.finish_water_entry()
+
 func enter_prototype_water(volume: Node, surface_y: float) -> void:
 	if not debug_blue_water_power_unlocked:
 		_reject_from_prototype_water(volume)
 		return
+	var was_outside_water := _prototype_water_surfaces.is_empty()
 	_prototype_water_surfaces[volume] = surface_y
-	if velocity.length() < prototype_swim_min_speed:
-		var entry_direction := velocity.normalized()
-		if entry_direction == Vector2.ZERO:
-			entry_direction = Vector2.DOWN
-		velocity = entry_direction * prototype_swim_min_speed
+	if was_outside_water and not bank_dive_active and live_3d_visual:
+		live_3d_visual.finish_water_entry()
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 
 
 func exit_prototype_water(volume: Node) -> void:
 	_prototype_water_surfaces.erase(volume)
+	if _is_in_lake_air_pocket():
+		return
+	for other_water in get_tree().get_nodes_in_group("lake_water_volumes"):
+		if other_water != volume and other_water.contains_global_point(get_water_sample_position()):
+			return
 	if _prototype_water_surfaces.is_empty() and velocity.length_squared() > 0.001:
+		# Carry earned speed out of water; slow exits must not become forced rockets.
+		if velocity.length() < lake_swim_speed or velocity.y >= 0.0:
+			return
 		var breach_speed := clampf(
-			maxf(velocity.length(), prototype_swim_breach_min_speed) * prototype_swim_breach_multiplier,
-			prototype_swim_breach_min_speed,
+			velocity.length() * prototype_swim_breach_multiplier,
+			0.0,
 			prototype_swim_breach_max_speed
 		)
 		velocity = velocity.normalized() * breach_speed
@@ -1602,10 +1709,30 @@ func _reject_from_prototype_water(volume: Node) -> void:
 
 
 func is_in_prototype_water() -> bool:
+	if _is_in_lake_air_pocket():
+		return false
 	for volume in _prototype_water_surfaces.keys():
 		if not is_instance_valid(volume):
 			_prototype_water_surfaces.erase(volume)
-	return not _prototype_water_surfaces.is_empty()
+	var point := get_water_sample_position()
+	for volume in get_tree().get_nodes_in_group("lake_water_volumes"):
+		if volume.has_method("contains_global_point") and volume.contains_global_point(point):
+			return true
+	# Older rectangular volumes have no point-query interface.
+	for volume in _prototype_water_surfaces:
+		if not volume.has_method("contains_global_point"):
+			return true
+	return false
+
+func get_water_sample_position() -> Vector2:
+	var shape := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	return shape.global_position if shape else global_position
+
+func _is_in_lake_air_pocket() -> bool:
+	for pocket in get_tree().get_nodes_in_group("lake_air_pockets"):
+		if pocket.has_method("contains_global_point") and pocket.contains_global_point(get_water_sample_position()):
+			return true
+	return false
 
 
 func _process_prototype_swim_vertical(delta: float) -> void:
@@ -1647,27 +1774,12 @@ func _process_prototype_swim_movement(delta: float, horizontal_input: float) -> 
 	var input_direction := Vector2(horizontal_input, vertical_input)
 	if input_direction.length_squared() > 1.0:
 		input_direction = input_direction.normalized()
-	if input_direction.length_squared() > 0.001:
-		input_direction = input_direction.normalized()
-		var current_speed := maxf(velocity.length(), prototype_swim_min_speed)
-		var current_direction := velocity.normalized()
-		if current_direction == Vector2.ZERO:
-			current_direction = input_direction
-		var turn_limit := deg_to_rad(prototype_swim_turn_speed_degrees) * delta
-		var turn_angle := clampf(current_direction.angle_to(input_direction), -turn_limit, turn_limit)
-		var steered_direction := current_direction.rotated(turn_angle).normalized()
-		var speed_ratio := clampf(current_speed / prototype_swim_max_speed, 0.0, 1.0)
-		var resistance := lerpf(prototype_swim_low_speed_resistance, 0.0, speed_ratio * speed_ratio)
-		var propulsion := prototype_swim_acceleration + current_speed * prototype_swim_speed_gain_rate
-		var next_speed := current_speed
-		if current_speed < prototype_swim_max_speed:
-			next_speed = minf(
-				current_speed + maxf(propulsion - resistance, 0.0) * delta,
-				prototype_swim_max_speed
-			)
-		velocity = steered_direction * next_speed
-	elif prototype_swim_idle_drag > 0.0:
-		velocity = velocity.move_toward(Vector2.ZERO, prototype_swim_idle_drag * delta)
+	var target := input_direction * lake_swim_speed
+	var rate := lake_swim_acceleration if input_direction.length_squared() > 0.001 else lake_swim_braking
+	# A dash or bulb may exceed cruise speed; shed that excess progressively.
+	if velocity.length() > lake_swim_speed + 30.0 and input_direction.dot(velocity) > 0.0:
+		rate = lake_swim_burst_resistance
+	velocity = velocity.move_toward(target, rate * delta)
 
 
 func _apply_prototype_water_wall_loss(pre_move_velocity: Vector2) -> void:
@@ -1678,6 +1790,14 @@ func _apply_prototype_water_wall_loss(pre_move_velocity: Vector2) -> void:
 		if collision and pre_move_velocity.dot(collision.get_normal()) < -prototype_swim_wall_impact_threshold:
 			velocity *= prototype_swim_wall_speed_retention
 			return
+
+
+func apply_water_bulb_dash_boost(incoming: Vector2, multiplier: float, lift: float) -> void:
+	# Capture velocity before cancelling dash, which clears horizontal speed.
+	var boosted := incoming * multiplier
+	boosted.y = minf(boosted.y, -lift)
+	apply_traversal_launch(boosted.normalized())
+	velocity = boosted
 
 
 func apply_water_bulb_boost(direction: Vector2, multiplier: float, minimum_speed: float) -> void:
@@ -1729,6 +1849,113 @@ func _begin_one_way_drop() -> void:
 	wall_cling_timer = 0.0
 
 # ===============================
+# CROUCH / BLOCK
+# ===============================
+func _capture_standing_collision_shapes() -> void:
+	var body_collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if body_collision and body_collision.shape is RectangleShape2D:
+		body_collision.shape = body_collision.shape.duplicate()
+		_body_collision_standing_size = (body_collision.shape as RectangleShape2D).size
+		_body_collision_standing_position = body_collision.position
+	var hurt_collision := get_node_or_null("Hurtbox/CollisionShape2D") as CollisionShape2D
+	if hurt_collision and hurt_collision.shape is RectangleShape2D:
+		hurt_collision.shape = hurt_collision.shape.duplicate()
+		_hurtbox_collision_standing_size = (hurt_collision.shape as RectangleShape2D).size
+		_hurtbox_collision_standing_position = hurt_collision.position
+
+
+func _update_defensive_stance() -> void:
+	var previous_crouch := is_crouching
+	var previous_block := is_blocking
+	var can_stance := (
+		is_on_floor()
+		and not is_dead
+		and not is_hurt
+		and not is_attacking
+		and not is_meditating
+		and not save_point_interaction_active
+		and not is_in_prototype_water()
+	)
+	var wants_crouch := (
+		previous_crouch
+		if is_attacking
+		else can_stance and Input.is_action_pressed("move_down")
+	)
+	if previous_crouch and not wants_crouch and not _can_restore_standing_collision():
+		wants_crouch = true
+	is_crouching = wants_crouch
+	is_blocking = can_stance and Input.is_action_pressed("Block")
+
+	if is_crouching != previous_crouch:
+		_apply_crouch_collision(is_crouching)
+
+	if is_crouching and is_blocking and (not previous_crouch or not previous_block):
+		_stance_transition_anim = &"Crouch_Block_Enter"
+	elif is_blocking and not previous_block:
+		_stance_transition_anim = &"Block_Enter"
+	elif previous_block and not is_blocking and is_crouching:
+		_stance_transition_anim = &"Crouch_Block_Exit"
+	elif is_crouching and not previous_crouch:
+		_stance_transition_anim = &"Crouch_Enter"
+	elif previous_crouch and not is_crouching:
+		_stance_transition_anim = &"Crouch_Exit"
+
+
+func _apply_crouch_collision(crouched: bool) -> void:
+	_resize_stance_rectangle(
+		get_node_or_null("CollisionShape2D") as CollisionShape2D,
+		_body_collision_standing_size,
+		_body_collision_standing_position,
+		crouched
+	)
+	_resize_stance_rectangle(
+		get_node_or_null("Hurtbox/CollisionShape2D") as CollisionShape2D,
+		_hurtbox_collision_standing_size,
+		_hurtbox_collision_standing_position,
+		crouched
+	)
+
+
+func _resize_stance_rectangle(
+	collision: CollisionShape2D,
+	standing_size: Vector2,
+	standing_position: Vector2,
+	crouched: bool
+) -> void:
+	if not collision or not collision.shape is RectangleShape2D or standing_size == Vector2.ZERO:
+		return
+	var rectangle := collision.shape as RectangleShape2D
+	if crouched:
+		var crouched_height := standing_size.y * crouch_height_ratio
+		rectangle.size = Vector2(standing_size.x, crouched_height)
+		collision.position = standing_position + Vector2(0.0, (standing_size.y - crouched_height) * 0.5)
+	else:
+		rectangle.size = standing_size
+		collision.position = standing_position
+
+
+func _can_restore_standing_collision() -> bool:
+	if _body_collision_standing_size == Vector2.ZERO:
+		return true
+	var standing_shape := RectangleShape2D.new()
+	standing_shape.size = _body_collision_standing_size
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = standing_shape
+	query.transform = global_transform * Transform2D(0.0, _body_collision_standing_position)
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+
+func _is_damage_from_facing_side(damage: DamageData) -> bool:
+	var source_x := damage.hit_position.x
+	if damage.source is Node2D:
+		source_x = (damage.source as Node2D).global_position.x
+	if is_zero_approx(source_x - global_position.x):
+		return false
+	return signf(source_x - global_position.x) == float(last_direction)
+
+# ===============================
 # ANIMATION
 # ===============================
 func play_character_anim(body_anim: String) -> void:
@@ -1745,7 +1972,10 @@ func play_character_anim(body_anim: String) -> void:
 
 	if body_changed:
 		current_body_anim = body_anim
-		player_animation.play(body_anim)
+		if player_animation.sprite_frames.has_animation(body_anim):
+			player_animation.play(body_anim)
+		if live_3d_visual:
+			live_3d_visual.play_gameplay_animation(StringName(body_anim))
 		if not is_attacking:
 			_play_weapon_pose_anim(body_anim)
 
@@ -1774,7 +2004,8 @@ func update_animations(dir: float) -> void:
 		player_animation.rotation = 0.0
 		player_animation.scale = _player_default_visual_scale
 		player_animation.position = _player_default_visual_position
-		play_character_anim("Wall_Cling")
+		if not live_3d_visual or not live_3d_visual.is_playing_transition():
+			play_character_anim("Wall_Cling")
 		player_animation.pause()
 		player_animation.set_frame_and_progress(0, 0.0)
 		return
@@ -1799,9 +2030,34 @@ func update_animations(dir: float) -> void:
 		if current_body_anim != HURT_ANIMATION:
 			current_body_anim = HURT_ANIMATION
 			player_animation.play(HURT_ANIMATION)
+			if live_3d_visual:
+				live_3d_visual.play_gameplay_animation(HURT_ANIMATION)
 			current_equip_anim = HURT_ANIMATION
 			if current_gloves and current_gloves.has_method("play_equipment_anim"):
 				current_gloves.play_equipment_anim(HURT_ANIMATION)
+		return
+
+	if _stance_transition_anim != &"":
+		var transition := _stance_transition_anim
+		_stance_transition_anim = &""
+		play_character_anim(String(transition))
+		return
+	if live_3d_visual and live_3d_visual.is_playing_transition():
+		return
+	if is_blocking:
+		var backpedaling := (
+			not is_crouching
+			and absf(dir) > 0.01
+			and signf(dir) != signf(float(last_direction))
+		)
+		play_character_anim(
+			"Crouch_Block_Idle"
+			if is_crouching
+			else "Block_Backpedal" if backpedaling else "Block_Forward" if absf(dir) > 0.01 else "Block_Idle"
+		)
+		return
+	if is_crouching and not is_attacking:
+		play_character_anim("Crouch_Idle")
 		return
 
 	if current_attack_uses_grapple_strike and not current_grapple_strike_animation_started:
@@ -1816,6 +2072,8 @@ func update_animations(dir: float) -> void:
 			_play_grapple_strike_approach_animation()
 			return
 
+	if is_attacking and current_attack_is_spin:
+		return
 	if is_attacking and player_animation.sprite_frames.has_animation(current_attack_body_anim):
 		_set_flow_vfx_dash_visual_active(false)
 		player_animation.rotation = 0.0
@@ -1858,7 +2116,7 @@ func update_animations(dir: float) -> void:
 			_apply_directional_dash_pose(forced_dash_direction)
 			update_equipment_facing()
 
-	elif is_wall_clinging and player_animation.sprite_frames.has_animation("Wall_Cling"):
+	elif is_wall_clinging and not is_in_prototype_water() and player_animation.sprite_frames.has_animation("Wall_Cling"):
 		player_animation.rotation = 0.0
 		var wall_direction := _get_wall_visual_direction()
 		player_animation.position = _player_default_visual_position - Vector2(
@@ -1868,7 +2126,7 @@ func update_animations(dir: float) -> void:
 		play_character_anim("Wall_Cling")
 
 	elif is_in_prototype_water():
-		if absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Swim"):
+		if velocity.length() > 20.0 and player_animation.sprite_frames.has_animation("Swim"):
 			var swim_pitch_sign := -1.0 if player_animation.flip_h else 1.0
 			player_animation.rotation = (
 				deg_to_rad(prototype_swim_visual_pitch_degrees) * swim_pitch_sign
@@ -1881,16 +2139,15 @@ func update_animations(dir: float) -> void:
 				Vector2.ZERO
 			)
 			play_character_anim("Swim")
-		elif absf(dir) > 0.01 and player_animation.sprite_frames.has_animation("Run"):
-			player_animation.rotation = 0.0
-			play_character_anim("Run")
 		elif player_animation.sprite_frames.has_animation("Jump_Apex"):
 			player_animation.rotation = 0.0
-			play_character_anim("Jump_Apex")
+			play_character_anim("Swim_Idle")
 
 	elif not is_on_floor():
 		player_animation.rotation = 0.0
-		if absf(velocity.y) <= jump_apex_velocity_threshold and player_animation.sprite_frames.has_animation("Jump_Apex"):
+		if _is_grapple_restricting():
+			play_character_anim("Grapple_Swing")
+		elif absf(velocity.y) <= jump_apex_velocity_threshold and player_animation.sprite_frames.has_animation("Jump_Apex"):
 			play_character_anim("Jump_Apex")
 		elif velocity.y < 0.0 and player_animation.sprite_frames.has_animation("Jump_Ascent"):
 			play_character_anim("Jump_Ascent")
@@ -1980,19 +2237,10 @@ func update_equipment_facing() -> void:
 func _update_wall_cling_vfx() -> void:
 	if not wall_cling_vfx:
 		return
-
-	var should_show := is_wall_clinging and not is_on_floor()
-	wall_cling_vfx.visible = should_show
-	if not should_show:
-		wall_cling_vfx.stop()
-		return
-
-	var wall_direction := _get_wall_visual_direction()
-
-	wall_cling_vfx.position = Vector2(20.0 * float(wall_direction), -54.0)
-	wall_cling_vfx.flip_h = wall_direction > 0
-	if not wall_cling_vfx.is_playing():
-		wall_cling_vfx.play("cling")
+	# The old sprite puff was authored for the retired 2D character silhouette.
+	# Keep it disabled until a matching live-3D contact effect is built.
+	wall_cling_vfx.visible = false
+	wall_cling_vfx.stop()
 
 func _play_ledge_climb_pose() -> void:
 	player_animation.rotation = 0.0
@@ -2007,6 +2255,8 @@ func _play_ledge_climb_pose() -> void:
 		1.0
 	)
 	play_character_anim(String(LEDGE_CLIMB_ANIMATION))
+	if live_3d_visual:
+		live_3d_visual.set_ledge_climb_progress(progress)
 	var frame_count := player_animation.sprite_frames.get_frame_count(
 		LEDGE_CLIMB_ANIMATION
 	)
@@ -2047,6 +2297,9 @@ func update_combat_timers(delta: float) -> void:
 
 	attack_timer += delta
 	_sync_attack_hitbox_to_anchor()
+	if current_attack_is_spin:
+		_update_spin_special()
+		return
 	if current_attack_uses_ground_combo:
 		_update_ground_combo_attack()
 		return
@@ -2128,6 +2381,7 @@ func update_combat_timers(delta: float) -> void:
 			_cancel_current_grapple_strike()
 		is_attacking = false
 		current_attack_is_special = false
+		current_attack_is_spin = false
 		attack_hitbox.disable()
 		_reset_attack_hitbox_polygon()
 		_reset_weapon_visuals()
@@ -2149,6 +2403,10 @@ func start_attack(is_special := false) -> void:
 		):
 			current_gloves.call("cancel_for_committed_attack")
 		_cancel_neutral_special_vfx()
+		var special_horizontal := Input.get_axis("move_left", "move_right")
+		if absf(special_horizontal) > ATTACK_DIRECTION_DEADZONE:
+			_begin_spin_special(int(signf(special_horizontal)))
+			return
 
 	var grapple_strike_started := false
 	if (
@@ -2171,11 +2429,12 @@ func start_attack(is_special := false) -> void:
 		not is_special
 		and not grapple_strike_started
 		and is_on_floor()
+		and not is_in_prototype_water()
 		and not _is_grapple_restricting()
 	):
 		_begin_ground_combo_attack(_get_ground_combo_family(attack_direction))
 		return
-	if not is_special and not grapple_strike_started and not is_on_floor():
+	if not is_special and not grapple_strike_started and (not is_on_floor() or is_in_prototype_water()):
 		_begin_air_double_attack(attack_direction)
 		return
 
@@ -2222,6 +2481,54 @@ func start_attack(is_special := false) -> void:
 		play_character_anim(current_attack_body_anim)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+
+func _begin_spin_special(direction: int) -> void:
+	is_attacking = true
+	current_attack_is_special = true
+	current_attack_is_spin = true
+	current_attack_uses_ground_combo = false
+	current_attack_uses_air_double = false
+	current_attack_uses_grapple_strike = false
+	last_direction = direction
+	attack_direction = Vector2(direction, 0)
+	current_attack_body_anim = "Spin_Special"
+	current_body_anim = "Spin_Special"
+	attack_timer = 0.0
+	attack_active_started = false
+	attack_active_finished = false
+	attack_vfx_started = true
+	attack_cooldown_timer = spin_special_duration
+	velocity.x = 0.0
+	attack_hitbox.disable()
+	attack_collision_polygon.polygon = _build_circle_hitbox_polygon(spin_special_radius)
+	_sync_attack_hitbox_to_anchor()
+	if live_3d_visual:
+		live_3d_visual.play_spin_special(spin_special_duration)
+	update_equipment_facing()
+
+
+func _update_spin_special() -> void:
+	var frame := live_3d_visual.get_current_action_frame_30fps() if live_3d_visual else floori(attack_timer / spin_special_duration * 40.0)
+	if not attack_active_started and frame >= spin_special_active_frames.x:
+		attack_active_started = true
+		attack_hitbox.damage = _build_attack_damage()
+		attack_hitbox.enable()
+		_play_double_attack_strike_audio(0)
+		_play_flow_vfx_attack_swing(attack_direction, 360.0, 0)
+	if attack_active_started and not attack_active_finished and frame > spin_special_active_frames.y:
+		attack_active_finished = true
+		attack_hitbox.disable()
+		velocity.x = 0.0
+	if attack_hitbox.active:
+		_retry_active_attack_overlaps()
+	if attack_timer >= spin_special_duration:
+		attack_hitbox.disable()
+		is_attacking = false
+		current_attack_is_special = false
+		current_attack_is_spin = false
+		_reset_attack_hitbox_polygon()
+		_reset_weapon_visuals()
+
 
 func _try_resolve_current_grapple_strike() -> void:
 	if (
@@ -2307,6 +2614,7 @@ func _cancel_enemy_grapple_combat() -> void:
 func _finish_cancelled_attack() -> void:
 	is_attacking = false
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	attack_timer = 0.0
 	attack_active_started = false
 	attack_active_finished = false
@@ -2328,17 +2636,13 @@ func _begin_ground_combo_attack(
 			Input.get_axis("move_left", "move_right")
 		)
 
-	if requested_visual_mode == &"stationary":
-		# Stationary combat uses its good double-hit clip as one complete move,
-		# rather than chaining through the discarded stationary opener.
-		ground_combo_step = 1
-	elif (
+	if (
 		family != ground_combo_family
 		or ground_combo_reset_timer <= 0.0 and not current_attack_uses_ground_combo
 	):
 		ground_combo_step = 0
 	else:
-		ground_combo_step = mini(ground_combo_step + 1, 1)
+		ground_combo_step = mini(ground_combo_step + 1, 2)
 
 	ground_combo_family = &"forward"
 	ground_combo_reset_timer = 0.0
@@ -2355,14 +2659,18 @@ func _begin_ground_combo_attack(
 	if ground_attack_visual_mode == &"stationary":
 		velocity.x = 0.0
 	current_attack_uses_ground_combo = true
+	current_attack_started_crouched = is_crouching
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	is_attacking = true
 	attack_timer = 0.0
 	attack_active_started = false
 	attack_active_finished = false
 
 	attack_direction = Vector2(float(last_direction), 0.0)
-	current_attack_body_anim = "Ground_Attack_Combo_%d" % (ground_combo_step + 1)
+	# The hidden legacy sprite has two attacks; keep it on its second clip while
+	# the live 3D visual exposes all three authored strikes.
+	current_attack_body_anim = "Ground_Attack_Combo_%d" % mini(ground_combo_step + 1, 2)
 
 	if player_animation:
 		player_animation.flip_h = last_direction < 0
@@ -2386,11 +2694,33 @@ func _begin_ground_combo_attack(
 		)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+	if live_3d_visual:
+		var total_speed := ground_combo_playback_speed * maxf(
+			0.1,
+			get_momentum_attack_speed_multiplier()
+		)
+		live_3d_visual.play_ground_combo_strike(
+			ground_combo_step,
+			current_attack_started_crouched,
+			total_speed
+		)
+		var segment_duration := live_3d_visual.get_ground_combo_segment_duration(
+			ground_combo_step,
+			current_attack_started_crouched
+		)
+		if segment_duration > 0.0:
+			ground_combo_attack_duration = segment_duration / maxf(
+				total_speed * live_3d_visual.base_playback_speed,
+				0.01
+			)
 
 func _update_ground_combo_attack() -> void:
 	var strike_frames := _get_ground_combo_strike_frames()
+	var combat_frame := player_animation.frame
+	if live_3d_visual:
+		combat_frame = live_3d_visual.get_current_action_frame_30fps()
 	var next_strike := _get_strike_for_frame(
-		player_animation.frame,
+		combat_frame,
 		strike_frames[0],
 		strike_frames[1]
 	)
@@ -2415,19 +2745,24 @@ func _update_ground_combo_attack() -> void:
 
 func _finish_ground_combo_attack() -> void:
 	var queued_family := ground_combo_queued_family
-	var should_chain := ground_combo_queued and queued_family != &""
+	var should_chain := (
+		ground_combo_queued
+		and queued_family != &""
+		and not current_attack_started_crouched
+	)
 	var completed_visual_mode := ground_attack_visual_mode
 	var completed_forward_finisher := (
-		ground_combo_family == &"forward" and ground_combo_step >= 1
+		ground_combo_family == &"forward" and ground_combo_step >= 2
 	)
 	attack_hitbox.disable()
 	attack_collision_polygon.polygon = _default_attack_hitbox_polygon
 	is_attacking = false
 	current_attack_uses_ground_combo = false
+	current_attack_started_crouched = false
 	ground_combo_active_strike = -1
 	ground_combo_queued = false
 	ground_combo_queued_family = &""
-	if completed_forward_finisher:
+	if completed_forward_finisher or not should_chain:
 		_reset_ground_combo_chain()
 	else:
 		ground_combo_reset_timer = ground_combo_reset_window
@@ -2439,6 +2774,7 @@ func _finish_ground_combo_attack() -> void:
 
 func _begin_air_double_attack(direction: Vector2) -> void:
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	current_attack_uses_ground_combo = false
 	current_attack_uses_air_double = true
 	is_attacking = true
@@ -2450,20 +2786,31 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 	if direction.length() <= ATTACK_DIRECTION_DEADZONE:
 		direction = Vector2(float(last_direction), 0.0)
 	attack_direction = direction.normalized()
+	if is_in_prototype_water() and live_3d_visual:
+		# The authored water slash strikes ahead of the swimmer. Keep damage
+		# aligned with that pose instead of aiming an invisible vertical strike.
+		attack_direction = velocity.normalized() if velocity.length() > 20.0 else Vector2(
+			signf(direction.x) if absf(direction.x) > ATTACK_DIRECTION_DEADZONE else float(last_direction), 0.0
+		)
 	current_attack_body_anim = (
 		String(POGO_ATTACK_ANIMATION)
-		if attack_direction.y > 0.55
+		if attack_direction.y > 0.55 and not is_in_prototype_water()
 		else "Air_Double_Attack"
 	)
+	if not is_in_prototype_water() and current_attack_body_anim != String(POGO_ATTACK_ANIMATION) and attack_direction.y >= -0.55:
+		attack_direction = Vector2(signf(direction.x) if absf(direction.x) > ATTACK_DIRECTION_DEADZONE else float(last_direction), 0.0)
 	if abs(attack_direction.x) > ATTACK_DIRECTION_DEADZONE:
 		last_direction = int(sign(attack_direction.x))
 
+	var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
 	if player_animation:
 		player_animation.flip_h = last_direction < 0
-		var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
 		var frame_count := player_animation.sprite_frames.get_frame_count(current_attack_body_anim)
 		var animation_fps := player_animation.sprite_frames.get_animation_speed(current_attack_body_anim)
-		air_attack_duration = float(frame_count) / maxf(animation_fps * attack_speed_multiplier, 0.1)
+		air_attack_duration = float(frame_count) / maxf(
+			animation_fps * attack_speed_multiplier * air_attack_playback_speed,
+			0.1
+		)
 		player_animation.speed_scale = attack_speed_multiplier
 
 	attack_cooldown_timer = player_stats.attack_cooldown / maxf(0.1, get_momentum_attack_speed_multiplier())
@@ -2481,28 +2828,37 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		play_character_anim(current_attack_body_anim)
 		if current_gloves and current_gloves.has_method("play_attack_follow_pose"):
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
+	if live_3d_visual:
+		var live_duration := live_3d_visual.play_air_attack(
+			air_attack_playback_speed * attack_speed_multiplier
+		)
+		if live_duration > 0.0:
+			air_attack_duration = live_duration
 
 	# Pogo is a committed downward strike, not the delayed first half of the
 	# generic aerial double attack. Make contact live on the first authored pose
 	# so traversal responds to intent instead of requiring animation memorization.
-	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION):
+	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION) and not live_3d_visual:
 		air_attack_active_strike = 0
 		attack_hitbox.enable()
 		_play_double_attack_strike_audio(0)
 
 func _update_air_double_attack() -> void:
+	var combat_frame := player_animation.frame
+	if live_3d_visual:
+		combat_frame = live_3d_visual.get_current_action_frame_30fps()
 	var next_strike := -1
-	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION):
+	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION) and not live_3d_visual:
 		next_strike = _get_strike_for_frame(
-			player_animation.frame,
+			combat_frame,
 			pogo_attack_active_frames,
 			Vector2i(-1, -1)
 		)
 	else:
 		next_strike = _get_strike_for_frame(
-			player_animation.frame,
-			air_attack_first_strike_frames,
-			air_attack_second_strike_frames
+			combat_frame,
+			_get_air_attack_active_frames(),
+			Vector2i(-1, -1)
 		)
 
 	if next_strike != air_attack_active_strike:
@@ -2544,7 +2900,58 @@ func _finish_air_double_attack() -> void:
 	air_attack_active_strike = -1
 	_reset_weapon_visuals()
 
+func _get_air_attack_active_frames() -> Vector2i:
+	if live_3d_visual and live_3d_visual._current_action in [&"air_attack_up", &"air_attack_down"]:
+		return Vector2i(1, 5)
+	return air_attack_first_strike_frames
+
+
+func get_sword_sweep_state() -> Dictionary:
+	if is_attacking and current_attack_is_spin and live_3d_visual:
+		var spin_frame := live_3d_visual.get_current_action_position() * 30.0
+		var spin_phase := (spin_frame - spin_special_active_frames.x) / float(spin_special_active_frames.y - spin_special_active_frames.x + 1)
+		return {"phase": spin_phase, "radius": spin_special_radius, "arc": 360.0,
+			"pose": attack_hitbox.global_transform, "reverse": last_direction < 0, "style": 3}
+	if not is_attacking or not live_3d_visual or current_attack_is_special:
+		return {}
+	var frames := Vector2i(-1, -1)
+	var reach := ground_combo_forward_hitbox_radius
+	var degrees := ground_combo_hitbox_arc_degrees
+	var reversed := ground_combo_step == 1
+	if current_attack_uses_air_double:
+		if current_attack_body_anim == String(POGO_ATTACK_ANIMATION) and not live_3d_visual:
+			frames = pogo_attack_active_frames
+		else:
+			frames = _get_air_attack_active_frames()
+		reach = air_attack_hitbox_radius
+		degrees = air_attack_hitbox_arc_degrees
+		reversed = false
+	elif current_attack_uses_ground_combo:
+		frames = _get_ground_combo_strike_frames()[0]
+	else:
+		return {}
+	if current_attack_uses_ground_combo and not current_attack_started_crouched and ground_combo_step == 2:
+		frames = Vector2i(71, 90)
+	# Capture the forward sword arc before contact, without changing damage timing.
+	if current_attack_uses_air_double and live_3d_visual._current_action in [&"air_attack_forward", &"water_attack_idle"]:
+		frames = Vector2i(4, 10)
+	var source_frame := live_3d_visual.get_current_action_position() * 30.0
+	if current_attack_body_anim == String(POGO_ATTACK_ANIMATION) and not live_3d_visual:
+		source_frame = player_animation.frame
+	var phase := (source_frame - float(frames.x - 1)) / maxf(1.0, float(frames.y - frames.x + 1))
+	return {"phase": phase, "radius": reach, "arc": degrees,
+		"pose": attack_hitbox.global_transform, "reverse": reversed,
+		"style": (1 if current_attack_started_crouched else clampi(ground_combo_step, 0, 2)) if current_attack_uses_ground_combo else (4 if live_3d_visual._current_action in [&"air_attack_up", &"air_attack_down"] else 0)}
+
 func _get_ground_combo_strike_frames() -> Array[Vector2i]:
+	if live_3d_visual:
+		if current_attack_started_crouched:
+			return [crouch_attack_strike_frames, Vector2i(-1, -1)]
+		if ground_combo_step == 0:
+			return [ground_combo_1_first_strike_frames, ground_combo_1_second_strike_frames]
+		if ground_combo_step == 1:
+			return [ground_combo_2_first_strike_frames, ground_combo_2_second_strike_frames]
+		return [ground_combo_3_first_strike_frames, ground_combo_3_second_strike_frames]
 	if ground_attack_visual_mode == &"stationary":
 		return [
 			stationary_combo_2_first_strike_frames,
@@ -2638,9 +3045,9 @@ func _reset_attack_hitbox_polygon() -> void:
 		)
 
 func can_start_attack(is_special := false) -> bool:
-	if is_dead or is_hurt or is_attacking or attack_cooldown_timer > 0.0:
+	if is_dead or is_hurt or bank_dive_active or is_attacking or is_blocking or attack_cooldown_timer > 0.0:
 		return false
-	if is_special and not is_on_floor():
+	if is_special and (not is_on_floor() or is_in_prototype_water()):
 		return false
 	if (
 		current_chest
@@ -2742,6 +3149,8 @@ func _is_attack_movement_committed() -> bool:
 func _is_attack_in_dash_cancel_window() -> bool:
 	if not is_attacking:
 		return true
+	if current_attack_is_spin:
+		return not attack_active_started or attack_active_finished
 	if current_attack_is_special:
 		var attack_end := (
 			neutral_special_windup
@@ -2766,8 +3175,8 @@ func _is_attack_in_dash_cancel_window() -> bool:
 		)
 	if current_attack_uses_air_double:
 		var strike_frames: Array[Vector2i] = [
-			air_attack_first_strike_frames,
-			air_attack_second_strike_frames,
+			_get_air_attack_active_frames(),
+			Vector2i(-1, -1),
 		]
 		return (
 			_has_not_reached_attack_strike_frames(strike_frames)
@@ -2782,7 +3191,8 @@ func _has_not_reached_attack_strike_frames(strike_frames: Array[Vector2i]) -> bo
 	for frame_window in strike_frames:
 		if frame_window.x >= 0:
 			first_active_frame = mini(first_active_frame, frame_window.x)
-	return first_active_frame < 1000000 and player_animation.frame < first_active_frame
+	var frame := live_3d_visual.get_current_action_frame_30fps() if live_3d_visual else player_animation.frame
+	return first_active_frame < 1000000 and frame < first_active_frame
 
 func _has_passed_attack_strike_frames(strike_frames: Array[Vector2i]) -> bool:
 	if not player_animation:
@@ -2790,7 +3200,8 @@ func _has_passed_attack_strike_frames(strike_frames: Array[Vector2i]) -> bool:
 	var final_active_frame := -1
 	for frame_window in strike_frames:
 		final_active_frame = maxi(final_active_frame, frame_window.y)
-	return final_active_frame >= 0 and player_animation.frame > final_active_frame
+	var frame := live_3d_visual.get_current_action_frame_30fps() if live_3d_visual else player_animation.frame
+	return final_active_frame >= 0 and frame > final_active_frame
 
 func _cancel_attack_for_dash() -> void:
 	if current_attack_uses_grapple_strike:
@@ -3061,6 +3472,10 @@ func _apply_attack_direction() -> void:
 func _sync_attack_hitbox_to_anchor() -> void:
 	if not attack_hitbox:
 		return
+	if current_attack_is_spin:
+		attack_hitbox.global_transform = global_transform
+		attack_hitbox.global_position = $CollisionShape2D.global_position
+		return
 	if current_attack_is_special:
 		attack_hitbox.global_transform = global_transform
 		attack_hitbox.global_position = _get_neutral_special_ground_contact_position()
@@ -3076,10 +3491,11 @@ func _sync_attack_hitbox_to_anchor() -> void:
 
 func _build_attack_damage() -> DamageData:
 	var data := DamageData.new()
+	data.is_melee = true
 	if current_attack_is_special:
 		data.amount = roundi(
 			float(player_stats.attack_damage)
-			* neutral_special_damage_multiplier
+			* (spin_special_damage_multiplier if current_attack_is_spin else neutral_special_damage_multiplier)
 			* player_stats.skill_damage_multiplier
 			* get_momentum_attack_damage_multiplier()
 		)
@@ -3148,6 +3564,12 @@ func modify_outgoing_hit_damage(
 	if target_owner:
 		target_position = target_owner.global_position
 	damage.hit_position = _get_hurtbox_feedback_position(target_hurtbox)
+	if current_attack_is_spin:
+		var radial := target_position - attack_hitbox.global_position
+		if radial.length_squared() < 0.01:
+			radial = attack_direction
+		damage.knockback = radial.normalized() * player_stats.knockback_strength
+		return damage
 	if not current_attack_is_special:
 		return damage
 
@@ -3524,7 +3946,8 @@ func start_dash_iframe(duration: float, direction := Vector2.ZERO) -> void:
 		safe_duration
 	)
 	_set_dash_contact_phasing(_dash_contact_phase_timer > 0.0)
-	_play_dash_iframe_vfx(direction, _dash_iframe_timer)
+	# The retired 2D dash shell does not match the live 3D roll silhouette.
+	# Invulnerability and contact phasing remain active without spawning it.
 
 func _set_dash_contact_phasing(is_active: bool) -> void:
 	if _dash_contact_phasing_active == is_active:
@@ -3839,7 +4262,7 @@ func _play_neutral_special_vfx() -> void:
 		host = get_tree().root
 	host.add_child(vfx)
 	_neutral_special_vfx_instance = vfx
-	vfx.global_position = _get_neutral_special_weapon_anchor_position()
+	vfx.global_position = _get_neutral_special_chest_anchor_position()
 	if vfx.has_method("play"):
 		vfx.call(
 			"play",
@@ -3854,7 +4277,7 @@ func _update_neutral_special_vfx_anchor() -> void:
 		_neutral_special_vfx_instance = null
 		return
 
-	var anchor_position := _get_neutral_special_weapon_anchor_position()
+	var anchor_position := _get_neutral_special_chest_anchor_position()
 	if _neutral_special_vfx_instance.has_method("set_charge_position"):
 		_neutral_special_vfx_instance.call("set_charge_position", anchor_position)
 	else:
@@ -3865,7 +4288,7 @@ func _trigger_neutral_special_impact_vfx() -> void:
 		_neutral_special_vfx_instance = null
 		return
 
-	var impact_position := _get_neutral_special_ground_contact_position()
+	var impact_position := _get_neutral_special_chest_anchor_position()
 	if _neutral_special_vfx_instance.has_method("trigger_impact"):
 		_neutral_special_vfx_instance.call("trigger_impact", impact_position)
 	else:
@@ -3886,19 +4309,8 @@ func _cancel_neutral_special_vfx() -> void:
 		_neutral_special_vfx_instance.queue_free()
 	_neutral_special_vfx_instance = null
 
-func _get_neutral_special_weapon_anchor_position() -> Vector2:
-	if not player_animation:
-		return global_position
-
-	var anchor_index := clampi(
-		player_animation.frame - NEUTRAL_SPECIAL_CHARGE_FIRST_FRAME,
-		0,
-		NEUTRAL_SPECIAL_WEAPON_ANCHORS.size() - 1
-	)
-	var local_anchor: Vector2 = NEUTRAL_SPECIAL_WEAPON_ANCHORS[anchor_index]
-	if player_animation.flip_h:
-		local_anchor.x = -local_anchor.x
-	return player_animation.to_global(local_anchor)
+func _get_neutral_special_chest_anchor_position() -> Vector2:
+	return global_position + neutral_special_chest_vfx_offset
 
 func _get_neutral_special_ground_contact_position() -> Vector2:
 	if not player_animation:
@@ -3933,12 +4345,9 @@ func _set_flow_vfx_dash_visual_active(
 	if _flow_vfx_dash_visual_active == is_active:
 		return
 	_flow_vfx_dash_visual_active = is_active
-	if not is_active or not flow_state_aura or not flow_state_aura.has_method("play_dash"):
-		return
-	var dash_direction := direction
-	if dash_direction.length() <= 0.001:
-		dash_direction = Vector2(float(last_direction), 0.0)
-	flow_state_aura.call("play_dash", dash_direction.normalized())
+	# Temporarily suppress the sprite-authored Flow dash trail as well. The
+	# state flag is retained so a roll-matched replacement can be added later.
+	return
 
 func _play_flow_vfx_jump(direction: Vector2) -> void:
 	if not flow_state_aura or not flow_state_aura.has_method("play_jump"):
@@ -3990,6 +4399,7 @@ func _on_attack_hit_landed(_hurtbox: HurtboxComponent, _damage: DamageData) -> v
 		current_attack_uses_air_double
 		and attack_direction.y > 0.55
 		and not is_on_floor()
+		and not is_in_prototype_water()
 	):
 		_perform_pogo_rebound()
 		return
@@ -4071,15 +4481,26 @@ func set_grapple_strike_contact_guard(is_active: bool) -> void:
 	_grapple_strike_contact_guard = is_active
 
 func modify_incoming_health_damage(damage: DamageData) -> DamageData:
-	if not player_stats or player_stats.resistance <= 0:
+	_last_incoming_hit_blocked = (
+		is_blocking and _is_damage_from_facing_side(damage)
+	)
+	var block_ratio := block_damage_taken_ratio if _last_incoming_hit_blocked else 1.0
+	var resistance_mitigation := (
+		player_stats.get_resistance_mitigation()
+		if player_stats and player_stats.resistance > 0
+		else 0.0
+	)
+	if is_equal_approx(block_ratio, 1.0) and is_zero_approx(resistance_mitigation):
 		return damage
-
 	var modified := damage.duplicate_for_hit(
 		damage.source,
 		damage.hit_position
 	)
-	var mitigation := player_stats.get_resistance_mitigation()
-	modified.amount = maxi(1, roundi(float(damage.amount) * (1.0 - mitigation)))
+	# Block and resistance are independent multiplicative stages, never additive.
+	modified.amount = maxi(
+		1,
+		roundi(float(damage.amount) * block_ratio * (1.0 - resistance_mitigation))
+	)
 	return modified
 
 func receive_ignored_health_hit(damage: DamageData) -> void:
@@ -4093,11 +4514,21 @@ func receive_ignored_health_hit(damage: DamageData) -> void:
 func _on_damaged(damage: DamageData) -> void:
 	_cancel_dash_iframe()
 	_cancel_enemy_grapple_combat()
+	if _last_incoming_hit_blocked:
+		_last_incoming_hit_blocked = false
+		if live_3d_visual:
+			live_3d_visual.play_block_impact(is_crouching)
+		AudioManager.play_sfx(&"player_damage")
+		var guard_knockback := damage.knockback * 0.2
+		velocity = guard_knockback
+		CombatFeedback.hit_pause(self, minf(damage.hit_pause, 0.035))
+		return
 	_hurt_animation_active = is_on_floor()
 	is_hurt = true
 	hurt_timer = damage.hitstun if damage.hitstun > 0.0 else player_stats.hurt_time
 	is_attacking = false
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
 	_cancel_neutral_special_vfx()
@@ -4105,6 +4536,8 @@ func _on_damaged(damage: DamageData) -> void:
 	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
 	AudioManager.play_sfx(&"player_damage")
+	if live_3d_visual:
+		live_3d_visual.play_hurt(damage.amount >= 20, is_crouching)
 
 	if hit_flash:
 		hit_flash.flash(Color(1.0, 0.35, 0.35, 1.0), 0.08)
@@ -4130,7 +4563,7 @@ func _on_damaged(damage: DamageData) -> void:
 		)
 	CombatFeedback.hit_pause(self, damage.hit_pause)
 
-func _on_died(_damage: DamageData) -> void:
+func _on_died(damage: DamageData) -> void:
 	if death_reset_started:
 		return
 
@@ -4150,12 +4583,20 @@ func _on_died(_damage: DamageData) -> void:
 	death_reset_started = true
 	is_attacking = false
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
 	_cancel_neutral_special_vfx()
 	attack_hitbox.disable()
 	_reset_attack_hitbox_polygon()
 	_reset_weapon_visuals()
+	if live_3d_visual:
+		var source_is_behind := false
+		if damage and damage.source is Node2D:
+			source_is_behind = signf(
+				(damage.source as Node2D).global_position.x - global_position.x
+			) != float(last_direction)
+		live_3d_visual.play_death(source_is_behind)
 	call_deferred("_show_game_over_after_death")
 
 func _drop_held_thread_knots() -> void:
@@ -4227,6 +4668,7 @@ func revive_for_tutorial(respawn_position: Vector2) -> void:
 	hurt_timer = 0.0
 	is_attacking = false
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	_cancel_enemy_grapple_combat()
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
@@ -4298,6 +4740,7 @@ func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2
 	is_attacking = false
 	is_hurt = false
 	current_attack_is_special = false
+	current_attack_is_spin = false
 	_cancel_enemy_grapple_combat()
 	_cancel_ground_combo_attack()
 	_cancel_air_double_attack()
@@ -4328,12 +4771,17 @@ func end_save_point_interaction() -> void:
 
 	_save_point_standing_up = true
 	_stop_save_point_breathing(false)
+	if live_3d_visual:
+		live_3d_visual.play_save_point_stand()
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		player_animation.animation = SIT_ANIMATION
 		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
 		player_animation.speed_scale = _save_point_original_animation_speed_scale * save_point_stand_up_speed_scale
 		player_animation.play_backwards(SIT_ANIMATION)
 		await player_animation.animation_finished
+	if live_3d_visual:
+		while live_3d_visual.is_action_sequence_playing(&"save_point_stand"):
+			await get_tree().process_frame
 	_complete_save_point_interaction()
 
 func recover_at_save_point() -> void:
@@ -4403,6 +4851,9 @@ func _complete_save_point_sit_down() -> void:
 	if player_animation and player_animation.sprite_frames and player_animation.sprite_frames.has_animation(SIT_ANIMATION):
 		await player_animation.animation_finished
 		player_animation.frame = maxi(player_animation.sprite_frames.get_frame_count(SIT_ANIMATION) - 1, 0)
+	if live_3d_visual:
+		while live_3d_visual.is_action_sequence_playing(&"save_point_sit"):
+			await get_tree().process_frame
 	_save_point_sitting_down = false
 	_save_point_seated = true
 	_start_save_point_breathing()

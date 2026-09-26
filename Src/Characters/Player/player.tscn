@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dia0qg14qiah1"]
 
 [ext_resource type="Script" uid="uid://rw8rhi7ev0wh" path="res://Src/Characters/Player/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" path="res://Src/Characters/Player/player_live_3d_visual.gd" id="102_live3d"]
 [ext_resource type="PackedScene" uid="uid://buxb8jonbu5wu" path="res://Src/Equipment/base_gloves.tscn" id="2_8cvsi"]
 [ext_resource type="Texture2D" uid="uid://cq16hn8cqgyb5" path="res://Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png" id="2_jr15c"]
 [ext_resource type="Texture2D" uid="uid://xiytrkrfbr6v" path="res://Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png" id="3_5pixu"]
@@ -3131,6 +3132,9 @@ base_gloves_scene = ExtResource("2_8cvsi")
 player_stats = ExtResource("83_stats")
 thread_knot_count = 0
 equipment_left_offset = Vector2(8, 0)
+
+[node name="Live3DVisual" type="Node2D" parent="."]
+script = ExtResource("102_live3d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=789508642]
 position = Vector2(0.5, 6.1224995)
