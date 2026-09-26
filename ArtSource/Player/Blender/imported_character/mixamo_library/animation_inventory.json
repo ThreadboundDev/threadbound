@@ -1,0 +1,870 @@
+[
+  {
+    "index": 1,
+    "action": "attack_1",
+    "source_file": "sword and shield attack.fbx",
+    "frames": 71,
+    "fps": 30,
+    "duration_seconds": 2.3667,
+    "vertical_range": [
+      -0.647686779499054,
+      0.7323660850524902
+    ],
+    "timeline_start": 1,
+    "timeline_end": 71
+  },
+  {
+    "index": 2,
+    "action": "attack_2",
+    "source_file": "sword and shield attack (2).fbx",
+    "frames": 40,
+    "fps": 30,
+    "duration_seconds": 1.3333,
+    "vertical_range": [
+      -0.2140619158744812,
+      -0.09999841451644897
+    ],
+    "timeline_start": 78,
+    "timeline_end": 117
+  },
+  {
+    "index": 3,
+    "action": "attack_3",
+    "source_file": "sword and shield attack (3).fbx",
+    "frames": 53,
+    "fps": 30,
+    "duration_seconds": 1.7667,
+    "vertical_range": [
+      -0.38486558198928833,
+      -0.11008846759796143
+    ],
+    "timeline_start": 124,
+    "timeline_end": 176
+  },
+  {
+    "index": 4,
+    "action": "attack_4",
+    "source_file": "sword and shield attack (4).fbx",
+    "frames": 31,
+    "fps": 30,
+    "duration_seconds": 1.0333,
+    "vertical_range": [
+      -0.17449843883514404,
+      -0.14814817905426025
+    ],
+    "timeline_start": 183,
+    "timeline_end": 213
+  },
+  {
+    "index": 5,
+    "action": "block_1",
+    "source_file": "sword and shield block.fbx",
+    "frames": 17,
+    "fps": 30,
+    "duration_seconds": 0.5667,
+    "vertical_range": [
+      -0.26843947172164917,
+      -0.15433073043823242
+    ],
+    "timeline_start": 220,
+    "timeline_end": 236
+  },
+  {
+    "index": 6,
+    "action": "block_2",
+    "source_file": "sword and shield block (2).fbx",
+    "frames": 16,
+    "fps": 30,
+    "duration_seconds": 0.5333,
+    "vertical_range": [
+      -0.27281653881073,
+      -0.14814752340316772
+    ],
+    "timeline_start": 243,
+    "timeline_end": 258
+  },
+  {
+    "index": 7,
+    "action": "block_idle_1",
+    "source_file": "sword and shield block idle.fbx",
+    "frames": 42,
+    "fps": 30,
+    "duration_seconds": 1.4,
+    "vertical_range": [
+      -0.2731945514678955,
+      -0.2689315676689148
+    ],
+    "timeline_start": 265,
+    "timeline_end": 306
+  },
+  {
+    "index": 8,
+    "action": "casting_1",
+    "source_file": "sword and shield casting.fbx",
+    "frames": 90,
+    "fps": 30,
+    "duration_seconds": 3.0,
+    "vertical_range": [
+      -0.564898669719696,
+      -0.12274765968322754
+    ],
+    "timeline_start": 313,
+    "timeline_end": 402
+  },
+  {
+    "index": 9,
+    "action": "casting_2",
+    "source_file": "sword and shield casting (2).fbx",
+    "frames": 32,
+    "fps": 30,
+    "duration_seconds": 1.0667,
+    "vertical_range": [
+      -0.15433067083358765,
+      -0.11819076538085938
+    ],
+    "timeline_start": 409,
+    "timeline_end": 440
+  },
+  {
+    "index": 10,
+    "action": "crouch_1",
+    "source_file": "sword and shield crouch.fbx",
+    "frames": 18,
+    "fps": 30,
+    "duration_seconds": 0.6,
+    "vertical_range": [
+      -0.5875855684280396,
+      -0.1448994278907776
+    ],
+    "timeline_start": 447,
+    "timeline_end": 464
+  },
+  {
+    "index": 11,
+    "action": "crouch_block_1",
+    "source_file": "sword and shield crouch block.fbx",
+    "frames": 15,
+    "fps": 30,
+    "duration_seconds": 0.5,
+    "vertical_range": [
+      -0.5875856876373291,
+      -0.5125550031661987
+    ],
+    "timeline_start": 471,
+    "timeline_end": 485
+  },
+  {
+    "index": 12,
+    "action": "crouch_block_2",
+    "source_file": "sword and shield crouch block (2).fbx",
+    "frames": 22,
+    "fps": 30,
+    "duration_seconds": 0.7333,
+    "vertical_range": [
+      -0.5191359519958496,
+      -0.5010561347007751
+    ],
+    "timeline_start": 492,
+    "timeline_end": 513
+  },
+  {
+    "index": 13,
+    "action": "crouch_block_idle_1",
+    "source_file": "sword and shield crouch block idle.fbx",
+    "frames": 9,
+    "fps": 30,
+    "duration_seconds": 0.3,
+    "vertical_range": [
+      -0.5170448422431946,
+      -0.5152642130851746
+    ],
+    "timeline_start": 520,
+    "timeline_end": 528
+  },
+  {
+    "index": 14,
+    "action": "crouch_idle_1",
+    "source_file": "sword and shield crouch idle.fbx",
+    "frames": 72,
+    "fps": 30,
+    "duration_seconds": 2.4,
+    "vertical_range": [
+      -0.5947222709655762,
+      -0.5862656831741333
+    ],
+    "timeline_start": 535,
+    "timeline_end": 606
+  },
+  {
+    "index": 15,
+    "action": "crouching_1",
+    "source_file": "sword and shield crouching.fbx",
+    "frames": 16,
+    "fps": 30,
+    "duration_seconds": 0.5333,
+    "vertical_range": [
+      -0.5875846147537231,
+      -0.1457098126411438
+    ],
+    "timeline_start": 613,
+    "timeline_end": 628
+  },
+  {
+    "index": 16,
+    "action": "crouching_2",
+    "source_file": "sword and shield crouching (2).fbx",
+    "frames": 15,
+    "fps": 30,
+    "duration_seconds": 0.5,
+    "vertical_range": [
+      -0.5705564022064209,
+      -0.501811683177948
+    ],
+    "timeline_start": 635,
+    "timeline_end": 649
+  },
+  {
+    "index": 17,
+    "action": "crouching_3",
+    "source_file": "sword and shield crouching (3).fbx",
+    "frames": 20,
+    "fps": 30,
+    "duration_seconds": 0.6667,
+    "vertical_range": [
+      -0.5875855684280396,
+      -0.5558245182037354
+    ],
+    "timeline_start": 656,
+    "timeline_end": 675
+  },
+  {
+    "index": 18,
+    "action": "death_1",
+    "source_file": "sword and shield death.fbx",
+    "frames": 70,
+    "fps": 30,
+    "duration_seconds": 2.3333,
+    "vertical_range": [
+      -0.9058518409729004,
+      -0.08655929565429688
+    ],
+    "timeline_start": 682,
+    "timeline_end": 751
+  },
+  {
+    "index": 19,
+    "action": "death_2",
+    "source_file": "sword and shield death (2).fbx",
+    "frames": 118,
+    "fps": 30,
+    "duration_seconds": 3.9333,
+    "vertical_range": [
+      -0.8635706901550293,
+      -0.03126955032348633
+    ],
+    "timeline_start": 758,
+    "timeline_end": 875
+  },
+  {
+    "index": 20,
+    "action": "draw_sword_1",
+    "source_file": "draw sword 1.fbx",
+    "frames": 16,
+    "fps": 30,
+    "duration_seconds": 0.5333,
+    "vertical_range": [
+      -0.02629852294921875,
+      -0.005168557167053223
+    ],
+    "timeline_start": 882,
+    "timeline_end": 897
+  },
+  {
+    "index": 21,
+    "action": "draw_sword_2",
+    "source_file": "draw sword 2.fbx",
+    "frames": 24,
+    "fps": 30,
+    "duration_seconds": 0.8,
+    "vertical_range": [
+      -0.1652199625968933,
+      -0.0097275972366333
+    ],
+    "timeline_start": 904,
+    "timeline_end": 927
+  },
+  {
+    "index": 22,
+    "action": "get_up_from_hang_1",
+    "source_file": "Get Up From Hang.fbx",
+    "frames": 35,
+    "fps": 30,
+    "duration_seconds": 1.1667,
+    "vertical_range": [
+      -0.3975435495376587,
+      1.223602533340454
+    ],
+    "timeline_start": 934,
+    "timeline_end": 968
+  },
+  {
+    "index": 23,
+    "action": "grab_ledge_from_water_1",
+    "source_file": "Grab Ledge From Water.fbx",
+    "frames": 151,
+    "fps": 30,
+    "duration_seconds": 5.0333,
+    "vertical_range": [
+      0.4298936128616333,
+      0.5051978826522827
+    ],
+    "timeline_start": 975,
+    "timeline_end": 1125
+  },
+  {
+    "index": 24,
+    "action": "grapple_swinging_1",
+    "source_file": "Grapple Swinging.fbx",
+    "frames": 60,
+    "fps": 30,
+    "duration_seconds": 2.0,
+    "vertical_range": [
+      0.7496789693832397,
+      1.9420485496520996
+    ],
+    "timeline_start": 1132,
+    "timeline_end": 1191
+  },
+  {
+    "index": 25,
+    "action": "hanging_idle_1",
+    "source_file": "Hanging Idle.fbx",
+    "frames": 71,
+    "fps": 30,
+    "duration_seconds": 2.3667,
+    "vertical_range": [
+      0.07486164569854736,
+      0.08147335052490234
+    ],
+    "timeline_start": 1198,
+    "timeline_end": 1268
+  },
+  {
+    "index": 26,
+    "action": "idle_1",
+    "source_file": "sword and shield idle.fbx",
+    "frames": 109,
+    "fps": 30,
+    "duration_seconds": 3.6333,
+    "vertical_range": [
+      -0.16033941507339478,
+      -0.1450846791267395
+    ],
+    "timeline_start": 1275,
+    "timeline_end": 1383
+  },
+  {
+    "index": 27,
+    "action": "idle_2",
+    "source_file": "sword and shield idle (2).fbx",
+    "frames": 227,
+    "fps": 30,
+    "duration_seconds": 7.5667,
+    "vertical_range": [
+      -0.16285359859466553,
+      -0.09705781936645508
+    ],
+    "timeline_start": 1390,
+    "timeline_end": 1616
+  },
+  {
+    "index": 28,
+    "action": "idle_3",
+    "source_file": "sword and shield idle (3).fbx",
+    "frames": 261,
+    "fps": 30,
+    "duration_seconds": 8.7,
+    "vertical_range": [
+      -0.1854037642478943,
+      -0.1127428412437439
+    ],
+    "timeline_start": 1623,
+    "timeline_end": 1883
+  },
+  {
+    "index": 29,
+    "action": "idle_4",
+    "source_file": "sword and shield idle (4).fbx",
+    "frames": 77,
+    "fps": 30,
+    "duration_seconds": 2.5667,
+    "vertical_range": [
+      -0.15433067083358765,
+      -0.1448116898536682
+    ],
+    "timeline_start": 1890,
+    "timeline_end": 1966
+  },
+  {
+    "index": 30,
+    "action": "impact_1",
+    "source_file": "sword and shield impact.fbx",
+    "frames": 22,
+    "fps": 30,
+    "duration_seconds": 0.7333,
+    "vertical_range": [
+      -0.2728157043457031,
+      -0.23274093866348267
+    ],
+    "timeline_start": 1973,
+    "timeline_end": 1994
+  },
+  {
+    "index": 31,
+    "action": "impact_2",
+    "source_file": "sword and shield impact (2).fbx",
+    "frames": 30,
+    "fps": 30,
+    "duration_seconds": 1.0,
+    "vertical_range": [
+      -0.15924996137619019,
+      -0.09957796335220337
+    ],
+    "timeline_start": 2001,
+    "timeline_end": 2030
+  },
+  {
+    "index": 32,
+    "action": "impact_3",
+    "source_file": "sword and shield impact (3).fbx",
+    "frames": 22,
+    "fps": 30,
+    "duration_seconds": 0.7333,
+    "vertical_range": [
+      -0.172260582447052,
+      -0.1192813515663147
+    ],
+    "timeline_start": 2037,
+    "timeline_end": 2058
+  },
+  {
+    "index": 33,
+    "action": "jump_1",
+    "source_file": "sword and shield jump.fbx",
+    "frames": 26,
+    "fps": 30,
+    "duration_seconds": 0.8667,
+    "vertical_range": [
+      -0.1116819977760315,
+      0.5743594169616699
+    ],
+    "timeline_start": 2065,
+    "timeline_end": 2090
+  },
+  {
+    "index": 34,
+    "action": "jump_2",
+    "source_file": "sword and shield jump (2).fbx",
+    "frames": 30,
+    "fps": 30,
+    "duration_seconds": 1.0,
+    "vertical_range": [
+      -0.20061802864074707,
+      0.3302295207977295
+    ],
+    "timeline_start": 2097,
+    "timeline_end": 2126
+  },
+  {
+    "index": 35,
+    "action": "jump_into_wall_hang_1",
+    "source_file": "Jump Into Wall Hang.fbx",
+    "frames": 40,
+    "fps": 30,
+    "duration_seconds": 1.3333,
+    "vertical_range": [
+      -0.13325995206832886,
+      0.9865453243255615
+    ],
+    "timeline_start": 2133,
+    "timeline_end": 2172
+  },
+  {
+    "index": 36,
+    "action": "jumping_into_water_1",
+    "source_file": "jumping into water.fbx",
+    "frames": 37,
+    "fps": 30,
+    "duration_seconds": 1.2333,
+    "vertical_range": [
+      -1.7805002927780151,
+      0.022686243057250977
+    ],
+    "timeline_start": 2179,
+    "timeline_end": 2215
+  },
+  {
+    "index": 37,
+    "action": "kick_1",
+    "source_file": "sword and shield kick.fbx",
+    "frames": 37,
+    "fps": 30,
+    "duration_seconds": 1.2333,
+    "vertical_range": [
+      -0.15433067083358765,
+      -0.02244889736175537
+    ],
+    "timeline_start": 2222,
+    "timeline_end": 2258
+  },
+  {
+    "index": 38,
+    "action": "power_up_1",
+    "source_file": "sword and shield power up.fbx",
+    "frames": 72,
+    "fps": 30,
+    "duration_seconds": 2.4,
+    "vertical_range": [
+      -0.18951845169067383,
+      -0.08682602643966675
+    ],
+    "timeline_start": 2265,
+    "timeline_end": 2336
+  },
+  {
+    "index": 39,
+    "action": "roll_1",
+    "source_file": "Roll.fbx",
+    "frames": 36,
+    "fps": 30,
+    "duration_seconds": 1.2,
+    "vertical_range": [
+      -0.9282506704330444,
+      -0.10564714670181274
+    ],
+    "timeline_start": 2343,
+    "timeline_end": 2378
+  },
+  {
+    "index": 40,
+    "action": "run_1",
+    "source_file": "sword and shield run.fbx",
+    "frames": 22,
+    "fps": 30,
+    "duration_seconds": 0.7333,
+    "vertical_range": [
+      -0.127733051776886,
+      -0.024036765098571777
+    ],
+    "timeline_start": 2385,
+    "timeline_end": 2406
+  },
+  {
+    "index": 41,
+    "action": "run_2",
+    "source_file": "sword and shield run (2).fbx",
+    "frames": 17,
+    "fps": 30,
+    "duration_seconds": 0.5667,
+    "vertical_range": [
+      -0.09130549430847168,
+      -0.03193938732147217
+    ],
+    "timeline_start": 2413,
+    "timeline_end": 2429
+  },
+  {
+    "index": 42,
+    "action": "sheath_sword_1",
+    "source_file": "sheath sword 1.fbx",
+    "frames": 39,
+    "fps": 30,
+    "duration_seconds": 1.3,
+    "vertical_range": [
+      -0.1543307900428772,
+      -0.020546913146972656
+    ],
+    "timeline_start": 2436,
+    "timeline_end": 2474
+  },
+  {
+    "index": 43,
+    "action": "sheath_sword_2",
+    "source_file": "sheath sword 2.fbx",
+    "frames": 26,
+    "fps": 30,
+    "duration_seconds": 0.8667,
+    "vertical_range": [
+      -0.020546913146972656,
+      -0.005168437957763672
+    ],
+    "timeline_start": 2481,
+    "timeline_end": 2506
+  },
+  {
+    "index": 44,
+    "action": "sit_to_stand_1",
+    "source_file": "Sit To Stand.fbx",
+    "frames": 69,
+    "fps": 30,
+    "duration_seconds": 2.3,
+    "vertical_range": [
+      -0.4964103102684021,
+      -0.008576035499572754
+    ],
+    "timeline_start": 2513,
+    "timeline_end": 2581
+  },
+  {
+    "index": 45,
+    "action": "slash_1",
+    "source_file": "sword and shield slash.fbx",
+    "frames": 46,
+    "fps": 30,
+    "duration_seconds": 1.5333,
+    "vertical_range": [
+      -0.2719801664352417,
+      -0.15403497219085693
+    ],
+    "timeline_start": 2588,
+    "timeline_end": 2633
+  },
+  {
+    "index": 46,
+    "action": "slash_2",
+    "source_file": "sword and shield slash (2).fbx",
+    "frames": 107,
+    "fps": 30,
+    "duration_seconds": 3.5667,
+    "vertical_range": [
+      -0.5815762281417847,
+      0.32061493396759033
+    ],
+    "timeline_start": 2640,
+    "timeline_end": 2746
+  },
+  {
+    "index": 47,
+    "action": "slash_3",
+    "source_file": "sword and shield slash (3).fbx",
+    "frames": 48,
+    "fps": 30,
+    "duration_seconds": 1.6,
+    "vertical_range": [
+      -0.16972380876541138,
+      -0.035239219665527344
+    ],
+    "timeline_start": 2753,
+    "timeline_end": 2800
+  },
+  {
+    "index": 48,
+    "action": "slash_4",
+    "source_file": "sword and shield slash (4).fbx",
+    "frames": 70,
+    "fps": 30,
+    "duration_seconds": 2.3333,
+    "vertical_range": [
+      -0.5871866941452026,
+      0.3292222023010254
+    ],
+    "timeline_start": 2807,
+    "timeline_end": 2876
+  },
+  {
+    "index": 49,
+    "action": "slash_5",
+    "source_file": "sword and shield slash (5).fbx",
+    "frames": 42,
+    "fps": 30,
+    "duration_seconds": 1.4,
+    "vertical_range": [
+      -0.5875855684280396,
+      -0.4233170747756958
+    ],
+    "timeline_start": 2883,
+    "timeline_end": 2924
+  },
+  {
+    "index": 50,
+    "action": "stand_to_sit_1",
+    "source_file": "Stand To Sit.fbx",
+    "frames": 68,
+    "fps": 30,
+    "duration_seconds": 2.2667,
+    "vertical_range": [
+      -0.4767879247665405,
+      -0.004526376724243164
+    ],
+    "timeline_start": 2931,
+    "timeline_end": 2998
+  },
+  {
+    "index": 51,
+    "action": "strafe_1",
+    "source_file": "sword and shield strafe.fbx",
+    "frames": 35,
+    "fps": 30,
+    "duration_seconds": 1.1667,
+    "vertical_range": [
+      -0.19791245460510254,
+      -0.11735570430755615
+    ],
+    "timeline_start": 3005,
+    "timeline_end": 3039
+  },
+  {
+    "index": 52,
+    "action": "strafe_2",
+    "source_file": "sword and shield strafe (2).fbx",
+    "frames": 40,
+    "fps": 30,
+    "duration_seconds": 1.3333,
+    "vertical_range": [
+      -0.21225190162658691,
+      -0.15016037225723267
+    ],
+    "timeline_start": 3046,
+    "timeline_end": 3085
+  },
+  {
+    "index": 53,
+    "action": "strafe_3",
+    "source_file": "sword and shield strafe (3).fbx",
+    "frames": 21,
+    "fps": 30,
+    "duration_seconds": 0.7,
+    "vertical_range": [
+      -0.0935332179069519,
+      -0.006942033767700195
+    ],
+    "timeline_start": 3092,
+    "timeline_end": 3112
+  },
+  {
+    "index": 54,
+    "action": "strafe_4",
+    "source_file": "sword and shield strafe (4).fbx",
+    "frames": 22,
+    "fps": 30,
+    "duration_seconds": 0.7333,
+    "vertical_range": [
+      -0.07066589593887329,
+      0.026623249053955078
+    ],
+    "timeline_start": 3119,
+    "timeline_end": 3140
+  },
+  {
+    "index": 55,
+    "action": "swimming_1",
+    "source_file": "Swimming.fbx",
+    "frames": 137,
+    "fps": 30,
+    "duration_seconds": 4.5667,
+    "vertical_range": [
+      -0.34876716136932373,
+      -0.32659459114074707
+    ],
+    "timeline_start": 3147,
+    "timeline_end": 3283
+  },
+  {
+    "index": 56,
+    "action": "turn_1",
+    "source_file": "sword and shield turn.fbx",
+    "frames": 29,
+    "fps": 30,
+    "duration_seconds": 0.9667,
+    "vertical_range": [
+      -0.15508651733398438,
+      -0.12307506799697876
+    ],
+    "timeline_start": 3290,
+    "timeline_end": 3318
+  },
+  {
+    "index": 57,
+    "action": "turn_180_1",
+    "source_file": "sword and shield 180 turn.fbx",
+    "frames": 25,
+    "fps": 30,
+    "duration_seconds": 0.8333,
+    "vertical_range": [
+      -0.18453317880630493,
+      -0.04124325513839722
+    ],
+    "timeline_start": 3325,
+    "timeline_end": 3349
+  },
+  {
+    "index": 58,
+    "action": "turn_180_2",
+    "source_file": "sword and shield 180 turn (2).fbx",
+    "frames": 26,
+    "fps": 30,
+    "duration_seconds": 0.8667,
+    "vertical_range": [
+      -0.32758742570877075,
+      -0.11165410280227661
+    ],
+    "timeline_start": 3356,
+    "timeline_end": 3381
+  },
+  {
+    "index": 59,
+    "action": "turn_2",
+    "source_file": "sword and shield turn (2).fbx",
+    "frames": 29,
+    "fps": 30,
+    "duration_seconds": 0.9667,
+    "vertical_range": [
+      -0.15526962280273438,
+      -0.12476927042007446
+    ],
+    "timeline_start": 3388,
+    "timeline_end": 3416
+  },
+  {
+    "index": 60,
+    "action": "walk_1",
+    "source_file": "sword and shield walk.fbx",
+    "frames": 34,
+    "fps": 30,
+    "duration_seconds": 1.1333,
+    "vertical_range": [
+      -0.09849154949188232,
+      -0.03189432621002197
+    ],
+    "timeline_start": 3423,
+    "timeline_end": 3456
+  },
+  {
+    "index": 61,
+    "action": "walk_2",
+    "source_file": "sword and shield walk (2).fbx",
+    "frames": 38,
+    "fps": 30,
+    "duration_seconds": 1.2667,
+    "vertical_range": [
+      -0.08187001943588257,
+      -0.040963590145111084
+    ],
+    "timeline_start": 3463,
+    "timeline_end": 3500
+  },
+  {
+    "index": 62,
+    "action": "water_idle_1",
+    "source_file": "Water Idle.fbx",
+    "frames": 91,
+    "fps": 30,
+    "duration_seconds": 3.0333,
+    "vertical_range": [
+      -0.015036344528198242,
+      0.011289477348327637
+    ],
+    "timeline_start": 3507,
+    "timeline_end": 3597
+  }
+]

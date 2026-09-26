@@ -1,0 +1,15 @@
+{
+  "weights": {
+    "Threadborne_Character": {
+      "unweighted": 0,
+      "max_weight_sum_error": 2.474989742040634e-07
+    },
+    "Threadborne_Posing_Preview": {
+      "unweighted": 0,
+      "max_weight_sum_error": 2.952292561531067e-07
+    }
+  },
+  "viewport_preview_only": true,
+  "full_resolution_render_enabled": true,
+  "rest_pose": true
+}

@@ -1,0 +1,13 @@
+{
+  "shoulder_vertices_updated": 114649,
+  "lower_body_weight_hash_before": "d735ce8952207c8ac2e096b1f1139fbf898f529575c94fc3fa633a7d57b2c760",
+  "lower_body_weight_hash_after": "d735ce8952207c8ac2e096b1f1139fbf898f529575c94fc3fa633a7d57b2c760",
+  "viewport_vertices": 39045,
+  "render_vertices": 982421,
+  "test_angles": [
+    45,
+    60
+  ],
+  "saved_pose": "rest",
+  "live_scene_modified": false
+}

@@ -1,0 +1,196 @@
+{
+  "source": "ArtSource\\Player\\Blender\\imported_character\\mixamo_library\\Threadborne_Air_Light_v2.blend",
+  "output": "Assets\\Threadborne\\Player\\Equipped3DTest\\threadborne_equipped_air_light_v2_review.glb",
+  "source_character_vertices": 982421,
+  "character_export_decimate_ratio": 0.35,
+  "shield_thickness_factor": 0.68,
+  "animations": {
+    "air_light_1": [
+      1.0,
+      12.0
+    ],
+    "attack_1": [
+      1.0,
+      71.0
+    ],
+    "block_1": [
+      1.0,
+      17.0
+    ],
+    "block_idle_1": [
+      1.0,
+      42.0
+    ],
+    "casting_1": [
+      1.0,
+      90.0
+    ],
+    "casting_2": [
+      1.0,
+      32.0
+    ],
+    "crouch_1": [
+      1.0,
+      18.0
+    ],
+    "crouch_block_1": [
+      1.0,
+      15.0
+    ],
+    "crouch_block_2": [
+      1.0,
+      22.0
+    ],
+    "crouch_block_idle_1": [
+      1.0,
+      9.0
+    ],
+    "crouch_idle_1": [
+      1.0,
+      72.0
+    ],
+    "crouching_1": [
+      1.0,
+      16.0
+    ],
+    "crouching_2": [
+      1.0,
+      15.0
+    ],
+    "crouching_3": [
+      1.0,
+      20.0
+    ],
+    "death_1": [
+      1.0,
+      70.0
+    ],
+    "death_2": [
+      1.0,
+      118.0
+    ],
+    "get_up_from_hang_1": [
+      1.0,
+      35.0
+    ],
+    "grab_ledge_from_water_1": [
+      1.0,
+      151.0
+    ],
+    "grapple_swinging_1": [
+      1.0,
+      60.0
+    ],
+    "hanging_idle_1": [
+      1.0,
+      71.0
+    ],
+    "idle_1": [
+      1.0,
+      109.0
+    ],
+    "idle_2": [
+      1.0,
+      227.0
+    ],
+    "idle_3": [
+      1.0,
+      261.0
+    ],
+    "idle_4": [
+      1.0,
+      77.0
+    ],
+    "impact_1": [
+      1.0,
+      22.0
+    ],
+    "impact_2": [
+      1.0,
+      30.0
+    ],
+    "impact_3": [
+      1.0,
+      22.0
+    ],
+    "jump_1": [
+      1.0,
+      26.0
+    ],
+    "jump_2": [
+      1.0,
+      30.0
+    ],
+    "jump_into_wall_hang_1": [
+      1.0,
+      40.0
+    ],
+    "jumping_into_water_1": [
+      1.0,
+      37.0
+    ],
+    "power_up_1": [
+      1.0,
+      72.0
+    ],
+    "roll_1": [
+      1.0,
+      36.0
+    ],
+    "run_1": [
+      1.0,
+      22.0
+    ],
+    "run_2": [
+      1.0,
+      17.0
+    ],
+    "sit_to_stand_1": [
+      1.0,
+      69.0
+    ],
+    "slash_1": [
+      1.0,
+      46.0
+    ],
+    "slash_2": [
+      1.0,
+      107.0
+    ],
+    "slash_5": [
+      1.0,
+      42.0
+    ],
+    "stand_to_sit_1": [
+      1.0,
+      68.0
+    ],
+    "swimming_1": [
+      1.0,
+      137.0
+    ],
+    "turn_1": [
+      1.0,
+      29.0
+    ],
+    "turn_2": [
+      1.0,
+      29.0
+    ],
+    "walk_1": [
+      1.0,
+      34.0
+    ],
+    "walk_2": [
+      1.0,
+      38.0
+    ],
+    "water_idle_1": [
+      1.0,
+      91.0
+    ]
+  },
+  "canonical_animation_count": 62,
+  "runtime_animation_count": 46,
+  "objects": 12
+}

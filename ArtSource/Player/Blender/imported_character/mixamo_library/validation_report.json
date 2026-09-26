@@ -1,0 +1,26 @@
+{
+  "valid": true,
+  "inventory_count": 62,
+  "retargeted_action_count": 62,
+  "review_strip_count": 62,
+  "missing_actions": [],
+  "empty_actions": [],
+  "total_keyframes": 668817,
+  "missing_review_strips": [],
+  "review_pose_changes_between_frames_1_and_20": true,
+  "relationship_lines_hidden": true,
+  "fps": 30,
+  "timeline": [
+    1,
+    3597
+  ],
+  "camera_type": "ORTHO",
+  "render_resolution": [
+    900,
+    1200
+  ],
+  "sword_present": true,
+  "shield_present": true,
+  "base_grapple_present": true,
+  "rig_bones": 62
+}
