@@ -44,3 +44,12 @@ Assets/UI/Main Menu/*.mp4
 
 # Local linked worktrees and generated task scratch space
 /tmp/
+
+# Local Godot user data created when user:// is redirected into the repository.
+/Godot/
+
+# Tool and render command output.
+*.log
+
+# Blender automatic backup copies; keep deliberate named source versions.
+*.blend[0-9]*
