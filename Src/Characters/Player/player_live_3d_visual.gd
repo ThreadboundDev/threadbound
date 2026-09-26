@@ -981,4 +981,3 @@ func _apply_idle_sword_clearance() -> void:
 	var pose := _skeleton.get_bone_global_pose(hand)
 	pose.basis = Basis(Vector3.RIGHT, deg_to_rad(14.0)) * pose.basis
 	_skeleton.set_bone_global_pose_override(hand, pose, 1.0, true)
-

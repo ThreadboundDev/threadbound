@@ -149,5 +149,3 @@ func verify() -> void:
 	assert(visual.get_action_duration(&"water_attack_idle") > 0.7)
 	print("PASS: spin input/AP/radial single hits/frame windows/cleanup; neutral preserved; water single slash at rest, moving and vertical")
 	quit()
-
-

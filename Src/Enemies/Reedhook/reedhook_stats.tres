@@ -15,4 +15,3 @@ attack_cooldown = 0.8
 hurt_time = 0.4
 use_polished_hurt_response = true
 hurt_visual_recoil_distance = 0.0
-

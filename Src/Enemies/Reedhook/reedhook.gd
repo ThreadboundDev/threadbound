@@ -149,4 +149,3 @@ func _on_state_changed(state: StringName) -> void:
 		_walking = false
 		model.animator.speed_scale = 1.0
 		model.play_clip(&"idle")
-

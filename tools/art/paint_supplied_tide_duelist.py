@@ -45,4 +45,3 @@ bpy.ops.wm.save_as_mainfile(filepath=str(D/'TideDuelist_Painted_v2.blend'),compr
 bpy.ops.object.select_all(action='DESELECT');o.select_set(True)
 bpy.ops.export_scene.gltf(filepath=str(D/'TideDuelist_Painted_v2.glb'),export_format='GLB',use_selection=True,export_animations=False,export_lights=False,export_cameras=False)
 print('FISH_PAINTED',D)
-

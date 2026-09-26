@@ -99,5 +99,3 @@ scene.frame_start, scene.frame_end = 1,16
 scene.frame_set(1)
 bpy.ops.wm.save_as_mainfile(filepath=str(LIB / 'Threadborne_Air_Light_v3_final.blend'))
 print('AIR_V3_READY: moving jump body, visible elbow windup, fixed forearm grip, 16 frames')
-
-

@@ -27,4 +27,3 @@ for corner in range(3):np.add.at(acc,indices[:,corner],face)
 length=np.linalg.norm(acc,axis=1);valid=np.array(changed)[length[changed]>1e-10];norm[valid]=acc[valid]/length[valid,None]
 shutil.copy2(p,backup);p.write_bytes(raw)
 print('KNEE_PATCH',len(changed),'vertices; all animation, skin, UV and material buffers retained')
-
