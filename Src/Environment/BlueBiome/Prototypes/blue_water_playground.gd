@@ -13,9 +13,9 @@ func _process(_delta: float) -> void:
 		return
 	var location := "WATER" if player.is_in_prototype_water() else "AIR"
 	speed_label.text = (
-		"BLUE WATER PLAYGROUND\n"
+		"BLUE WATER + COMBAT PLAYGROUND\n"
 		+ "Speed: %4d   State: %s\n" % [roundi(player.velocity.length()), location]
-		+ "Move: WASD / stick   Dash: Shift / B   Jump: Space / A\n"
-		+ "Bulbs break only above their displayed impact speed.\n"
-		+ "Walls drain speed. Grapple is disabled underwater."
+		+ "Move: WASD   Jump: Space   Roll: Shift   Crouch: S\n"
+		+ "Attack: LMB   Grapple: RMB   Special: Q   Block: F\n"
+		+ "Combat targets are right of spawn; the deep swim basin follows them."
 	)

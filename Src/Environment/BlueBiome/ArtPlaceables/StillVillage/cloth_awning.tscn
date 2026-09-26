@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Decoration/cloth_awning.png" id="1"]
+
+[node name="cloth_awning" type="Node2D"]
+metadata/asset_id = "cloth_awning"
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+offset = Vector2(-323.84001, -160.00000)

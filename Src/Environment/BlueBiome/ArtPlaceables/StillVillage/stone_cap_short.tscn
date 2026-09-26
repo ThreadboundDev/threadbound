@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Structures/stone_cap_short.png" id="1"]
+
+[node name="stone_cap_short" type="Node2D"]
+metadata/asset_id = "stone_cap_short"
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+offset = Vector2(-108.80000, -128.00000)

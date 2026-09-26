@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Structures/curved_brace.png" id="1"]
+
+[node name="curved_brace" type="Node2D"]
+metadata/asset_id = "curved_brace"
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+offset = Vector2(-119.04000, -124.16000)

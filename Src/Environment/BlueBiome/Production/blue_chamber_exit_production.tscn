@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://4lstnu66b7bd" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room.gd" id="1_j7o8l"]
 [ext_resource type="PackedScene" uid="uid://bk6sithumcg8y" path="res://Src/UI/combat_hud.tscn" id="2_xqyib"]
-[ext_resource type="Texture2D" uid="uid://bg07x7xpopr20" path="res://Assets/BlueBiome/Art/TerrainModules/LushSlateV2/wall_fill_navy_01.png" id="4_ijovs"]
 [ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="8_slsrf"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_bumper.tscn" id="10_lqtfn"]
+[ext_resource type="Script" uid="uid://bs0us1aljhrwe" path="res://Src/Environment/Greybox/greybox_bumper.gd" id="11_te7lv"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="14_sc77o"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_hazard.tscn" id="16_p04us"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_water.tscn" id="18_i4t86"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Water/blue_reflective_water.tscn" id="20_hmo7d"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_marker.tscn" id="23_7xsh1"]
 [ext_resource type="Shader" uid="uid://vbn137jwo3hq" path="res://Assets/BlueBiome/Materials/Terrain/blue_terrain_navy_fill.gdshader" id="32_navy_fill"]
-[ext_resource type="TileSet" uid="uid://bel3pch37j0ns" path="res://Assets/BlueBiome/Art/TerrainPaintTests/blue_biome_krita_tileset_poc_01.tres" id="34_krita_tiles"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_navy_fill"]
 shader = ExtResource("32_navy_fill")
@@ -51,21 +51,9 @@ z_index = 31
 
 [node name="GameplayBack" type="Node2D" parent="GeneratedArt" unique_id=280232531]
 
-[node name="WallFillNavy01" type="Sprite2D" parent="GeneratedArt/GameplayBack" unique_id=2014491892]
-position = Vector2(-2875, 449)
-texture = ExtResource("4_ijovs")
-
 [node name="GameplayEdges" type="Node2D" parent="GeneratedArt" unique_id=727879621]
 
-[node name="KritaPaintedTerrain512" type="TileMapLayer" parent="GeneratedArt/GameplayEdges" unique_id=2003825225]
-z_index = 2
-tile_map_data = PackedByteArray("AAD6/wAAAAABAAAAAAD7/wAAAAABAAAAAAD8/wAAAAACAAAAAAD5/wAAAAABAAEAAAD6/wEAAAABAAEAAAD5/wEAAAAAAAEAAAD7/wEAAAABAAEAAAD7/wIAAAABAAIAAAD6/wIAAAABAAIAAAD5/wIAAAAAAAIAAAD8/wIAAAACAAIAAAD8/wEAAAACAAEAAAD5////AAACAAEAAAD5//7/AAACAAEAAAD6//z/AAABAAEAAAD6//3/AAABAAIAAAD5//3/AAABAAEAAAD7//3/AAABAAIAAAD8//3/AAACAAIAAAD5//z/AAABAAEAAAD5//v/AAABAAEAAAA=")
-tile_set = ExtResource("34_krita_tiles")
-
 [node name="Foreground" type="Node2D" parent="GeneratedArt" unique_id=434146492]
-
-[node name="ArtGenerationRegions" type="Node2D" parent="." unique_id=2062945261]
-z_index = 50
 
 [node name="Gameplay" type="Node2D" parent="." unique_id=822190994]
 
@@ -104,7 +92,6 @@ size = Vector2(512, 255.37)
 [node name="ReflectiveWaterVisual" parent="Gameplay/WaterVolumes/WestUpperWater" unique_id=1688901201 instance=ExtResource("20_hmo7d")]
 offset_top = -127.685
 offset_bottom = 127.685
-scale = Vector2(2.873605, 1)
 
 [node name="CentralLowerWater" parent="Gameplay/WaterVolumes" unique_id=530565777 instance=ExtResource("18_i4t86")]
 position = Vector2(523, 1230.0001)
@@ -137,3 +124,8 @@ marker_color = Color(0.75, 0.35, 1, 0.9)
 
 [node name="Secret Here" type="Marker2D" parent="Gameplay/Markers" unique_id=312191160]
 position = Vector2(2806, 581)
+
+[node name="ThroughBumper" type="Node2D" parent="." unique_id=1281711662 instance=ExtResource("10_lqtfn")]
+z_index = 30
+position = Vector2(-1284, -317)
+script = ExtResource("11_te7lv")

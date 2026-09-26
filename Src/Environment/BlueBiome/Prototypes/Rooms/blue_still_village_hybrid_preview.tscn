@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_preview.tscn" id="1"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/still_village_hybrid_preview.gd" id="2"]
+
+[node name="BlueStillVillageHybridPreview" instance=ExtResource("1")]
+script = ExtResource("2")
