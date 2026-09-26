@@ -1,7 +1,5 @@
 # Threadbound
 
-![Threadbound Banner](docs/art/concept_art/banner.png)
-
 Threadbound is a 2D action metroidvania built in Godot. It is about momentum, identity, and choice: the player moves through the world by chaining traversal, combat, equipment, and real-time adaptation into one continuous flow.
 
 You are the Threadborne, a being born from the wound left when the primordial Threads were separated. The world of Eryndor is not asking you to become a class, follow a fixed build, or unlock a prescribed route. It is asking what kind of being you will become through action.

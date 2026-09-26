@@ -81,8 +81,8 @@ the system its own identity.
 The greybox prototype consolidates these actions into one non-solid Water Bulb:
 
 - **Attack:** pop and recoil opposite the strike direction.
-- **Dash:** pop and continue along the incoming dash direction.
-- **Grapple:** pop remotely without changing player momentum, clearing the
+- **Dash:** pop on contact, continue forward at 1.2 times incoming velocity, and gain upward lift (default 1000 px/s).
+- **Grapple or ranged damage:** pop remotely without changing player momentum, clearing the
   bulb's contact response for passage.
 - **Ordinary contact or spawn overlap:** gently eject the player through the
   nearest edge without consuming the bulb.
@@ -195,3 +195,11 @@ enemy behavior, and traversal-system changes into one pull request.
 - Treat lore, major system redesigns, and asset replacements as approval-gated.
 - Update this roadmap when a milestone, dependency, or decision materially
   changes.
+
+## Bulb Choice Room (September 19)
+
+The approved action-based bulb replaces the retired speed threshold. Open
+`Prototypes/Rooms/blue_bulb_choice_room.tscn` with F6 for the isolated proof.
+It provides a safe lower route, a dash gap, a downward-strike perch, an optional
+upper chain, and a remote-clear choice. The existing macro route remains intact.
+See `docs/design/blue_bulb_choice_room.md` for controls, checks, and tuning.

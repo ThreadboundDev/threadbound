@@ -1,0 +1,62 @@
+[
+  {
+    "file": "01-chamber-context.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-08-16 204554.png",
+    "caption": "Chamber presentation, August 16. Context image; not proof of the exact public demo build.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "02-flow-july.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-07-31 105159.png",
+    "caption": "Earlier sprite-era Flow treatment, July 31. Historical image, not the current 3D-player effect.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "03-inventory-august.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-08-15 170203.png",
+    "caption": "Inventory interface, August 15. Release-window UX context.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "04-blue-rooftops.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-08-27 205929.png",
+    "caption": "Blue-region house and rooftop art study, August 27.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "05-environment-study.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-08-28 092516.png",
+    "caption": "Environment art study, August 28. Do not label as a finished playable region.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "06-hybrid-village.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-09-22 095346.png",
+    "caption": "Painted houses, platforms and water bulbs in the village composition test, September 22.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "07-equipped-model.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-09-05 205317.png",
+    "caption": "Equipped 3D character close-up, September 5. Work in progress.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "08-manual-animation.png",
+    "source": "C:\\Users\\chase\\Pictures\\Screenshots\\Threadbound Screenshots\\Screenshot 2026-09-25 142736.png",
+    "caption": "Manual aerial-animation workspace in Blender, September 25.",
+    "processing": "Unaltered copy"
+  },
+  {
+    "file": "09-current-lake-gameplay.png",
+    "source": "C:\\Users\\chase\\Documents\\threadbound\\Media\\Development\\devlog4\\review\\video_sep26\\review_02.png",
+    "caption": "Current lake prototype, sampled around 9.97 seconds from the September 26 09:10:50 recording. Greybox geometry is intentional.",
+    "processing": "Video frame extracted at half resolution (1280 x 720); full desktop frame retained"
+  },
+  {
+    "file": "10-earlier-combat-prototype.png",
+    "source": "C:\\Users\\chase\\Documents\\threadbound\\Media\\Development\\devlog4\\review\\video_sep14\\review_06.png",
+    "caption": "Earlier live-3D combat test, around 44.55 seconds from the September 14 11:20:11 recording. This predates the latest aerial-attack fixes.",
+    "processing": "Video frame extracted at half resolution (1280 x 720); full desktop frame retained"
+  }
+]

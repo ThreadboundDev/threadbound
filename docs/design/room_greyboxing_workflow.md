@@ -2,6 +2,8 @@
 
 The Room Greybox editor dock exists to turn an idea into a playable room as quickly as possible.
 
+**Current lake workflow:** start with [Lake greybox guide](lake_greybox_start_here.md) and `blue_lake_greybox.tscn`. Polygon Water and Air Pocket are the supported authoring tools for the revised Blue direction. Historical water/rendering notes below describe earlier experiments.
+
 ## Palette
 
 - Dark-grey terrain tiles: standard terrain and collision, painted on a 128 px grid through Godot's native TileMap palette.
@@ -11,7 +13,7 @@ The Room Greybox editor dock exists to turn an idea into a playable room as quic
 - Blue water: playable prototype swim volume.
 - Red hazard: damage and knockback volume; free placement by default so slopes, spikes, and irregular danger zones are not constrained to the grid.
 - White water bulb: non-solid traversal volume. Attacks recoil the player,
-  dashes continue through it, grapple pops it without propulsion, and ordinary
+  dashes carry through with extra speed and lift, grapple/ranged hits pop without propulsion, and ordinary
   contact gently ejects the player.
 
 Select the intended room or geometry container, open **Room Greybox** in the bottom panel, and press **Terrain Tiles**. Choose the solid or one-way tile in Godot's TileMap palette, then paint and erase directly in the 2D viewport. Pressing the button again selects the room's existing `GreyboxTerrain` layer.
@@ -36,7 +38,7 @@ The debug colors should remain conspicuous. This tool is evaluated by authoring 
 
 ## Prototype Water
 
-Current water is intentionally minimal. The player floats at the transformed top edge of the water volume with the torso and head exposed. Horizontal movement uses the Run animation, while an idle surface float uses Jump_Apex. Jump or Up rises and Down sinks. Pressing Jump while at the surface commits to a normal-strength launch long enough to clear the water volume. Opaque water renders above the player but below terrain, hiding submerged body pixels without covering platforms. It does not yet implement drowning, currents, waterlogged sinking, a regional unlock, or finished swimming animation.
+Current lake swimming uses responsive eight-way input with braking at rest. Polygon volumes provide the shape, and overlapping Air Pocket polygons restore dry movement and remove the water overlay. Fast upward exits retain momentum; slow exits do not force a launch. Water remains transparent and becomes clearer while submerged. See the current lake guide for controls, limits, tuning and the remaining rendering/combat work.
 
 ### Finished Water Visual Workflow
 
@@ -67,7 +69,7 @@ The **Hazard** button creates a reusable triangular spike strip. Hazards reuse t
 ## Prototype Bumpers
 
 The **Water Bulb** button creates a reusable non-solid traversal volume. Bulbs
-are harmless solid surfaces: touching or landing on one never deals damage.
+are non-solid: touching one never deals damage and gently ejects the player.
 Each instance exposes its size, hits required to break, launch strength in
 normal jump heights, and regeneration delay. The attack that removes the final
 hit launches the player opposite the attack direction. Because ballistic height
@@ -76,3 +78,10 @@ two-jump apex rather than simply doubling jump velocity.
 
 Use one-hit bumpers for fast traversal chains and multi-hit bumpers for route
 timing, gates, or optional pockets that remain accessible until regeneration.
+
+### Bulb choice verification
+
+Use `blue_bulb_choice_room.tscn` for the attack/dash/remote comparison.
+No impact-speed threshold remains. Dash lift and speed multiplier are separate
+authored values; ranged damage never recoils its owner. The focused regression
+scene is `tools/environment/verify_bulb_choices.tscn`.

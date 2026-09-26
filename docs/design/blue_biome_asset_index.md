@@ -27,6 +27,14 @@ Open a room under `Src/Environment/BlueBiome/Prototypes/Rooms`, then use the **R
 
 The waterline Threadglass scene supplies only the dangerous reeds/glass and collision. It deliberately does not contain painted water. Align the bottom edge of the art with the active water surface; the water system remains responsible for animation, depth, masking, and player presentation.
 
-## Room route
+## Still Village kit preview
+
+The isolated `Prototypes/Rooms/blue_still_village_preview.tscn` dresses the bulb
+choice room with twelve reusable pieces under `ArtPlaceables/StillVillage`.
+Editable Blender models are in `ArtSource/BlueBiome/Blender/StillVillage`;
+runtime art is in `Assets/BlueBiome/StillVillage`. It uses two 2D parallax image
+layers and rendered bulb animation while preserving inherited room collision.
+
+## Existing region shells
 
 The clean room shells are collected under `Prototypes/Rooms`: Chamber Exit / Rooftops, Lakeside Village, Lower Shore, Peasant Fields, Irrigation Channel, Hidden Cistern, Shrine Approach, Old Shrine, Hermit's Lake, and Waterfall Ascent. The macro overview and scalable reference remain one level up in `Prototypes` and `References`.
