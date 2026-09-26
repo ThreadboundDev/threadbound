@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Enemies/enemy_stats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+max_health = 100
+move_speed = 90.0
+chase_speed = 130.0
+acceleration = 350.0
+gravity = 0.0
+attack_damage = 18
+contact_damage = 0
+attack_windup = 0.733333
+attack_active_time = 0.20
+attack_recovery = 0.566667
+attack_cooldown = 1.2
+hurt_time = 0.4
+knockback_strength = 240.0
+use_polished_hurt_response = true
+hurt_motion_uses_gravity = false
+hurt_knockback_deceleration = 600.0
+hurt_visual_recoil_distance = 0.0
