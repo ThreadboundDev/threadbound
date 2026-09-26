@@ -52,5 +52,3 @@ func play_clip(clip: StringName, duration := 0.0) -> void:
 		return
 	var speed := animator.get_animation(clip).length / duration if duration > 0.0 else 1.0
 	animator.play(clip, 0.04, speed)
-
-

@@ -131,4 +131,3 @@ s.frame_set(8)
 s['directional_attack_notes'] = 'Approved forward action unchanged. Up: chambered vertical thrust. Down: extended stab with tucked legs. 30fps, frames1-24. Not yet exported to Godot.'
 bpy.ops.wm.save_as_mainfile(filepath=str(DEST),compress=True)
 print('DIRECTIONAL_ATTACKS',json.dumps(reports))
-

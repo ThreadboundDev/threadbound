@@ -86,5 +86,5 @@ Canonical Blender library: **62 actions** at 30 FPS.
 - Parry/perfect-block success, guard break, and guard-broken reaction.
 - Sword-and-shield interaction poses for doors, levers, and pickups.
 
-All source FBXs are retained under `ArtSource/Player/Blender/imported_character/mixamo_library/source`. 
+All source FBXs are retained under `ArtSource/Player/Blender/imported_character/mixamo_library/source`.
 The Downloads-folder copies are disposable after byte-for-byte verification.

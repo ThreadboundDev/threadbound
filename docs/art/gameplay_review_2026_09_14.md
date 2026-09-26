@@ -117,4 +117,3 @@ Validation: `verify_air_light.tscn` checks one hit per activation, both facings,
 Headless Godot also reports environment-level log/certificate/editor-setting access messages and shutdown resource-leak warnings. Verification markers pass; this is not a warning-free engine run. No commit was created. Existing unrelated checkout changes were preserved.
 
 This is a playable first pass. Ground-animation side-view cleanup, broader impact/splash art, and animated underwater presentation remain future polish. Normal user playtesting is still needed to judge feel.
-
