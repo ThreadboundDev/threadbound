@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1"]
+[ext_resource type="Script" path="res://Src/Enemies/TideDuelist/tide_duelist.gd" id="2"]
+[ext_resource type="Resource" path="res://Src/Enemies/TideDuelist/tide_duelist_stats.tres" id="3"]
+[ext_resource type="Script" path="res://Src/Enemies/TideDuelist/tide_duelist_visual.gd" id="4"]
+
+[sub_resource type="CircleShape2D" id="Body"]
+radius = 42.0
+[sub_resource type="CircleShape2D" id="Blade"]
+radius = 32.0
+[sub_resource type="CircleShape2D" id="Detection"]
+radius = 600.0
+
+[node name="TideDuelist" instance=ExtResource("1")]
+script = ExtResource("2")
+stats = ExtResource("3")
+patrol_distance = 220.0
+editor_description = "Place fully inside polygon lake water. Waits still, curls with an eye flash, then commits to a blinkstrike. Air pockets and terrain block movement."
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, 0)
+shape = SubResource("Body")
+
+[node name="Body" parent="Visuals" index="0"]
+visible = false
+
+[node name="Fish" type="Node2D" parent="Visuals" index="1"]
+script = ExtResource("4")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 0)
+shape = SubResource("Body")
+
+[node name="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = SubResource("Detection")
+
+[node name="AttackHitbox" parent="." index="6"]
+position = Vector2(62, 0)
+
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("Blade")
+
+[node name="HitFlashComponent" parent="." index="8"]
+target_path = NodePath("../Visuals/Fish")
+
+[node name="EnemyHealthBar" parent="." index="11"]
+position = Vector2(0, -65)

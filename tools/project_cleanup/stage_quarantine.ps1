@@ -6,7 +6,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$DestinationRoot,
 
-    [string]$RepositoryManifestPath = "cleanup_reports/quarantine_manifest_20260725.json",
+    [string]$RepositoryManifestPath = "docs/archive/project_cleanup/quarantine_manifest_20260725.json",
 
     [switch]$Append
 )
@@ -36,7 +36,7 @@ function Get-Reason {
     if ($RelativePath.StartsWith("docs/art/concept_art/")) {
         return "non-runtime concept art"
     }
-    if ($RelativePath.StartsWith("cleanup_reports/delete_candidates_20260702/")) {
+    if ($RelativePath.StartsWith("docs/archive/project_cleanup/delete_candidates_20260702/")) {
         return "previous delete-candidate staging folder"
     }
     return "no static project reference"

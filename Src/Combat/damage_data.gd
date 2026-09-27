@@ -9,6 +9,8 @@ extends Resource
 @export var screen_shake_duration: float = 0.06
 @export var use_receiver_screen_shake_fallback := true
 @export var allow_friendly_fire := false
+# Only direct melee hits recoil their source when popping traversal bulbs.
+@export var is_melee := false
 
 var source: Node = null
 var hit_position: Vector2 = Vector2.ZERO

@@ -1,0 +1,27 @@
+{
+  "asset": "Hanging Bell A",
+  "fps": 24,
+  "canvas": [
+    600,
+    800
+  ],
+  "states": {
+    "rush": [
+      1,
+      24
+    ],
+    "pop": [
+      25,
+      36
+    ],
+    "spent": [
+      37,
+      42
+    ],
+    "refill": [
+      43,
+      72
+    ]
+  },
+  "notes": "3D authored animation; no fluid simulation. Orthographic contour is render-only. glTF uses one timeline; split per marker ranges in engine."
+}

@@ -1,0 +1,63 @@
+index,action,source_file,frames,fps,duration_seconds,timeline_start,timeline_end
+1,attack_1,sword and shield attack.fbx,71,30,2.3667,1,71
+2,attack_2,sword and shield attack (2).fbx,40,30,1.3333,78,117
+3,attack_3,sword and shield attack (3).fbx,53,30,1.7667,124,176
+4,attack_4,sword and shield attack (4).fbx,31,30,1.0333,183,213
+5,block_1,sword and shield block.fbx,17,30,0.5667,220,236
+6,block_2,sword and shield block (2).fbx,16,30,0.5333,243,258
+7,block_idle_1,sword and shield block idle.fbx,42,30,1.4,265,306
+8,casting_1,sword and shield casting.fbx,90,30,3.0,313,402
+9,casting_2,sword and shield casting (2).fbx,32,30,1.0667,409,440
+10,crouch_1,sword and shield crouch.fbx,18,30,0.6,447,464
+11,crouch_block_1,sword and shield crouch block.fbx,15,30,0.5,471,485
+12,crouch_block_2,sword and shield crouch block (2).fbx,22,30,0.7333,492,513
+13,crouch_block_idle_1,sword and shield crouch block idle.fbx,9,30,0.3,520,528
+14,crouch_idle_1,sword and shield crouch idle.fbx,72,30,2.4,535,606
+15,crouching_1,sword and shield crouching.fbx,16,30,0.5333,613,628
+16,crouching_2,sword and shield crouching (2).fbx,15,30,0.5,635,649
+17,crouching_3,sword and shield crouching (3).fbx,20,30,0.6667,656,675
+18,death_1,sword and shield death.fbx,70,30,2.3333,682,751
+19,death_2,sword and shield death (2).fbx,118,30,3.9333,758,875
+20,draw_sword_1,draw sword 1.fbx,16,30,0.5333,882,897
+21,draw_sword_2,draw sword 2.fbx,24,30,0.8,904,927
+22,get_up_from_hang_1,Get Up From Hang.fbx,35,30,1.1667,934,968
+23,grab_ledge_from_water_1,Grab Ledge From Water.fbx,151,30,5.0333,975,1125
+24,grapple_swinging_1,Grapple Swinging.fbx,60,30,2.0,1132,1191
+25,hanging_idle_1,Hanging Idle.fbx,71,30,2.3667,1198,1268
+26,idle_1,sword and shield idle.fbx,109,30,3.6333,1275,1383
+27,idle_2,sword and shield idle (2).fbx,227,30,7.5667,1390,1616
+28,idle_3,sword and shield idle (3).fbx,261,30,8.7,1623,1883
+29,idle_4,sword and shield idle (4).fbx,77,30,2.5667,1890,1966
+30,impact_1,sword and shield impact.fbx,22,30,0.7333,1973,1994
+31,impact_2,sword and shield impact (2).fbx,30,30,1.0,2001,2030
+32,impact_3,sword and shield impact (3).fbx,22,30,0.7333,2037,2058
+33,jump_1,sword and shield jump.fbx,26,30,0.8667,2065,2090
+34,jump_2,sword and shield jump (2).fbx,30,30,1.0,2097,2126
+35,jump_into_wall_hang_1,Jump Into Wall Hang.fbx,40,30,1.3333,2133,2172
+36,jumping_into_water_1,jumping into water.fbx,37,30,1.2333,2179,2215
+37,kick_1,sword and shield kick.fbx,37,30,1.2333,2222,2258
+38,power_up_1,sword and shield power up.fbx,72,30,2.4,2265,2336
+39,roll_1,Roll.fbx,36,30,1.2,2343,2378
+40,run_1,sword and shield run.fbx,22,30,0.7333,2385,2406
+41,run_2,sword and shield run (2).fbx,17,30,0.5667,2413,2429
+42,sheath_sword_1,sheath sword 1.fbx,39,30,1.3,2436,2474
+43,sheath_sword_2,sheath sword 2.fbx,26,30,0.8667,2481,2506
+44,sit_to_stand_1,Sit To Stand.fbx,69,30,2.3,2513,2581
+45,slash_1,sword and shield slash.fbx,46,30,1.5333,2588,2633
+46,slash_2,sword and shield slash (2).fbx,107,30,3.5667,2640,2746
+47,slash_3,sword and shield slash (3).fbx,48,30,1.6,2753,2800
+48,slash_4,sword and shield slash (4).fbx,70,30,2.3333,2807,2876
+49,slash_5,sword and shield slash (5).fbx,42,30,1.4,2883,2924
+50,stand_to_sit_1,Stand To Sit.fbx,68,30,2.2667,2931,2998
+51,strafe_1,sword and shield strafe.fbx,35,30,1.1667,3005,3039
+52,strafe_2,sword and shield strafe (2).fbx,40,30,1.3333,3046,3085
+53,strafe_3,sword and shield strafe (3).fbx,21,30,0.7,3092,3112
+54,strafe_4,sword and shield strafe (4).fbx,22,30,0.7333,3119,3140
+55,swimming_1,Swimming.fbx,137,30,4.5667,3147,3283
+56,turn_1,sword and shield turn.fbx,29,30,0.9667,3290,3318
+57,turn_180_1,sword and shield 180 turn.fbx,25,30,0.8333,3325,3349
+58,turn_180_2,sword and shield 180 turn (2).fbx,26,30,0.8667,3356,3381
+59,turn_2,sword and shield turn (2).fbx,29,30,0.9667,3388,3416
+60,walk_1,sword and shield walk.fbx,34,30,1.1333,3423,3456
+61,walk_2,sword and shield walk (2).fbx,38,30,1.2667,3463,3500
+62,water_idle_1,Water Idle.fbx,91,30,3.0333,3507,3597

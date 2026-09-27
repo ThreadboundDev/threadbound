@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BluePeasantFields" instance=ExtResource("1")]
+room_id = "blue_peasant_fields"
+display_name = "Peasant Fields"
+macro_focus = Vector2(970, 570)
+planning_bounds = Vector2(7000, 2800)
+design_intent = "Open, breezy horizontal traversal with long movement chains and an early view of the Old Shrine across water."

@@ -32,12 +32,14 @@ const ESSENCE_YELLOW := Color(1.0, 0.79, 0.2, 1.0)
 @export var run_trail_max_speed := 780.0
 @export var run_trail_interval := 0.14
 @export var ambient_wisp_interval := 0.09
+@export var use_multimesh_soul_trail := true
 
 @export_group("Events")
 @export var maximum_ephemeral_sprites := 32
 @export var minimum_landing_effect_speed := 160.0
 
 @onready var silhouette_shell: Sprite2D = $AuraBack/SilhouetteShell
+@onready var soul_trail: FlowMultiMeshTrail = $AuraBack/SoulTrail
 @onready var flow_light: PointLight2D = $AuraBack/FlowLight
 @onready var transition_core: AnimatedSprite2D = $TransitionLayer/TransitionCore
 @onready var transition_accents: Array[AnimatedSprite2D] = [
@@ -75,7 +77,7 @@ var _identity_channels: Array[Color] = []
 var _identity_override_active := false
 var _ephemeral_sprites: Array[CanvasItem] = []
 var _meditation_active := false
-var _player_visual: AnimatedSprite2D
+var _player_visual: Node2D
 var _silhouette_material: ShaderMaterial
 
 func _ready() -> void:
@@ -109,7 +111,7 @@ func set_flow_active(is_active: bool) -> void:
 	visible = true
 	set_process(true)
 	_buildup_timer = 0.0
-	_play_transition(&"ignite" if active else &"unravel")
+	_stop_transition_visuals()
 
 func set_meditation_active(is_active: bool) -> void:
 	if _meditation_active == is_active:
@@ -130,11 +132,15 @@ func set_meditation_active(is_active: bool) -> void:
 
 func set_momentum_amount(value: float) -> void:
 	_momentum_amount = clampf(value, 0.0, 100.0)
-	if active or _momentum_amount >= buildup_start_momentum:
+	if active or _meditation_active or _aura_visibility > 0.005:
 		visible = true
 		set_process(true)
 	else:
 		_refresh_processing_state()
+
+func get_attack_identity_channels() -> Array[Color]:
+	# Read-only snapshot also works outside Flow and honors future identity callers.
+	return _identity_channels.duplicate()
 
 func set_identity_channels(channels: Array[Color]) -> void:
 	_identity_override_active = false
@@ -173,104 +179,23 @@ func _set_identity_channels_internal(channels: Array[Color]) -> void:
 	_apply_identity_channels()
 
 func play_attack_swing(
-	direction: Vector2,
-	arc_degrees: float = 130.0,
-	strike_index: int = 0
+	_direction: Vector2,
+	_arc_degrees: float = 130.0,
+	_strike_index: int = 0
 ) -> void:
-	if not active or not is_inside_tree():
-		return
+	# Retired: the detached 2D crescent did not match the live 3D weapon.
+	pass
 
-	var swing_direction := direction.normalized()
-	if swing_direction.length() <= 0.001:
-		swing_direction = Vector2.RIGHT
-	var arc_scale := clampf(arc_degrees / 130.0, 0.72, 1.24)
-	var colors := _get_action_colors()
-	var color_center := (float(colors.size()) - 1.0) * 0.5
+func play_dash(_direction: Vector2) -> void:
+	# Flow movement is communicated by the pose-matched body afterimages.
+	pass
 
-	for index in colors.size():
-		var sprite := attack_template.duplicate() as AnimatedSprite2D
-		event_layer.add_child(sprite)
-		sprite.visible = true
-		sprite.position = (
-			Vector2(0.0, -38.0)
-			+ swing_direction * (35.0 + index * 1.25)
-		)
-		sprite.rotation = (
-			swing_direction.angle()
-			+ (float(index) - color_center) * 0.035
-		)
-		sprite.scale = Vector2.ONE * (0.58 * arc_scale * (1.0 - index * 0.025))
-		# The authored crescent faces opposite the weapon travel direction.
-		# Mirror it horizontally while retaining the alternating vertical cut.
-		sprite.flip_h = not attack_template.flip_h
-		sprite.flip_v = strike_index % 2 == 1
-		sprite.material = _make_tint_material(
-			colors[index],
-			0.18 if index == 0 else 0.9,
-			1.28 if index == 0 else 1.04
-		)
-		sprite.modulate.a = 0.32 if index == 0 else 0.18
-		_register_ephemeral(sprite)
-		sprite.animation_finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
-		sprite.play(&"swing")
+func play_jump(_direction: Vector2) -> void:
+	pass
 
-func play_dash(direction: Vector2) -> void:
-	if not active or not is_inside_tree():
-		return
-
-	var dash_direction := direction.normalized()
-	if dash_direction.length() <= 0.001:
-		dash_direction = Vector2.RIGHT
-	_spawn_movement_layers(
-		movement_templates[0],
-		Vector2(0.0, -34.0) - dash_direction * 36.0,
-		dash_direction.angle(),
-		Vector2(0.62, 0.5),
-		0.24,
-		dash_direction * -22.0,
-		0.82
-	)
-
-func play_jump(direction: Vector2) -> void:
-	if not active or not is_inside_tree():
-		return
-
-	var player_body := get_parent() as CharacterBody2D
-	var is_air_jump := player_body != null and not player_body.is_on_floor()
-	var template := movement_templates[3] if is_air_jump else movement_templates[1]
-	var horizontal_tilt := clampf(direction.x, -1.0, 1.0) * 0.14
-	_spawn_movement_layers(
-		template,
-		Vector2(0.0, 2.0 if is_air_jump else 30.0),
-		horizontal_tilt,
-		Vector2(0.3, 0.32) if is_air_jump else Vector2(0.32, 0.35),
-		0.64 if is_air_jump else 0.7,
-		Vector2(-direction.x * 4.0, 12.0 if is_air_jump else 20.0),
-		0.48
-	)
-
-func play_land(impact_speed: float) -> void:
-	if (
-		not active
-		or not is_inside_tree()
-		or impact_speed < minimum_landing_effect_speed
-	):
-		return
-
-	var strength := clampf(
-		inverse_lerp(minimum_landing_effect_speed, 1100.0, impact_speed),
-		0.0,
-		1.0
-	)
-	var landing_scale := Vector2(
-		lerpf(0.33, 0.52, strength),
-		lerpf(0.24, 0.38, strength)
-	)
-	_spawn_landing_layers(
-		landing_scale,
-		lerpf(0.92, 1.18, strength),
-		lerpf(0.46, 0.62, strength)
-	)
+func play_land(_impact_speed: float) -> void:
+	# Retired with the white ground burst.
+	pass
 
 func _process(delta: float) -> void:
 	_time += delta
@@ -282,11 +207,8 @@ func _process(delta: float) -> void:
 		fade_speed * delta
 	)
 
-	if active:
-		_update_run_trails(delta)
-		_update_ambient_wisps(delta)
-	elif not _meditation_active:
-		_update_buildup(delta)
+	if soul_trail:
+		soul_trail.set_trail_active(active and use_multimesh_soul_trail)
 
 	_update_aura_visuals()
 	_refresh_processing_state()
@@ -300,20 +222,25 @@ func _configure_static_materials() -> void:
 
 func _resolve_player_visual() -> void:
 	var player := get_parent()
-	if player:
+	if not player:
+		_player_visual = null
+		return
+	var live_composite := player.get_node_or_null("Live3DComposite") as Sprite2D
+	if live_composite:
+		_player_visual = live_composite
+		return
+	if not is_instance_valid(_player_visual):
 		_player_visual = player.get_node_or_null("Player Animation") as AnimatedSprite2D
 
 func _sync_silhouette_source() -> void:
+	# The live 3D composite is added deferred, so keep looking for it even when
+	# the hidden legacy sprite was available during this node's _ready().
+	_resolve_player_visual()
 	if not is_instance_valid(_player_visual):
-		_resolve_player_visual()
-	if not is_instance_valid(_player_visual) or _player_visual.sprite_frames == null:
 		silhouette_shell.visible = false
 		return
 
-	var frame_texture := _player_visual.sprite_frames.get_frame_texture(
-		_player_visual.animation,
-		_player_visual.frame
-	)
+	var frame_texture := _get_visual_texture(_player_visual)
 	if frame_texture == null:
 		silhouette_shell.visible = false
 		return
@@ -326,17 +253,17 @@ func _sync_silhouette_source() -> void:
 	# The source pose is mirrored explicitly inside the shader instead.
 	silhouette_shell.flip_h = false
 	silhouette_shell.flip_v = false
-	silhouette_shell.offset = _player_visual.offset
-	silhouette_shell.centered = _player_visual.centered
+	silhouette_shell.offset = _get_visual_offset(_player_visual)
+	silhouette_shell.centered = _get_visual_centered(_player_visual)
 
 	if _silhouette_material:
 		_silhouette_material.set_shader_parameter(
 			&"source_flip_h",
-			_player_visual.flip_h
+			_get_visual_flip_h(_player_visual)
 		)
 		_silhouette_material.set_shader_parameter(
 			&"source_flip_v",
-			_player_visual.flip_v
+			_get_visual_flip_v(_player_visual)
 		)
 		var sampled_texture: Texture2D = frame_texture
 		var sampled_size := Vector2(frame_texture.get_size())
@@ -370,6 +297,43 @@ func _sync_silhouette_source() -> void:
 				source_uv_rect.size.y
 			)
 		)
+
+func _get_visual_texture(visual: Node2D) -> Texture2D:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).texture
+	if visual is AnimatedSprite2D:
+		var animated := visual as AnimatedSprite2D
+		if animated.sprite_frames:
+			return animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+	return null
+
+func _get_visual_offset(visual: Node2D) -> Vector2:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).offset
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).offset
+	return Vector2.ZERO
+
+func _get_visual_centered(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).centered
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).centered
+	return true
+
+func _get_visual_flip_h(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).flip_h
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).flip_h
+	return false
+
+func _get_visual_flip_v(visual: Node2D) -> bool:
+	if visual is Sprite2D:
+		return (visual as Sprite2D).flip_v
+	if visual is AnimatedSprite2D:
+		return (visual as AnimatedSprite2D).flip_v
+	return false
 
 func _connect_transition_signals() -> void:
 	var transition_sprites: Array[AnimatedSprite2D] = [transition_core]
@@ -405,6 +369,8 @@ func _apply_identity_channels() -> void:
 		transition_accents[index].material = _make_tint_material(color, 0.94, 1.08)
 
 	flow_light.color = _get_identity_glow_color(effective_channels)
+	if soul_trail:
+		soul_trail.set_trail_color(flow_light.color)
 	_update_silhouette_identity_material()
 	_update_aura_visuals()
 
@@ -516,64 +482,26 @@ func _update_aura_visuals() -> void:
 			1.28 + pulse * 0.42 + _activation_burst * 0.82
 		)
 
-	flow_light.energy = (
-		display_strength
-		* (0.48 + pulse * 0.22 + _activation_burst * 0.42)
-	)
+	flow_light.energy = 0.0
 	flow_light.texture_scale = (
 		1.08
 		+ pulse * 0.16
 		+ _activation_burst * 0.22
 	)
 
-func _play_transition(animation_name: StringName) -> void:
+func _play_transition(_animation_name: StringName) -> void:
+	_stop_transition_visuals()
+	_activation_burst = 0.0
+
+func _stop_transition_visuals() -> void:
 	transition_core.stop()
 	transition_core.visible = false
 	for sprite in transition_accents:
 		sprite.stop()
 		sprite.visible = false
-
 	if _activation_tween and _activation_tween.is_valid():
 		_activation_tween.kill()
-	_activation_tween = create_tween()
-	if animation_name == &"ignite":
-		transition_core.visible = true
-		transition_core.modulate.a = 0.86
-		transition_core.scale = Vector2.ONE * 0.62
-		transition_core.play(&"ignite")
-		for index in transition_accents.size():
-			var accent := transition_accents[index]
-			accent.visible = true
-			accent.modulate.a = 0.38 - index * 0.055
-			accent.scale = Vector2.ONE * (0.58 - index * 0.035)
-			if index == 1:
-				accent.scale.x *= -1.0
-			accent.play(&"ignite")
-		_activation_burst = 0.0
-		_activation_tween.tween_property(
-			self,
-			"_activation_burst",
-			1.0,
-			0.1
-		).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
-		_activation_tween.tween_property(
-			self,
-			"_activation_burst",
-			0.0,
-			0.4
-		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	else:
-		transition_core.visible = true
-		transition_core.modulate.a = 0.34
-		transition_core.scale = Vector2.ONE * 0.54
-		transition_core.play(&"unravel")
-		_activation_burst = minf(maxf(_activation_burst, 0.24), 0.4)
-		_activation_tween.tween_property(
-			self,
-			"_activation_burst",
-			0.0,
-			0.32
-		).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_activation_tween = null
 
 func _play_meditation_bloom() -> void:
 	if _activation_tween and _activation_tween.is_valid():
@@ -656,6 +584,11 @@ func _spawn_buildup_mote(strength: float) -> void:
 	fade_tween.tween_property(sprite, "modulate:a", 0.0, lifetime * 0.78)
 	fade_tween.finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
 
+func enable_multimesh_soul_trail(is_enabled: bool) -> void:
+	use_multimesh_soul_trail = is_enabled
+	if soul_trail:
+		soul_trail.set_trail_active(active and use_multimesh_soul_trail)
+
 func _update_run_trails(delta: float) -> void:
 	var player_body := get_parent() as CharacterBody2D
 	if not player_body:
@@ -694,6 +627,18 @@ func _update_run_trails(delta: float) -> void:
 	tween.tween_property(sprite, "scale", Vector2(0.23, 0.1), 0.2)
 	tween.tween_property(sprite, "modulate:a", 0.0, 0.2)
 	tween.finished.connect(_release_ephemeral.bind(sprite), CONNECT_ONE_SHOT)
+
+func _update_soul_trail() -> void:
+	var player_body := get_parent() as CharacterBody2D
+	if not player_body or not soul_trail:
+		return
+	soul_trail.minimum_speed = run_trail_min_speed
+	soul_trail.maximum_speed = run_trail_max_speed
+	soul_trail.sample_motion(
+		_player_visual,
+		player_body.velocity,
+		clampf(_aura_visibility, 0.35, 1.0)
+	)
 
 func _update_ambient_wisps(delta: float) -> void:
 	if _aura_visibility < 0.35:
@@ -943,9 +888,15 @@ func _refresh_processing_state() -> void:
 		active
 		or _meditation_active
 		or _aura_visibility > 0.005
-		or _momentum_amount >= buildup_start_momentum
 		or transition_visible
 		or not _ephemeral_sprites.is_empty()
 	)
 	visible = needs_processing
 	set_process(needs_processing)
+
+func _physics_process(_delta: float) -> void:
+	# Body echoes sample the same clock that advances CharacterBody2D motion.
+	# Mixing render-frame sampling with physics motion caused the trail to
+	# alternate between stale and current transforms under camera smoothing.
+	if active and use_multimesh_soul_trail:
+		_update_soul_trail()

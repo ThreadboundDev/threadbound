@@ -1,0 +1,286 @@
+extends Node
+
+const BLOCK := preload("res://Src/Environment/Greybox/greybox_block.tscn")
+const WATER := preload("res://Src/Environment/Greybox/greybox_water.tscn")
+const HAZARD := preload("res://Src/Environment/Greybox/greybox_hazard.tscn")
+const BUMPER := preload("res://Src/Environment/Greybox/greybox_bumper.tscn")
+const TILE_LAYER := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
+const ANNOTATION := preload("res://Src/Environment/Greybox/greybox_annotation_area.tscn")
+const ART_REGION := preload("res://Src/Environment/Greybox/art_generation_region.tscn")
+const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/blue_village_room_01.tscn")
+
+
+func _ready() -> void:
+	var block := BLOCK.instantiate() as GreyboxBlock2D
+	add_child(block)
+	block.position = Vector2(-1000, 0)
+	block.size = Vector2(384, 64)
+	assert((block.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(384, 64))
+	assert(block.block_color.get_luminance() < 0.3, "Large greybox blocks should be dark grey.")
+
+	var tile_layer := TILE_LAYER.instantiate() as TileMapLayer
+	add_child(tile_layer)
+	assert(tile_layer.tile_set != null)
+	assert(tile_layer.tile_set.tile_size == Vector2i(128, 128))
+	var source := tile_layer.tile_set.get_source(0) as TileSetAtlasSource
+	assert(source != null)
+	assert(source.has_tile(Vector2i(0, 0)), "Solid terrain tile is missing.")
+	assert(source.has_tile(Vector2i(1, 0)), "One-way terrain tile is missing.")
+	var one_way_data := source.get_tile_data(Vector2i(1, 0), 0)
+	assert(tile_layer.tile_set.get_physics_layers_count() == 3)
+	assert(tile_layer.tile_set.get_physics_layer_collision_layer(1) == 8)
+	assert(tile_layer.tile_set.get_physics_layer_collision_layer(2) == 4)
+	assert(one_way_data.is_collision_polygon_one_way(0, 0), "One-way tile collision is not configured.")
+	var one_way_points := one_way_data.get_collision_polygon_points(0, 0)
+	assert(one_way_points.has(Vector2(-64, -64)))
+	assert(one_way_points.has(Vector2(64, 64)), "One-way collision must fill the entire tile.")
+	tile_layer.set_cell(Vector2i.ZERO, 0, Vector2i(1, 0), 0)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	var tile_center := tile_layer.map_to_local(Vector2i.ZERO)
+	var side_query := PhysicsRayQueryParameters2D.create(tile_center + Vector2(-96, 0), tile_center + Vector2(96, 0), 4)
+	assert(not tile_layer.get_world_2d().direct_space_state.intersect_ray(side_query).is_empty(), "Grapple must hit a one-way tile from its side.")
+	var below_query := PhysicsRayQueryParameters2D.create(tile_center + Vector2(0, 96), tile_center + Vector2(0, -96), 4)
+	assert(not tile_layer.get_world_2d().direct_space_state.intersect_ray(below_query).is_empty(), "Grapple must hit a one-way tile from below.")
+	assert(one_way_data.get_collision_polygons_count(0) == 1, "One-way tiles must not add solid seam polygons.")
+
+	var water := WATER.instantiate() as GreyboxWater2D
+	add_child(water)
+	water.size = Vector2(640, 320)
+	water.position = Vector2(100, 500)
+	water.scale = Vector2(3, 2)
+	assert((water.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(640, 320))
+	assert(is_equal_approx(water.get_surface_global_y(), 180.0), "Scaled water surface is incorrect.")
+	assert(water.z_index < tile_layer.z_index)
+	assert(water.water_color.a > 0.0 and water.water_color.a < 1.0, "Traversable water keeps the player visible.")
+
+	var hazard := HAZARD.instantiate() as GreyboxHazard2D
+	add_child(hazard)
+	hazard.position = Vector2(13.5, 27.25)
+	assert(hazard.position == Vector2(13.5, 27.25), "Hazards must support free placement.")
+	var pogo_receiver := hazard.get_node_or_null("PogoReceiver") as HurtboxComponent
+	assert(pogo_receiver != null, "Red hazards must expose a pogo attack receiver.")
+	assert(pogo_receiver.hurtbox_owner == hazard)
+	assert(pogo_receiver.collision_layer == 2)
+
+	var bumper := BUMPER.instantiate() as GreyboxBumper2D
+	add_child(bumper)
+	bumper.position = Vector2(250, 0)
+	bumper.size = Vector2(224, 80)
+	bumper.hits_to_break = 2
+	bumper.launch_jump_heights = 2.0
+	bumper.regeneration_delay = 0.05
+	assert((bumper.get_node("HitReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80))
+	assert(
+		(bumper.get_node("ContactReceiver/CollisionShape2D").shape as RectangleShape2D).size == Vector2(224, 80),
+		"Water-bulb contact must follow its authored size."
+	)
+	assert(
+		bumper is Node2D and not bumper.is_class("CollisionObject2D"),
+		"Water bulbs must not be solid or walkable."
+	)
+	var bumper_receiver := bumper.get_node("HitReceiver") as HurtboxComponent
+	assert(bumper_receiver.collision_layer == 2)
+	assert((bumper.get_node("GrappleTarget") as Area2D).collision_layer == 4)
+
+	var annotation := ANNOTATION.instantiate() as GreyboxAnnotationArea2D
+	add_child(annotation)
+	annotation.title = "Rope Bridge"
+	annotation.size = Vector2(640, 96)
+	annotation.intended_collision = "One-way"
+	annotation.art_layer = "Gameplay Edge"
+	annotation.orientation = "Span"
+	assert(annotation.collision_layer == 0)
+	assert(annotation.collision_mask == 0)
+	assert(not annotation.monitoring)
+	assert(not annotation.monitorable)
+	assert(annotation.get_node("CollisionShape2D").disabled)
+	assert((annotation.get_node("CollisionShape2D").shape as RectangleShape2D).size == Vector2(640, 96))
+
+	var room := ROOM.instantiate()
+	add_child(room)
+	var player := room.get_node("Player")
+	assert(player.has_method("enter_prototype_water"))
+	assert(room.get_node("Water") is GreyboxWater2D)
+	assert(room.get_node("Hazards/PrototypeReeds") is GreyboxHazard2D)
+	assert(room.get_node("Geometry/GreyboxTerrain") is TileMapLayer)
+	var attack_hitbox := player.get_node("AttackHitbox") as HitboxComponent
+	assert(player.get_collision_mask_value(1))
+	assert(player.get_collision_mask_value(4))
+	assert((int(player.current_gloves.get("grapple_collision_mask")) & 8) != 0)
+	assert(player.has_method("is_dash_active"))
+	assert(player.call("_is_valid_ledge_wall_hit", {"normal": Vector2.LEFT}))
+	assert(not player.call("_is_valid_ledge_wall_hit", {"normal": Vector2.UP}), "Platform centers must not count as climbable walls.")
+	assert(player.call("_is_valid_ledge_top_hit", {"normal": Vector2.UP}))
+	assert(not player.call("_is_valid_ledge_top_hit", {"normal": Vector2.LEFT}))
+	player.set("_ledge_top", Vector2(200.0, 300.0))
+	player.set("_ledge_direction", 1)
+	player.call("_start_ledge_climb", false)
+	var climb_target: Vector2 = player.get("_ledge_climb_target")
+	var collision_bottom := float(player.call("_get_player_collision_bottom_offset"))
+	assert(
+		climb_target.y + collision_bottom < 300.0,
+		"Ledge climb target must place the entire player above the platform surface."
+	)
+	player.set("is_ledge_climbing", false)
+	var before_drop_y: float = (player as Node2D).global_position.y
+	player.call("_begin_one_way_drop")
+	assert(not player.get_collision_mask_value(1), "Drop-through must briefly ignore terrain collision.")
+	assert(player.global_position.y > before_drop_y)
+	player.call("_process_one_way_drop_input", player.one_way_drop_ignore_duration + 0.01)
+	assert(player.get_collision_mask_value(1), "Terrain collision must restore after dropping.")
+	player.set("current_action_points", 4)
+	player.set("air_jump_available", false)
+	player.set("current_attack_uses_air_double", true)
+	player.set("is_attacking", true)
+	player.set("attack_direction", Vector2.DOWN)
+	attack_hitbox.enable()
+	attack_hitbox.call("_on_area_entered", pogo_receiver)
+	assert(
+		is_equal_approx(player.velocity.y, -player.pogo_rebound_speed),
+		"A downward hit on a red hazard must apply the full pogo rebound."
+	)
+	assert(player.pogo_rebound_gravity_timer > 0.0, "Pogo must start its gravity grace window.")
+	assert(player.get("current_action_points") == 4, "Pogo must not change AP.")
+	assert(not player.get("air_jump_available"), "Pogo must not restore the air jump.")
+	assert(not player.get("current_attack_uses_air_double"))
+	var bumper_hit := DamageData.new()
+	bumper_hit.is_melee = true
+	bumper_hit.source = player
+	bumper_hit.knockback = Vector2.DOWN * 250.0
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	bumper_receiver.receive_hit(bumper_hit)
+	assert(bumper.get_hits_remaining() == 1)
+	assert(not bumper.is_broken())
+	bumper_receiver.receive_hit(bumper_hit)
+	assert(bumper.is_broken())
+	await get_tree().process_frame
+	var expected_bumper_speed := float(player.current_boots.base_jump_force) * sqrt(2.0)
+	assert(
+		is_equal_approx(player.velocity.y, -expected_bumper_speed),
+		"A downward breaking hit must launch the player to a two-jump apex."
+	)
+	assert(is_zero_approx(player.velocity.x))
+	assert(player.pogo_rebound_gravity_timer > 0.0)
+	player.process_mode = Node.PROCESS_MODE_INHERIT
+	player.call("apply_traversal_launch", Vector2.LEFT, 2.0, true, bumper.ground_scoot_speed)
+	assert(
+		is_equal_approx(player.velocity.x, -bumper.ground_scoot_speed),
+		"A grounded bumper hit must scoot the player opposite the attack direction."
+	)
+	await get_tree().physics_frame
+	assert(
+		player.velocity.x < 0.0,
+		"Ordinary movement processing must not erase the grounded bumper scoot."
+	)
+	var recoil_speed_after_lock := absf(player.velocity.x)
+	await get_tree().create_timer(player.traversal_launch_control_lock_duration + 0.02).timeout
+	await get_tree().physics_frame
+	assert(
+		absf(player.velocity.x) < recoil_speed_after_lock,
+		"Recoil must blend smoothly back toward player input after its lock."
+	)
+	player.call("apply_traversal_launch", Vector2.RIGHT, 2.0, false, bumper.ground_scoot_speed)
+	var airborne_launch_speed := float(player.current_boots.base_jump_force) * sqrt(2.0)
+	assert(
+		is_equal_approx(player.velocity.x, airborne_launch_speed),
+		"An airborne bumper hit must apply the full launch opposite the attack direction."
+	)
+	await get_tree().physics_frame
+	assert(
+		player.velocity.x > 0.0,
+		"Ordinary air control must not erase the airborne bumper launch."
+	)
+	var dash_bumper := BUMPER.instantiate() as GreyboxBumper2D
+	dash_bumper.regeneration_delay = 0.0
+	add_child(dash_bumper)
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	player.current_chest.set("is_dashing", true)
+	player.velocity = Vector2.RIGHT * 1150.0
+	dash_bumper.call("_on_body_entered", player)
+	await get_tree().process_frame
+	assert(dash_bumper.is_broken(), "An active dash must pop a water bulb.")
+	assert(
+		player.velocity.x > 0.0,
+		"A water bulb must continue an active dash along its incoming direction."
+	)
+	player.current_chest.set("is_dashing", false)
+	player.process_mode = Node.PROCESS_MODE_INHERIT
+	var grapple_bulb := BUMPER.instantiate() as GreyboxBumper2D
+	grapple_bulb.regeneration_delay = 0.0
+	add_child(grapple_bulb)
+	var velocity_before_grapple_pop: Vector2 = player.velocity
+	assert(grapple_bulb.activate_from_grapple(player), "A water bulb must consume grapple contact.")
+	assert(grapple_bulb.is_broken(), "Grapple contact must pop a water bulb.")
+	assert(player.velocity == velocity_before_grapple_pop, "Grapple pop must not propel the player.")
+	var bonk_bulb := BUMPER.instantiate() as GreyboxBumper2D
+	bonk_bulb.regeneration_delay = 0.0
+	add_child(bonk_bulb)
+	player.global_position = bonk_bulb.global_position
+	bonk_bulb.call("_on_body_entered", player)
+	assert(not bonk_bulb.is_broken(), "Ordinary contact must not consume a water bulb.")
+	assert(
+		player.global_position != bonk_bulb.global_position,
+		"Spawn overlap must eject the player through the nearest bulb edge."
+	)
+	await get_tree().create_timer(0.06).timeout
+	await get_tree().process_frame
+	assert(not bumper.is_broken())
+	assert(bumper.get_hits_remaining() == 2)
+	player.debug_blue_water_power_unlocked = true
+	player.call("enter_prototype_water", water, 100.0)
+	assert(player.call("is_in_prototype_water"))
+	player.global_position.y = 100.0 + player.prototype_swim_surface_depth
+	assert(player.call("_is_at_prototype_water_surface"))
+	player.velocity.y = -player.prototype_swim_exit_jump_speed
+	player.set("_prototype_swim_exit_lock_timer", player.prototype_swim_exit_lock_duration)
+	player.call("_process_prototype_swim_vertical", 1.0 / 60.0)
+	assert(
+		is_equal_approx(player.velocity.y, -player.prototype_swim_exit_jump_speed),
+		"Water exit lock must preserve the committed jump launch."
+	)
+	player.set("is_attacking", false)
+	player.set("is_hurt", false)
+	player.set("pogo_rebound_animation_timer", 0.0)
+	player.set("current_attack_uses_grapple_strike", false)
+	player.velocity = Vector2(150, 0)
+	(player.get_node("Player Animation") as AnimatedSprite2D).flip_h = false
+	player.call("update_animations", 1.0)
+	assert(player.current_body_anim == "Swim", "Moving in water should use the swim animation.")
+	var player_sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	assert(
+		player_sprite.scale.is_equal_approx(Vector2(0.546, 0.546)),
+		"Swimming should use the corrected smaller presentation scale."
+	)
+	assert(
+		is_equal_approx(player_sprite.rotation_degrees, 6.0),
+		"Right-facing swimming should pitch forward by six degrees."
+	)
+	player.velocity = Vector2.ZERO
+	player.call("update_animations", 0.0)
+	assert(player.current_body_anim == "Swim_Idle", "Floating in water should use Swim_Idle.")
+	assert(is_zero_approx(player_sprite.rotation), "Floating should clear the swim pitch.")
+	player.call("exit_prototype_water", water)
+	assert(not player.call("is_in_prototype_water"))
+	print("ROOM_GREYBOX_VERIFY_OK")
+	room.queue_free()
+	block.queue_free()
+	water.queue_free()
+	hazard.queue_free()
+	bumper.queue_free()
+	dash_bumper.queue_free()
+	grapple_bulb.queue_free()
+	bonk_bulb.queue_free()
+	annotation.queue_free()
+	var art_region := ART_REGION.instantiate() as ArtGenerationRegion2D
+	add_child(art_region)
+	art_region.section_name = "Test Terrain"
+	art_region.pixels_per_world_unit = 2.0
+	var spec := art_region.get_generation_spec()
+	assert(spec.section_name == "Test Terrain")
+	assert(spec.target_pixel_size == {"width": 2048, "height": 1024})
+	assert(not art_region.visible or Engine.is_editor_hint())
+	art_region.queue_free()
+	tile_layer.queue_free()
+	await get_tree().process_frame
+	get_tree().quit()

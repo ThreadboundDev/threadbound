@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_hazard.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Hazards/threadglass_hazard_sheet.png" id="2"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/Placeables/Hazards/threadglass_background_key_material.tres" id="3"]
+[sub_resource type="AtlasTexture" id="Atlas"]
+atlas = ExtResource("2")
+region = Rect2(880, 450, 420, 550)
+[node name="ThreadglassPogoCrown" instance=ExtResource("1")]
+size = Vector2(260, 440)
+damage = 20
+knockback = Vector2(340, -520)
+debug_draw_enabled = false
+[node name="Artwork" type="Sprite2D" parent="."]
+z_index = 33
+material = ExtResource("3")
+texture = SubResource("Atlas")

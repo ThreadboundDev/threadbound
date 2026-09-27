@@ -1,0 +1,12 @@
+{
+  "file": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\Player\\Blender\\imported_character\\mixamo_upload\\Threadborne_Mixamo_Upload.fbx",
+  "vertices": 39045,
+  "faces": 49999,
+  "armature_exported": false,
+  "textures": [
+    "Threadborne_BaseColor",
+    "Threadborne_Occlusion_Roughness_Metallic",
+    "Threadborne_Normal"
+  ],
+  "bytes": 3778668
+}

@@ -1,0 +1,53 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/blue_biome_greybox_overview.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/References/blue_macro_reference.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_chamber_exit_rooftops.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_village.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lower_shore.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_peasant_fields.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_irrigation_channel.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_hidden_cistern.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_shrine_approach.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_old_shrine.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_hermits_lake.tscn" id="11"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_waterfall_ascent.tscn" id="12"]
+
+[node name="BlueBiomeGreyboxOverview" type="Node2D"]
+script = ExtResource("1")
+
+[node name="MacroReference" parent="." instance=ExtResource("2")]
+reference_opacity = 0.38
+
+[node name="Rooms" type="Node2D" parent="."]
+process_mode = 4
+
+[node name="ChamberExitRooftops" parent="Rooms" instance=ExtResource("3")]
+position = Vector2(3420, 5880)
+
+[node name="LakesideVillage" parent="Rooms" instance=ExtResource("4")]
+position = Vector2(7440, 6420)
+
+[node name="LowerShore" parent="Rooms" instance=ExtResource("5")]
+position = Vector2(8040, 7800)
+
+[node name="PeasantFields" parent="Rooms" instance=ExtResource("6")]
+position = Vector2(11640, 6840)
+
+[node name="IrrigationChannel" parent="Rooms" instance=ExtResource("7")]
+position = Vector2(11160, 9480)
+
+[node name="HiddenCistern" parent="Rooms" instance=ExtResource("8")]
+position = Vector2(6420, 9720)
+
+[node name="ShrineApproach" parent="Rooms" instance=ExtResource("9")]
+position = Vector2(16320, 7320)
+
+[node name="OldShrine" parent="Rooms" instance=ExtResource("10")]
+position = Vector2(16920, 5280)
+
+[node name="HermitsLake" parent="Rooms" instance=ExtResource("11")]
+position = Vector2(9360, 2940)
+
+[node name="WaterfallAscent" parent="Rooms" instance=ExtResource("12")]
+position = Vector2(12600, 2280)

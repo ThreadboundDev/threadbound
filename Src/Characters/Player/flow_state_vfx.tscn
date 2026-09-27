@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Script" path="res://Src/Characters/Player/flow_state_aura.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V1/flow_transition_v1.png" id="3_transition"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V2/flow_movement_energy_v2.png" id="5_movement"]
 [ext_resource type="Texture2D" path="res://Assets/VFX/FlowState/V1/flow_motes_v1.png" id="6_motes"]
 [ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="7_light"]
+[ext_resource type="Script" path="res://Src/VFX/Flow/flow_multimesh_trail.gd" id="8_trail"]
 
 [sub_resource type="AtlasTexture" id="Atlas_transition_0"]
 atlas = ExtResource("3_transition")
@@ -128,12 +129,15 @@ animations = [{
 "speed": 24.0
 }]
 
-[node name="FlowStateVFX" type="Node2D"]
+[node name="FlowStateVFX" type="Node2D" groups=["flow_state_vfx"]]
 visible = false
 z_index = -1
 script = ExtResource("1_script")
 
 [node name="AuraBack" type="Node2D" parent="."]
+
+[node name="SoulTrail" type="Node2D" parent="AuraBack"]
+script = ExtResource("8_trail")
 
 [node name="SilhouetteShell" type="Sprite2D" parent="AuraBack"]
 visible = false

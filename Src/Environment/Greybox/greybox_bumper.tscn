@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_bumper.gd" id="1"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="2_hurtbox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bumper"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(128, 128)
+
+[node name="GreyboxBumper" type="Node2D"]
+z_index = 30
+script = ExtResource("1")
+
+[node name="HitReceiver" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_hurtbox")
+hurtbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitReceiver"]
+shape = SubResource("RectangleShape2D_bumper")
+
+[node name="ContactReceiver" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactReceiver"]
+shape = SubResource("RectangleShape2D_contact")
+
+[node name="GrappleTarget" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+shape = SubResource("RectangleShape2D_bumper")

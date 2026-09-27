@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cdt7j4dceu2yc"]
+
+[ext_resource type="Script" uid="uid://cpjgmyoosqey2" path="res://Src/Environment/Greybox/greybox_room.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_water.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_hazard.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="8_tiles"]
+
+[node name="BlueVillageRoom01" type="Node2D" unique_id=1151857728]
+script = ExtResource("1")
+design_intent = "First pipeline test: readable baseline shore route, faster roof/branch route, playable water, and a lake/Hermit reveal."
+
+[node name="Geometry" type="Node2D" parent="." unique_id=859786103]
+
+[node name="GreyboxTerrain" parent="Geometry" unique_id=1152432023 instance=ExtResource("8_tiles")]
+
+[node name="Water" parent="." unique_id=666201470 instance=ExtResource("3")]
+position = Vector2(302, 922)
+size = Vector2(1536, 512)
+
+[node name="Hazards" type="Node2D" parent="." unique_id=1782171168]
+
+[node name="PrototypeReeds" parent="Hazards" unique_id=676931825 instance=ExtResource("4")]
+position = Vector2(937, 475)
+rotation = 1.6196848
+size = Vector2(170, 46)
+damage = 12
+knockback = Vector2(240, -300)
+
+[node name="Player" parent="." unique_id=1793805005 instance=ExtResource("6")]
+position = Vector2(-576, 560)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=207907470]
+position = Vector2(0, -80)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

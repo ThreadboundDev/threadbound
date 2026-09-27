@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Vegetation/blue_tree_willow_01.png" id="1_texture"]
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Art/Vegetation/blue_tree_canopy_wind.gdshader" id="2_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tree"]
+shader = ExtResource("2_wind")
+shader_parameter/sway_strength = 5.2
+shader_parameter/sway_speed = 0.33
+shader_parameter/gust_strength = 11.0
+shader_parameter/gust_frequency = 0.075
+shader_parameter/phase_offset = 5.1
+shader_parameter/canopy_start = 0.4
+
+[node name="BlueTreeWillow01" type="Node2D"]
+
+[node name="Artwork" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_tree")
+position = Vector2(0, -220.16)
+scale = Vector2(0.43, 0.43)
+texture = ExtResource("1_texture")
+z_index = 34
+

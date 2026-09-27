@@ -2,6 +2,9 @@ extends Node
 
 const CHAMBER_SCENE := preload("res://Src/Environment/World/Chamber Of The First Weave.tscn")
 const OPTIONS_SCENE := preload("res://Src/UI/Options/options_panel.tscn")
+const BLUE_BUTTON_SCENE := preload(
+	"res://Src/Environment/Objectives/blue_wing_button.tscn"
+)
 
 var _failures: Array[String] = []
 
@@ -48,8 +51,9 @@ func _verify_options_ui() -> void:
 func _verify_blue_attempt_timer() -> void:
 	var objective := BalanceWingObjective.new()
 	objective.attempt_duration = 1.0
+	add_child(objective)
 	for index in 3:
-		var button := BlueWingButton.new()
+		var button := BLUE_BUTTON_SCENE.instantiate() as BlueWingButton
 		button.name = "TestButton%d" % index
 		objective.add_child(button)
 		objective.call("_register_button", button)
@@ -58,6 +62,7 @@ func _verify_blue_attempt_timer() -> void:
 	_expect(bool(objective.get("_attempt_active")), "The first Blue button must begin an attempt.")
 	objective.call("_process", 1.1)
 	_expect(not first_button.is_active, "An expired Blue attempt must reset every button.")
+	remove_child(objective)
 	objective.free()
 
 func _verify_chamber_content() -> void:

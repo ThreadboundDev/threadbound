@@ -305,8 +305,8 @@ texture = ExtResource("16_cave_light")
 texture_scale = 12.5
 
 [node name="CaveOpeningSoftFill" type="PointLight2D" parent="Atmosphere" unique_id=2067136995]
-position = Vector2(0, -2032.5)
-scale = Vector2(1, 1.3955759)
+position = Vector2(0, -2600)
+scale = Vector2(1, 2)
 color = Color(0.64, 0.73, 0.9, 1)
 energy = 0.48
 range_z_min = -4096

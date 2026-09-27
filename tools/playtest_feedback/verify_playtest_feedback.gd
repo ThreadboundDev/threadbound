@@ -40,31 +40,43 @@ func _verify_player_feedback() -> void:
 	else:
 		var ledge_top: Vector2 = player.get("_ledge_top")
 		var ledge_direction: int = player.get("_ledge_direction")
-		player.call("_climb_from_ledge", false)
-		var expected_pull_over := ledge_top + Vector2(
-			ledge_direction * player.ledge_climb_horizontal_offset,
-			-player.ledge_climb_vertical_offset
-		)
+		player.call("_start_ledge_climb", false)
+		var expected_pull_over: Vector2 = player.get("_ledge_climb_target")
+		player.call("_process_ledge_climb", player.ledge_climb_duration)
 		if not player.global_position.is_equal_approx(expected_pull_over):
 			failures.append("Ledge pull-over did not place the player on top of the ledge.")
 
 		player.set("is_ledge_hanging", true)
 		player.set("_ledge_top", ledge_top)
 		player.set("_ledge_direction", ledge_direction)
-		player.call("_climb_from_ledge", true)
+		player.call("_start_ledge_climb", true)
+		player.call("_process_ledge_climb", player.ledge_climb_duration)
 		if player.is_ledge_hanging or player.velocity.y >= 0.0:
 			failures.append("Ledge jump did not release the hang with upward velocity.")
 
 	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
 	player.set("current_attack_body_anim", "Ground_Attack_Combo_2")
 	player.call("_apply_attack_visual_tuning")
-	var expected_finisher_scale: Vector2 = Vector2(0.7, 0.7) * player.ground_combo_forward_finisher_visual_scale_multiplier
-	if not sprite.scale.is_equal_approx(expected_finisher_scale):
-		failures.append("Forward combo finisher did not receive its larger visual scale.")
+	if _has_property(player, &"ground_combo_forward_finisher_visual_scale_multiplier"):
+		var expected_finisher_scale: Vector2 = (
+			Vector2(0.7, 0.7)
+			* float(player.get("ground_combo_forward_finisher_visual_scale_multiplier"))
+		)
+		if not sprite.scale.is_equal_approx(expected_finisher_scale):
+			failures.append("Forward combo finisher did not receive its larger visual scale.")
+	else:
+		failures.append(
+			"Playtest feedback verifier still expects the retired 2D combo-finisher scale setting."
+		)
 	if not is_equal_approx(player.ground_combo_forward_hitbox_radius, 156.0):
 		failures.append("Ground-forward attack reach is not tuned to 156 pixels.")
-	if not is_equal_approx(player.ground_combo_up_hitbox_radius, 142.0):
-		failures.append("Ground-up attack reach is not tuned to 142 pixels.")
+	if _has_property(player, &"ground_combo_up_hitbox_radius"):
+		if not is_equal_approx(float(player.get("ground_combo_up_hitbox_radius")), 142.0):
+			failures.append("Ground-up attack reach is not tuned to 142 pixels.")
+	else:
+		failures.append(
+			"Playtest feedback verifier still expects the removed ground-up hitbox setting."
+		)
 	if not is_equal_approx(player.air_attack_hitbox_radius, 160.0):
 		failures.append("Air attack reach is not tuned to 160 pixels.")
 
@@ -114,6 +126,7 @@ func _verify_player_feedback() -> void:
 
 	player.queue_free()
 	floor_body.queue_free()
+	await get_tree().process_frame
 
 func _verify_controls_accept() -> void:
 	var stepper := OPTION_STEPPER_SCENE.instantiate() as OptionStepper
@@ -152,5 +165,12 @@ func _action_has_physical_key(action: StringName, expected_key: Key) -> bool:
 		return false
 	for event in InputMap.action_get_events(action):
 		if event is InputEventKey and event.physical_keycode == expected_key:
+			return true
+	return false
+
+
+func _has_property(object: Object, property_name: StringName) -> bool:
+	for property in object.get_property_list():
+		if StringName(property.get("name", "")) == property_name:
 			return true
 	return false

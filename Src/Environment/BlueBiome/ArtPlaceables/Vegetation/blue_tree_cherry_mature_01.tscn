@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Vegetation/blue_tree_cherry_mature_01.png" id="1_texture"]
+[ext_resource type="Shader" path="res://Assets/BlueBiome/Art/Vegetation/blue_tree_canopy_wind.gdshader" id="2_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tree"]
+shader = ExtResource("2_wind")
+shader_parameter/sway_strength = 2.4
+shader_parameter/sway_speed = 0.29
+shader_parameter/gust_strength = 5.5
+shader_parameter/gust_frequency = 0.07
+shader_parameter/phase_offset = 3.7
+shader_parameter/canopy_start = 0.5
+
+[node name="BlueTreeCherryMature01" type="Node2D"]
+
+[node name="Artwork" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_tree")
+position = Vector2(0, -230.4)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("1_texture")
+z_index = 34
+

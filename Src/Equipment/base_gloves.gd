@@ -201,6 +201,10 @@ func play_equipment_anim(anim_name: String) -> void:
 
 func _play_grapple_fire_animation() -> void:
 	action_anim_lock_timer = grapple_fire_anim_lock_time
+	if player:
+		var live_visual = player.get("live_3d_visual")
+		if live_visual and live_visual.has_method("play_grapple_throw"):
+			live_visual.play_grapple_throw()
 
 	var use_diagonal: bool = abs(grapple_direction.y) > 0.35
 	if player and absf(grapple_direction.x) > 0.05:
@@ -273,6 +277,12 @@ func exit_save_point_pose() -> void:
 # BASIC HELPERS
 # ===============================
 func get_grapple_origin_global_position() -> Vector2:
+	if player:
+		var live_visual = player.get("live_3d_visual")
+		if live_visual and live_visual.has_method("get_grapple_origin_player_offset"):
+			var live_offset: Vector2 = live_visual.call("get_grapple_origin_player_offset")
+			if live_offset.length_squared() > 0.001:
+				return player.to_global(live_offset)
 	if grapple_origin:
 		return grapple_origin.global_position
 
@@ -280,6 +290,14 @@ func get_grapple_origin_global_position() -> Vector2:
 		return player.global_position
 
 	return global_position
+
+
+func get_active_grapple_direction() -> Vector2:
+	if grapple_direction.length_squared() > 0.001:
+		return grapple_direction.normalized()
+	if player:
+		return Vector2(float(player.last_direction), 0.0)
+	return Vector2.RIGHT
 
 func is_grapple_attached() -> bool:
 	return grapple_state == GrappleState.ATTACHED
@@ -1086,7 +1104,11 @@ func _check_grapple_collision(previous_tip: Vector2, new_tip: Vector2) -> void:
 			_update_active_grapple_visuals()
 			return
 
-		_notify_grapple_collider(collider)
+		if _notify_grapple_collider(collider):
+			grapple_tip_position = surface_point
+			_begin_grapple_retract()
+			_update_active_grapple_visuals()
+			return
 		grapple_attached = true
 		grapple_attachment_state = GrappleAttachmentState.SPENT
 		grapple_attach_position = surface_point
@@ -1223,18 +1245,18 @@ func _update_moving_grapple_target() -> void:
 	else:
 		grapple_target = null
 
-func _notify_grapple_collider(collider: Object) -> void:
+func _notify_grapple_collider(collider: Object) -> bool:
 	if not collider:
-		return
+		return false
 
 	if collider.has_method("activate_from_grapple"):
-		collider.activate_from_grapple(player)
-		return
+		return bool(collider.activate_from_grapple(player))
 
 	if collider is Node:
 		var parent := (collider as Node).get_parent()
 		if parent and parent.has_method("activate_from_grapple"):
-			parent.activate_from_grapple(player)
+			return bool(parent.activate_from_grapple(player))
+	return false
 
 # ===============================
 # ACTIVE GRAPPLE VISUAL UPDATE
@@ -1491,11 +1513,20 @@ func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 func thread_mechanic(delta: float) -> void:
 	if action_anim_lock_timer > 0.0:
 		action_anim_lock_timer -= delta
+	var grapple_blocked: bool = bool(
+		player != null
+		and player.has_method("is_in_prototype_water")
+		and player.is_in_prototype_water()
+	)
+	if grapple_blocked:
+		if grapple_state != GrappleState.STOWED:
+			_begin_grapple_retract()
 
 	# Always check climbing while grapple is attached.
-	_handle_rope_climb(delta)
+	if not grapple_blocked:
+		_handle_rope_climb(delta)
 
-	if InputMap.has_action(grapple_input_action):
+	if not grapple_blocked and InputMap.has_action(grapple_input_action):
 		if Input.is_action_just_pressed(grapple_input_action):
 			if grapple_state == GrappleState.STOWED:
 				if not player.has_method("spend_action_points") or player.spend_action_points(1):

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_annotation_area.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_annotation"]
+size = Vector2(384, 192)
+
+[node name="GreyboxAnnotationArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+disabled = true
+shape = SubResource("RectangleShape_annotation")

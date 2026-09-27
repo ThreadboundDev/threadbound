@@ -1,0 +1,62 @@
+[
+  {
+    "asset": "stone_cap_short",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "stone_cap_long",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "timber_deck",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "curved_brace",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "support_post",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "bulb_hanger",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "dry_channel",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "stopped_waterwheel",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "shore_stone",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "grass_clump",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "cherry_cluster",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  },
+  {
+    "asset": "cloth_awning",
+    "identical_alpha_and_dimensions": true,
+    "material_changed": true
+  }
+]

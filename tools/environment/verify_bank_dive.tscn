@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://tools/environment/verify_bank_dive.gd" id="1"]
+[node name="BankDiveVerification" type="Node2D"]
+script = ExtResource("1")

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Pickups/thread_knot_pickup.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Src/Pickups/recovery_thread_knot_pile.gd" id="2_script"]
+
+[node name="RecoveryThreadKnotPile" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+vacuum_delay = 0.35
+vacuum_radius = 150.0
+collect_distance = 38.0
+bob_height = 4.0
+bob_speed = 3.0

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueLowerShore" instance=ExtResource("1")]
+room_id = "blue_lower_shore"
+display_name = "Lower Shore / Water Secrets"
+macro_focus = Vector2(670, 650)
+planning_bounds = Vector2(4200, 2800)
+design_intent = "Optional shoreline exploration that advertises water secrets before swimming is acquired."

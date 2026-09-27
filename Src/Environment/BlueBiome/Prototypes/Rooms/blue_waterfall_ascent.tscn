@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueWaterfallAscent" instance=ExtResource("1")]
+room_id = "blue_waterfall_ascent"
+display_name = "Waterfall Ascent"
+macro_focus = Vector2(1050, 190)
+planning_bounds = Vector2(3200, 5400)
+design_intent = "Short movement-and-combat ascent after the Hermit releases the waterfall and current returns."

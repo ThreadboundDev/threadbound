@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Src/Environment/Greybox/greybox_collision_preview.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/fill_color = Color(0.16, 0.18, 0.22, 1)
+shader_parameter/border_color = Color(0.34, 0.38, 0.44, 1)
+shader_parameter/atlas_grid = Vector2(4, 4)
+shader_parameter/border_width = 0.035

@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3]
+[ext_resource type="PackedScene" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1"]
+[ext_resource type="Script" path="res://Src/Enemies/Reedhook/reedhook.gd" id="2"]
+[ext_resource type="Resource" path="res://Src/Enemies/Reedhook/reedhook_stats.tres" id="3"]
+[ext_resource type="Script" path="res://Src/Enemies/Reedhook/reedhook_visual.gd" id="4"]
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(44, 146)
+[sub_resource type="RectangleShape2D" id="Hook"]
+size = Vector2(105, 100)
+[sub_resource type="CircleShape2D" id="Detection"]
+radius = 450.0
+[node name="Reedhook" instance=ExtResource("1")]
+script = ExtResource("2")
+stats = ExtResource("3")
+patrol_distance = 160.0
+editor_description = "Grounded hook skirmisher. Place on a dry deck or air-pocket floor. Stops at ledges; commits to a short hook sweep."
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0,-73)
+shape = SubResource("Body")
+[node name="Body" parent="Visuals" index="0"]
+visible = false
+[node name="Model" type="Node2D" parent="Visuals" index="1"]
+script = ExtResource("4")
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0,-73)
+shape = SubResource("Body")
+[node name="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = SubResource("Detection")
+[node name="AttackHitbox" parent="." index="6"]
+position = Vector2(78,-90)
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("Hook")
+[node name="HitFlashComponent" parent="." index="8"]
+target_path = NodePath("../Visuals/Model")

@@ -1,0 +1,16 @@
+{
+  "Reedhook": {
+    "triangles": 10132,
+    "vertices": 5236,
+    "bones": 17,
+    "materials": 7,
+    "animation": "idle_breathe"
+  },
+  "TideDuelist": {
+    "triangles": 10062,
+    "vertices": 5431,
+    "bones": 7,
+    "materials": 9,
+    "animation": "swim_idle"
+  }
+}

@@ -1,0 +1,113 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/blue_building_cutaway.gd" id="1_71lr5"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Buildings/Interiors/stilt_house_cutaway_interior_v1.png" id="2_yivxe"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key_material.tres" id="3_8lr15"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Buildings/stilt_house_keyed.png" id="4_tyo4n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hwyx"]
+atlas = ExtResource("2_yivxe")
+region = Rect2(570, 110, 570, 445)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4635i"]
+size = Vector2(796, 872)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_foinm"]
+atlas = ExtResource("2_yivxe")
+region = Rect2(570, 110, 570, 445)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6rle"]
+size = Vector2(796, 1384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k55nj"]
+atlas = ExtResource("2_yivxe")
+region = Rect2(570, 110, 570, 445)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cd2ok"]
+size = Vector2(668, 616)
+
+[node name="LakeBuildings" type="Node2D" unique_id=317196644]
+
+[node name="WestHouse" type="Node2D" parent="." unique_id=906078366]
+editor_description = "Exterior fades on entry. Preview Inside shows the furnished cutaway in the editor. Artwork only; existing terrain owns collision."
+position = Vector2(64, -64)
+script = ExtResource("1_71lr5")
+exterior_inside_alpha = 0.0
+interior_outside_alpha = 0.0
+
+[node name="Interior" type="Sprite2D" parent="WestHouse" unique_id=881246722]
+z_index = -4
+scale = Vector2(1.5719298, 2.013483)
+texture = SubResource("AtlasTexture_8hwyx")
+
+[node name="InteriorWarmth" type="Node2D" parent="WestHouse" unique_id=1168257068]
+
+[node name="Exterior" type="Sprite2D" parent="WestHouse" unique_id=115753613]
+z_index = 8
+material = ExtResource("3_8lr15")
+position = Vector2(-65.759995, 278.23157)
+scale = Vector2(1.096, 1.5719298)
+texture = ExtResource("4_tyo4n")
+
+[node name="EntryZone" type="Area2D" parent="WestHouse" unique_id=1801203343]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WestHouse/EntryZone" unique_id=1558193097]
+shape = SubResource("RectangleShape2D_4635i")
+
+[node name="CentralHouse" type="Node2D" parent="." unique_id=1729045627]
+editor_description = "Exterior fades on entry. Preview Inside shows the furnished cutaway in the editor. Artwork only; existing terrain owns collision."
+position = Vector2(1472, 64)
+script = ExtResource("1_71lr5")
+exterior_inside_alpha = 0.0
+interior_outside_alpha = 0.0
+
+[node name="Interior" type="Sprite2D" parent="CentralHouse" unique_id=1868840347]
+z_index = -4
+scale = Vector2(1.5719298, 3.1640449)
+texture = SubResource("AtlasTexture_foinm")
+
+[node name="InteriorWarmth" type="Node2D" parent="CentralHouse" unique_id=1513669694]
+
+[node name="Exterior" type="Sprite2D" parent="CentralHouse" unique_id=1691186210]
+z_index = 8
+material = ExtResource("3_8lr15")
+position = Vector2(-65.759995, 437.22104)
+scale = Vector2(1.096, 2.4701755)
+texture = ExtResource("4_tyo4n")
+
+[node name="EntryZone" type="Area2D" parent="CentralHouse" unique_id=78290633]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CentralHouse/EntryZone" unique_id=1311786748]
+shape = SubResource("RectangleShape2D_s6rle")
+
+[node name="EastHouse" type="Node2D" parent="." unique_id=536653688]
+editor_description = "Exterior fades on entry. Preview Inside shows the furnished cutaway in the editor. Artwork only; existing terrain owns collision."
+position = Vector2(2816, 64)
+script = ExtResource("1_71lr5")
+exterior_inside_alpha = 0.0
+interior_outside_alpha = 0.0
+
+[node name="Interior" type="Sprite2D" parent="EastHouse" unique_id=1986867580]
+z_index = -4
+scale = Vector2(1.3473685, 1.4382023)
+texture = SubResource("AtlasTexture_k55nj")
+
+[node name="InteriorWarmth" type="Node2D" parent="EastHouse" unique_id=1183720908]
+
+[node name="Exterior" type="Sprite2D" parent="EastHouse" unique_id=1128935258]
+z_index = 8
+material = ExtResource("3_8lr15")
+position = Vector2(-58.079998, 198.73685)
+scale = Vector2(0.968, 1.122807)
+texture = ExtResource("4_tyo4n")
+
+[node name="EntryZone" type="Area2D" parent="EastHouse" unique_id=413741396]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EastHouse/EntryZone" unique_id=1223238891]
+shape = SubResource("RectangleShape2D_cd2ok")

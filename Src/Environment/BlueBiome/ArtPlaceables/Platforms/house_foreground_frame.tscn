@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Platforms/village_platform_kit_keyed.png" id="1"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key_material.tres" id="2"]
+[sub_resource type="AtlasTexture" id="Atlas"]
+atlas = ExtResource("1")
+region = Rect2(1110, 400, 426, 600)
+[node name="HouseForegroundFrame" type="Node2D"]
+[node name="Artwork" type="Sprite2D" parent="."]
+z_index = 45
+material = ExtResource("2")
+texture = SubResource("Atlas")

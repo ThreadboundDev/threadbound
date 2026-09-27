@@ -2,13 +2,18 @@
 
 This document defines the cleanup direction for Threadbound files and folders. It is meant to keep the project readable for collaborators without forcing risky path renames during unrelated gameplay work.
 
-## Current Roots
+## Project Roots
 
-- `Assets/` stores art, UI images, animation source exports, and importable visual assets.
+- `addons/` stores Godot editor and runtime plugins.
+- `ArtSource/` stores editable art, reference images, and intermediate authoring inputs. Use `.gdignore` for source-only subtrees.
+- `Assets/` stores game-ready art, UI images, animation exports, audio, and importable visual assets.
+- `Builds/` is ignored and stores regenerable local exports when needed.
 - `Src/` stores Godot scenes, scripts, resources, UI, characters, environment, equipment, and managers.
 - `docs/` stores design, gameplay, narrative, art direction, and archived historical notes.
+- `Media/` stores development captures and social-media production files that are not loaded by the game.
+- `tools/` stores verification scenes, cleanup scripts, and local development utilities.
 
-Keep these root folders as-is until a dedicated project-structure migration is planned.
+Keep runtime assets out of `ArtSource/` and temporary build output out of the repository.
 
 ## New Files
 
@@ -49,7 +54,7 @@ Existing paths do not need to be renamed immediately. Rename old paths only in f
 
 For exported runtime art, prefer stable descriptive filenames in `snake_case`.
 
-For source art files, keep the original working files when they are useful, but do not commit editor backups or autosaves. The `.gitignore` excludes common temporary files such as `*~`, `*.tmp`, and Godot temporary scene saves.
+For source art files, keep useful working files under `ArtSource/`, but do not commit editor backups or autosaves. The `.gitignore` excludes common temporary files such as `*~`, `*.tmp`, and Godot temporary scene saves.
 
 ## Documentation
 
@@ -67,11 +72,11 @@ Each archive folder should include a short `README.md` explaining why the materi
 
 ## Branches and Pull Requests
 
-Use short branch names that describe the work:
+Use the repository `threadbound/<type>-<description>` convention:
 
-- `docs-cleanup`
-- `base-grapple-polish`
-- `animation-state-cleanup`
-- `equipment-ui-pass`
+- `threadbound/docs-project-structure`
+- `threadbound/fix-grapple-collision`
+- `threadbound/asset-player-animation-cleanup`
+- `threadbound/feature-equipment-ui`
 
 Keep pull requests focused around one kind of change so review stays approachable.

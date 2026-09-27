@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueHermitsLake" instance=ExtResource("1")]
+room_id = "blue_hermits_lake"
+display_name = "Hermit's Lake"
+macro_focus = Vector2(780, 245)
+planning_bounds = Vector2(6800, 3600)
+design_intent = "Still-water boss space centered on Hermit's fishing boat, with the dry waterfall held in the background."

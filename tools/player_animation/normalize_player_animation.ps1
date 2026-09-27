@@ -2179,28 +2179,6 @@ function Copy-NormalizedAsset {
 
 Copy-NormalizedAsset "Assets\Threadborne\Idle\Idleright.png" "Assets\Threadborne\Player\Normalized_V2\idle\idle_right.png"
 
-$runFrames = @(1, 2, 3, 4, 5, 6, 7, 8, 12, 18, 20)
-$restoredRunSources = @{
-    1 = "frame_00_run_001.png"
-    2 = "frame_01_run_002.png"
-    3 = "frame_02_run_003.png"
-    4 = "frame_03_run_004.png"
-    5 = "frame_04_run_005.png"
-    6 = "frame_05_run_006.png"
-    12 = "frame_06_run_012.png"
-    20 = "frame_07_run_020.png"
-    7 = "frame_08_run_007.png"
-    18 = "frame_09_run_018.png"
-    8 = "frame_10_run_008.png"
-}
-foreach ($frame in $runFrames) {
-    $sourceName = Join-Path `
-        "Assets\Threadborne\Player\Normalized_V2\run\old_run" `
-        $restoredRunSources[$frame]
-    $destinationName = "Assets\Threadborne\Player\Normalized_V2\run\run_{0:D3}.png" -f $frame
-    Copy-NormalizedAsset $sourceName $destinationName
-}
-
 $copyMap = @{
     "Assets\Threadborne\Player_Normalized_V1\Jump_Ascent.png" = "Assets\Threadborne\Player\Normalized_V2\jump\ascent.png"
     "Assets\Threadborne\Player_Normalized_V1\Jump_Apex.png" = "Assets\Threadborne\Player\Normalized_V2\jump\apex.png"
@@ -2215,25 +2193,6 @@ $copyMap = @{
 foreach ($source in $copyMap.Keys) {
     Copy-NormalizedAsset $source $copyMap[$source]
 }
-
-$ledgeClimbSourceRoot = Join-Path $outputRoot "movement\ledge_climb_sources"
-[string[]]$ledgeClimbFrames = @(
-    (Join-Path $ledgeClimbSourceRoot "frame_00.png"),
-    (Join-Path $ledgeClimbSourceRoot "frame_01.png"),
-    (Join-Path $ledgeClimbSourceRoot "frame_02.png"),
-    (Join-Path $ledgeClimbSourceRoot "frame_03.png")
-)
-foreach ($ledgeClimbFrame in $ledgeClimbFrames) {
-    if (-not (Test-Path -LiteralPath $ledgeClimbFrame)) {
-        throw "Missing ledge climb source frame: $ledgeClimbFrame"
-    }
-}
-[ThreadboundAnimationNormalizer]::BuildFrameGrid(
-    $ledgeClimbFrames,
-    (Join-Path $outputRoot "movement\ledge_climb.png"),
-    2,
-    2,
-    320)
 
 $attackJobs = @(
     @("Assets\Threadborne\threadborne_smash_attack.png", "attacks\neutral_special.png", 6, 8, 1024, 0.675)

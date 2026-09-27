@@ -1,0 +1,242 @@
+[
+  {
+    "id": "stone_cap_short",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/stone_cap_short.png",
+    "canvas": [
+      424,
+      312
+    ],
+    "origin_px": [
+      108.80000366210938,
+      128.00000061035155
+    ],
+    "bounds_units": [
+      -0.8500000286102295,
+      -1.4099999713897704,
+      2.4599999237060546,
+      1.0000000047683715
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "stone_cap_long",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/stone_cap_long.png",
+    "canvas": [
+      680,
+      312
+    ],
+    "origin_px": [
+      108.80000366210938,
+      128.00000061035155
+    ],
+    "bounds_units": [
+      -0.8500000286102295,
+      -1.4099999713897704,
+      4.459999923706055,
+      1.0000000047683715
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "timber_deck",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/timber_deck.png",
+    "canvas": [
+      768,
+      304
+    ],
+    "origin_px": [
+      131.83999694824217,
+      138.87999786376952
+    ],
+    "bounds_units": [
+      -1.029999976158142,
+      -1.2300000238418578,
+      4.949999694824219,
+      1.0849999833106994
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "curved_brace",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/curved_brace.png",
+    "canvas": [
+      512,
+      472
+    ],
+    "origin_px": [
+      119.0400015258789,
+      124.16000427246094
+    ],
+    "bounds_units": [
+      -0.930000011920929,
+      -2.679999952316284,
+      3.050000076293945,
+      0.9700000333786011
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "support_post",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/support_post.png",
+    "canvas": [
+      320,
+      424
+    ],
+    "origin_px": [
+      157.4400030517578,
+      16.64
+    ],
+    "bounds_units": [
+      -1.2300000238418578,
+      -3.13,
+      1.220000033378601,
+      0.13
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "bulb_hanger",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/bulb_hanger.png",
+    "canvas": [
+      560,
+      440
+    ],
+    "origin_px": [
+      131.83999694824217,
+      282.879990234375
+    ],
+    "bounds_units": [
+      -1.029999976158142,
+      -1.179999952316284,
+      3.3300000476837157,
+      2.2099999237060546
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "dry_channel",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/dry_channel.png",
+    "canvas": [
+      624,
+      304
+    ],
+    "origin_px": [
+      119.0400015258789,
+      113.27999938964844
+    ],
+    "bounds_units": [
+      -0.930000011920929,
+      -1.429999952316284,
+      3.929999952316284,
+      0.8849999952316284
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "stopped_waterwheel",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/stopped_waterwheel.png",
+    "canvas": [
+      488,
+      488
+    ],
+    "origin_px": [
+      241.91999877929686,
+      241.91999877929686
+    ],
+    "bounds_units": [
+      -1.8899999904632567,
+      -1.8899999904632567,
+      1.8899999904632567,
+      1.8899999904632567
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "shore_stone",
+    "kind": "Structures",
+    "texture": "Assets/BlueBiome/StillVillage/Structures/shore_stone.png",
+    "canvas": [
+      536,
+      208
+    ],
+    "origin_px": [
+      16.64,
+      16.64
+    ],
+    "bounds_units": [
+      -0.13,
+      -1.4799999046325683,
+      4.0300000953674315,
+      0.13
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "grass_clump",
+    "kind": "Decoration",
+    "texture": "Assets/BlueBiome/StillVillage/Decoration/grass_clump.png",
+    "canvas": [
+      200,
+      144
+    ],
+    "origin_px": [
+      115.88673461914063,
+      122.48734344482422
+    ],
+    "bounds_units": [
+      -0.9053651142120361,
+      -0.13,
+      0.6238213527202606,
+      0.9569323706626892
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "cherry_cluster",
+    "kind": "Decoration",
+    "texture": "Assets/BlueBiome/StillVillage/Decoration/cherry_cluster.png",
+    "canvas": [
+      648,
+      360
+    ],
+    "origin_px": [
+      323.84001220703124,
+      234.2400061035156
+    ],
+    "bounds_units": [
+      -2.5300000953674315,
+      -0.9800000238418579,
+      2.5300000953674315,
+      1.8300000476837157
+    ],
+    "pixels_per_unit": 128
+  },
+  {
+    "id": "cloth_awning",
+    "kind": "Decoration",
+    "texture": "Assets/BlueBiome/StillVillage/Decoration/cloth_awning.png",
+    "canvas": [
+      648,
+      376
+    ],
+    "origin_px": [
+      323.84001220703124,
+      160.00000061035155
+    ],
+    "bounds_units": [
+      -2.5300000953674315,
+      -1.63,
+      2.5300000953674315,
+      1.2500000047683715
+    ],
+    "pixels_per_unit": 128
+  }
+]

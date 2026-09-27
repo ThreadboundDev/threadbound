@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Prototype/Placeables/Platforms/village_platform_kit_keyed.png" id="1"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Prototype/CodexPass/blue_chroma_key_material.tres" id="2"]
+[sub_resource type="AtlasTexture" id="Atlas_short"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 300, 420)
+[sub_resource type="RectangleShape2D" id="Shape_short"]
+size = Vector2(258, 28)
+
+[node name="WoodPlatformShort" type="Node2D"]
+[node name="Artwork" type="Sprite2D" parent="."]
+z_index = 32
+position = Vector2(0, 10)
+material = ExtResource("2")
+texture = SubResource("Atlas_short")
+[node name="LandingSurface" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LandingSurface"]
+position = Vector2(0, 14)
+shape = SubResource("Shape_short")
+one_way_collision = true
+one_way_collision_margin = 12.0
+[node name="GrappleTarget" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+position = Vector2(0, 14)
+shape = SubResource("Shape_short")
+

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+
+[node name="BlueShrineApproach" instance=ExtResource("1")]
+room_id = "blue_shrine_approach"
+display_name = "Shrine Approach"
+macro_focus = Vector2(1360, 610)
+planning_bounds = Vector2(3200, 4500)
+design_intent = "Vertical return from the irrigation works that reveals the Shrine as the player climbs toward it."

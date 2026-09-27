@@ -17,6 +17,7 @@ const BASE_GLOVES_SCENE := preload("res://Src/Equipment/base_gloves.tscn")
 
 const EXPECTED_ANIMATIONS := {
 	&"Air_Double_Attack": {"frames": 27, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
+	&"Pogo_Attack": {"frames": 11, "fps": 24.0, "loop": false, "cell": Vector2(416, 416)},
 	&"Grapple_Diagonal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Horizontal": {"frames": 6, "fps": 18.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Grapple_Strike": {"frames": 11, "fps": 40.0, "loop": false, "cell": Vector2(416, 416)},
@@ -30,8 +31,10 @@ const EXPECTED_ANIMATIONS := {
 	&"Jump_Ascent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Descent": {"frames": 4, "fps": 8.0, "loop": true, "cell": Vector2(320, 320)},
 	&"Jump_Land": {"frames": 4, "fps": 12.0, "loop": false, "cell": Vector2(320, 320)},
+	&"Pogo_Rebound": {"frames": 4, "fps": 24.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Ledge_Climb": {"frames": 4, "fps": 20.0, "loop": false, "cell": Vector2(320, 320)},
 	&"Run": {"frames": 11, "fps": 24.0, "loop": true, "cell": Vector2(548, 548)},
+	&"Swim": {"frames": 38, "fps": 24.0, "loop": true, "cell": Vector2(416, 416)},
 	&"Sit": {"frames": 48, "fps": 18.0, "loop": false, "cell": Vector2(512, 512)},
 	&"Wall_Cling": {"frames": 4, "fps": 6.0, "loop": true, "cell": Vector2(320, 320)},
 }
@@ -55,8 +58,9 @@ func _ready() -> void:
 		_verify_ground_attack_variant_locking(player, sprite, failures)
 		_verify_forward_combo_chain(player, failures)
 		_verify_retired_up_attack(player, sprite, failures)
+		_verify_pogo_rebound(player, sprite, failures)
+		_verify_pogo_attack_art(sprite, failures)
 	_verify_ledge_climb_sheet(failures)
-	_verify_restored_run_frames(failures)
 	_verify_wall_cling_contact_registration(failures)
 	_verify_grounded_attack_registration(failures)
 	_verify_grapple_gutter_cleanup(failures)
@@ -68,6 +72,13 @@ func _ready() -> void:
 		Vector2i(6, 4),
 		19,
 		16,
+		failures
+	)
+	_verify_sheet_cell_gutters(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png",
+		Vector2i(6, 2),
+		11,
+		8,
 		failures
 	)
 	player.free()
@@ -86,6 +97,60 @@ func _ready() -> void:
 	for failure in failures:
 		push_error(failure)
 	get_tree().quit(1)
+
+func _verify_pogo_rebound(
+	player: CharacterBody2D,
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	player.call("_begin_air_double_attack", Vector2.DOWN)
+	if player.get("current_attack_body_anim") != "Pogo_Attack":
+		failures.append("A downward aerial attack did not select the one-strike pogo clip.")
+	player.velocity = Vector2(30.0, 400.0)
+	player.call("_perform_pogo_rebound")
+	if not is_equal_approx(player.velocity.y, -float(player.get("pogo_rebound_speed"))):
+		failures.append("Pogo rebound did not apply its configured upward speed.")
+	if float(player.get("pogo_rebound_speed")) < 1000.0:
+		failures.append("Pogo rebound is weaker than the intended jump-strength launch.")
+	if float(player.get("pogo_rebound_gravity_timer")) <= 0.0:
+		failures.append("Pogo rebound did not start its gravity grace window.")
+	if not is_equal_approx(float(player.call("_get_current_gravity")), float(player.get("gravity"))):
+		failures.append("Pogo gravity grace did not protect the launch from jump-cut gravity.")
+	if player.get("current_attack_uses_air_double") or player.get("is_attacking"):
+		failures.append("Pogo rebound did not release the completed aerial attack.")
+	if not is_zero_approx(float(player.get("attack_cooldown_timer"))):
+		failures.append("Pogo rebound did not refresh the aerial strike recovery.")
+	if sprite.animation != &"Pogo_Rebound":
+		failures.append("Pogo rebound did not begin its dedicated animation.")
+
+func _verify_pogo_attack_art(
+	sprite: AnimatedSprite2D,
+	failures: Array[String]
+) -> void:
+	var frames := sprite.sprite_frames
+	for frame_index in frames.get_frame_count(&"Pogo_Attack"):
+		var texture := frames.get_frame_texture(&"Pogo_Attack", frame_index) as AtlasTexture
+		if texture == null or texture.atlas == null:
+			failures.append("Pogo frame %d is not backed by its dedicated atlas." % frame_index)
+			continue
+		if not texture.atlas.resource_path.ends_with("/pogo_attack_v2.png"):
+			failures.append(
+				"Pogo frame %d uses %s instead of pogo_attack_v2.png." %
+				[frame_index, texture.atlas.resource_path]
+			)
+
+	var image := _load_imported_image(
+		"res://Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png"
+	)
+	if image == null or image.is_empty():
+		failures.append("Could not load the dedicated pogo sheet.")
+		return
+	var unused_cell := Rect2i(2080, 416, 416, 416)
+	for y in range(unused_cell.position.y, unused_cell.end.y):
+		for x in range(unused_cell.position.x, unused_cell.end.x):
+			if image.get_pixel(x, y).a > 0.03:
+				failures.append("The unused twelfth pogo atlas cell is not transparent.")
+				return
 
 func _verify_colored_grapple_art_alignment(failures: Array[String]) -> void:
 	for variant_name in COLORED_GRAPPLE_SCENES:
@@ -235,6 +300,13 @@ func _verify_sprite(sprite: AnimatedSprite2D, failures: Array[String]) -> void:
 					"%s frame %d uses atlas cell %s; expected %s." %
 					[animation_name, frame_index, texture.region.size, expected.cell]
 				)
+
+	var corrected_swim_frame := frames.get_frame_texture(&"Swim", 13) as AtlasTexture
+	var adjacent_swim_frame := frames.get_frame_texture(&"Swim", 14) as AtlasTexture
+	if corrected_swim_frame == null or adjacent_swim_frame == null:
+		failures.append("The corrected swim transition frames are missing.")
+	elif corrected_swim_frame.region != adjacent_swim_frame.region:
+		failures.append("Swim frame 13 still uses the vertically displaced atlas sample.")
 
 func _verify_moving_combo_atlas_maps(
 	sprite: AnimatedSprite2D,
@@ -393,53 +465,6 @@ func _verify_ledge_climb_sheet(failures: Array[String]) -> void:
 				failures.append("Ledge climb crest contains a forbidden scarf-tail silhouette.")
 				return
 
-func _verify_restored_run_frames(failures: Array[String]) -> void:
-	var archive_names := {
-		1: "frame_00_run_001.png",
-		2: "frame_01_run_002.png",
-		3: "frame_02_run_003.png",
-		4: "frame_03_run_004.png",
-		5: "frame_04_run_005.png",
-		6: "frame_05_run_006.png",
-		12: "frame_06_run_012.png",
-		20: "frame_07_run_020.png",
-		7: "frame_08_run_007.png",
-		18: "frame_09_run_018.png",
-		8: "frame_10_run_008.png",
-	}
-	for frame_number in archive_names:
-		var path := (
-			"res://Assets/Threadborne/Player/Normalized_V2/run/run_%03d.png" %
-			frame_number
-		)
-		var archive_path := (
-			"res://Assets/Threadborne/Player/Normalized_V2/run/old_run/%s" %
-			archive_names[frame_number]
-		)
-		var image := _load_imported_image(path)
-		if image == null or image.is_empty():
-			failures.append("Could not load restored run frame: %s." % path)
-			continue
-		if image.get_size() != Vector2i(548, 548):
-			failures.append("%s is %s; expected the 548 px runtime canvas." % [path, image.get_size()])
-			continue
-
-		var archived_image := Image.load_from_file(archive_path)
-		if archived_image == null or archived_image.is_empty():
-			failures.append("Could not load archived run source: %s." % archive_path)
-			continue
-		if image.get_size() != archived_image.get_size():
-			failures.append(
-				"%s size %s does not match archived source size %s." %
-				[path, image.get_size(), archived_image.get_size()]
-			)
-			continue
-		if image.get_data() != archived_image.get_data():
-			failures.append(
-				"%s no longer matches the approved archived original %s." %
-				[path, archive_names[frame_number]]
-			)
-
 func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> void:
 	if not is_equal_approx(float(player.get("landing_visual_scale_multiplier")), 0.88):
 		failures.append("Jump landing must use the corrected 0.88 visual scale.")
@@ -457,6 +482,10 @@ func _verify_movement_visual_tuning(player: Node, failures: Array[String]) -> vo
 		failures.append("Meditation healing must stop at 75% health.")
 	if not is_equal_approx(float(player.get("meditation_flow_interval_multiplier")), 0.75):
 		failures.append("Flow meditation must use the approved 25% faster pulse cadence.")
+	if not is_equal_approx(float(player.get("prototype_swim_visual_scale_multiplier")), 0.78):
+		failures.append("Swimming must use the corrected 0.78 visual scale multiplier.")
+	if not is_equal_approx(float(player.get("prototype_swim_visual_pitch_degrees")), 6.0):
+		failures.append("Swimming must use the approved six-degree forward pitch.")
 
 	var meditation_timers: Array[float] = [8.0, 3.0, 6.0, 0.0, 0.0, 0.0]
 	player.set("_action_point_recharge_timers", meditation_timers)

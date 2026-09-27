@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Rooftops/blue_rooftop_short_01.png" id="1_art"]
+
+[sub_resource type="RectangleShape2D" id="LandingShape"]
+size = Vector2(304, 24)
+
+[sub_resource type="RectangleShape2D" id="EdgeShape"]
+size = Vector2(20, 80)
+
+[sub_resource type="RectangleShape2D" id="GrappleShape"]
+size = Vector2(320, 96)
+
+[node name="BlueRooftopShort01" type="Node2D"]
+metadata/module_span = 320
+metadata/placement_type = "free"
+
+[node name="Artwork" type="Sprite2D" parent="."]
+z_index = 32
+position = Vector2(0, 33)
+scale = Vector2(0.1648645, 0.1648645)
+texture = ExtResource("1_art")
+
+[node name="OneWayLandingSurface" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OneWayLandingSurface"]
+position = Vector2(0, 12)
+shape = SubResource("LandingShape")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="ClimbableEdges" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="LeftEdge" type="CollisionShape2D" parent="ClimbableEdges"]
+position = Vector2(-150, 40)
+shape = SubResource("EdgeShape")
+
+[node name="RightEdge" type="CollisionShape2D" parent="ClimbableEdges"]
+position = Vector2(150, 40)
+shape = SubResource("EdgeShape")
+
+[node name="GrappleTarget" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrappleTarget"]
+position = Vector2(0, 48)
+shape = SubResource("GrappleShape")
+

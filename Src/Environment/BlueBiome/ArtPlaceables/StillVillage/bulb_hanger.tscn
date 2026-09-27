@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Structures/bulb_hanger.png" id="1"]
+
+[node name="bulb_hanger" type="Node2D"]
+metadata/asset_id = "bulb_hanger"
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = ExtResource("1")
+centered = false
+offset = Vector2(-131.84000, -282.87999)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_polygon_terrain.gd" id="1_script"]
+
+[node name="GreyboxPolygonTerrain" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+editor_description = "Select CollisionPolygon2D, choose Create Points in the 2D toolbar, click around the painted silhouette, and close the polygon. GrappleTarget mirrors it automatically."
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-128, -64, 128, -64, 128, 64, -128, 64)
+
+[node name="GrappleTarget" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GrappleTarget"]
+polygon = PackedVector2Array(-128, -64, 128, -64, 128, 64, -128, 64)
