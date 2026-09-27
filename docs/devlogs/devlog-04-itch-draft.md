@@ -128,7 +128,7 @@ I've been using transferred animation clips as a starting library and doing more
 
 *Working on the aerial poses in Blender.*
 
-The model is now connected to the local player scene, so this has moved beyond a static comparison. But it is still an experiment. Lighting, outlines, sword visibility, character scale and how it sits beside the painted environment all need to work together. More animation clips on disk don't automatically mean more finished moves in the game.
+The model is now connected to the player scene in the current project, so this has moved beyond a static comparison. But it is still an experiment. Lighting, outlines, sword visibility, character scale and how it sits beside the painted environment all need to work together. More animation clips on disk don't automatically mean more finished moves in the game.
 
 One thing I like about this direction is being able to go back into a pose and work on the relationship between the whole body and the weapon. That's also where a lot of the remaining work is: making the movement feel intentional all the way through, including the transitions back out of an attack.
 

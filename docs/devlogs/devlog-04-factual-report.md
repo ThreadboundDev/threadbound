@@ -1,4 +1,4 @@
-# Demo 0.1.0 to the current working project — factual change report
+# Demo 0.1.0 to the current project — factual change report
 
 Reviewed September 26, 2026. This is a repository/history review, not a new gameplay test or release certification.
 
@@ -8,15 +8,15 @@ There are **no local Git tags** identifying the published Demo 0.1.0. The first 
 
 This report uses **`9bc22046bf537f504758c35b8a94fd17f26994a2` as a provisional demo baseline**, not as a verified public-build commit. An upload date or build manifest is still needed to establish precisely what Itch players received. August 15–16 fixes may have been included in the public demo and must not automatically be advertised as later additions.
 
-Current committed endpoint: **`5ee389c6d8181bf46b9f55b31e821fb99f98638c`**, September 4, on `threadbound/level-blue-biome-development`. Current working files also contain extensive **uncommitted September work**, including the live 3D player, lake, enemy prototypes, and authored aerial attacks. Those files are included in this review, explicitly as development work rather than a published update.
+Current committed endpoint: **`e149be56dbf2bcba443608a9b0f86a011491d505`**, September 26, on `Main`. This is the merge/checkpoint for the Blue biome, live 3D player, water, enemy and level work. It is committed development history, but the repository contains no evidence that this commit has been packaged as a new public Itch build.
 
-The tracked baseline-to-HEAD comparison reports 549 changed files, 11,944 insertions and 348 deletions. This includes art and file organization; it is not a feature count. History contains parallel/reconciled commits and merges, so counting commit subjects would exaggerate the work.
+The tracked baseline-to-HEAD comparison reports 1,380 changed files, 34,239 insertions and 616 deletions. This includes source art, imported assets, tooling and file organization; it is not a feature count. History contains parallel/reconciled commits and merges, so counting commit subjects would exaggerate the work.
 
 Three labels below distinguish the evidence:
 
 - **Earlier development:** present before the provisional August 14 baseline. Useful retrospective context, not established post-demo work.
 - **Committed after baseline:** verified in the Git comparison; public release inclusion remains uncertain around August 15–16.
-- **Current experiment:** present in local working files but uncommitted and not established as shipped.
+- **Committed current development:** present at the September 26 endpoint, but not established as part of a public downloadable build.
 
 Evidence priority is current code/scene wiring, then the latest dated notes, then historical documents. Several documents retain superseded descriptions. A design proposal or a verification script's existence alone is not proof that a feature works in a public build.
 
@@ -38,7 +38,7 @@ The August 26 downward-strike pass gave pogo its own 11-frame animation with a v
 
 **Evidence:** `3eb0c6fd`; [pogo changelog](../changelogs/player_pogo_attack.md); baseline/current player sprite resources.
 
-### Current experiment: rigged attacks, directional air moves and blocking
+### Committed current development: rigged attacks, directional air moves and blocking
 
 The live model uses a continuous `slash_2` performance divided into **three input-driven grounded strikes**. This differs from the older sprite opener/double-finisher structure. Current timing and effects follow the model animation; the September 26 second-hit correction moves its contact window to source frames 37–42 because the later window followed the sword behind the player.
 
@@ -64,13 +64,13 @@ Collected demo Threads drive the colored accents as a temporary identity proxy. 
 
 **Evidence:** `26ec8077`, merged through `26bdc4ba`; `58fc582b` fixes left-facing silhouette; [Flow specification](../art/flow_state_vfx.md).
 
-### Current experiment: simplifying Flow around the live model
+### Committed current development: simplifying Flow around the live model
 
 The current aura resolves the live 3D composite instead of sampling only the hidden legacy sprite. Pose snapshots form short afterimages. Default trail capacity falls from 22 to 5, lifetime from 0.58 to 0.30 seconds, and opacity from 0.38 to 0.20, with greater spacing and a capture interval.
 
 Several old effects are deliberately retired: detached attack crescents, separate jump/dash/landing emissions, active ambient/buildup updates, transition sprites and Flow light energy. The code comments identify the mismatch between the old crescent and the live weapon and describe movement feedback as pose-matched afterimages. The silhouette aura remains; it would be inaccurate to say all Flow visuals were removed.
 
-**Evidence:** working diff of `Src/Characters/Player/flow_state_aura.gd` and `Src/VFX/Flow/flow_multimesh_trail.gd` against HEAD. The older Flow document is historical direction, not an exact inventory of the present enabled effects.
+**Evidence:** commit `fa615b3a`; current `Src/Characters/Player/flow_state_aura.gd` and `Src/VFX/Flow/flow_multimesh_trail.gd`. The older Flow document is historical direction, not an exact inventory of the present enabled effects.
 
 **Player effect:** the current approach concentrates feedback on the actual player pose and weapon instead of layering every earlier effect together. No measured frame-rate improvement or new Flow-stat system is established by this review.
 
@@ -82,11 +82,11 @@ Several old effects are deliberately retired: detached attack crescents, separat
 
 Late August/early September introduced Blue-region swim and water experiments, a full-frame sprite swim animation, polygon water and launch objects. Water preserves and redirects momentum; fixes specifically prevent ordinary air input immediately erasing a breach launch. The September 4 endpoint is itself a breach-momentum fix.
 
-**Current experiment:** bank-side Dive prompts stage the entry above water, while ordinary falls still work. Polygon lakes and dry pockets use consistent player-position sampling; wakes are restricted to actual wet regions. Swimming should retain its own animation underwater instead of falling into running or wall-cling presentation. The current code/notes address slow exits, overlapping volumes, boundary transitions and air-pocket rendering.
+**Committed current development:** bank-side Dive prompts stage the entry above water, while ordinary falls still work. Polygon lakes and dry pockets use consistent player-position sampling; wakes are restricted to actual wet regions. Swimming should retain its own animation underwater instead of falling into running or wall-cling presentation. The current code/notes address slow exits, overlapping volumes, boundary transitions and air-pocket rendering.
 
 Water bulbs now distinguish actions: melee pops recoil the player opposite the strike; dash carries incoming momentum forward with lift; remote grapple/ranged pops clear the bulb without propelling the player. Ordinary contact gently ejects without consuming it. Bulbs regenerate. The choice-room test offers alternate approaches and a safe recovery floor, consistent with the documented emphasis on expressive routes and backtracking.
 
-**Evidence:** `aaf164f6`, `fa3e96f5`, `3eb0c6fd`, `370fd7cf`, `1015e7ec`, `54cd30e1`, `5ee389c6`; [water prototype](../design/blue_water_momentum_prototype.md); [bulb choice room](../design/blue_bulb_choice_room.md); latest manual-animation guide; `Src/Environment/BlueBiome/Water/`, `Src/Environment/Greybox/greybox_polygon_water.gd` and player water methods.
+**Evidence:** `aaf164f6`, `fa3e96f5`, `3eb0c6fd`, `370fd7cf`, `1015e7ec`, `54cd30e1`, `5ee389c6`, `337af0f8`, `6e723d57`, `fa615b3a`; [water prototype](../design/blue_water_momentum_prototype.md); [bulb choice room](../design/blue_bulb_choice_room.md); latest manual-animation guide; `Src/Environment/BlueBiome/Water/`, `Src/Environment/Greybox/greybox_polygon_water.gd` and player water methods.
 
 **Player effect:** water is being tested as an active part of a traversal chain, with controllable transitions back to air and grapple. These rooms are prototypes; the full Blue region is not demonstrated as finished or publicly available.
 
@@ -96,11 +96,11 @@ Water bulbs now distinguish actions: melee pops recoil the player opposite the s
 
 **Committed after baseline:** Blue-region prototype rooms and art arrived in late August, including cloud placement, lake-slate terrain and modular rooftop platforms. Follow-up fixes corrected collision, terrain reconstruction, water depth and cloud/camera anchoring. These matter because a decorative platform must still represent the actual landing surface.
 
-**Current experiment:** Still Village studies combine painted houses/platforms and layered backgrounds with rendered water bulbs. Bulb petals pulse, open and refill; directional droplets distinguish activation. Building-water contact uses tint/occlusion and restrained rings to make supports sit in the lake. Material studies seek broad wood grain, muted slate and worn structural edges, but the notes explicitly say final parity with the approved painted house style remains unresolved.
+**Committed current development:** Still Village studies combine painted houses/platforms and layered backgrounds with rendered water bulbs. Bulb petals pulse, open and refill; directional droplets distinguish activation. Building-water contact uses tint/occlusion and restrained rings to make supports sit in the lake. Material studies seek broad wood grain, muted slate and worn structural edges, but the notes explicitly say final parity with the approved painted house style remains unresolved.
 
 The polished hybrid preview is a composition test. The lake greybox is a different playtest scene; recent notes intentionally disable decorative houses/terrain there to judge movement and encounters. Do not caption a village art study as the final playable level, or interpret its cosmetic water-contact shader as new swimming physics.
 
-**Evidence:** `7a7ba4ec`, `846e49f3`, `ff668484`, `55f89840`, `2afb9302`, `3af10a15`; [Blue roadmap](../design/blue_biome_development_roadmap.md); [hybrid village review](../art/hybrid_village_review.md); [water/attack feedback](../art/water_and_attack_feedback.md); [lake playtest](../design/lake_playtest_2026_09_25.md).
+**Evidence:** `7a7ba4ec`, `846e49f3`, `ff668484`, `55f89840`, `2afb9302`, `3af10a15`, `63fa72d1`, `54bf2727`; [Blue roadmap](../design/blue_biome_development_roadmap.md); [hybrid village review](../art/hybrid_village_review.md); [water/attack feedback](../art/water_and_attack_feedback.md); [lake playtest](../design/lake_playtest_2026_09_25.md).
 
 **Player effect:** a more specific lakeside visual identity and clearer relationships between platforms, buildings and water. Final region layout and art cohesion are still being tested.
 
@@ -112,14 +112,14 @@ There is **no post-RC2 tracked change under `Src/Enemies/ProtoWeaver`** in the r
 
 **Committed after baseline:** shared enemy code prevents enemies physically balancing on the player's head and refreshes target availability when player targeting is suspended. Contact damage respects that suspension. These fix awkward overlap and invalid targeting behavior.
 
-**Current experiment:** two Blue-region enemies are instantiated in the lake greybox:
+**Committed current development:** two Blue-region enemies are instantiated in the lake greybox:
 
 - **Reedhook:** a dry-platform enemy with a planted hook windup, short forward sweep and punishable recovery. Facing locks, hurt interrupts the attack, walls block hits, and edge probes keep it from intentionally walking into water. No passive idle-contact damage.
 - **Tide Duelist:** a swordfish-like underwater enemy that holds position, curls into a draw, flashes its eye and commits to a fixed-direction dash. Windup/recovery are harmless, damage interrupts it, and containment checks keep it inside connected water rather than crossing banks or dry pockets. It does not perform maze navigation.
 
 Both reuse existing death/reset foundations and remain first-pass enemies. The September 25 request for a sharper blinkstrike feel is an unresolved playtest item, not a completed improvement merely because a dash exists.
 
-**Evidence:** `dc22da46`; [Reedhook](../art/reedhook_behavior.md); [Tide Duelist](../art/tide_duelist_behavior.md); `Src/Enemies/Reedhook/`, `Src/Enemies/TideDuelist/`; lake scene instances. Boss history: `a32a7109`, `3c0895b6`, `a88d463c`, `5f3ddef4`, `ccd51015`, `1691cce0`, `e58b3c93`.
+**Evidence:** `dc22da46`, `c6d13a0f`, `54bf2727`; [Reedhook](../art/reedhook_behavior.md); [Tide Duelist](../art/tide_duelist_behavior.md); `Src/Enemies/Reedhook/`, `Src/Enemies/TideDuelist/`; lake scene instances. Boss history: `a32a7109`, `3c0895b6`, `a88d463c`, `5f3ddef4`, `ccd51015`, `1691cce0`, `e58b3c93`.
 
 ## 6. UI/UX, guidance and reliability
 
@@ -127,7 +127,7 @@ Both reuse existing death/reset foundations and remain first-pass enemies. The S
 
 Death handling gained repeated-death fallback and recovery from orphaned game-over state. These are player-visible reliability fixes: being able to resume control matters more than their internal implementation.
 
-**Current experiment:** controls documentation includes Block and the updated interaction mapping; Dive uses the existing interaction binding. The review does not establish a wholly new menu redesign after the demo.
+**Committed current development:** controls documentation includes Block and the updated interaction mapping; Dive uses the existing interaction binding. The review does not establish a wholly new menu redesign after the demo.
 
 **Evidence:** `cc892dc4`, `cb59eff0`, `c281c2e6`, `a8981843`, `4275d790`, `e25d05ee`, `327ac1e5`, `6bb9c1af`, `ef6dcddc`; baseline/current changes under `Src/UI/` and `Src/Global/input_binding_manager.gd`.
 
@@ -145,7 +145,7 @@ The confirmed post-baseline audio-manager change adds `stop_game_over_music()`, 
 
 **Committed after baseline:** Thread Knot recovery was added August 22. Held currency and the recovery pile's amount, scene and position are saved; a recoverable pile can be claimed. This changes the consequences and continuity of death, rather than introducing a new class or permanent-build system. Release-window merchant changes also trimmed offerings and adjusted lore pricing.
 
-**Current experiment:** the model carries sword/shield/grapple artwork and the controller implements guard. The presence of these meshes does not establish a complete new equipment economy, unlock tree or finalized equipment replacement. Water-item references and prototype/debug access must not be presented as a completed region-wide progression quest.
+**Committed current development:** the model carries sword/shield/grapple artwork and the controller implements guard. The presence of these meshes does not establish a complete new equipment economy, unlock tree or finalized equipment replacement. Water-item references and prototype/debug access must not be presented as a completed region-wide progression quest.
 
 **Evidence:** `d0c9c559`, `ef7ffd5e`, `b5f4bdd0`; `Src/Global/demo_progress.gd`, `Src/Pickups/recovery_thread_knot_pile.gd`; [equipment slots](../gameplay/equipment_slots.md), [progression](../design/progression_and_choices.md), current player guard code.
 
@@ -162,13 +162,13 @@ The confirmed post-baseline audio-manager change adds `stop_game_over_music()`, 
 
 The pipeline explored both rendered sprites from a rigged character and a live 3D model rendered into the 2D game. The initial equipped sprite test exported 125 frames at 30 FPS on fixed canvases, removed baked jump travel, and tested lighting/outline treatments. A parallel live-model test uses real normals, stylized lighting and a transparent viewport composite.
 
-Early pipeline notes say these are isolated tests that do not replace the production player. **That describes an earlier stage.** The current working `player.tscn` references `player_live_3d_visual.gd`, which loads the equipped model, hides legacy visuals and installs the authored attack library. The experiment is now integrated into the local player scene, though uncommitted and not demonstrated as released.
+Early pipeline notes say these are isolated tests that do not replace the production player. **That describes an earlier stage.** The current `player.tscn` references `player_live_3d_visual.gd`, which loads the equipped model, hides legacy visuals and installs the authored attack library. The experiment is now committed and integrated into the player scene, though it is not demonstrated as part of a public release.
 
 The work includes shoulder/arm deformation, fingers, sword grip, shield mounting, side-on framing, transferred Mixamo actions, authored aerial poses, swimming blends, ledge animation, hurt/death and save-point transitions. A large animation library is not equivalent to that many finished gameplay moves; many catalog entries are explicitly candidates.
 
 The documented practical problems are consistent proportions, coherent transitions, readable weapon contact and agreement between character rendering and painted environments. Using a rig offers an editable basis for those problems; it is an experiment rather than proof that the final art pipeline has been settled. Current work still needs normal-speed feel review, environment scale/cohesion judgment and performance observation. A local knee-mesh patch also needs reapplication after a fresh full mesh export.
 
-**Evidence:** [Blender pipeline](../art/player_blender_pipeline.md); [animation map](../art/player_animation_gameplay_map.md); [September 14 review](../art/gameplay_review_2026_09_14.md); [manual guide and September 26 updates](../art/manual_aerial_animation_guide.md); actual current player scene/script and GLB references.
+**Evidence:** `45108718`, `fa615b3a`; [Blender pipeline](../art/player_blender_pipeline.md); [animation map](../art/player_animation_gameplay_map.md); [September 14 review](../art/gameplay_review_2026_09_14.md); [manual guide and September 26 updates](../art/manual_aerial_animation_guide.md); actual current player scene/script and GLB references.
 
 ## Editorial decisions for Devlog #4
 
@@ -181,6 +181,6 @@ The documented practical problems are consistent proportions, coherent transitio
 
 ## Review method and limits
 
-Inspected Git version changes, first-parent history, relevant feature commits, baseline-to-HEAD diffs and current uncommitted scripts/scenes/docs. Reviewed 172 screenshot thumbnails from July 23 onward and 16 sampled frames from two local recordings (September 14 and September 26). Selected images were then packaged with provenance. This is not exhaustive frame-by-frame review of every local video.
+Inspected Git version changes, first-parent history, relevant feature commits, baseline-to-HEAD diffs and the committed September checkpoint. Reviewed 172 screenshot thumbnails from July 23 onward and 16 sampled frames from two local recordings (September 14 and September 26). Selected images were then packaged with provenance. This is not exhaustive frame-by-frame review of every local video.
 
 No game code, scenes, source artwork, existing design documents, saves or Git history were changed for this report. Existing verification results are attributed to project notes; the gameplay test suite was not rerun for this writing task. No public release/tag fetch or Itch publication was performed.
