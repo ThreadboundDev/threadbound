@@ -72,6 +72,7 @@ var _air_slash_active := false
 var _water_attack_blend := 0.0
 var _action_sequence: Array[StringName] = []
 var _action_sequence_name: StringName = &""
+var _swim_visual_facing := 1
 
 
 func _ready() -> void:
@@ -79,6 +80,7 @@ func _ready() -> void:
 	_player = get_parent() as CharacterBody2D
 	if not enabled or not _player:
 		return
+	_swim_visual_facing = int(_player.get("last_direction"))
 	_build_viewport()
 	if Engine.is_editor_hint():
 		_hide_legacy_visuals()
@@ -103,7 +105,7 @@ func _process(delta: float) -> void:
 	_hide_legacy_visuals()
 	if Engine.is_editor_hint():
 		return
-	var facing := int(_player.get("last_direction"))
+	var facing := _get_visual_facing()
 	if _logical_animation in [&"Dash", &"Water_Dash"]:
 		var wet: bool = _player.is_in_prototype_water()
 		if wet != (_logical_animation == &"Water_Dash"):
@@ -123,7 +125,6 @@ func _process(delta: float) -> void:
 	if _air_slash_active and _player.is_in_prototype_water():
 		_apply_water_attack_blend(delta)
 	_apply_grapple_aim_override()
-	_apply_swim_idle_sword_pose()
 	_apply_idle_sword_clearance()
 	_update_sword_smears(delta)
 	if _skeleton and _pelvis_index >= 0:
@@ -131,6 +132,11 @@ func _process(delta: float) -> void:
 			0.0,
 			_skeleton.get_bone_global_pose(_pelvis_index).origin.y - _pelvis_rest_y
 		)
+		# Ground attacks compensate for authored pelvis lift to keep the feet
+		# planted. In water that correction visibly launches the whole render and
+		# snaps it back when the attack ends, so let the swimming clip own its root.
+		if _player.is_in_prototype_water():
+			lift = 0.0
 		_model_root.position.y = -lift
 
 
@@ -156,6 +162,20 @@ func _update_swim_direction(delta: float, facing: int) -> void:
 	# Rotate around the collision center rather than swinging around the feet.
 	var center := (_player.get_node("CollisionShape2D") as CollisionShape2D).position
 	_display.position = center + (_display_rest_position-center).rotated(_display.rotation)
+
+
+func _get_visual_facing() -> int:
+	var authored_facing := int(_player.get("last_direction"))
+	if not _player.is_in_prototype_water():
+		_swim_visual_facing = authored_facing
+		return authored_facing
+	# Input changes last_direction before swim momentum has actually reversed.
+	# Hold the old presentation through the near-zero crossover, then mirror once
+	# real horizontal travel establishes the new facing. This avoids the model
+	# flipping while also rotating half a turn.
+	if absf(_player.velocity.x) > 20.0:
+		_swim_visual_facing = -1 if _player.velocity.x < 0.0 else 1
+	return _swim_visual_facing
 
 
 func play_gameplay_animation(logical_name: StringName) -> void:
@@ -750,42 +770,6 @@ func _update_sword_smears(_delta: float) -> void:
 		var collider := _player.get_node("CollisionShape2D") as CollisionShape2D
 		var feet := collider.to_global(Vector2(0, collider.shape.get_rect().end.y))
 		_sword_sweep.align_ground(feet.y)
-
-
-func _apply_swim_idle_sword_pose() -> void:
-	if _logical_animation != &"Swim_Idle" or not _skeleton or not _sword_mesh:
-		return
-	if _upper_body_overlay_active or bool(_player.get("is_attacking")):
-		return
-	var upper := _skeleton.find_bone("upper_arm.R")
-	var fore := _skeleton.find_bone("forearm.R")
-	var hand := _skeleton.find_bone("hand.R")
-	if upper < 0 or fore < 0 or hand < 0:
-		return
-	var upper_rest := _skeleton.get_bone_global_rest(upper)
-	var fore_rest := _skeleton.get_bone_global_rest(fore)
-	var hand_rest := _skeleton.get_bone_global_rest(hand)
-	var shoulder := _skeleton.get_bone_global_pose_no_override(upper).origin
-	# Hold the arm ahead of the torso; let the original tread-water animation
-	# continue on the body, legs and shield arm without sweeping the sword back.
-	var elbow := shoulder + Vector3(0, -0.7, 0.7).normalized() * upper_rest.origin.distance_to(fore_rest.origin)
-	var grip := elbow + Vector3(0, 0.65, 0.76).normalized() * fore_rest.origin.distance_to(hand_rest.origin)
-	var upper_pose := upper_rest
-	upper_pose.origin = shoulder
-	upper_pose.basis = Basis(Quaternion((fore_rest.origin-upper_rest.origin).normalized(), (elbow-shoulder).normalized())) * upper_rest.basis
-	_skeleton.set_bone_global_pose_override(upper, upper_pose, 1.0, true)
-	var fore_pose := fore_rest
-	fore_pose.origin = elbow
-	fore_pose.basis = Basis(Quaternion((hand_rest.origin-fore_rest.origin).normalized(), (grip-elbow).normalized())) * fore_rest.basis
-	_skeleton.set_bone_global_pose_override(fore, fore_pose, 1.0, true)
-	var hand_pose := hand_rest
-	hand_pose.origin = grip
-	_skeleton.set_bone_global_pose_override(hand, hand_pose, 1.0, true)
-	var blade := _get_blade_model_points()
-	if blade.size() == 2:
-		var axis := (_skeleton.global_basis.inverse() * (blade[1]-blade[0])).normalized()
-		hand_pose.basis = Basis(Quaternion(axis, Vector3(0,1,0.15).normalized())) * hand_pose.basis
-		_skeleton.set_bone_global_pose_override(hand, hand_pose, 1.0, true)
 
 
 func _get_blade_world_points() -> PackedVector2Array:

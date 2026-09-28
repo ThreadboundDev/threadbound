@@ -29,7 +29,10 @@ void fragment() {
 	vec2 pixel=SCREEN_PIXEL_SIZE;
 	float pixels_below=depth/max(abs(dFdy(world_position.y)),.001);
 	vec2 reflected=SCREEN_UV-vec2(0.0,2.0*pixels_below*pixel.y);
-	float valid=step(.001,reflected.y)*step(reflected.y,.999);
+	// Reflected samples eventually leave the visible screen as the source moves.
+	// Fade that boundary over a small band instead of revealing the viewport as
+	// a hard horizontal edge in the water.
+	float valid=smoothstep(.001,.065,reflected.y)*(1.0-smoothstep(.935,.999,reflected.y));
 	reflected.x+=wave*pixel.x*3.0;
 	vec3 reflection=texture(screen_texture,clamp(reflected,vec2(.001),vec2(.999))).rgb*.4;
 	reflection+=texture(screen_texture,clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999))).rgb*.3;

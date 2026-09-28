@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://chjbc1kgc3esj" path="res://Src/Enemies/Tensioner/tensioner.tscn" id="11_tensioner"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="13_dwbey"]
 [ext_resource type="Script" uid="uid://cefv85kbtvpw3" path="res://Src/Environment/Greybox/greybox_polygon_water.gd" id="14_qtjmy"]
+[ext_resource type="PackedScene" path="res://Src/Tests/Combat/training_dummy.tscn" id="15_training_dummy"]
 
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Water/water_dive_entry.tscn" id="90_dive"]
 
@@ -79,6 +80,9 @@ position = Vector2(4640, -2002)
 block_color = Color(0.18, 0.22, 0.25, 0.96)
 
 [node name="CombatTargets" type="Node2D" parent="IntegratedTestLane" unique_id=1834378254]
+
+[node name="TrainingDummy" parent="IntegratedTestLane/CombatTargets" instance=ExtResource("15_training_dummy")]
+position = Vector2(920, -870)
 
 [node name="LoomkinBlockTarget" parent="IntegratedTestLane/CombatTargets" unique_id=1600295083 instance=ExtResource("9_loomkin")]
 position = Vector2(1206, -870)

@@ -44,6 +44,10 @@ func _ready() -> void:
 	assert(visual.size.is_equal_approx(water.size))
 	assert((visual.material as ShaderMaterial).shader.code.contains("hint_screen_texture"))
 	assert((visual.material as ShaderMaterial).shader.code.contains("horizontal_blur_px"))
+	assert(
+		(visual.material as ShaderMaterial).shader.code.contains("reflection_screen_fade"),
+		"Reflections must fade before their screen-space sample reaches a hard edge."
+	)
 
 	var room := ROOM.instantiate()
 	add_child(room)

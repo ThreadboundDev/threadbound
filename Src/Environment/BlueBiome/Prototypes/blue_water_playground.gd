@@ -17,5 +17,5 @@ func _process(_delta: float) -> void:
 		+ "Speed: %4d   State: %s\n" % [roundi(player.velocity.length()), location]
 		+ "Move: WASD   Jump: Space   Roll: Shift   Crouch: S\n"
 		+ "Attack: LMB   Grapple: RMB   Special: Q   Block: F\n"
-		+ "Combat targets are right of spawn; the deep swim basin follows them."
+		+ "Infinite training dummy and combat targets are right of spawn; the deep swim basin follows."
 	)

@@ -52,6 +52,10 @@ void fragment() {
 	// Mirror the already-rendered scene around this rectangle's top edge.
 	vec2 reflected_uv = SCREEN_UV;
 	reflected_uv.y -= UV.y * screen_height * 2.0;
+	float reflection_screen_fade = (
+		smoothstep(0.001, 0.065, reflected_uv.y)
+		* (1.0 - smoothstep(0.935, 0.999, reflected_uv.y))
+	);
 
 	float broad_wave = sin(UV.y * 43.0 + UV.x * 9.0 + time * 3.1);
 	float fine_wave = sin(UV.y * 91.0 - UV.x * 17.0 - time * 4.7);
@@ -81,6 +85,7 @@ void fragment() {
 		reflection_strength
 		* depth_fade
 		* surface_reflection_fade
+		* reflection_screen_fade
 		* mix(0.38, 1.0, breakup)
 	);
 	vec3 water = mix(gradient, reflected, reflection_mix);

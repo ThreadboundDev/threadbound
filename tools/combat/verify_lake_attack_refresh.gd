@@ -74,6 +74,17 @@ func verify() -> void:
 	world.add_child(water)
 	player._prototype_water_surfaces[water] = 0.0
 	assert(not player.can_start_attack(true), "No underwater special yet")
+	player.last_direction = 1
+	player.velocity = Vector2(300,0)
+	visual._process(0.016)
+	assert(not visual._display.flip_h, "Rightward swimming must face right")
+	player.last_direction = -1
+	player.velocity = Vector2(10,0)
+	visual._process(0.016)
+	assert(not visual._display.flip_h, "Swim facing must hold while reversal velocity crosses zero")
+	player.velocity = Vector2(-300,0)
+	visual._process(0.016)
+	assert(visual._display.flip_h, "Swim facing must change after travel reverses")
 	for movement in [Vector2.ZERO,Vector2(300,0),Vector2(0,-300)]:
 		player.velocity = movement
 		player.attack_cooldown_timer = 0.0
@@ -89,6 +100,7 @@ func verify() -> void:
 		assert(not player.attack_hitbox.active)
 		visual._animation_player.seek(8.0/30.0,true)
 		visual._process(0.016)
+		assert(is_zero_approx(visual._model_root.position.y), "Underwater attacks must not apply grounded pelvis lift")
 		player.update_combat_timers(0.01)
 		assert(player.attack_hitbox.active)
 		assert(visual._lower_sampler_action == &"water_attack_move")

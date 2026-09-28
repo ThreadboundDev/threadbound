@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Combat/training_dummy.gd" id="1_script"]
+[ext_resource type="Script" path="res://Src/Components/health_component.gd" id="2_health"]
+[ext_resource type="Script" path="res://Src/Components/hurtbox_component.gd" id="3_hurtbox"]
+[ext_resource type="Script" path="res://Src/Components/hit_flash_component.gd" id="4_flash"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(72, 128)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_label"]
+bg_color = Color(0.08, 0.055, 0.035, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.58, 0.26, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="TrainingDummy" type="StaticBody2D" groups=["enemies", "training_dummies"]]
+z_index = 12
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Post" type="Polygon2D" parent="Visuals"]
+color = Color(0.42, 0.23, 0.1, 1)
+polygon = PackedVector2Array(-13, -136, 13, -136, 17, 0, -17, 0)
+
+[node name="Crossbar" type="Polygon2D" parent="Visuals"]
+position = Vector2(0, -91)
+color = Color(0.56, 0.33, 0.15, 1)
+polygon = PackedVector2Array(-55, -10, 55, -10, 55, 10, -55, 10)
+
+[node name="Head" type="Polygon2D" parent="Visuals"]
+color = Color(0.68, 0.47, 0.23, 1)
+polygon = PackedVector2Array(-27, -137, -21, -158, 0, -168, 21, -158, 27, -137, 20, -116, 0, -107, -20, -116)
+
+[node name="EyeLeft" type="Polygon2D" parent="Visuals"]
+color = Color(0.12, 0.07, 0.035, 1)
+polygon = PackedVector2Array(-14, -145, -5, -148, -5, -139, -14, -137)
+
+[node name="EyeRight" type="Polygon2D" parent="Visuals"]
+color = Color(0.12, 0.07, 0.035, 1)
+polygon = PackedVector2Array(5, -148, 14, -145, 14, -137, 5, -139)
+
+[node name="Base" type="Polygon2D" parent="Visuals"]
+color = Color(0.29, 0.16, 0.075, 1)
+polygon = PackedVector2Array(-46, 0, 46, 0, 33, -16, -33, -16)
+
+[node name="LabelPanel" type="PanelContainer" parent="Visuals"]
+offset_left = -71.0
+offset_top = -216.0
+offset_right = 71.0
+offset_bottom = -176.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_label")
+
+[node name="Label" type="Label" parent="Visuals/LabelPanel"]
+layout_mode = 2
+text = "TRAINING DUMMY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 1000000
+invincible_after_hit = 0.0
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("3_hurtbox")
+health_component_path = NodePath("../HealthComponent")
+hurtbox_owner_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="HitFlashComponent" type="Node" parent="."]
+script = ExtResource("4_flash")
+target_path = NodePath("../Visuals")
