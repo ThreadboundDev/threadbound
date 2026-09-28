@@ -1,6 +1,8 @@
 # Still Lake enemy concepts — approval pass 1
 
-Status: A/Reedhook and the D2/Tide Duelist swordfish/samurai direction were approved for simple 3D models. First-pass editable Blender sources and rigged Godot exports are now available; see [model delivery notes](../art/blue_enemy_models_v1.md). B, C, and E remain proposals. Original D was not approved. Enemy behavior, factions, and lore have not been added. The current lake-heavy direction in the conversation takes precedence over the older overland route document.
+Status: A/Reedhook and the D2/Tide Duelist swordfish/samurai direction were approved for simple 3D models. First-pass editable Blender sources and rigged Godot exports are now available; see [model delivery notes](../art/blue_enemy_models_v1.md). The Swordfish Duelist's behavior, environmental interactions, elite variant, Bellstriker contrast enemy, and Stillwater Tortoise midpoint boss direction are now approved for prototyping; see [Blue Biome swordfish ecosystem and environmental combat](blue_swordfish_ecosystem_and_environmental_combat.md). B, C, and E remain proposals. Original D was not approved. Factions and lore have not been added. The current lake-heavy direction in the conversation takes precedence over the older overland route document.
+
+The approved combat direction uses swordfish anatomy and the principles of battōjutsu and iaijutsu without making the creature a literal samurai. The earlier visual scope studies below remain useful model references, but the maintained behavior and encounter rules now live in the linked design record.
 
 ## Needlefin iteration 2
 
