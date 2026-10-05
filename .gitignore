@@ -51,5 +51,9 @@ Assets/UI/Main Menu/*.mp4
 # Tool and render command output.
 *.log
 
+# Generated Python tool caches; keep the scripts, not interpreter bytecode.
+__pycache__/
+*.py[cod]
+
 # Blender automatic backup copies; keep deliberate named source versions.
 *.blend[0-9]*

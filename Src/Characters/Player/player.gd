@@ -330,6 +330,9 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_range(0.5, 1.5, 0.01) var double_attack_first_strike_pitch := 0.92
 @export_range(0.5, 1.5, 0.01) var double_attack_second_strike_pitch := 1.08
 
+@export_group("Underwater Attack Combo")
+@export_range(0.5, 3.5, 0.05) var water_combo_playback_speed := 2.5
+
 @export_group("Momentum Rules")
 @export var momentum_movement_report_interval := 0.16
 @export var momentum_movement_min_speed := 90.0
@@ -623,6 +626,8 @@ var ground_attack_visual_mode: StringName = &"stationary"
 var ground_attack_locked_facing := 1
 var air_attack_duration := 0.0
 var air_attack_active_strike := -1
+var water_combo_step := -1
+var water_combo_queued := false
 var _default_attack_hitbox_polygon := PackedVector2Array()
 var _neutral_special_vfx_instance: Node2D = null
 var _dash_iframe_vfx_instance: Node2D = null
@@ -846,7 +851,12 @@ func _physics_process(delta: float) -> void:
 		# Preserve the authored recoil through the short attack recovery.
 		pass
 	elif is_attacking and current_attack_is_spin:
-		velocity.x = float(last_direction) * spin_special_dash_speed if attack_active_started and not attack_active_finished else 0.0
+		if is_in_prototype_water():
+			_process_prototype_swim_movement(delta, horizontal_input)
+			if attack_active_started and not attack_active_finished:
+				velocity.x = attack_direction.x * spin_special_dash_speed
+		else:
+			velocity.x = float(last_direction) * spin_special_dash_speed if attack_active_started and not attack_active_finished else 0.0
 	elif _is_attack_movement_committed():
 		velocity.x = 0.0
 	elif not grapple_restricting and not is_hurt:
@@ -2387,6 +2397,9 @@ func update_combat_timers(delta: float) -> void:
 		_reset_weapon_visuals()
 
 func start_attack(is_special := false) -> void:
+	if not is_special and is_attacking and water_combo_step >= 0:
+		water_combo_queued = water_combo_step < 2
+		return
 	if not is_special and is_attacking and current_attack_uses_ground_combo:
 		ground_combo_queued = true
 		ground_combo_queued_family = _get_ground_combo_family(_get_attack_input_direction())
@@ -2456,8 +2469,10 @@ func start_attack(is_special := false) -> void:
 	if current_attack_uses_grapple_strike:
 		_sync_current_grapple_strike_direction()
 	attack_timer = 0.0
-	if current_attack_is_special:
+	if current_attack_is_special and not is_in_prototype_water():
 		velocity.x = 0.0
+	if current_attack_is_special and is_in_prototype_water():
+		attack_direction = Vector2(float(last_direction), 0.0)
 	var cooldown := player_stats.attack_cooldown
 	if current_attack_is_special:
 		cooldown *= neutral_special_cooldown_multiplier
@@ -2498,7 +2513,8 @@ func _begin_spin_special(direction: int) -> void:
 	attack_active_finished = false
 	attack_vfx_started = true
 	attack_cooldown_timer = spin_special_duration
-	velocity.x = 0.0
+	if not is_in_prototype_water():
+		velocity.x = 0.0
 	attack_hitbox.disable()
 	attack_collision_polygon.polygon = _build_circle_hitbox_polygon(spin_special_radius)
 	_sync_attack_hitbox_to_anchor()
@@ -2518,7 +2534,8 @@ func _update_spin_special() -> void:
 	if attack_active_started and not attack_active_finished and frame > spin_special_active_frames.y:
 		attack_active_finished = true
 		attack_hitbox.disable()
-		velocity.x = 0.0
+		if not is_in_prototype_water():
+			velocity.x = 0.0
 	if attack_hitbox.active:
 		_retry_active_attack_overlaps()
 	if attack_timer >= spin_special_duration:
@@ -2772,7 +2789,9 @@ func _finish_ground_combo_attack() -> void:
 		attack_cooldown_timer = 0.0
 		_begin_ground_combo_attack(queued_family, completed_visual_mode)
 
-func _begin_air_double_attack(direction: Vector2) -> void:
+func _begin_air_double_attack(direction: Vector2, water_step := 0) -> void:
+	water_combo_step = water_step if is_in_prototype_water() and live_3d_visual else -1
+	water_combo_queued = false
 	current_attack_is_special = false
 	current_attack_is_spin = false
 	current_attack_uses_ground_combo = false
@@ -2787,9 +2806,9 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		direction = Vector2(float(last_direction), 0.0)
 	attack_direction = direction.normalized()
 	if is_in_prototype_water() and live_3d_visual:
-		# The authored water slash strikes ahead of the swimmer. Keep damage
-		# aligned with that pose instead of aiming an invisible vertical strike.
-		attack_direction = velocity.normalized() if velocity.length() > 20.0 else Vector2(
+		# Upright swim-idle attacks keep their facing for each strike while the
+		# physics body continues swimming freely in any direction.
+		attack_direction = Vector2(
 			signf(direction.x) if absf(direction.x) > ATTACK_DIRECTION_DEADZONE else float(last_direction), 0.0
 		)
 	current_attack_body_anim = (
@@ -2803,12 +2822,13 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		last_direction = int(sign(attack_direction.x))
 
 	var attack_speed_multiplier := maxf(0.1, get_momentum_attack_speed_multiplier())
+	var attack_playback_speed := water_combo_playback_speed if water_combo_step >= 0 else air_attack_playback_speed
 	if player_animation:
 		player_animation.flip_h = last_direction < 0
 		var frame_count := player_animation.sprite_frames.get_frame_count(current_attack_body_anim)
 		var animation_fps := player_animation.sprite_frames.get_animation_speed(current_attack_body_anim)
 		air_attack_duration = float(frame_count) / maxf(
-			animation_fps * attack_speed_multiplier * air_attack_playback_speed,
+			animation_fps * attack_speed_multiplier * attack_playback_speed,
 			0.1
 		)
 		player_animation.speed_scale = attack_speed_multiplier
@@ -2818,6 +2838,11 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		air_attack_hitbox_arc_degrees,
 		air_attack_hitbox_radius
 	)
+	if water_combo_step >= 0:
+		attack_collision_polygon.polygon = (
+			_build_circle_hitbox_polygon(air_attack_hitbox_radius)
+			if water_combo_step == 2 else _build_attack_sector_polygon(140.0, air_attack_hitbox_radius)
+		)
 	attack_hitbox.damage = _build_attack_damage()
 	attack_hitbox.disable()
 	_sync_attack_hitbox_to_anchor()
@@ -2830,7 +2855,7 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 			current_gloves.play_attack_follow_pose(attack_direction, _get_equipment_attack_follow_anim())
 	if live_3d_visual:
 		var live_duration := live_3d_visual.play_air_attack(
-			air_attack_playback_speed * attack_speed_multiplier
+			attack_playback_speed * attack_speed_multiplier
 		)
 		if live_duration > 0.0:
 			air_attack_duration = live_duration
@@ -2844,6 +2869,10 @@ func _begin_air_double_attack(direction: Vector2) -> void:
 		_play_double_attack_strike_audio(0)
 
 func _update_air_double_attack() -> void:
+	if water_combo_step >= 0 and not is_in_prototype_water():
+		water_combo_queued = false
+		_finish_air_double_attack()
+		return
 	var combat_frame := player_animation.frame
 	if live_3d_visual:
 		combat_frame = live_3d_visual.get_current_action_frame_30fps()
@@ -2870,7 +2899,7 @@ func _update_air_double_attack() -> void:
 			_play_double_attack_strike_audio(air_attack_active_strike)
 			_play_flow_vfx_attack_swing(
 				attack_direction,
-				air_attack_hitbox_arc_degrees,
+				360.0 if water_combo_step == 2 else air_attack_hitbox_arc_degrees,
 				air_attack_active_strike
 			)
 	if air_attack_active_strike >= 0:
@@ -2890,6 +2919,11 @@ func _retry_active_attack_overlaps() -> void:
 		attack_hitbox.call("_on_area_entered", area)
 
 func _finish_air_double_attack() -> void:
+	if water_combo_step >= 0 and water_combo_step < 2 and water_combo_queued and is_in_prototype_water():
+		_begin_air_double_attack(_get_attack_input_direction(), water_combo_step + 1)
+		return
+	water_combo_step = -1
+	water_combo_queued = false
 	attack_hitbox.disable()
 	# A successful pogo can finish from Area2D.area_entered while Godot is
 	# flushing physics queries. Defer the shape reset so PhysicsServer does not
@@ -2901,12 +2935,22 @@ func _finish_air_double_attack() -> void:
 	_reset_weapon_visuals()
 
 func _get_air_attack_active_frames() -> Vector2i:
+	if water_combo_step >= 0:
+		# Ground slash_2 windows rebased onto segments starting at 0, 1.15, 2.33s.
+		return [Vector2i(16, 24), Vector2i(3, 8), Vector2i(10, 20)][water_combo_step]
 	if live_3d_visual and live_3d_visual._current_action in [&"air_attack_up", &"air_attack_down"]:
 		return Vector2i(1, 5)
 	return air_attack_first_strike_frames
 
 
 func get_sword_sweep_state() -> Dictionary:
+	if is_attacking and water_combo_step >= 0 and live_3d_visual:
+		var window := _get_air_attack_active_frames()
+		var water_phase := (live_3d_visual.get_current_action_position() * 30.0 - window.x) / float(window.y - window.x + 1)
+		return {"phase": water_phase, "radius": air_attack_hitbox_radius,
+			"arc": 360.0 if water_combo_step == 2 else 140.0,
+			"pose": attack_hitbox.global_transform, "reverse": attack_direction.x < 0,
+			"style": [0, 0, 2][water_combo_step]}
 	if is_attacking and current_attack_is_spin and live_3d_visual:
 		var spin_frame := live_3d_visual.get_current_action_position() * 30.0
 		var spin_phase := (spin_frame - spin_special_active_frames.x) / float(spin_special_active_frames.y - spin_special_active_frames.x + 1)
@@ -3007,6 +3051,8 @@ func _cancel_ground_combo_attack() -> void:
 	_reset_ground_combo_chain()
 
 func _cancel_air_double_attack() -> void:
+	water_combo_step = -1
+	water_combo_queued = false
 	current_attack_uses_air_double = false
 	air_attack_active_strike = -1
 
@@ -3047,7 +3093,7 @@ func _reset_attack_hitbox_polygon() -> void:
 func can_start_attack(is_special := false) -> bool:
 	if is_dead or is_hurt or bank_dive_active or is_attacking or is_blocking or attack_cooldown_timer > 0.0:
 		return false
-	if is_special and (not is_on_floor() or is_in_prototype_water()):
+	if is_special and not is_on_floor() and not is_in_prototype_water():
 		return false
 	if (
 		current_chest
@@ -3137,6 +3183,8 @@ func _is_attack_movement_committed() -> bool:
 	if not is_attacking:
 		return false
 	if current_attack_is_special:
+		if is_in_prototype_water():
+			return false
 		return not attack_active_finished
 	if current_attack_uses_ground_combo and ground_attack_visual_mode == &"stationary":
 		if not player_animation:
@@ -3472,6 +3520,11 @@ func _apply_attack_direction() -> void:
 func _sync_attack_hitbox_to_anchor() -> void:
 	if not attack_hitbox:
 		return
+	if water_combo_step >= 0:
+		attack_hitbox.global_transform = global_transform
+		attack_hitbox.global_position = $CollisionShape2D.global_position
+		attack_hitbox.global_rotation = attack_direction.angle()
+		return
 	if current_attack_is_spin:
 		attack_hitbox.global_transform = global_transform
 		attack_hitbox.global_position = $CollisionShape2D.global_position
@@ -3564,7 +3617,7 @@ func modify_outgoing_hit_damage(
 	if target_owner:
 		target_position = target_owner.global_position
 	damage.hit_position = _get_hurtbox_feedback_position(target_hurtbox)
-	if current_attack_is_spin:
+	if current_attack_is_spin or water_combo_step == 2:
 		var radial := target_position - attack_hitbox.global_position
 		if radial.length_squared() < 0.01:
 			radial = attack_direction
@@ -3619,6 +3672,8 @@ func modify_outgoing_hit_damage(
 	return damage
 
 func _get_current_attack_profile() -> Dictionary:
+	if water_combo_step >= 0:
+		return [ATTACK_PROFILE_BASIC, ATTACK_PROFILE_MOVING_FINISHER_SECOND, ATTACK_PROFILE_STATIONARY_SECOND][water_combo_step]
 	if current_attack_uses_air_double:
 		return (
 			ATTACK_PROFILE_AIR_SECOND
@@ -4310,9 +4365,13 @@ func _cancel_neutral_special_vfx() -> void:
 	_neutral_special_vfx_instance = null
 
 func _get_neutral_special_chest_anchor_position() -> Vector2:
+	if is_in_prototype_water():
+		return $CollisionShape2D.global_position
 	return global_position + neutral_special_chest_vfx_offset
 
 func _get_neutral_special_ground_contact_position() -> Vector2:
+	if is_in_prototype_water():
+		return $CollisionShape2D.global_position
 	if not player_animation:
 		return global_position
 

@@ -33,11 +33,17 @@ func physics_update(delta: float) -> void:
 		_active_started = true
 		enemy.activate_attack_hitbox()
 
-	if _active_started and not _attack_finished and _timer >= windup + active_time:
+	var active_complete := _timer >= windup + active_time
+	if enemy.has_method("is_attack_active_complete"):
+		active_complete = bool(enemy.call("is_attack_active_complete"))
+	if _active_started and not _attack_finished and active_complete:
 		_attack_finished = true
 		enemy.deactivate_attack_hitbox()
 
-	if _timer >= windup + active_time + recovery:
+	var sequence_complete := _timer >= windup + active_time + recovery
+	if enemy.has_method("is_attack_sequence_complete"):
+		sequence_complete = bool(enemy.call("is_attack_sequence_complete"))
+	if sequence_complete:
 		if enemy.has_method("is_attack_sequence_busy") and enemy.is_attack_sequence_busy():
 			return
 

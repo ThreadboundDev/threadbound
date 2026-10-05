@@ -1,0 +1,545 @@
+{
+  "pixels_per_meter": 80.0,
+  "camera_tilt_degrees": 8.0,
+  "camera_target_height": 4.5,
+  "viewport_size": [
+    2400,
+    1440
+  ],
+  "walk_surfaces": [
+    {
+      "name": "Main pavilion deck",
+      "a": [
+        -7,
+        3.2
+      ],
+      "b": [
+        7,
+        3.2
+      ],
+      "one_way": true,
+      "thickness": 0.16
+    },
+    {
+      "name": "Left stair ramp",
+      "a": [
+        -12.5,
+        0.05
+      ],
+      "b": [
+        -7,
+        3.2
+      ],
+      "one_way": false,
+      "thickness": 0.16
+    },
+    {
+      "name": "Roof run 00",
+      "a": [
+        -8.0,
+        6.489999999999999
+      ],
+      "b": [
+        -7.5,
+        6.465865182876586
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 01",
+      "a": [
+        -7.5,
+        6.465865182876586
+      ],
+      "b": [
+        -7.0,
+        6.49269805908203
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 02",
+      "a": [
+        -7.0,
+        6.49269805908203
+      ],
+      "b": [
+        -6.5,
+        6.560983152389524
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 03",
+      "a": [
+        -6.5,
+        6.560983152389524
+      ],
+      "b": [
+        -6.0,
+        6.662470703124999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 04",
+      "a": [
+        -6.0,
+        6.662470703124999
+      ],
+      "b": [
+        -5.5,
+        6.790086259841918
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 05",
+      "a": [
+        -5.5,
+        6.790086259841918
+      ],
+      "b": [
+        -5.0,
+        6.937840270996093
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 06",
+      "a": [
+        -5.0,
+        6.937840270996093
+      ],
+      "b": [
+        -4.5,
+        7.100737676620482
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 07",
+      "a": [
+        -4.5,
+        7.100737676620482
+      ],
+      "b": [
+        -4.0,
+        7.274687499999999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 08",
+      "a": [
+        -4.0,
+        7.274687499999999
+      ],
+      "b": [
+        -3.5,
+        7.4564124393463125
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 09",
+      "a": [
+        -3.5,
+        7.4564124393463125
+      ],
+      "b": [
+        -3.0,
+        7.643358459472656
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 10",
+      "a": [
+        -3.0,
+        7.643358459472656
+      ],
+      "b": [
+        -2.5,
+        7.833604383468627
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 11",
+      "a": [
+        -2.5,
+        7.833604383468627
+      ],
+      "b": [
+        -2.0,
+        8.025771484375
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 12",
+      "a": [
+        -2.0,
+        8.025771484375
+      ],
+      "b": [
+        -1.5,
+        8.21893307685852
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 13",
+      "a": [
+        -1.5,
+        8.21893307685852
+      ],
+      "b": [
+        -1.0,
+        8.412524108886718
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 14",
+      "a": [
+        -1.0,
+        8.412524108886718
+      ],
+      "b": [
+        -0.5,
+        8.606250753402708
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 15",
+      "a": [
+        -0.5,
+        8.606250753402708
+      ],
+      "b": [
+        0.0,
+        8.799999999999999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 16",
+      "a": [
+        0.0,
+        8.799999999999999
+      ],
+      "b": [
+        0.5,
+        8.606250753402708
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 17",
+      "a": [
+        0.5,
+        8.606250753402708
+      ],
+      "b": [
+        1.0,
+        8.412524108886718
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 18",
+      "a": [
+        1.0,
+        8.412524108886718
+      ],
+      "b": [
+        1.5,
+        8.21893307685852
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 19",
+      "a": [
+        1.5,
+        8.21893307685852
+      ],
+      "b": [
+        2.0,
+        8.025771484375
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 20",
+      "a": [
+        2.0,
+        8.025771484375
+      ],
+      "b": [
+        2.5,
+        7.833604383468627
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 21",
+      "a": [
+        2.5,
+        7.833604383468627
+      ],
+      "b": [
+        3.0,
+        7.643358459472656
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 22",
+      "a": [
+        3.0,
+        7.643358459472656
+      ],
+      "b": [
+        3.5,
+        7.4564124393463125
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 23",
+      "a": [
+        3.5,
+        7.4564124393463125
+      ],
+      "b": [
+        4.0,
+        7.274687499999999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 24",
+      "a": [
+        4.0,
+        7.274687499999999
+      ],
+      "b": [
+        4.5,
+        7.100737676620482
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 25",
+      "a": [
+        4.5,
+        7.100737676620482
+      ],
+      "b": [
+        5.0,
+        6.937840270996093
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 26",
+      "a": [
+        5.0,
+        6.937840270996093
+      ],
+      "b": [
+        5.5,
+        6.790086259841918
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 27",
+      "a": [
+        5.5,
+        6.790086259841918
+      ],
+      "b": [
+        6.0,
+        6.662470703124999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 28",
+      "a": [
+        6.0,
+        6.662470703124999
+      ],
+      "b": [
+        6.5,
+        6.560983152389524
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 29",
+      "a": [
+        6.5,
+        6.560983152389524
+      ],
+      "b": [
+        7.0,
+        6.49269805908203
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 30",
+      "a": [
+        7.0,
+        6.49269805908203
+      ],
+      "b": [
+        7.5,
+        6.465865182876586
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof run 31",
+      "a": [
+        7.5,
+        6.465865182876586
+      ],
+      "b": [
+        8.0,
+        6.489999999999999
+      ],
+      "one_way": true,
+      "thickness": 0.13
+    },
+    {
+      "name": "Roof access balcony 0",
+      "a": [
+        6.8,
+        4.55
+      ],
+      "b": [
+        9.6,
+        4.55
+      ],
+      "one_way": true,
+      "thickness": 0.16
+    },
+    {
+      "name": "Roof access balcony 1",
+      "a": [
+        8.2,
+        5.8
+      ],
+      "b": [
+        10.9,
+        5.8
+      ],
+      "one_way": true,
+      "thickness": 0.16
+    },
+    {
+      "name": "Lower route",
+      "a": [
+        -13,
+        0.05
+      ],
+      "b": [
+        13,
+        0.05
+      ],
+      "one_way": false,
+      "thickness": 0.3
+    }
+  ],
+  "room_bounds_x": [
+    -1.65,
+    2.05
+  ],
+  "room_ceiling": 2.78,
+  "checkpoints": {
+    "underneath": [
+      4.5,
+      0.05
+    ],
+    "stairs": [
+      -13,
+      0.05
+    ],
+    "deck": [
+      -4,
+      3.2
+    ],
+    "roof": [
+      0,
+      8.8
+    ]
+  },
+  "foreground_groups": [
+    "Foreground_Posts",
+    "Foreground_Rails",
+    "Decor_Front"
+  ],
+  "exterior_group": "Room_Exterior",
+  "materials": [
+    "timber",
+    "timber_light",
+    "timber_dark",
+    "stone",
+    "stone_dark",
+    "stone_light",
+    "plaster",
+    "cloth",
+    "indigo",
+    "roof_0",
+    "roof_1",
+    "roof_2",
+    "roof_3",
+    "gold",
+    "gold_dark",
+    "iron",
+    "rope",
+    "glow",
+    "glass",
+    "moss",
+    "foliage",
+    "pink"
+  ]
+}

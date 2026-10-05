@@ -1,0 +1,61 @@
+{
+  "name": "Blue pavilion reusable deck 2m",
+  "units": "metres",
+  "length_m": 2.0,
+  "width_m": 3.5,
+  "walking_surface_z_m": 0.0,
+  "board_thickness_m": 0.18,
+  "visual_bounds_blender_z_up": [
+    [
+      0.0,
+      -1.75,
+      -0.22999998927116394
+    ],
+    [
+      2.0,
+      1.75,
+      0.005000000353902578
+    ]
+  ],
+  "origin": "left walking edge at x0, y0, z0",
+  "snap_step_metres": [
+    2,
+    0,
+    0
+  ],
+  "mesh_groups": [
+    "Deck_Surface",
+    "Foreground_Trim",
+    "Back_Trim"
+  ],
+  "foreground_groups": [
+    "Foreground_Trim"
+  ],
+  "pixels_per_metre": 80,
+  "camera_tilt_degrees": 8,
+  "collision_local_px": {
+    "rectangle": [
+      0,
+      0,
+      160,
+      24
+    ],
+    "layer": 1,
+    "one_way": false
+  },
+  "snap_step_2d_px": [
+    160,
+    0
+  ],
+  "notes": [
+    "Place modules at multiples of 2 metres (160px) for continuous walking collision.",
+    "No railing, stairs, pillars or end caps; left and right edge girders join flush.",
+    "Packed albedo, normal and roughness maps reuse the main pavilion V2 materials."
+  ],
+  "validation": {
+    "status": "PASS",
+    "triangles": 4952,
+    "packed_textures": "PASS",
+    "x_bounds_flush": "PASS"
+  }
+}

@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3]
+[ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Bellstriker/bellstriker.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="3"]
+[sub_resource type="RectangleShape2D" id="Floor"]
+size = Vector2(2400, 80)
+[sub_resource type="RectangleShape2D" id="Dock"]
+size = Vector2(1200, 350)
+[sub_resource type="RectangleShape2D" id="Wall"]
+size = Vector2(80, 1000)
+[node name="BellstrikerTest" type="Node2D"]
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -100
+polygon = PackedVector2Array(-2000, -2000, 4000, -2000, 4000, 2000, -2000, 2000)
+color = Color(0.04, 0.09, 0.14, 1)
+[node name="Water" parent="." instance=ExtResource("3")]
+points = PackedVector2Array(-100, 250, 850, 250, 850, 650, -100, 650)
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(1000, 690)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("Floor")
+[node name="Visual" type="Polygon2D" parent="Floor"]
+polygon = PackedVector2Array(-1200, -40, 1200, -40, 1200, 40, -1200, 40)
+color = Color(0.22, 0.3, 0.34, 1)
+[node name="Dock" type="StaticBody2D" parent="."]
+position = Vector2(1450, 475)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dock"]
+shape = SubResource("Dock")
+[node name="Visual" type="Polygon2D" parent="Dock"]
+polygon = PackedVector2Array(-600, -175, 600, -175, 600, 175, -600, 175)
+color = Color(0.28, 0.34, 0.36, 1)
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-140, 200)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("Wall")
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(2090, 200)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("Wall")
+[node name="Instructions" type="Label" parent="."]
+position = Vector2(420, -90)
+text = "BELLSTRIKER BOXING TEST\nSwim left; bait its leap onto the dock.\nJab > cross > double-claw smash. Dodge, then punish recovery."
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(970, 300)
+debug_water_abilities_unlocked = true
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -80)
+position_smoothing_enabled = true
+[node name="Bellstriker" parent="." instance=ExtResource("2")]
+position = Vector2(530, 470)

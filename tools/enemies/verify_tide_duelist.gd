@@ -57,14 +57,40 @@ func run() -> void:
 	world.add_child(fish)
 	await frames(5)
 	var origin := fish.position
-	await frames(30)
+	var bob_min := INF
+	var bob_max := -INF
+	for frame in 90:
+		await frames(1)
+		bob_min = minf(bob_min, fish.fish_visual.position.y)
+		bob_max = maxf(bob_max, fish.fish_visual.position.y)
 	check(fish.position.distance_to(origin) < 0.1, "Still fish must not patrol")
+	check(bob_max - bob_min > 0.5 and maxf(absf(bob_min), absf(bob_max)) <= 3.01, "Living hover is visible but bounded to three pixels")
+	check(fish.fish_visual.animator.current_animation == "life/hover", "Living idle loops")
+	var hover: Animation = fish.fish_visual.animator.get_animation(&"life/hover")
+	var glide: Animation = fish.fish_visual.animator.get_animation(&"life/dash_glide")
+	for clip in [hover, glide]:
+		check(clip.loop_mode == Animation.LOOP_LINEAR, "Living motion loops seamlessly")
+		var flexible_bones := 0
+		for track in clip.get_track_count():
+			if clip.track_get_type(track) != Animation.TYPE_ROTATION_3D:
+				continue
+			var first: Quaternion = clip.rotation_track_interpolate(track, 0.0)
+			var last: Quaternion = clip.rotation_track_interpolate(track, clip.length)
+			check(absf(first.dot(last)) > 0.99999, "Tail wave loop endpoints match")
+			if first.angle_to(clip.rotation_track_interpolate(track, clip.length * 0.25)) > deg_to_rad(0.1):
+				flexible_bones += 1
+		check(flexible_bones >= 4, "Idle and glide animate the body/head/tail chain, not just the image")
 	check(fish._footprint_fits(fish.position), "Idle must stay in water")
 	player.position = fish.position + Vector2(480,0)
 	await frames(12)
 	check(fish.position.distance_to(origin) < 0.1, "Detected target must not cause swimming")
 	check(fish.fish_visual.tell_intensity > 0.0, "Awareness lights the eye")
+	check(fish.fish_visual.animator.current_animation == "life/hover", "Awareness retains the living idle")
 	check(fish.fish_visual.eye_materials.size() == 2, "Both skinned eyes have tell materials")
+	var fish_image := fish.fish_visual.get_node("FishImage") as Sprite2D
+	check(fish_image.scale.x >= 0.6, "Fish visual is large enough to read in combat")
+	check(fish_image.material is ShaderMaterial, "Fish silhouette uses an outline material")
+	check((fish.get_node("CollisionShape2D") as CollisionShape2D).shape.radius >= 58.0, "Body collision matches the larger fish")
 	print("PASS still idle / stationary awareness / eye materials")
 	fish.reset_for_save_point()
 	player.position = fish.position + Vector2(260,0)
@@ -78,15 +104,33 @@ func run() -> void:
 	check(fish.dash_direction.is_equal_approx(direction), "Draw stance locks aim")
 	player.position.y -= 100
 	var saw_flash := false
-	for index in range(65):
+	var saw_glide := false
+	var dash_start := fish.position
+	for index in range(180):
 		await frames(1)
+		if fish.attack_phase == &"dash" and fish.fish_visual.animator.current_animation == "life/dash_glide":
+			saw_glide = true
 		if fish.attack_phase == &"windup" and fish.fish_visual.tell_intensity > 0.9:
 			saw_flash = true
 			check(not fish.attack_hitbox.active, "Prestrike flash must be harmless")
+		if fish.attack_phase == &"recover":
+			break
 	check(saw_flash, "Final windup must flash before striking")
+	check(saw_glide, "Long committed dash keeps the tail moving after blade release")
 	check(player_health.current_health == 82, "One 18-damage hit per dash")
 	check(not fish.attack_hitbox.active, "Recovery disables blade")
-	print("PASS curl / locked dash / single hit / recovery")
+	check(fish.position.distance_to(dash_start) > 600.0, "Committed dash travels until the lake boundary")
+	check(fish.dash_blocked, "Lake boundary ends the committed dash")
+	player.position = fish.position + Vector2(-260,0)
+	fish.target = player
+	var saw_recovery_shake := false
+	for index in range(26):
+		await frames(1)
+		saw_recovery_shake = saw_recovery_shake or absf(fish.fish_visual.rotation) > deg_to_rad(2.0)
+	check(saw_recovery_shake, "Recovery visibly shakes off the wall impact")
+	check(fish.facing == -1, "Late recovery reacquires and faces the player")
+	check(fish.fish_visual.tell_intensity > 0.0, "Reacquiring the player restores the awareness tell")
+	print("PASS curl / wall-terminated dash / head shake / player reacquisition")
 
 	# An actual received melee hit must interrupt an active dash and retain recoil.
 	fish.reset_for_save_point()
@@ -108,6 +152,7 @@ func run() -> void:
 	check(not fish.attack_hitbox.active, "Hurt cancels blade immediately")
 	check(fish.velocity.x < 0, "Hurt preserves knockback")
 	check(fish.fish_visual.animator.current_animation == "hurt", "Hurt animation plays")
+	check(fish.fish_visual.position.is_equal_approx(Vector2.ZERO), "Hover immediately clears on hurt")
 	await frames(28)
 	check(fish.state_machine.current_state_name != &"Hurt", "Hurt recovers")
 	print("PASS damage / interrupt / hurt animation / recoil")
@@ -156,10 +201,13 @@ func run() -> void:
 	await frames(2)
 	check(fish.is_dead, "Lethal hit kills fish")
 	check(not fish.attack_hitbox.active, "Death cancels blade")
+	await frames(2)
+	check(not fish.fish_visual.animator.is_playing(), "Death stops living motion")
 	await frames(40)
 	fish.reset_for_save_point()
 	check(not fish.is_dead and fish.visible and fish.health_component.current_health == 100, "Save point restores fish")
 	check(fish.position.is_equal_approx(fish.home_position), "Respawn returns home")
+	check(fish.fish_visual.animator.current_animation == "life/hover" and fish.fish_visual.animator.is_playing(), "Save point restarts living idle")
 	print("PASS all clips / death / save-point reset")
 	print("TIDE_DUELIST_ALL_CHECKS_PASS")
 	get_tree().quit()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/blue_pavilion_3d_playtest.gd" id="1"]
+
+[node name="BluePavilion3DPlaytest" type="Node2D"]
+script = ExtResource("1")

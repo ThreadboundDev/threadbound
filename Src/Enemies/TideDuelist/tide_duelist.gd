@@ -2,7 +2,9 @@ extends EnemyBase
 ## Aquatic skirmisher. Uses the existing enemy states and combat components.
 
 @export var attack_range := 380.0
-@export var dash_speed := 2200.0
+@export var dash_speed := 1050.0
+@export var maximum_dash_distance := 2400.0
+@export var footprint_radius := 132.0
 @export var patrol_height := 100.0
 @export var water_path: NodePath
 
@@ -15,7 +17,9 @@ var _patrol_clock := 0.0
 var _patrol_sign := 1.0
 var _desired_velocity := Vector2.ZERO
 var _dash_elapsed := 0.0
+var _dash_distance := 0.0
 var _windup_elapsed := 0.0
+var _recovery_elapsed := 0.0
 @onready var fish_visual: Node2D = $Visuals/Fish
 
 func _ready() -> void:
@@ -47,10 +51,15 @@ func patrol(_delta: float) -> void:
 	_desired_velocity = Vector2.ZERO
 	fish_visual.set_attack_tell(0.0)
 
-func chase_target(_delta: float) -> void:
+func chase_target(delta: float) -> void:
 	_desired_velocity = Vector2.ZERO
 	if is_instance_valid(target):
-		_face_direction(global_position.direction_to(target.global_position))
+		var direction := global_position.direction_to(target.global_position)
+		if not direction.is_zero_approx():
+			var side := 1 if direction.x >= 0.0 else -1
+			update_facing(side)
+			var aim := atan2(direction.y * side, absf(direction.x))
+			visuals.rotation = lerp_angle(visuals.rotation, aim, 1.0 - exp(-5.0 * delta))
 		fish_visual.set_attack_tell(0.35)
 	else:
 		fish_visual.set_attack_tell(0.0)
@@ -79,6 +88,7 @@ func is_player_in_attack_range() -> bool:
 
 func begin_attack() -> void:
 	super.begin_attack()
+	fish_visual.set_recovery_shake(0.0)
 	dash_direction = global_position.direction_to(target.global_position) if is_instance_valid(target) else Vector2(facing, 0)
 	if dash_direction.is_zero_approx():
 		dash_direction = Vector2(facing, 0)
@@ -96,14 +106,17 @@ func activate_attack_hitbox() -> void:
 	attack_phase = &"dash"
 	fish_visual.set_attack_tell(0.0)
 	_dash_elapsed = 0.0
-	attack_hitbox.position = dash_direction * 62.0
+	_dash_distance = 0.0
+	_recovery_elapsed = 0.0
+	attack_hitbox.position = dash_direction * 82.0
 	attack_hitbox.rotation = dash_direction.angle()
-	fish_visual.play_clip(&"dash", stats.attack_active_time)
+	fish_visual.play_clip(&"dash")
 
 func deactivate_attack_hitbox() -> void:
 	super.deactivate_attack_hitbox()
 	if attack_phase == &"dash":
 		attack_phase = &"recover"
+		_recovery_elapsed = 0.0
 		fish_visual.play_clip(&"recover", stats.attack_recovery)
 
 func end_attack() -> void:
@@ -122,24 +135,53 @@ func update_attack_motion(delta: float) -> void:
 		_dash_elapsed += delta
 		# The first two source frames unsheathe the curled bill. The blade must
 		# be extended before forward motion and damage become active.
-		if _dash_elapsed < stats.attack_active_time * 0.2:
+		if _dash_elapsed < 0.04:
 			velocity = Vector2.ZERO
 			return
 		if not attack_hitbox.active:
 			super.activate_attack_hitbox()
 			attack_hitbox.damage.knockback = dash_direction * stats.knockback_strength
 		velocity = dash_direction * dash_speed
+		var start := global_position
 		if not _move_in_water(velocity * delta, true):
 			dash_blocked = true
 			deactivate_attack_hitbox()
 			velocity = Vector2.ZERO
+		else:
+			_dash_distance += global_position.distance_to(start)
+			if _dash_distance >= maximum_dash_distance:
+				dash_blocked = true
+				deactivate_attack_hitbox()
+				velocity = Vector2.ZERO
 	elif attack_phase == &"recover":
+		_recovery_elapsed += delta
 		velocity = Vector2.ZERO
+		var progress := clampf(_recovery_elapsed / maxf(stats.attack_recovery, 0.01), 0.0, 1.0)
+		fish_visual.set_recovery_shake(progress)
+		if progress >= 0.55 and is_instance_valid(target):
+			var reacquire_direction := global_position.direction_to(target.global_position)
+			if not reacquire_direction.is_zero_approx():
+				var side := 1 if reacquire_direction.x >= 0.0 else -1
+				update_facing(side)
+				var desired_rotation := atan2(reacquire_direction.y * side, absf(reacquire_direction.x))
+				visuals.rotation = lerp_angle(
+					visuals.rotation,
+					desired_rotation,
+					1.0 - exp(-10.0 * delta)
+				)
+			fish_visual.set_attack_tell(lerpf(0.0, 0.35, inverse_lerp(0.55, 1.0, progress)))
 	else:
 		velocity = Vector2.ZERO
 
+func is_attack_active_complete() -> bool:
+	return attack_phase == &"recover"
+
+func is_attack_sequence_complete() -> bool:
+	return attack_phase == &"recover" and _recovery_elapsed >= stats.attack_recovery
+
 func begin_polished_hurt_response() -> void:
 	_desired_velocity = Vector2.ZERO
+	fish_visual.set_recovery_shake(0.0)
 	fish_visual.set_attack_tell(0.0)
 	fish_visual.play_clip(&"hurt", maxf(stats.hurt_time, 0.12))
 
@@ -156,6 +198,8 @@ func _try_contact_hurtbox(_area: Area2D) -> bool:
 	return false
 
 func _on_state_changed(state: StringName) -> void:
+	if state != &"Attack":
+		fish_visual.set_recovery_shake(0.0)
 	if state in [&"Patrol", &"Idle", &"Chase"]:
 		fish_visual.play_clip(&"still")
 		fish_visual.set_attack_tell(0.35 if state == &"Chase" else 0.0)
@@ -185,7 +229,9 @@ func _clear_line(destination: Vector2) -> bool:
 	query.exclude = exclusions
 	if not get_world_2d().direct_space_state.intersect_ray(query).is_empty():
 		return false
-	var steps := maxi(1, ceili(global_position.distance_to(destination) / 8.0))
+	# Sample tightly enough that narrow dry seams cannot be skipped between two
+	# otherwise-valid water points.
+	var steps := maxi(1, ceili(global_position.distance_to(destination) / 3.0))
 	for step in range(steps + 1):
 		if not _point_is_water(global_position.lerp(destination, float(step) / steps)):
 			return false
@@ -195,7 +241,12 @@ func _footprint_fits(center: Vector2) -> bool:
 	# Conservative envelope includes the bill and curled tail. Check polygon edges
 	# too: corner-only tests miss narrow air pockets and concave shoreline notches.
 	var footprint := PackedVector2Array()
-	for offset in [Vector2(-100,-100), Vector2(100,-100), Vector2(100,100), Vector2(-100,100)]:
+	for offset in [
+		Vector2(-footprint_radius,-footprint_radius),
+		Vector2(footprint_radius,-footprint_radius),
+		Vector2(footprint_radius,footprint_radius),
+		Vector2(-footprint_radius,footprint_radius),
+	]:
 		var point: Vector2 = center + offset
 		if not _point_is_water(point):
 			return false
@@ -246,6 +297,8 @@ func _check_dash_hits() -> void:
 func reset_for_save_point() -> void:
 	super.reset_for_save_point()
 	visuals.rotation = 0.0
+	fish_visual.set_recovery_shake(0.0)
+	fish_visual.reset_living_motion()
 	dash_blocked = false
 	_patrol_clock = 0.0
 	_patrol_sign = float(facing)

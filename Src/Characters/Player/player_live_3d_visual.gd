@@ -39,6 +39,10 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export_range(1.0, 4.0, 0.1) var water_dash_animation_speed := 2.0
 @export var wall_cling_entry_duration := 0.18
 @export var neutral_special_duration := 1.20
+@export_range(0.0, 0.3, 0.01) var swim_turn_commit_delay := 0.10
+@export_range(0.0, 20.0, 0.5) var water_attack_forward_tilt_degrees := 10.0
+@export_range(0.0, 1.0, 0.05) var water_attack_swim_leg_blend := 0.75
+@export_range(0.0, 1.0, 0.05) var water_attack_leg_motion_strength := 0.65
 
 @export_group("Sword Smear")
 @export var sword_smear_enabled := true
@@ -73,6 +77,8 @@ var _water_attack_blend := 0.0
 var _action_sequence: Array[StringName] = []
 var _action_sequence_name: StringName = &""
 var _swim_visual_facing := 1
+var _swim_turn_candidate := 0
+var _swim_turn_elapsed := 0.0
 
 
 func _ready() -> void:
@@ -80,7 +86,8 @@ func _ready() -> void:
 	_player = get_parent() as CharacterBody2D
 	if not enabled or not _player:
 		return
-	_swim_visual_facing = int(_player.get("last_direction"))
+	if not Engine.is_editor_hint():
+		_swim_visual_facing = int(_player.get("last_direction"))
 	_build_viewport()
 	if Engine.is_editor_hint():
 		_hide_legacy_visuals()
@@ -105,12 +112,13 @@ func _process(delta: float) -> void:
 	_hide_legacy_visuals()
 	if Engine.is_editor_hint():
 		return
-	var facing := _get_visual_facing()
+	var facing := _get_visual_facing(delta)
 	if _logical_animation in [&"Dash", &"Water_Dash"]:
 		var wet: bool = _player.is_in_prototype_water()
 		if wet != (_logical_animation == &"Water_Dash"):
 			play_gameplay_animation(&"Dash")
 	_display.flip_h = facing < 0
+	_sync_special_medium()
 	if _air_slash_active and (not _player.is_attacking or not _player.current_attack_uses_air_double):
 		_air_slash_active = false
 		_lower_sampler_action = &""
@@ -122,22 +130,33 @@ func _process(delta: float) -> void:
 		_apply_lower_body_overrides()
 	elif _skeleton:
 		_skeleton.clear_bones_global_pose_override()
-	if _air_slash_active and _player.is_in_prototype_water():
+	if _air_slash_active and _player.is_in_prototype_water() and _player.water_combo_step < 0:
 		_apply_water_attack_blend(delta)
 	_apply_grapple_aim_override()
 	_apply_idle_sword_clearance()
-	_update_sword_smears(delta)
 	if _skeleton and _pelvis_index >= 0:
-		var lift := maxf(
-			0.0,
+		var pelvis_displacement := (
 			_skeleton.get_bone_global_pose(_pelvis_index).origin.y - _pelvis_rest_y
 		)
-		# Ground attacks compensate for authored pelvis lift to keep the feet
-		# planted. In water that correction visibly launches the whole render and
-		# snaps it back when the attack ends, so let the swimming clip own its root.
 		if _player.is_in_prototype_water():
-			lift = 0.0
-		_model_root.position.y = -lift
+			# Swimming movement belongs to the CharacterBody. Cancel both positive
+			# and negative authored pelvis translation so changing to an attack clip
+			# cannot move the rendered character independently by several pixels.
+			_model_root.position.y = -pelvis_displacement
+			if _player.water_combo_step >= 0 or _is_water_special_active():
+				var offset := _skeleton.get_bone_global_rest(_pelvis_index).origin - _skeleton.get_bone_global_pose(_pelvis_index).origin
+				_model_root.position.x = offset.x
+				_model_root.position.z = offset.z
+			else:
+				_model_root.position.x = 0.0
+				_model_root.position.z = 0.0
+		else:
+			_model_root.position.x = 0.0
+			_model_root.position.z = 0.0
+			# On land, compensate only upward motion so attacks keep their feet planted
+			# without pulling naturally crouched poses away from the floor.
+			_model_root.position.y = -maxf(0.0, pelvis_displacement)
+	_update_sword_smears(delta)
 
 
 func _exit_tree() -> void:
@@ -147,6 +166,17 @@ func _exit_tree() -> void:
 
 
 func _update_swim_direction(delta: float, facing: int) -> void:
+	if _player.water_combo_step >= 0:
+		# Present the full grounded motion with a small lean into the strike.
+		# Pivot at the swimmer's collision center, never at the planted feet.
+		_display.rotation = deg_to_rad(water_attack_forward_tilt_degrees) * facing
+		var center := (_player.get_node("CollisionShape2D") as CollisionShape2D).position
+		_display.position = center + (_display_rest_position-center).rotated(_display.rotation)
+		return
+	if _is_water_special_active():
+		_display.rotation = 0.0
+		_display.position = _display_rest_position
+		return
 	var swimming: bool = _player.is_in_prototype_water() and (_logical_animation in [&"Swim", &"Water_Dash"] or _air_slash_active) and not _upper_body_overlay_active
 	if not swimming:
 		_display.rotation = 0.0
@@ -164,17 +194,42 @@ func _update_swim_direction(delta: float, facing: int) -> void:
 	_display.position = center + (_display_rest_position-center).rotated(_display.rotation)
 
 
-func _get_visual_facing() -> int:
+func _get_visual_facing(delta: float) -> int:
 	var authored_facing := int(_player.get("last_direction"))
+	if _player.water_combo_step >= 0 or _is_water_special_active():
+		authored_facing = -1 if _player.attack_direction.x < 0.0 else 1
+		_swim_visual_facing = authored_facing
+		_swim_turn_candidate = 0
+		_swim_turn_elapsed = 0.0
+		return authored_facing
 	if not _player.is_in_prototype_water():
 		_swim_visual_facing = authored_facing
+		_swim_turn_candidate = 0
+		_swim_turn_elapsed = 0.0
 		return authored_facing
 	# Input changes last_direction before swim momentum has actually reversed.
-	# Hold the old presentation through the near-zero crossover, then mirror once
-	# real horizontal travel establishes the new facing. This avoids the model
-	# flipping while also rotating half a turn.
-	if absf(_player.velocity.x) > 20.0:
-		_swim_visual_facing = -1 if _player.velocity.x < 0.0 else 1
+	# Hold the old presentation through the near-zero crossover. Even after the
+	# velocity changes sign, require a short committed travel window before
+	# mirroring: a swim frame is asymmetric, so one-frame left/right alternation
+	# reads as a broken pose rather than a responsive turn.
+	if absf(_player.velocity.x) <= 20.0:
+		_swim_turn_candidate = 0
+		_swim_turn_elapsed = 0.0
+		return _swim_visual_facing
+	var motion_facing := -1 if _player.velocity.x < 0.0 else 1
+	if motion_facing == _swim_visual_facing:
+		_swim_turn_candidate = 0
+		_swim_turn_elapsed = 0.0
+		return _swim_visual_facing
+	if _swim_turn_candidate != motion_facing:
+		_swim_turn_candidate = motion_facing
+		_swim_turn_elapsed = 0.0
+	else:
+		_swim_turn_elapsed += delta
+	if _swim_turn_elapsed >= swim_turn_commit_delay:
+		_swim_visual_facing = motion_facing
+		_swim_turn_candidate = 0
+		_swim_turn_elapsed = 0.0
 	return _swim_visual_facing
 
 
@@ -223,11 +278,12 @@ func play_gameplay_animation(logical_name: StringName) -> void:
 		)
 		return
 	if logical_name == &"Neutral_Special_Attack":
+		var action: StringName = &"water_neutral_special" if _player.is_in_prototype_water() else &"power_up_1"
 		var power_speed := (
-			get_action_duration(&"power_up_1")
+			get_action_duration(action)
 			/ maxf(neutral_special_duration, 0.01)
 		)
-		_play_action(&"power_up_1", &"", 0.0, true, power_speed / base_playback_speed)
+		_play_action(action, &"", 0.0, true, power_speed / base_playback_speed)
 		return
 	if logical_name == &"Sit":
 		_start_action_sequence(&"save_point_sit", [&"turn_1", &"stand_to_sit_1"])
@@ -333,7 +389,7 @@ func play_air_attack(playback_speed: float) -> float:
 	_skeleton.clear_bones_global_pose_override()
 	var action: StringName = &"air_attack_forward"
 	if _player.is_in_prototype_water():
-		action = &"water_attack_idle"
+		action = StringName("water_combo_%d" % (_player.water_combo_step + 1)) if _player.water_combo_step >= 0 else &"water_attack_idle"
 		_water_attack_blend = clampf(_player.velocity.length() / 120.0, 0.0, 1.0)
 	elif _player.attack_direction.y > 0.55:
 		action = &"air_attack_down"
@@ -371,7 +427,25 @@ func play_spin_special(duration: float) -> void:
 	_air_slash_active = false
 	_skeleton.clear_bones_global_pose_override()
 	_logical_animation = &"Spin_Special"
-	_play_action(&"attack_2", &"", 0.0, true, get_action_duration(&"attack_2") / maxf(duration * base_playback_speed, 0.01))
+	var action: StringName = &"water_spin_special" if _player.is_in_prototype_water() else &"attack_2"
+	_play_action(action, &"", 0.0, true, get_action_duration(action) / maxf(duration * base_playback_speed, 0.01))
+
+func _is_water_special_active() -> bool:
+	return _player.is_attacking and _player.current_attack_is_special and _player.is_in_prototype_water()
+
+func _sync_special_medium() -> void:
+	if not _player.is_attacking or not _player.current_attack_is_special:
+		return
+	# Crossing a water surface changes only presentation, not timing, AP, or hits.
+	var spin: bool = _player.current_attack_is_spin
+	var ground: StringName = &"attack_2" if spin else &"power_up_1"
+	var water: StringName = &"water_spin_special" if spin else &"water_neutral_special"
+	var action := water if _player.is_in_prototype_water() else ground
+	if _current_action == action:
+		return
+	var position := get_current_action_position()
+	var duration: float = _player.spin_special_duration if spin else neutral_special_duration
+	_play_action(action, &"", position, true, get_action_duration(action) / maxf(duration * base_playback_speed, 0.01))
 
 
 func get_grapple_origin_player_offset() -> Vector2:
@@ -582,6 +656,7 @@ func _build_viewport() -> void:
 		if _pelvis_index >= 0:
 			_pelvis_rest_y = _skeleton.get_bone_global_rest(_pelvis_index).origin.y
 	_install_authored_attacks(_animation_player, _skeleton)
+	_install_water_combo(_animation_player, _skeleton)
 	_index_clips()
 	if not Engine.is_editor_hint():
 		_build_lower_body_sampler()
@@ -657,7 +732,7 @@ func _index_clips() -> void:
 			"grab_ledge_from_water_1", "get_up_from_hang_1", "hanging_idle_1",
 			"jump_into_wall_hang_1", "roll_1",
 			"air_attack_forward", "air_attack_up", "air_attack_down",
-			"water_attack_idle", "water_attack_move"
+			"water_attack_idle", "water_attack_move", "water_combo_1", "water_combo_2", "water_combo_3", "water_neutral_special", "water_spin_special"
 		]:
 			if lower.ends_with(desired) and not _clips.has(StringName(desired)):
 				_clips[StringName(desired)] = animation_name
@@ -952,6 +1027,91 @@ func _install_authored_attacks(target: AnimationPlayer, skeleton: Skeleton3D) ->
 		library.add_animation(clip, animation)
 	target.add_animation_library(&"authored", library)
 	donor.free()
+
+
+func _install_water_combo(target: AnimationPlayer, skeleton: Skeleton3D) -> void:
+	# Keep the grounded pelvis/upper body/flip. Leg joints use a swim-idle base
+	# with authored attack articulation layered over it, not a frozen replacement.
+	# Root compensation still lets physics own travel; source assets stay intact.
+	var ground: Animation
+	var idle: Animation
+	var neutral: Animation
+	var spin: Animation
+	for clip in target.get_animation_list():
+		if String(clip).to_lower().ends_with("slash_2"):
+			ground = target.get_animation(clip)
+		if String(clip).to_lower().ends_with("water_idle_1"):
+			idle = target.get_animation(clip)
+		if String(clip).to_lower().ends_with("power_up_1"):
+			neutral = target.get_animation(clip)
+		if String(clip).to_lower().ends_with("attack_2"):
+			spin = target.get_animation(clip)
+	if not ground or not idle:
+		push_error("Swimming combo requires grounded slash_2 and water_idle_1")
+		return
+	var library := AnimationLibrary.new()
+	var path := target.get_node(target.root_node).get_path_to(skeleton)
+	var starts := [0.0, 1.15, 2.33, ground.length]
+	var definitions: Array[Dictionary] = []
+	for step in range(3):
+		definitions.append({"name": StringName("water_combo_%d" % (step + 1)), "source": ground, "start": starts[step], "end": starts[step + 1], "special": false})
+	if neutral:
+		definitions.append({"name": &"water_neutral_special", "source": neutral, "start": 0.0, "end": neutral.length, "special": true})
+	if spin:
+		definitions.append({"name": &"water_spin_special", "source": spin, "start": 0.0, "end": spin.length, "special": true})
+	for definition in definitions:
+		var authored: Animation = definition.source
+		var start: float = definition.start
+		var animation := Animation.new()
+		animation.length = definition.end - start
+		animation.step = 1.0 / 30.0
+		for track in authored.get_track_count():
+			var bone_path := authored.track_get_path(track)
+			var type := authored.track_get_type(track)
+			if bone_path.get_subname_count() != 1 or type not in [Animation.TYPE_POSITION_3D, Animation.TYPE_ROTATION_3D, Animation.TYPE_SCALE_3D]:
+				continue
+			var bone := StringName(bone_path.get_subname(0))
+			if skeleton.find_bone(bone) < 0:
+				continue
+			var idle_track := -1
+			for candidate in idle.get_track_count():
+				var candidate_path := idle.track_get_path(candidate)
+				if idle.track_get_type(candidate) == type and candidate_path.get_subname_count() == 1 and candidate_path.get_subname(0) == bone:
+					idle_track = candidate
+					break
+			var destination := animation.add_track(type)
+			animation.track_set_path(destination, NodePath(String(path) + ":" + String(bone)))
+			for frame in range(ceili(animation.length * 30.0) + 1):
+				var time := minf(float(frame) / 30.0, animation.length)
+				var sample_time: float = start + time
+				var source := authored
+				var source_track := track
+				if definition.special and idle_track >= 0 and (bone in LOWER_BODY_BONES or bone == &"root"):
+					source = idle
+					source_track = idle_track
+					# Keep the pelvis anchored; swimming translation is owned by physics.
+					sample_time = 0.0 if bone in [&"pelvis", &"root"] else fmod(start + time, idle.length)
+				var value: Variant
+				match type:
+					Animation.TYPE_POSITION_3D: value = source.position_track_interpolate(source_track, sample_time)
+					Animation.TYPE_ROTATION_3D: value = source.rotation_track_interpolate(source_track, sample_time)
+					Animation.TYPE_SCALE_3D: value = source.scale_track_interpolate(source_track, sample_time)
+				if definition.special and idle_track >= 0 and bone in [&"pelvis", &"root"] and type == Animation.TYPE_ROTATION_3D:
+					# Retain the authored spin/body lean as a delta from swim idle,
+					# while root translation remains physics-owned.
+					value = authored.rotation_track_interpolate(track, start + time) * authored.rotation_track_interpolate(track, start).inverse() * idle.rotation_track_interpolate(idle_track, 0.0)
+				elif not definition.special and idle_track >= 0 and bone in LOWER_BODY_BONES and bone != &"pelvis" and type == Animation.TYPE_ROTATION_3D:
+					# A shared whole-combo reference and swim phase preserve handoffs.
+					# Keep attack flexion relative to its initial leg pose, recentered
+					# on swimming legs. The pelvis rotation still carries the full flip.
+					var attack_pose: Quaternion = value
+					var reference := authored.rotation_track_interpolate(track, 0.0)
+					var swim_pose := idle.rotation_track_interpolate(idle_track, fmod(start + time, idle.length))
+					var motion := Quaternion.IDENTITY.slerp(reference.inverse() * attack_pose, water_attack_leg_motion_strength)
+					value = attack_pose.slerp(swim_pose * motion, water_attack_swim_leg_blend).normalized()
+				animation.track_insert_key(destination, time, value)
+		library.add_animation(definition.name, animation)
+	target.add_animation_library(&"water_combo", library)
 
 
 func _apply_idle_sword_clearance() -> void:

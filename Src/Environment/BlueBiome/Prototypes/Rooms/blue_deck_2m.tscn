@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/blue_deck_2m.gd" id="1_deck"]
+
+[node name="BlueDeck2m" type="Node2D"]
+editor_description = "Reusable Blue Biome timber deck. Length 2 m = 160 px; depth 3.5 m. Origin is left walking surface endpoint (0, 0); right endpoint (160, 0). Repeat on a 160 px horizontal snap grid. Enable One Way for elevated walkways. Built-in 2D collision and layered 3D art."
+script = ExtResource("1_deck")

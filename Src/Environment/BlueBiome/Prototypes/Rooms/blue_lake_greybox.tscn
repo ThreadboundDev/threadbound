@@ -1,20 +1,43 @@
 [gd_scene format=4 uid="uid://cbp2r88uc33no"]
 
 [ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_bumper.tscn" id="1_84ve6"]
+[ext_resource type="Script" uid="uid://bs0us1aljhrwe" path="res://Src/Environment/Greybox/greybox_bumper.gd" id="2_wpvsb"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="4"]
 [ext_resource type="Script" uid="uid://druh8mmmsjy1p" path="res://Src/Environment/BlueBiome/Prototypes/lake_level_presentation.gd" id="5_art"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/TideDuelist/tide_duelist.tscn" id="8_fish"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/Reedhook/reedhook.tscn" id="9_reedhook"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Bellstriker/bellstriker.tscn" id="10_bellstriker"]
 
 [node name="BlueLakeGreybox" type="Node2D" unique_id=209142078]
 editor_description = "Lake authoring starter. Swimming unlocked here only. Draw water and air pockets with Room Greybox; paint the underwater route on GreyboxTerrain."
 
 [node name="Backdrop" type="Polygon2D" parent="." unique_id=2122872592]
 z_index = -100
-position = Vector2(-277, 225)
+position = Vector2(-38, 815)
 color = Color(0.055, 0.095, 0.14, 1)
 polygon = PackedVector2Array(-4096, -4096, 8192, -4096, 8192, 8192, -4096, 8192)
+
+[node name="WaterBulb" type="Node2D" parent="Backdrop" unique_id=721547638 instance=ExtResource("1_84ve6")]
+z_index = 30
+position = Vector2(256, 0)
+script = ExtResource("2_wpvsb")
+
+[node name="WaterBulb2" type="Node2D" parent="Backdrop" unique_id=30843828 instance=ExtResource("1_84ve6")]
+z_index = 30
+position = Vector2(611, 1074)
+script = ExtResource("2_wpvsb")
+
+[node name="WaterBulb3" type="Node2D" parent="Backdrop" unique_id=974447023 instance=ExtResource("1_84ve6")]
+z_index = 30
+position = Vector2(-383, 1126)
+script = ExtResource("2_wpvsb")
+
+[node name="WaterBulb4" type="Node2D" parent="Backdrop" unique_id=507596182 instance=ExtResource("1_84ve6")]
+z_index = 30
+position = Vector2(1297, 1233)
+script = ExtResource("2_wpvsb")
 
 [node name="Geometry" type="Node2D" parent="." unique_id=123977663]
 
@@ -53,7 +76,7 @@ self_modulate = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-944, -361, -401, -623, 825, -600, 1198, -297, 1211, 181, -838, 163)
 
 [node name="Player" parent="." unique_id=1777291295 instance=ExtResource("1")]
-position = Vector2(256, 240)
+position = Vector2(291, 275)
 debug_blue_water_power_unlocked = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=328312995]
@@ -68,15 +91,26 @@ position_smoothing_enabled = true
 script = ExtResource("5_art")
 
 [node name="TideDuelist" parent="." unique_id=553997636 instance=ExtResource("8_fish")]
-position = Vector2(640, 760)
+position = Vector2(624, 823)
 attack_range = 380.0
-dash_speed = 780.0
+dash_speed = 1050.0
+maximum_dash_distance = 2400.0
+footprint_radius = 132.0
 patrol_height = 100.0
 water_path = NodePath("")
 start_facing = 1
 
 [node name="Reedhook" parent="." unique_id=1277744726 instance=ExtResource("9_reedhook")]
 position = Vector2(1408, 370)
+
+[node name="Bellstriker" parent="." unique_id=766353338 instance=ExtResource("10_bellstriker")]
+position = Vector2(2500, 820)
+attack_range = 225.0
+swim_speed = 265.0
+strike_speed = 760.0
+leap_range = 540.0
+target_leash = 1500.0
+start_facing = -1
 
 [editable path="Volumes/Lake"]
 [editable path="Volumes/AirPocket"]

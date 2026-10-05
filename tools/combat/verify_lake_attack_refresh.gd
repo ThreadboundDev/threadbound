@@ -73,7 +73,8 @@ func verify() -> void:
 	var water := Node2D.new()
 	world.add_child(water)
 	player._prototype_water_surfaces[water] = 0.0
-	assert(not player.can_start_attack(true), "No underwater special yet")
+	player.attack_cooldown_timer = 0.0
+	assert(player.can_start_attack(true), "Existing specials are available underwater")
 	player.last_direction = 1
 	player.velocity = Vector2(300,0)
 	visual._process(0.016)
@@ -83,29 +84,39 @@ func verify() -> void:
 	visual._process(0.016)
 	assert(not visual._display.flip_h, "Swim facing must hold while reversal velocity crosses zero")
 	player.velocity = Vector2(-300,0)
-	visual._process(0.016)
+	for frame in 5:
+		visual._process(0.016)
+	assert(not visual._display.flip_h, "Brief opposite swim input must not mirror an asymmetric frame")
+	for frame in 3:
+		visual._process(0.016)
 	assert(visual._display.flip_h, "Swim facing must change after travel reverses")
 	for movement in [Vector2.ZERO,Vector2(300,0),Vector2(0,-300)]:
 		player.velocity = movement
 		player.attack_cooldown_timer = 0.0
 		player.start_attack(false)
 		assert(player.current_attack_uses_air_double and not player.current_attack_uses_ground_combo)
-		assert(visual._current_action == &"water_attack_idle")
-		if movement.length() > 20:
-			assert(player.attack_direction.dot(movement.normalized()) > 0.99)
+		assert(visual._current_action == &"water_combo_1")
+		assert(player.velocity == movement, "Water attacks preserve swim momentum")
 		visual._animation_player.play(visual._clips[visual._current_action], 0.0)
 		visual._animation_player.pause()
-		visual._animation_player.seek(6.0/30.0,true)
+		visual._animation_player.seek(3.0/30.0,true)
 		player.update_combat_timers(0.01)
 		assert(not player.attack_hitbox.active)
-		visual._animation_player.seek(8.0/30.0,true)
+		visual._animation_player.seek(float(player._get_air_attack_active_frames().x + 1)/30.0,true)
 		visual._process(0.016)
-		assert(is_zero_approx(visual._model_root.position.y), "Underwater attacks must not apply grounded pelvis lift")
+		var pelvis_y: float = visual._skeleton.get_bone_global_pose(visual._pelvis_index).origin.y
+		assert(
+			is_equal_approx(
+				visual._model_root.position.y,
+				-(pelvis_y - visual._pelvis_rest_y)
+			),
+			"Underwater attacks must cancel authored vertical pelvis displacement"
+		)
 		player.update_combat_timers(0.01)
 		assert(player.attack_hitbox.active)
-		assert(visual._lower_sampler_action == &"water_attack_move")
-		assert(visual._water_attack_blend > 0.9 if movement.length()>20 else visual._water_attack_blend < 0.1)
-		visual._animation_player.seek(12.0/30.0,true)
+		var tilt := deg_to_rad(visual.water_attack_forward_tilt_degrees) * (-1.0 if player.attack_direction.x < 0.0 else 1.0)
+		assert(is_equal_approx(visual._display.rotation, tilt), "Water attacks retain their small facing-locked forward lean")
+		visual._animation_player.seek(float(player._get_air_attack_active_frames().y + 1)/30.0,true)
 		player.update_combat_timers(0.01)
 		assert(not player.attack_hitbox.active)
 		player.attack_timer = player.air_attack_duration
@@ -159,5 +170,5 @@ func verify() -> void:
 		assert(pixel.y > 12 and pixel.y < visual._viewport.size.y-12, "Sword must fit inside render texture")
 	assert(visual.get_action_duration(&"air_attack_forward") < 0.55)
 	assert(visual.get_action_duration(&"water_attack_idle") > 0.7)
-	print("PASS: spin input/AP/radial single hits/frame windows/cleanup; neutral preserved; water single slash at rest, moving and vertical")
+	print("PASS: spin input/AP/radial single hits/frame windows/cleanup; neutral preserved; water combo opener at rest, moving and vertical")
 	quit()
