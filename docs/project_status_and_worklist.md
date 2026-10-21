@@ -12,6 +12,11 @@ implemented and checked; [delivery and validation](design/lakeside_house_entry_p
 T01/T02 now await a short visible house/NPC review. Next independent background
 task is T03 when Chase is unavailable to play.
 
+Chase's subsequent scoped request is **T13: matching walkway stamp objects**.
+Source/reference preparation is complete; the [2D integration proposal](design/lakeside_walkway_stamp_proposal.md)
+awaits approval before live asset replacement. This is a current-room visual
+correction; it does not approve broader art production or a 3D rebuild.
+
 ## Milestone and working limits
 
 Accept one existing representative Blue room: complete its baseline route with
@@ -185,6 +190,17 @@ not authorize merging, publishing a build or protected implementation changes.
   or tag a release as part of routine checkpointing.
   Done when an exported candidate has a reproducible report and a separate
   release decision. Commit: `docs: record exported candidate verification`.
+
+## Scoped walkway request
+
+- [ ] **T13 - Matching bridge/balcony stamp objects.** **Waiting on approval**.
+  Existing current-library PNGs and catalog are saved with source hashes under
+  `ArtSource/BlueBiome/Placeables/WalkwayStamps/`. Recommended 2D integration,
+  exact file list and acceptance checks are in the linked proposal above.
+  Preserve the existing nine landing collisions and all routes/gaps. Source
+  preparation commit: `asset: preserve matching walkway stamps and integration plan`.
+  After approval: `art: integrate matching village walkway stamps`, then visible
+  comparison beside the houses at normal player scale.
 
 ## Parked until the current milestone is accepted
 

@@ -1,0 +1,168 @@
+{
+  "purpose": "Review/source preservation for user-requested matching walkway objects; not installed into the game",
+  "source_library": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library",
+  "source_kind": "Existing project stamp library; byte-identical copies, no new generation or image edits",
+  "assets": [
+    {
+      "file": "A04_Japanese_Engawa_Landing.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\A04_Japanese_Engawa_Landing.png",
+      "bytes": 1097796,
+      "sha256": "38a91276e42dfa29ec4c5cbd5ebcd68f8246c373fd8b98a4d4568fee0d8f4998",
+      "size": [
+        1661,
+        874
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "original_manifest_entry": {
+        "id": "A04_Japanese_Engawa_Landing",
+        "category": "Walkways",
+        "size": [
+          1661,
+          874
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\cave_connections_v1\\stamps\\A04_Japanese_Engawa_Landing.png",
+        "preset": "Village Walkways A04 Japanese Engawa Landing"
+      }
+    },
+    {
+      "file": "B04_Simple_Plank_Crossing.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\B04_Simple_Plank_Crossing.png",
+      "bytes": 875835,
+      "sha256": "4f81a83732602cdc260bbee98b7b9b6d609615f0fd8fcc0158335fdb2229271a",
+      "size": [
+        2167,
+        368
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "original_manifest_entry": {
+        "id": "B04_Simple_Plank_Crossing",
+        "category": "Walkways",
+        "size": [
+          2167,
+          368
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\cave_connections_v1\\stamps\\B04_Simple_Plank_Crossing.png",
+        "preset": "Village Walkways B04 Simple Plank Crossing"
+      }
+    },
+    {
+      "file": "J03_Japanese_Veranda.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J03_Japanese_Veranda.png",
+      "bytes": 949424,
+      "sha256": "36cd36c16af7349a832cf69d8660f5788731c9a3a82d67a96fb3d57cbfb2e8de",
+      "size": [
+        2166,
+        549
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "original_manifest_entry": {
+        "id": "J03_Japanese_Veranda",
+        "category": "Walkways",
+        "size": [
+          2166,
+          549
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\japanese_v2\\stamps\\J03_Japanese_Veranda.png",
+        "preset": "Village Walkways J03 Japanese Veranda"
+      }
+    },
+    {
+      "file": "J04_Matched_Broken_Bridge.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J04_Matched_Broken_Bridge.png",
+      "bytes": 727090,
+      "sha256": "16cd8db37ae6b41c99df2611d55a2a27705162d55bee6c486797e3797fcf47e2",
+      "size": [
+        2172,
+        429
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "original_manifest_entry": {
+        "id": "J04_Matched_Broken_Bridge",
+        "category": "Walkways",
+        "size": [
+          2172,
+          429
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\japanese_v2\\stamps\\J04_Matched_Broken_Bridge.png",
+        "preset": "Village Walkways J04 Matched Broken Bridge"
+      }
+    },
+    {
+      "file": "T01_Rock_Timber_Landing.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\T01_Rock_Timber_Landing.png",
+      "bytes": 2388085,
+      "sha256": "6ed41eb25afcee3b977e697a14c6eb203454a141c0d9395ddb81aa1c4994bda1",
+      "size": [
+        1517,
+        1012
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "original_manifest_entry": {
+        "id": "T01_Rock_Timber_Landing",
+        "category": "Walkways",
+        "size": [
+          1517,
+          1012
+        ],
+        "alpha_range": [
+          0,
+          254
+        ],
+        "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\cave_connections_v1\\stamps\\T01_Rock_Timber_Landing.png",
+        "preset": "Village Walkways T01 Rock Timber Landing"
+      }
+    },
+    {
+      "file": "Walkways.png",
+      "original_path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\catalog\\Walkways.png",
+      "bytes": 266768,
+      "sha256": "9785fc9a6aa13be8437d0774a2bb5fef631de98abe4e7f306e158d14d57ef479",
+      "size": [
+        1500,
+        655
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "original_manifest_entry": null
+    }
+  ]
+}
