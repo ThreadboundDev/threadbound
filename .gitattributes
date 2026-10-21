@@ -9,7 +9,6 @@
 
 # Preserve delivered art and work references without large binary Git blobs.
 *.blend@ filter=lfs diff=lfs merge=lfs -text
-*.kra filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.png filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.gif filter=lfs diff=lfs merge=lfs -text
