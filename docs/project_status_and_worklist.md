@@ -6,9 +6,9 @@ This is the single current task order. The [checkpoint recap](checkpoint_2026_10
 is the evidence for the current state; older roadmaps and delivery reports do
 not override its failures or imply hands-on acceptance.
 
-**Next task: T01, reproduce and resolve house floor/cutaway failures.**
-No implementation task is currently in progress. This planning update does not
-implement or approve any protected gameplay, scene, lore or asset changes.
+**Next task: T01, correct stale house/NPC shortcuts and confirm the Fisher loft layout.**
+Diagnosis is recorded below; no runtime fixes have been made. Protected gameplay,
+scene, lore and asset changes still require their existing approval process.
 
 ## Milestone and working limits
 
@@ -56,6 +56,11 @@ not authorize merging, publishing a build or protected implementation changes.
 ## Phase 1 - establish reliable current behavior
 
 - [ ] **T01 - House floors and cutaways.** Background task; ready; first priority.
+  October 21 diagnosis at `131577a0`: [findings](verification/lakeside_floor_diagnosis_2026_10_21.md).
+  The real floors and cutaways work at the houses' current positions; outdated
+  landmark buttons misdirect both the player and existing fixtures. FisherLoft
+  collision sits only 1px below FisherFloor; its intended upstairs use needs
+  Chase's decision. Next: shortcut bug fix, then loft correction if appropriate.
   Reproduce the Fisher house and Workshop floor/contact/facade failures in
   `tools/environment/verify_lakeside_krita.gd` with the real player. Determine
   whether runtime geometry, spawn assumptions or fixture setup is wrong before
@@ -70,6 +75,9 @@ not authorize merging, publishing a build or protected implementation changes.
   selection/prompt, real interact input, work-to-talk transition, facing, return
   to work and obstruction behavior. Diagnose the 12 failures in the current
   48-check fixture; do not assume all have the same cause.
+  T01 probe: both prompts/selection work beside the current NPC positions; their
+  landmark shortcuts are stale. Full greeting/turning/obstruction remains untested
+  at corrected destinations, so no interaction rewrite is justified yet.
   Done when the corrected scenarios pass and both NPCs have an exact hands-on
   greeting retest. Commit each coherent defect as
   `fix: restore <specific lakeside interaction behavior>`.
