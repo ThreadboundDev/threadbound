@@ -19,6 +19,15 @@ fitted intact landing visuals are implemented and checked; visible review is
 pending. This scoped correction does not approve broader art production or a
 3D rebuild. T01/T02 house review remains pending too.
 
+**Current visual feedback: T14, background wood depth separation.** The Krita
+import flattened `STAMP REAR SUPPORTS` together with Cave Walls/Under Cave Mouth.
+Chase clarified that both rock layers may stay combined; only the wood needs
+separation. Collision already excludes these supports. The
+[scoped correction](design/lakeside_rear_support_depth_proposal.md) restores a
+wood-only layer with a tunable depth filter. **Awaiting implementation scope
+approval**; no runtime changes yet. Keep the existing gameplay geometry and
+latest house/walkway work intact.
+
 ## Milestone and working limits
 
 Accept one existing representative Blue room: complete its baseline route with
