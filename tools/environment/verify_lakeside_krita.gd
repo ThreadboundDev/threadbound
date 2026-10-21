@@ -53,8 +53,8 @@ func verify() -> void:
 	await frames(30)
 	var player: CharacterBody2D = room.get_node("Player")
 	# Existing enemies are retained in the room; freeze only this automated fixture.
-	for key: String in ["TideDuelist", "Reedhook", "Bellstriker"]:
-		room.get_node(key).process_mode = Node.PROCESS_MODE_DISABLED
+	for enemy in get_nodes_in_group("enemies"):
+		enemy.process_mode = Node.PROCESS_MODE_DISABLED
 	check(player.is_on_floor(), "Original shore spawn must stand on the painted route")
 	check(room.get_node("Geometry/GreyboxTerrain").self_modulate.a == 0.0, "Greybox guides must stay hidden while physics remains")
 	check(not room.get_node("Geometry/GreyboxTerrain").collision_enabled, "Old tile collision must be completely disabled")
@@ -124,6 +124,16 @@ func verify() -> void:
 	for landmark: String in ["Fisher house", "Workshop", "Tower"]:
 		room.focus_landmark(landmark)
 		await frames(25)
+		var house := room.get_landmark_house(landmark) as Node2D
+		if is_instance_valid(house):
+			check(not house.render_model.is_cutaway, "Walking outside must not open the house: " + landmark)
+			await process_frame
+			Input.action_press("interact")
+			await process_frame
+			await process_frame
+			Input.action_release("interact")
+			await frames(25)
+			check(house.is_player_inside(player), "Interact must enter the house: " + landmark)
 		var building := "FisherHouse" if landmark == "Fisher house" else landmark
 		var marker: Node2D = room.get_node("Buildings/" + building)
 		check(player.is_on_floor(), "Real player must stand on the rendered model floor: " + landmark)

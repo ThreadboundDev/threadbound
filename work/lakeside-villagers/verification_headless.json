@@ -1,5 +1,5 @@
 {
-	"checks": 48,
+	"checks": 51,
 	"display": "headless",
 	"failures": [],
 	"godot": "4.7.2-stable (official)",

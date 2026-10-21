@@ -7,6 +7,7 @@ signal interacted(player: Node2D)
 @export_range(1.0, 30.0, 0.5) var greeting_seconds := 6.0
 @export var model_depth := -0.4
 @export var show_workstation := true
+@export var house_path: NodePath
 var _player: Node2D
 var _prompt: Label
 var _greeting_left := 0.0
@@ -52,6 +53,7 @@ func _process(delta: float) -> void:
 		InteractionPromptFormatter.apply_interact_prompt(_prompt, text, 26)
 	elif _registered:
 		_release_player()
+		_end_greeting()
 	if _greeting_left > 0:
 		_greeting_left = maxf(0, _greeting_left - delta)
 		if is_instance_valid(render_model):
@@ -71,9 +73,19 @@ func _exited_range(body: Node2D) -> void:
 		_prompt.visible = false
 
 func _clear_to_player() -> bool:
+	var ignored: Array[RID] = []
+	if not house_path.is_empty():
+		var house := get_node_or_null(house_path)
+		if not is_instance_valid(house) or not house.is_player_inside(_player):
+			return false
+		if house.can_use_door(_player):
+			return false
+		ignored = house.interaction_exclusions(_player)
 	var query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0, -64), _player.global_position + Vector2(0, -14), 1)
 	if _player is CollisionObject2D:
-		query.exclude = [_player.get_rid()]
+		if ignored.is_empty():
+			ignored.append(_player.get_rid())
+	query.exclude = ignored
 	return get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
 func interact(player: Node2D) -> void:

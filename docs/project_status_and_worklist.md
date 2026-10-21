@@ -7,8 +7,10 @@ is the evidence for the current state; older roadmaps and delivery reports do
 not override its failures or imply hands-on acceptance.
 
 **Current task: T01, finish house contact and deliberate door entry.**
-The authorized layout/shortcut fix is implemented and checked; the new door
-entry/collision architecture is [proposed for approval](design/lakeside_house_entry_proposal.md).
+The layout fix is saved as `9abd15ff`. Chase approved the door change, which is
+implemented and checked; [delivery and validation](design/lakeside_house_entry_proposal.md).
+T01/T02 now await a short visible house/NPC review. Next independent background
+task is T03 when Chase is unavailable to play.
 
 ## Milestone and working limits
 
@@ -56,27 +58,25 @@ not authorize merging, publishing a build or protected implementation changes.
 ## Phase 1 - establish reliable current behavior
 
 - [ ] **T01 - House floors and cutaways.** Partially complete; first priority.
-  Current state: **Waiting on approval** for deliberate door entry, with a
-  separate authorized layout fix saved in this task's `fix:` commit. Chase confirmed
-  the moved houses, requested lower floors and deferred the loft. House/NPC
-  buttons now follow the saved layout; floors/NPC feet are aligned to the model
-  heights and loft collision is disabled. The map and 48-check NPC suites pass.
-  Workshop painted rock still holds the player about 4-6px above its interior
-  floor. Door-based interior collision/rendering and explicit enter/exit need
-  [the scoped architectural change](design/lakeside_house_entry_proposal.md).
+  Current state: **Awaiting hands-on review**. Layout/shortcut fix: `9abd15ff`.
+  Approved Interact doors are implemented: walk past outdoors, enter/exit at the
+  door, stand on the aligned floor with no outdoor rock interference, and greet
+  residents only inside. Fisher loft remains disabled. The 405-check house,
+  51-check NPC, map, 19-check guardian and legacy art-prep fixtures pass.
+  [Approved scope and results](design/lakeside_house_entry_proposal.md).
   [Dated diagnosis and fix results](verification/lakeside_floor_diagnosis_2026_10_21.md)
   retain the original failures and current limitations. Done when approved
   entry/exit behavior and indoor contact pass focused checks and Chase's visible
-  retest. Next commit after approval:
+  retest. Implementation commit subject:
   `feature: add deliberate door entry to lakeside houses`.
 
 - [ ] **T02 - Villager interaction.** Awaiting hands-on review; depends on T01's
   entry behavior for final acceptance. Verify Net Mender and Boatwright
   selection/prompt, real interact input, work-to-talk transition, facing, return
   to work and obstruction behavior. The original checkpoint recorded 12 failures;
-  after the authorized layout/shortcut fix, all 48 headless checks now pass,
+  after the approved door delivery, all 51 headless checks now pass,
   including greeting, facing, obstruction and range exit. Hands-on acceptance
-  is still pending; planned door access will require another focused regression.
+  is still pending; the fixture explicitly enters each house before greeting.
   Done when the corrected scenarios pass and both NPCs have an exact hands-on
   greeting retest. Commit each coherent defect as
   `fix: restore <specific lakeside interaction behavior>`.

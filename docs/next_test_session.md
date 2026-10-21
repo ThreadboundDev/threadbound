@@ -1,22 +1,37 @@
 # Next hands-on test session
 
-Latest T01 layout retest: use **Fisher house**, **Workshop**, **Net mender** and
-**Boatwright** buttons in the Krita playtest. Destinations follow the current
-layout; Shore returns to the saved player spawn. Check the lowered floors and
-villager feet at normal zoom. Fisher loft collision is disabled for now.
-The current automatic cutaway still opens on proximity; explicit Interact doors
-are [proposed, not installed](design/lakeside_house_entry_proposal.md). Workshop
-rock collision can still hold the player a few pixels above its interior floor;
-the door proposal includes separating indoor/outdoor player contact.
-Map, 48 villager and 19 guardian-map checks pass after the layout fix.
+## First: T01/T02 house doors and residents - about 5 minutes
+
+Run `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+with F6, using the preferred keyboard/controller bindings.
+
+1. Use **Fisher house**. Walk past the exterior: the player should remain in
+   front, with no house platform/roof blocking movement and no automatic cutaway.
+2. Stand at its door and press **Interact** at the **Enter** prompt. Check the
+   cutaway, feet against the floor and ordinary movement/jumping inside. The loft
+   has no collision for now. Greet the Net Mender, check turning and return to work.
+3. Return to the inside door and press **Interact** at **Exit**. Confirm the
+   outside position/facade/ground return correctly. Repeat once and try holding
+   the button; one press should cause only one transition.
+4. Repeat at **Workshop**. Walk right inside to reach the Boatwright. Check that
+   the old floor float is gone and greeting works from both sides.
+5. Use **Shore** while inside a house, then return and enter again. Report any
+   leftover cutaway, missing ground, stuck prompt or wrong controller glyph.
+
+**Net mender** and **Boatwright** landmark buttons also lead to their outside
+doorways. Chase's building placements/art are retained. Visible layering, door
+marker placement, feet and transition feel are the acceptance decisions; the
+405 house, 51 NPC, map, 19 guardian and legacy art-prep checks pass headlessly.
+[Delivery and exact scope](design/lakeside_house_entry_proposal.md).
 
 Earlier October 21 [checkpoint results](checkpoint_2026_10_21.md) remain dated
 evidence. Their house/NPC failures are superseded by the T01 results above.
 The active runner is v2; retained Eave Runner v3 is not installed. GPU appearance,
 frame time and hands-on acceptance remain open.
 
-Current saved baseline: `16b3bd3c`, October 21, 2026. Status: **Awaiting hands-on
-review**. Lakeside house/NPC reproduction belongs to T01/T02; the separate lake
+Current house delivery: `feature: add deliberate door entry to lakeside houses`
+on top of `9abd15ff`, October 21, 2026. Status: **Awaiting hands-on review**.
+Use Git history for the exact delivery commit. The separate lake
 controls session below is T05 / H1 in the [current work list](project_status_and_worklist.md).
 Check the current commit before playing. Earlier automated results remain dated
 evidence and do not accept feel or visuals.

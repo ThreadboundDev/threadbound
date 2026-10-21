@@ -1076,9 +1076,17 @@ position = Vector2(2816, 477.44)
 
 [node name="Workshop" parent="Buildings" unique_id=43814193 instance=ExtResource("map_workshop")]
 position = Vector2(3816, -1078)
+use_door_entry = true
+floor_shape_path = NodePath("../../Geometry/BuildingCollision/WorkshopFloor/Outline")
+house_collision_paths = Array[NodePath]([NodePath("../../Geometry/BuildingCollision/WorkshopFloor"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof0"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof1"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof2"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof3"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof4"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof5"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof6"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof7"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof8"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof9"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof10"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof11"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof12"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof13"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof14"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof15"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof16"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof17"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof18"), NodePath("../../Geometry/BuildingCollision/WorkshopRoof19")])
+outdoor_terrain_paths = Array[NodePath]([NodePath("../../Geometry/RockCollision")])
 
 [node name="FisherHouse" parent="Buildings" unique_id=1058129808 instance=ExtResource("map_house")]
 position = Vector2(-32, 408)
+use_door_entry = true
+floor_shape_path = NodePath("../../Geometry/BuildingCollision/FisherFloor/Outline")
+house_collision_paths = Array[NodePath]([NodePath("../../Geometry/BuildingCollision/FisherFloor"), NodePath("../../Geometry/BuildingCollision/FisherLoft"), NodePath("../../Geometry/BuildingCollision/FisherRoof0"), NodePath("../../Geometry/BuildingCollision/FisherRoof1"), NodePath("../../Geometry/BuildingCollision/FisherRoof2"), NodePath("../../Geometry/BuildingCollision/FisherRoof3"), NodePath("../../Geometry/BuildingCollision/FisherRoof4"), NodePath("../../Geometry/BuildingCollision/FisherRoof5"), NodePath("../../Geometry/BuildingCollision/FisherRoof6"), NodePath("../../Geometry/BuildingCollision/FisherRoof7"), NodePath("../../Geometry/BuildingCollision/FisherRoof8"), NodePath("../../Geometry/BuildingCollision/FisherRoof9"), NodePath("../../Geometry/BuildingCollision/FisherRoof10"), NodePath("../../Geometry/BuildingCollision/FisherRoof11"), NodePath("../../Geometry/BuildingCollision/FisherRoof12"), NodePath("../../Geometry/BuildingCollision/FisherRoof13"), NodePath("../../Geometry/BuildingCollision/FisherRoof14"), NodePath("../../Geometry/BuildingCollision/FisherRoof15"), NodePath("../../Geometry/BuildingCollision/FisherRoof16"), NodePath("../../Geometry/BuildingCollision/FisherRoof17"), NodePath("../../Geometry/BuildingCollision/FisherRoof18"), NodePath("../../Geometry/BuildingCollision/FisherRoof19")])
+outdoor_terrain_paths = Array[NodePath]([NodePath("../../Geometry/RockCollision")])
 
 [node name="Lighting" type="Node2D" parent="." unique_id=1092298690]
 editor_description = "Editable 3D+2D lantern instances. Add more here; tune sunlight on LakesideArtStage."
@@ -1130,9 +1138,11 @@ editor_description = "Reusable villagers with separate workstations. Feet anchor
 
 [node name="NetMender" parent="Residents" unique_id=1617034690 instance=ExtResource("villager_mender")]
 position = Vector2(111, 326.72)
+house_path = NodePath("../../Buildings/FisherHouse")
 
 [node name="Boatwright" parent="Residents" unique_id=802886720 instance=ExtResource("villager_boatwright")]
 position = Vector2(4038, -1141.36)
+house_path = NodePath("../../Buildings/Workshop")
 
 [editable path="Geometry/TerrainArtwork"]
 [editable path="Geometry/RockCollision"]

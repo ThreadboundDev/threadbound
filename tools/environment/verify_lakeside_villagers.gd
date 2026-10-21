@@ -48,6 +48,18 @@ func capture(label: String) -> void:
 	check(root.get_texture().get_image().save_png(file) == OK, "Save actual rendered villager view")
 	captured.append(file)
 
+func focus_resident(label: String) -> void:
+	room.focus_landmark(label)
+	await frames(25)
+	await press_interact()
+	var house := room.get_landmark_house(label) as Node2D
+	var player := room.get_node("Player") as CharacterBody2D
+	check(house.is_player_inside(player), "Enter the house before greeting its resident")
+	player.global_position = room.get_interior_landmark_position(label)
+	player.velocity = Vector2.ZERO
+	player.reset_physics_interpolation()
+	await frames(35)
+
 func run() -> void:
 	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
@@ -88,8 +100,7 @@ func run() -> void:
 			await frames(22)
 			check(not initial.is_equal_approx(skeleton.get_bone_global_pose(wrist)), key + " work animation really moves the hand bones")
 		var fixture_transform: Transform3D = worker.get_node("Workstation").global_transform
-		room.focus_landmark("Net mender" if key == "NetMender" else "Boatwright")
-		await frames(35)
+		await focus_resident("Net mender" if key == "NetMender" else "Boatwright")
 		check(player.is_on_floor(), "Player stands on the existing house floor near " + key)
 		check(npc._registered and player.current_selector == npc and npc._prompt.visible, "Existing interaction callbacks and prompt select " + key)
 		await capture(key + "_in_house_work")
@@ -124,8 +135,7 @@ func run() -> void:
 		npc.show_workstation = true
 
 	# A wall between player and NPC prevents greeting through the wall.
-	room.focus_landmark("Net mender")
-	await frames(25)
+	await focus_resident("Net mender")
 	var mender = room.get_node("Residents/NetMender")
 	var blocker := StaticBody2D.new()
 	blocker.position = mender.global_position + Vector2(-30, -65)
@@ -154,8 +164,7 @@ func run() -> void:
 	if DisplayServer.get_name() != "headless":
 		var camera := player.get_node("Camera2D") as Camera2D
 		camera.zoom = Vector2.ONE * 2.5
-		room.focus_landmark("Net mender")
-		await frames(45)
+		await focus_resident("Net mender")
 		for index in 7:
 			await frames(8)
 			await capture("greeting_%02d" % index)

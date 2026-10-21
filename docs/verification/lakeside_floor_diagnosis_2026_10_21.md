@@ -1,5 +1,22 @@
 # T01: lakeside floor and cutaway diagnosis
 
+## Approved door delivery
+
+After the layout fix `9abd15ff`, Chase approved and the follow-up implements
+[deliberate Interact entry/exit](../design/lakeside_house_entry_proposal.md).
+The small houses now remain closed and nonblocking outside; their indoor floor
+and boundary contact activates for the entering player. Outdoor painted rock is
+excluded while inside, resolving the residual Workshop rock contact described
+below. The physics foot reference is within 0.003px of each aligned floor.
+
+Fresh checks: 405 house-entry assertions, 51 villager assertions, 19 guardian-map
+assertions, the map integration fixture and legacy art-prep fixture all pass.
+The house fixture covers real input, repeat/held use, movement/jumping, explicit
+exit, unrelated exception preservation, teleports, death and teardown. Both
+existing fixtures now enter deliberately before checking indoor behavior.
+No graphical review was run; doorway placement, layering and foot appearance
+remain Chase's acceptance step. Earlier sections below are historical evidence.
+
 ## Authorized layout follow-up
 
 Chase confirmed the moved placements, approved updating shortcuts and lowering

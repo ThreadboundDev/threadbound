@@ -5,6 +5,38 @@ The assembled map is now available in
 Use F6 there for the painted terrain, water, building placement and smoothed
 polygon collision. The original flat art-review room below remains available.
 
+## Interact doors in the Krita playtest
+
+Fisher house and Workshop use **Interact** at their doors to enter and exit.
+Their House/NPC landmark buttons place the player outside the correct doorway.
+Walk right from the Workshop's inside spawn to reach the Boatwright. Residents
+can be greeted only inside; the door prompt takes priority at the doorway.
+Fisher loft collision remains disabled for now.
+
+Outdoors, both houses render behind the player and their collision is ignored
+by that player. Inside, the cutaway opens, outdoor rock contact is excluded,
+and the house's floor/walls/ceiling bound player movement. Exiting restores the
+recorded outdoor position and collision. Debug teleports, death/removal and scene
+teardown release state. Tower still opens automatically; boat slip stays open.
+
+The reusable small-house prefabs default `use_door_entry` to false, preserving
+the separate art-prep room. The Krita instances opt in and explicitly reference
+their room-owned floor, house bodies and outdoor rock body. `Door` and
+`InsideSpawn` are editable scene anchors; `entry_rect` supplies the interior
+footprint/ceiling, and the floor reference supplies the actual floor height.
+Move the art and its linked room-owned collision together when rearranging.
+
+Physics layer **32** is reserved by `lakeside_house_2d.gd` for interior-only
+boundaries. Only the indoor player temporarily enables that mask bit; the
+project's existing named layers, enemy masks and input bindings are unchanged.
+Use another free layer for unrelated content unless this reservation is reviewed.
+
+Validation and current limitations are recorded in
+`docs/design/lakeside_house_entry_proposal.md`. Visible doorway alignment,
+layering, floor contact and controller feel still need Chase's review.
+
+## Original art-prep room
+
 Open `res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_art_prep.tscn`
 and run **F6** when ready. The existing lake greybox and main scene are unchanged.
 

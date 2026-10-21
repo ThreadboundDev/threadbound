@@ -9,7 +9,7 @@
 		"Fisher house": {
 			"cutaway": true,
 			"on_floor": true,
-			"position": "(-32.0, 257.4617)"
+			"position": "(68.0, 257.4731)"
 		},
 		"Tower": {
 			"cutaway": true,
@@ -19,7 +19,7 @@
 		"Workshop": {
 			"cutaway": true,
 			"on_floor": true,
-			"position": "(3823.99, -1216.993)"
+			"position": "(3727.584, -1210.607)"
 		}
 	},
 	"godot": "4.7.2-stable (official)",

@@ -9,6 +9,7 @@ extends Node3D
 
 var facade_parts: Array[Node3D] = []
 var is_cutaway := false
+var facade_foreground := true
 
 func _ready() -> void:
 	for part in find_children("*Facade_Removable*", "Node3D", true, false):
@@ -21,7 +22,7 @@ func _ready() -> void:
 func _set_layers(node: Node, facade: bool) -> void:
 	facade = facade or "Facade_Removable" in str(node.name)
 	if node is GeometryInstance3D:
-		(node as GeometryInstance3D).layers = 2 if facade else 1
+		(node as GeometryInstance3D).layers = 2 if facade and facade_foreground else 1
 	if node is MeshInstance3D:
 		var mesh := node as MeshInstance3D
 		for surface in mesh.mesh.get_surface_count():
@@ -36,3 +37,8 @@ func set_cutaway(inside: bool) -> void:
 	for part in facade_parts:
 		if is_instance_valid(part):
 			part.visible = not inside
+
+func set_facade_foreground(enabled: bool) -> void:
+	if facade_foreground != enabled:
+		facade_foreground = enabled
+		_set_layers(self, false)

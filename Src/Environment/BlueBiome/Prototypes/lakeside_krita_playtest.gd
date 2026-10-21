@@ -139,6 +139,9 @@ func set_overview(value: bool) -> void:
 		$Player/Camera2D.make_current()
 
 func focus_landmark(label: String) -> void:
+	for house in get_tree().get_nodes_in_group("lakeside_door_houses"):
+		if house.is_player_inside($Player):
+			house.leave_house(false)
 	$Player.global_position = get_landmark_position(label)
 	$Player.velocity = Vector2.ZERO
 	$Player.reset_physics_interpolation()
@@ -146,6 +149,19 @@ func focus_landmark(label: String) -> void:
 	$Player/Camera2D.reset_smoothing()
 
 func get_landmark_position(label: String) -> Vector2:
+	var house := get_landmark_house(label)
+	if is_instance_valid(house) and house.use_door_entry:
+		return house.outside_destination($Player)
+	return get_interior_landmark_position(label)
+
+func get_landmark_house(label: String) -> Node2D:
+	if label in ["Fisher house", "Net mender"]:
+		return $Buildings/FisherHouse
+	if label in ["Workshop", "Boatwright"]:
+		return $Buildings/Workshop
+	return null
+
+func get_interior_landmark_position(label: String) -> Vector2:
 	if label == "Shore":
 		return _player_spawn_position
 	if not HOUSE_LANDMARK_FLOORS.has(label):

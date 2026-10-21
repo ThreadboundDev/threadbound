@@ -1,10 +1,60 @@
 # Two small houses: deliberate door entry
 
+**Approved by Chase on October 21, 2026; implemented, awaiting hands-on review.**
+Delivery commit subject: `feature: add deliberate door entry to lakeside houses`.
+The full intended behavior and file scope below remain the approval record.
+
 Prepared October 21, 2026 after Chase confirmed the moved house placements,
 requested lower floor collision and deferred Fisher house's loft. The layout
-and shortcut fixes are a separate authorized bug fix. This document proposes
-the new entry/collision behavior; implementation awaits architectural approval
-under `AGENTS.md`.
+and shortcut fixes were committed separately as `9abd15ff`. Chase subsequently
+approved the entry/collision proposal below.
+
+## Delivery and verification
+
+Both small houses in the Krita playtest now opt into deliberate Interact entry.
+House and resident landmarks take the player to the correct outside door. Enter
+opens the cutaway and places the player inside; Exit restores the recorded
+outdoor position. Outdoor players ignore the two houses' collision bodies and
+render in front of their facades. Indoor players use bounded house collision,
+ignore painted terrain, and can greet that house's villager. Debug teleports,
+death flags, player removal and house teardown clean up collision and prompts.
+
+Interior-only boundaries use the otherwise unused physics layer 32. Only the
+indoor player temporarily scans it; enemy masks and project input settings are
+unchanged. The original player script, assets, building placements and disabled
+loft are unchanged by this entry pass. Tower retains its automatic cutaway;
+boat slip remains an open shelter. The separate art-prep room retains its
+original automatic house-entry behavior.
+
+Fresh Godot 4.7.2 headless results on `9abd15ff` plus this working change:
+
+- `verify_lakeside_house_entry.gd`: **405 checks passed**, including real input,
+  exterior platform sweep, held press, enter/exit, indoor movement/jumping,
+  enemy masks, collision ownership, repeated use and cleanup paths. Physics
+  foot-reference errors at the two interior floors are below **0.003px**.
+- `verify_lakeside_villagers.gd`: **51 checks passed**, explicitly entering
+  before greeting; includes actual input, both facings, greeting end/timeout,
+  obstruction, leaving and furniture instances. Indoor greeting rays ignore
+  the same outdoor terrain as the player, while still respecting added walls.
+- `verify_lakeside_krita.gd`: **PASS**, now asserting a closed facade outside
+  and Interact entry before indoor floor/cutaway assertions. Sampled terrain
+  registration still has zero mismatches across 9,871 samples.
+- `verify_woven_lakeside.gd`: **19 checks passed** for both authored encounters,
+  player/HUD interaction and enemy replacement.
+- `verify_lakeside_3d.gd`: **PASS**, covering the separate legacy art-prep room,
+  shared stage, model registration/dimensions and automatic cutaways.
+
+Runs used isolated `APPDATA` under ignored `tmp/house_entry/userdata`, dummy
+audio and fixed 60fps; no graphical windows or normal save data were used.
+Full logs and the 405-check report are under `tmp/house_entry/`. The legacy
+art-prep report was retained there without replacing the previous delivery's
+tracked report. Existing shutdown ObjectDB/resource diagnostics remain; a
+verbose follow-up identifies the existing base equipment/boots/chest script
+resources, not a clean shutdown. Ownership cleanup remains a separate T10 item.
+
+These results establish the exercised runtime behavior, not GPU appearance,
+frame time or final art/feel acceptance. The next visible test is documented
+in `docs/next_test_session.md`.
 
 ## Intended behavior
 

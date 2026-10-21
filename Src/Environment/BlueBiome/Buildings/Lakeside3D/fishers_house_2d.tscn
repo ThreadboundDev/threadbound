@@ -1,8 +1,25 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.gd" id="1"]
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_2d.gd" id="1"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/fishers_house_3d.tscn" id="2"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_door.gd" id="3_door"]
+[sub_resource type="RectangleShape2D" id="DoorRange"]
+size = Vector2(110, 240)
 [node name="FishersHouse" type="Node2D"]
 editor_description = "Bottom-center anchor. 745px wide, 835px tall. Preview Inside opens the cutaway; player entry does the same at runtime."
 script = ExtResource("1")
 model_scene = ExtResource("2")
 entry_rect = Rect2(-256, -602, 512, 521)
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2(0, -81.28)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("3_door")
+
+[node name="Range" type="CollisionShape2D" parent="Door"]
+position = Vector2(0, -60)
+shape = SubResource("DoorRange")
+
+[node name="InsideSpawn" type="Marker2D" parent="."]
+position = Vector2(100, -81.28)
