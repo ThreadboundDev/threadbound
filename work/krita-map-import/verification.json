@@ -4,17 +4,12 @@
 		5888.0
 	],
 	"display": "headless",
-	"failures": [
-		"Real player must stand on the rendered model floor: Fisher house",
-		"Entry must open the facade: Fisher house",
-		"Real player must stand on the rendered model floor: Workshop",
-		"Entry must open the facade: Workshop"
-	],
+	"failures": [],
 	"floors": {
 		"Fisher house": {
-			"cutaway": false,
-			"on_floor": false,
-			"position": "(320.0, 86.92168)"
+			"cutaway": true,
+			"on_floor": true,
+			"position": "(-32.0, 257.4617)"
 		},
 		"Tower": {
 			"cutaway": true,
@@ -22,9 +17,9 @@
 			"position": "(1472.0, 1037.955)"
 		},
 		"Workshop": {
-			"cutaway": false,
-			"on_floor": false,
-			"position": "(2688.0, -785.3978)"
+			"cutaway": true,
+			"on_floor": true,
+			"position": "(3823.99, -1216.993)"
 		}
 	},
 	"godot": "4.7.2-stable (official)",
@@ -50,7 +45,7 @@
 		-2560.0
 	],
 	"painted_chunks": 41,
-	"passed": false,
+	"passed": true,
 	"physics_alpha_mismatches": 0,
 	"physics_alpha_samples": 9871,
 	"render_scale": 2.0,

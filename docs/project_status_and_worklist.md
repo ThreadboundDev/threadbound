@@ -6,9 +6,9 @@ This is the single current task order. The [checkpoint recap](checkpoint_2026_10
 is the evidence for the current state; older roadmaps and delivery reports do
 not override its failures or imply hands-on acceptance.
 
-**Next task: T01, correct stale house/NPC shortcuts and confirm the Fisher loft layout.**
-Diagnosis is recorded below; no runtime fixes have been made. Protected gameplay,
-scene, lore and asset changes still require their existing approval process.
+**Current task: T01, finish house contact and deliberate door entry.**
+The authorized layout/shortcut fix is implemented and checked; the new door
+entry/collision architecture is [proposed for approval](design/lakeside_house_entry_proposal.md).
 
 ## Milestone and working limits
 
@@ -55,29 +55,28 @@ not authorize merging, publishing a build or protected implementation changes.
 
 ## Phase 1 - establish reliable current behavior
 
-- [ ] **T01 - House floors and cutaways.** Background task; ready; first priority.
-  October 21 diagnosis at `131577a0`: [findings](verification/lakeside_floor_diagnosis_2026_10_21.md).
-  The real floors and cutaways work at the houses' current positions; outdated
-  landmark buttons misdirect both the player and existing fixtures. FisherLoft
-  collision sits only 1px below FisherFloor; its intended upstairs use needs
-  Chase's decision. Next: shortcut bug fix, then loft correction if appropriate.
-  Reproduce the Fisher house and Workshop floor/contact/facade failures in
-  `tools/environment/verify_lakeside_krita.gd` with the real player. Determine
-  whether runtime geometry, spawn assumptions or fixture setup is wrong before
-  changing it. Verify Tower and adjacent water/ledge behavior still work.
-  Done when the exact failures pass for the correct reason and a short visible
-  retest is queued; final feel/visual acceptance remains with Chase.
-  Commit each actual fix as `fix: correct <specific house contact defect>`; if
-  fixture setup alone was wrong, use `test: correct lakeside floor fixture setup`.
+- [ ] **T01 - House floors and cutaways.** Partially complete; first priority.
+  Current state: **Waiting on approval** for deliberate door entry, with a
+  separate authorized layout fix saved in this task's `fix:` commit. Chase confirmed
+  the moved houses, requested lower floors and deferred the loft. House/NPC
+  buttons now follow the saved layout; floors/NPC feet are aligned to the model
+  heights and loft collision is disabled. The map and 48-check NPC suites pass.
+  Workshop painted rock still holds the player about 4-6px above its interior
+  floor. Door-based interior collision/rendering and explicit enter/exit need
+  [the scoped architectural change](design/lakeside_house_entry_proposal.md).
+  [Dated diagnosis and fix results](verification/lakeside_floor_diagnosis_2026_10_21.md)
+  retain the original failures and current limitations. Done when approved
+  entry/exit behavior and indoor contact pass focused checks and Chase's visible
+  retest. Next commit after approval:
+  `feature: add deliberate door entry to lakeside houses`.
 
-- [ ] **T02 - Villager interaction.** Background task; depends on T01 where floor
-  contact affects the reproduction. Restore/verify Net Mender and Boatwright
+- [ ] **T02 - Villager interaction.** Awaiting hands-on review; depends on T01's
+  entry behavior for final acceptance. Verify Net Mender and Boatwright
   selection/prompt, real interact input, work-to-talk transition, facing, return
-  to work and obstruction behavior. Diagnose the 12 failures in the current
-  48-check fixture; do not assume all have the same cause.
-  T01 probe: both prompts/selection work beside the current NPC positions; their
-  landmark shortcuts are stale. Full greeting/turning/obstruction remains untested
-  at corrected destinations, so no interaction rewrite is justified yet.
+  to work and obstruction behavior. The original checkpoint recorded 12 failures;
+  after the authorized layout/shortcut fix, all 48 headless checks now pass,
+  including greeting, facing, obstruction and range exit. Hands-on acceptance
+  is still pending; planned door access will require another focused regression.
   Done when the corrected scenarios pass and both NPCs have an exact hands-on
   greeting retest. Commit each coherent defect as
   `fix: restore <specific lakeside interaction behavior>`.

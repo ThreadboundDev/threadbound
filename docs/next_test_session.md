@@ -1,11 +1,19 @@
 # Next hands-on test session
 
-October 21 checkpoint update: [fresh results and known failures](checkpoint_2026_10_21.md).
-Before relying on the lakeside NPC route, reproduce Fisher house/Workshop floor
-contact and Net Mender/Boatwright greeting failures. Existing NPC interaction
-checks currently fail. The active runner is v2; retained Eave Runner v3 is not
-installed. Heron v3, guardian encounters, capsule contact and fish/wall/bulb checks
-passed headlessly. GPU appearance, frame time and hands-on acceptance remain open.
+Latest T01 layout retest: use **Fisher house**, **Workshop**, **Net mender** and
+**Boatwright** buttons in the Krita playtest. Destinations follow the current
+layout; Shore returns to the saved player spawn. Check the lowered floors and
+villager feet at normal zoom. Fisher loft collision is disabled for now.
+The current automatic cutaway still opens on proximity; explicit Interact doors
+are [proposed, not installed](design/lakeside_house_entry_proposal.md). Workshop
+rock collision can still hold the player a few pixels above its interior floor;
+the door proposal includes separating indoor/outdoor player contact.
+Map, 48 villager and 19 guardian-map checks pass after the layout fix.
+
+Earlier October 21 [checkpoint results](checkpoint_2026_10_21.md) remain dated
+evidence. Their house/NPC failures are superseded by the T01 results above.
+The active runner is v2; retained Eave Runner v3 is not installed. GPU appearance,
+frame time and hands-on acceptance remain open.
 
 Current saved baseline: `16b3bd3c`, October 21, 2026. Status: **Awaiting hands-on
 review**. Lakeside house/NPC reproduction belongs to T01/T02; the separate lake

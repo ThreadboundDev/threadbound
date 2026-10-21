@@ -1,5 +1,36 @@
 # T01: lakeside floor and cutaway diagnosis
 
+## Authorized layout follow-up
+
+Chase confirmed the moved placements, approved updating shortcuts and lowering
+the two ground floors, and deferred the Fisher loft. The follow-up bug fix:
+
+- Resolves house/NPC destinations from current collision/NPC transforms and the
+  real player's foot offset. Shore returns to the authored player spawn.
+- Lowers FisherFloor by 25.72px to y=326.72 and WorkshopFloor by 15.64px to
+  y=-1141.36, matching model floor heights `.635 * 128` and `.495 * 128` below
+  the current building anchors. NPC feet anchors follow those floor heights.
+- Disables the retained FisherLoft collision polygon. House art/placements stay
+  where Chase put them.
+
+Fresh Godot 4.7.2 headless verification: map fixture passes with both houses
+and Tower grounded/cutaway; all 48 villager checks pass; all 19 guardian-map
+checks pass. Existing shutdown resource diagnostics remain. Logs are under
+ignored `tmp/t01_layout_fix/`; no graphical windows or normal save data were used.
+
+A controlled contact probe shows Workshop contact can still be with the painted
+rock body approximately 4-6px above the newly aligned interior floor. The map
+fixture only asserts grounding, not the identity/height of the supporting floor.
+That remaining visual/contact issue belongs to the proposed indoor collision
+state; it is not claimed fixed by lowering the house platform alone.
+
+Chase requested deliberate Interact entry while walking freely past the outside.
+[The file-specific door proposal](../design/lakeside_house_entry_proposal.md)
+records the behavior, collision/rendering changes and approval boundary. The
+existing automatic proximity cutaway remains active until that change is approved.
+
+## Original diagnosis, retained as dated evidence
+
 Inspected baseline `131577a0` on October 21, 2026. No runtime, scene or asset
 changes were made. This report narrows the four floor/cutaway failures recorded
 at the checkpoint; it does not accept visual registration or complete T01.

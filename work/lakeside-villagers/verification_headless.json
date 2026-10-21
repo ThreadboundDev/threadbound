@@ -1,21 +1,8 @@
 {
 	"checks": 48,
 	"display": "headless",
-	"failures": [
-		"Existing interaction callbacks and prompt select NetMender",
-		"Normal interact input starts greeting NetMender",
-		"NetMender lowers the work tool into talk idle",
-		"NetMender turns toward a player on the left",
-		"NetMender can turn toward a player on the right",
-		"Player stands on the existing house floor near Boatwright",
-		"Existing interaction callbacks and prompt select Boatwright",
-		"Normal interact input starts greeting Boatwright",
-		"Boatwright lowers the work tool into talk idle",
-		"Boatwright turns toward a player on the left",
-		"Boatwright can turn toward a player on the right",
-		"Interaction becomes available when the obstruction clears"
-	],
+	"failures": [],
 	"godot": "4.7.2-stable (official)",
-	"passed": false,
+	"passed": true,
 	"rendered": []
 }

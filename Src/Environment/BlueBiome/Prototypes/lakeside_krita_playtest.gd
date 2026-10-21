@@ -17,18 +17,29 @@ var _enemy_spawns: Array[Dictionary] = []
 var _wall_spawns: Array[Dictionary] = []
 var _status: Label
 var _feedback: Label
+var _player_spawn_position := Vector2.ZERO
 const LANDMARKS := {
 	"Shore": Vector2(128, 275),
 	"Cave": Vector2(-1000, -610),
 	"Tower": Vector2(1472, 1037.955),
 	"Boat slip": Vector2(2816, 290),
-	"Workshop": Vector2(2688, -1093.245),
-	"Fisher house": Vector2(320, -197.245),
+	"Workshop": Vector2(3824, -1210.605),
+	"Fisher house": Vector2(-32, 257.475),
 	"Breakable rock": Vector2(-810, 1450),
-	"Net mender": Vector2(340, -197.245),
-	"Boatwright": Vector2(2730, -1093.245),
+	"Net mender": Vector2(51, 257.475),
+	"Boatwright": Vector2(3978, -1210.605),
 	"Eave Runner": Vector2(1440, -664.445),
 	"Loom Heron": Vector2(3180, 314.755),
+}
+const HOUSE_LANDMARK_FLOORS := {
+	"Workshop": ^"Geometry/BuildingCollision/WorkshopFloor/Outline",
+	"Fisher house": ^"Geometry/BuildingCollision/FisherFloor/Outline",
+	"Net mender": ^"Geometry/BuildingCollision/FisherFloor/Outline",
+	"Boatwright": ^"Geometry/BuildingCollision/WorkshopFloor/Outline",
+}
+const LANDMARK_RESIDENTS := {
+	"Net mender": ^"Residents/NetMender",
+	"Boatwright": ^"Residents/Boatwright",
 }
 
 func _enter_tree() -> void:
@@ -51,6 +62,7 @@ func _enter_tree() -> void:
 			records.append({"path": get_path_to(child), "parent": get_path_to(child.get_parent()), "scene": packed, "name": child.name})
 
 func _ready() -> void:
+	_player_spawn_position = $Player.global_position
 	_apply_lighting()
 	_apply_cutaways()
 	if not Engine.is_editor_hint():
@@ -127,11 +139,30 @@ func set_overview(value: bool) -> void:
 		$Player/Camera2D.make_current()
 
 func focus_landmark(label: String) -> void:
-	$Player.global_position = LANDMARKS[label]
+	$Player.global_position = get_landmark_position(label)
 	$Player.velocity = Vector2.ZERO
 	$Player.reset_physics_interpolation()
 	set_overview(false)
 	$Player/Camera2D.reset_smoothing()
+
+func get_landmark_position(label: String) -> Vector2:
+	if label == "Shore":
+		return _player_spawn_position
+	if not HOUSE_LANDMARK_FLOORS.has(label):
+		return LANDMARKS[label]
+	# Follow the saved collision and residents when the room is rearranged.
+	var floor_shape := get_node(HOUSE_LANDMARK_FLOORS[label]) as CollisionPolygon2D
+	var bounds := Rect2(floor_shape.to_global(floor_shape.polygon[0]), Vector2.ZERO)
+	for point: Vector2 in floor_shape.polygon:
+		bounds = bounds.expand(floor_shape.to_global(point))
+	var target_x := bounds.get_center().x
+	if LANDMARK_RESIDENTS.has(label):
+		target_x = get_node(LANDMARK_RESIDENTS[label]).global_position.x - 60.0
+		target_x = clampf(target_x, bounds.position.x + 24.0, bounds.end.x - 24.0)
+	var body := $Player/CollisionShape2D as CollisionShape2D
+	var foot_offset: float = body.to_global(Vector2(0.0, body.shape.get_rect().end.y)).y - $Player.global_position.y
+	# Start slightly above the one-way floor so contact is acquired normally.
+	return Vector2(target_x, bounds.position.y - foot_offset - 6.0)
 
 func _button(row: HBoxContainer, label: String, callback: Callable) -> void:
 	var button := Button.new()
