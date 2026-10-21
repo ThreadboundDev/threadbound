@@ -41,9 +41,30 @@
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_06_02.png" id="39"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_04_04.png" id="40"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_05_04.png" id="41"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_05_00.png" id="42"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_00.png" id="43"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_01.png" id="44"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_00_02.png" id="45"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_01_02.png" id="46"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_05_02.png" id="47"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_02.png" id="48"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_00_03.png" id="49"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_00_04.png" id="50"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_05_04.png" id="51"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_04.png" id="52"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_03_05.png" id="53"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_04_05.png" id="54"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_05_05.png" id="55"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_05.png" id="56"]
+[ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/rear_support_depth.tres" id="support_depth"]
 
 [node name="TerrainArtwork" type="Node2D"]
 editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."
+
+[node name="rear_supports" type="Node2D" parent="."]
+z_index = -7
+editor_description = "Krita STAMP REAR SUPPORTS only. Non-solid wood behind cave rocks; tune the shared depth material here."
+material = ExtResource("support_depth")
 
 [node name="rear_cave" type="Node2D" parent="."]
 z_index = -6
@@ -264,3 +285,93 @@ centered = false
 position = Vector2(3712, 1536)
 texture = ExtResource("41")
 centered = false
+
+[node name="Chunk_42" type="Sprite2D" parent="rear_supports"]
+position = Vector2(3712, -2560)
+texture = ExtResource("42")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_43" type="Sprite2D" parent="rear_supports"]
+position = Vector2(4736, -2560)
+texture = ExtResource("43")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_44" type="Sprite2D" parent="rear_supports"]
+position = Vector2(4736, -1536)
+texture = ExtResource("44")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_45" type="Sprite2D" parent="rear_supports"]
+position = Vector2(-1408, -512)
+texture = ExtResource("45")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_46" type="Sprite2D" parent="rear_supports"]
+position = Vector2(-384, -512)
+texture = ExtResource("46")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_47" type="Sprite2D" parent="rear_supports"]
+position = Vector2(3712, -512)
+texture = ExtResource("47")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_48" type="Sprite2D" parent="rear_supports"]
+position = Vector2(4736, -512)
+texture = ExtResource("48")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_49" type="Sprite2D" parent="rear_supports"]
+position = Vector2(-1408, 512)
+texture = ExtResource("49")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_50" type="Sprite2D" parent="rear_supports"]
+position = Vector2(-1408, 1536)
+texture = ExtResource("50")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_51" type="Sprite2D" parent="rear_supports"]
+position = Vector2(3712, 1536)
+texture = ExtResource("51")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_52" type="Sprite2D" parent="rear_supports"]
+position = Vector2(4736, 1536)
+texture = ExtResource("52")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_53" type="Sprite2D" parent="rear_supports"]
+position = Vector2(1664, 2560)
+texture = ExtResource("53")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_54" type="Sprite2D" parent="rear_supports"]
+position = Vector2(2688, 2560)
+texture = ExtResource("54")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_55" type="Sprite2D" parent="rear_supports"]
+position = Vector2(3712, 2560)
+texture = ExtResource("55")
+centered = false
+use_parent_material = true
+
+[node name="Chunk_56" type="Sprite2D" parent="rear_supports"]
+position = Vector2(4736, 2560)
+texture = ExtResource("56")
+centered = false
+use_parent_material = true

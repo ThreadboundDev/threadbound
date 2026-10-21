@@ -12,6 +12,15 @@
   "pixels_per_unit": 1,
   "groups": [
     {
+      "name": "rear_supports",
+      "bounds": [
+        50,
+        467,
+        6902,
+        5781
+      ]
+    },
+    {
       "name": "rear_cave",
       "bounds": [
         0,
@@ -533,6 +542,186 @@
       "size": [
         1024,
         1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_05_00.png",
+      "position": [
+        3712,
+        -2560
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_06_00.png",
+      "position": [
+        4736,
+        -2560
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_06_01.png",
+      "position": [
+        4736,
+        -1536
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_00_02.png",
+      "position": [
+        -1408,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_01_02.png",
+      "position": [
+        -384,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_05_02.png",
+      "position": [
+        3712,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_06_02.png",
+      "position": [
+        4736,
+        -512
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_00_03.png",
+      "position": [
+        -1408,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_00_04.png",
+      "position": [
+        -1408,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_05_04.png",
+      "position": [
+        3712,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_06_04.png",
+      "position": [
+        4736,
+        1536
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_03_05.png",
+      "position": [
+        1664,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_04_05.png",
+      "position": [
+        2688,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_05_05.png",
+      "position": [
+        3712,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_supports",
+      "path": "rear_supports_06_05.png",
+      "position": [
+        4736,
+        2560
+      ],
+      "size": [
+        768,
+        768
       ]
     }
   ],
@@ -1526,5 +1715,18 @@
     },
     "rock_polygons": 51,
     "roof_collision": "Continuous one-way ramps; existing node positions preserved"
+  },
+  "rear_layer_sources": {
+    "rear_supports": [
+      "STAMP REAR SUPPORTS"
+    ],
+    "rear_cave": [
+      "Under Cave Mouth",
+      "Cave Walls"
+    ]
+  },
+  "rear_layer_split_check": {
+    "max_channel_error": 1,
+    "pixels_over_two": 0
   }
 }

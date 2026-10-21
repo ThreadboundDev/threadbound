@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/rear_support_depth.gdshader" id="1"]
+
+[resource]
+resource_name = "Background timber depth"
+shader = ExtResource("1")
+shader_parameter/saturation = 0.45
+shader_parameter/contrast = 0.65
+shader_parameter/haze_amount = 0.28
+shader_parameter/haze_color = Color(0.1, 0.19, 0.26, 1)

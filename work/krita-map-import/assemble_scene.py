@@ -1,6 +1,12 @@
 """Assemble a separate playable room from the saved layout and approved assets."""
 from pathlib import Path
-import base64, hashlib, json, re, shutil, struct
+import argparse, base64, hashlib, json, re, shutil, struct, sys
+
+parser = argparse.ArgumentParser(description=__doc__)
+mode = parser.add_mutually_exclusive_group(required=True)
+mode.add_argument('--artwork-only', action='store_true', help='Refresh painted chunks without touching the playable room')
+mode.add_argument('--rebuild-legacy-room', action='store_true', help='Rebuild the original room, overwriting later manual layout and gameplay edits; requires separate review')
+args = parser.parse_args()
 
 ROOT=Path(__file__).resolve().parents[2]
 ART=ROOT/'Assets/BlueBiome/Art/LakesideMap'
@@ -9,17 +15,27 @@ BASE='res://Src/Environment/BlueBiome/Buildings/Lakeside3D/'
 manifest=json.loads((ART/'map_manifest.json').read_text())
 STAMP=Path('C:/Users/chase/Documents/Codex/2026-10-07/ri/outputs/blue_village_stamp_pack')
 sources={'walking_deck.png':'japanese_construction_v3/stamps/D01_Deck_Edge.png','quarry_block.png':'slate_village_library/stamps/S03_Tall_Quarry_Block.png','small_stone.png':'slate_village_library/stamps/S02_Short_Chunk.png'}
-for out,src in sources.items():shutil.copy2(STAMP/src,ART/out)
+artwork_only = args.artwork_only
+if not artwork_only:
+    for out,src in sources.items():shutil.copy2(STAMP/src,ART/out)
 
 art=['[gd_scene format=3]','']
 for i,c in enumerate(manifest['chunks']):art.append(f'[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/{c["path"]}" id="{i+1}"]')
+art.append('[ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/rear_support_depth.tres" id="support_depth"]')
 art+=['','[node name="TerrainArtwork" type="Node2D"]','editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."']
-zs={'rear_cave':-6,'terrain':5,'bridges':6,'breakables':7,'foreground':9}
+zs={'rear_supports':-7,'rear_cave':-6,'terrain':5,'bridges':6,'breakables':7,'foreground':9}
 for g in manifest['groups']:
     name=g['name'];art += [f'\n[node name="{name}" type="Node2D" parent="."]',f'z_index = {zs[name]}']
+    if name == 'rear_supports':
+        art += ['editor_description = "Krita STAMP REAR SUPPORTS only. Non-solid wood behind cave rocks; tune the shared depth material here."', 'material = ExtResource("support_depth")']
 for i,c in enumerate(manifest['chunks']):
     art += [f'\n[node name="Chunk_{i+1:02}" type="Sprite2D" parent="{c["group"]}"]',f'position = Vector2({c["position"][0]}, {c["position"][1]})',f'texture = ExtResource("{i+1}")','centered = false']
+    if c['group'] == 'rear_supports':
+        art += ['use_parent_material = true']
 (SCENES/'lakeside_krita_artwork.tscn').write_text('\n'.join(art)+'\n')
+if artwork_only:
+    print('ASSEMBLED_ARTWORK_ONLY', len(manifest['chunks']), 'chunks; playable room untouched')
+    sys.exit(0)
 
 source=SCENES/'blue_lake_greybox.tscn'
 s=source.read_text()

@@ -85,6 +85,18 @@ func verify() -> void:
 	check(physics_mismatch <= 12, "Physics must follow the inset, smoothed rock mask across the map")
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://Assets/BlueBiome/Art/LakesideMap/map_manifest.json"))
 	var artwork: Node2D = room.get_node("Geometry/TerrainArtwork")
+	var rear_wood := artwork.get_node("rear_supports") as Node2D
+	var rear_rocks := artwork.get_node("rear_cave") as Node2D
+	check(rear_wood.z_index < rear_rocks.z_index and rear_rocks.z_index < player.z_index, "Non-solid wood must sit behind the combined cave rocks and player")
+	check(rear_wood.get_child_count() == 15 and rear_rocks.get_child_count() == 32, "Original support layer and combined rock layer must remain independent")
+	check(rear_wood.material is ShaderMaterial and rear_rocks.material == null and artwork.material == null, "Depth material belongs only to background timber")
+	check(rear_wood.find_children("*", "CollisionObject2D", true, false).is_empty(), "Rear wood artwork must never add collision")
+	if rear_wood.material is ShaderMaterial:
+		var depth_material := rear_wood.material as ShaderMaterial
+		check(depth_material.shader.resource_path.ends_with("rear_support_depth.gdshader"), "Rear timber uses the shared tunable depth filter")
+		check(depth_material.get_shader_parameter("saturation") < 1.0 and depth_material.get_shader_parameter("contrast") < 1.0 and depth_material.get_shader_parameter("haze_amount") > 0.0, "Rear timber must have a visible depth treatment")
+	check(manifest.rear_layer_sources.rear_supports == ["STAMP REAR SUPPORTS"] and manifest.rear_layer_sources.rear_cave == ["Under Cave Mouth", "Cave Walls"], "Restore original wood layer while keeping both rock layers together")
+	check(manifest.rear_layer_split_check.pixels_over_two == 0, "Unfiltered separated art must reconstruct the source projection")
 	check(artwork.find_children("*", "Sprite2D", true, false).size() == manifest.chunks.size(), "All saved painted chunks must be present")
 	for chunk: Dictionary in manifest.chunks:
 		var found := false
@@ -92,6 +104,7 @@ func verify() -> void:
 			if sprite.texture.resource_path.ends_with(chunk.path):
 				found = true
 				check(sprite.global_position.is_equal_approx(Vector2(chunk.position[0], chunk.position[1])) and sprite.scale == Vector2.ONE and not sprite.centered, "Krita pixel coordinates must remain exact")
+				check(sprite.use_parent_material == (chunk.group == "rear_supports") and sprite.material == null, "Only rear timber chunks inherit the depth filter: " + str(chunk.path))
 		check(found, "Missing art chunk: " + str(chunk.path))
 	var stage: Node2D = room.get_node("LakesideArtStage")
 	check(stage.placements.size() == 10, "Four buildings, four lanterns and two villagers must register")
@@ -165,7 +178,7 @@ func verify() -> void:
 	await capture("playtest_cave")
 	room.focus_landmark("Workshop")
 	await capture("playtest_workshop")
-	var report := {"passed":failures.is_empty(), "failures":failures,"godot":Engine.get_version_info().string,"display":DisplayServer.get_name(),"canvas":manifest.canvas,"origin":manifest.world_origin,"painted_chunks":manifest.chunks.size(),"old_tile_collision_enabled":false,"rock_polygons":rocks.get_child_count(),"physics_alpha_samples":physics_samples,"physics_alpha_mismatches":physics_mismatch,"model_surfaces":manifest.assembly.surfaces.size(),"floors":floor_results,"render_scale":stage.render_scale,"house_viewport_size":str(stage.far_view.size),"loaded_pbr_maps":pbr_maps,"rendered_images":captured}
+	var report := {"passed":failures.is_empty(), "failures":failures,"godot":Engine.get_version_info().string,"display":DisplayServer.get_name(),"canvas":manifest.canvas,"origin":manifest.world_origin,"painted_chunks":manifest.chunks.size(),"rear_wood_chunks":rear_wood.get_child_count(),"rear_rock_chunks":rear_rocks.get_child_count(),"old_tile_collision_enabled":false,"rock_polygons":rocks.get_child_count(),"physics_alpha_samples":physics_samples,"physics_alpha_mismatches":physics_mismatch,"model_surfaces":manifest.assembly.surfaces.size(),"floors":floor_results,"render_scale":stage.render_scale,"house_viewport_size":str(stage.far_view.size),"loaded_pbr_maps":pbr_maps,"rendered_images":captured}
 	FileAccess.open("res://work/krita-map-import/verification.json", FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
 	print("KRITA_PLAYTEST_CHECK ", JSON.stringify(report))
 	room.queue_free()

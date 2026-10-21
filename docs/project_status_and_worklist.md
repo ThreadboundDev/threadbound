@@ -19,14 +19,12 @@ fitted intact landing visuals are implemented and checked; visible review is
 pending. This scoped correction does not approve broader art production or a
 3D rebuild. T01/T02 house review remains pending too.
 
-**Current visual feedback: T14, background wood depth separation.** The Krita
-import flattened `STAMP REAR SUPPORTS` together with Cave Walls/Under Cave Mouth.
-Chase clarified that both rock layers may stay combined; only the wood needs
-separation. Collision already excludes these supports. The
-[scoped correction](design/lakeside_rear_support_depth_proposal.md) restores a
-wood-only layer with a tunable depth filter. **Awaiting implementation scope
-approval**; no runtime changes yet. Keep the existing gameplay geometry and
-latest house/walkway work intact.
+**Current visual correction: T14, background wood depth separation.** Chase
+approved the [scoped correction](design/lakeside_rear_support_depth_proposal.md).
+The original wood supports now have a separate background layer and tunable
+depth filter; Cave Walls/Under Cave Mouth remain combined. Implementation and
+focused checks are complete; **awaiting daylight/dusk visible review**. Gameplay
+geometry and the latest house/walkway work are unchanged.
 
 ## Milestone and working limits
 
@@ -202,7 +200,7 @@ not authorize merging, publishing a build or protected implementation changes.
   Done when an exported candidate has a reproducible report and a separate
   release decision. Commit: `docs: record exported candidate verification`.
 
-## Scoped walkway request
+## Scoped visual corrections
 
 - [ ] **T13 - Matching bridge/balcony stamp objects.** **Awaiting visible review**.
   Existing current-library PNGs and catalog are saved with source hashes under
@@ -217,6 +215,19 @@ not authorize merging, publishing a build or protected implementation changes.
   Done when Chase accepts seams, feet, rail depth and match beside the houses
   at normal playing scale in daylight/dusk. Commit that review before another
   art direction.
+
+- [ ] **T14 - Background wood depth separation.** **Awaiting visible review**.
+  Approved scope/provenance and delivery are in the linked correction above.
+  Original `STAMP REAR SUPPORTS`: 15 independent wood chunks behind 32 combined
+  rock chunks, with reduced saturation/contrast and a cool haze shader. Layout,
+  collision and unrelated artwork are unchanged. Unfiltered recomposition
+  differs by at most one channel value; repeat import is byte-identical. Map,
+  **405 house** and **606 walkway** checks pass; editor shader validation passes
+  with no warnings/errors. Existing shutdown diagnostics remain for T04.
+  Commit: `fix: separate background timber from lakeside rock art` (see Git log
+  for hash). Done when Chase accepts the wood as clearly non-solid background
+  in daylight/dusk while playable rock/timber edges remain clear. Record any
+  material tweaks and checkpoint before switching art direction.
 
 ## Parked until the current milestone is accepted
 

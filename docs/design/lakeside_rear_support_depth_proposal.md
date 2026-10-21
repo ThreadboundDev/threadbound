@@ -1,6 +1,7 @@
 # Restore the separate Krita wood support layer
 
-October 21, 2026; inspected baseline `7531cbdf`. **Implementation awaits approval.**
+October 21, 2026; inspected baseline `7531cbdf`, proposal saved as `bec89e67`.
+**Chase approved this scope; implementation is complete, visible review pending.**
 Chase reports that background beams/pillars read as gameplay until the player
 passes through them. He clarified that Cave Walls and Under Cave Mouth may
 remain together; wood must be separate, or become separate Godot objects.
@@ -19,7 +20,7 @@ receive a separate depth treatment. Their collision exclusion was preserved:
 `prepare_rock_mask.py` deliberately excludes `layer20`. This is a visual import
 problem, not a request to make those beams solid.
 
-## Proposed result
+## Approved result
 
 - Keep Cave Walls and Under Cave Mouth combined in `rear_cave`, at z=-6.
 - Extract only the original wood support layer into `rear_supports`, at z=-7.
@@ -38,8 +39,8 @@ problem, not a request to make those beams solid.
 
 ## Exact implementation file scope
 
-Paths below are relative to the repository root. No runtime changes have been
-made while preparing this proposal.
+Paths below are relative to the repository root. This file list was saved
+before runtime changes and approved by Chase before implementation.
 
 1. `work/krita-map-import/extract_map.py`: retain the wood as a separate export;
    add a scoped update mode so unrelated map/source exports are preserved.
@@ -109,3 +110,61 @@ Commit/push the approved coherent correction as
 `fix: separate background timber from lakeside rock art`; confirm remote HEAD
 before starting another task. This document is the reviewable scope required
 by `AGENTS.md` before scene restructuring and asset replacement.
+
+## Delivery and results — October 21, 2026
+
+The original `STAMP REAR SUPPORTS` pixels now draw in their own `rear_supports`
+group at z=-7. Cave Walls plus Under Cave Mouth remain combined in `rear_cave`
+at z=-6. There are **15 wood chunks and 32 rock chunks** (56 painted chunks
+total, including the unchanged terrain). Exactly 15 existing PNGs were updated
+to remove the wood; their import settings and UIDs are unchanged. The other
+existing textures and import files are byte-identical to the baseline.
+
+Only the wood sprites inherit `rear_support_depth.tres`. Initial shader values:
+saturation **0.45**, contrast **0.65**, haze amount **0.28**, cool haze color
+**(0.10, 0.19, 0.26)**. Texture alpha and sharp outlines are retained. Tune the
+shared material on `Geometry/TerrainArtwork/rear_supports` under **Material >
+Shader Parameters**. The rock art and playable wooden platforms use their
+existing materials.
+
+For future scoped re-extraction, from the repository root use the project's
+Python runtime with:
+
+```text
+work/krita-map-import/extract_map.py --rear-supports-only
+work/krita-map-import/assemble_scene.py --artwork-only
+```
+
+The extractor verifies the source SHA before a scoped update and validates
+recomposition before replacing files. The assembler requires an explicit mode
+and rejects missing/misspelled modes. `--rebuild-legacy-room` is retained only
+as an explicit legacy operation: it overwrites subsequent authored room work
+and needs separate scope/review. It was **not run** for this correction.
+
+Validation on Godot 4.7.2 Mono, with isolated saves/logs under ignored
+`tmp/rear_supports/`:
+
+- Recombined unfiltered wood/rock matches the original source within **one
+  8-bit channel value**, with zero pixels exceeding the two-value tolerance.
+  Both full extraction and scoped extraction now retain the separate layer.
+- Scoped extraction and artwork-only assembly were repeated: all outputs were
+  byte-for-byte identical. Missing/misspelled assembly flags fail without
+  modifying the room. The retained source KRA was not modified.
+- SHA-256 audit: main playable room, rock collision scene, collision mask,
+  unrelated textures and all existing import sidecars are unchanged. The nine
+  fitted walkway instances and house-entry work remain intact.
+- Map fixture passed: 56 correctly positioned chunks; material ownership/draw
+  order; **9,871** rock physics samples with **zero mismatches**; original house
+  floors, water and dry-pocket behavior still pass.
+- **405 house-entry** and **606 walkway** checks passed, including real player
+  landings/walking on all nine spans. Logs contain the explicit success markers
+  and no parse/script errors. Historical tracked reports were preserved.
+- The connected editor's shader compiler validated the canvas shader: **valid,
+  four uniforms, no errors or warnings**, without changing editor state.
+
+Headless runs still emit the previously recorded equipment/audio shutdown
+resource diagnostics; their investigation remains T04. The shader parse check
+does not establish rendered appearance. **Chase's daylight/dusk visual review
+is pending**, especially whether the supports read as background before contact.
+Use the short T14 retest in `docs/next_test_session.md`. Commit subject:
+`fix: separate background timber from lakeside rock art`; exact hash in Git log.

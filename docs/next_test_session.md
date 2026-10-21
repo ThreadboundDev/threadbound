@@ -1,5 +1,26 @@
 # Next hands-on test session
 
+## Latest: T14 background wood depth — about 2 minutes
+
+Run `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+with F6. The wood beams/pillars now have a separate cooler, quieter background
+layer; Cave Walls and Under Cave Mouth remain together.
+
+1. Use **Cave**, then look at exposed diagonal beams and upright timber
+   supports. Before walking through one, does it already read as background?
+2. Compare a support with the nearby playable rock edge and a timber walkway.
+   The support should recede, while contact surfaces remain clear. Check for
+   missing wood, doubled edges or seams where wood meets rock.
+3. Use **Day / dusk** and repeat the comparison. Report keep/change for the
+   filter strength. If it needs adjustment, give the nearest landmark.
+
+The material is adjustable at `Geometry/TerrainArtwork/rear_supports > Material
+> Shader Parameters`; source pixels, alpha, positions and collision are retained.
+Map, 405 house-entry and 606 walkway checks pass; the shader validates in the
+editor. Appearance acceptance remains open.
+[Scope, defaults and validation](design/lakeside_rear_support_depth_proposal.md).
+Save and **commit/push any manual changes before changing topics**.
+
 ## First: T01/T02 house doors and residents - about 5 minutes
 
 Run `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
