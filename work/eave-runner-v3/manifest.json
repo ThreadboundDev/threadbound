@@ -1,0 +1,39 @@
+{
+  "version": 3,
+  "triangles": 657226,
+  "vertices": 334800,
+  "bones": 60,
+  "materials": 18,
+  "components": 215,
+  "bounds": [
+    [
+      -1.2135188579559326,
+      0.9854764938354492
+    ],
+    [
+      -0.21274636685848236,
+      0.363479346036911
+    ],
+    [
+      0.02151479572057724,
+      1.8350000381469727
+    ]
+  ],
+  "clips": {
+    "death": 1.2,
+    "hurt": 0.4,
+    "idle": 2.4,
+    "jump_slash": 0.6667,
+    "land_recover": 0.6,
+    "run": 0.8,
+    "throw_release": 0.3333,
+    "throw_windup": 0.4667,
+    "wall_attach": 0.3333,
+    "wall_launch": 0.3,
+    "wall_perch": 1.6,
+    "wall_windup": 0.4667
+  },
+  "source": "ArtSource\\BlueBiome\\Enemies\\EaveRunner\\EaveRunner_Woven_v3.blend",
+  "runtime": "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v3.glb",
+  "design": "tailored angular hood, pierced ceramic mask, layered wraps/cowl, gathered trousers, woven tendons, fitted bamboo bracers and articulated fingers"
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/rigs/default.mhskel",
+    "file": "default.mhskel",
+    "sha256": "99f179bce0aa850b45d4191a1d0d234c5851f881c057439470ded3bddf729a24",
+    "bytes": 117790
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/rigs/default_weights.mhw",
+    "file": "default_weights.mhw",
+    "sha256": "0f3641d651ae3d00ad6b4ccee43142edb109d3bd909d27d9e4139ef1beed8625",
+    "bytes": 897521
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/eyes/low-poly/low-poly.obj",
+    "file": "low-poly.obj",
+    "sha256": "783fe1e6331162c876520b4c2bed7a8ca06354ca15497e8ebd68bb1b59f4d3de",
+    "bytes": 6604
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/eyes/low-poly/low-poly.mhclo",
+    "file": "low-poly.mhclo",
+    "sha256": "68582e28e9176cba7cfcf35208f671b6201b8d1bc95c32decff61a3160ec34d8",
+    "bytes": 1344
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/eyes/materials/brown_eye.png",
+    "file": "brown_eye.png",
+    "sha256": "4659691c7295ad6206c78b003e5fd0e5f91dcd53032fa914a229bb48cabe424b",
+    "bytes": 610817
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/eyes/materials/brown.mhmat",
+    "file": "brown.mhmat",
+    "sha256": "4abad93ce50541c08127721e77bce035640c9f16bed16cd0f5524b1cd5908465",
+    "bytes": 1247
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/targets/macrodetails/asian-female-young.target",
+    "file": "asian-female-young.target",
+    "sha256": "095fe79694fa19e1fe98d93009ec116199bd524e081c640351a10eccf2cca1eb",
+    "bytes": 435553
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/targets/macrodetails/asian-male-old.target",
+    "file": "asian-male-old.target",
+    "sha256": "36dc5a3a135ded33885e814806b0e3668ca5bf44bddcebdee48ae75ae68bc3d3",
+    "bytes": 427966
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/targets/macrodetails/asian-male-young.target",
+    "file": "asian-male-young.target",
+    "sha256": "ed2e8c191cb6b87b4a2d97c80486acb2604fa549316c7aa2a738a5d5a14334dc",
+    "bytes": 421040
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/targets/macrodetails/universal-female-young-averagemuscle-averageweight.target",
+    "file": "universal-female-young-averagemuscle-averageweight.target",
+    "sha256": "4ba5396ddabda448ece15650a566fbebfbb10239256ccb201e8f883429e12249",
+    "bytes": 604
+  },
+  {
+    "source": "https://raw.githubusercontent.com/makehumancommunity/makehuman/master/makehuman/data/targets/macrodetails/universal-male-old-averagemuscle-averageweight.target",
+    "file": "universal-male-old-averagemuscle-averageweight.target",
+    "sha256": "4ba5396ddabda448ece15650a566fbebfbb10239256ccb201e8f883429e12249",
+    "bytes": 604
+  }
+]

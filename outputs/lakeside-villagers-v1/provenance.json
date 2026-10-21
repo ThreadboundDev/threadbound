@@ -1,0 +1,118 @@
+{
+  "models": [
+    {
+      "file": "Boatwright.glb",
+      "bytes": 2146840,
+      "sha256": "5043e792a1125130791e0c3db8c1b2ee0f9095d6393a3c90d3fbe423a73eb11b"
+    },
+    {
+      "file": "Boatwright_Workstation.glb",
+      "bytes": 173040,
+      "sha256": "48b0897c3c1842ff83b5be3a4a8abb74477d188fbf3744b85cd7ba8e7c970307"
+    },
+    {
+      "file": "NetMender.glb",
+      "bytes": 1970560,
+      "sha256": "d837abb1a41bafca2f2684e357c9a57d7c0a3b5b293e395ea7d758849e3120a8"
+    },
+    {
+      "file": "NetMender_Workstation.glb",
+      "bytes": 315036,
+      "sha256": "3e7c15392535fb921fe1426b3e1ba07c9cde530dca7cedd1984bd1260f228280"
+    }
+  ],
+  "textures": [
+    {
+      "file": "blue_pavilion_cloth_light_4281ebbaa6.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4281ebbaa605935c24c91042f6e6b223cf1de5a15303829d307e22e50bfb7bbb"
+    },
+    {
+      "file": "blue_pavilion_cloth_light_normal_ce4fb9c1e9.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "ce4fb9c1e9747557e8ca40922c8118ba8fd95b14b8339095a0160126017756a6"
+    },
+    {
+      "file": "blue_pavilion_cloth_light_roughness_a46173b84c.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "a46173b84c4e8d0c1c84a33a45e89dede3c1607431ea28134afae79956c214d2"
+    },
+    {
+      "file": "blue_pavilion_indigo_normal_e2e5f28585.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "e2e5f2858529790f8fa6cce44acd37f79d37d5f309f31c59a3fa1a2884fb4564"
+    },
+    {
+      "file": "blue_pavilion_indigo_roughness_bfdfa77cee.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "bfdfa77ceeadf2eff74c3a05cbbfbfa655477e83e8f5507c0496519c4275e827"
+    },
+    {
+      "file": "brown_eye_4659691c72.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4659691c7295ad6206c78b003e5fd0e5f91dcd53032fa914a229bb48cabe424b"
+    },
+    {
+      "file": "IndigoWorkwear_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "8ea25f097f2a9a2e06fba1e57ee2df302ebb69e75c5dd59e484f7cb3bcb957bd"
+    },
+    {
+      "file": "walnut_BaseColor_4K_c1fdcb3158.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d"
+    },
+    {
+      "file": "walnut_NormalGL_4K_fdd992393d.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680"
+    },
+    {
+      "file": "walnut_Roughness_4K_f26709e30e.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "f26709e30e72a0f98f17b6582d075a89c35bc67d402b561d3f0ed019b1b1addc"
+    },
+    {
+      "file": "WorkCanvas_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "6a0691949f57c310cdbdbbb63c45ffb3a3fdf3bb0a0e8a3f801f71efc080764f"
+    }
+  ],
+  "source": "ArtSource/BlueBiome/Villagers/LakesideVillagers_v1.blend",
+  "base": "CC0 MakeHuman hm08 mesh and default rig/weights; license in ArtSource/BlueBiome/Villagers/CC0_Source/LICENSE.ASSETS.md",
+  "fabric_generation": "Built-in image_gen__imagegen, exact prompts stored with Blender source",
+  "blender_source_sha256": "889e18f869b29cfb6f458ce89467c873d27d4e4546623214f1fa81edec52aace"
+}

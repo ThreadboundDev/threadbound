@@ -1,0 +1,58 @@
+{
+  "EaveRunner_In_Game.png": {
+    "bytes": 2064399,
+    "sha256": "f443356268e12af3a2e952838bfbb399427db1a3123ac4bfa0eda9928a0c7379"
+  },
+  "EaveRunner_Woven_v1.blend": {
+    "bytes": 56531244,
+    "sha256": "c877d6b1dd7ebb01d460d615b2ee2ed772e643d1a0d5127e9f08232d13b934e7"
+  },
+  "Eave_In_Game.gif": {
+    "bytes": 10627270,
+    "sha256": "646e73b9a22c052b58f2f5e6ed3f3a38a1dc95dd5804f30981f229daf9d81ad4"
+  },
+  "Gameplay_Notes.md": {
+    "bytes": 6250,
+    "sha256": "43c45ebf9c8850afa80060dbc30933231d7164ab59e074348761886c021763cf"
+  },
+  "Heron_In_Game.gif": {
+    "bytes": 6403185,
+    "sha256": "2374fb74fe868ffbbda8500c34ea40388192ac49cd3a543be2c8a4c39578f12d"
+  },
+  "Heron_Source_Verification.json": {
+    "bytes": 1070,
+    "sha256": "ff5c2e2b4508749ccbfb9c212044a4280418e1d3419d0a60271f672187305304"
+  },
+  "LoomHeron_In_Game.png": {
+    "bytes": 1567543,
+    "sha256": "83a4d0a0e6fabbffeb7b7338a3c30b95f5460d7831eb4e6fcfd442d186e96fce"
+  },
+  "LoomHeron_Model.png": {
+    "bytes": 1254042,
+    "sha256": "b4198f93feb8a1649d1fb5da71b8aa8817f6edbcfc733e42b52453c092421c4a"
+  },
+  "LoomHeron_Woven_v1.blend": {
+    "bytes": 54786456,
+    "sha256": "ea4f40fab116e9cee26409c259ad20dc048ace80763be9cf5c646298fec404b6"
+  },
+  "README.txt": {
+    "bytes": 2307,
+    "sha256": "1b0c2cd59e5ae82dbd1b5939d1d36453850597da49f2bcb427a65cd985738a03"
+  },
+  "verify-woven-lakeside-render.log": {
+    "bytes": 1794,
+    "sha256": "81b92c6de0f741e577d0c619d74c8265b4f212a7784864f6eeb7494ecd6a7913"
+  },
+  "verify-woven-lakeside.log": {
+    "bytes": 1376,
+    "sha256": "a598e4c9bc22e169823af64efeccfb46ccdf9bb7cfe6e314655285005a4ac550"
+  },
+  "verify-woven.log": {
+    "bytes": 566,
+    "sha256": "bfea9f62ed5223d3272d78b5c5284a6a76d3602586c7d111a7bc57f7aa81f8b8"
+  },
+  "Woven_Guardians_Runtime.zip": {
+    "bytes": 119357051,
+    "sha256": "803896e6214d567e47567453dd8a6878f1e9858bbe58e7a91364e31c488eca47"
+  }
+}

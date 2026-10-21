@@ -1,0 +1,50 @@
+{
+  "Heron indigo sail": [
+    0.12,
+    0.23,
+    0.36,
+    1
+  ],
+  "Heron repaired flax sail": [
+    0.68,
+    0.57,
+    0.39,
+    1
+  ],
+  "Heron woven core": [
+    0.6,
+    0.68,
+    0.8,
+    1
+  ],
+  "Heron flax knots": [
+    0.63,
+    0.44,
+    0.24,
+    1
+  ],
+  "Heron walnut spars": [
+    0.53,
+    0.34,
+    0.17,
+    1
+  ],
+  "Heron ceramic face": [
+    0.92,
+    0.85,
+    0.69,
+    1
+  ],
+  "Heron eye recess": [
+    0.008,
+    0.015,
+    0.022,
+    1
+  ],
+  "Heron blue glazed eye": [
+    0.06,
+    0.43,
+    0.58,
+    1
+  ]
+}

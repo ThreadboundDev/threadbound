@@ -1,0 +1,67 @@
+{
+  "IndigoWeave": {
+    "source": "Assets\\BlueBiome\\Villagers\\Textures\\IndigoWorkwear_BaseColor.png",
+    "resolution": [
+      4096,
+      4096
+    ],
+    "maps": [
+      "IndigoWeave_BaseColor_4K.png",
+      "IndigoWeave_Roughness_4K.png",
+      "IndigoWeave_Normal_4K.png"
+    ],
+    "detail": "Native shader warp/weft, fine fibre relief"
+  },
+  "FlaxWeave": {
+    "source": "Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light.png",
+    "resolution": [
+      4096,
+      4096
+    ],
+    "maps": [
+      "FlaxWeave_BaseColor_4K.png",
+      "FlaxWeave_Roughness_4K.png",
+      "FlaxWeave_Normal_4K.png"
+    ],
+    "detail": "Native shader warp/weft, fine fibre relief"
+  },
+  "WorkCanvas": {
+    "source": "Assets\\BlueBiome\\Villagers\\Textures\\WorkCanvas_BaseColor.png",
+    "resolution": [
+      4096,
+      4096
+    ],
+    "maps": [
+      "WorkCanvas_BaseColor_4K.png",
+      "WorkCanvas_Roughness_4K.png",
+      "WorkCanvas_Normal_4K.png"
+    ],
+    "detail": "Native shader warp/weft, fine fibre relief"
+  },
+  "WovenCord": {
+    "source": "Assets\\BlueBiome\\Enemies\\EaveRunner\\Textures\\WovenCord_BaseColor.png",
+    "resolution": [
+      4096,
+      4096
+    ],
+    "maps": [
+      "WovenCord_BaseColor_4K.png",
+      "WovenCord_Roughness_4K.png",
+      "WovenCord_Normal_4K.png"
+    ],
+    "detail": "Native shader warp/weft, fine fibre relief"
+  },
+  "AgedCeramic": {
+    "source": "Assets\\BlueBiome\\Enemies\\EaveRunner\\Textures\\AgedIvory_BaseColor.png",
+    "resolution": [
+      4096,
+      4096
+    ],
+    "maps": [
+      "AgedCeramic_BaseColor_4K.png",
+      "AgedCeramic_Roughness_4K.png",
+      "AgedCeramic_Normal_4K.png"
+    ],
+    "detail": "Native shader fine ceramic surface relief"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "NetMender": {
+    "triangles": 39390,
+    "station_triangles": 9656,
+    "bones": 163,
+    "animations": [
+      "WorkIdle",
+      "TalkIdle"
+    ],
+    "height_m": 1.65,
+    "base": "CC0 MakeHuman hm08",
+    "front": "-Y in Blender, +Z in glTF/Godot"
+  },
+  "Boatwright": {
+    "triangles": 40146,
+    "station_triangles": 3172,
+    "bones": 163,
+    "animations": [
+      "WorkIdle.001",
+      "TalkIdle.001"
+    ],
+    "height_m": 1.74,
+    "base": "CC0 MakeHuman hm08",
+    "front": "-Y in Blender, +Z in glTF/Godot"
+  }
+}

@@ -1,0 +1,90 @@
+{
+	"asset": {
+		"clips": [
+			{
+				"maximum_bone_motion": 0.0311937425285578,
+				"name": "idle",
+				"seconds": 2.40000009536743
+			},
+			{
+				"maximum_bone_motion": 0.380007386207581,
+				"name": "run",
+				"seconds": 0.800000011920929
+			},
+			{
+				"maximum_bone_motion": 0.693308591842651,
+				"name": "wall_attach",
+				"seconds": 0.333333343267441
+			},
+			{
+				"maximum_bone_motion": 0.0221592970192432,
+				"name": "wall_perch",
+				"seconds": 1.60000002384186
+			},
+			{
+				"maximum_bone_motion": 0.208235502243042,
+				"name": "wall_windup",
+				"seconds": 0.466666668653488
+			},
+			{
+				"maximum_bone_motion": 0.730068385601044,
+				"name": "wall_launch",
+				"seconds": 0.300000011920929
+			},
+			{
+				"maximum_bone_motion": 0.868043661117554,
+				"name": "jump_slash",
+				"seconds": 0.666666686534882
+			},
+			{
+				"maximum_bone_motion": 0.480252742767334,
+				"name": "land_recover",
+				"seconds": 0.600000023841858
+			},
+			{
+				"maximum_bone_motion": 0.494873553514481,
+				"name": "throw_windup",
+				"seconds": 0.466666668653488
+			},
+			{
+				"maximum_bone_motion": 0.615548372268677,
+				"name": "throw_release",
+				"seconds": 0.333333343267441
+			},
+			{
+				"maximum_bone_motion": 0.144147992134094,
+				"name": "hurt",
+				"seconds": 0.400000005960464
+			},
+			{
+				"maximum_bone_motion": 0.65013188123703,
+				"name": "death",
+				"seconds": 1.20000004768372
+			}
+		],
+		"detailed_surfaces": 6,
+		"materials": [
+			"Guardian | worn blade bevel",
+			"Guardian | woven indigo core",
+			"Guardian | hollow recess",
+			"Guardian | charcoal work cloth",
+			"Guardian | indigo hood and panels",
+			"Guardian | worn flax binding",
+			"Guardian | aged ivory mask",
+			"Guardian | blue glaze and inner light",
+			"Guardian | darkened iron",
+			"Guardian | reed splints"
+		],
+		"normal_surfaces": 6,
+		"triangles": 264312,
+		"vertices": 143015
+	},
+	"checks": 147,
+	"display": "headless",
+	"failures": [
+		"Actual gameplay prefab uses the v3 Eave Runner",
+		"Full exported topology survives Godot import"
+	],
+	"passed": false,
+	"scope": "Imported art, animation and retained gameplay framing; not a GPU render test."
+}

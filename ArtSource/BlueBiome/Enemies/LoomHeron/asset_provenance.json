@@ -1,0 +1,9 @@
+{
+  "model": "Original script-authored cloth/reed/cord bird based on approved Loom Heron concept A",
+  "builder": "tools/art/build_loom_heron.py",
+  "concept_reference": "outputs\\woven-blue-guardians-2026-10-20\\Woven_Flying_Concepts.png",
+  "concept_sha256": "d29c9746e900ed33b1d190726f826427e5f6883c57356a113492379180addd4b",
+  "textures": "Reused village PBR maps and Eave Runner cord/ceramic color maps. Original generation prompts/provenance are recorded beside EaveRunner source.",
+  "rig": "17 deform bones; in-place clips; forward -Y Blender / +Z Godot",
+  "new_image_generation": false
+}

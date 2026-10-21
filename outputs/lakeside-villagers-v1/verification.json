@@ -1,0 +1,175 @@
+{
+  "gameplay": {
+    "checks": 48,
+    "display": "headless",
+    "failures": [],
+    "godot": "4.7.2-stable (official)",
+    "passed": true,
+    "rendered": []
+  },
+  "rendered": {
+    "checks": 83,
+    "display": "Windows",
+    "failures": [],
+    "godot": "4.7.2-stable (official)",
+    "passed": true,
+    "rendered": [
+      "res://work/lakeside-villagers/renders/NetMender_in_house_work.png",
+      "res://work/lakeside-villagers/renders/NetMender_in_house_talk_left.png",
+      "res://work/lakeside-villagers/renders/Boatwright_in_house_work.png",
+      "res://work/lakeside-villagers/renders/Boatwright_in_house_talk_left.png",
+      "res://work/lakeside-villagers/renders/greeting_00.png",
+      "res://work/lakeside-villagers/renders/greeting_01.png",
+      "res://work/lakeside-villagers/renders/greeting_02.png",
+      "res://work/lakeside-villagers/renders/greeting_03.png",
+      "res://work/lakeside-villagers/renders/greeting_04.png",
+      "res://work/lakeside-villagers/renders/greeting_05.png",
+      "res://work/lakeside-villagers/renders/greeting_06.png",
+      "res://work/lakeside-villagers/renders/greeting_07.png",
+      "res://work/lakeside-villagers/renders/greeting_08.png",
+      "res://work/lakeside-villagers/renders/greeting_09.png",
+      "res://work/lakeside-villagers/renders/greeting_10.png",
+      "res://work/lakeside-villagers/renders/greeting_11.png",
+      "res://work/lakeside-villagers/renders/greeting_12.png",
+      "res://work/lakeside-villagers/renders/greeting_13.png",
+      "res://work/lakeside-villagers/renders/greeting_14.png",
+      "res://work/lakeside-villagers/renders/greeting_15.png",
+      "res://work/lakeside-villagers/renders/greeting_16.png",
+      "res://work/lakeside-villagers/renders/greeting_17.png",
+      "res://work/lakeside-villagers/renders/greeting_18.png",
+      "res://work/lakeside-villagers/renders/greeting_19.png",
+      "res://work/lakeside-villagers/renders/greeting_20.png",
+      "res://work/lakeside-villagers/renders/greeting_21.png",
+      "res://work/lakeside-villagers/renders/greeting_22.png",
+      "res://work/lakeside-villagers/renders/greeting_23.png",
+      "res://work/lakeside-villagers/renders/greeting_24.png",
+      "res://work/lakeside-villagers/renders/greeting_25.png",
+      "res://work/lakeside-villagers/renders/greeting_26.png",
+      "res://work/lakeside-villagers/renders/greeting_27.png",
+      "res://work/lakeside-villagers/renders/greeting_28.png",
+      "res://work/lakeside-villagers/renders/greeting_29.png",
+      "res://work/lakeside-villagers/renders/greeting_30.png"
+    ]
+  },
+  "source": {
+    "packed_images": [
+      {
+        "name": "blue_pavilion_cloth_light.png",
+        "packed": true,
+        "bytes": 795171,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "blue_pavilion_cloth_light_normal.png",
+        "packed": true,
+        "bytes": 1747808,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light_normal.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "blue_pavilion_cloth_light_roughness.png",
+        "packed": true,
+        "bytes": 355496,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light_roughness.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "blue_pavilion_indigo_normal.png",
+        "packed": true,
+        "bytes": 1747335,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_indigo_normal.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "blue_pavilion_indigo_roughness.png",
+        "packed": true,
+        "bytes": 355201,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_indigo_roughness.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "brown_eye.png",
+        "packed": true,
+        "bytes": 610817,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\work\\lakeside-villagers\\source\\brown_eye.png",
+        "size": [
+          1024,
+          1024
+        ]
+      },
+      {
+        "name": "IndigoWorkwear_BaseColor.png",
+        "packed": true,
+        "bytes": 4254694,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Villagers\\Textures\\IndigoWorkwear_BaseColor.png",
+        "size": [
+          1254,
+          1254
+        ]
+      },
+      {
+        "name": "walnut_BaseColor_4K.png",
+        "packed": true,
+        "bytes": 15625991,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_BaseColor_4K.png",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "name": "walnut_NormalGL_4K.png",
+        "packed": true,
+        "bytes": 14541349,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_NormalGL_4K.png",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "name": "walnut_Roughness_4K.png",
+        "packed": true,
+        "bytes": 6500673,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_Roughness_4K.png",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "name": "WorkCanvas_BaseColor.png",
+        "packed": true,
+        "bytes": 4023571,
+        "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Villagers\\Textures\\WorkCanvas_BaseColor.png",
+        "size": [
+          1254,
+          1254
+        ]
+      }
+    ],
+    "packed_image_bytes": 50558106,
+    "source_bytes": 54708945,
+    "scenes": [
+      "Boatwright_WorkshopReview",
+      "NetMender_WorkshopReview",
+      "Scene"
+    ]
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "passed": true,
+  "checks": 325,
+  "failures": [],
+  "characters": {
+    "NetMender": {
+      "triangles": 153580,
+      "previous_triangles": 39390,
+      "bones": 163,
+      "clips": [
+        {
+          "name": "WorkIdle",
+          "seconds": 4.0,
+          "motion": 0.2912362664937973,
+          "maximum_span": 1.6901753349229693
+        },
+        {
+          "name": "TalkIdle",
+          "seconds": 4.0,
+          "motion": 0.21329332888126373,
+          "maximum_span": 1.690283696167171
+        }
+      ],
+      "packed_images": 17
+    },
+    "Boatwright": {
+      "triangles": 156420,
+      "previous_triangles": 40146,
+      "bones": 163,
+      "clips": [
+        {
+          "name": "WorkIdle.001",
+          "seconds": 4.0,
+          "motion": 0.12291334569454193,
+          "maximum_span": 1.7799211731180549
+        },
+        {
+          "name": "TalkIdle.001",
+          "seconds": 4.0,
+          "motion": 0.0406668521463871,
+          "maximum_span": 1.7799905529245734
+        }
+      ],
+      "packed_images": 17
+    },
+    "EaveRunner": {
+      "triangles": 264312,
+      "previous_triangles": 66052,
+      "bones": 60,
+      "clips": [
+        {
+          "name": "idle",
+          "seconds": 2.4,
+          "motion": 0.12383580207824707,
+          "maximum_span": 1.8792781867086887
+        },
+        {
+          "name": "run",
+          "seconds": 0.8,
+          "motion": 1.5037821531295776,
+          "maximum_span": 1.8349933717399836
+        },
+        {
+          "name": "wall_attach",
+          "seconds": 0.3333333333333333,
+          "motion": 1.8474712371826172,
+          "maximum_span": 2.000993773341179
+        },
+        {
+          "name": "wall_perch",
+          "seconds": 1.6,
+          "motion": 0.13012397289276123,
+          "maximum_span": 1.7539024204015732
+        },
+        {
+          "name": "wall_windup",
+          "seconds": 0.4666666666666667,
+          "motion": 0.7433684468269348,
+          "maximum_span": 1.94974847137928
+        },
+        {
+          "name": "wall_launch",
+          "seconds": 0.3,
+          "motion": 1.888524353504181,
+          "maximum_span": 1.8797492533922195
+        },
+        {
+          "name": "jump_slash",
+          "seconds": 0.6666666666666666,
+          "motion": 1.7901631593704224,
+          "maximum_span": 1.7532090693712234
+        },
+        {
+          "name": "land_recover",
+          "seconds": 0.6,
+          "motion": 0.7457531969994307,
+          "maximum_span": 1.8780663264915347
+        },
+        {
+          "name": "throw_windup",
+          "seconds": 0.4666666666666667,
+          "motion": 1.6288722157478333,
+          "maximum_span": 1.8780663264915347
+        },
+        {
+          "name": "throw_release",
+          "seconds": 0.3333333333333333,
+          "motion": 1.4400537610054016,
+          "maximum_span": 1.8780663264915347
+        },
+        {
+          "name": "hurt",
+          "seconds": 0.4,
+          "motion": 0.31148023158311844,
+          "maximum_span": 1.8780663264915347
+        },
+        {
+          "name": "death",
+          "seconds": 1.2,
+          "motion": 1.209775686264038,
+          "maximum_span": 1.8780663264915347
+        }
+      ],
+      "packed_images": 15
+    },
+    "LoomHeron": {
+      "triangles": 107096,
+      "previous_triangles": 24488,
+      "bones": 18,
+      "clips": [
+        {
+          "name": "idle",
+          "seconds": 2.4,
+          "motion": 0.26092422008514404,
+          "maximum_span": 3.6525813341140747
+        },
+        {
+          "name": "flight",
+          "seconds": 1.2,
+          "motion": 0.9014284610748291,
+          "maximum_span": 3.5767141580581665
+        },
+        {
+          "name": "perch",
+          "seconds": 2.0,
+          "motion": 0.2109573557972908,
+          "maximum_span": 2.463662028312683
+        },
+        {
+          "name": "needle_aim",
+          "seconds": 0.8666666666666667,
+          "motion": 0.4283939450979233,
+          "maximum_span": 3.57546329498291
+        },
+        {
+          "name": "needle_fire",
+          "seconds": 0.3333333333333333,
+          "motion": 0.24781513214111328,
+          "maximum_span": 3.3594212532043457
+        },
+        {
+          "name": "low_recover",
+          "seconds": 1.1,
+          "motion": 0.423714280128479,
+          "maximum_span": 3.589999794960022
+        },
+        {
+          "name": "hurt",
+          "seconds": 0.4,
+          "motion": 0.4644433632493019,
+          "maximum_span": 3.5210938453674316
+        },
+        {
+          "name": "death",
+          "seconds": 1.2,
+          "motion": 1.9052956402301788,
+          "maximum_span": 3.589999794960022
+        }
+      ],
+      "packed_images": 15
+    }
+  }
+}

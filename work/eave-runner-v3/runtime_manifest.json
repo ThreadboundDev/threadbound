@@ -1,0 +1,42 @@
+{
+  "model": "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v3.glb",
+  "source": "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v3.blend",
+  "bytes": 26457404,
+  "animations": [
+    "death",
+    "hurt",
+    "idle",
+    "jump_slash",
+    "land_recover",
+    "run",
+    "throw_release",
+    "throw_windup",
+    "wall_attach",
+    "wall_launch",
+    "wall_perch",
+    "wall_windup"
+  ],
+  "textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Roughness_4K_1d5c83efcd.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_Roughness_4K_cff3089430.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Roughness_4K_37ad58ea20.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_BaseColor_4K_c1fdcb3158.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_NormalGL_4K_fdd992393d.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_Roughness_4K_f26709e30e.png"
+  ],
+  "normal_textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_NormalGL_4K_fdd992393d.png"
+  ],
+  "triangles": 657226,
+  "geometry_buffers_verified": 1983
+}

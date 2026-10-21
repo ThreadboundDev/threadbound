@@ -22,3 +22,9 @@ Assets/BlueBiome/Characters/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Enemies/EaveRunner/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Enemies/LoomHeron/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Villagers/**/*.png filter=lfs diff=lfs merge=lfs -text
+
+# Keep vendored MakeHuman inputs intact, including upstream whitespace.
+ArtSource/BlueBiome/Villagers/CC0_Source/** -text -whitespace
+work/lakeside-villagers/source/** -text -whitespace
+# Upstream's seven-character Markdown heading is not a merge conflict.
+work/lakeside-villagers/source/LICENSE.md conflict-marker-size=32

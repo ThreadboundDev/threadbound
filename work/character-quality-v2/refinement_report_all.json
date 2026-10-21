@@ -1,0 +1,32 @@
+{
+  "NetMender": {
+    "before_triangles": 39390,
+    "triangles": 157752,
+    "vertices": 79829,
+    "bones": 163
+  },
+  "Boatwright": {
+    "before_triangles": 40146,
+    "triangles": 160680,
+    "vertices": 81425,
+    "bones": 163
+  },
+  "EaveRunner": {
+    "before_triangles": 66052,
+    "triangles": 264312,
+    "vertices": 134717,
+    "bones": 60
+  },
+  "LoomHeron": {
+    "before_triangles": 24488,
+    "triangles": 107096,
+    "vertices": 55533,
+    "bones": 18,
+    "new_clips": [
+      "needle_aim",
+      "needle_fire",
+      "low_recover"
+    ],
+    "muzzle_bone": "beak_tip"
+  }
+}

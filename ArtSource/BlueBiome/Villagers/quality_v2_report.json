@@ -1,0 +1,14 @@
+{
+  "NetMender": {
+    "triangles": 153580,
+    "vertices": 77722,
+    "bones": 163,
+    "normalized_vertices": 0
+  },
+  "Boatwright": {
+    "triangles": 156420,
+    "vertices": 79275,
+    "bones": 163,
+    "normalized_vertices": 0
+  }
+}

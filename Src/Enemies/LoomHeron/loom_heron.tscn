@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3]
+[ext_resource type="PackedScene" path="res://Src/Enemies/EnemyBase/enemy_base.tscn" id="1"]
+[ext_resource type="Script" path="res://Src/Enemies/LoomHeron/loom_heron.gd" id="2"]
+[ext_resource type="Resource" path="res://Src/Enemies/LoomHeron/loom_heron_stats.tres" id="3"]
+[ext_resource type="Script" path="res://Src/Enemies/WovenGuardians/woven_guardian_visual.gd" id="4"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Enemies/LoomHeron/Models/LoomHeron_v3.glb" id="5"]
+[sub_resource type="CapsuleShape2D" id="Body"]
+radius = 28.0
+height = 110.0
+[sub_resource type="CircleShape2D" id="Beak"]
+radius = 42.0
+[sub_resource type="CircleShape2D" id="Detection"]
+radius = 750.0
+[node name="LoomHeron" instance=ExtResource("1")]
+script = ExtResource("2")
+stats = ExtResource("3")
+patrol_distance = 160.0
+start_facing = 1
+editor_description = "Ranged Hermit cloth-wing guardian, v3 crafted art. Layered indigo sails, carved ceramic mask and braided basket frame. Place its feet origin 160–260px above a dry route. Aims, fires one locked ceramic needle, then descends into vulnerable recovery."
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -70)
+shape = SubResource("Body")
+[node name="Body" parent="Visuals" index="0"]
+visible = false
+[node name="Model" type="Node2D" parent="Visuals" index="1"]
+script = ExtResource("4")
+model_scene = ExtResource("5")
+camera_height = 1.05
+camera_span = 4.6
+model_yaw = 52.0
+starting_clip = &"flight"
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, -70)
+shape = SubResource("Body")
+[node name="CollisionShape2D" parent="DetectionArea" index="0"]
+shape = SubResource("Detection")
+[node name="AttackHitbox" parent="." index="6"]
+position = Vector2(54, -72)
+[node name="CollisionShape2D" parent="AttackHitbox" index="0"]
+shape = SubResource("Beak")
+[node name="HitFlashComponent" parent="." index="8"]
+target_path = NodePath("../Visuals/Model")
+[node name="EnemyHealthBar" parent="." index="11"]
+position = Vector2(0, -185)

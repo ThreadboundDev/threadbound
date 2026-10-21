@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Enemies/EaveRunner/eave_runner_model_3d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v2.glb" id="2"]
+
+[node name="EaveRunnerModel" type="Node3D"]
+script = ExtResource("1")
+editor_description = "Woven Eave Runner: art-only model with twelve clips, a sixty-bone deform rig and six short-tail cloth bones. Exact maker unspecified; Hermit-aligned visual direction."
+
+[node name="Character" parent="." instance=ExtResource("2")]

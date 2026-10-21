@@ -1,0 +1,73 @@
+{
+  "triangles": 66052,
+  "vertices": 34349,
+  "bones": 60,
+  "materials": 10,
+  "clips": [
+    {
+      "name": "idle",
+      "duration": 2.4,
+      "loop": true
+    },
+    {
+      "name": "run",
+      "duration": 0.8,
+      "loop": true
+    },
+    {
+      "name": "wall_attach",
+      "duration": 0.35,
+      "loop": false
+    },
+    {
+      "name": "wall_perch",
+      "duration": 1.6,
+      "loop": true
+    },
+    {
+      "name": "wall_windup",
+      "duration": 0.45,
+      "loop": false
+    },
+    {
+      "name": "wall_launch",
+      "duration": 0.3,
+      "loop": false
+    },
+    {
+      "name": "jump_slash",
+      "duration": 0.65,
+      "loop": false
+    },
+    {
+      "name": "land_recover",
+      "duration": 0.6,
+      "loop": false
+    },
+    {
+      "name": "throw_windup",
+      "duration": 0.45,
+      "loop": false
+    },
+    {
+      "name": "throw_release",
+      "duration": 0.35,
+      "loop": false
+    },
+    {
+      "name": "hurt",
+      "duration": 0.4,
+      "loop": false
+    },
+    {
+      "name": "death",
+      "duration": 1.2,
+      "loop": false
+    }
+  ],
+  "cloth_bones": 6,
+  "front": "-Y Blender / +Z Godot",
+  "source_base": "CC0 MakeHuman hm08 fitting surface, remapped deform weights; new clothing, cord geometry, props and animation",
+  "maker": "Unspecified; visual allegiance is Hermit-aligned",
+  "scope": "Rigged animated art asset; no live combat controller or replacement of Reedhook"
+}

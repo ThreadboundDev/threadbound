@@ -1,0 +1,51 @@
+{
+  "player_reference": "work\\eave-runner-v3\\player_reference_only.blend",
+  "eave_source": "ArtSource\\BlueBiome\\Enemies\\EaveRunner\\EaveRunner_Woven_v3.blend",
+  "source_mtime_ns": 1792593808171899400,
+  "player_geometry_sha256": "18bc25fae20ac40e9107793db28676acf59726d8d0a543112f3af954bbe8cf38",
+  "player_vertices": 464260,
+  "player_original_bounds": [
+    [
+      -0.9498665928840637,
+      0.9493858814239502
+    ],
+    [
+      -0.23743019998073578,
+      0.2360316962003708
+    ],
+    [
+      1.1371394066372886e-06,
+      1.8000497817993164
+    ]
+  ],
+  "eave_original_bounds": [
+    [
+      -0.9860881567001343,
+      0.9854764938354492
+    ],
+    [
+      -0.21274636685848236,
+      0.363479346036911
+    ],
+    [
+      0.02151479572057724,
+      1.8350000381469727
+    ]
+  ],
+  "player_scale_unchanged": true,
+  "rest_poses": true,
+  "center_spacing_metres": 1.9,
+  "vertical_orthographic_span": 3.2,
+  "hidden_eave_weapon_components": [
+    "Short blade wrapped handle",
+    "Tight blade grip flax crossing",
+    "Tight blade grip flax crossing.001",
+    "Patinated oval blade guard",
+    "Forged dark blade flats",
+    "Honed blade edge bevels",
+    "Dark blade spine fuller",
+    "Held pin dark iron shaft",
+    "Held pin sharpened point"
+  ],
+  "output": "work\\eave-runner-v3\\renders\\Eave_Player_Proportions.png"
+}

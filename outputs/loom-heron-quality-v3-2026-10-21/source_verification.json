@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "checks": 835,
+  "failures": [],
+  "asset": {
+    "source": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Enemies\\LoomHeron\\LoomHeron_Woven_v3.blend",
+    "triangles": 573520,
+    "vertices": 291599,
+    "bones": 18,
+    "rest_bounds": {
+      "minimum": [
+        -1.7556421756744385,
+        -1.130190372467041,
+        0.09631790965795517
+      ],
+      "maximum": [
+        1.755642294883728,
+        1.0766886472702026,
+        1.9107403755187988
+      ],
+      "span": [
+        3.5112844705581665,
+        2.2068790197372437,
+        1.8144224658608437
+      ]
+    },
+    "material_count": 15,
+    "packed_image_count": 15,
+    "clips": [
+      {
+        "name": "idle",
+        "seconds": 2.4,
+        "motion": 0.26092422008514404,
+        "maximum_span": 3.5573970079421997,
+        "loop_error": 6.123233849335533e-18
+      },
+      {
+        "name": "flight",
+        "seconds": 1.2,
+        "motion": 0.9014284610748291,
+        "maximum_span": 3.498070001602173,
+        "loop_error": 6.123233849335533e-18
+      },
+      {
+        "name": "perch",
+        "seconds": 2.0,
+        "motion": 0.2109573557972908,
+        "maximum_span": 2.4628419876098633,
+        "loop_error": 0.0
+      },
+      {
+        "name": "dive_windup",
+        "seconds": 0.7,
+        "motion": 0.6760931611061096,
+        "maximum_span": 3.492937207221985,
+        "loop_error": null
+      },
+      {
+        "name": "dive",
+        "seconds": 0.5333333333333333,
+        "motion": 0.2632817327976227,
+        "maximum_span": 2.7412673234939575,
+        "loop_error": null
+      },
+      {
+        "name": "brake",
+        "seconds": 0.8666666666666667,
+        "motion": 0.8058088067919016,
+        "maximum_span": 3.5112844705581665,
+        "loop_error": null
+      },
+      {
+        "name": "hurt",
+        "seconds": 0.4,
+        "motion": 0.4644433632493019,
+        "maximum_span": 3.449084758758545,
+        "loop_error": null
+      },
+      {
+        "name": "death",
+        "seconds": 1.2,
+        "motion": 1.9052956402301788,
+        "maximum_span": 3.5112844705581665,
+        "loop_error": null
+      },
+      {
+        "name": "needle_aim",
+        "seconds": 0.8666666666666667,
+        "motion": 0.4283939450979233,
+        "maximum_span": 3.492937207221985,
+        "loop_error": null
+      },
+      {
+        "name": "needle_fire",
+        "seconds": 0.3333333333333333,
+        "motion": 0.24781513214111328,
+        "maximum_span": 3.2886587381362915,
+        "loop_error": null
+      },
+      {
+        "name": "low_recover",
+        "seconds": 1.1,
+        "motion": 0.4232982397079468,
+        "maximum_span": 3.5112844705581665,
+        "loop_error": null
+      }
+    ]
+  }
+}

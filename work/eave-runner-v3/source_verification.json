@@ -1,0 +1,128 @@
+{
+  "passed": true,
+  "checks": 1180,
+  "failures": [],
+  "asset": {
+    "source": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Enemies\\EaveRunner\\EaveRunner_Woven_v3.blend",
+    "triangles": 657226,
+    "vertices": 334800,
+    "bones": 60,
+    "rest_bounds": {
+      "minimum": [
+        -1.2135188579559326,
+        -0.21274636685848236,
+        0.02151479199528694
+      ],
+      "maximum": [
+        0.985476553440094,
+        0.36347928643226624,
+        1.8350000381469727
+      ],
+      "span": [
+        2.1989954113960266,
+        0.5762256532907486,
+        1.8134852461516857
+      ]
+    },
+    "material_count": 17,
+    "packed_image_count": 15,
+    "hands": {
+      "L": {
+        "vertices": 15396,
+        "rest_wrist_radius": 0.21292413589431466,
+        "maximum_animated_wrist_radius": 0.2093474018088331
+      },
+      "R": {
+        "vertices": 15396,
+        "rest_wrist_radius": 0.21397328031509394,
+        "maximum_animated_wrist_radius": 0.15950358589461403
+      }
+    },
+    "clips": [
+      {
+        "name": "idle",
+        "seconds": 2.4,
+        "motion": 0.12124669551849365,
+        "maximum_span": 1.8149616569280624,
+        "loop_error": 0.0
+      },
+      {
+        "name": "run",
+        "seconds": 0.8,
+        "motion": 1.9208008646965027,
+        "maximum_span": 1.7735004667192698,
+        "loop_error": 0.0
+      },
+      {
+        "name": "wall_attach",
+        "seconds": 0.3333333333333333,
+        "motion": 1.9490100145339966,
+        "maximum_span": 1.9177462831139565,
+        "loop_error": null
+      },
+      {
+        "name": "wall_perch",
+        "seconds": 1.6,
+        "motion": 0.132501482963562,
+        "maximum_span": 1.590615913271904,
+        "loop_error": 0.0
+      },
+      {
+        "name": "wall_windup",
+        "seconds": 0.4666666666666667,
+        "motion": 1.2226925492286682,
+        "maximum_span": 1.5856153964996338,
+        "loop_error": null
+      },
+      {
+        "name": "wall_launch",
+        "seconds": 0.3,
+        "motion": 1.586792230606079,
+        "maximum_span": 1.6779854595661163,
+        "loop_error": null
+      },
+      {
+        "name": "jump_slash",
+        "seconds": 0.6666666666666666,
+        "motion": 1.9049323201179504,
+        "maximum_span": 1.726171836256981,
+        "loop_error": null
+      },
+      {
+        "name": "land_recover",
+        "seconds": 0.6,
+        "motion": 0.7737940549850464,
+        "maximum_span": 1.813485162332654,
+        "loop_error": null
+      },
+      {
+        "name": "throw_windup",
+        "seconds": 0.4666666666666667,
+        "motion": 1.8388462662696838,
+        "maximum_span": 1.8134850431233644,
+        "loop_error": null
+      },
+      {
+        "name": "throw_release",
+        "seconds": 0.3333333333333333,
+        "motion": 1.979610562324524,
+        "maximum_span": 1.8134852815419436,
+        "loop_error": null
+      },
+      {
+        "name": "hurt",
+        "seconds": 0.4,
+        "motion": 0.30376312881708145,
+        "maximum_span": 1.813485162332654,
+        "loop_error": null
+      },
+      {
+        "name": "death",
+        "seconds": 1.2,
+        "motion": 1.2150877714157104,
+        "maximum_span": 1.813485162332654,
+        "loop_error": null
+      }
+    ]
+  }
+}

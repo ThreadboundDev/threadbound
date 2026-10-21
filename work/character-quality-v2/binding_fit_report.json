@@ -1,0 +1,12 @@
+{
+  "NetMender": {
+    "fitted_binding_vertices": 6612,
+    "removed_throat_bridge_faces": 38,
+    "triangles": 157676
+  },
+  "Boatwright": {
+    "fitted_binding_vertices": 6612,
+    "removed_throat_bridge_faces": 82,
+    "triangles": 160516
+  }
+}

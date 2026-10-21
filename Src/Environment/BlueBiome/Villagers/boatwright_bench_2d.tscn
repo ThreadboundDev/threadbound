@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Villagers/lakeside_workstation_2d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Villagers/Models/Boatwright_Workstation.glb" id="2"]
+
+[node name="BoatwrightBench" type="Node2D"]
+script = ExtResource("1")
+model_scene = ExtResource("2")
+editor_description = "Standalone workstation. Feet anchor at the floor; uses the shared lakeside 3D lighting stage."

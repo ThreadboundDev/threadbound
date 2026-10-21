@@ -1,0 +1,121 @@
+{
+  "NetMender_v2.glb": {
+    "bytes": 5568992,
+    "animations": [
+      "TalkIdle",
+      "WorkIdle"
+    ],
+    "textures": [
+      "Assets\\BlueBiome\\Villagers\\Textures\\brown_eye_4659691c72.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\NetMender_Skin_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\NetMender_Skin_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\FlaxWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_NormalGL_4K_fdd992393d.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_BaseColor_4K_c1fdcb3158.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_Roughness_4K_f26709e30e.png"
+    ],
+    "triangles": 153580
+  },
+  "Boatwright_v2.glb": {
+    "bytes": 5665496,
+    "animations": [
+      "TalkIdle",
+      "WorkIdle"
+    ],
+    "textures": [
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\Boatwright_Skin_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\Boatwright_Skin_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\FlaxWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_NormalGL_4K_fdd992393d.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_BaseColor_4K_c1fdcb3158.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_Roughness_4K_f26709e30e.png",
+      "Assets\\BlueBiome\\Villagers\\Textures\\brown_eye_4659691c72.png"
+    ],
+    "triangles": 156420
+  },
+  "EaveRunner_v2.glb": {
+    "bytes": 9629172,
+    "animations": [
+      "death",
+      "hurt",
+      "idle",
+      "jump_slash",
+      "land_recover",
+      "run",
+      "throw_release",
+      "throw_windup",
+      "wall_attach",
+      "wall_launch",
+      "wall_perch",
+      "wall_windup"
+    ],
+    "textures": [
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_Roughness_4K_37ad58ea20.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\FlaxWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_Roughness_4K_1d5c83efcd.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_NormalGL_4K_fdd992393d.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_BaseColor_4K_c1fdcb3158.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_Roughness_4K_f26709e30e.png"
+    ],
+    "triangles": 264312
+  },
+  "LoomHeron_v2.glb": {
+    "bytes": 3768388,
+    "animations": [
+      "brake",
+      "death",
+      "dive",
+      "dive_windup",
+      "flight",
+      "hurt",
+      "idle",
+      "low_recover",
+      "needle_aim",
+      "needle_fire",
+      "perch"
+    ],
+    "textures": [
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\AgedCeramic_Roughness_4K_1d5c83efcd.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\FlaxWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WorkCanvas_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\IndigoWeave_Roughness_4K_cff3089430.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_NormalGL_4K_fdd992393d.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_BaseColor_4K_c1fdcb3158.png",
+      "Assets\\BlueBiome\\Enemies\\LoomHeron\\Textures\\walnut_Roughness_4K_f26709e30e.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_Normal_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_BaseColor_4K.png",
+      "Assets\\BlueBiome\\Characters\\SharedTexturesV2\\WovenCord_Roughness_4K_37ad58ea20.png"
+    ],
+    "triangles": 107096
+  }
+}

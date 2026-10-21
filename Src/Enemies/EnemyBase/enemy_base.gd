@@ -46,6 +46,7 @@ var _base_visuals_position := Vector2.ZERO
 var _pending_hurt_duration := 0.0
 var _hurt_visual_tween: Tween
 var _influence_controller: EnemyInfluenceController
+var _death_generation := 0
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -247,6 +248,8 @@ func die() -> void:
 	if is_dead:
 		return
 
+	_death_generation += 1
+	var death_generation := _death_generation
 	is_dead = true
 	if _influence_controller:
 		_influence_controller.on_enemy_death()
@@ -260,6 +263,9 @@ func die() -> void:
 	velocity = Vector2.ZERO
 	_play_death_collapse()
 	await get_tree().create_timer(stats.death_cleanup_delay).timeout
+	# A save reset can revive the same instance before this old timer expires.
+	if death_generation != _death_generation or not is_dead:
+		return
 	if resets_at_save_points and not is_in_group("bosses"):
 		visible = false
 		return
@@ -292,6 +298,7 @@ func reset_for_save_point() -> void:
 	if not resets_at_save_points or is_in_group("bosses"):
 		return
 
+	_death_generation += 1
 	end_attack()
 	is_dead = false
 	if _influence_controller:

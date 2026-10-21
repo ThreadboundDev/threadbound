@@ -1,0 +1,8 @@
+{
+	"checks": 97,
+	"display": "headless",
+	"failures": [
+		"LoomHeron full refined topology survives import"
+	],
+	"passed": false
+}

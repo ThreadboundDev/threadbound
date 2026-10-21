@@ -1,0 +1,68 @@
+{
+  "Guardian | woven indigo core": [
+    0.67,
+    0.72,
+    0.82,
+    1
+  ],
+  "Guardian | indigo hood and panels": [
+    0.09,
+    0.17,
+    0.29,
+    1
+  ],
+  "Guardian | charcoal work cloth": [
+    0.075,
+    0.085,
+    0.1,
+    1
+  ],
+  "Guardian | worn flax binding": [
+    0.56,
+    0.4,
+    0.23,
+    1
+  ],
+  "Guardian | aged ivory mask": [
+    0.92,
+    0.84,
+    0.67,
+    1
+  ],
+  "Guardian | hollow recess": [
+    0.008,
+    0.01,
+    0.015,
+    1
+  ],
+  "Guardian | reed splints": [
+    0.34,
+    0.19,
+    0.075,
+    1
+  ],
+  "Guardian | darkened iron": [
+    0.23,
+    0.27,
+    0.29,
+    1
+  ],
+  "Guardian | worn blade bevel": [
+    0.48,
+    0.52,
+    0.53,
+    1
+  ],
+  "Guardian | blue glaze and inner light": [
+    0.025,
+    0.2,
+    0.3,
+    1
+  ],
+  "REVIEW grey": [
+    0.13,
+    0.15,
+    0.17,
+    1
+  ]
+}

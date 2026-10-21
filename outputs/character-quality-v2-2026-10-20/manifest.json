@@ -1,0 +1,90 @@
+{
+  "Boatwright_v2_Detail.png": {
+    "bytes": 2733651,
+    "sha256": "a8a0e1fb4f2cf45c42f48843a11de9fccfaf3ccbd8b4c1832e5ec425d35b1068"
+  },
+  "Boatwright_v2_Source.png": {
+    "bytes": 3846101,
+    "sha256": "1f9f63fef96dcb0d3b4e9070841ece6fff4f25f363560b1e4f684de7ffd437f4"
+  },
+  "Character_Quality_v2_Preview.png": {
+    "bytes": 1678356,
+    "sha256": "d04ba0ed77a49570c35d5b45f68accdf094194dbca459b20b5dad8fae708f583"
+  },
+  "combat-check.log": {
+    "bytes": 567,
+    "sha256": "b838d03c5484a5e9eb40842299f1483323a737d310ed568d266c80caf0752e7e"
+  },
+  "eave-art-check.log": {
+    "bytes": 287,
+    "sha256": "fd0be3bf948e2f37ccd8eb495f511fb6bc77692613319b9c8f7c64fca451cb4a"
+  },
+  "EaveRunner_v2_Detail.png": {
+    "bytes": 3013961,
+    "sha256": "5f57553a8d1c15e4857386b4890015ac824ad29bf088738632d1f6cf53d308e1"
+  },
+  "EaveRunner_v2_Source.png": {
+    "bytes": 3929660,
+    "sha256": "3507217d87a3c796f1acc09a276bfdfb6863b7cdd2fa3f0debada5c5eaf21beb"
+  },
+  "EaveRunner_Woven_v2.blend": {
+    "bytes": 214140395,
+    "sha256": "30294e19ad3b6b38e8c1bbc237cde8b0264515777b99ca7225c63f5f03458e56"
+  },
+  "final_export_report.json": {
+    "bytes": 498,
+    "sha256": "a8f96eacc2be434b6ab343aa5dc2daa9ef04342069bca01e620039dac0dc037d"
+  },
+  "godot_art_verification.json": {
+    "bytes": 75,
+    "sha256": "3e7ce3d92bbfca5deae5688e52edc455999293d21e2816025cfd9ee7c67d8f45"
+  },
+  "Heron_Ranged_Pose_Preview.gif": {
+    "bytes": 4585256,
+    "sha256": "84e934ff994876a82c52d3bc11a58e377bc05e638e3efb0fdb61d4d847987436"
+  },
+  "Implementation_and_Review.md": {
+    "bytes": 5302,
+    "sha256": "4cbc4bc88fdce5bfad2c85d334b6fd9f941d177f37c6c81fbfa1ac12a465ba6f"
+  },
+  "lakeside-check.log": {
+    "bytes": 1366,
+    "sha256": "9be938d52b67a1d27ffe17ec459ab4509c8943d902b88014f8abfe7a3ef9efc8"
+  },
+  "LakesideVillagers_v2.blend": {
+    "bytes": 208434708,
+    "sha256": "ac63fa495ba98c91ae5d16993e34aba95d3191a2d0b0dc98ebe814caf7c34a2e"
+  },
+  "LoomHeron_v2_Source.png": {
+    "bytes": 2212640,
+    "sha256": "201ccbd28592450125431bacd629132843a827b91950d477407701e674779e17"
+  },
+  "LoomHeron_Woven_v2.blend": {
+    "bytes": 209302791,
+    "sha256": "746720c7e117ecde3dcbd172aac358d93163a1cd6f6b0788cf72ef3a4b7ea197"
+  },
+  "NetMender_v2_Detail.png": {
+    "bytes": 2630259,
+    "sha256": "3440b57545bea96c270d68c0ce1f4055e29042f72d41c2cafc503acc432fdc58"
+  },
+  "NetMender_v2_Source.png": {
+    "bytes": 3783359,
+    "sha256": "096aa86f75580f679b0bd8c804590ca4f991c56451ba340c0a525f042bd4bf6f"
+  },
+  "README.txt": {
+    "bytes": 1547,
+    "sha256": "19436511e8fba325df35a717988de0316b00eed3f17ec5da02731983bcce5297"
+  },
+  "runtime_manifest.json": {
+    "bytes": 6458,
+    "sha256": "f5ed8924e48eb6d572d1a78b6b84f1e2c1e9501cf5de5d67156790d9b008f18d"
+  },
+  "source_verification.json": {
+    "bytes": 4893,
+    "sha256": "0210986be665366bc3e728a405bcdcd77fc822eb47f01ddd13d34e0b6f7cea22"
+  },
+  "villager-check.log": {
+    "bytes": 1208,
+    "sha256": "213f2d3d22dd08c60fbf839f67352fa3f6f01214e9b1d277fc4579fdad898520"
+  }
+}

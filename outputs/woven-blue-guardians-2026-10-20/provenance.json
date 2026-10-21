@@ -1,0 +1,129 @@
+{
+  "tool": "Built-in image_gen__imagegen for concept/cord/ceramic images; Blender 5.2.1 authoring and Godot 4.7.2 import/render",
+  "base": "CC0 MakeHuman hm08 topology and matching weights, new reduced deform rig",
+  "maker": "Unspecified; visual allegiance Hermit-aligned",
+  "model": {
+    "file": "Models/EaveRunner_v1.glb",
+    "triangles": 66052,
+    "bones": 60,
+    "sha256": "2f99b40913343d55073896a16597fdc82c961602d4c4bb0d3f8aa964e79a41b1"
+  },
+  "source_sha256": "c877d6b1dd7ebb01d460d615b2ee2ed772e643d1a0d5127e9f08232d13b934e7",
+  "images": [
+    {
+      "file": "AgedIvory_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "4f15e110e47e3d4fbcaf5a645851f60647244f681538e501d488233a3c8ab388"
+    },
+    {
+      "file": "blue_pavilion_ceramic_normal_485019a0d0.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "485019a0d04c32a10c09b033a864ba65c89812dac365b6f7393f7d081a2f4222"
+    },
+    {
+      "file": "blue_pavilion_ceramic_roughness_0d12ec26f7.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "0d12ec26f78c3ea4be6e702a4c53501eace503a708a24432f2dba99b4ed51ca2"
+    },
+    {
+      "file": "blue_pavilion_cloth_light_4281ebbaa6.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4281ebbaa605935c24c91042f6e6b223cf1de5a15303829d307e22e50bfb7bbb"
+    },
+    {
+      "file": "blue_pavilion_cloth_light_normal_ce4fb9c1e9.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "ce4fb9c1e9747557e8ca40922c8118ba8fd95b14b8339095a0160126017756a6"
+    },
+    {
+      "file": "blue_pavilion_cloth_light_roughness_a46173b84c.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "a46173b84c4e8d0c1c84a33a45e89dede3c1607431ea28134afae79956c214d2"
+    },
+    {
+      "file": "blue_pavilion_indigo_normal_e2e5f28585.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "e2e5f2858529790f8fa6cce44acd37f79d37d5f309f31c59a3fa1a2884fb4564"
+    },
+    {
+      "file": "blue_pavilion_indigo_roughness_bfdfa77cee.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "bfdfa77ceeadf2eff74c3a05cbbfbfa655477e83e8f5507c0496519c4275e827"
+    },
+    {
+      "file": "IndigoWorkwear_BaseColor_8ea25f097f.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "8ea25f097f2a9a2e06fba1e57ee2df302ebb69e75c5dd59e484f7cb3bcb957bd"
+    },
+    {
+      "file": "walnut_BaseColor_4K_c1fdcb3158.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d"
+    },
+    {
+      "file": "walnut_NormalGL_4K_fdd992393d.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680"
+    },
+    {
+      "file": "walnut_Roughness_4K_f26709e30e.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "sha256": "f26709e30e72a0f98f17b6582d075a89c35bc67d402b561d3f0ed019b1b1addc"
+    },
+    {
+      "file": "WovenCord_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "d59da19488e480ca083a78b2d8412eeed902b3a6e3cc1c20fd33bd7c92866649"
+    }
+  ],
+  "concepts": [
+    {
+      "file": "EaveRunner_Woven_Concept.png",
+      "sha256": "bbaf5d7b29d58b14e5f92158ebbc6659540377d3f7cacba07637d9a7c6901c5b"
+    },
+    {
+      "file": "Woven_Flying_Concepts.png",
+      "sha256": "d29c9746e900ed33b1d190726f826427e5f6883c57356a113492379180addd4b"
+    }
+  ],
+  "prompts": "generation_prompts.json"
+}

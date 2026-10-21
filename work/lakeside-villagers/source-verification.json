@@ -1,0 +1,121 @@
+{
+  "packed_images": [
+    {
+      "name": "blue_pavilion_cloth_light.png",
+      "packed": true,
+      "bytes": 795171,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "blue_pavilion_cloth_light_normal.png",
+      "packed": true,
+      "bytes": 1747808,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light_normal.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "blue_pavilion_cloth_light_roughness.png",
+      "packed": true,
+      "bytes": 355496,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_cloth_light_roughness.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "blue_pavilion_indigo_normal.png",
+      "packed": true,
+      "bytes": 1747335,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_indigo_normal.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "blue_pavilion_indigo_roughness.png",
+      "packed": true,
+      "bytes": 355201,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Prototype\\Placeables\\Buildings\\Pavilion3D_V2\\blue_pavilion_indigo_roughness.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "brown_eye.png",
+      "packed": true,
+      "bytes": 610817,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\work\\lakeside-villagers\\source\\brown_eye.png",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "IndigoWorkwear_BaseColor.png",
+      "packed": true,
+      "bytes": 4254694,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Villagers\\Textures\\IndigoWorkwear_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "name": "walnut_BaseColor_4K.png",
+      "packed": true,
+      "bytes": 15625991,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_BaseColor_4K.png",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "walnut_NormalGL_4K.png",
+      "packed": true,
+      "bytes": 14541349,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_NormalGL_4K.png",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "walnut_Roughness_4K.png",
+      "packed": true,
+      "bytes": 6500673,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Art\\Lakeside3D\\Textures\\walnut_Roughness_4K.png",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "WorkCanvas_BaseColor.png",
+      "packed": true,
+      "bytes": 4023571,
+      "path": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Villagers\\..\\..\\..\\Assets\\BlueBiome\\Villagers\\Textures\\WorkCanvas_BaseColor.png",
+      "size": [
+        1254,
+        1254
+      ]
+    }
+  ],
+  "packed_image_bytes": 50558106,
+  "source_bytes": 54708945,
+  "scenes": [
+    "Boatwright_WorkshopReview",
+    "NetMender_WorkshopReview",
+    "Scene"
+  ]
+}

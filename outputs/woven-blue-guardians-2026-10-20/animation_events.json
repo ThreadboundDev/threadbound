@@ -1,0 +1,24 @@
+{
+  "wall_attach": {
+    "contact": 0.3
+  },
+  "wall_windup": {
+    "aim_lock": 0.35
+  },
+  "wall_launch": {
+    "detach": 0.06
+  },
+  "jump_slash": {
+    "slash_on": 0.14,
+    "slash_off": 0.39
+  },
+  "throw_windup": {
+    "aim_lock": 0.35
+  },
+  "throw_release": {
+    "release": 0.13
+  },
+  "land_recover": {
+    "recovered": 0.55
+  }
+}

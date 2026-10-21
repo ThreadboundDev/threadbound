@@ -1,0 +1,38 @@
+{
+  "version": 3,
+  "triangles": 573520,
+  "vertices": 291599,
+  "bones": 18,
+  "materials": 15,
+  "components": 153,
+  "bounds": [
+    [
+      -1.755642294883728,
+      1.755642294883728
+    ],
+    [
+      -1.130190372467041,
+      1.0766887664794922
+    ],
+    [
+      0.09631791710853577,
+      1.9107404947280884
+    ]
+  ],
+  "clips": {
+    "brake": 0.8667,
+    "death": 1.2,
+    "dive": 0.5333,
+    "dive_windup": 0.7,
+    "flight": 1.2,
+    "hurt": 0.4,
+    "idle": 2.4,
+    "low_recover": 1.1,
+    "needle_aim": 0.8667,
+    "needle_fire": 0.3333,
+    "perch": 2.0
+  },
+  "design": "authored tapered ceramic skull; individual cambered indigo fan panels; layered cloth primaries; basket weave; braided load paths; fitted joints; hooked talons",
+  "source": "ArtSource/BlueBiome/Enemies/LoomHeron/LoomHeron_Woven_v3.blend",
+  "runtime": "Assets/BlueBiome/Enemies/LoomHeron/Models/LoomHeron_v3.glb"
+}

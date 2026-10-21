@@ -1,0 +1,330 @@
+{
+  "ArtSource/BlueBiome/Villagers/LakesideVillagers_v1.blend": [
+    {
+      "object": "Boatwright_TexturedCharacter",
+      "scene": [
+        "Boatwright_WorkshopReview"
+      ],
+      "materials": [
+        {
+          "name": "Boatwright | warm skin",
+          "polys": 11278,
+          "tris": 22556,
+          "quads": 11278
+        },
+        {
+          "name": "Villager | charcoal trouser",
+          "polys": 1554,
+          "tris": 3108,
+          "quads": 1554
+        },
+        {
+          "name": "Villager | worn indigo",
+          "polys": 2675,
+          "tris": 5350,
+          "quads": 2675
+        },
+        {
+          "name": "Villager | flax linen",
+          "polys": 871,
+          "tris": 1742,
+          "quads": 871
+        },
+        {
+          "name": "Villager | work apron",
+          "polys": 285,
+          "tris": 570,
+          "quads": 285
+        },
+        {
+          "name": "Villager | hemp cord",
+          "polys": 972,
+          "tris": 1944,
+          "quads": 972
+        },
+        {
+          "name": "Villager | village walnut",
+          "polys": 186,
+          "tris": 372,
+          "quads": 186
+        },
+        {
+          "name": "Villager | salt and pepper",
+          "polys": 1752,
+          "tris": 3456,
+          "quads": 1704
+        },
+        {
+          "name": "Villager | dark hair",
+          "polys": 384,
+          "tris": 768,
+          "quads": 384
+        },
+        {
+          "name": "Villager | brown eyes.001",
+          "polys": 86,
+          "tris": 172,
+          "quads": 86
+        },
+        {
+          "name": "Villager | iron tool",
+          "polys": 54,
+          "tris": 108,
+          "quads": 54
+        }
+      ]
+    },
+    {
+      "object": "NetMender_TexturedCharacter",
+      "scene": [
+        "NetMender_WorkshopReview"
+      ],
+      "materials": [
+        {
+          "name": "NetMender | warm skin",
+          "polys": 10886,
+          "tris": 21772,
+          "quads": 10886
+        },
+        {
+          "name": "Villager | charcoal trouser",
+          "polys": 1728,
+          "tris": 3456,
+          "quads": 1728
+        },
+        {
+          "name": "Villager | worn indigo",
+          "polys": 3463,
+          "tris": 6878,
+          "quads": 3415
+        },
+        {
+          "name": "Villager | flax linen",
+          "polys": 871,
+          "tris": 1742,
+          "quads": 871
+        },
+        {
+          "name": "Villager | work apron",
+          "polys": 285,
+          "tris": 570,
+          "quads": 285
+        },
+        {
+          "name": "Villager | hemp cord",
+          "polys": 1004,
+          "tris": 2008,
+          "quads": 1004
+        },
+        {
+          "name": "Villager | village walnut",
+          "polys": 132,
+          "tris": 264,
+          "quads": 132
+        },
+        {
+          "name": "Villager | dark hair",
+          "polys": 1048,
+          "tris": 2048,
+          "quads": 1000
+        },
+        {
+          "name": "Villager | salt and pepper",
+          "polys": 240,
+          "tris": 480,
+          "quads": 240
+        },
+        {
+          "name": "Villager | brown eyes",
+          "polys": 86,
+          "tris": 172,
+          "quads": 86
+        }
+      ]
+    }
+  ],
+  "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v1.blend": [
+    {
+      "object": "EaveRunner_TexturedMesh",
+      "scene": [
+        "EaveRunner_Review"
+      ],
+      "materials": [
+        {
+          "name": "Guardian | woven indigo core",
+          "polys": 14342,
+          "tris": 28684,
+          "quads": 14342
+        },
+        {
+          "name": "Guardian | hollow recess",
+          "polys": 288,
+          "tris": 528,
+          "quads": 240
+        },
+        {
+          "name": "Guardian | charcoal work cloth",
+          "polys": 2130,
+          "tris": 4260,
+          "quads": 2130
+        },
+        {
+          "name": "Guardian | indigo hood and panels",
+          "polys": 3206,
+          "tris": 6412,
+          "quads": 3206
+        },
+        {
+          "name": "Guardian | worn flax binding",
+          "polys": 11816,
+          "tris": 23632,
+          "quads": 11816
+        },
+        {
+          "name": "Guardian | aged ivory mask",
+          "polys": 661,
+          "tris": 1322,
+          "quads": 643
+        },
+        {
+          "name": "Guardian | blue glaze and inner light",
+          "polys": 40,
+          "tris": 80,
+          "quads": 40
+        },
+        {
+          "name": "Guardian | darkened iron",
+          "polys": 444,
+          "tris": 888,
+          "quads": 444
+        },
+        {
+          "name": "Guardian | reed splints",
+          "polys": 120,
+          "tris": 240,
+          "quads": 120
+        },
+        {
+          "name": "Guardian | worn blade bevel",
+          "polys": 5,
+          "tris": 6,
+          "quads": 1
+        }
+      ]
+    }
+  ],
+  "ArtSource/BlueBiome/Enemies/LoomHeron/LoomHeron_Woven_v1.blend": [
+    {
+      "object": "Heron_blue_glazed_eye",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron blue glazed eye",
+          "polys": 576,
+          "tris": 1056,
+          "quads": 480
+        }
+      ]
+    },
+    {
+      "object": "Heron_ceramic_face",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron ceramic face",
+          "polys": 320,
+          "tris": 588,
+          "quads": 268
+        }
+      ]
+    },
+    {
+      "object": "Heron_eye_recess",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron eye recess",
+          "polys": 583,
+          "tris": 1070,
+          "quads": 487
+        }
+      ]
+    },
+    {
+      "object": "Heron_flax_knots",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron flax knots",
+          "polys": 7392,
+          "tris": 14784,
+          "quads": 7392
+        }
+      ]
+    },
+    {
+      "object": "Heron_indigo_sail",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron indigo sail",
+          "polys": 365,
+          "tris": 612,
+          "quads": 247
+        }
+      ]
+    },
+    {
+      "object": "Heron_repaired_flax_sail",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron repaired flax sail",
+          "polys": 8,
+          "tris": 16,
+          "quads": 8
+        }
+      ]
+    },
+    {
+      "object": "Heron_walnut_spars",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron walnut spars",
+          "polys": 137,
+          "tris": 274,
+          "quads": 137
+        }
+      ]
+    },
+    {
+      "object": "Heron_woven_core",
+      "scene": [
+        "Scene"
+      ],
+      "materials": [
+        {
+          "name": "Heron woven core",
+          "polys": 3068,
+          "tris": 6088,
+          "quads": 3020
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "checks": 106,
+  "failures": [],
+  "triangles": 24488,
+  "bones": 17,
+  "packed_images": 13,
+  "clips": [
+    {
+      "name": "idle",
+      "seconds": 2.4,
+      "maximum_joint_motion": 0.26092422008514404
+    },
+    {
+      "name": "flight",
+      "seconds": 1.2,
+      "maximum_joint_motion": 0.9014284610748291
+    },
+    {
+      "name": "perch",
+      "seconds": 2.0,
+      "maximum_joint_motion": 0.2109573557972908
+    },
+    {
+      "name": "dive_windup",
+      "seconds": 0.7,
+      "maximum_joint_motion": 0.599251851439476
+    },
+    {
+      "name": "dive",
+      "seconds": 0.5333333333333333,
+      "maximum_joint_motion": 0.2632817327976227
+    },
+    {
+      "name": "brake",
+      "seconds": 0.8666666666666667,
+      "maximum_joint_motion": 0.6491963714361191
+    },
+    {
+      "name": "hurt",
+      "seconds": 0.4,
+      "maximum_joint_motion": 0.4644433632493019
+    },
+    {
+      "name": "death",
+      "seconds": 1.2,
+      "maximum_joint_motion": 1.748923271894455
+    }
+  ]
+}

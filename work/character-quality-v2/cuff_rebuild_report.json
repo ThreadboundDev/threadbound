@@ -1,0 +1,12 @@
+{
+  "NetMender": {
+    "old_cuff_faces_removed": 3072,
+    "new_cuff_triangles": 2048,
+    "total_triangles": 153580
+  },
+  "Boatwright": {
+    "old_cuff_faces_removed": 3072,
+    "new_cuff_triangles": 2048,
+    "total_triangles": 156420
+  }
+}

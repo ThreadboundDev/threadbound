@@ -1,0 +1,40 @@
+{
+  "model": "Assets/BlueBiome/Enemies/LoomHeron/Models/LoomHeron_v3.glb",
+  "bytes": 22759436,
+  "animations": [
+    "brake",
+    "death",
+    "dive",
+    "dive_windup",
+    "flight",
+    "hurt",
+    "idle",
+    "low_recover",
+    "needle_aim",
+    "needle_fire",
+    "perch"
+  ],
+  "textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Roughness_4K_1d5c83efcd.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_Roughness_4K_cff3089430.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Roughness_4K_37ad58ea20.png",
+    "Assets/BlueBiome/Enemies/LoomHeron/Textures/walnut_BaseColor_4K_c1fdcb3158.png",
+    "Assets/BlueBiome/Enemies/LoomHeron/Textures/walnut_NormalGL_4K_fdd992393d.png",
+    "Assets/BlueBiome/Enemies/LoomHeron/Textures/walnut_Roughness_4K_f26709e30e.png"
+  ],
+  "normal_textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Enemies/LoomHeron/Textures/walnut_NormalGL_4K_fdd992393d.png"
+  ],
+  "triangles": 573520,
+  "geometry_buffers_verified": 405
+}

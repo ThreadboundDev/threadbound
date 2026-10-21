@@ -1,0 +1,35 @@
+{
+  "EaveRunner_v1.glb": {
+    "bytes": 3132988,
+    "textures": [
+      "blue_pavilion_indigo_normal_e2e5f28585.png",
+      "WovenCord_BaseColor.png",
+      "blue_pavilion_indigo_roughness_bfdfa77cee.png",
+      "blue_pavilion_cloth_light_normal_ce4fb9c1e9.png",
+      "IndigoWorkwear_BaseColor_8ea25f097f.png",
+      "blue_pavilion_cloth_light_roughness_a46173b84c.png",
+      "blue_pavilion_cloth_light_4281ebbaa6.png",
+      "blue_pavilion_ceramic_normal_485019a0d0.png",
+      "AgedIvory_BaseColor.png",
+      "blue_pavilion_ceramic_roughness_0d12ec26f7.png",
+      "walnut_NormalGL_4K_fdd992393d.png",
+      "walnut_BaseColor_4K_c1fdcb3158.png",
+      "walnut_Roughness_4K_f26709e30e.png"
+    ],
+    "animations": [
+      "death",
+      "hurt",
+      "idle",
+      "jump_slash",
+      "land_recover",
+      "run",
+      "throw_release",
+      "throw_windup",
+      "wall_attach",
+      "wall_launch",
+      "wall_perch",
+      "wall_windup"
+    ],
+    "materials": 10
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "Heron V3 | deep indigo linen": [
+    0.32,
+    0.52,
+    0.78,
+    1
+  ],
+  "Heron V3 | weathered indigo linen": [
+    0.57,
+    0.76,
+    0.94,
+    1
+  ],
+  "Heron V3 | shadow indigo linen": [
+    0.18,
+    0.29,
+    0.43,
+    1
+  ],
+  "Heron V3 | flax repairs": [
+    0.66,
+    0.68,
+    0.6,
+    1
+  ],
+  "Heron V3 | honey flax cord": [
+    0.64,
+    0.48,
+    0.28,
+    1
+  ],
+  "Heron V3 | worn flax highlights": [
+    0.83,
+    0.69,
+    0.43,
+    1
+  ],
+  "Heron V3 | dark woven understructure": [
+    0.46,
+    0.57,
+    0.66,
+    1
+  ],
+  "Heron V3 | carved ivory ceramic": [
+    0.97,
+    0.97,
+    0.9,
+    1
+  ],
+  "Heron V3 | ceramic edge wear": [
+    0.4,
+    0.35,
+    0.25,
+    1
+  ],
+  "Heron V3 | recessed lacquer": [
+    0.012,
+    0.019,
+    0.025,
+    1
+  ],
+  "Heron V3 | patinated fasteners": [
+    0.075,
+    0.085,
+    0.066,
+    1
+  ],
+  "Heron V3 | blue glazed iris": [
+    0.02,
+    0.31,
+    0.42,
+    1
+  ],
+  "Heron V3 | indigo ceramic inlay": [
+    0.018,
+    0.045,
+    0.069,
+    1
+  ],
+  "Heron V3 | split walnut spars": [
+    0.52,
+    0.36,
+    0.21,
+    1
+  ],
+  "Heron | charged thread": [
+    0.025,
+    0.32,
+    0.48,
+    1
+  ]
+}

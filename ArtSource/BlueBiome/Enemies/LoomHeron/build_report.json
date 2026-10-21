@@ -1,0 +1,18 @@
+{
+  "bones": 17,
+  "triangles": 24488,
+  "vertices": 13176,
+  "surfaces": 8,
+  "clips": {
+    "idle": 2.4,
+    "flight": 1.2,
+    "perch": 2.0,
+    "dive_windup": 0.7,
+    "dive": 0.55,
+    "brake": 0.85,
+    "hurt": 0.4,
+    "death": 1.2
+  },
+  "direction": "Blender -Y, Godot +Z",
+  "scale": "meters; span about 3.5m; body origin at floor"
+}

@@ -1,0 +1,30 @@
+{
+	"asset": {
+		"detailed_surfaces": 10,
+		"materials": [
+			"Heron V3 | blue glazed iris",
+			"Heron V3 | carved ivory ceramic",
+			"Heron V3 | ceramic edge wear",
+			"Heron V3 | dark woven understructure",
+			"Heron V3 | deep indigo linen",
+			"Heron V3 | flax repairs",
+			"Heron V3 | honey flax cord",
+			"Heron V3 | indigo ceramic inlay",
+			"Heron V3 | patinated fasteners",
+			"Heron V3 | recessed lacquer",
+			"Heron V3 | shadow indigo linen",
+			"Heron V3 | split walnut spars",
+			"Heron V3 | weathered indigo linen",
+			"Heron V3 | worn flax highlights",
+			"Heron | charged thread.001"
+		],
+		"normal_surfaces": 10,
+		"triangles": 573520,
+		"vertices": 323027
+	},
+	"checks": 167,
+	"display": "headless",
+	"failures": [],
+	"passed": true,
+	"scope": "Imported asset data and gameplay framing; this is not a GPU render test."
+}
