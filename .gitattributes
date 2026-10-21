@@ -6,3 +6,19 @@
 *.glb filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
+
+# Preserve delivered art and work references without large binary Git blobs.
+*.blend@ filter=lfs diff=lfs merge=lfs -text
+*.kra filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.png filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+outputs/**/*.gif filter=lfs diff=lfs merge=lfs -text
+work/**/*.png filter=lfs diff=lfs merge=lfs -text
+work/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+work/**/*.gif filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Art/Lakeside3D/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Art/LakesideMap/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Characters/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Enemies/EaveRunner/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Enemies/LoomHeron/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Villagers/**/*.png filter=lfs diff=lfs merge=lfs -text

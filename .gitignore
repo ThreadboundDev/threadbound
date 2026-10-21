@@ -57,3 +57,19 @@ __pycache__/
 
 # Blender automatic backup copies; keep deliberate named source versions.
 *.blend[0-9]*
+
+# Reproducible isolated Godot imports and temporary Blender build directories.
+# Keep work scripts, reports, reference inputs and deliberate review images.
+/work/**/import_project/
+/work/**/temp/
+/work/**/build-temp/
+/work/**/blender-temp/
+
+# Raw animation captures; packaged GIFs and review stills remain versioned.
+/work/character-quality-v2/heron-motion/
+/work/loom-heron-v3/motion/
+/work/woven-guardians/renders/Eave_[0-9]*.png*
+/work/woven-guardians/renders/Heron_[0-9]*.png*
+/work/lakeside-ui-rock/fracture_[0-9]*.png*
+/work/lakeside-villagers/renders/greeting_[0-9]*.png*
+/work/eave-runner/renders/motion_*.png*
