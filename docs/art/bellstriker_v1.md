@@ -1,5 +1,7 @@
 # Bellstriker — playable prototype
 
+Reviewed October 5, 2026 against `5f42ee0b`. The live visual preloads **Boxing v4**; v1–v3 sections below preserve implementation history. No checks or hands-on acceptance were performed during this documentation update. Prioritize review through [the work queues](../project_status_and_worklist.md) and [upcoming hands-on sessions](../next_test_session.md).
+
 ## Current v4: attached wrists and trailing swimming feet
 
 Live model: `Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v4.glb`. Editable source: `ArtSource/BlueBiome/Enemies/Bellstriker_Boxing_v4.blend`. v3 is preserved. `tools/art/revise_bellstriker_attachment_v4.py` loads the saved v3 rather than rebuilding its rig or combat poses.
@@ -8,9 +10,23 @@ The old mesh-space split missed the near glove because the supplied model faces 
 
 `tools/art/verify_bellstriker_attachment_v4.py` checks actual wrist/glove mesh proximity, arm-chain continuity across the combos, unchanged original curves outside the swimming leg rotations, and seamless moving foot loops. Existing imported-pose and combat checks also target v4. Use `render_bellstriker.tscn -- --combo-frames --output=<directory>` for six samples of each water combo segment and the swim cycle.
 
-## Previous v3: full-spine swimming and vertical boxing
+## Current combat behavior and test locations
 
-The live visual now uses `Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v3.glb`, with editable source `ArtSource/BlueBiome/Enemies/Bellstriker_Boxing_v3.blend`. v1/v2 and the supplied high-resolution model remain untouched. `tools/art/revise_bellstriker_spine_v3.py` builds v3 from v2 and refuses to overwrite an existing v3 source unless explicitly told it is still an untouched generated output.
+Two-axis aquatic pursuit and short-burst terrestrial pursuit lead into a three-punch combo: lead jab, rear cross, heavy double-claw smash. Water/land leaps remain; dry air pockets count as land. Terrain blocks movement and strike damage. The current implementation does not provide general platform pathfinding, wall-sticking, variant colors or environment-breaking interactions.
+
+Windups are 0.32 / 0.27 / 0.62 seconds; active windows are 0.12 / 0.14 / 0.22 seconds. Damage is 16 / 21 / 32 before existing scaling. Each punch can damage a receiver once. Aim tracks during early windup and between punches, then locks for 0.10 seconds (0.20 for the finisher); released punches do not home. Small steps maintain pressure between punches; a wall or escaping target can end the sequence early. Final recovery is 0.90 seconds with a 0.45-second cooldown. Hurt/death disable the attack. No passive contact damage; windups, gaps and recovery are harmless.
+
+The live v4 test locations are:
+
+- `Src/Enemies/Bellstriker/bellstriker_test.tscn`: F6, begin on the dock, bait the water-to-land leap, then swim into the pool to review boxing.
+- `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn`: instance at `(2500, 820)` beyond the initial fish/Reedhook encounters.
+- Reusable scene: `Src/Enemies/Bellstriker/bellstriker.tscn`.
+
+Use `tools/enemies/verify_bellstriker.tscn` for combat/environment integration and `tools/enemies/verify_bellstriker_animation.gd` for current imported poses. Review tells, combo escape/recovery, wrist/body contact, swimming feet and amphibious transitions by playing; verification scripts are not a feel decision.
+
+## Previous v3: full-spine swimming and vertical boxing (historical)
+
+At the v3 stage the visual used `Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v3.glb`, with editable source `ArtSource/BlueBiome/Enemies/Bellstriker_Boxing_v3.blend`. v1/v2 and the supplied high-resolution model remain untouched. `tools/art/revise_bellstriker_spine_v3.py` builds v3 from v2 and refuses to overwrite an existing v3 source unless explicitly told it is still an untouched generated output.
 
 The 44-bone rig includes body/thorax/neck/head, a connected six-segment abdomen-to-tail-fan chain, shoulder/elbow/fist chains, four three-joint legs per side, and antenna branches. The tail chain extends past the end of the mesh; tail-fan vertices have full tail-fan influence, not a mix with the stationary torso. Swim and swim-idle use a traveling vertical wave through the entire rear body, with smaller counter-motion in the thorax/head and tucked legs that follow their corresponding body segment. Vertex weights are normalized. Swim/guard loops match at their endpoints.
 
@@ -24,23 +40,23 @@ Verification: `tools/art/verify_bellstriker_spine_v3.py` checks the saved Blende
 
 ## Previous v2: swimming and boxing (historical)
 
-The live scene now uses `Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v2.glb`, authored in `ArtSource/BlueBiome/Enemies/Bellstriker_Boxing_v2.blend`. Previous v1 source/export are preserved. `tools/art/revise_bellstriker_boxing.py` generates the initial v2 source; never regenerate over manual edits.
+At the v2 stage the scene used `Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v2.glb`, authored in `ArtSource/BlueBiome/Enemies/Bellstriker_Boxing_v2.blend`. Previous v1 source/export are preserved. `tools/art/revise_bellstriker_boxing.py` generates the initial v2 source; never regenerate over manual edits.
 
 Water pursuit uses a tail/body swimming cycle with tucked legs, not the terrestrial walk cycle. Water idle floats with tucked legs. In close combat the thorax raises 52 degrees; head and claws counter-rotate to face forward. Presentation aims toward the target around the body center. Land movement remains walking, and water/land leaps are retained. The generated fused source required separating the club shells into rigid pieces to prevent stretched triangles; shoulders, leg weights, and transitions are still prototype art and need a manual cleanup pass.
 
 Combo: left jab, right cross, heavy double-claw smash. Windups: 0.32 / 0.27 / 0.62 seconds. Active windows: 0.12 / 0.14 / 0.22 seconds. Damage: 16 / 21 / 32 before existing scaling. Each punch damages a receiver once, with light hitstop on the first two and stronger hitstop on the finisher. Aim tracks between punches and during initial windup, then locks for 0.10 seconds (0.20 for finisher); released punches never home. Small approach steps between punches maintain pressure. Walls or an escaping target end the sequence early. Final recovery is 0.90 seconds, plus 0.45-second cooldown. Hurt/death interrupt the sequence and disable damage.
 
-The existing F6 test scene and lake spawn both use v2. Integration checks cover swimming vs walking clips, upright charge, all three punches and single-hit damage, locked aim in both facings, escape cancellation, harmless gaps/recovery, wall occlusion, leaps, air pockets, hurt/death, and save reset. The v1 tuning below is historical and superseded by this section.
+The F6 test scene and lake spawn used v2 at that stage; both now use v4. Integration checks cover swimming vs walking clips, upright charge, all three punches and single-hit damage, locked aim in both facings, escape cancellation, harmless gaps/recovery, wall occlusion, leaps, air pockets, hurt/death, and save reset. The v1 tuning below is historical and superseded by the combo behavior above.
 
 Implements the amphibious elite in `docs/design/blue_swordfish_ecosystem_and_environmental_combat.md` using the supplied `hitem3d.glb`. This is a gameplay and animation first pass, not final creature animation.
 
-## Test locations
+## Original v1 test setup (historical)
 
 - Open `Src/Enemies/Bellstriker/bellstriker_test.tscn` in Godot and press F6. Start on the dock, bait the water-to-land leap, then swim into the pool to test underwater combat. Swimming is unlocked in this scene.
 - Also placed in `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn` at `(2500, 820)`, beyond the initial fish/reedhook encounters.
 - Reusable enemy scene: `Src/Enemies/Bellstriker/bellstriker.tscn`.
 
-## Current behavior
+## Original v1 single-strike behavior (historical)
 
 Two-axis aquatic pursuit and short-burst terrestrial pursuit. Launches ballistic leaps toward nearby land/platform targets or off ledges toward water. Air pockets count as dry space. Terrain blocks movement and strike damage.
 
@@ -48,7 +64,7 @@ Charge lasts 0.70 seconds. Aim follows the player initially, then locks for the 
 
 Starting tuning: 320 HP, 28 strike damage (subject to existing enemy scaling), reduced incoming knockback. Uses shared hurt, hit flash, hitstop, health bar, death, pickups, and save-point reset systems. Bell audio is synthesized locally; no external audio dependency.
 
-## Editable assets
+## Original v1 assets (preserved)
 
 Original preserved unchanged: `ArtSource/BlueBiome/Enemies/Bellstriker_HighRes_Source.glb`.
 
@@ -60,7 +76,7 @@ Approximately 50,000 triangles instead of the source's two million, with 2048-pi
 
 `tools/art/build_bellstriker.py` generates the initial assets and refuses to replace an existing Blender source by default. Do not use `--replace-generated` after manual edits.
 
-## Verification
+## Verification commands (current checks)
 
 `godot --headless --path . res://tools/enemies/verify_bellstriker.tscn`
 

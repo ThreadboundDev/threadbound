@@ -4,6 +4,21 @@ This document is the working source of truth for developing the playable Blue
 Biome. It organizes the work without locking unresolved mechanics, enemy
 designs, or final art direction prematurely.
 
+## Current checkpoint — October 5, 2026
+
+Reviewed against `5f42ee0b` on `water-cleanup`. Water Bulb interactions, water traversal, authored air attacks, the water combo/specials, Tide Duelist, Reedhook and Bellstriker are implemented prototypes. Lake, village, painted terrain, pavilion V2 and deck-module experiments exist. This documentation review did not rerun verification or accept them by playtest.
+
+October 10 follow-up: current local work now includes swordfish-fracturable greybox walls and art attached to each bulb. [Six focused fish/bulb/room-authoring checks passed](../verification/focused_checks_2026_10_10.md), including those additions. That updates the October 5 prototype/verification status below; barrier teaching, live-editor placement, visuals and feel still need review.
+
+The next milestone is one accepted representative Blue room: useful baseline and optional routes, recoverable mistakes, readable combat, coherent player/world scale and an observed performance baseline. Broader region production follows that proof. Swordfish friendly damage, fracture barriers, multi-dash elite and the tortoise encounter remain future ecosystem prototypes rather than completed content.
+
+Use [Project status and work list](../project_status_and_worklist.md) for priorities and [Next hands-on test session](../next_test_session.md) for the ready-to-play handoff. Development has two availability queues:
+
+- **Away:** discuss systems and intended feel, audit source, investigate errors, run relevant automated checks, prepare file-specific proposals and make authorized focused changes. These tasks can progress while Chase cannot physically play.
+- **At-computer:** judge controls, tells/contact, route usefulness, scale, art integration and the exported candidate. Automation does not close those decisions.
+
+Availability changes which ready task we pick; it does not change the existing approval rules or mean all work must stop for a playtest.
+
 ## Development Goal
 
 Build an interactive, readable lakeside region whose encounters and traversal
@@ -17,17 +32,19 @@ existing player-expression systems, and collision-first environment pipeline.
 
 Return to the room greyboxes before producing final environment art.
 
-- Playtest the new bumper blocks in representative Blue room layouts.
+- Playtest the existing Water Bulbs in representative Blue room layouts.
 - Explore bumper chains, optional routes, recovery paths, combat placement,
   and interactions near water.
-- Define how water changes bumper movement without committing to a full
-  implementation before the prototype proves fun.
+- Review the implemented melee recoil, boosted dash and remote clear around
+  water. Define changes from observed play rather than treating the initial
+  interaction implementation as still missing.
 - Rework individual room geometry only after its traversal purpose is clear.
 - Validate normal routes and expressive routes at player scale.
 
-The first focused design question is: **what does entering, leaving, or moving
-through water do to a bumper launch, and what does the player control during
-that transition?**
+The current focused design question is: **do entering/leaving water and bulb
+launches preserve useful control, readable direction and safe recovery in a
+representative room?** Intended behavior and edge cases can be discussed while
+away; the answer about feel still needs hands-on review.
 
 #### Exploratory Bumper Art Concept: Water-Pod Flower
 
@@ -96,14 +113,17 @@ systems, files, edge cases, and verification plan for approval.
 
 ### 2. Blue Combat and Enemy Needs
 
-Use existing enemies as temporary encounter actors while traversal is being
-validated. Their purpose is to reveal what the rooms need, not to imply that
-they are final Blue inhabitants.
+Tide Duelist, Reedhook and Bellstriker are now reusable first-pass encounter
+actors. Review their existing roles alongside traversal before expanding the
+roster or treating the prototype art as final.
 
 - Test existing enemy archetypes against bumper and water layouts.
 - Record missing combat roles rather than beginning with visual generation.
-- Select one smallest useful Blue enemy or adaptation once the gameplay gap is
-  understood.
+- Review fish commitment/recovery, Reedhook reach/ledges and Bellstriker boxing
+  and amphibious pursuit. Record keep/change decisions for each.
+- Select the smallest useful ecosystem prototype after the current encounter
+  decisions; swordfish friendly damage and one fracture barrier precede the
+  tortoise encounter.
 - Prototype behavior and silhouette readability before commissioning or
   generating final art.
 - Keep new enemy mechanics compatible with established combat foundations.
@@ -132,9 +152,11 @@ visible seams, repetition, or unsuitable rendering.
 
 ## Branch and Pull Request Strategy
 
-`threadbound/level-blue-biome-development` is the integration branch for the
-Blue Biome work. Focused implementation should use short-lived branches from
-the latest integration branch, following the repository naming rules.
+`threadbound/level-blue-biome-development` was the earlier Blue integration
+branch; the September checkpoint preserved that work and the October 5 review
+is on `water-cleanup`. Verify the intended current base before starting a
+dependent branch rather than assuming the historical integration branch is
+current. Focused new branches follow `threadbound/<type>-<description>`.
 
 Examples:
 
@@ -146,12 +168,15 @@ Examples:
 
 Each pull request should contain one reviewable outcome and include what
 changed, why it changed, and how it was tested. Merge or rebase the latest Blue
-integration work before starting a dependent branch. Do not mix final art,
+integration work as needed before starting a dependent branch, using the
+verified intended base. Do not mix final art,
 enemy behavior, and traversal-system changes into one pull request.
 
 ## Milestones
 
 ### Milestone A: Traversal Proof
+
+Status: interaction prototypes exist; representative-route usefulness and feel await hands-on acceptance.
 
 - One representative room demonstrates useful bumper play.
 - Water/bumper behavior is defined and verified.
@@ -160,11 +185,15 @@ enemy behavior, and traversal-system changes into one pull request.
 
 ### Milestone B: Combat Proof
 
+Status: three enemy roles and water combat are implemented prototypes; encounter acceptance and ecosystem interactions remain work.
+
 - Representative Blue encounters have documented gameplay needs.
 - One Blue-specific enemy role is selected and prototyped.
 - Encounters remain readable around water and bumper movement.
 
 ### Milestone C: Art Proof
+
+Status: several art/rendering studies exist; one coherent room, scale, contact edges and performance await review.
 
 - The terrain tileset works without obvious seams at room scale.
 - One representative room has approved gameplay, background, and foreground
@@ -173,17 +202,25 @@ enemy behavior, and traversal-system changes into one pull request.
 
 ### Milestone D: Region Production
 
+Status: macro-room prototypes exist; expansion of accepted encounters/art depends on representative-room proof.
+
 - Proven traversal patterns are distributed without making every room alike.
 - Enemy and hazard combinations reinforce each room's purpose.
 - Reusable art is extended across the macro route with room-specific landmarks.
 
-## Immediate Next Session
+## Immediate next sessions
 
-1. Open a representative Blue greybox room.
-2. Place and tune bumpers without changing water code.
-3. Test launch direction, cadence, recovery, and optional-route potential.
-4. Sketch two or three candidate water interactions from observed play.
-5. Choose the smallest prototype and prepare its approval proposal.
+**Away:** the bounded fish/bulb/room-authoring pass is now complete (October 10).
+Discuss intended fish/Bellstriker/water-combat feel, and prepare
+small ready items or investigate reproducible problems. Keep manual retests
+written into the handoff. Room and ecosystem proposals can progress in
+conversation without prematurely accepting their gameplay.
+
+**At-computer:** start with the prepared H1 lake movement/attack session, about
+30 minutes. H2 reviews enemy encounters next; H3 covers bulb routes and scale;
+H4 covers pavilion/deck presentation/performance. Use separate sessions instead
+of asking Chase to complete the entire backlog at once. Shared-system/demo and
+export regression follows before accepting a playable candidate.
 
 ## Scope Guardrails
 

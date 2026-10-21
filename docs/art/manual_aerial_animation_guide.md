@@ -1,5 +1,15 @@
 # Your aerial attack workspace
 
+## Current runtime and source map — October 5, 2026
+
+The authored v2 air set is integrated through `Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb` while `threadborne_equipped_combat_swings.glb` supplies the equipped model/locomotion. Procedural shoulder aiming and leg replacement are not applied over those authored air clips. Forward contact uses source frames 7–11; forward recovery is compressed after frame 12. Up/down runtime copies extend quickly, hold contact, end at 0.32 seconds and use active frames 1–5. Existing momentum speed modifiers still apply.
+
+The Blender workspace/source cadence remains editable and distinct from runtime retiming. The original workspace instructions below describe its initial templates; later sections record the completed directional v2 set and its integration. Do not interpret historical “not exported/integrated” notes as current pending work.
+
+Current water combat supersedes the single-swing water workspace integration below. It derives three strikes from grounded `slash_2` with swimming legs and also supports underwater neutral/spin specials. See [water combo and abilities](water_combo_v1.md). Review [the next hands-on session](../next_test_session.md) for current acceptance tasks; this note cleanup did not rerun checks or accept the animation by feel.
+
+## Initial workspace and posing instructions
+
 Open `ArtSource/Player/Blender/ManualAttacks/Threadborne_Aerial_Attacks_Workspace.blend`.
 
 This separate copy starts in Pose Mode, side-on, with the sword-hand control selected. The current game export and original equipped source are untouched. The posing mesh is the lighter preview; the full-resolution character is retained but hidden. Three held-pose templates are included, not completed attack animations:
@@ -41,7 +51,7 @@ Start with forward, then make distinct up/down arcs. West can use a mirrored for
 
 ## Returning to the game
 
-### Forward attack body pass
+### Historical forward attack body pass
 
 `ArtSource/Player/Blender/ManualAttacks/Threadborne_Aerial_Attacks_FullBody.blend`
 contains the user's saved `air_attack_forward` sword animation with added torso,
@@ -55,9 +65,9 @@ was checked across half-frame samples for finite transforms and an exact loop
 pose match. The unstretched IK hand can still fall short of the authored target
 by up to 0.088 model units during the sweep; the target keys were retained.
 An untextured motion preview is saved beside the Blend as
-`air_attack_forward_full_body.gif`. This pass has not been exported to Godot.
+`air_attack_forward_full_body.gif`. At this stage the pass had not been exported to Godot; the later directional v2 donor is now integrated.
 
-### Directional attack set
+### Directional source studies
 
 `ArtSource/Player/Blender/ManualAttacks/Threadborne_Aerial_Attacks_Directional.blend`
 contains the approved forward action unchanged plus authored `air_attack_up`
@@ -71,8 +81,9 @@ All half-frame samples passed finite-transform and IK reach checks (maximum
 hand-target error below 0.000002 model units), and both endpoint poses match.
 Rendered frame sequences were reviewed. The previews alongside the Blend are
 `air_attack_up_preview.gif` and `air_attack_down_preview.gif`. These are Blender
-animations only; runtime selection, baking, hitboxes and VFX timing are not
-integrated yet. Earlier workspaces are preserved.
+animations from the first study; its runtime selection, baking, hitboxes and VFX
+timing were not integrated at that stage. The later v2 set is now integrated.
+Earlier workspaces are preserved.
 
 The revised `Threadborne_Aerial_Attacks_Directional_v2.blend` supersedes that
 first directional study. Up now chambers with a bent elbow and an upright
@@ -89,15 +100,20 @@ The v2 air set is now active in `player_live_3d_visual.gd`, using the baked
 animation donor `Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb`.
 The existing equipped model and locomotion library remain in use. No procedural
 shoulder aiming or leg replacement is applied over the authored air clips.
-Live damage and sword-sweep timing use source frames 7–11 on the imported
-zero-based timeline. Base attack playback is 1.0; momentum attack-speed
+At initial integration, damage and sword-sweep timing used source frames 7–11
+on the imported zero-based timeline. Forward contact retains that window;
+up/down now use the later retimed frames 1–5. Base attack playback is 1.0; momentum attack-speed
 modifiers still apply. Grounded attacks and the spin special are unchanged.
+
+#### Historical single-swing water integration
+
+This subsection describes the earlier water implementation, superseded by the current runtime-generated three-hit combo and specials. Its source clips remain preserved in the authored donor.
 
 `Threadborne_Water_Attacks_Workspace.blend` contains `water_attack_idle` and
 `water_attack_move`, alongside the approved air clips. Idle copies the approved
 forward attack. Move samples the existing swimming body/legs and places the
 same hand/elbow target path relative to the swimming shoulder. These editable
-IK actions are baked only in the disposable export process. In-game, their
+IK actions are baked only in the disposable export process. At that stage, their in-game
 poses blend over swim speed (fully moving at 120 px/s), with both clips sampled
 at the same attack time. The moving display retains swim-direction tilt.
 Water slashes hit ahead along swimming direction, or facing direction at rest;
@@ -116,7 +132,7 @@ Playtest: air left/right, up, down/pogo; water attack while still, horizontal
 and vertical swimming; start/stop swimming during a swing; cancel into dash;
 then verify grounded combos and the directional spin still feel unchanged.
 
-Saving the Blend does **not** change the game. Once an action is ready, bake the IK's evaluated motion onto the deformation bones, export the chosen clips, and align damage/VFX windows to the authored contact frames. Integration must replace the current runtime directional arm rotation for these attacks; otherwise it would distort the newly authored poses. Water will still need a separate blending review.
+Saving the Blend does **not** change the game. For future air edits, bake the IK's evaluated motion onto deformation bones, export the chosen clips through the authored-attack workflow, and review current runtime retiming alongside damage/VFX windows. The old directional shoulder rotation has already been removed from authored air playback. Current water blending is a separate runtime adaptation; exporting the historical water donor alone does not replace it.
 
 Do not run `prepare_manual_aerial_workspace.py` to update your animations. It is a one-time setup script and refuses to overwrite an existing manual workspace.
 

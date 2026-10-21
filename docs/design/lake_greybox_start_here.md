@@ -4,11 +4,11 @@ Open `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn`. Save a
 
 ## Draw the level
 
-1. Select Geometry and open the **Room Greybox** bottom panel. **Terrain Tiles** selects the existing layer: paint solid terrain to route the underwater space and one-way tiles for decks. **Large Block** and **One-Way Block** add resizable pieces.
+1. Select Geometry and open the **Room Greybox** bottom panel. **Terrain Tiles** selects the existing layer: paint solid terrain to route the underwater space and one-way tiles for decks. **Large Block** and **One-Way Block** add resizable pieces. **Breakable Wall** adds a solid cracked wall on the same 128 px grid; resize its **Size** in the Inspector and rotate it for floors or ceilings. Use it in place of solid tiles across the opening so breaking it leaves a passage. Only an active swordfish dash fractures it; ordinary contact and player attacks leave it intact. Bait the fish while standing on its side of the wall, dodge after its aim locks, and let the committed dash strike the wall. Reload the room to restore broken walls.
 2. Select Volumes, press **Polygon Water**, then **Edit Water / Air Points**. Use Godot's native polygon toolbar to create or move vertices. Concave shapes, sloping edges and narrow passages are supported. Use separate volumes for disconnected bodies. Do not cross a polygon's own edges.
 3. Press **Move Water** to select and move the entire volume. Shape editing and dock additions support editor undo/redo. New water or terrain is not accidentally nested inside the selected polygon child.
 4. **Air Pocket** adds a dry polygon. Shape it with the same edit button and overlap it with water. The water fill is cut away there and the player uses normal gravity/ground movement. Add solid floors/walls where wanted; the pocket itself has no solid boundary.
-5. Move the player onto your starting porch. Adjust the Player/Camera2D limits to fit an expanded room. Place **Water Bulb** volumes for launch routes.
+5. Move the player onto your starting porch. Adjust the Player/Camera2D limits to fit an expanded room. Place **Water Bulb** volumes for launch routes. Their petal art animates in game as well as appearing in the editor, with pop, spent and refill states.
 
 Air pockets currently override swimming for the player. Enemy AI does not gain an underwater movement system from this tool. A pocket's movement boundary uses the player's origin, so leave clearance for their body. The greybox water shader supports 16 pockets / 256 combined pocket vertices per loaded scene and warns when exceeded. Water shapes themselves have no such authored-point cap. Split larger maps into rooms.
 
@@ -27,6 +27,8 @@ Enable **Lake Presentation** on polygon water for moving screen-space reflection
 Current art comparison: `blue_still_village_hybrid_preview.tscn`. Use the lake starter for level layout and the hybrid room for the approved mixed-art direction.
 
 ## Validation and cleanup
+
+`tools/environment/verify_greybox_walls_and_bulb_art.tscn` checks resizable wall collision, player/windup rejection, successive dash fractures, solid-terrain recovery, dry-pocket blocking, and bulb art alignment, resizing, pop, spent, refill and regeneration states. The existing Tide Duelist and bulb-choice regressions also cover combat and live traversal routes.
 
 `tools/environment/verify_lake_authoring.gd` checks concave containment, entry from rest, cruise/braking/reversal, dry-pocket priority, re-entry, slow/fast exits, transformed pockets and independent rectangular collision sizes. A real Godot render was checked for the pocket cutout and submerged visibility.
 

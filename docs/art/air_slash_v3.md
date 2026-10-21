@@ -1,5 +1,7 @@
 # Air slash V3
 
+Status reviewed October 5, 2026: **superseded aerial study**. The current player uses the authored v2 forward/up/down donor described in [the manual attack guide](manual_aerial_animation_guide.md), not `air_light_1`. Preserve this note/source for history; its timing and validation describe the earlier revision. Use [Next hands-on test session](../next_test_session.md) for current acceptance work.
+
 This pass responds to the frozen body and wrist-driven cut in V2. Every bone except `upper_arm.R`, `forearm.R`, and `hand.R` follows the moving `jump_1` animation, sampling jump frames 7–22 across the 16-frame attack. This is a baked moving jump segment, not a live layer that preserves the current jump playback position.
 
 The sword hand rises near the shoulder while the elbow folds backward in the side-view plane. The elbow opens as the hand travels forward, then down, and the arm blends back into the moving jump. The sword maintains a fixed alignment to the forearm during the cut instead of supplying the motion with a separate wrist rotation. The single hit window is source frames 5–8; VFX follow that timing.

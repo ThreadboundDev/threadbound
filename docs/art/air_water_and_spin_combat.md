@@ -1,5 +1,13 @@
 # Air/water slash and directional special
 
+## Status: earlier implementation, superseded
+
+Reviewed October 5, 2026. The reused air/water opener and procedural shoulder adaptation described below are historical. Current air attacks use the authored v2 forward/up/down donor with later runtime retiming; current water attacks use a three-hit grounded-combo adaptation, and neutral/directional Special now works underwater.
+
+Use [the manual attack guide](manual_aerial_animation_guide.md) for current air integration, [water combo and abilities](water_combo_v1.md) for live underwater behavior, and [the next hands-on session](../next_test_session.md) for testing. The dry-ground directional-special description remains implementation history; current code and targeted checks govern its live tuning. Validation below belongs to the earlier revision and was not rerun for this note update.
+
+## Historical implementation and validation
+
 Air and water basic attacks reuse the first swing of `slash_2`, the existing grounded opener. The live clip runs from 0 to 1.10 seconds of source time; damage and sword VFX use source frames 16–24 at 30 FPS. Playback speed scales both together. Water attacks remain single swings, including when touching the lake floor.
 
 A hidden animation sampler keeps the jumping, swimming, or water-idle lower body. Water also retains its torso/head pose and swimming tilt. The sword arm performs the authored swing, with a constant directional shoulder rotation instead of continuously pinning the blade toward the aim point. Starting a slash blends over 0.08 seconds and preserves the current swim phase. Downward aerial hits retain pogo behavior; downward water hits do not bounce the swimmer.

@@ -1,5 +1,7 @@
 # Underwater combo: downward / upward / two-handed flip
 
+Current runtime notes reviewed October 5, 2026 against `5f42ee0b`. Source workspaces below are retained history. No automated checks or hands-on acceptance were performed during this note cleanup. Use [the next test session](../next_test_session.md) for player review and [the work queues](../project_status_and_worklist.md) for priorities.
+
 ## Current runtime: grounded attack motion with dynamic swimming legs
 
 The live player derives all three water strikes from the grounded `slash_2` combo (segments starting at 0.00, 1.15, 2.33 seconds), not the separately authored water donor. Pelvis/root, torso, arms, sword and the complete spin/front flip are unchanged. Only thigh/shin/foot/toe rotations are adapted: a continuously sampled `water_idle_1` leg pose carries 65% of each grounded joint's motion relative to its whole-combo initial pose, and the grounded leg rotation blends 75% toward that moving water pose. This produces tucked, floating legs that still bend/kick with the attack, rather than a planted stance or frozen swim pose. A common reference and swim phase across all three hits prevent handoff snaps. All bone positions/scales stay authored.
@@ -18,11 +20,21 @@ Neutral allows normal swimming throughout. Spin allows normal steering during wi
 
 `tools/combat/verify_water_specials.gd` checks all three inputs, source motion/swim legs, frame-by-frame pelvis anchoring, movement, AP, radial coverage, single hits, water entry/exit, cancellation, and cleanup. `tools/combat/render_water_specials.gd` generates a neutral/spin pose contact sheet for visual review.
 
+## Current runtime verification
+
+Run Godot with `--headless --path . --script` and:
+
+- `res://tools/combat/verify_water_combo.gd` for the live grounded-to-swimming adaptation, handoffs, both facings, hit windows, buffering, coverage, cancellation and anchoring.
+- `res://tools/combat/verify_water_specials.gd` for underwater neutral/spin adaptation, AP, movement, hits and surface transitions.
+- `res://tools/combat/verify_lake_attack_refresh.gd` for the wider air/water/ground-special regression.
+
+The `render_water_combo.gd`, `render_water_combo_motion.gd` and `render_water_specials.gd` tools capture current game poses. In-game control, contact and normal-speed readability still require hands-on review; inspect the runtime result before editing a preserved donor.
+
 ## Earlier authored version (historical)
 
 All prior manual Blender workspaces and water exports are preserved. The documentation below describes that earlier authored version, no longer used for live water-combo animation.
 
-Basic attack underwater uses three swim-idle-based clips. Tap once for the opener;
+The earlier authored basic attack used three swim-idle-based clips. Its timing and presentation below are historical, not current tuning. Tap once for the opener;
 tap again during each strike to buffer the next. Holding attack does not auto-chain.
 Each strike can queue only one follow-up; the finisher ends the chain. Swimming
 movement remains available. Movement does not tilt the authored attacks; facing is held
@@ -35,7 +47,7 @@ for each strike, with the next strike able to face the new input direction.
 | water_combo_3 | 1–39 | 12–30 | 360-degree two-handed front-flip slash |
 
 The first cut raises the sword, cuts downward, and settles at the right hip.
-In-game playback uses `water_combo_playback_speed = 1.25` on the player (25%
+At that stage playback used `water_combo_playback_speed = 1.25` on the player (25%
 faster than the authored clips), multiplied by the existing momentum attack
 speed. Strike duration follows that playback speed; damage and VFX windows
 remain tied to the current animation frame.
@@ -49,7 +61,9 @@ Each enemy can be hit once per strike. Damage uses existing profiles: basic,
 moving-finisher-second, stationary-second (base 25/25/30 before normal modifiers).
 Dashing or leaving the water cancels the chain.
 
-## Editing in Blender
+## Editing the preserved Blender study (historical donor)
+
+This workflow edits/exports the older water donor. The live combo is now generated from the grounded source at runtime; exporting this study does not update it. Reintroducing the donor would be a separate approved integration change, not a routine export.
 
 Open `ArtSource/Player/Blender/ManualAttacks/Threadborne_Water_Combo_v4_IK.blend`.
 Select `Threadborne_Rig`, use the Dope Sheet's Action Editor, and select one of the
@@ -107,8 +121,9 @@ each frame to preserve the direction/reach during torso movement.
 
 All controls remain editable IK. Saved v3 actions are retained as
 `reference_v3_water_combo_1/2/3`; all earlier Blender files are preserved.
-The game asset uses the new v4 actions; later Blender edits need another export
-to appear in Godot. Saved v3 hand rotation discontinuities are not propagated:
+The preserved donor contains the v4 actions; later Blender edits need another
+export to update that donor, which is no longer selected for the live combo.
+Saved v3 hand rotation discontinuities are not propagated:
 the continuous preserved v2 blade path is used with the existing v3 body.
 
 Save your edits, then run from the repository root (adjust Blender's path if needed):
@@ -119,27 +134,23 @@ Save your edits, then run from the repository root (adjust Blender's path if nee
 
 This exports only the combo clips into
 `Assets/Threadborne/Player/Equipped3DTest/threadborne_water_combo.glb` without saving
-changes back to the Blender source. Godot imports this separate animation donor;
-the equipped player mesh and other clips remain unchanged. If timing changes,
-update the active windows in `player.gd` and the regression tests as appropriate.
+changes back to the Blender source. Godot can import this preserved donor, but
+the current `_install_water_combo` does not load it. Exporting it does not
+change the equipped mesh, live combo, damage windows or current tests.
 
 `tools/art/revise_water_combo_arms_v4.py` is the current generator, not the editing export
 path. It refuses to replace an existing workspace unless explicitly passed
 `-- --replace-generated`; that flag discards edits in the generated workspace.
 
-## Verification
+## Historical source verification and current render tools
 
-Run Godot with `--headless --path . --script` and either:
-
-- `res://tools/combat/verify_water_combo.gd`: both facings, chain buffering, hit
-  windows, all-around coverage, duplicate-hit prevention, cancellation, and
-  pelvis anchoring throughout every clip.
-- `res://tools/combat/verify_lake_attack_refresh.gd`: existing air/water regression.
+The Godot checks listed in Current runtime verification above exercise the
+current generated clips, not acceptance of this historical Blender donor.
 
 `tools/art/verify_water_combo_v2.py` runs in Blender and checks matching clip
 handoffs, fixed finger poses, pelvis anchoring, and both hands reaching their
 grip targets during the two-handed section. Pass
-`-- Threadborne_Water_Combo_v4_IK.blend` to verify the current source.
+`-- Threadborne_Water_Combo_v4_IK.blend` to verify the preserved v4 source.
 `tools/art/verify_water_combo_v4.py` additionally verifies exact preservation of
 non-sword-control curves, the forward elbow plane, extended follow-through,
 and bounded frame-to-frame wrist rotation. Near-straight arms in v4 are

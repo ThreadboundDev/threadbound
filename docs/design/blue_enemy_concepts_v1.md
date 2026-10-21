@@ -4,6 +4,18 @@ Status: A/Reedhook and the D2/Tide Duelist swordfish/samurai direction were appr
 
 The approved combat direction uses swordfish anatomy and the principles of battōjutsu and iaijutsu without making the creature a literal samurai. The earlier visual scope studies below remain useful model references, but the maintained behavior and encounter rules now live in the linked design record.
 
+October 20 narrative direction: organized regional opposition should belong to
+the Hermit's faction and defend its understanding of Balance. Wildlife and
+unaffiliated bandits can have separate motives. See
+[Enemy factions and world context](enemy_factions_and_world_context.md) for the
+recorded constraint and proposed connections. Those proposals do not yet
+change these assets' origins, the native swordfish identity or runtime behavior.
+
+October 20 art follow-up: Chase is not sold on Reedhook as an enemy and considers
+the current model a prototype. Keep its current placeholder until a replacement
+is chosen. The authorized wall-assassin art pass and requested flying-enemy
+concepts are recorded in [Woven Blue guardians](../art/woven_blue_guardians_v1.md).
+
 ## Needlefin iteration 2
 
 The user suggested combining a swordfish with a samurai and asked whether it might suit a boss. `ArtSource/BlueBiome/Concepts/Enemies/needlefin_samurai_v2.png` explores D1/Reed Ronin (common), D2/Tide Duelist (elite), and D3/Stillwater Ronin (miniboss). These are alternative scope studies, not three approved enemies. Shared features: a smooth katana-shaped bill, integrated helmet brow, indigo armor scales, and sleeve-like fins. Recommendation: use the middle silhouette with simplified fins as a distinctive regular/elite enemy; reserve elaborate dueling behavior and larger presentation for a possible miniboss. Its threat level should come from behavior and encounter design, not armor detail alone. No boss or lore commitment has been made. Generated with the built-in image tool; exact prompt saved alongside the board.

@@ -52,6 +52,19 @@ Enemies reflect the world:
 - Weaver → imitation, control  
 - Reclaimer → removal, correction  
 
+### Faction and World Context
+
+October 20 direction: each enemy needs a motive for opposing the player and a
+reason to occupy its location. Organized regional enemies belong to the
+Thread Master's faction and defend its interpretation of its principle.
+Unaffiliated bandits and affected wildlife can supply distinct local motives.
+Connect encounters, environmental evidence and NPC talking points before the
+boss. Regional color and a combat role alone are insufficient.
+
+See [Enemy factions and world context](enemy_factions_and_world_context.md)
+for the confirmed direction, canon constraints and proposed Blue applications.
+Specific new guard roles, ecology and dialogue there remain proposals.
+
 ---
 
 ## 🧶 Enemy Categories

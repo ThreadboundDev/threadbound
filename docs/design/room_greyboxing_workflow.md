@@ -10,6 +10,7 @@ The Room Greybox editor dock exists to turn an idea into a playable room as quic
 - Dark-grey one-way tile: jump-through platform with a pale top edge, painted from the same palette.
 - Dark-grey large block: freely resized solid rectangular geometry.
 - Dark-grey one-way block: freely resized jump-through rectangular geometry.
+- Cyan-cracked breakable wall: resizable solid terrain; only an active swordfish dash fractures it. Place it instead of solid tiles across the opening. The fish continues through the opening; reload the room to restore the wall.
 - Blue water: playable prototype swim volume.
 - Red hazard: damage and knockback volume; free placement by default so slopes, spikes, and irregular danger zones are not constrained to the grid.
 - White water bulb: non-solid traversal volume. Attacks recoil the player,
@@ -68,7 +69,7 @@ The **Hazard** button creates a reusable triangular spike strip. Hazards reuse t
 
 ## Prototype Bumpers
 
-The **Water Bulb** button creates a reusable non-solid traversal volume. Bulbs
+The **Water Bulb** button creates a reusable non-solid traversal volume with animated petal artwork in every runtime instance. Pop, spent and refill animations follow its gameplay state. Bulbs
 are non-solid: touching one never deals damage and gently ejects the player.
 Each instance exposes its size, hits required to break, launch strength in
 normal jump heights, and regeneration delay. The attack that removes the final
