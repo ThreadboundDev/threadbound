@@ -1,0 +1,232 @@
+{
+	"after": {
+		"cave_left": {
+			"distance": 582.350524902344,
+			"end": "(-982.3505, -594.9333)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"cave_right": {
+			"distance": 580.664428710938,
+			"end": "(-399.3356, -601.8409)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"fisher_roof_left": {
+			"distance": 477.025497436523,
+			"end": "(78.9745, -825.9711)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"fisher_roof_right": {
+			"distance": 476.8232421875,
+			"end": "(560.8232, -825.4939)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"lakebed_left": {
+			"distance": 416.21142578125,
+			"end": "(583.7886, 2430.857)",
+			"reached": false,
+			"stalled_frames": 162,
+			"worst_stall": 162
+		},
+		"lakebed_right": {
+			"distance": 128.673522949219,
+			"end": "(128.6732, 2425.054)",
+			"reached": false,
+			"stalled_frames": 197,
+			"worst_stall": 197
+		},
+		"right_shore_left": {
+			"distance": 349.986328125,
+			"end": "(5000.014, 300.5703)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"right_shore_right": {
+			"distance": 350.0068359375,
+			"end": "(5350.007, 300.2931)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"ruin_bridge_left": {
+			"distance": 725.196533203125,
+			"end": "(3294.803, 2307.688)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"ruin_bridge_right": {
+			"distance": 721.56689453125,
+			"end": "(4021.567, 2266.225)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"shore_left": {
+			"distance": 349.81649017334,
+			"end": "(-119.8165, 319.853)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"shore_right": {
+			"distance": 356.15608215332,
+			"end": "(236.1561, 316.1173)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"slip_roof_left": {
+			"distance": 660.070556640625,
+			"end": "(2479.929, -478.3275)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"slip_roof_right": {
+			"distance": 658.8837890625,
+			"end": "(3138.884, -475.7421)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"workshop_roof_left": {
+			"distance": 632.23779296875,
+			"end": "(2367.762, -1573.324)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"workshop_roof_right": {
+			"distance": 630.9892578125,
+			"end": "(3000.989, -1577.132)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		}
+	},
+	"before": {
+		"cave_left": {
+			"distance": 546.932373046875,
+			"end": "(-946.9324, -600.2937)",
+			"reached": false,
+			"stalled_frames": 104,
+			"worst_stall": 104
+		},
+		"cave_right": {
+			"distance": 157.729187011719,
+			"end": "(-822.2708, -592.5259)",
+			"reached": false,
+			"stalled_frames": 151,
+			"worst_stall": 151
+		},
+		"fisher_roof_left": {
+			"distance": 416.667098999023,
+			"end": "(139.3329, -181.6758)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"fisher_roof_right": {
+			"distance": 416.666900634766,
+			"end": "(500.6669, -181.6758)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"lakebed_left": {
+			"distance": 0.123046875,
+			"end": "(1000.346, 2486.788)",
+			"reached": false,
+			"stalled_frames": 220,
+			"worst_stall": 220
+		},
+		"lakebed_right": {
+			"distance": 73.9999084472656,
+			"end": "(73.99991, 2463.782)",
+			"reached": false,
+			"stalled_frames": 210,
+			"worst_stall": 210
+		},
+		"right_shore_left": {
+			"distance": 194.99462890625,
+			"end": "(5155.005, 296.7541)",
+			"reached": false,
+			"stalled_frames": 118,
+			"worst_stall": 118
+		},
+		"right_shore_right": {
+			"distance": 348.51318359375,
+			"end": "(5348.513, 296.4168)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"ruin_bridge_left": {
+			"distance": 291.976318359375,
+			"end": "(3728.024, 2302.711)",
+			"reached": false,
+			"stalled_frames": 152,
+			"worst_stall": 152
+		},
+		"ruin_bridge_right": {
+			"distance": 556.992431640625,
+			"end": "(3856.992, 2304.266)",
+			"reached": false,
+			"stalled_frames": 119,
+			"worst_stall": 119
+		},
+		"shore_left": {
+			"distance": 349.999778747559,
+			"end": "(-119.9998, 315.6803)",
+			"reached": true,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"shore_right": {
+			"distance": 165.272869110107,
+			"end": "(45.27287, 315.7506)",
+			"reached": false,
+			"stalled_frames": 122,
+			"worst_stall": 122
+		},
+		"slip_roof_left": {
+			"distance": 333.330078125,
+			"end": "(2806.67, -85.04175)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"slip_roof_right": {
+			"distance": 341.663330078125,
+			"end": "(2821.663, -85.04175)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"workshop_roof_left": {
+			"distance": 383.32958984375,
+			"end": "(2616.67, -1034.871)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		},
+		"workshop_roof_right": {
+			"distance": 383.32958984375,
+			"end": "(2753.33, -1034.871)",
+			"reached": false,
+			"stalled_frames": 0,
+			"worst_stall": 0
+		}
+	},
+	"failures": [],
+	"passed": true
+}

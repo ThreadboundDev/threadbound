@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/net_workshop_3d.tscn" id="2"]
+[node name="NetWorkshop" type="Node2D"]
+editor_description = "Bottom-center anchor. 1001px wide, 637px tall. Entry sensor hides facade and roof center. The room owns solid collision."
+script = ExtResource("1")
+model_scene = ExtResource("2")
+entry_rect = Rect2(-384, -426, 768, 365)

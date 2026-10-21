@@ -1,0 +1,1141 @@
+[gd_scene format=4 uid="uid://ci64gwc2i38ww"]
+
+[ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_bumper.tscn" id="1_84ve6"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://cltdhj51882n" path="res://Assets/BlueBiome/Art/LakesideMap/quarry_block.png" id="5_3fuy0"]
+[ext_resource type="Script" uid="uid://druh8mmmsjy1p" path="res://Src/Environment/BlueBiome/Prototypes/lake_level_presentation.gd" id="5_art"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_breakable_rock.tscn" id="5_lncmj"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/TideDuelist/tide_duelist.tscn" id="8_fish"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Reedhook/reedhook.tscn" id="9_reedhook"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Bellstriker/bellstriker.tscn" id="10_bellstriker"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/EaveRunner/eave_runner.tscn" id="guardian_eave"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/LoomHeron/loom_heron.tscn" id="guardian_heron"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/lakeside_krita_artwork.tscn" id="map_art"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/fishers_house_2d.tscn" id="map_house"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_lantern_2d.tscn" id="map_lantern"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/lakeside_rock_collision.tscn" id="map_rocks"]
+[ext_resource type="Script" uid="uid://dfi4fjmr1ejmh" path="res://Src/Environment/BlueBiome/Prototypes/lakeside_krita_playtest.gd" id="map_script"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/covered_boat_slip_2d.tscn" id="map_slip"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_art_stage_2d.tscn" id="map_stage"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/central_tower_2d.tscn" id="map_tower"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/net_workshop_2d.tscn" id="map_workshop"]
+[ext_resource type="PackedScene" uid="uid://bk6sithumcg8y" path="res://Src/UI/combat_hud.tscn" id="playtest_hud"]
+[ext_resource type="Texture2D" uid="uid://fat4p2jiygo1" path="res://Assets/BlueBiome/Art/LakesideMap/walking_deck.png" id="stamp_walking_deck"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/boatwright_2d.tscn" id="villager_boatwright"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/net_mender_2d.tscn" id="villager_mender"]
+
+[node name="BlueLakesideKritaPlaytest" type="Node2D" unique_id=209142078]
+editor_description = "F6: saved Krita map at 1:1 scale plus approved 3D village buildings. Original terrain, water, air pockets, breakables and actors retained. Building guides replaced by matching 2D collision. Lights and foliage remain editable nodes."
+script = ExtResource("map_script")
+
+[node name="Backdrop" type="Polygon2D" parent="." unique_id=2122872592]
+z_index = -100
+position = Vector2(-38, 815)
+color = Color(0.055, 0.095, 0.14, 1)
+polygon = PackedVector2Array(-4096, -4096, 8192, -4096, 8192, 8192, -4096, 8192)
+
+[node name="WaterBulb" parent="Backdrop" unique_id=721547638 instance=ExtResource("1_84ve6")]
+position = Vector2(330, 308)
+
+[node name="WaterBulb2" parent="Backdrop" unique_id=30843828 instance=ExtResource("1_84ve6")]
+position = Vector2(2340, 771)
+scale = Vector2(-1, 1)
+
+[node name="WaterBulb2" parent="Backdrop/WaterBulb2" unique_id=593237349 instance=ExtResource("1_84ve6")]
+position = Vector2(1327, -727)
+
+[node name="WaterBulb4" parent="Backdrop" unique_id=507596182 instance=ExtResource("1_84ve6")]
+position = Vector2(3627, -165)
+
+[node name="Geometry" type="Node2D" parent="." unique_id=123977663]
+
+[node name="GreyboxTerrain" parent="Geometry" unique_id=1462546748 instance=ExtResource("4")]
+tile_map_data = PackedByteArray("AAAAAAMAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA0AAAAAAAAAAAAFAP//AAABAAAAAAAGAP//AAABAAAAAAAQAP//AAABAAAAAAARAP//AAABAAAAAAABAA0AAAAAAAAAAAACAA0AAAAAAAAAAAADAA0AAAAAAAAAAAATAA0AAAAAAAAAAAATAAwAAAAAAAAAAAATAAsAAAAAAAAAAAATAAoAAAAAAAAAAAATAA4AAAAAAAAAAAATAA8AAAAAAAAAAAATABAAAAAAAAAAAAATABEAAAAAAAAAAAATABIAAAAAAAAAAAD//wgAAAAAAAAAAAD+/wgAAAAAAAAAAAD9/wgAAAAAAAAAAAD8/wgAAAAAAAAAAAD8/wkAAAAAAAAAAAD8/w0AAAAAAAAAAAD7/w0AAAAAAAAAAAD7/w4AAAAAAAAAAAD6/w4AAAAAAAAAAAD6/w8AAAAAAAAAAAD6/xAAAAAAAAAAAAD6/xEAAAAAAAAAAAD6/xIAAAAAAAAAAAD6/xMAAAAAAAAAAAD7/xMAAAAAAAAAAAD8/xMAAAAAAAAAAAD9/xMAAAAAAAAAAAD9/xQAAAAAAAAAAAD+/xQAAAAAAAAAAAD//xQAAAAAAAAAAAAAABQAAAAAAAAAAAABABQAAAAAAAAAAAACABQAAAAAAAAAAAADABQAAAAAAAAAAAAEABQAAAAAAAAAAAAFABQAAAAAAAAAAAAGABQAAAAAAAAAAAAHABQAAAAAAAAAAAAIABQAAAAAAAAAAAAJABQAAAAAAAAAAAAKABQAAAAAAAAAAAALABQAAAAAAAAAAAAMABQAAAAAAAAAAAANABQAAAAAAAAAAAARABQAAAAAAAAAAAASABQAAAAAAAAAAAATABQAAAAAAAAAAAATABMAAAAAAAAAAAD//wMAAAAAAAAAAAD+/wMAAAAAAAAAAAD9/wMAAAAAAAAAAAD8/wMAAAAAAAAAAAD7/wMAAAAAAAAAAAD4/wMAAAAAAAAAAAD4/wIAAAAAAAAAAAD4/wEAAAAAAAAAAAD4/wAAAAAAAAAAAAD4////AAAAAAAAAAD4//7/AAAAAAAAAAD4//3/AAAAAAAAAAD4//z/AAAAAAAAAAD4//b/AAAAAAAAAAAgAAMAAAABAAAAAAAhAAMAAAABAAAAAAAiAAMAAAABAAAAAAAjAAMAAAABAAAAAAAkAAMAAAABAAAAAAAkAP//AAAAAAAAAAAkAP7/AAAAAAAAAAAjAP7/AAAAAAAAAAAjAP3/AAAAAAAAAAAjAPz/AAAAAAAAAAAjAPv/AAAAAAAAAAAjAPr/AAAAAAAAAAAjAPn/AAAAAAAAAAAjAPj/AAAAAAAAAAAjAPf/AAAAAAAAAAAjAPb/AAAAAAAAAAAjAPX/AAAAAAAAAAAjAPT/AAAAAAAAAAAjAPP/AAAAAAAAAAD5//z/AAAAAAAAAAD6//z/AAAAAAAAAAD7//z/AAAAAAAAAAD8//z/AAAAAAAAAAASAP//AAABAAAAAAD9//z/AAAAAAAAAAD9//3/AAAAAAAAAAD9//7/AAAAAAAAAAD9////AAAAAAAAAAD9/wAAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAAEAP//AAABAAAAAAAXAPj/AAABAAAAAAAYAPj/AAABAAAAAAAZAPj/AAABAAAAAAAUAAkAAAAAAAAAAAAUAAoAAAAAAAAAAAAUAAsAAAAAAAAAAAAUAAwAAAAAAAAAAAAUAA0AAAAAAAAAAAAUAA4AAAAAAAAAAAAUAA8AAAAAAAAAAAAUABAAAAAAAAAAAAAUABEAAAAAAAAAAAAUABIAAAAAAAAAAAAUABMAAAAAAAAAAAAUABQAAAAAAAAAAAAVABIAAAAAAAAAAAAVABEAAAAAAAAAAAAVABAAAAAAAAAAAAAVAA8AAAAAAAAAAAAVAA4AAAAAAAAAAAAVAA0AAAAAAAAAAAAVAAwAAAAAAAAAAAAVAAsAAAAAAAAAAAAVAAoAAAAAAAAAAAAVAAkAAAAAAAAAAAAYABQAAAAAAAAAAAAZABQAAAAAAAAAAAAZABMAAAAAAAAAAAAaABMAAAAAAAAAAAAaABQAAAAAAAAAAAAbABQAAAAAAAAAAAAcABQAAAAAAAAAAAAdABQAAAAAAAAAAAAeABQAAAAAAAAAAAAfABQAAAAAAAAAAAAgABQAAAAAAAAAAAAhABQAAAAAAAAAAAAiABQAAAAAAAAAAAAjABQAAAAAAAAAAAAkABQAAAAAAAAAAAAlABQAAAAAAAAAAAAlAAMAAAABAAAAAAAmAAMAAAAAAAAAAAAmAAQAAAAAAAAAAAAmAAUAAAAAAAAAAAAmAAYAAAAAAAAAAAAmAAcAAAAAAAAAAAAmAAgAAAAAAAAAAAAmAAkAAAAAAAAAAAAmAAoAAAAAAAAAAAAmAAsAAAAAAAAAAAAmAAwAAAAAAAAAAAAmAA0AAAAAAAAAAAAmAA4AAAAAAAAAAAAmAA8AAAAAAAAAAAAmABAAAAAAAAAAAAAmABQAAAAAAAAAAAAfABMAAAAAAAAAAAAgABMAAAAAAAAAAAAgABIAAAAAAAAAAAAhABIAAAAAAAAAAAAiABIAAAAAAAAAAAAiABMAAAAAAAAAAAAhABMAAAAAAAAAAAAjABMAAAAAAAAAAAAYABMAAAAAAAAAAAAWABEAAAAAAAAAAAAXABEAAAAAAAAAAAAXABIAAAAAAAAAAAAWABIAAAAAAAAAAAAYABIAAAAAAAAAAAAWABAAAAAAAAAAAAD4/wQAAAAAAAAAAAD6/wcAAAAAAAAAAAD7/wQAAAAAAAAAAAD7/wUAAAAAAAAAAAD7/wYAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wQAAAAAAAAAAAD8/wUAAAAAAAAAAAD8/wYAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wQAAAAAAAAAAAD9/wUAAAAAAAAAAAD9/wYAAAAAAAAAAAD9/wcAAAAAAAAAAAD+/wQAAAAAAAAAAAD+/wUAAAAAAAAAAAD+/wYAAAAAAAAAAAD+/wcAAAAAAAAAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD1/wcAAAAAAAAAAAD1/wgAAAAAAAAAAAD1/wkAAAAAAAAAAAD1/woAAAAAAAAAAAD1/wsAAAAAAAAAAAD1/wwAAAAAAAAAAAD1/w0AAAAAAAAAAAD2/wcAAAAAAAAAAAD2/wgAAAAAAAAAAAD2/wkAAAAAAAAAAAD2/woAAAAAAAAAAAD2/wsAAAAAAAAAAAD2/wwAAAAAAAAAAAD2/w0AAAAAAAAAAAD3/wwAAAAAAAAAAAD3/w0AAAAAAAAAAAD4/wwAAAAAAAAAAAD4/w0AAAAAAAAAAAD5/wwAAAAAAAAAAAD5/w0AAAAAAAAAAAD6/wgAAAAAAAAAAAD6/wkAAAAAAAAAAAD6/w0AAAAAAAAAAAD7/wgAAAAAAAAAAAD7/wkAAAAAAAAAAAD1/w4AAAAAAAAAAAD1/w8AAAAAAAAAAAD1/xAAAAAAAAAAAAD1/xEAAAAAAAAAAAD1/xIAAAAAAAAAAAD1/xMAAAAAAAAAAAD1/xQAAAAAAAAAAAD1/xUAAAAAAAAAAAD2/w4AAAAAAAAAAAD2/w8AAAAAAAAAAAD2/xAAAAAAAAAAAAD2/xEAAAAAAAAAAAD2/xIAAAAAAAAAAAD2/xMAAAAAAAAAAAD2/xQAAAAAAAAAAAD2/xUAAAAAAAAAAAD3/w4AAAAAAAAAAAD3/w8AAAAAAAAAAAD3/xAAAAAAAAAAAAD3/xEAAAAAAAAAAAD3/xIAAAAAAAAAAAD3/xMAAAAAAAAAAAD3/xQAAAAAAAAAAAD3/xUAAAAAAAAAAAD4/w4AAAAAAAAAAAD4/w8AAAAAAAAAAAD4/xAAAAAAAAAAAAD4/xEAAAAAAAAAAAD4/xIAAAAAAAAAAAD4/xMAAAAAAAAAAAD4/xQAAAAAAAAAAAD4/xUAAAAAAAAAAAD5/w4AAAAAAAAAAAD5/w8AAAAAAAAAAAD5/xAAAAAAAAAAAAD5/xEAAAAAAAAAAAD5/xIAAAAAAAAAAAD5/xMAAAAAAAAAAAD5/xQAAAAAAAAAAAD5/xUAAAAAAAAAAAD1/xYAAAAAAAAAAAD1/xcAAAAAAAAAAAD1/xgAAAAAAAAAAAD1/xkAAAAAAAAAAAD2/xYAAAAAAAAAAAD2/xcAAAAAAAAAAAD2/xgAAAAAAAAAAAD2/xkAAAAAAAAAAAD3/xYAAAAAAAAAAAD3/xcAAAAAAAAAAAD3/xgAAAAAAAAAAAD3/xkAAAAAAAAAAAD4/xYAAAAAAAAAAAD4/xcAAAAAAAAAAAD4/xgAAAAAAAAAAAD4/xkAAAAAAAAAAAD5/xYAAAAAAAAAAAD5/xcAAAAAAAAAAAD5/xgAAAAAAAAAAAD5/xkAAAAAAAAAAAD6/xUAAAAAAAAAAAD6/xYAAAAAAAAAAAD6/xcAAAAAAAAAAAD6/xgAAAAAAAAAAAD6/xkAAAAAAAAAAAD7/xUAAAAAAAAAAAD7/xYAAAAAAAAAAAD7/xcAAAAAAAAAAAD7/xgAAAAAAAAAAAD7/xkAAAAAAAAAAAD8/xUAAAAAAAAAAAD8/xYAAAAAAAAAAAD8/xcAAAAAAAAAAAD8/xgAAAAAAAAAAAD8/xkAAAAAAAAAAAD9/xUAAAAAAAAAAAD9/xYAAAAAAAAAAAD9/xcAAAAAAAAAAAD9/xgAAAAAAAAAAAD9/xkAAAAAAAAAAAD+/xUAAAAAAAAAAAD+/xYAAAAAAAAAAAD+/xcAAAAAAAAAAAD+/xgAAAAAAAAAAAD+/xkAAAAAAAAAAAD//xUAAAAAAAAAAAD//xYAAAAAAAAAAAD//xcAAAAAAAAAAAD//xgAAAAAAAAAAAD//xkAAAAAAAAAAAAAABUAAAAAAAAAAAAAABYAAAAAAAAAAAAAABcAAAAAAAAAAAAAABgAAAAAAAAAAAAAABkAAAAAAAAAAAABABUAAAAAAAAAAAABABYAAAAAAAAAAAABABcAAAAAAAAAAAABABgAAAAAAAAAAAABABkAAAAAAAAAAAACABUAAAAAAAAAAAACABYAAAAAAAAAAAACABcAAAAAAAAAAAACABgAAAAAAAAAAAACABkAAAAAAAAAAAADABUAAAAAAAAAAAADABYAAAAAAAAAAAADABcAAAAAAAAAAAADABgAAAAAAAAAAAADABkAAAAAAAAAAAAEABUAAAAAAAAAAAAEABYAAAAAAAAAAAAEABcAAAAAAAAAAAAEABgAAAAAAAAAAAAEABkAAAAAAAAAAAAFABUAAAAAAAAAAAAFABYAAAAAAAAAAAAFABcAAAAAAAAAAAAFABgAAAAAAAAAAAAFABkAAAAAAAAAAAAGABUAAAAAAAAAAAAGABYAAAAAAAAAAAAGABcAAAAAAAAAAAAGABgAAAAAAAAAAAAGABkAAAAAAAAAAAAHABUAAAAAAAAAAAAHABYAAAAAAAAAAAAHABcAAAAAAAAAAAAHABgAAAAAAAAAAAAHABkAAAAAAAAAAAAIABUAAAAAAAAAAAAIABYAAAAAAAAAAAAIABcAAAAAAAAAAAAIABgAAAAAAAAAAAAIABkAAAAAAAAAAAD6/xQAAAAAAAAAAAD7/xQAAAAAAAAAAAD8/xQAAAAAAAAAAAAJABUAAAAAAAAAAAAJABYAAAAAAAAAAAAJABcAAAAAAAAAAAAJABgAAAAAAAAAAAAKABUAAAAAAAAAAAAKABYAAAAAAAAAAAAKABcAAAAAAAAAAAAKABgAAAAAAAAAAAALABUAAAAAAAAAAAALABYAAAAAAAAAAAALABcAAAAAAAAAAAALABgAAAAAAAAAAAAMABUAAAAAAAAAAAAMABYAAAAAAAAAAAAMABcAAAAAAAAAAAAMABgAAAAAAAAAAAANABUAAAAAAAAAAAANABYAAAAAAAAAAAANABcAAAAAAAAAAAANABgAAAAAAAAAAAAOABYAAAAAAAAAAAAOABcAAAAAAAAAAAAOABgAAAAAAAAAAAAPABcAAAAAAAAAAAAPABgAAAAAAAAAAAAQABcAAAAAAAAAAAAQABgAAAAAAAAAAAARABcAAAAAAAAAAAARABgAAAAAAAAAAAASABgAAAAAAAAAAAAUABUAAAAAAAAAAAAVABUAAAAAAAAAAAAWABUAAAAAAAAAAAAXABUAAAAAAAAAAAAXABYAAAAAAAAAAAAXABcAAAAAAAAAAAAXABgAAAAAAAAAAAAYABUAAAAAAAAAAAAYABYAAAAAAAAAAAAYABcAAAAAAAAAAAAYABgAAAAAAAAAAAAZABUAAAAAAAAAAAAZABYAAAAAAAAAAAAZABcAAAAAAAAAAAAZABgAAAAAAAAAAAAaABUAAAAAAAAAAAAaABYAAAAAAAAAAAAaABcAAAAAAAAAAAAaABgAAAAAAAAAAAAbABUAAAAAAAAAAAAbABYAAAAAAAAAAAAbABcAAAAAAAAAAAAbABgAAAAAAAAAAAAcABUAAAAAAAAAAAAcABYAAAAAAAAAAAAcABcAAAAAAAAAAAAcABgAAAAAAAAAAAAdABUAAAAAAAAAAAAdABYAAAAAAAAAAAAdABcAAAAAAAAAAAAdABgAAAAAAAAAAAAeABUAAAAAAAAAAAAeABYAAAAAAAAAAAAeABcAAAAAAAAAAAAeABgAAAAAAAAAAAAfABUAAAAAAAAAAAAfABYAAAAAAAAAAAAfABcAAAAAAAAAAAAfABgAAAAAAAAAAAAgABUAAAAAAAAAAAAgABYAAAAAAAAAAAAgABcAAAAAAAAAAAAgABgAAAAAAAAAAAAhABUAAAAAAAAAAAAhABYAAAAAAAAAAAAhABcAAAAAAAAAAAAhABgAAAAAAAAAAAAiABUAAAAAAAAAAAAiABYAAAAAAAAAAAAiABcAAAAAAAAAAAAiABgAAAAAAAAAAAAjABUAAAAAAAAAAAAjABYAAAAAAAAAAAAjABcAAAAAAAAAAAAjABgAAAAAAAAAAAAkABUAAAAAAAAAAAAkABYAAAAAAAAAAAAkABcAAAAAAAAAAAAkABgAAAAAAAAAAAAlABUAAAAAAAAAAAAlABYAAAAAAAAAAAAlABcAAAAAAAAAAAAlABgAAAAAAAAAAAAmABUAAAAAAAAAAAAmABYAAAAAAAAAAAAmABcAAAAAAAAAAAAmABgAAAAAAAAAAAAJABkAAAAAAAAAAAAKABkAAAAAAAAAAAALABkAAAAAAAAAAAAMABkAAAAAAAAAAAANABkAAAAAAAAAAAAOABkAAAAAAAAAAAAPABkAAAAAAAAAAAAQABkAAAAAAAAAAAARABkAAAAAAAAAAAASABkAAAAAAAAAAAATABkAAAAAAAAAAAAUABkAAAAAAAAAAAAVABkAAAAAAAAAAAAWABkAAAAAAAAAAAAXABkAAAAAAAAAAAAYABkAAAAAAAAAAAAZABkAAAAAAAAAAAAaABkAAAAAAAAAAAAbABkAAAAAAAAAAAAcABkAAAAAAAAAAAAdABkAAAAAAAAAAAAeABkAAAAAAAAAAAAfABkAAAAAAAAAAAAgABkAAAAAAAAAAAAhABkAAAAAAAAAAAAiABkAAAAAAAAAAAAjABkAAAAAAAAAAAAkABkAAAAAAAAAAAAlABkAAAAAAAAAAAAmABkAAAAAAAAAAAAnAAMAAAAAAAAAAAAnAAQAAAAAAAAAAAAnAAUAAAAAAAAAAAAnAAYAAAAAAAAAAAAnAAcAAAAAAAAAAAAnAAgAAAAAAAAAAAAnAAkAAAAAAAAAAAAnAAoAAAAAAAAAAAAnAAsAAAAAAAAAAAAnAAwAAAAAAAAAAAAnAA0AAAAAAAAAAAAnAA4AAAAAAAAAAAAnAA8AAAAAAAAAAAAnABAAAAAAAAAAAAAnABQAAAAAAAAAAAAnABUAAAAAAAAAAAAnABYAAAAAAAAAAAAnABcAAAAAAAAAAAAnABgAAAAAAAAAAAAnABkAAAAAAAAAAAAoAAMAAAAAAAAAAAAoAAQAAAAAAAAAAAAoAAUAAAAAAAAAAAAoAAYAAAAAAAAAAAAoAAcAAAAAAAAAAAAoAAgAAAAAAAAAAAAoAAkAAAAAAAAAAAAoAAoAAAAAAAAAAAAoAAsAAAAAAAAAAAAoAAwAAAAAAAAAAAAoAA0AAAAAAAAAAAAoAA4AAAAAAAAAAAAoAA8AAAAAAAAAAAAoABAAAAAAAAAAAAAoABQAAAAAAAAAAAAoABUAAAAAAAAAAAAoABYAAAAAAAAAAAAoABcAAAAAAAAAAAAoABgAAAAAAAAAAAAoABkAAAAAAAAAAAApAAMAAAAAAAAAAAApAAQAAAAAAAAAAAApAAUAAAAAAAAAAAApAAYAAAAAAAAAAAApAAcAAAAAAAAAAAApAAgAAAAAAAAAAAApAAkAAAAAAAAAAAApAAoAAAAAAAAAAAApAAsAAAAAAAAAAAApAAwAAAAAAAAAAAApAA0AAAAAAAAAAAApAA4AAAAAAAAAAAApAA8AAAAAAAAAAAApABAAAAAAAAAAAAApABQAAAAAAAAAAAApABUAAAAAAAAAAAApABYAAAAAAAAAAAApABcAAAAAAAAAAAApABgAAAAAAAAAAAApABkAAAAAAAAAAAAqAAMAAAAAAAAAAAAqAAQAAAAAAAAAAAAqAAUAAAAAAAAAAAAqAAYAAAAAAAAAAAAqAAcAAAAAAAAAAAAqAAgAAAAAAAAAAAAqAAkAAAAAAAAAAAAqAAoAAAAAAAAAAAAqAAsAAAAAAAAAAAAqAAwAAAAAAAAAAAAqAA0AAAAAAAAAAAAqAA4AAAAAAAAAAAAqAA8AAAAAAAAAAAAqABAAAAAAAAAAAAAqABQAAAAAAAAAAAAqABUAAAAAAAAAAAAqABYAAAAAAAAAAAAqABcAAAAAAAAAAAAqABgAAAAAAAAAAAAqABkAAAAAAAAAAAD1//b/AAAAAAAAAAD1//f/AAAAAAAAAAD1//j/AAAAAAAAAAD1//n/AAAAAAAAAAD1//r/AAAAAAAAAAD1//v/AAAAAAAAAAD1//z/AAAAAAAAAAD1//3/AAAAAAAAAAD1//7/AAAAAAAAAAD1////AAAAAAAAAAD1/wAAAAAAAAAAAAD1/wEAAAAAAAAAAAD1/wIAAAAAAAAAAAD1/wMAAAAAAAAAAAD1/wQAAAAAAAAAAAD1/wUAAAAAAAAAAAD1/wYAAAAAAAAAAAD2//b/AAAAAAAAAAD2//f/AAAAAAAAAAD2//j/AAAAAAAAAAD2//n/AAAAAAAAAAD2//r/AAAAAAAAAAD2//v/AAAAAAAAAAD2//z/AAAAAAAAAAD2//3/AAAAAAAAAAD2//7/AAAAAAAAAAD2////AAAAAAAAAAD2/wAAAAAAAAAAAAD2/wEAAAAAAAAAAAD2/wIAAAAAAAAAAAD2/wMAAAAAAAAAAAD2/wQAAAAAAAAAAAD2/wUAAAAAAAAAAAD2/wYAAAAAAAAAAAD3//b/AAAAAAAAAAD3//z/AAAAAAAAAAD3//3/AAAAAAAAAAD3//7/AAAAAAAAAAD3////AAAAAAAAAAD3/wAAAAAAAAAAAAD3/wEAAAAAAAAAAAD3/wIAAAAAAAAAAAD3/wMAAAAAAAAAAAD3/wQAAAAAAAAAAAD3/wUAAAAAAAAAAAD3/wYAAAAAAAAAAAD1/+//AAAAAAAAAAD1//D/AAAAAAAAAAD1//H/AAAAAAAAAAD1//L/AAAAAAAAAAD1//P/AAAAAAAAAAD1//T/AAAAAAAAAAD1//X/AAAAAAAAAAD2/+//AAAAAAAAAAD2//D/AAAAAAAAAAD2//H/AAAAAAAAAAD2//L/AAAAAAAAAAD2//P/AAAAAAAAAAD2//T/AAAAAAAAAAD2//X/AAAAAAAAAAD3/+//AAAAAAAAAAD3//D/AAAAAAAAAAD3//H/AAAAAAAAAAD3//L/AAAAAAAAAAD3//P/AAAAAAAAAAD3//T/AAAAAAAAAAD3//X/AAAAAAAAAAD4/+//AAAAAAAAAAD4//D/AAAAAAAAAAD4//H/AAAAAAAAAAD4//L/AAAAAAAAAAD4//P/AAAAAAAAAAD4//T/AAAAAAAAAAD4//X/AAAAAAAAAAD1/+z/AAAAAAAAAAD1/+3/AAAAAAAAAAD1/+7/AAAAAAAAAAD2/+z/AAAAAAAAAAD2/+3/AAAAAAAAAAD2/+7/AAAAAAAAAAD3/+z/AAAAAAAAAAD3/+3/AAAAAAAAAAD3/+7/AAAAAAAAAAD4/+z/AAAAAAAAAAD4/+3/AAAAAAAAAAD4/+7/AAAAAAAAAAAqAOz/AAAAAAAAAAAqAO3/AAAAAAAAAAAqAO7/AAAAAAAAAAD+//7/AAAAAAAAAAD+////AAAAAAAAAAD/////AAAAAAAAAAD7////AAABAAAAAAD8////AAABAAAAAAAZAAMAAAABAAAAAAAaAAMAAAABAAAAAAAbAAMAAAABAAAAAAAcAAMAAAABAAAAAAD5/wMAAAABAAAAAAD6/wMAAAABAAAAAAApAO//AAAAAAAAAAApAPD/AAAAAAAAAAApAPH/AAAAAAAAAAApAPL/AAAAAAAAAAApAPP/AAAAAAAAAAApAPT/AAAAAAAAAAApAPX/AAAAAAAAAAApAPb/AAAAAAAAAAApAPf/AAAAAAAAAAApAPj/AAAAAAAAAAApAPn/AAAAAAAAAAApAPr/AAAAAAAAAAApAPv/AAAAAAAAAAApAPz/AAAAAAAAAAApAP3/AAAAAAAAAAApAP7/AAAAAAAAAAApAP//AAAAAAAAAAAqAO//AAAAAAAAAAAqAPD/AAAAAAAAAAAqAPH/AAAAAAAAAAAqAPL/AAAAAAAAAAAqAPP/AAAAAAAAAAAqAPT/AAAAAAAAAAAqAPX/AAAAAAAAAAAqAPb/AAAAAAAAAAAqAPf/AAAAAAAAAAAqAPj/AAAAAAAAAAAqAPn/AAAAAAAAAAAqAPr/AAAAAAAAAAAqAPv/AAAAAAAAAAAqAPz/AAAAAAAAAAAqAP3/AAAAAAAAAAAqAP7/AAAAAAAAAAAqAP//AAAAAAAAAAAmAPr/AAABAAAAAAAnAPr/AAAAAAAAAAAoAPr/AAAAAAAAAAAkAPb/AAAAAAAAAAAlAPb/AAAAAAAAAAAmAPb/AAAAAAAAAAAkAPf/AAAAAAAAAAAlAPf/AAAAAAAAAAAkAPj/AAAAAAAAAAAkAPP/AAABAAAAAAAlAPP/AAABAAAAAAAmAPP/AAABAAAAAAAnAPP/AAABAAAAAAAoAPP/AAABAAAAAAAlAP//AAAAAAAAAAAmAP//AAAAAAAAAAAoAPv/AAAAAAAAAAAoAPz/AAAAAAAAAAAnAPv/AAAAAAAAAAAVABMAAAAAAAAAAAAVABQAAAAAAAAAAAAWABMAAAAAAAAAAAAWABQAAAAAAAAAAAAXABMAAAAAAAAAAAAXABQAAAAAAAAAAAAaAPf/AAAAAAAAAAAaAPj/AAAAAAAAAAAbAPf/AAAAAAAAAAAbAPj/AAAAAAAAAAAcAPf/AAAAAAAAAAAcAPj/AAAAAAAAAAAdAPf/AAAAAAAAAAAdAPj/AAAAAAAAAAAeAPf/AAAAAAAAAAAeAPj/AAAAAAAAAAAfAPf/AAAAAAAAAAAfAPj/AAAAAAAAAAAgAPf/AAAAAAAAAAAgAPj/AAAAAAAAAAAhAPf/AAAAAAAAAAAhAPj/AAAAAAAAAAAiAPf/AAAAAAAAAAAiAPj/AAAAAAAAAAAgAPb/AAAAAAAAAAAhAPb/AAAAAAAAAAAiAPb/AAAAAAAAAAAhAPX/AAAAAAAAAAAiAPX/AAAAAAAAAAAiAPT/AAAAAAAAAAAgAPn/AAAAAAAAAAAhAPn/AAAAAAAAAAAiAPn/AAAAAAAAAAAhAPr/AAAAAAAAAAAiAPr/AAAAAAAAAAAiAPv/AAAAAAAAAAAGAPT/AAAAAAAAAAADAPP/AAAAAAAAAAACAPP/AAAAAAAAAAD5//P/AAAAAAAAAAD6//P/AAAAAAAAAAD7//P/AAAAAAAAAAD7//H/AAAAAAAAAAD7//L/AAAAAAAAAAD8//L/AAAAAAAAAAD9//L/AAAAAAAAAAD+//L/AAAAAAAAAAD///L/AAAAAAAAAAACAPT/AAAAAAAAAAA=")
+collision_enabled = false
+
+[node name="BreakableWall" parent="Geometry" unique_id=903898221 instance=ExtResource("5_lncmj")]
+position = Vector2(1979.9999, 2623)
+rotation = -1.5572482
+stone_texture = ExtResource("5_3fuy0")
+crack_color = Color(0.18, 0.68, 1, 1)
+preview_damage_stage = 0
+debris_lifetime = 1.8
+fracture_seed = 37
+
+[node name="TerrainArtwork" parent="Geometry" unique_id=1220208181 instance=ExtResource("map_art")]
+
+[node name="RockCollision" parent="Geometry" unique_id=306509884 instance=ExtResource("map_rocks")]
+
+[node name="BuildingCollision" type="Node2D" parent="Geometry" unique_id=603428248]
+editor_description = "2D physics matching the model surfaces at 128 px per Blender unit. No collision across the boat-slip center or tower basin opening."
+
+[node name="TowerWallLeft0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1774941520]
+position = Vector2(911.68, 1867.52)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallLeft0" unique_id=551028826]
+polygon = PackedVector2Array(-39.68, -52.48, 39.68, -52.48, 39.68, 52.48, -39.68, 52.48)
+
+[node name="TowerWallRight0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=52378869]
+position = Vector2(2032.32, 1867.52)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallRight0" unique_id=1402426832]
+polygon = PackedVector2Array(-39.68, -52.48, 39.68, -52.48, 39.68, 52.48, -39.68, 52.48)
+
+[node name="TowerWallLeft1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=822653593]
+position = Vector2(1020.16, 1489.92)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallLeft1" unique_id=839936816]
+polygon = PackedVector2Array(-67.2, -325.12, 67.2, -325.12, 67.2, 325.12, -67.2, 325.12)
+
+[node name="TowerWallRight1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1163814951]
+position = Vector2(1923.84, 1489.92)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallRight1" unique_id=113281211]
+polygon = PackedVector2Array(-67.2, -325.12, 67.2, -325.12, 67.2, 325.12, -67.2, 325.12)
+
+[node name="TowerWallLeft2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=22687127]
+position = Vector2(1094.4, -51.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallLeft2" unique_id=2083684160]
+polygon = PackedVector2Array(-52.48, -1216, 52.48, -1216, 52.48, 1216, -52.48, 1216)
+
+[node name="TowerWallRight2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1588701179]
+position = Vector2(1849.6, -51.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallRight2" unique_id=1437575234]
+polygon = PackedVector2Array(-52.48, -1216, 52.48, -1216, 52.48, 1216, -52.48, 1216)
+
+[node name="TowerWallLeft3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1913211005]
+position = Vector2(1196.8, -1571.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallLeft3" unique_id=265791855]
+polygon = PackedVector2Array(-49.92, -304, 49.92, -304, 49.92, 304, -49.92, 304)
+
+[node name="TowerWallRight3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=102267295]
+position = Vector2(1747.2, -1571.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallRight3" unique_id=817583118]
+polygon = PackedVector2Array(-49.92, -304, 49.92, -304, 49.92, 304, -49.92, 304)
+
+[node name="TowerWallLeft4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=626703243]
+position = Vector2(1180.16, -1992.32)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallLeft4" unique_id=500760367]
+polygon = PackedVector2Array(-67.2, -117.12, 67.2, -117.12, 67.2, 117.12, -67.2, 117.12)
+
+[node name="TowerWallRight4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1693488395]
+position = Vector2(1763.84, -1992.32)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerWallRight4" unique_id=922595727]
+polygon = PackedVector2Array(-67.2, -117.12, 67.2, -117.12, 67.2, 117.12, -67.2, 117.12)
+
+[node name="TowerPlatform0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=236746087]
+position = Vector2(1472, 1113.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform0" unique_id=827713663]
+polygon = PackedVector2Array(-332.8, -6, 332.8, -6, 332.8, 6, -332.8, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=769484661]
+position = Vector2(1273.6, 871.28)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform1" unique_id=1848862072]
+polygon = PackedVector2Array(-134.4, -6, 134.4, -6, 134.4, 6, -134.4, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1432181877]
+position = Vector2(1667.2, 776.56)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform2" unique_id=531639473]
+polygon = PackedVector2Array(-137.6, -6, 137.6, -6, 137.6, 6, -137.6, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1320304730]
+position = Vector2(1472, 456.56)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform3" unique_id=1640182206]
+polygon = PackedVector2Array(-332.8, -6, 332.8, -6, 332.8, 6, -332.8, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2014806335]
+position = Vector2(1622.4, 95.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform4" unique_id=1291808210]
+polygon = PackedVector2Array(-182.4, -6, 182.4, -6, 182.4, 6, -182.4, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform5" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2093626303]
+position = Vector2(1318.4, -250)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform5" unique_id=2036807186]
+polygon = PackedVector2Array(-179.2, -6, 179.2, -6, 179.2, 6, -179.2, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform6" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2084972276]
+position = Vector2(1472, -589.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform6" unique_id=1260719095]
+polygon = PackedVector2Array(-332.8, -6, 332.8, -6, 332.8, 6, -332.8, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform7" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=165366417]
+position = Vector2(1472, -1018)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform7" unique_id=349643172]
+polygon = PackedVector2Array(-332.8, -6, 332.8, -6, 332.8, 6, -332.8, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="TowerPlatform8" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1818163696]
+position = Vector2(1472, -1485.2)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform8" unique_id=1789953239]
+polygon = PackedVector2Array(-232.96, -6, 232.96, -6, 232.96, 6, -232.96, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopFloor" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2010910920]
+position = Vector2(2688, -1018)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopFloor" unique_id=630859821]
+position = Vector2(1136, -133)
+polygon = PackedVector2Array(-401.92, -6, 401.92, -6, 401.92, 6, -401.92, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherFloor" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=372806332]
+position = Vector2(320, -122)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherFloor" unique_id=834560491]
+position = Vector2(-352, 429)
+polygon = PackedVector2Array(-273.92, -6, 273.92, -6, 273.92, 6, -273.92, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherLoft" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=428418285]
+position = Vector2(320, -437.52)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherLoft" unique_id=422919943]
+position = Vector2(-337, 745.52)
+polygon = PackedVector2Array(-252.16, -6, 252.16, -6, 252.16, 6, -252.16, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipDeckLeft" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=418191784]
+position = Vector2(2451.2, 390)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipDeckLeft" unique_id=472869700]
+polygon = PackedVector2Array(-58.88, -6, 58.88, -6, 58.88, 6, -58.88, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipDeckRight" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=515565634]
+position = Vector2(3180.8, 390)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipDeckRight" unique_id=1266820561]
+polygon = PackedVector2Array(-58.88, -6, 58.88, -6, 58.88, 6, -58.88, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1401388857]
+position = Vector2(-375, -250.98376)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof0" unique_id=1450269532]
+polygon = PackedVector2Array(-18.176, -9.4162, 18.176, -6.3472, 18.176, 5.6528, -18.176, 2.5838)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1937318165]
+position = Vector2(-338.648, -254.1305)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof1" unique_id=1532583423]
+polygon = PackedVector2Array(-18.176, -3.2005, 18.176, -10.6292, 18.176, 1.3708, -18.176, 8.7995)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=463048672]
+position = Vector2(-302.29602, -264.7915)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof2" unique_id=1933908483]
+polygon = PackedVector2Array(-18.176, 0.0318, 18.176, -13.1229, 18.176, -1.1229, -18.176, 12.0318)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=249417797]
+position = Vector2(-265.944, -279.89587)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof3" unique_id=465573460]
+polygon = PackedVector2Array(-18.176, 1.9815, 18.176, -14.664, 18.176, -2.664, -18.176, 13.9815)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=924705748]
+position = Vector2(-229.59201, -297.77118)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof4" unique_id=818330756]
+polygon = PackedVector2Array(-18.176, 3.2112, 18.176, -15.653, 18.176, -3.653, -18.176, 15.2112)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof5" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=82793525]
+position = Vector2(-193.24, -317.43536)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof5" unique_id=144688124]
+polygon = PackedVector2Array(-18.176, 4.0113, 18.176, -16.3026, 18.176, -4.3026, -18.176, 16.0113)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof6" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1421724293]
+position = Vector2(-156.888, -338.27747)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof6" unique_id=1301573580]
+polygon = PackedVector2Array(-18.176, 4.5395, 18.176, -16.7323, 18.176, -4.7323, -18.176, 16.5395)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof7" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=566680235]
+position = Vector2(-120.53601, -359.89935)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof7" unique_id=1674695620]
+polygon = PackedVector2Array(-18.176, 4.8896, 18.176, -17.019, 18.176, -5.019, -18.176, 16.8896)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof8" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=242674224]
+position = Vector2(-84.18402, -382.0462)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof8" unique_id=1932712351]
+polygon = PackedVector2Array(-18.176, 5.1278, 18.176, -15.9538, 18.176, -3.9538, -18.176, 17.1278)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof9" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1569622919]
+position = Vector2(-47.832, -392)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof9" unique_id=151475081]
+polygon = PackedVector2Array(-18.176, -6, 18.176, -6, 18.176, 6, -18.176, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof10" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1408966655]
+position = Vector2(-11.480011, -392)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof10" unique_id=1203443903]
+polygon = PackedVector2Array(-18.176, -6, 18.176, -6, 18.176, 6, -18.176, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof11" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1201551669]
+position = Vector2(24.87201, -382.0462)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof11" unique_id=187177754]
+polygon = PackedVector2Array(-18.176, -15.9538, 18.176, 5.1278, 18.176, 17.1278, -18.176, -3.9538)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof12" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1227947945]
+position = Vector2(61.224, -359.89935)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof12" unique_id=83519211]
+polygon = PackedVector2Array(-18.176, -17.019, 18.176, 4.8896, 18.176, 16.8896, -18.176, -5.019)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof13" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1142244189]
+position = Vector2(97.57599, -338.27747)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof13" unique_id=1334505179]
+polygon = PackedVector2Array(-18.176, -16.7323, 18.176, 4.5395, 18.176, 16.5395, -18.176, -4.7323)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof14" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1958834418]
+position = Vector2(133.92801, -317.43536)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof14" unique_id=115340338]
+polygon = PackedVector2Array(-18.176, -16.3026, 18.176, 4.0113, 18.176, 16.0113, -18.176, -4.3026)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof15" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=205040546]
+position = Vector2(170.27997, -297.77118)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof15" unique_id=1044570169]
+polygon = PackedVector2Array(-18.176, -15.653, 18.176, 3.2112, 18.176, 15.2112, -18.176, -3.653)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof16" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1943708751]
+position = Vector2(206.63202, -279.89587)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof16" unique_id=824397467]
+polygon = PackedVector2Array(-18.176, -14.664, 18.176, 1.9815, 18.176, 13.9815, -18.176, -2.664)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof17" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=233665379]
+position = Vector2(242.98401, -264.7915)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof17" unique_id=2111628253]
+polygon = PackedVector2Array(-18.176, -13.1229, 18.176, 0.0318, 18.176, 12.0318, -18.176, -1.1229)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof18" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=823609498]
+position = Vector2(279.336, -254.1305)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof18" unique_id=2082965935]
+polygon = PackedVector2Array(-18.176, -10.6292, 18.176, -3.2005, 18.176, 8.7995, -18.176, 1.3708)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof19" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1293467764]
+position = Vector2(315.688, -250.98376)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/FisherRoof19" unique_id=1565298213]
+polygon = PackedVector2Array(-18.176, -6.3472, 18.176, -9.4162, 18.176, 2.5838, -18.176, 5.6528)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1026572249]
+position = Vector2(3344, -1565.2013)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof0" unique_id=1498795722]
+polygon = PackedVector2Array(-24.576, -10.6787, 24.576, -6.8767, 24.576, 5.1233, -24.576, 1.3213)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1034861557]
+position = Vector2(3393.152, -1570.4314)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof1" unique_id=501516558]
+polygon = PackedVector2Array(-24.576, -1.6466, 24.576, -12.7798, 24.576, -0.7798, -24.576, 10.3534)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=918959296]
+position = Vector2(3442.3042, -1585.729)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof2" unique_id=1631356362]
+polygon = PackedVector2Array(-24.576, 2.5178, 24.576, -15.7854, 24.576, -3.7854, -24.576, 14.5178)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=235540280]
+position = Vector2(3491.456, -1606.2383)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof3" unique_id=812825111]
+polygon = PackedVector2Array(-24.576, 4.7239, 24.576, -17.4264, 24.576, -5.4264, -24.576, 16.7239)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=499894577]
+position = Vector2(3540.6082, -1629.6199)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof4" unique_id=1368172085]
+polygon = PackedVector2Array(-24.576, 5.9551, 24.576, -18.3531, 24.576, -6.3531, -24.576, 17.9551)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof5" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1589447619]
+position = Vector2(3589.76, -1654.6252)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof5" unique_id=422667399]
+polygon = PackedVector2Array(-24.576, 6.6522, 24.576, -18.8778, 24.576, -6.8778, -24.576, 18.6522)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof6" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1365459046]
+position = Vector2(3638.912, -1680.5557)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof6" unique_id=1246976005]
+polygon = PackedVector2Array(-24.576, 7.0526, 24.576, -12.4444, 24.576, -0.4444, -24.576, 19.0526)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof7" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1587919121]
+position = Vector2(3688.0642, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof7" unique_id=620755401]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof8" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=855018696]
+position = Vector2(3737.216, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof8" unique_id=138803956]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof9" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1601286466]
+position = Vector2(3786.3682, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof9" unique_id=227289618]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof10" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1496825161]
+position = Vector2(3835.52, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof10" unique_id=1605724257]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof11" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=575848136]
+position = Vector2(3884.672, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof11" unique_id=385572538]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof12" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=957692865]
+position = Vector2(3933.824, -1687)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof12" unique_id=2054931836]
+polygon = PackedVector2Array(-24.576, -6, 24.576, -6, 24.576, 6, -24.576, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof13" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=552987414]
+position = Vector2(3982.976, -1680.5557)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof13" unique_id=832046669]
+polygon = PackedVector2Array(-24.576, -12.4444, 24.576, 7.0526, 24.576, 19.0526, -24.576, -0.4444)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof14" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=508316358]
+position = Vector2(4032.1282, -1654.6252)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof14" unique_id=1140822540]
+polygon = PackedVector2Array(-24.576, -18.8778, 24.576, 6.6522, 24.576, 18.6522, -24.576, -6.8778)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof15" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2064306155]
+position = Vector2(4081.28, -1629.6199)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof15" unique_id=913045301]
+polygon = PackedVector2Array(-24.576, -18.3531, 24.576, 5.9551, 24.576, 17.9551, -24.576, -6.3531)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof16" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1694460951]
+position = Vector2(4130.432, -1606.2383)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof16" unique_id=1452785754]
+polygon = PackedVector2Array(-24.576, -17.4264, 24.576, 4.7239, 24.576, 16.7239, -24.576, -5.4264)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof17" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=372847289]
+position = Vector2(4179.584, -1585.729)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof17" unique_id=1493360373]
+polygon = PackedVector2Array(-24.576, -15.7854, 24.576, 2.5178, 24.576, 14.5178, -24.576, -3.7854)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof18" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=110492234]
+position = Vector2(4228.7363, -1570.4314)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof18" unique_id=1595239489]
+polygon = PackedVector2Array(-24.576, -12.7798, 24.576, -1.6466, 24.576, 10.3534, -24.576, -0.7798)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof19" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2077672320]
+position = Vector2(4277.888, -1565.2013)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/WorkshopRoof19" unique_id=1237244138]
+polygon = PackedVector2Array(-24.576, -6.8767, 24.576, -10.6787, 24.576, 1.3213, -24.576, 5.1233)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2138030298]
+position = Vector2(2333.248, -348.12)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof0" unique_id=345320709]
+polygon = PackedVector2Array(-25.408, -10.92, 25.408, -7.3231, 25.408, 4.6769, -25.408, 1.08)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1804698221]
+position = Vector2(2384.064, -354.5989)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof1" unique_id=560776142]
+polygon = PackedVector2Array(-25.408, -0.8443, 25.408, -13.7681, 25.408, -1.7681, -25.408, 11.1557)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=242659517]
+position = Vector2(2434.88, -371.9646)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof2" unique_id=1935427622]
+polygon = PackedVector2Array(-25.408, 3.5976, 25.408, -16.9046, 25.408, -4.9046, -25.408, 15.5976)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1056574632]
+position = Vector2(2485.696, -394.7221)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof3" unique_id=2082400684]
+polygon = PackedVector2Array(-25.408, 5.8529, 25.408, -18.5477, 25.408, -6.5477, -25.408, 17.8529)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=416183120]
+position = Vector2(2536.512, -420.3276)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof4" unique_id=558063423]
+polygon = PackedVector2Array(-25.408, 7.0578, 25.408, -19.4315, 25.408, -7.4315, -25.408, 19.0578)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof5" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=440920233]
+position = Vector2(2587.328, -447.4649)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof5" unique_id=453902274]
+polygon = PackedVector2Array(-25.408, 7.7058, 25.408, -19.9123, 25.408, -7.9123, -25.408, 19.7058)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof6" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=447127129]
+position = Vector2(2638.144, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof6" unique_id=119044346]
+polygon = PackedVector2Array(-25.408, 0.2228, 25.408, -6, 25.408, 6, -25.408, 12.2228)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof7" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1641550504]
+position = Vector2(2688.96, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof7" unique_id=371940061]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof8" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=263747376]
+position = Vector2(2739.776, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof8" unique_id=1637867994]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof9" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=956981318]
+position = Vector2(2790.592, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof9" unique_id=1243305785]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof10" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1063535675]
+position = Vector2(2841.408, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof10" unique_id=490058605]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof11" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1780115951]
+position = Vector2(2892.224, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof11" unique_id=1435633157]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof12" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=367653322]
+position = Vector2(2943.04, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof12" unique_id=1703116422]
+polygon = PackedVector2Array(-25.408, -6, 25.408, -6, 25.408, 6, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof13" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2105816099]
+position = Vector2(2993.856, -467.6)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof13" unique_id=2040332791]
+polygon = PackedVector2Array(-25.408, -6, 25.408, 0.2228, 25.408, 12.2228, -25.408, 6)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof14" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2102608373]
+position = Vector2(3044.672, -447.4649)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof14" unique_id=1588937673]
+polygon = PackedVector2Array(-25.408, -19.9123, 25.408, 7.7058, 25.408, 19.7058, -25.408, -7.9123)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof15" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=45671207]
+position = Vector2(3095.488, -420.3276)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof15" unique_id=465389177]
+polygon = PackedVector2Array(-25.408, -19.4315, 25.408, 7.0578, 25.408, 19.0578, -25.408, -7.4315)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof16" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1901294452]
+position = Vector2(3146.304, -394.7221)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof16" unique_id=1180928015]
+polygon = PackedVector2Array(-25.408, -18.5477, 25.408, 5.8529, 25.408, 17.8529, -25.408, -6.5477)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof17" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1314418205]
+position = Vector2(3197.12, -371.9646)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof17" unique_id=1399240232]
+polygon = PackedVector2Array(-25.408, -16.9046, 25.408, 3.5976, 25.408, 15.5976, -25.408, -4.9046)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof18" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1427746827]
+position = Vector2(3247.936, -354.5989)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof18" unique_id=1040884480]
+polygon = PackedVector2Array(-25.408, -13.7681, 25.408, -0.8443, 25.408, 11.1557, -25.408, -1.7681)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof19" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1032650247]
+position = Vector2(3298.752, -348.12)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/SlipRoof19" unique_id=56310446]
+polygon = PackedVector2Array(-25.408, -7.3231, 25.408, -10.92, 25.408, 1.08, -25.408, 4.6769)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding01" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=205044787]
+position = Vector2(4928, -1659)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding01" unique_id=1500837506]
+polygon = PackedVector2Array(-320, -5, 320, -5, 320, 5, -320, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding02" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1871208022]
+position = Vector2(3136, -1019)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding02" unique_id=566398977]
+position = Vector2(108, -110)
+polygon = PackedVector2Array(-192, -5, 192, -5, 192, 5, 101.2887, 5, -192, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding03" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1037904693]
+position = Vector2(4928, -763)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding03" unique_id=2122297209]
+polygon = PackedVector2Array(-64, -5, 64, -5, 64, 5, -64, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding04" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=819354097]
+position = Vector2(-512, -123)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding04" unique_id=1138902979]
+polygon = PackedVector2Array(-128, -5, 128, -5, 128, 5, -128, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding05" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1832517862]
+position = Vector2(704, -123)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding05" unique_id=206701312]
+position = Vector2(-268, 525)
+polygon = PackedVector2Array(-192, -5, 192, -5, 192, 5, -192, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding06" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1671826348]
+position = Vector2(2240, -123)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding06" unique_id=1771430398]
+polygon = PackedVector2Array(-192, -5, 192, -5, 192, 5, -192, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding07" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=964912132]
+position = Vector2(-768, 389)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding07" unique_id=38595485]
+polygon = PackedVector2Array(-128, -5, 128, -5, 128, 5, -128, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding08" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1041009457]
+position = Vector2(3456, 389)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding08" unique_id=177808262]
+polygon = PackedVector2Array(-256, -5, 256, -5, 256, 5, -256, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLanding09" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=494671126]
+position = Vector2(4480, 389)
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/BridgeLanding09" unique_id=184734081]
+polygon = PackedVector2Array(-384, -5, 384, -5, 384, 5, -384, 5)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="BridgeLandings" type="Node2D" parent="Geometry" unique_id=1091014669]
+z_index = -1
+
+[node name="Deck01" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=2071785988]
+position = Vector2(4569, -1663.0001)
+scale = Vector2(1.580078, 0.8125)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck02" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=969137955]
+position = Vector2(3058, -1156)
+scale = Vector2(0.75, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck03" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=998491023]
+position = Vector2(4873.0005, -804.00006)
+scale = Vector2(0.9296875, 1.0833325)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck04" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1485223545]
+position = Vector2(-640, -128)
+scale = Vector2(0.5, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck05" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=897058146]
+position = Vector2(240, 376)
+scale = Vector2(0.75, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck06" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1144824625]
+position = Vector2(2048, -128)
+scale = Vector2(0.75, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck07" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1569005893]
+position = Vector2(-896, 384)
+scale = Vector2(0.5, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck08" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1455332206]
+position = Vector2(3200, 384)
+scale = Vector2(1, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Deck09" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1104663311]
+position = Vector2(4096, 384)
+scale = Vector2(1.5, 0.65)
+texture = ExtResource("stamp_walking_deck")
+centered = false
+
+[node name="Volumes" type="Node2D" parent="." unique_id=184337777]
+
+[node name="Lake" parent="Volumes" unique_id=557312954 instance=ExtResource("3")]
+position = Vector2(-361, 942)
+lake_presentation = true
+points = PackedVector2Array(369, -531, 5834, -536, 5838, 2334, -1041, 2334, -1036, -551)
+
+[node name="CollisionPolygon2D" parent="Volumes/Lake" index="0"]
+self_modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(369, -531, 5834, -536, 5838, 2334, -1041, 2334, -1036, -551)
+
+[node name="AirPocket" parent="Volumes" unique_id=1581545087 instance=ExtResource("3")]
+position = Vector2(-38, 657)
+lake_presentation = true
+air_pocket = true
+points = PackedVector2Array(1117, 676, 1140, 121, 1140, -21, 1117, -270, 1908, -268, 1888, -4, 1884, 307, 1888, 634, 1907, 797, 2013, 858, 1996, 1169, 1026, 1169, 1011, 801)
+
+[node name="CollisionPolygon2D" parent="Volumes/AirPocket" index="0"]
+self_modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1117, 676, 1140, 121, 1140, -21, 1117, -270, 1908, -268, 1888, -4, 1884, 307, 1888, 634, 1907, 797, 2013, 858, 1996, 1169, 1026, 1169, 1011, 801)
+
+[node name="AirPocket2" parent="Volumes" unique_id=1881122904 instance=ExtResource("3")]
+position = Vector2(3689, 2417)
+lake_presentation = true
+air_pocket = true
+points = PackedVector2Array(-944, -361, -401, -623, 825, -600, 1812, -341, 1815, 180, -838, 163)
+
+[node name="CollisionPolygon2D" parent="Volumes/AirPocket2" index="0"]
+self_modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-944, -361, -401, -623, 825, -600, 1812, -341, 1815, 180, -838, 163)
+
+[node name="AirPocket3" parent="Volumes" unique_id=1900584095 instance=ExtResource("3")]
+position = Vector2(2227, 2820)
+air_pocket = true
+points = PackedVector2Array(-526, -236, 798, -226, 783, 431, -531, 431)
+
+[node name="CollisionPolygon2D" parent="Volumes/AirPocket3" index="0"]
+self_modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-526, -236, 798, -226, 783, 431, -531, 431)
+
+[node name="BreakableWall" parent="Volumes" unique_id=1497858949 instance=ExtResource("5_lncmj")]
+position = Vector2(1479, 1844.9999)
+rotation = 1.5737704
+scale = Vector2(1.0637424, 2.8490815)
+stone_texture = ExtResource("5_3fuy0")
+crack_color = Color(0.18, 0.68, 1, 1)
+preview_damage_stage = 0
+debris_lifetime = 1.8
+fracture_seed = 37
+
+[node name="Player" parent="." unique_id=1777291295 instance=ExtResource("1")]
+position = Vector2(-980, -585)
+debug_blue_water_power_unlocked = true
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=328312995]
+position = Vector2(0, -80)
+zoom = Vector2(0.9, 0.9)
+limit_left = -1408
+limit_top = -2560
+limit_right = 5504
+limit_bottom = 3328
+position_smoothing_enabled = true
+
+[node name="LakePresentation" type="Node2D" parent="." unique_id=21909911]
+position = Vector2(0, 4)
+script = ExtResource("5_art")
+show_terrain_art = true
+
+[node name="TideDuelist" parent="." unique_id=553997636 instance=ExtResource("8_fish")]
+position = Vector2(624, 823)
+attack_range = 380.0
+dash_speed = 1050.0
+maximum_dash_distance = 2400.0
+footprint_radius = 132.0
+patrol_height = 100.0
+water_path = NodePath("")
+start_facing = 1
+
+[node name="Reedhook" parent="." unique_id=1277744726 instance=ExtResource("9_reedhook")]
+position = Vector2(1408, 370)
+
+[node name="EaveRunner" parent="." unique_id=162748076 instance=ExtResource("guardian_eave")]
+position = Vector2(1776, -595.2)
+prefer_wall = true
+home_leash = 950.0
+
+[node name="LoomHeron" parent="." unique_id=1061336384 instance=ExtResource("guardian_heron")]
+position = Vector2(3795, -145)
+needle_speed = 520.0
+home_leash = 950.0
+patrol_distance = 135.0
+
+[node name="Bellstriker" parent="." unique_id=766353338 instance=ExtResource("10_bellstriker")]
+position = Vector2(2500, 820)
+attack_range = 225.0
+swim_speed = 265.0
+strike_speed = 760.0
+leap_range = 540.0
+target_leash = 1500.0
+start_facing = -1
+
+[node name="BreakableWall" parent="." unique_id=724026110 instance=ExtResource("5_lncmj")]
+position = Vector2(-494.99997, 1469.0001)
+scale = Vector2(1.6992638, 1.0679702)
+stone_texture = ExtResource("5_3fuy0")
+crack_color = Color(0.18, 0.68, 1, 1)
+preview_damage_stage = 0
+debris_lifetime = 1.8
+fracture_seed = 37
+hits_to_break = 4
+
+[node name="LakesideArtStage" parent="." unique_id=556602146 instance=ExtResource("map_stage")]
+preview_center = Vector2(2048, 384)
+preview_zoom = 0.17
+
+[node name="Buildings" type="Node2D" parent="." unique_id=56121599]
+
+[node name="Tower" parent="Buildings" unique_id=489339460 instance=ExtResource("map_tower")]
+position = Vector2(1472, 1920)
+
+[node name="BoatSlip" parent="Buildings" unique_id=753330207 instance=ExtResource("map_slip")]
+position = Vector2(2816, 477.44)
+
+[node name="Workshop" parent="Buildings" unique_id=43814193 instance=ExtResource("map_workshop")]
+position = Vector2(3816, -1078)
+
+[node name="FisherHouse" parent="Buildings" unique_id=1058129808 instance=ExtResource("map_house")]
+position = Vector2(-32, 408)
+
+[node name="Lighting" type="Node2D" parent="." unique_id=1092298690]
+editor_description = "Editable 3D+2D lantern instances. Add more here; tune sunlight on LakesideArtStage."
+
+[node name="CaveLantern" parent="Lighting" unique_id=935566722 instance=ExtResource("map_lantern")]
+position = Vector2(-1080, -650)
+
+[node name="FisherLantern" parent="Lighting" unique_id=1270805851 instance=ExtResource("map_lantern")]
+position = Vector2(-240, -96)
+
+[node name="WorkshopLantern" parent="Lighting" unique_id=1576346462 instance=ExtResource("map_lantern")]
+position = Vector2(3499, -1428)
+
+[node name="SlipLantern" parent="Lighting" unique_id=797162181 instance=ExtResource("map_lantern")]
+position = Vector2(2460, -242)
+
+[node name="RearFoliage" type="Node2D" parent="." unique_id=348119948]
+editor_description = "Place separate foliage scenes here so sway and lights remain editable in Godot."
+z_index = -5
+
+[node name="FrontFoliage" type="Node2D" parent="." unique_id=54564591]
+editor_description = "Place separate foliage scenes here so sway and lights remain editable in Godot."
+z_index = 9
+
+[node name="OverviewCamera" type="Camera2D" parent="." unique_id=78538352]
+position = Vector2(2048, 384)
+enabled = false
+zoom = Vector2(0.17, 0.17)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=230667967]
+layer = 20
+
+[node name="CombatHUD" parent="HUD" unique_id=195930383 instance=ExtResource("playtest_hud")]
+offset_top = 30.0
+
+[node name="VitalsReadout" type="Label" parent="HUD" unique_id=472308794]
+offset_left = 30.0
+offset_top = 344.0
+offset_right = 610.0
+offset_bottom = 370.0
+theme_override_colors/font_color = Color(0.88, 0.94, 1, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.04, 0.06, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 19
+text = "HP 100 / 100    AP 6 / 6    Momentum 0%"
+
+[node name="Residents" type="Node2D" parent="." unique_id=1216398775]
+editor_description = "Reusable villagers with separate workstations. Feet anchors sit on the existing house floors."
+
+[node name="NetMender" parent="Residents" unique_id=1617034690 instance=ExtResource("villager_mender")]
+position = Vector2(111, 305)
+
+[node name="Boatwright" parent="Residents" unique_id=802886720 instance=ExtResource("villager_boatwright")]
+position = Vector2(4038, -1181)
+
+[editable path="Geometry/TerrainArtwork"]
+[editable path="Geometry/RockCollision"]
+[editable path="Volumes/Lake"]
+[editable path="Volumes/AirPocket"]
+[editable path="Volumes/AirPocket2"]
+[editable path="Volumes/AirPocket3"]

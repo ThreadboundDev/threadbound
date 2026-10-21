@@ -1,0 +1,8 @@
+{
+	"checks": 65,
+	"display": "headless",
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"passed": true,
+	"rendered_images": []
+}

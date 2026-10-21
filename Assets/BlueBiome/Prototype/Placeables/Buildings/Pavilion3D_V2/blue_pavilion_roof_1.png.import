@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cd4k7tck8edb7"
-path="res://.godot/imported/blue_pavilion_roof_1.png-f65ee77c5abf116dc2bf990c9f4c08a9.ctex"
+path.s3tc="res://.godot/imported/blue_pavilion_roof_1.png-f65ee77c5abf116dc2bf990c9f4c08a9.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "92cad1e72cb576a8f795462498dc9073"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/BlueBiome/Prototype/Placeables/Buildings/Pavilion3D_V2/blue_pavilion_roof_1.png"
-dest_files=["res://.godot/imported/blue_pavilion_roof_1.png-f65ee77c5abf116dc2bf990c9f4c08a9.ctex"]
+dest_files=["res://.godot/imported/blue_pavilion_roof_1.png-f65ee77c5abf116dc2bf990c9f4c08a9.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

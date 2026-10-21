@@ -1,0 +1,59 @@
+{
+	"canvas": [
+		6912.0,
+		5888.0
+	],
+	"display": "headless",
+	"failures": [
+		"Real player must stand on the rendered model floor: Fisher house",
+		"Entry must open the facade: Fisher house",
+		"Real player must stand on the rendered model floor: Workshop",
+		"Entry must open the facade: Workshop"
+	],
+	"floors": {
+		"Fisher house": {
+			"cutaway": false,
+			"on_floor": false,
+			"position": "(320.0, 86.92168)"
+		},
+		"Tower": {
+			"cutaway": true,
+			"on_floor": true,
+			"position": "(1472.0, 1037.955)"
+		},
+		"Workshop": {
+			"cutaway": false,
+			"on_floor": false,
+			"position": "(2688.0, -785.3978)"
+		}
+	},
+	"godot": "4.7.2-stable (official)",
+	"house_viewport_size": "(3840, 2160)",
+	"loaded_pbr_maps": {
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_BaseColor_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_NormalGL_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_Roughness_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/plaster_BaseColor_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/plaster_NormalGL_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/plaster_Roughness_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/slate_BaseColor_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/slate_NormalGL_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/slate_Roughness_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/walnut_BaseColor_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/walnut_NormalGL_4K.png": "(4096.0, 4096.0)",
+		"res://Assets/BlueBiome/Art/Lakeside3D/Textures/walnut_Roughness_4K.png": "(4096.0, 4096.0)"
+	},
+	"model_surfaces": 93,
+	"old_tile_collision_enabled": false,
+	"origin": [
+		-1408.0,
+		-2560.0
+	],
+	"painted_chunks": 41,
+	"passed": false,
+	"physics_alpha_mismatches": 0,
+	"physics_alpha_samples": 9871,
+	"render_scale": 2.0,
+	"rendered_images": [],
+	"rock_polygons": 51
+}

@@ -1,0 +1,603 @@
+[gd_scene format=3]
+
+[node name="RoofLandings" type="Node2D"]
+
+[node name="FisherRoof0" type="StaticBody2D" parent="."]
+position = Vector2(-25.3440, -709.9438)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof0"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof1" type="StaticBody2D" parent="."]
+position = Vector2(11.0080, -713.0905)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof1"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof2" type="StaticBody2D" parent="."]
+position = Vector2(47.3600, -723.7515)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof2"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof3" type="StaticBody2D" parent="."]
+position = Vector2(83.7120, -738.8559)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof3"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof4" type="StaticBody2D" parent="."]
+position = Vector2(120.0640, -756.7312)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof4"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof5" type="StaticBody2D" parent="."]
+position = Vector2(156.4160, -776.3954)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof5"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof6" type="StaticBody2D" parent="."]
+position = Vector2(192.7680, -797.2375)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof6"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof7" type="StaticBody2D" parent="."]
+position = Vector2(229.1200, -818.8594)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof7"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof8" type="StaticBody2D" parent="."]
+position = Vector2(265.4720, -841.0062)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof8"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof9" type="StaticBody2D" parent="."]
+position = Vector2(301.8240, -850.9600)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof9"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof10" type="StaticBody2D" parent="."]
+position = Vector2(338.1760, -850.9600)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof10"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof11" type="StaticBody2D" parent="."]
+position = Vector2(374.5280, -841.0062)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof11"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof12" type="StaticBody2D" parent="."]
+position = Vector2(410.8800, -818.8594)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof12"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof13" type="StaticBody2D" parent="."]
+position = Vector2(447.2320, -797.2375)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof13"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof14" type="StaticBody2D" parent="."]
+position = Vector2(483.5840, -776.3954)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof14"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof15" type="StaticBody2D" parent="."]
+position = Vector2(519.9360, -756.7312)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof15"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof16" type="StaticBody2D" parent="."]
+position = Vector2(556.2880, -738.8559)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof16"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof17" type="StaticBody2D" parent="."]
+position = Vector2(592.6400, -723.7515)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof17"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof18" type="StaticBody2D" parent="."]
+position = Vector2(628.9920, -713.0905)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof18"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="FisherRoof19" type="StaticBody2D" parent="."]
+position = Vector2(665.3440, -709.9438)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="FisherRoof19"]
+polygon = PackedVector2Array(-18.1760, -6.0000, 18.1760, -6.0000, 18.1760, 6.0000, -18.1760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof0" type="StaticBody2D" parent="."]
+position = Vector2(2221.0560, -1444.6813)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof0"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof1" type="StaticBody2D" parent="."]
+position = Vector2(2270.2080, -1449.9114)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof1"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof2" type="StaticBody2D" parent="."]
+position = Vector2(2319.3600, -1465.2090)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof2"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof3" type="StaticBody2D" parent="."]
+position = Vector2(2368.5120, -1485.7183)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof3"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof4" type="StaticBody2D" parent="."]
+position = Vector2(2417.6640, -1509.0999)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof4"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof5" type="StaticBody2D" parent="."]
+position = Vector2(2466.8160, -1534.1052)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof5"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof6" type="StaticBody2D" parent="."]
+position = Vector2(2515.9680, -1560.0356)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof6"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof7" type="StaticBody2D" parent="."]
+position = Vector2(2565.1200, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof7"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof8" type="StaticBody2D" parent="."]
+position = Vector2(2614.2720, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof8"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof9" type="StaticBody2D" parent="."]
+position = Vector2(2663.4240, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof9"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof10" type="StaticBody2D" parent="."]
+position = Vector2(2712.5760, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof10"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof11" type="StaticBody2D" parent="."]
+position = Vector2(2761.7280, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof11"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof12" type="StaticBody2D" parent="."]
+position = Vector2(2810.8800, -1566.4800)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof12"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof13" type="StaticBody2D" parent="."]
+position = Vector2(2860.0320, -1560.0356)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof13"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof14" type="StaticBody2D" parent="."]
+position = Vector2(2909.1840, -1534.1052)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof14"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof15" type="StaticBody2D" parent="."]
+position = Vector2(2958.3360, -1509.0999)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof15"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof16" type="StaticBody2D" parent="."]
+position = Vector2(3007.4880, -1485.7183)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof16"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof17" type="StaticBody2D" parent="."]
+position = Vector2(3056.6400, -1465.2090)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof17"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof18" type="StaticBody2D" parent="."]
+position = Vector2(3105.7920, -1449.9114)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof18"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="WorkshopRoof19" type="StaticBody2D" parent="."]
+position = Vector2(3154.9440, -1444.6813)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="WorkshopRoof19"]
+polygon = PackedVector2Array(-24.5760, -6.0000, 24.5760, -6.0000, 24.5760, 6.0000, -24.5760, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof0" type="StaticBody2D" parent="."]
+position = Vector2(2333.2480, -348.1200)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof0"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof1" type="StaticBody2D" parent="."]
+position = Vector2(2384.0640, -354.5989)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof1"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof2" type="StaticBody2D" parent="."]
+position = Vector2(2434.8800, -371.9646)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof2"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof3" type="StaticBody2D" parent="."]
+position = Vector2(2485.6960, -394.7221)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof3"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof4" type="StaticBody2D" parent="."]
+position = Vector2(2536.5120, -420.3276)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof4"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof5" type="StaticBody2D" parent="."]
+position = Vector2(2587.3280, -447.4649)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof5"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof6" type="StaticBody2D" parent="."]
+position = Vector2(2638.1440, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof6"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof7" type="StaticBody2D" parent="."]
+position = Vector2(2688.9600, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof7"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof8" type="StaticBody2D" parent="."]
+position = Vector2(2739.7760, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof8"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof9" type="StaticBody2D" parent="."]
+position = Vector2(2790.5920, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof9"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof10" type="StaticBody2D" parent="."]
+position = Vector2(2841.4080, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof10"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof11" type="StaticBody2D" parent="."]
+position = Vector2(2892.2240, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof11"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof12" type="StaticBody2D" parent="."]
+position = Vector2(2943.0400, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof12"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof13" type="StaticBody2D" parent="."]
+position = Vector2(2993.8560, -467.6000)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof13"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof14" type="StaticBody2D" parent="."]
+position = Vector2(3044.6720, -447.4649)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof14"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof15" type="StaticBody2D" parent="."]
+position = Vector2(3095.4880, -420.3276)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof15"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof16" type="StaticBody2D" parent="."]
+position = Vector2(3146.3040, -394.7221)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof16"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof17" type="StaticBody2D" parent="."]
+position = Vector2(3197.1200, -371.9646)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof17"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof18" type="StaticBody2D" parent="."]
+position = Vector2(3247.9360, -354.5989)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof18"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="SlipRoof19" type="StaticBody2D" parent="."]
+position = Vector2(3298.7520, -348.1200)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Outline" type="CollisionPolygon2D" parent="SlipRoof19"]
+polygon = PackedVector2Array(-25.4080, -6.0000, 25.4080, -6.0000, 25.4080, 6.0000, -25.4080, 6.0000)
+one_way_collision = true
+one_way_collision_margin = 12.0

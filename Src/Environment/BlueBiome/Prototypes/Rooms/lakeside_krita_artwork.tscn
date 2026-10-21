@@ -1,0 +1,266 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_00.png" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_01_00.png" id="2"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_00.png" id="3"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_00.png" id="4"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_01.png" id="5"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_04_01.png" id="6"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_01.png" id="7"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_01.png" id="8"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_02.png" id="9"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_01_02.png" id="10"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_02.png" id="11"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_02.png" id="12"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_03.png" id="13"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_01_03.png" id="14"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_03_03.png" id="15"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_04_03.png" id="16"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_03.png" id="17"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_03.png" id="18"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_04.png" id="19"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_01_04.png" id="20"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_02_04.png" id="21"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_03_04.png" id="22"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_04_04.png" id="23"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_04.png" id="24"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_04.png" id="25"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_00_05.png" id="26"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_01_05.png" id="27"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_02_05.png" id="28"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_03_05.png" id="29"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_04_05.png" id="30"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_05_05.png" id="31"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_cave_06_05.png" id="32"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_00_01.png" id="33"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_01_01.png" id="34"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_05_01.png" id="35"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_00_02.png" id="36"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_01_02.png" id="37"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_05_02.png" id="38"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_06_02.png" id="39"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_04_04.png" id="40"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/terrain_05_04.png" id="41"]
+
+[node name="TerrainArtwork" type="Node2D"]
+editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."
+
+[node name="rear_cave" type="Node2D" parent="."]
+z_index = -6
+
+[node name="terrain" type="Node2D" parent="."]
+z_index = 5
+
+[node name="breakables" type="Node2D" parent="."]
+z_index = 7
+
+[node name="bridges" type="Node2D" parent="."]
+z_index = 6
+
+[node name="foreground" type="Node2D" parent="."]
+z_index = 9
+
+[node name="Chunk_01" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, -2560)
+texture = ExtResource("1")
+centered = false
+
+[node name="Chunk_02" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-384, -2560)
+texture = ExtResource("2")
+centered = false
+
+[node name="Chunk_03" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, -2560)
+texture = ExtResource("3")
+centered = false
+
+[node name="Chunk_04" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, -2560)
+texture = ExtResource("4")
+centered = false
+
+[node name="Chunk_05" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, -1536)
+texture = ExtResource("5")
+centered = false
+
+[node name="Chunk_06" type="Sprite2D" parent="rear_cave"]
+position = Vector2(2688, -1536)
+texture = ExtResource("6")
+centered = false
+
+[node name="Chunk_07" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, -1536)
+texture = ExtResource("7")
+centered = false
+
+[node name="Chunk_08" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, -1536)
+texture = ExtResource("8")
+centered = false
+
+[node name="Chunk_09" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, -512)
+texture = ExtResource("9")
+centered = false
+
+[node name="Chunk_10" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-384, -512)
+texture = ExtResource("10")
+centered = false
+
+[node name="Chunk_11" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, -512)
+texture = ExtResource("11")
+centered = false
+
+[node name="Chunk_12" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, -512)
+texture = ExtResource("12")
+centered = false
+
+[node name="Chunk_13" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, 512)
+texture = ExtResource("13")
+centered = false
+
+[node name="Chunk_14" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-384, 512)
+texture = ExtResource("14")
+centered = false
+
+[node name="Chunk_15" type="Sprite2D" parent="rear_cave"]
+position = Vector2(1664, 512)
+texture = ExtResource("15")
+centered = false
+
+[node name="Chunk_16" type="Sprite2D" parent="rear_cave"]
+position = Vector2(2688, 512)
+texture = ExtResource("16")
+centered = false
+
+[node name="Chunk_17" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, 512)
+texture = ExtResource("17")
+centered = false
+
+[node name="Chunk_18" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, 512)
+texture = ExtResource("18")
+centered = false
+
+[node name="Chunk_19" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, 1536)
+texture = ExtResource("19")
+centered = false
+
+[node name="Chunk_20" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-384, 1536)
+texture = ExtResource("20")
+centered = false
+
+[node name="Chunk_21" type="Sprite2D" parent="rear_cave"]
+position = Vector2(640, 1536)
+texture = ExtResource("21")
+centered = false
+
+[node name="Chunk_22" type="Sprite2D" parent="rear_cave"]
+position = Vector2(1664, 1536)
+texture = ExtResource("22")
+centered = false
+
+[node name="Chunk_23" type="Sprite2D" parent="rear_cave"]
+position = Vector2(2688, 1536)
+texture = ExtResource("23")
+centered = false
+
+[node name="Chunk_24" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, 1536)
+texture = ExtResource("24")
+centered = false
+
+[node name="Chunk_25" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, 1536)
+texture = ExtResource("25")
+centered = false
+
+[node name="Chunk_26" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-1408, 2560)
+texture = ExtResource("26")
+centered = false
+
+[node name="Chunk_27" type="Sprite2D" parent="rear_cave"]
+position = Vector2(-384, 2560)
+texture = ExtResource("27")
+centered = false
+
+[node name="Chunk_28" type="Sprite2D" parent="rear_cave"]
+position = Vector2(640, 2560)
+texture = ExtResource("28")
+centered = false
+
+[node name="Chunk_29" type="Sprite2D" parent="rear_cave"]
+position = Vector2(1664, 2560)
+texture = ExtResource("29")
+centered = false
+
+[node name="Chunk_30" type="Sprite2D" parent="rear_cave"]
+position = Vector2(2688, 2560)
+texture = ExtResource("30")
+centered = false
+
+[node name="Chunk_31" type="Sprite2D" parent="rear_cave"]
+position = Vector2(3712, 2560)
+texture = ExtResource("31")
+centered = false
+
+[node name="Chunk_32" type="Sprite2D" parent="rear_cave"]
+position = Vector2(4736, 2560)
+texture = ExtResource("32")
+centered = false
+
+[node name="Chunk_33" type="Sprite2D" parent="terrain"]
+position = Vector2(-1408, -1536)
+texture = ExtResource("33")
+centered = false
+
+[node name="Chunk_34" type="Sprite2D" parent="terrain"]
+position = Vector2(-384, -1536)
+texture = ExtResource("34")
+centered = false
+
+[node name="Chunk_35" type="Sprite2D" parent="terrain"]
+position = Vector2(3712, -1536)
+texture = ExtResource("35")
+centered = false
+
+[node name="Chunk_36" type="Sprite2D" parent="terrain"]
+position = Vector2(-1408, -512)
+texture = ExtResource("36")
+centered = false
+
+[node name="Chunk_37" type="Sprite2D" parent="terrain"]
+position = Vector2(-384, -512)
+texture = ExtResource("37")
+centered = false
+
+[node name="Chunk_38" type="Sprite2D" parent="terrain"]
+position = Vector2(3712, -512)
+texture = ExtResource("38")
+centered = false
+
+[node name="Chunk_39" type="Sprite2D" parent="terrain"]
+position = Vector2(4736, -512)
+texture = ExtResource("39")
+centered = false
+
+[node name="Chunk_40" type="Sprite2D" parent="terrain"]
+position = Vector2(2688, 1536)
+texture = ExtResource("40")
+centered = false
+
+[node name="Chunk_41" type="Sprite2D" parent="terrain"]
+position = Vector2(3712, 1536)
+texture = ExtResource("41")
+centered = false

@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Material" path="res://Assets/BlueBiome/Art/Lakeside3D/Materials/iron.tres" id="1"]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Art/Lakeside3D/Materials/walnut.tres" id="2"]
+
+[sub_resource type="StandardMaterial3D" id="Material_paper"]
+albedo_color = Color(0.94, 0.64, 0.3, 1)
+roughness = 1.0
+emission_enabled = true
+emission = Color(1, 0.47, 0.13, 1)
+emission_energy_multiplier = 2.2
+
+[sub_resource type="CylinderMesh" id="Mesh_paper"]
+material = SubResource("Material_paper")
+top_radius = 0.105
+bottom_radius = 0.105
+height = 0.30
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="Mesh_cap"]
+material = ExtResource("2")
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.055
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="Mesh_bar"]
+material = ExtResource("1")
+size = Vector3(0.025, 0.35, 0.025)
+
+[sub_resource type="TorusMesh" id="Mesh_ring"]
+material = ExtResource("1")
+inner_radius = 0.05
+outer_radius = 0.07
+rings = 12
+ring_segments = 6
+
+[sub_resource type="BoxMesh" id="Mesh_hook"]
+material = ExtResource("2")
+size = Vector3(0.07, 0.07, 0.38)
+
+[node name="LakesideLantern3D" type="Node3D"]
+
+[node name="Paper" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_paper")
+cast_shadow = 0
+
+[node name="Cap" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.18, 0)
+mesh = SubResource("Mesh_cap")
+cast_shadow = 0
+
+[node name="Base" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.18, 0)
+mesh = SubResource("Mesh_cap")
+cast_shadow = 0
+
+[node name="Bar1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.12, 0, 0)
+mesh = SubResource("Mesh_bar")
+cast_shadow = 0
+
+[node name="Bar2" type="MeshInstance3D" parent="."]
+position = Vector3(0.12, 0, 0)
+mesh = SubResource("Mesh_bar")
+cast_shadow = 0
+
+[node name="Bar3" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, -0.12)
+mesh = SubResource("Mesh_bar")
+cast_shadow = 0
+
+[node name="Bar4" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0.12)
+mesh = SubResource("Mesh_bar")
+cast_shadow = 0
+
+[node name="Hanger" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.265, 0)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Mesh_ring")
+cast_shadow = 0
+
+[node name="WallArm" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.30, -0.16)
+mesh = SubResource("Mesh_hook")
+cast_shadow = 0
+
+[node name="WarmLight" type="OmniLight3D" parent="."]
+layers = 3
+position = Vector3(0, 0, 0.18)
+light_color = Color(1, 0.65, 0.29, 1)
+light_energy = 2.2
+light_specular = 0.35
+light_cull_mask = 3
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 0.25
+omni_range = 4.0

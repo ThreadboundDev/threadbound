@@ -51,6 +51,12 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "One-Way Block"
 
+[node name="BreakableWall" type="Button" parent="Margin/Rows/Geometry"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Solid cracked wall that only a swordfish dash can break. Resize Size in the Inspector."
+text = "Breakable Wall"
+
 [node name="Water" type="Button" parent="Margin/Rows/Geometry"]
 unique_name_in_owner = true
 layout_mode = 2

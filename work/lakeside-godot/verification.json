@@ -1,0 +1,31 @@
+{
+	"checks_passed": true,
+	"display": "headless",
+	"failures": [],
+	"godot_version": "4.7.2-stable (official)",
+	"imported_dimensions": {
+		"BoatSlip": [
+			8.07999992370605,
+			7.60094547271729,
+			5.07999992370605
+		],
+		"FisherHouse": [
+			5.81999969482422,
+			6.52594518661499,
+			5.96499967575073
+		],
+		"Tower": [
+			9.375,
+			32.03125,
+			6.0
+		],
+		"Workshop": [
+			7.81999969482422,
+			4.97594547271729,
+			6.06500053405762
+		]
+	},
+	"projection_error_pixels": 0.000125827195006423,
+	"shared_world": true,
+	"visual_review": "Headless validation only; rendered lighting review awaits the user's playtest."
+}

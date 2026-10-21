@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=1 format=3]
+
+
+
+[resource]
+resource_name = "recess"
+albedo_color = Color(0.02800000086426735, 0.024000000208616257, 0.019999999552965164, 1)
+metallic = 0
+roughness = 1

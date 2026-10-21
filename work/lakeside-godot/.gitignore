@@ -1,0 +1,4 @@
+runtime/
+sandbox/
+appdata/
+*.log

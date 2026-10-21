@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_art_stage_2d.gd" id="1"]
+
+[node name="LakesideArtStage" type="Node2D"]
+editor_description = "Shared real 3D lighting behind the existing 2D player. Add Lakeside3D 2D building/lantern scenes to the same room. All anchors use 128 px/unit."
+script = ExtResource("1")

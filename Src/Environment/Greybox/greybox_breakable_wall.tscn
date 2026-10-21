@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/Greybox/greybox_breakable_wall.gd" id="1"]
+[sub_resource type="RectangleShape2D" id="Wall"]
+size = Vector2(128, 384)
+
+[node name="BreakableWall" type="StaticBody2D"]
+z_index = 30
+script = ExtResource("1")
+size = Vector2(128, 384)
+editor_description = "Resizable solid wall. Bait a swordfish dash into the cracks to break it. Ordinary attacks and movement cannot break it; reload the room to restore."
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Wall")

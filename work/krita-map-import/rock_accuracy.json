@@ -1,0 +1,8 @@
+{
+  "polygons": 51,
+  "vertices": 1182,
+  "false_solid_pixels_beyond_4px": 511,
+  "missed_solid_pixels_beyond_4px": 1182,
+  "false_solid_fraction": 1.2555943978965378e-05,
+  "missed_solid_fraction": 2.904329898852657e-05
+}

@@ -5,16 +5,22 @@ var elapsed := -1.0
 
 func setup(target: GreyboxBumper2D) -> void:
 	bulb = target
-	sprite_frames = load("res://Assets/BlueBiome/StillVillage/Bulb/bulb_frames.tres")
+	sprite_frames = load("res://Assets/BlueBiome/StillVillage/Bulb/PetalV2/bulb_frames.tres")
 	centered = false
 	offset = Vector2(-196.0, -311.4667)
-	scale = Vector2.ONE * (bulb.size.x / 202.6667)
-	position = bulb.position
+	sync_to_bulb()
 	z_index = 30
+	z_as_relative = false
 	bulb.broken.connect(_on_broken)
 	bulb.regenerated.connect(_on_regenerated)
 	speed_scale = 0.4
 	play(&"rush")
+
+func sync_to_bulb() -> void:
+	if not is_instance_valid(bulb):
+		return
+	scale = Vector2.ONE * (bulb.size.x / 202.6667)
+	position = Vector2.ZERO if get_parent() == bulb else bulb.position
 
 func _on_broken() -> void:
 	elapsed = 0.0
@@ -28,6 +34,7 @@ func _emit_release() -> void:
 	get_parent().add_child(spray)
 	spray.global_position = global_position
 	spray.z_index = z_index + 1
+	spray.z_as_relative = false
 	spray.amount = 32
 	spray.lifetime = 0.32
 	spray.one_shot = true

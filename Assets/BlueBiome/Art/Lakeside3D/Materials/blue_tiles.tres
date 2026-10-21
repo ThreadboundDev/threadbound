@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_BaseColor_4K.png" id="color"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_Roughness_4K.png" id="roughness"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/Lakeside3D/Textures/blue_tiles_NormalGL_4K.png" id="normal"]
+
+[resource]
+resource_name = "blue_tiles"
+albedo_color = Color(1, 1, 1, 1)
+metallic = 0
+roughness = 1
+albedo_texture = ExtResource("color")
+roughness_texture = ExtResource("roughness")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_scale = 0.44999998807907104
+normal_texture = ExtResource("normal")

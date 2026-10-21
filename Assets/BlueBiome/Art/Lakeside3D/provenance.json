@@ -1,0 +1,201 @@
+{
+  "models": {
+    "covered_boat_slip": {
+      "source": "outputs\\lakeside-buildings-v1\\models\\CoveredBoatSlip.glb",
+      "source_bytes": 41974484,
+      "runtime_bytes": 4122004,
+      "geometry_uv_material_values_preserved": true,
+      "geometry_binary_sha256": "56d95bf246483619cf364afd69808a345cbd3bcd5e38cebc474d207c171913f6"
+    },
+    "net_workshop": {
+      "source": "outputs\\lakeside-buildings-v1\\models\\NetWorkshop_Exterior.glb",
+      "source_bytes": 50605808,
+      "runtime_bytes": 2594596,
+      "geometry_uv_material_values_preserved": true,
+      "geometry_binary_sha256": "786755cc8cd44392cbce81d822ce1b5d17ca85cde41aa0bf3b97abb08e1a1c79"
+    },
+    "fishers_house": {
+      "source": "outputs\\lakeside-buildings-v1\\models\\FishersHouse_Exterior.glb",
+      "source_bytes": 49803708,
+      "runtime_bytes": 1792480,
+      "geometry_uv_material_values_preserved": true,
+      "geometry_binary_sha256": "c0f5297766aa04e5e4e388c9c4cf60eadd5b4e6400c74a55bd97bad685272613"
+    },
+    "central_tower": {
+      "source": "outputs\\central-tower-model-v3\\CentralTower_Exterior.glb",
+      "source_bytes": 53113744,
+      "runtime_bytes": 5102432,
+      "geometry_uv_material_values_preserved": true,
+      "geometry_binary_sha256": "072c31623328443395d8f420f2a4d503c1c2d845b929279631b84a2e4bffa0ef"
+    }
+  },
+  "textures": {
+    "walnut_NormalGL_2K.png": {
+      "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58",
+      "bytes": 6065181
+    },
+    "walnut_BaseColor_4K.jpg": {
+      "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d",
+      "bytes": 3546876
+    },
+    "walnut_Roughness_2K.png": {
+      "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee",
+      "bytes": 2195152
+    },
+    "blue_tiles_NormalGL_2K.png": {
+      "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118",
+      "bytes": 6495637
+    },
+    "blue_tiles_BaseColor_4K.jpg": {
+      "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188",
+      "bytes": 3711251
+    },
+    "blue_tiles_Roughness_2K.png": {
+      "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983",
+      "bytes": 2315187
+    },
+    "slate_NormalGL_2K.png": {
+      "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2",
+      "bytes": 6935064
+    },
+    "slate_BaseColor_4K.jpg": {
+      "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4",
+      "bytes": 4159495
+    },
+    "slate_Roughness_2K.png": {
+      "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456",
+      "bytes": 2428332
+    },
+    "plaster_NormalGL_2K.png": {
+      "sha256": "e8718349d8521c963bb7ed4215126cd78c0ca2cb85dd7131e83bb3d4c6854a0e",
+      "bytes": 4550319
+    },
+    "plaster_BaseColor_4K.jpg": {
+      "sha256": "44a3d07491d87417f18a37fd86b8d9060903d59d1684e35e952d842d014f8de7",
+      "bytes": 3319358
+    },
+    "plaster_Roughness_2K.png": {
+      "sha256": "7c2ed6feb709bcc8ae273f0047879909334096c46f245c8121dc70131f4f10a7",
+      "bytes": 2288849
+    },
+    "walnut_BaseColor_4K.png": {
+      "sha256": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d",
+      "bytes": 15625991,
+      "source": "outputs\\central-tower-model-v1\\textures\\walnut_BaseColor_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "walnut_NormalGL_4K.png": {
+      "sha256": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680",
+      "bytes": 14541349,
+      "source": "outputs\\central-tower-model-v1\\textures\\walnut_NormalGL_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "walnut_Roughness_4K.png": {
+      "sha256": "98f50367ba5d5022ac033db94361e9791963edd6e696a63a4bf22fd8b835837b",
+      "bytes": 6500673,
+      "source": "outputs\\central-tower-model-v1\\textures\\walnut_Roughness_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "plaster_BaseColor_4K.png": {
+      "sha256": "c0167c177c3f2e5a69af5aaa9c5b4d4f8250a69b82016dcefbeef7629f7bb4ae",
+      "bytes": 19129091,
+      "source": "outputs\\central-tower-model-v1\\textures\\plaster_BaseColor_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "plaster_NormalGL_4K.png": {
+      "sha256": "679cff7ba67ea2db90843e05efd01cc4725f5a5c8825da86afc1ffd3748b022b",
+      "bytes": 12455468,
+      "source": "outputs\\central-tower-model-v1\\textures\\plaster_NormalGL_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "plaster_Roughness_4K.png": {
+      "sha256": "c9a34328105c2571a295af2718f471a8d0b4af455ed59acef329d569a9603ed3",
+      "bytes": 6537591,
+      "source": "outputs\\central-tower-model-v1\\textures\\plaster_Roughness_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "blue_tiles_BaseColor_4K.png": {
+      "sha256": "0ab47aa50bf2ea21ea34357d21a7d75ebfacd870f8f33ec074577ead74b1ccae",
+      "bytes": 20190767,
+      "source": "outputs\\central-tower-model-v1\\textures\\blue_tiles_BaseColor_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "blue_tiles_NormalGL_4K.png": {
+      "sha256": "5f12e1e279aae3a0561e3997076cb37e92e8f83b562d934b5c1848668236e8b8",
+      "bytes": 16421087,
+      "source": "outputs\\central-tower-model-v1\\textures\\blue_tiles_NormalGL_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "blue_tiles_Roughness_4K.png": {
+      "sha256": "9582d7b70ccecda20862c72d18a31d1261d803dacd3d7b829d4b63dd37ca37a2",
+      "bytes": 6633512,
+      "source": "outputs\\central-tower-model-v1\\textures\\blue_tiles_Roughness_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "slate_BaseColor_4K.png": {
+      "sha256": "edb96bfcf62f24c8994f0486cb8893a15fa38130c25ac63a47ebf991f08a8a95",
+      "bytes": 20060573,
+      "source": "outputs\\central-tower-model-v1\\textures\\slate_BaseColor_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "slate_NormalGL_4K.png": {
+      "sha256": "136433b6a4abf571c457c2b723c77966006004879d6646bb8de2c032ccf49ec2",
+      "bytes": 19329631,
+      "source": "outputs\\central-tower-model-v1\\textures\\slate_NormalGL_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    },
+    "slate_Roughness_4K.png": {
+      "sha256": "c426e5abd6027f317e6d6fbd3547b499b64e2c0e6e0cc6758bc6a72e32414da5",
+      "bytes": 6630112,
+      "source": "outputs\\central-tower-model-v1\\textures\\slate_Roughness_4K.png",
+      "dimensions": [
+        4096,
+        4096
+      ]
+    }
+  },
+  "checks_passed": true,
+  "render_quality": {
+    "maps": "Original 4096px Blender PNG color, normal and roughness maps, unchanged pixels",
+    "vram_compression": "high quality BC7/BPTC where supported",
+    "shared_by_all_buildings": true,
+    "retained_legacy_files": "Old 2K runtime maps and JPEGs remain available but are not referenced by the building models",
+    "render_scale": 1.25,
+    "msaa_samples": 4,
+    "composite_filter": "linear",
+    "material_filter": "linear mipmaps anisotropic"
+  }
+}

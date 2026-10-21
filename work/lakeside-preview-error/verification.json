@@ -1,0 +1,225 @@
+{
+	"checks": 149,
+	"display": "Windows",
+	"failures": [],
+	"godot": "4.7.2-stable (official)",
+	"passed": true,
+	"samples": [
+		{
+			"host": "(2, 2)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(2, 1080)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(1920, 2)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(16, 16)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(32, 32)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(64, 64)",
+			"render": "(1280, 720)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(128, 128)",
+			"render": "(64, 64)",
+			"scale": 0.5,
+			"usable": true
+		},
+		{
+			"host": "(320, 180)",
+			"render": "(160, 90)",
+			"scale": 0.5,
+			"usable": true
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(640, 360)",
+			"scale": 0.5,
+			"usable": true
+		},
+		{
+			"host": "(1920, 1080)",
+			"render": "(960, 540)",
+			"scale": 0.5,
+			"usable": true
+		},
+		{
+			"host": "(2, 2)",
+			"render": "(960, 540)",
+			"scale": 0.5,
+			"usable": false
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(640, 360)",
+			"scale": 0.5,
+			"usable": true
+		},
+		{
+			"host": "(2, 2)",
+			"render": "(640, 360)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(2, 1080)",
+			"render": "(640, 360)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(1920, 2)",
+			"render": "(640, 360)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(16, 16)",
+			"render": "(640, 360)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(32, 32)",
+			"render": "(640, 360)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(64, 64)",
+			"render": "(80, 80)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(128, 128)",
+			"render": "(160, 160)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(320, 180)",
+			"render": "(400, 225)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(1600, 900)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(1920, 1080)",
+			"render": "(2400, 1350)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(2, 2)",
+			"render": "(2400, 1350)",
+			"scale": 1.25,
+			"usable": false
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(1600, 900)",
+			"scale": 1.25,
+			"usable": true
+		},
+		{
+			"host": "(2, 2)",
+			"render": "(1600, 900)",
+			"scale": 2.0,
+			"usable": false
+		},
+		{
+			"host": "(2, 1080)",
+			"render": "(1600, 900)",
+			"scale": 2.0,
+			"usable": false
+		},
+		{
+			"host": "(1920, 2)",
+			"render": "(1600, 900)",
+			"scale": 2.0,
+			"usable": false
+		},
+		{
+			"host": "(16, 16)",
+			"render": "(1600, 900)",
+			"scale": 2.0,
+			"usable": false
+		},
+		{
+			"host": "(32, 32)",
+			"render": "(64, 64)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(64, 64)",
+			"render": "(128, 128)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(128, 128)",
+			"render": "(256, 256)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(320, 180)",
+			"render": "(640, 360)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(2560, 1440)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(1920, 1080)",
+			"render": "(3840, 2160)",
+			"scale": 2.0,
+			"usable": true
+		},
+		{
+			"host": "(2, 2)",
+			"render": "(3840, 2160)",
+			"scale": 2.0,
+			"usable": false
+		},
+		{
+			"host": "(1280, 720)",
+			"render": "(2560, 1440)",
+			"scale": 2.0,
+			"usable": true
+		}
+	]
+}

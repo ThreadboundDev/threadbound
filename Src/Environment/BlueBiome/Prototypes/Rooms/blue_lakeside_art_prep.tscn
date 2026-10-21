@@ -1,0 +1,115 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/lakeside_art_prep.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_art_stage_2d.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/covered_boat_slip_2d.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/net_workshop_2d.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/fishers_house_2d.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/central_tower_2d.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_lantern_2d.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="8"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.gd" id="9"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_review_walkway_3d.tscn" id="10"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/far_sky_cliffs.png" id="11"]
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(5632, 64)
+[sub_resource type="RectangleShape2D" id="Shape_loft"]
+size = Vector2(504, 12)
+[sub_resource type="CanvasItemMaterial" id="Material_sky"]
+light_mode = 1
+[sub_resource type="Gradient" id="Gradient_sky"]
+colors = PackedColorArray(0.56, 0.73, 0.81, 1, 0.21, 0.40, 0.48, 1)
+[sub_resource type="GradientTexture2D" id="Texture_sky"]
+gradient = SubResource("Gradient_sky")
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
+width = 16
+height = 1024
+
+[node name="BlueLakesideArtPrep" type="Node2D"]
+editor_description = "F6 art/lighting test with the real 2D player. New models share a 3D world. The floor is temporary; final terrain/water/air pockets come from the Krita layout."
+script = ExtResource("1")
+
+[node name="Backdrop" type="Sprite2D" parent="."]
+z_index = -100
+material = SubResource("Material_sky")
+position = Vector2(600, -1800)
+scale = Vector2(1000, 8)
+texture = SubResource("Texture_sky")
+
+[node name="DistantCliffs" type="Sprite2D" parent="."]
+z_index = -90
+position = Vector2(640, -1300)
+scale = Vector2(4, 4)
+texture = ExtResource("11")
+
+[node name="KritaReference" type="Sprite2D" parent="."]
+editor_description = "Assign the finished PNG here for alignment. Keep Scale at 1 and Centered off for pixel coordinates. Then move the 2D building anchors onto the map."
+z_index = -20
+centered = false
+
+[node name="LakesideArtStage" parent="." instance=ExtResource("2")]
+
+[node name="Buildings" type="Node2D" parent="."]
+[node name="BoatSlip" parent="Buildings" instance=ExtResource("3")]
+position = Vector2(-1400, 96)
+[node name="Workshop" parent="Buildings" instance=ExtResource("4")]
+position = Vector2(0, 64)
+[node name="FisherHouse" parent="Buildings" instance=ExtResource("5")]
+position = Vector2(1152, 80)
+[node name="Tower" parent="Buildings" instance=ExtResource("6")]
+position = Vector2(2560, 0)
+
+[node name="ReviewWalkway" type="Node2D" parent="."]
+editor_description = "Temporary art test deck and shadow receiver. Replace with authored terrain during map assembly."
+script = ExtResource("9")
+model_scene = ExtResource("10")
+
+[node name="Lanterns" type="Node2D" parent="."]
+[node name="SlipLantern" parent="Lanterns" instance=ExtResource("7")]
+position = Vector2(-1738, -555)
+depth_units = 1.95
+[node name="WorkshopLantern" parent="Lanterns" instance=ExtResource("7")]
+position = Vector2(-307, -224)
+depth_units = 2.4
+[node name="HouseLantern" parent="Lanterns" instance=ExtResource("7")]
+position = Vector2(1389, -231)
+depth_units = 2.35
+
+[node name="Geometry" type="Node2D" parent="."]
+[node name="TemporaryFloor" type="StaticBody2D" parent="Geometry"]
+collision_layer = 1
+collision_mask = 0
+[node name="Shape" type="CollisionShape2D" parent="Geometry/TemporaryFloor"]
+position = Vector2(512, 32)
+shape = SubResource("Shape_floor")
+[node name="HouseLoft" type="StaticBody2D" parent="Geometry"]
+collision_layer = 1
+collision_mask = 0
+[node name="Shape" type="CollisionShape2D" parent="Geometry/HouseLoft"]
+position = Vector2(1152, -304.4)
+shape = SubResource("Shape_loft")
+one_way_collision = true
+
+[node name="ActorAmbient" type="CanvasModulate" parent="."]
+color = Color(0.85, 0.91, 0.98, 1)
+[node name="ActorDaylight" type="DirectionalLight2D" parent="."]
+rotation = -0.43633
+range_item_cull_mask = 3
+color = Color(1, 0.94, 0.83, 1)
+energy = 0.2
+
+[node name="Player" parent="." instance=ExtResource("8")]
+position = Vector2(-600, -69.245)
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -285)
+zoom = Vector2(0.85, 0.85)
+position_smoothing_enabled = true
+limit_left = -2350
+limit_top = -4400
+limit_right = 3450
+limit_bottom = 650
+[node name="OverviewCamera" type="Camera2D" parent="."]
+position = Vector2(600, -1750)
+zoom = Vector2(0.22, 0.22)
+enabled = false

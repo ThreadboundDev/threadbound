@@ -18,11 +18,13 @@ var _patrol_sign := 1.0
 var _desired_velocity := Vector2.ZERO
 var _dash_elapsed := 0.0
 var _dash_distance := 0.0
+var _terrain_strike_id := 0
 var _windup_elapsed := 0.0
 var _recovery_elapsed := 0.0
 @onready var fish_visual: Node2D = $Visuals/Fish
 
 func _ready() -> void:
+	add_to_group("swordfish")
 	_water = get_node_or_null(water_path) as Node2D if not water_path.is_empty() else null
 	if not _water:
 		for volume in get_tree().get_nodes_in_group("lake_water_volumes"):
@@ -103,6 +105,7 @@ func begin_attack() -> void:
 func activate_attack_hitbox() -> void:
 	if dash_blocked or is_dead:
 		return
+	_terrain_strike_id += 1
 	attack_phase = &"dash"
 	fish_visual.set_attack_tell(0.0)
 	_dash_elapsed = 0.0
@@ -267,6 +270,12 @@ func _footprint_fits(center: Vector2) -> bool:
 					return false
 	return true
 
+func can_fracture_terrain() -> bool:
+	return not is_dead and attack_phase == &"dash" and attack_hitbox.active
+
+func get_terrain_strike_id() -> int:
+	return _terrain_strike_id
+
 func _move_in_water(motion: Vector2, damaging := false) -> bool:
 	if not is_instance_valid(_water):
 		return false
@@ -275,6 +284,14 @@ func _move_in_water(motion: Vector2, damaging := false) -> bool:
 	for index in range(steps):
 		if not _footprint_fits(global_position + step):
 			return false
+		# Probe before moving so a fracture releases collision before the dash advances.
+		var obstacle := move_and_collide(step, true)
+		if obstacle:
+			var wall := obstacle.get_collider() as Node
+			if not damaging or not is_instance_valid(wall) or not wall.has_method("fracture_from_swordfish"):
+				return false
+			if not wall.call("fracture_from_swordfish", self):
+				return false
 		var collision := move_and_collide(step)
 		if collision:
 			return false

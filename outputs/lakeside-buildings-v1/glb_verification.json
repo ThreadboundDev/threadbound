@@ -1,0 +1,677 @@
+{
+  "files": {
+    "CoveredBoatSlip.glb": {
+      "bytes": 41974484,
+      "triangles": 49080,
+      "mesh_primitives": 9,
+      "dimensions_gltf_y_up": [
+        8.079999923706055,
+        7.600945472717285,
+        5.079999923706055
+      ],
+      "all_have_uv_normals_tangents": true,
+      "texture_images": [
+        {
+          "name": "walnut_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58"
+        },
+        {
+          "name": "walnut_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d"
+        },
+        {
+          "name": "walnut_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee"
+        },
+        {
+          "name": "blue_tiles_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118"
+        },
+        {
+          "name": "blue_tiles_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188"
+        },
+        {
+          "name": "blue_tiles_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983"
+        },
+        {
+          "name": "slate_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2"
+        },
+        {
+          "name": "slate_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4"
+        },
+        {
+          "name": "slate_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456"
+        }
+      ],
+      "fixed_roof_checks": [],
+      "checks_passed": true
+    },
+    "FishersHouse_Cutaway.glb": {
+      "bytes": 49274368,
+      "triangles": 13838,
+      "mesh_primitives": 14,
+      "dimensions_gltf_y_up": [
+        5.819999694824219,
+        5.385581016540527,
+        5.9649999141693115
+      ],
+      "all_have_uv_normals_tangents": true,
+      "texture_images": [
+        {
+          "name": "plaster_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "e8718349d8521c963bb7ed4215126cd78c0ca2cb85dd7131e83bb3d4c6854a0e"
+        },
+        {
+          "name": "plaster_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "44a3d07491d87417f18a37fd86b8d9060903d59d1684e35e952d842d014f8de7"
+        },
+        {
+          "name": "plaster_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "7c2ed6feb709bcc8ae273f0047879909334096c46f245c8121dc70131f4f10a7"
+        },
+        {
+          "name": "slate_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2"
+        },
+        {
+          "name": "slate_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4"
+        },
+        {
+          "name": "slate_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456"
+        },
+        {
+          "name": "walnut_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58"
+        },
+        {
+          "name": "walnut_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d"
+        },
+        {
+          "name": "walnut_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee"
+        },
+        {
+          "name": "blue_tiles_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118"
+        },
+        {
+          "name": "blue_tiles_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188"
+        },
+        {
+          "name": "blue_tiles_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983"
+        }
+      ],
+      "fixed_roof_checks": [
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__blue_tiles_Left_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__blue_tiles_Right_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__walnut_Left_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__walnut_Right_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        }
+      ],
+      "checks_passed": true
+    },
+    "FishersHouse_Exterior.glb": {
+      "bytes": 49803708,
+      "triangles": 24374,
+      "mesh_primitives": 20,
+      "dimensions_gltf_y_up": [
+        5.819999694824219,
+        6.52594518661499,
+        5.9649999141693115
+      ],
+      "all_have_uv_normals_tangents": true,
+      "texture_images": [
+        {
+          "name": "plaster_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "e8718349d8521c963bb7ed4215126cd78c0ca2cb85dd7131e83bb3d4c6854a0e"
+        },
+        {
+          "name": "plaster_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "44a3d07491d87417f18a37fd86b8d9060903d59d1684e35e952d842d014f8de7"
+        },
+        {
+          "name": "plaster_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "7c2ed6feb709bcc8ae273f0047879909334096c46f245c8121dc70131f4f10a7"
+        },
+        {
+          "name": "slate_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2"
+        },
+        {
+          "name": "slate_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4"
+        },
+        {
+          "name": "slate_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456"
+        },
+        {
+          "name": "walnut_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58"
+        },
+        {
+          "name": "walnut_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d"
+        },
+        {
+          "name": "walnut_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee"
+        },
+        {
+          "name": "blue_tiles_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118"
+        },
+        {
+          "name": "blue_tiles_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188"
+        },
+        {
+          "name": "blue_tiles_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983"
+        }
+      ],
+      "fixed_roof_checks": [
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__blue_tiles_Left_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__blue_tiles_Right_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__walnut_Left_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        },
+        {
+          "node": "FishersHouse__03_Roof_Sides_Fixed__walnut_Right_Corners",
+          "minimum_abs_x": 2.0350000858306885,
+          "limit": 2.035
+        }
+      ],
+      "checks_passed": true
+    },
+    "NetWorkshop_Cutaway.glb": {
+      "bytes": 49418436,
+      "triangles": 15418,
+      "mesh_primitives": 15,
+      "dimensions_gltf_y_up": [
+        7.819999694824219,
+        3.9464032649993896,
+        6.06499981880188
+      ],
+      "all_have_uv_normals_tangents": true,
+      "texture_images": [
+        {
+          "name": "plaster_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "e8718349d8521c963bb7ed4215126cd78c0ca2cb85dd7131e83bb3d4c6854a0e"
+        },
+        {
+          "name": "plaster_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "44a3d07491d87417f18a37fd86b8d9060903d59d1684e35e952d842d014f8de7"
+        },
+        {
+          "name": "plaster_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "7c2ed6feb709bcc8ae273f0047879909334096c46f245c8121dc70131f4f10a7"
+        },
+        {
+          "name": "slate_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2"
+        },
+        {
+          "name": "slate_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4"
+        },
+        {
+          "name": "slate_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456"
+        },
+        {
+          "name": "walnut_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58"
+        },
+        {
+          "name": "walnut_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d"
+        },
+        {
+          "name": "walnut_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee"
+        },
+        {
+          "name": "blue_tiles_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118"
+        },
+        {
+          "name": "blue_tiles_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188"
+        },
+        {
+          "name": "blue_tiles_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983"
+        }
+      ],
+      "fixed_roof_checks": [
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__blue_tiles_Left_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__blue_tiles_Right_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__walnut_Left_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__walnut_Right_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        }
+      ],
+      "checks_passed": true
+    },
+    "NetWorkshop_Exterior.glb": {
+      "bytes": 50605808,
+      "triangles": 34338,
+      "mesh_primitives": 22,
+      "dimensions_gltf_y_up": [
+        7.819999694824219,
+        4.975945472717285,
+        6.06499981880188
+      ],
+      "all_have_uv_normals_tangents": true,
+      "texture_images": [
+        {
+          "name": "plaster_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "e8718349d8521c963bb7ed4215126cd78c0ca2cb85dd7131e83bb3d4c6854a0e"
+        },
+        {
+          "name": "plaster_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "44a3d07491d87417f18a37fd86b8d9060903d59d1684e35e952d842d014f8de7"
+        },
+        {
+          "name": "plaster_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "7c2ed6feb709bcc8ae273f0047879909334096c46f245c8121dc70131f4f10a7"
+        },
+        {
+          "name": "slate_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c504c2f81f1a65ccb73ec893b63ed4f75dece6dbfbe9999a3de59e183dcfa1b2"
+        },
+        {
+          "name": "slate_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "de2cd3c93a741fd653cee9010c182414c5fd51292707a657b3de9558babc07a4"
+        },
+        {
+          "name": "slate_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "c4539df915af5275dc1e32a5d6c8ecb29e5c9fd06e7cfc60f584284778626456"
+        },
+        {
+          "name": "walnut_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "f8a99aea821f3de98a1486e4d521bd8c1e52c7dd8c88395923e0c9ecb516de58"
+        },
+        {
+          "name": "walnut_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "865fc1300128901fcea86b6218a0ed62d9263a76450a456e93d961b014dbca6d"
+        },
+        {
+          "name": "walnut_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "a2a539edfd497234f877f9eb8c583ce13cf8f6cce2ee68770954b2dd62bdd3ee"
+        },
+        {
+          "name": "blue_tiles_NormalGL_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "528a8886ab5033f53cc45418c921862c3842f664c49443f646b0c3c5c0c1c118"
+        },
+        {
+          "name": "blue_tiles_BaseColor_4K",
+          "size": [
+            4096,
+            4096
+          ],
+          "embedded": true,
+          "sha256": "1358a0a513e2fb73003c7118232ef932a54539add5866c2904cc0ae5fe381188"
+        },
+        {
+          "name": "blue_tiles_Roughness_2K",
+          "size": [
+            2048,
+            2048
+          ],
+          "embedded": true,
+          "sha256": "b8edf192afd729549e81259e7d9f9d416986d52690bbf49161563d226fe67983"
+        }
+      ],
+      "fixed_roof_checks": [
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__blue_tiles_Left_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__blue_tiles_Right_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__walnut_Left_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        },
+        {
+          "node": "NetWorkshop__03_Roof_Sides_Fixed__walnut_Right_Corners",
+          "minimum_abs_x": 3.0350000858306885,
+          "limit": 3.035
+        }
+      ],
+      "checks_passed": true
+    }
+  },
+  "checks_passed": true
+}

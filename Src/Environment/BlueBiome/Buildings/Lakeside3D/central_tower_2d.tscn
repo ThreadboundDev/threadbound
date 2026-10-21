@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/central_tower_3d.tscn" id="2"]
+[node name="CentralTower" type="Node2D"]
+editor_description = "Approved tower v3: 1200px maximum width, 4100px height. Open-bottom basin and corrected roof returns. Water remains level-side."
+script = ExtResource("1")
+model_scene = ExtResource("2")
+entry_rect = Rect2(-320, -3910, 640, 3845)

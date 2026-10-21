@@ -1,0 +1,302 @@
+{
+  "pixels_per_unit": 128,
+  "material_source": "outputs\\central-tower-model-v3\\CentralTower_Editable.blend",
+  "material_signatures": {
+    "blue_tiles": [
+      {
+        "image": "blue_tiles_BaseColor_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "0ab47aa50bf2ea21ea34357d21a7d75ebfacd870f8f33ec074577ead74b1ccae"
+      },
+      {
+        "image": "blue_tiles_NormalGL_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "5f12e1e279aae3a0561e3997076cb37e92e8f83b562d934b5c1848668236e8b8"
+      },
+      {
+        "image": "blue_tiles_Roughness_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "9582d7b70ccecda20862c72d18a31d1261d803dacd3d7b829d4b63dd37ca37a2"
+      }
+    ],
+    "iron": [],
+    "plaster": [
+      {
+        "image": "plaster_BaseColor_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "c0167c177c3f2e5a69af5aaa9c5b4d4f8250a69b82016dcefbeef7629f7bb4ae"
+      },
+      {
+        "image": "plaster_NormalGL_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "679cff7ba67ea2db90843e05efd01cc4725f5a5c8825da86afc1ffd3748b022b"
+      },
+      {
+        "image": "plaster_Roughness_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "c9a34328105c2571a295af2718f471a8d0b4af455ed59acef329d569a9603ed3"
+      }
+    ],
+    "recess": [],
+    "rope": [],
+    "slate": [
+      {
+        "image": "slate_BaseColor_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "edb96bfcf62f24c8994f0486cb8893a15fa38130c25ac63a47ebf991f08a8a95"
+      },
+      {
+        "image": "slate_NormalGL_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "136433b6a4abf571c457c2b723c77966006004879d6646bb8de2c032ccf49ec2"
+      },
+      {
+        "image": "slate_Roughness_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "c426e5abd6027f317e6d6fbd3547b499b64e2c0e6e0cc6758bc6a72e32414da5"
+      }
+    ],
+    "walnut": [
+      {
+        "image": "walnut_BaseColor_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d"
+      },
+      {
+        "image": "walnut_NormalGL_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680"
+      },
+      {
+        "image": "walnut_Roughness_4K.png",
+        "size": [
+          4096,
+          4096
+        ],
+        "sha256": "98f50367ba5d5022ac033db94361e9791963edd6e696a63a4bf22fd8b835837b"
+      }
+    ]
+  },
+  "assets": {
+    "CoveredBoatSlip": {
+      "design": "C: open covered boat gantry with four posts and narrow side deck fingers",
+      "exterior": {
+        "triangles": 49080,
+        "mesh_objects": 9,
+        "dimensions_blender_units": [
+          8.079999923706055,
+          5.079999923706055,
+          7.600945472717285
+        ],
+        "dimensions_gameplay_px": [
+          1034.24,
+          650.24,
+          972.92
+        ],
+        "bounds_min": [
+          -4.039999961853027,
+          -2.5399999618530273,
+          0.0
+        ],
+        "bounds_max": [
+          4.039999961853027,
+          2.5399999618530273,
+          7.600945472717285
+        ],
+        "all_meshes_have_uv": true
+      },
+      "cutaway": null,
+      "roof": {
+        "width": 7.94,
+        "depth": 4.94,
+        "eave_height": 6.13,
+        "rise": 1.2,
+        "inner_wall_cut_limit": null
+      }
+    },
+    "NetWorkshop": {
+      "design": "B: wide single-story net workshop",
+      "exterior": {
+        "triangles": 34338,
+        "mesh_objects": 22,
+        "dimensions_blender_units": [
+          7.819999694824219,
+          6.06499981880188,
+          4.975945472717285
+        ],
+        "dimensions_gameplay_px": [
+          1000.96,
+          776.32,
+          636.92
+        ],
+        "bounds_min": [
+          -3.9099998474121094,
+          -3.4049999713897705,
+          0.0
+        ],
+        "bounds_max": [
+          3.9099998474121094,
+          2.6599998474121094,
+          4.975945472717285
+        ],
+        "all_meshes_have_uv": true
+      },
+      "cutaway": {
+        "triangles": 15418,
+        "mesh_objects": 15,
+        "dimensions_blender_units": [
+          7.819999694824219,
+          6.06499981880188,
+          3.9464032649993896
+        ],
+        "dimensions_gameplay_px": [
+          1000.96,
+          776.32,
+          505.14
+        ],
+        "bounds_min": [
+          -3.9099998474121094,
+          -3.4049999713897705,
+          0.0
+        ],
+        "bounds_max": [
+          3.9099998474121094,
+          2.6599998474121094,
+          3.9464032649993896
+        ],
+        "all_meshes_have_uv": true
+      },
+      "roof": {
+        "width": 7.680000000000001,
+        "depth": 5.18,
+        "eave_height": 3.46,
+        "rise": 1.22,
+        "inner_wall_cut_limit": 3.035
+      }
+    },
+    "FishersHouse": {
+      "design": "B: compact raised fisher house",
+      "exterior": {
+        "triangles": 24374,
+        "mesh_objects": 20,
+        "dimensions_blender_units": [
+          5.819999694824219,
+          5.9649999141693115,
+          6.52594518661499
+        ],
+        "dimensions_gameplay_px": [
+          744.96,
+          763.52,
+          835.32
+        ],
+        "bounds_min": [
+          -2.9099998474121094,
+          -3.3550000190734863,
+          0.0
+        ],
+        "bounds_max": [
+          2.9099998474121094,
+          2.609999895095825,
+          6.52594518661499
+        ],
+        "all_meshes_have_uv": true
+      },
+      "cutaway": {
+        "triangles": 13838,
+        "mesh_objects": 14,
+        "dimensions_blender_units": [
+          5.819999694824219,
+          5.9649999141693115,
+          5.385581016540527
+        ],
+        "dimensions_gameplay_px": [
+          744.96,
+          763.52,
+          689.35
+        ],
+        "bounds_min": [
+          -2.9099998474121094,
+          -3.3550000190734863,
+          0.0
+        ],
+        "bounds_max": [
+          2.9099998474121094,
+          2.609999895095825,
+          5.385581016540527
+        ],
+        "all_meshes_have_uv": true
+      },
+      "roof": {
+        "width": 5.680000000000001,
+        "depth": 5.08,
+        "eave_height": 4.8500000000000005,
+        "rise": 1.38,
+        "inner_wall_cut_limit": 2.035
+      }
+    }
+  },
+  "roof_clearance_checks": [
+    {
+      "asset": "NetWorkshop",
+      "material": "blue_tiles",
+      "fixed_minimum_abs_x": 3.035,
+      "inner_wall_abs_x": 3.0,
+      "exterior_surface_area_error": 6.405098673667453e-08
+    },
+    {
+      "asset": "NetWorkshop",
+      "material": "walnut",
+      "fixed_minimum_abs_x": 3.035,
+      "inner_wall_abs_x": 3.0,
+      "exterior_surface_area_error": 1.734956924792641e-07
+    },
+    {
+      "asset": "FishersHouse",
+      "material": "blue_tiles",
+      "fixed_minimum_abs_x": 2.035,
+      "inner_wall_abs_x": 2.0,
+      "exterior_surface_area_error": 1.336652957206752e-07
+    },
+    {
+      "asset": "FishersHouse",
+      "material": "walnut",
+      "fixed_minimum_abs_x": 2.035,
+      "inner_wall_abs_x": 2.0,
+      "exterior_surface_area_error": 4.1471722056485305e-08
+    }
+  ],
+  "checks_passed": true
+}

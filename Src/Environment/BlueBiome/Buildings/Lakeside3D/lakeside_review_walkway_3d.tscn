@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Material" path="res://Assets/BlueBiome/Art/Lakeside3D/Materials/review_deck.tres" id="1"]
+[sub_resource type="BoxMesh" id="Mesh_deck"]
+material = ExtResource("1")
+size = Vector3(44, 0.25, 1.8)
+[node name="ReviewWalkway3D" type="Node3D"]
+[node name="TemporaryShadowReceiver" type="MeshInstance3D" parent="."]
+position = Vector3(4, -0.125, 0)
+mesh = SubResource("Mesh_deck")

@@ -1,0 +1,15 @@
+{
+	"checks": 65,
+	"display": "headless",
+	"failures": [
+		"Capture three authored enemies and walls before runtime changes",
+		"Respawn recreates a removed enemy without duplicates",
+		"Repeated respawn keeps exactly three enemies",
+		"Repeated respawn keeps exactly three enemies",
+		"Repeated respawn keeps exactly three enemies",
+		"Wall restore preserves authored hit counts"
+	],
+	"godot": "4.7.2-stable (official)",
+	"passed": false,
+	"rendered_images": []
+}

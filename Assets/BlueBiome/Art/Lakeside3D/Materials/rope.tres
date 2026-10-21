@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=1 format=3]
+
+
+
+[resource]
+resource_name = "rope"
+albedo_color = Color(0.3700000047683716, 0.2549999952316284, 0.13500000536441803, 1)
+metallic = 0
+roughness = 0.9200000166893005

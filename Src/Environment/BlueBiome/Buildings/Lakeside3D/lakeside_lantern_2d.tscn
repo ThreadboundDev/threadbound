@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_lantern_2d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_lantern_3d.tscn" id="2"]
+[ext_resource type="Texture2D" path="res://Src/Environment/WingLighting/wing_light_falloff.png" id="3"]
+[sub_resource type="CanvasItemMaterial" id="Material_unshaded"]
+light_mode = 1
+[node name="LakesideLantern" type="Node2D"]
+editor_description = "Move this 2D anchor to hang a lantern. Its 3D light casts real shadows; ActorWarmth reuses the project's existing 2D light falloff for the player."
+script = ExtResource("1")
+model_scene = ExtResource("2")
+[node name="ActorWarmth" type="PointLight2D" parent="."]
+color = Color(1, 0.7, 0.38, 1)
+energy = 0.28
+range_item_cull_mask = 3
+texture = ExtResource("3")
+texture_scale = 2.0

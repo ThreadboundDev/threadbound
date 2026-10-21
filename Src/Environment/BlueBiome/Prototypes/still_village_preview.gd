@@ -1,7 +1,6 @@
 extends Node2D
 ## Isolated dressing pass. The inherited scene owns every gameplay collider.
 const KIT := "res://Src/Environment/BlueBiome/ArtPlaceables/StillVillage/"
-const BULB_VISUAL := preload("res://Src/Environment/BlueBiome/Prototypes/still_bulb_visual.gd")
 var far_layer: Sprite2D
 var near_layer: Sprite2D
 var lake_fill: ColorRect
@@ -49,10 +48,10 @@ func _ready() -> void:
 		_place("grass_clump", Vector2(left + 30, top), Vector2(0.45,0.45), 3)
 	for bulb in $Bulbs.get_children():
 		bulb.self_modulate.a = 0.0
-		var visual := BULB_VISUAL.new()
+		# Reuse the bulb's own art, preserving the hybrid preview's existing art paths.
+		var visual := bulb.get_node("BulbArt") as AnimatedSprite2D
+		visual.reparent(art, true)
 		visual.name = str(bulb.name) + "Art"
-		art.add_child(visual)
-		visual.setup(bulb)
 		# The bulb render's stem tip is above-left of its water center.
 		var bulb_pixels_per_unit: float = bulb.size.x / 1.9
 		var stem_tip: Vector2 = bulb.position + Vector2(-1.5, -2.33) * bulb_pixels_per_unit

@@ -1,0 +1,62 @@
+{
+  "checks_passed": true,
+  "exact_tower_shader_graphs_and_packed_texture_bytes": true,
+  "packed_source_texture_sizes": {
+    "blue_tiles_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "blue_tiles_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "blue_tiles_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_Roughness_4K.png": [
+      4096,
+      4096
+    ]
+  },
+  "slip_lower_opening_probe_blockers": [],
+  "source_scenes": [
+    "00 \u00b7 All three assets",
+    "01 \u00b7 Covered boat slip",
+    "02 \u00b7 Net workshop",
+    "03 \u00b7 Fisher house"
+  ],
+  "source_material_count": 7
+}

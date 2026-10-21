@@ -1,0 +1,21 @@
+{
+  "solid_layers": [
+    "Cave Walls",
+    "Under Path Above Cave",
+    "Stone paths",
+    "Under Cave Mouth (except cave backdrop)"
+  ],
+  "non_solid": [
+    "STAMP REAR SUPPORTS",
+    "upper cave recessed backdrop"
+  ],
+  "alpha_threshold": 128,
+  "inset_pixels": 4,
+  "smoothing_radius_pixels": 8,
+  "simplification_pixels": 5,
+  "world_origin": [
+    -1408,
+    -2560
+  ],
+  "short_edge_collapse_pixels": 6
+}

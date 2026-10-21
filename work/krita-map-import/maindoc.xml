@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE DOC PUBLIC '-//KDE//DTD krita 2.0//EN' 'http://www.calligra.org/DTD/krita-2.0.dtd'>
+<DOC xmlns="http://www.calligra.org/DTD/krita" kritaVersion="5.3.1" editor="Krita" syntaxVersion="2.0">
+ <IMAGE name="Unnamed" width="6912" mime="application/x-kra" description="" colorspacename="RGBA" profile="sRGB-elle-V2-srgbtrc.icc" height="5888" y-res="72" x-res="72">
+  <layers>
+   <layer name="00 REFERENCE - collision guides; hide for export" y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="1" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer2" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{cf02403a-f413-4046-8921-9eacb097f609}" collapsed="1">
+    <layers>
+     <layer name="Gameplay edges; ceiling boundary is open air" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="1" x="0" filename="layer3" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{2dfced06-ad6a-40d3-ba2a-f40b67c7dacd}" collapsed="0"/>
+     <layer name="Solid selection source - right-click Select Opaque" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="0" locked="1" x="0" filename="layer4" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{eefc1c2f-36df-41e0-afb6-c461426bfca2}" collapsed="0"/>
+     <layer name="STONE TETRIS INSTRUCTIONS - show to read" y="512" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="0" locked="1" x="256" filename="layer5" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{96b0e5ad-826d-4b65-b7a0-2c5cedf3c6ae}" collapsed="0"/>
+     <layer name="COLLISION SHAPES - select opaque or magic wand on THIS layer" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="1" x="0" filename="layer6" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="60" uuid="{4e23c166-b72a-4b2b-8192-299f5fb84623}" collapsed="0"/>
+    </layers>
+   </layer>
+   <layer name="10 FOREGROUND - plants and front details" y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="0" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer7" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{4312ca94-4b18-4c31-8442-cabb76184325}" collapsed="0">
+    <layers>
+     <layer name="STAMP FRONT DETAILS" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer8" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{06377ddd-083c-4737-9c6a-3929c746bf31}" collapsed="0"/>
+    </layers>
+   </layer>
+   <layer name="20 FOREGROUND BRIDGES - in front of player" y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="0" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer9" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{1edf0683-8d0b-4744-845c-914f41691ed6}" collapsed="0">
+    <layers>
+     <layer name="FRONT RAILS - optional separate pieces" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer10" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{0ef206d1-7b1c-4646-84ce-f1efdd68857d}" collapsed="0"/>
+     <layer name="STAMP BRIDGES HERE - whole bridge or deck [original; toggle for comparison]" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer11" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{265fd6fb-44fa-4c1b-a0d0-bc68c2370ca0}" collapsed="0"/>
+    </layers>
+   </layer>
+   <layer name="30 BREAKABLES - separate game objects" y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="0" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer12" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{b02a064e-ce53-4ce1-83e6-abbb53a30e54}" collapsed="1">
+    <layers>
+     <layer name="STAMP BREAKABLE ART" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer13" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{03e8322f-30e7-468c-8844-dbdea89fe7c5}" collapsed="0"/>
+    </layers>
+   </layer>
+   <layer name="40 MAIN TERRAIN " y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="0" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer14" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{7c55335b-f11b-4562-b21a-1d6b6b8296b5}" collapsed="0">
+    <layers>
+     <layer name="Stone paths" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer15" compositeop="normal" channelflags="" intimeline="1" onionskin="0" opacity="255" uuid="{64bef7f4-684a-439a-8e6b-ddae7785e7b9}" collapsed="0"/>
+     <layer name="Under Path Above Cave" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer16" compositeop="normal" channelflags="" intimeline="1" onionskin="0" opacity="255" uuid="{eff70c74-b6e6-4670-9a42-c7f07d1f9b6c}" collapsed="0"/>
+    </layers>
+   </layer>
+   <layer name="60 REAR STRUCTURES - behind player" y="0" colorlabel="3" nodetype="grouplayer" colorspacename="RGBA" visible="1" locked="0" x="0" profile="sRGB-elle-V2-srgbtrc.icc" filename="layer17" compositeop="normal" channelflags="" intimeline="0" passthrough="0" opacity="255" uuid="{57128056-e6a7-4a82-b51b-5d7d2afd3e90}" collapsed="0">
+    <layers>
+     <layer name="Cave Walls" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer18" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{c4e86b95-cc1e-4f7c-ba9e-c4799454e7c8}" collapsed="0"/>
+     <layer uuid="{f215c629-aa5b-4b6c-8474-296c7b257f14}" colorlabel="0" compositeop="normal" channellockflags="" nodetype="paintlayer" onionskin="0" name="Under Cave Mouth" locked="0" intimeline="1" filename="layer19" collapsed="0" opacity="255" y="0" channelflags="" colorspacename="RGBA" selected="true" x="0" visible="1"/>
+     <layer name="STAMP REAR SUPPORTS" y="0" colorlabel="0" nodetype="paintlayer" channellockflags="1111" colorspacename="RGBA" visible="1" locked="0" x="0" filename="layer20" compositeop="normal" channelflags="" intimeline="0" onionskin="0" opacity="255" uuid="{3518d03f-9122-4716-a9fb-f09572d862d6}" collapsed="0"/>
+    </layers>
+   </layer>
+  </layers>
+  <ProjectionBackgroundColor ColorData="AAAAAA=="/>
+  <GlobalAssistantsColor SimpleColorData="176,176,176,255"/>
+  <ColorHistory/>
+  <Palettes>
+   <resource name="Blue Village Shared Slate" type="palettes" filename="Blue_Village_Shared_Slate.gpl" md5sum="83e1c0cea5b489fdb4ad30d4805376de"/>
+   <resource name="Blue Village Touchups" type="palettes" filename="Blue_Village_Touchups.gpl" md5sum="a01581695190eb5aa73fb097fc4d2ebb"/>
+  </Palettes>
+  <resources/>
+  <animation>
+   <framerate type="value" value="24"/>
+   <range type="timerange" from="0" to="100"/>
+   <currentTime type="value" value="0"/>
+  </animation>
+ </IMAGE>
+</DOC>

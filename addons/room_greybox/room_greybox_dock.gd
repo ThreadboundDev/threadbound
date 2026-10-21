@@ -2,6 +2,7 @@
 extends Control
 
 const SOLID := "res://Src/Environment/Greybox/greybox_block.tscn"
+const BREAKABLE_WALL := "res://Src/Environment/Greybox/greybox_breakable_wall.tscn"
 const WATER := "res://Src/Environment/Greybox/greybox_polygon_water.tscn"
 const HAZARD := "res://Src/Environment/Greybox/greybox_hazard.tscn"
 const BUMPER := "res://Src/Environment/Greybox/greybox_bumper.tscn"
@@ -18,6 +19,7 @@ func _ready() -> void:
 	%TerrainTiles.pressed.connect(_select_or_add_terrain)
 	%Solid.pressed.connect(_add.bind(SOLID, "LargeBlock", true, {}))
 	%OneWay.pressed.connect(_add.bind(SOLID, "OneWayBlock", true, {"one_way": true}))
+	%BreakableWall.pressed.connect(_add.bind(BREAKABLE_WALL, "BreakableWall", true, {}))
 	%Water.pressed.connect(_add_polygon_water)
 	%AirPocket.pressed.connect(_add.bind(WATER, "AirPocket", false, {"air_pocket": true}))
 	%EditWaterShape.pressed.connect(_edit_water_shape)

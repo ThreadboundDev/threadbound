@@ -1,0 +1,1530 @@
+{
+  "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\cave_connections_v1\\Blue_Village_Connections_Review.kra",
+  "source_sha256": "41ee10a00fb3339bf4fb21f40a904b2607e11ef70e2ba487944f41a5c1dd9f44",
+  "canvas": [
+    6912,
+    5888
+  ],
+  "world_origin": [
+    -1408,
+    -2560
+  ],
+  "pixels_per_unit": 1,
+  "groups": [
+    {
+      "name": "rear_cave",
+      "bounds": [
+        0,
+        0,
+        6912,
+        5888
+      ]
+    },
+    {
+      "name": "terrain",
+      "bounds": [
+        142,
+        1616,
+        6912,
+        5007
+      ]
+    },
+    {
+      "name": "breakables",
+      "bounds": null
+    },
+    {
+      "name": "bridges",
+      "bounds": null
+    },
+    {
+      "name": "foreground",
+      "bounds": null
+    }
+  ],
+  "chunks": [
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_00.png",
+      "position": [
+        -1408,
+        -2560
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_01_00.png",
+      "position": [
+        -384,
+        -2560
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_00.png",
+      "position": [
+        3712,
+        -2560
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_00.png",
+      "position": [
+        4736,
+        -2560
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_01.png",
+      "position": [
+        -1408,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_04_01.png",
+      "position": [
+        2688,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_01.png",
+      "position": [
+        3712,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_01.png",
+      "position": [
+        4736,
+        -1536
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_02.png",
+      "position": [
+        -1408,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_01_02.png",
+      "position": [
+        -384,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_02.png",
+      "position": [
+        3712,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_02.png",
+      "position": [
+        4736,
+        -512
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_03.png",
+      "position": [
+        -1408,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_01_03.png",
+      "position": [
+        -384,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_03_03.png",
+      "position": [
+        1664,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_04_03.png",
+      "position": [
+        2688,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_03.png",
+      "position": [
+        3712,
+        512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_03.png",
+      "position": [
+        4736,
+        512
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_04.png",
+      "position": [
+        -1408,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_01_04.png",
+      "position": [
+        -384,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_02_04.png",
+      "position": [
+        640,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_03_04.png",
+      "position": [
+        1664,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_04_04.png",
+      "position": [
+        2688,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_04.png",
+      "position": [
+        3712,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_04.png",
+      "position": [
+        4736,
+        1536
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_00_05.png",
+      "position": [
+        -1408,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_01_05.png",
+      "position": [
+        -384,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_02_05.png",
+      "position": [
+        640,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_03_05.png",
+      "position": [
+        1664,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_04_05.png",
+      "position": [
+        2688,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_05_05.png",
+      "position": [
+        3712,
+        2560
+      ],
+      "size": [
+        1024,
+        768
+      ]
+    },
+    {
+      "group": "rear_cave",
+      "path": "rear_cave_06_05.png",
+      "position": [
+        4736,
+        2560
+      ],
+      "size": [
+        768,
+        768
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_00_01.png",
+      "position": [
+        -1408,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_01_01.png",
+      "position": [
+        -384,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_05_01.png",
+      "position": [
+        3712,
+        -1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_00_02.png",
+      "position": [
+        -1408,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_01_02.png",
+      "position": [
+        -384,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_05_02.png",
+      "position": [
+        3712,
+        -512
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_06_02.png",
+      "position": [
+        4736,
+        -512
+      ],
+      "size": [
+        768,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_04_04.png",
+      "position": [
+        2688,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "group": "terrain",
+      "path": "terrain_05_04.png",
+      "position": [
+        3712,
+        1536
+      ],
+      "size": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "projection_check": {
+    "max_channel_error": 255,
+    "mean_channel_error": 0.006753427010995371,
+    "fraction_over_two": 0.00010843323048762077
+  },
+  "assembly": {
+    "source_room_sha256": "201e92c8cc99fd8cc05886efe394b447e6f471c41c214707ea62b8546fa3a6f3",
+    "source_cells": 1076,
+    "retained_cells": 777,
+    "removed_cells": 299,
+    "legacy_tiles_collide": false,
+    "terrain_collision": "Editable polygons traced from painted stone alpha; no greybox physics",
+    "building_positions": {
+      "Tower": [
+        1472,
+        1920
+      ],
+      "BoatSlip": [
+        2816,
+        477.44
+      ],
+      "Workshop": [
+        2688,
+        -960.64
+      ],
+      "FisherHouse": [
+        320,
+        -46.72
+      ]
+    },
+    "surfaces": [
+      {
+        "name": "TowerWallLeft0",
+        "rect": [
+          872.0,
+          1815.04,
+          951.3599999999999,
+          1920
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallRight0",
+        "rect": [
+          1992.64,
+          1815.04,
+          2072.0,
+          1920
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallLeft1",
+        "rect": [
+          952.96,
+          1164.8,
+          1087.3600000000001,
+          1815.04
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallRight1",
+        "rect": [
+          1856.6399999999999,
+          1164.8,
+          1991.04,
+          1815.04
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallLeft2",
+        "rect": [
+          1041.92,
+          -1267.1999999999998,
+          1146.88,
+          1164.8
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallRight2",
+        "rect": [
+          1797.12,
+          -1267.1999999999998,
+          1902.08,
+          1164.8
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallLeft3",
+        "rect": [
+          1146.88,
+          -1875.1999999999998,
+          1246.72,
+          -1267.1999999999998
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallRight3",
+        "rect": [
+          1697.28,
+          -1875.1999999999998,
+          1797.12,
+          -1267.1999999999998
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallLeft4",
+        "rect": [
+          1112.96,
+          -2109.44,
+          1247.3600000000001,
+          -1875.1999999999998
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerWallRight4",
+        "rect": [
+          1696.6399999999999,
+          -2109.44,
+          1831.04,
+          -1875.1999999999998
+        ],
+        "one_way": false
+      },
+      {
+        "name": "TowerPlatform0",
+        "rect": [
+          1139.2,
+          1107.2,
+          1804.8,
+          1119.2
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform1",
+        "rect": [
+          1139.2,
+          865.28,
+          1408.0,
+          877.28
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform2",
+        "rect": [
+          1529.6,
+          770.56,
+          1804.8,
+          782.56
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform3",
+        "rect": [
+          1139.2,
+          450.55999999999995,
+          1804.8,
+          462.55999999999995
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform4",
+        "rect": [
+          1440.0,
+          89.59999999999991,
+          1804.8,
+          101.59999999999991
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform5",
+        "rect": [
+          1139.2,
+          -256,
+          1497.6,
+          -244
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform6",
+        "rect": [
+          1139.2,
+          -595.1999999999998,
+          1804.8,
+          -583.1999999999998
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform7",
+        "rect": [
+          1139.2,
+          -1024,
+          1804.8,
+          -1012
+        ],
+        "one_way": true
+      },
+      {
+        "name": "TowerPlatform8",
+        "rect": [
+          1239.04,
+          -1491.1999999999998,
+          1704.96,
+          -1479.1999999999998
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopFloor",
+        "rect": [
+          2286.08,
+          -1024.0,
+          3089.92,
+          -1012.0
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherFloor",
+        "rect": [
+          46.079999999999984,
+          -128.0,
+          593.9200000000001,
+          -116.0
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherLoft",
+        "rect": [
+          67.84,
+          -443.52,
+          572.16,
+          -431.52
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipDeckLeft",
+        "rect": [
+          2392.32,
+          384.0,
+          2510.08,
+          396.0
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipDeckRight",
+        "rect": [
+          3121.92,
+          384.0,
+          3239.68,
+          396.0
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof0",
+        "rect": [
+          -43.51999999999998,
+          -715.943793676429,
+          -7.168000000000006,
+          -703.943793676429
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof1",
+        "rect": [
+          -7.168000000000006,
+          -719.0904903918212,
+          29.184000000000026,
+          -707.0904903918212
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof2",
+        "rect": [
+          29.184000000000026,
+          -729.7514914046097,
+          65.536,
+          -717.7514914046097
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof3",
+        "rect": [
+          65.536,
+          -744.8559065283342,
+          101.888,
+          -732.8559065283342
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof4",
+        "rect": [
+          101.888,
+          -762.7311515191587,
+          138.24,
+          -750.7311515191587
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof5",
+        "rect": [
+          138.24,
+          -782.39541008548,
+          174.592,
+          -770.39541008548
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof6",
+        "rect": [
+          174.592,
+          -803.2374985323678,
+          210.94400000000002,
+          -791.2374985323678
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof7",
+        "rect": [
+          210.94400000000002,
+          -824.859390337928,
+          247.296,
+          -812.859390337928
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof8",
+        "rect": [
+          247.296,
+          -847.0061540264799,
+          283.648,
+          -835.0061540264799
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof9",
+        "rect": [
+          283.648,
+          -856.9599999999999,
+          320.0,
+          -844.9599999999999
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof10",
+        "rect": [
+          320.0,
+          -856.9599999999999,
+          356.352,
+          -844.9599999999999
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof11",
+        "rect": [
+          356.352,
+          -847.0061540264799,
+          392.704,
+          -835.0061540264799
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof12",
+        "rect": [
+          392.704,
+          -824.859390337928,
+          429.05600000000004,
+          -812.859390337928
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof13",
+        "rect": [
+          429.05600000000004,
+          -803.2374985323678,
+          465.408,
+          -791.2374985323678
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof14",
+        "rect": [
+          465.408,
+          -782.39541008548,
+          501.76,
+          -770.39541008548
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof15",
+        "rect": [
+          501.76,
+          -762.7311515191587,
+          538.112,
+          -750.7311515191587
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof16",
+        "rect": [
+          538.112,
+          -744.8559065283342,
+          574.464,
+          -732.8559065283342
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof17",
+        "rect": [
+          574.464,
+          -729.7514914046097,
+          610.816,
+          -717.7514914046097
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof18",
+        "rect": [
+          610.816,
+          -719.0904903918212,
+          647.1679999999999,
+          -707.0904903918212
+        ],
+        "one_way": true
+      },
+      {
+        "name": "FisherRoof19",
+        "rect": [
+          647.1679999999999,
+          -715.9437936764289,
+          683.52,
+          -703.9437936764289
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof0",
+        "rect": [
+          2196.48,
+          -1450.6812813115396,
+          2245.632,
+          -1438.6812813115396
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof1",
+        "rect": [
+          2245.632,
+          -1455.9114284630764,
+          2294.784,
+          -1443.9114284630764
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof2",
+        "rect": [
+          2294.784,
+          -1471.2089655915902,
+          2343.936,
+          -1459.2089655915902
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof3",
+        "rect": [
+          2343.936,
+          -1491.7183106418097,
+          2393.088,
+          -1479.7183106418097
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof4",
+        "rect": [
+          2393.088,
+          -1515.099871314414,
+          2442.24,
+          -1503.099871314414
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof5",
+        "rect": [
+          2442.24,
+          -1540.105168567223,
+          2491.392,
+          -1528.105168567223
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof6",
+        "rect": [
+          2491.392,
+          -1566.0355902731249,
+          2540.544,
+          -1554.0355902731249
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof7",
+        "rect": [
+          2540.544,
+          -1572.48,
+          2589.696,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof8",
+        "rect": [
+          2589.696,
+          -1572.48,
+          2638.848,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof9",
+        "rect": [
+          2638.848,
+          -1572.48,
+          2688.0,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof10",
+        "rect": [
+          2688.0,
+          -1572.48,
+          2737.152,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof11",
+        "rect": [
+          2737.152,
+          -1572.48,
+          2786.304,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof12",
+        "rect": [
+          2786.304,
+          -1572.48,
+          2835.456,
+          -1560.48
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof13",
+        "rect": [
+          2835.456,
+          -1566.0355902731249,
+          2884.608,
+          -1554.0355902731249
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof14",
+        "rect": [
+          2884.608,
+          -1540.105168567223,
+          2933.76,
+          -1528.105168567223
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof15",
+        "rect": [
+          2933.76,
+          -1515.099871314414,
+          2982.9120000000003,
+          -1503.099871314414
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof16",
+        "rect": [
+          2982.9120000000003,
+          -1491.7183106418097,
+          3032.0640000000003,
+          -1479.7183106418097
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof17",
+        "rect": [
+          3032.0640000000003,
+          -1471.2089655915902,
+          3081.2160000000003,
+          -1459.2089655915902
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof18",
+        "rect": [
+          3081.2160000000003,
+          -1455.9114284630764,
+          3130.368,
+          -1443.9114284630764
+        ],
+        "one_way": true
+      },
+      {
+        "name": "WorkshopRoof19",
+        "rect": [
+          3130.368,
+          -1450.6812813115396,
+          3179.52,
+          -1438.6812813115396
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof0",
+        "rect": [
+          2307.84,
+          -354.1200360118474,
+          2358.656,
+          -342.1200360118474
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof1",
+        "rect": [
+          2358.656,
+          -360.59885928021,
+          2409.4719999999998,
+          -348.59885928021
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof2",
+        "rect": [
+          2409.4719999999998,
+          -377.96457800735953,
+          2460.288,
+          -365.96457800735953
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof3",
+        "rect": [
+          2460.288,
+          -400.72213144062613,
+          2511.104,
+          -388.72213144062613
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof4",
+        "rect": [
+          2511.104,
+          -426.3276204389229,
+          2561.92,
+          -414.3276204389229
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof5",
+        "rect": [
+          2561.92,
+          -453.46493124738055,
+          2612.736,
+          -441.46493124738055
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof6",
+        "rect": [
+          2612.736,
+          -473.59999999999997,
+          2663.552,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof7",
+        "rect": [
+          2663.552,
+          -473.59999999999997,
+          2714.368,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof8",
+        "rect": [
+          2714.368,
+          -473.59999999999997,
+          2765.184,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof9",
+        "rect": [
+          2765.184,
+          -473.59999999999997,
+          2816.0,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof10",
+        "rect": [
+          2816.0,
+          -473.59999999999997,
+          2866.816,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof11",
+        "rect": [
+          2866.816,
+          -473.59999999999997,
+          2917.632,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof12",
+        "rect": [
+          2917.632,
+          -473.59999999999997,
+          2968.448,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof13",
+        "rect": [
+          2968.448,
+          -473.59999999999997,
+          3019.264,
+          -461.59999999999997
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof14",
+        "rect": [
+          3019.264,
+          -453.46493124738055,
+          3070.08,
+          -441.46493124738055
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof15",
+        "rect": [
+          3070.08,
+          -426.3276204389229,
+          3120.896,
+          -414.3276204389229
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof16",
+        "rect": [
+          3120.896,
+          -400.722131440626,
+          3171.712,
+          -388.722131440626
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof17",
+        "rect": [
+          3171.712,
+          -377.96457800735953,
+          3222.5280000000002,
+          -365.96457800735953
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof18",
+        "rect": [
+          3222.5280000000002,
+          -360.59885928021,
+          3273.344,
+          -348.59885928021
+        ],
+        "one_way": true
+      },
+      {
+        "name": "SlipRoof19",
+        "rect": [
+          3273.344,
+          -354.1200360118474,
+          3324.16,
+          -342.1200360118474
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding01",
+        "rect": [
+          4608,
+          -1664,
+          5248,
+          -1654
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding02",
+        "rect": [
+          2944,
+          -1024,
+          3328,
+          -1014
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding03",
+        "rect": [
+          4864,
+          -768,
+          4992,
+          -758
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding04",
+        "rect": [
+          -640,
+          -128,
+          -384,
+          -118
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding05",
+        "rect": [
+          512,
+          -128,
+          896,
+          -118
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding06",
+        "rect": [
+          2048,
+          -128,
+          2432,
+          -118
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding07",
+        "rect": [
+          -896,
+          384,
+          -640,
+          394
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding08",
+        "rect": [
+          3200,
+          384,
+          3712,
+          394
+        ],
+        "one_way": true
+      },
+      {
+        "name": "BridgeLanding09",
+        "rect": [
+          4096,
+          384,
+          4864,
+          394
+        ],
+        "one_way": true
+      }
+    ],
+    "stamp_sources": {
+      "walking_deck.png": "japanese_construction_v3/stamps/D01_Deck_Edge.png",
+      "quarry_block.png": "slate_village_library/stamps/S03_Tall_Quarry_Block.png",
+      "small_stone.png": "slate_village_library/stamps/S02_Short_Chunk.png"
+    },
+    "collision_generation": {
+      "solid_layers": [
+        "Cave Walls",
+        "Under Path Above Cave",
+        "Stone paths",
+        "Under Cave Mouth (except cave backdrop)"
+      ],
+      "non_solid": [
+        "STAMP REAR SUPPORTS",
+        "upper cave recessed backdrop"
+      ],
+      "alpha_threshold": 128,
+      "inset_pixels": 4,
+      "smoothing_radius_pixels": 8,
+      "simplification_pixels": 5,
+      "world_origin": [
+        -1408,
+        -2560
+      ],
+      "short_edge_collapse_pixels": 6
+    },
+    "rock_polygons": 51,
+    "roof_collision": "Continuous one-way ramps; existing node positions preserved"
+  }
+}
