@@ -22,9 +22,11 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/central_tower_2d.tscn" id="map_tower"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/net_workshop_2d.tscn" id="map_workshop"]
 [ext_resource type="PackedScene" uid="uid://bk6sithumcg8y" path="res://Src/UI/combat_hud.tscn" id="playtest_hud"]
-[ext_resource type="Texture2D" uid="uid://fat4p2jiygo1" path="res://Assets/BlueBiome/Art/LakesideMap/walking_deck.png" id="stamp_walking_deck"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/boatwright_2d.tscn" id="villager_boatwright"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/net_mender_2d.tscn" id="villager_mender"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/plank_crossing_2d.tscn" id="walk_plank"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/railed_veranda_2d.tscn" id="walk_veranda"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/engawa_balcony_2d.tscn" id="walk_balcony"]
 
 [node name="BlueLakesideKritaPlaytest" type="Node2D" unique_id=209142078]
 editor_description = "F6: saved Krita map at 1:1 scale plus approved 3D village buildings. Original terrain, water, air pockets, breakables and actors retained. Building guides replaced by matching 2D collision. Lights and foliage remain editable nodes."
@@ -897,59 +899,50 @@ one_way_collision_margin = 12.0
 [node name="BridgeLandings" type="Node2D" parent="Geometry" unique_id=1091014669]
 z_index = -1
 
-[node name="Deck01" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=2071785988]
-position = Vector2(4569, -1663.0001)
-scale = Vector2(1.580078, 0.8125)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+[node name="Deck01" parent="Geometry/BridgeLandings" unique_id=2071785988 instance=ExtResource("walk_veranda")]
+z_index = 0
+position = Vector2(4608, -1664)
+span_width = 640.0
 
-[node name="Deck02" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=969137955]
-position = Vector2(3058, -1156)
-scale = Vector2(0.75, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+[node name="Deck02" parent="Geometry/BridgeLandings" unique_id=969137955 instance=ExtResource("walk_balcony")]
+z_index = 0
+position = Vector2(3052, -1134)
+span_width = 384.0
 
-[node name="Deck03" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=998491023]
-position = Vector2(4873.0005, -804.00006)
-scale = Vector2(0.9296875, 1.0833325)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+[node name="Deck03" parent="Geometry/BridgeLandings" unique_id=998491023 instance=ExtResource("walk_plank")]
+z_index = 0
+position = Vector2(4864, -768)
+span_width = 128.0
 
-[node name="Deck04" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1485223545]
+[node name="Deck04" parent="Geometry/BridgeLandings" unique_id=1485223545 instance=ExtResource("walk_plank")]
+z_index = 0
 position = Vector2(-640, -128)
-scale = Vector2(0.5, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+span_width = 256.0
 
-[node name="Deck05" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=897058146]
-position = Vector2(240, 376)
-scale = Vector2(0.75, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+[node name="Deck05" parent="Geometry/BridgeLandings" unique_id=897058146 instance=ExtResource("walk_balcony")]
+z_index = 0
+position = Vector2(244, 397)
+span_width = 384.0
 
-[node name="Deck06" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1144824625]
+[node name="Deck06" parent="Geometry/BridgeLandings" unique_id=1144824625 instance=ExtResource("walk_plank")]
+z_index = 0
 position = Vector2(2048, -128)
-scale = Vector2(0.75, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+span_width = 384.0
 
-[node name="Deck07" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1569005893]
+[node name="Deck07" parent="Geometry/BridgeLandings" unique_id=1569005893 instance=ExtResource("walk_plank")]
+z_index = 0
 position = Vector2(-896, 384)
-scale = Vector2(0.5, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+span_width = 256.0
 
-[node name="Deck08" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1455332206]
+[node name="Deck08" parent="Geometry/BridgeLandings" unique_id=1455332206 instance=ExtResource("walk_veranda")]
+z_index = 0
 position = Vector2(3200, 384)
-scale = Vector2(1, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+span_width = 512.0
 
-[node name="Deck09" type="Sprite2D" parent="Geometry/BridgeLandings" unique_id=1104663311]
+[node name="Deck09" parent="Geometry/BridgeLandings" unique_id=1104663311 instance=ExtResource("walk_veranda")]
+z_index = 0
 position = Vector2(4096, 384)
-scale = Vector2(1.5, 0.65)
-texture = ExtResource("stamp_walking_deck")
-centered = false
+span_width = 768.0
 
 [node name="Volumes" type="Node2D" parent="." unique_id=184337777]
 

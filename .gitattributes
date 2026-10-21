@@ -18,6 +18,7 @@ work/**/*.gif filter=lfs diff=lfs merge=lfs -text
 ArtSource/BlueBiome/Placeables/WalkwayStamps/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Art/Lakeside3D/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Art/LakesideMap/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/BlueBiome/Art/WalkwayStamps/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Characters/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Enemies/EaveRunner/**/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/BlueBiome/Enemies/LoomHeron/**/*.png filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/walkway_stamp_2d.gd" id="1"]
+
+[node name="EngawaBalcony2D" type="Node2D"]
+z_index = -1
+texture_filter = 4
+script = ExtResource("1")
+stamp = 2
+
+[node name="WalkPlane" type="Marker2D" parent="."]

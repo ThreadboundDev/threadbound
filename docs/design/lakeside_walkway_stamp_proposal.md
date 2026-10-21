@@ -2,8 +2,9 @@
 
 Prepared October 21, 2026 at baseline `f94f9b17`. Chase requested the bridges
 and balconies used as Krita stamps because the current small bridge does not
-match. Source/reference preparation is complete; installing replacements or
-restructuring the room awaits approval under `AGENTS.md`.
+match. Chase approved this 2D integration on October 21 with one refinement:
+exclude the rock-attached landing. Implementation is complete; visible review
+beside the houses is pending. No 3D rebuild is included.
 
 ## Evidence and recommendation
 
@@ -30,7 +31,8 @@ for shared building lighting/depth; it is a separate art scope.
 ## Proposed integration
 
 - Make reusable simple crossing, railed veranda, balcony/engawa and broken-pair
-  art prefabs. Keep the rock-attached landing as a saved reference for now.
+  art prefabs. The rock-attached landing is excluded from runtime assets and
+  options; its already committed source remains an archived reference only.
 - Use the original stamp pixels. Preserve the scale of end posts, rails and
   braces; fit different lengths with fixed ends and repeated middle sections.
   Author source regions/anchors using Godot texture regions and scene data,
@@ -90,7 +92,7 @@ files are necessary, revise the proposal before expanding the implementation.
 
 Source preparation: compare all six copied PNGs byte for byte with the active
 library; record dimensions, alpha ranges and checksums; commit/push the source
-pack and proposal without replacing any live assets. This is the current step.
+pack and proposal without replacing any live assets. Saved/pushed as `6d4122b3`.
 
 After approval: verify each prefab's anchor/span and repeated sections, ensure
 current collision vertices/margins/layers and authored gaps are unchanged, and
@@ -103,3 +105,59 @@ Implementation commit subject: `art: integrate matching village walkway stamps`.
 Push and confirm remote HEAD before starting another art direction. T01/T02
 house review remains pending; this scoped request does not reopen general art
 production or approve a 3D rebuild.
+
+## Delivery and validation — October 21, 2026
+
+Implemented on top of `6d4122b3`, Godot 4.7.2 Mono. Four lossless runtime PNG
+copies match the saved source SHA-256 hashes exactly. Reusable editor-visible
+art objects provide the four approved options; the broken pair is unplaced and
+always preserves its original transparent gap. Intact objects retain uniformly
+scaled end caps and repeat/clip source middle regions. No source pixels were
+regenerated. The old deck and rope bridge remain intact.
+
+All nine room sprites now use intact prefabs, aligned to the **existing collider
+bounds**, including independently moved Outline nodes. Original effective z=-1
+is retained. A normalized scene audit compared every non-art block against
+`6d4122b3`: unchanged. No physics, house, enemy, water, player or landmark data
+was edited. This corrects several old visual/collision mismatches instead of
+moving the route to the old stretched sprite positions.
+
+| Landing | Left x | Walk y | Width | Art |
+|---|---:|---:|---:|---|
+| 01 | 4608 | -1664 | 640 | Railed veranda |
+| 02 | 3052 | -1134 | 384 | Engawa balcony |
+| 03 | 4864 | -768 | 128 | Plank crossing |
+| 04 | -640 | -128 | 256 | Plank crossing |
+| 05 | 244 | 397 | 384 | Engawa balcony |
+| 06 | 2048 | -128 | 384 | Plank crossing |
+| 07 | -896 | 384 | 256 | Plank crossing |
+| 08 | 3200 | 384 | 512 | Railed veranda |
+| 09 | 4096 | 384 | 768 | Railed veranda |
+
+Headless results, isolated save data in ignored `tmp/walkways/`:
+
+- Walkway fixture: **606 checks, zero failures**. Four source hashes; all four
+  prefabs at 32–4096px spans; unbroken slice coverage and uniform source scale;
+  no added colliders; original body/shape transforms, vertices, margins and
+  layers on all nine landings. The real player falls onto each authored landing
+  and walks ~38.4–38.7px with real input. Feet differ from the walk plane by
+  at most **0.008px**. Other solids are ignored only by this isolated landing
+  fixture so overlapping rock cannot masquerade as the target platform.
+- Full map: passed; 9,871 terrain/alpha samples, zero mismatches. Door floors and
+  water/terrain checks pass with normal room physics.
+- House entry: **405 checks**, residents: **51 checks**, encounters/reset:
+  **19 checks**; zero functional failures. Explicit success markers and logs
+  were checked, not exit code alone. Historical tracked reports were retained.
+
+The runs still emit shutdown ObjectDB/resources-in-use diagnostics. The new
+landing/footstep fixture also leaves active audio WAV/playback references at
+shutdown; verbose inspection identifies audio plus the existing equipment
+scripts, not walkway textures. This task does not resolve that T04 lifecycle
+investigation. No parse/script errors remain in the final runs.
+
+**Awaiting Chase's visible review:** joins on the longest veranda, scale of
+posts/braces beside houses, feet against the perspective deck top, railing
+depth and daylight/dusk match. Headless alignment checks cannot accept those
+visual decisions. Use the short retest in `docs/next_test_session.md`. Commit
+subject: `art: integrate matching village walkway stamps`; find its exact hash
+in Git history. T01/T02 house review remains pending.

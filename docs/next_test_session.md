@@ -38,6 +38,26 @@ evidence and do not accept feel or visuals.
 
 When Chase asks “what should I test?”, give the numbered list below directly in chat. Check the current revision and any intervening changes first; add a recent fix's short retest at the top when relevant. Do not ask Chase to reconstruct the list or replay all historical checks.
 
+## T13: matching timber walkways — about 3 minutes
+
+In the same Krita playtest, look at the bridge landings near Fisher house and
+Workshop, then the longest railed span on the right. The nine old deck-edge
+sprites now use the saved plank, veranda and engawa stamp art. No landings or
+route gaps moved. The broken bridge is an unplaced library option; the
+rock-attached landing was excluded.
+
+1. Walk/jump onto narrow and wide spans. Check feet on the painted deck and
+   railing behind the player; report floating, obscured feet or unexpected ends.
+2. At normal camera zoom, compare post/brace scale and timber color beside the
+   houses. Check the longest veranda for repeated-section seams or cut posts.
+3. Compare daylight/dusk using the room's existing lighting controls. Give
+   keep/change/untested for the match. Report the nearest landmark or Deck01–09.
+
+The 606 headless walkway checks pass, including real player landing/walking on
+all nine spans; map/house/NPC/encounter regressions pass too. Appearance remains
+pending. [Delivery, exact positions and limitations](design/lakeside_walkway_stamp_proposal.md).
+Save manual Godot/art edits, then **commit and push before changing topics**.
+
 ## Short checks for current changes — about 5 minutes
 
 October 21: the **Loom Heron** landmark now uses the bird-only v3 art rebuild.
