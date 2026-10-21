@@ -466,6 +466,27 @@ func get_grapple_origin_player_offset() -> Vector2:
 	return _display.transform * sprite_point
 
 
+func get_ledge_grip_player_offset(facing: int) -> Vector2:
+	if not _skeleton or not _camera or not _display:
+		return Vector2.ZERO
+	var grip := Vector2.ZERO
+	var found := false
+	for bone: String in ["hand.L", "hand.R"]:
+		var index := _skeleton.find_bone(bone)
+		if index < 0:
+			continue
+		var hand_world := _skeleton.to_global(_skeleton.get_bone_global_pose(index).origin)
+		var point := _camera.unproject_position(hand_world) - Vector2(_viewport.size)*0.5 + _display.offset
+		point.x *= float(facing)
+		var projected := _display.transform * point
+		# During entry one arm can still trail behind the body. Anchor the
+		# forward hand; hanging idle then brings both hands onto the same lip.
+		if not found or projected.x * facing > grip.x * facing:
+			grip = projected
+			found = true
+	return grip
+
+
 func get_ground_combo_segment_duration(strike_index: int, crouched: bool) -> float:
 	if crouched:
 		return get_action_duration(&"slash_5")
@@ -705,8 +726,7 @@ func _build_viewport() -> void:
 	_display.scale = display_scale
 	_display.offset = Vector2(0, -255)
 	var collider := _player.get_node("CollisionShape2D") as CollisionShape2D
-	var shape := collider.shape as RectangleShape2D
-	_display.position = Vector2(0, collider.position.y + shape.size.y * 0.5)
+	_display.position = Vector2(0, collider.position.y + collider.shape.get_rect().end.y)
 	_display_rest_position = _display.position
 	var outline_material := ShaderMaterial.new()
 	outline_material.shader = OUTLINE_SHADER

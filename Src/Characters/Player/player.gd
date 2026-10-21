@@ -419,6 +419,9 @@ const ATTACK_PROFILE_AIR_SECOND := {
 @export_group("Ledge Grab")
 @export var ledge_forward_reach := 42.0
 @export var ledge_head_height := 72.0
+## Reach of the forward hand in the 3D wall-hang entry pose, above the origin.
+@export_range(16.0, 160.0, 1.0) var ledge_hand_height := 84.0
+@export_range(2.0, 24.0, 1.0) var ledge_hand_tolerance := 12.0
 @export var ledge_hang_offset := Vector2(28.0, 66.0)
 @export var grapple_ledge_assist_duration := 0.18
 @export var grapple_ledge_assist_forward_bonus := 18.0
@@ -581,6 +584,7 @@ var _stance_transition_anim: StringName = &""
 var _last_incoming_hit_blocked := false
 var _body_collision_standing_size := Vector2.ZERO
 var _body_collision_standing_position := Vector2.ZERO
+var _body_collision_standing_shape: Shape2D
 var _hurtbox_collision_standing_size := Vector2.ZERO
 var _hurtbox_collision_standing_position := Vector2.ZERO
 var _hurt_animation_active := false
@@ -1306,6 +1310,16 @@ func handle_wall_cling(delta: float) -> void:
 		var wall_normal_x = get_wall_normal().x
 		var input_dir = Input.get_axis("move_left", "move_right")
 		pushing_into_wall = input_dir != 0 and sign(input_dir) == -sign(wall_normal_x)
+		# A knee/foot touching a low corner is not a handhold. Ordinary wall
+		# slides still work on a continuous wall extending up to the hands.
+		if pushing_into_wall:
+			var direction := int(-signf(wall_normal_x))
+			var hand := global_position + Vector2(0.0, -ledge_hand_height)
+			var query := PhysicsRayQueryParameters2D.create(
+				hand, hand + Vector2(direction * ledge_forward_reach, 0.0),
+				collision_mask, [get_rid()]
+			)
+			pushing_into_wall = _is_valid_ledge_wall_hit(get_world_2d().direct_space_state.intersect_ray(query))
 
 	if on_wall and pushing_into_wall and not is_on_floor():
 		if not is_wall_clinging:
@@ -1339,35 +1353,32 @@ func _try_grab_ledge() -> bool:
 	if direction == 0:
 		return false
 	var forward_reach := ledge_forward_reach
-	var wall_sample_offsets: Array[float] = [-12.0]
 	if grapple_assist_active:
 		forward_reach += grapple_ledge_assist_forward_bonus
-		wall_sample_offsets.append_array([0.0, 12.0, 24.0])
 	var space := get_world_2d().direct_space_state
-	var wall_hit: Dictionary = {}
-	for sample_offset in wall_sample_offsets:
-		var wall_query := PhysicsRayQueryParameters2D.create(
-			global_position + Vector2(0.0, sample_offset),
-			global_position + Vector2(direction * forward_reach, sample_offset),
-			collision_mask,
-			[get_rid()]
-		)
-		wall_hit = space.intersect_ray(wall_query)
-		if _is_valid_ledge_wall_hit(wall_hit):
-			break
-		wall_hit = {}
-	if wall_hit.is_empty():
+	var hand_y := global_position.y - ledge_hand_height
+	var wall_y := hand_y + ledge_hand_tolerance
+	var wall_query := PhysicsRayQueryParameters2D.create(
+		Vector2(global_position.x, wall_y),
+		Vector2(global_position.x + direction * forward_reach, wall_y),
+		collision_mask, [get_rid()]
+	)
+	var wall_hit := space.intersect_ray(wall_query)
+	if not _is_valid_ledge_wall_hit(wall_hit):
 		return false
-	var clearance_query := PhysicsRayQueryParameters2D.create(global_position + Vector2(0.0, -ledge_head_height), global_position + Vector2(direction * forward_reach, -ledge_head_height), collision_mask, [get_rid()])
+	var clearance_y := minf(global_position.y - ledge_head_height, hand_y - ledge_hand_tolerance - 2.0)
+	var clearance_query := PhysicsRayQueryParameters2D.create(Vector2(global_position.x, clearance_y), Vector2(global_position.x + direction * forward_reach, clearance_y), collision_mask, [get_rid()])
 	if not space.intersect_ray(clearance_query).is_empty():
 		return false
 	# Sample just beyond the wall face. Using the full reach places the vertical
 	# ray deep inside wide platforms, where a ray that starts inside collision
 	# reports no surface and makes ledge grab impossible.
 	var top_x: float = (wall_hit.position as Vector2).x + direction * 2.0
-	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, global_position.y - ledge_head_height - 30.0), Vector2(top_x, global_position.y + 12.0), collision_mask, [get_rid()])
+	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, clearance_y), Vector2(top_x, wall_y), collision_mask, [get_rid()])
 	var top_hit := space.intersect_ray(top_query)
-	if not _is_valid_ledge_top_hit(top_hit):
+	if not _is_valid_ledge_top_hit(top_hit) or absf((top_hit.position as Vector2).y - hand_y) > ledge_hand_tolerance:
+		return false
+	if top_hit.get("collider") != wall_hit.get("collider"):
 		return false
 	var grabbed_from_water := is_in_prototype_water()
 	_ledge_direction = direction
@@ -1376,10 +1387,25 @@ func _try_grab_ledge() -> bool:
 	is_wall_clinging = false
 	_grapple_ledge_assist_timer = 0.0
 	velocity = Vector2.ZERO
-	global_position = _ledge_top + Vector2(-direction * ledge_hang_offset.x, ledge_hang_offset.y)
+	last_direction = direction
 	player_animation.flip_h = direction < 0
 	play_character_anim("Water_Ledge_Grab" if grabbed_from_water else "Wall_Cling")
+	_sync_ledge_hang_position()
 	return true
+
+
+func _sync_ledge_hang_position() -> void:
+	var grip := Vector2(_ledge_direction * ledge_hang_offset.x, -ledge_hang_offset.y)
+	if live_3d_visual and live_3d_visual.enabled:
+		var projected_hand := live_3d_visual.get_ledge_grip_player_offset(_ledge_direction)
+		if projected_hand != Vector2.ZERO:
+			# Keep the capsule below/outside the lip during the entry animation;
+			# follow the actual hand as the arms extend into hanging idle.
+			grip = Vector2(
+				_ledge_direction * maxf(absf(projected_hand.x), _body_collision_standing_size.x * 0.5 + 2.0),
+				minf(projected_hand.y, -ledge_hand_height + ledge_hand_tolerance)
+			)
+	global_position = _ledge_top - grip
 
 
 func _is_valid_ledge_wall_hit(hit: Dictionary) -> bool:
@@ -1406,7 +1432,7 @@ func _process_ledge_hang() -> bool:
 	if not is_ledge_hanging:
 		return false
 	velocity = Vector2.ZERO
-	global_position = _ledge_top + Vector2(-_ledge_direction * ledge_hang_offset.x, ledge_hang_offset.y)
+	_sync_ledge_hang_position()
 	if Input.is_action_just_pressed("move_down"):
 		is_ledge_hanging = false
 	elif Input.is_action_just_pressed("Jump"):
@@ -1863,9 +1889,10 @@ func _begin_one_way_drop() -> void:
 # ===============================
 func _capture_standing_collision_shapes() -> void:
 	var body_collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
-	if body_collision and body_collision.shape is RectangleShape2D:
+	if body_collision and (body_collision.shape is RectangleShape2D or body_collision.shape is CapsuleShape2D):
 		body_collision.shape = body_collision.shape.duplicate()
-		_body_collision_standing_size = (body_collision.shape as RectangleShape2D).size
+		_body_collision_standing_shape = body_collision.shape.duplicate()
+		_body_collision_standing_size = body_collision.shape.get_rect().size
 		_body_collision_standing_position = body_collision.position
 	var hurt_collision := get_node_or_null("Hurtbox/CollisionShape2D") as CollisionShape2D
 	if hurt_collision and hurt_collision.shape is RectangleShape2D:
@@ -1912,13 +1939,13 @@ func _update_defensive_stance() -> void:
 
 
 func _apply_crouch_collision(crouched: bool) -> void:
-	_resize_stance_rectangle(
+	_resize_stance_shape(
 		get_node_or_null("CollisionShape2D") as CollisionShape2D,
 		_body_collision_standing_size,
 		_body_collision_standing_position,
 		crouched
 	)
-	_resize_stance_rectangle(
+	_resize_stance_shape(
 		get_node_or_null("Hurtbox/CollisionShape2D") as CollisionShape2D,
 		_hurtbox_collision_standing_size,
 		_hurtbox_collision_standing_position,
@@ -1926,31 +1953,34 @@ func _apply_crouch_collision(crouched: bool) -> void:
 	)
 
 
-func _resize_stance_rectangle(
+func _resize_stance_shape(
 	collision: CollisionShape2D,
 	standing_size: Vector2,
 	standing_position: Vector2,
 	crouched: bool
 ) -> void:
-	if not collision or not collision.shape is RectangleShape2D or standing_size == Vector2.ZERO:
+	if not collision or standing_size == Vector2.ZERO:
 		return
-	var rectangle := collision.shape as RectangleShape2D
-	if crouched:
-		var crouched_height := standing_size.y * crouch_height_ratio
-		rectangle.size = Vector2(standing_size.x, crouched_height)
-		collision.position = standing_position + Vector2(0.0, (standing_size.y - crouched_height) * 0.5)
+	var height := standing_size.y * crouch_height_ratio if crouched else standing_size.y
+	if collision.shape is CapsuleShape2D:
+		var capsule := collision.shape as CapsuleShape2D
+		# Keep the same rounded footprint. Shorten the shape rather than
+		# nonuniformly scaling the physics node or turning it into a rectangle.
+		height = maxf(height, standing_size.x)
+		capsule.radius = standing_size.x * 0.5
+		capsule.height = height
+	elif collision.shape is RectangleShape2D:
+		(collision.shape as RectangleShape2D).size = Vector2(standing_size.x, height)
 	else:
-		rectangle.size = standing_size
-		collision.position = standing_position
+		return
+	collision.position = standing_position + Vector2(0.0, (standing_size.y - height) * 0.5)
 
 
 func _can_restore_standing_collision() -> bool:
-	if _body_collision_standing_size == Vector2.ZERO:
+	if _body_collision_standing_shape == null:
 		return true
-	var standing_shape := RectangleShape2D.new()
-	standing_shape.size = _body_collision_standing_size
 	var query := PhysicsShapeQueryParameters2D.new()
-	query.shape = standing_shape
+	query.shape = _body_collision_standing_shape
 	query.transform = global_transform * Transform2D(0.0, _body_collision_standing_position)
 	query.collision_mask = collision_mask
 	query.exclude = [get_rid()]

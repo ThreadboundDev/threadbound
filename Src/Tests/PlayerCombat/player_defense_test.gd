@@ -32,12 +32,15 @@ func _ready() -> void:
 	assert(not player._last_incoming_hit_blocked)
 
 	var body_collision := player.get_node("CollisionShape2D") as CollisionShape2D
-	var standing_height := (body_collision.shape as RectangleShape2D).size.y
+	assert(body_collision.shape is CapsuleShape2D)
+	var standing_height := (body_collision.shape as CapsuleShape2D).height
+	var feet_y := body_collision.position.y + standing_height * 0.5
 	player._apply_crouch_collision(true)
-	var crouched_height := (body_collision.shape as RectangleShape2D).size.y
+	var crouched_height := (body_collision.shape as CapsuleShape2D).height
 	assert(is_equal_approx(crouched_height, standing_height * player.crouch_height_ratio))
+	assert(is_equal_approx(body_collision.position.y + crouched_height * 0.5, feet_y))
 	player._apply_crouch_collision(false)
-	assert(is_equal_approx((body_collision.shape as RectangleShape2D).size.y, standing_height))
+	assert(is_equal_approx((body_collision.shape as CapsuleShape2D).height, standing_height))
 
 	print("PLAYER_DEFENSE_TEST_PASS frontal=25 rear=100 crouch_ratio=", player.crouch_height_ratio)
 	get_tree().quit()

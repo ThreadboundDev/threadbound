@@ -39,6 +39,7 @@ signal regenerated
 @onready var contact_receiver_collision: CollisionShape2D = $ContactReceiver/CollisionShape2D
 @onready var grapple_receiver_collision: CollisionShape2D = $GrappleTarget/CollisionShape2D
 
+var _bulb_visual: AnimatedSprite2D
 var _hits_remaining := 1
 var _is_broken := false
 ## Presentation direction, published before broken; zero means a remote pop.
@@ -49,6 +50,11 @@ func _ready() -> void:
 	_hits_remaining = hits_to_break
 	_refresh()
 	if not Engine.is_editor_hint():
+		# Keep presentation on the bulb so every placed instance has runtime art.
+		_bulb_visual = load("res://Src/Environment/BlueBiome/Prototypes/still_bulb_visual.gd").new()
+		_bulb_visual.name = "BulbArt"
+		add_child(_bulb_visual)
+		_bulb_visual.call("setup", self)
 		$HitReceiver.hit_received.connect(_on_hit_received)
 		$ContactReceiver.body_entered.connect(_on_body_entered)
 		call_deferred("_resolve_existing_overlaps")
@@ -61,6 +67,8 @@ func _refresh() -> void:
 	_set_rectangle_size(hit_receiver_collision, size)
 	_set_rectangle_size(contact_receiver_collision, size)
 	_set_rectangle_size(grapple_receiver_collision, size)
+	if is_instance_valid(_bulb_visual):
+		_bulb_visual.call("sync_to_bulb")
 
 
 func _set_rectangle_size(collision_shape: CollisionShape2D, rectangle_size: Vector2) -> void:
@@ -85,6 +93,8 @@ func _draw() -> void:
 		draw_texture_rect(texture, Rect2(Vector2(-196.0,-311.4667)*art_scale, Vector2(360,480)*art_scale), false)
 		draw_rect(rect, Color(0.4,0.9,1,0.8), false, 2.0)
 		draw_string(ThemeDB.fallback_font, Vector2(-size.x*.5,size.y*.5+26), "WATER BULB", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color.WHITE)
+		return
+	if is_instance_valid(_bulb_visual):
 		return
 	var health_ratio := float(_hits_remaining) / float(maxi(hits_to_break, 1))
 	var display_color := bumper_color.darkened((1.0 - health_ratio) * 0.28)

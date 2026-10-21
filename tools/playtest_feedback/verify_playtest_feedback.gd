@@ -24,7 +24,8 @@ func _ready() -> void:
 	get_tree().quit(1)
 
 func _verify_player_feedback() -> void:
-	var ledge := _create_static_body(Vector2(64.0, -16.0), Vector2(80.0, 64.0))
+	# A reachable lip belongs at hand height, not at the player's torso.
+	var ledge := _create_static_body(Vector2(64.0, -52.0), Vector2(80.0, 64.0))
 	add_child(ledge)
 
 	var player := PLAYER_SCENE.instantiate()
