@@ -5,7 +5,8 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 ## Start Here
 
 - [October 21 development checkpoint](checkpoint_2026_10_21.md) - consolidated recap, active vs unfinished assets, fresh check failures and the recovery Git branch
-- [Project status and work list](project_status_and_worklist.md) - prioritized Away and At-computer queues, acceptance steps and wider verification checklist (reviewed October 5, 2026)
+- [Project status and work list](project_status_and_worklist.md) - the current ordered TODO list, acceptance criteria and commit checkpoints (October 21, 2026)
+- [Required Git rhythm](development_git_workflow.md#required-rhythm-from-october-21-2026) - save, verify, commit and push before moving to another task
 - [Next hands-on test session](next_test_session.md) - the short ordered checklist to use when Chase is ready to play; update after feedback or relevant runtime changes
 - [October 10 focused verification](verification/focused_checks_2026_10_10.md) - fish, bulbs, walls and room-authoring results, tested source state and remaining coverage
 - `docs/narrative/CANON.md` - current narrative canon and guardrails

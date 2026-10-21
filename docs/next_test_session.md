@@ -7,7 +7,11 @@ checks currently fail. The active runner is v2; retained Eave Runner v3 is not
 installed. Heron v3, guardian encounters, capsule contact and fish/wall/bulb checks
 passed headlessly. GPU appearance, frame time and hands-on acceptance remain open.
 
-Prepared October 5 and updated October 10, 2026 for `5f42ee0b` plus current uncommitted work. Status: **Ready; not yet played for this checklist.** Six [focused fish/bulb/room-authoring checks passed](verification/focused_checks_2026_10_10.md); that does not accept feel or visuals. Queue item: **H1** in [Project status and work list](project_status_and_worklist.md).
+Current saved baseline: `16b3bd3c`, October 21, 2026. Status: **Awaiting hands-on
+review**. Lakeside house/NPC reproduction belongs to T01/T02; the separate lake
+controls session below is T05 / H1 in the [current work list](project_status_and_worklist.md).
+Check the current commit before playing. Earlier automated results remain dated
+evidence and do not accept feel or visuals.
 
 When Chase asks “what should I test?”, give the numbered list below directly in chat. Check the current revision and any intervening changes first; add a recent fix's short retest at the top when relevant. Do not ask Chase to reconstruct the list or replay all historical checks.
 
@@ -60,5 +64,10 @@ Short feedback is fine: “combo: keep; turn between hit 1/2 snaps left; special
 This sheet selects the next session; [full test cards](project_status_and_worklist.md#manual-test-cards) hold the wider coverage. Do not silently mark upcoming sessions passed because H1 goes well. Save-point behavior requires a scene with a save point and a disposable test save/profile.
 
 ## Handoff after the session
+
+Save any editor changes before leaving the session. Record feedback and the
+tested commit in the current work-list item, then commit and push those notes
+(and any coherent authorized fix) before starting another direction. This is a
+required Git checkpoint; no empty commit is needed if nothing changed.
 
 Record the tested revision/device, keep/change/untested decisions and up to three prioritized issues in the main work list. Move investigation/fixes into the Away queue and any required feel decisions into the At-computer queue. Replace this sheet's next-session list with the highest ready retests/session; preserve dated results in the main list rather than leaving an old list marked “next.”

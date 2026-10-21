@@ -2,7 +2,38 @@
 
 Use `threadbound/<type>-<description>` branches and `<type>: <description>` commits. Commit a coherent change after its relevant checks pass, before starting the next feature. Push at the end of a work session. Do not mix unrelated unfinished features into a single commit.
 
-Blender sources, GLB exports, FBX animation inputs and ZIP source archives use Git LFS. Install Git LFS before cloning or pulling the project; run `git lfs pull` if an asset contains a pointer instead of binary data. Existing history has not been rewritten or migrated.
+## Required rhythm from October 21, 2026
+
+Chase's standing instruction is to make Git checkpoints explicit. The assistant
+handles routine task-scoped commits/pushes and reminds Chase to save manual
+editor/art work before switching tasks. This is also recorded in `../AGENTS.md`.
+
+1. **Start:** inspect status/history; choose one item from the
+   [current work list](project_status_and_worklist.md); name its intended commit.
+2. **Work:** finish the smallest coherent result and run its relevant checks.
+   Review status about every 30-45 minutes during longer tasks; the timer is a
+   reminder, not a requirement for artificial or empty commits.
+3. **Checkpoint:** save files, stage explicit paths, inspect the staged diff,
+   run `git diff --cached --check`, commit, and push. Include the work-list result
+   and next hands-on retest in the same task commit when practical.
+4. **Verify:** confirm remote HEAD equals local HEAD, record the commit/result,
+   and report any remaining changes. Then choose the next task.
+
+Call out **Git checkpoint due** before a topic change or session end when files
+remain uncommitted. If Chase wants to do Git himself, provide exact commands
+and verify completion. If interrupted work is not ready, preserve a clearly
+described WIP checkpoint with its failures and next step; do not call it accepted.
+If a push is blocked, state that the commit exists only locally and why.
+
+The current stabilization branch is
+`threadbound/chore-october-development-checkpoint`, starting from `16b3bd3c`.
+Keep related stabilization and planning commits here until this branch is
+reviewed. After integration, use focused task branches from the accepted base.
+Do not return to `water-cleanup` or `Main` without checking their history.
+Opening a PR and merging are separate from saving work; never merge or publish
+a build automatically to complete a checkpoint.
+
+Blender sources, GLB exports, FBX animation inputs, ZIP source archives and scoped delivery/reference images use Git LFS according to `.gitattributes`. Install Git LFS before cloning or pulling the project; run `git lfs pull` if an asset contains a pointer instead of binary data. Existing history has not been rewritten or migrated.
 
 Keep deliberate named art revisions and approved source files. Automatic Blender backups (`.blend1`, etc.), Godot caches, build outputs, logs and `tmp/` stay local. Never ignore unfinished source work just to make the status clean.
 

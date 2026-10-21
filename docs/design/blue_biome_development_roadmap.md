@@ -1,8 +1,14 @@
 # Blue Biome Development Roadmap
 
-This document is the working source of truth for developing the playable Blue
-Biome. It organizes the work without locking unresolved mechanics, enemy
-designs, or final art direction prematurely.
+This document holds Blue Biome design direction and longer-term workstreams.
+Use the [current work list](../project_status_and_worklist.md) for task order,
+status, acceptance and commit checkpoints. It supersedes the dated priorities
+below without approving unresolved mechanics, enemies or art changes.
+
+October 21, 2026: the saved baseline is `16b3bd3c` on
+`threadbound/chore-october-development-checkpoint`. Resolve the current lakeside
+floor/NPC and verification issues before broader room production. See the
+[checkpoint](../checkpoint_2026_10_21.md) for passing and failing checks.
 
 ## Current checkpoint — October 5, 2026
 

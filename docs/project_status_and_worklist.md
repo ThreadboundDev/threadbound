@@ -1,108 +1,216 @@
-# Threadbound status and work list
+# Threadbound current TODO list
 
-October 21 checkpoint: [consolidated current recap](checkpoint_2026_10_21.md).
-Fresh checks found unresolved lakeside floor/NPC interaction failures and stale
-fixture expectations. Eave Runner v3 is retained but inactive; the runner and
-villagers use v2, and the heron uses v3. Treat the earlier assessment below as
-dated context; the checkpoint lists the current verification results and next work.
+Updated October 21, 2026. Saved game baseline: `16b3bd3c` on
+`threadbound/chore-october-development-checkpoint`, committed and pushed.
+This is the single current task order. The [checkpoint recap](checkpoint_2026_10_21.md)
+is the evidence for the current state; older roadmaps and delivery reports do
+not override its failures or imply hands-on acceptance.
 
-Reviewed October 5, 2026 against commit `5f42ee0b` on `water-cleanup`.
+**Next task: T01, reproduce and resolve house floor/cutaway failures.**
+No implementation task is currently in progress. This planning update does not
+implement or approve any protected gameplay, scene, lore or asset changes.
 
-This is a repository and documentation review. No new gameplay tests, automated Godot checks, performance measurements, or export tests were run for this review. “Implemented” means current code/scenes exist; it does not mean accepted by playtest or ready for release. Older passing checks belong to their recorded revisions.
+## Milestone and working limits
 
-October 10 update: [six focused fish, bulb and room-authoring checks passed](verification/focused_checks_2026_10_10.md) on `5f42ee0b` plus current uncommitted work, using Godot 4.7.2 Mono and isolated test data. This includes the newly present swordfish-wall fracture and attached bulb-art prototypes. No functional failures were found and no gameplay edits were made. Live editor, feel/visual, broader combat, demo/export and performance review remain pending.
+Accept one existing representative Blue room: complete its baseline route with
+the existing kit, use an optional expressive route, recover from a missed action,
+read enemy tells/contact, restart reliably and observe frame time at normal
+playing scale. Fix reproducible blockers before extending content production.
 
-## Overall assessment
+Keep one implementation task active and at most one prepared hands-on session.
+If a task waits for Chase's playtest or approval, take the next independent ready
+background task below. Park new ideas in the backlog. A new idea does not silently
+replace the current task or bypass its Git checkpoint.
 
-Threadbound has a substantial demo foundation and an active Blue-region prototype. The current work is at the integration and playtest stage: the live 3D player, water traversal, attacks, three enemy roles, bulbs, and environment experiments need to work together convincingly. Region production and release readiness are not established by the current checkpoint.
+Active assets: Eave Runner v2, villagers v2 and Loom Heron v3. Eave Runner v3 is
+retained unfinished work. Standalone tower v1-v3 deliveries are saved references,
+not a newly accepted replacement in the game. Preserve the current direction.
 
-Recommended next milestone: **accept one representative Blue room for movement, combat, readability, and repeatable play.** Complete it with the existing kit, exercise an optional expressive route, recover from mistakes, and finish without losing control or encountering new gameplay errors. Compare player/world scale in that same room. Then extend the proven approach.
+## Required commit rhythm
 
-## Current status
+1. Start with `git status --short --branch`, inspect recent history and select one
+   task. State what its next commit will preserve.
+2. Finish one coherent result. Run relevant checks; distinguish automated passes,
+   observed failures, unsupported checks and hands-on decisions.
+3. **Git checkpoint before changing topics:** save editor/art files, stage explicit
+   paths, inspect the staged diff, run `git diff --cached --check`, commit and push.
+4. Record the task result, tested revision and next retest in this list or its
+   linked report. End with branch, latest commit, remote status and remaining edits.
 
-| Area | Evidence in the current project | Next acceptance step |
-| --- | --- | --- |
-| Demo foundation | Main menu, chamber wing objectives, boss, save/death recovery, merchant, tutorial, ending, and feedback UI exist | Fresh-run and continue-run regression through the whole chamber |
-| Player | Live 3D visual integrated into the 2D controller; movement, grapple, guard, Flow and action-point systems exist | Controller feel, action transitions, scale, and contact readability |
-| Air attacks | Authored forward/up/down clips are integrated; later runtime timing updates exist | Both facings, blade/contact alignment, pogo and return to movement |
-| Water combat | Three-hit tap-buffered combo plus neutral and directional specials exist | Normal-speed animation, swimming control, hit windows, cancellation, and surface transitions |
-| Tide Duelist | Current dash is 1050 px/s; living hover/dash animation and water containment are implemented | Tell/lock readability, decisive release, punishable recovery, and boundary cases |
-| Reedhook | Dry-platform windup/sweep, interruption, wall and ledge behavior exist | Fair reach and recovery, facing commitment, and edge cases |
-| Bellstriker | Amphibious pursuit/leaps and boxing combo exist; current live model is v4 | Combo readability, land/water transitions, attached wrists, moving feet, hurt/reset |
-| Water bulbs | Melee recoil, boosted dash, remote clear and regeneration exist; lake now also contains bulbs | Steering recovery, usefulness, return paths and combinations with enemies |
-| Blue environment | Lake greybox, macro-room prototypes, painted terrain, village studies, pavilion V2 and deck module tests exist | Choose a coherent approach after route, scale, collision/art alignment and performance review |
-| Enemy ecosystem | Current local work includes swordfish-fracturable walls; their integration check passed October 10. Friendly damage, elite variant and tortoise remain future work | Review barrier teaching/readability/return paths; scope the next ecosystem step after encounter decisions |
-| Release | Project and Windows export preset still use `0.1.0-rc2`; no local tags identify the public build | Establish the public-build baseline and validate a new exported candidate before release claims |
+Review status about every 30-45 minutes during longer work. Commit a useful unit
+when ready; do not wait for an entire phase or manufacture empty commits. Each
+independent bug fix gets its own commit. A playtest with feedback gets a notes
+commit; any resulting code fix is a separate coherent commit. Preserve interrupted
+work as a clearly described WIP checkpoint with its known failures if needed.
 
-## Two ways to keep moving
+The assistant handles routine commits/pushes and calls out **Git checkpoint due**
+before another direction starts. Chase's manual Godot/Blender/Krita changes must
+be saved too. If Chase wants to run Git, provide exact commands and verify the
+result. Full rules: [Git workflow](development_git_workflow.md) and `../AGENTS.md`.
 
-Chase can often discuss ideas and make decisions while away from the computer. Treat that as productive development time. Hands-on playtesting is a separate queue, not a prerequisite for every task. Work on independent documentation, source reviews, reproducible fixes, automated checks and scoped design proposals while feel/visual acceptance waits for a play session.
+Stay on the current stabilization branch for related fixes. After review and
+integration, create focused `threadbound/<type>-<description>` branches from the
+accepted base. Do not silently move back to an older branch. Saving/pushing does
+not authorize merging, publishing a build or protected implementation changes.
 
-When Chase says they are away, use the first ready item in the Away queue. When Chase asks for the test list, read [Next test session](next_test_session.md), check whether its target revision/scenes still match the current project, and give the short ordered checklist directly in chat. Chase should not have to assemble it from the documentation.
+## Phase 1 - establish reliable current behavior
 
-### Away queue: conversation and background work
+- [ ] **T01 - House floors and cutaways.** Background task; ready; first priority.
+  Reproduce the Fisher house and Workshop floor/contact/facade failures in
+  `tools/environment/verify_lakeside_krita.gd` with the real player. Determine
+  whether runtime geometry, spawn assumptions or fixture setup is wrong before
+  changing it. Verify Tower and adjacent water/ledge behavior still work.
+  Done when the exact failures pass for the correct reason and a short visible
+  retest is queued; final feel/visual acceptance remains with Chase.
+  Commit each actual fix as `fix: correct <specific house contact defect>`; if
+  fixture setup alone was wrong, use `test: correct lakeside floor fixture setup`.
 
-Priority is top to bottom among items whose dependencies are ready. These tasks can happen during an active conversation/work session without Chase physically playing the game.
+- [ ] **T02 - Villager interaction.** Background task; depends on T01 where floor
+  contact affects the reproduction. Restore/verify Net Mender and Boatwright
+  selection/prompt, real interact input, work-to-talk transition, facing, return
+  to work and obstruction behavior. Diagnose the 12 failures in the current
+  48-check fixture; do not assume all have the same cause.
+  Done when the corrected scenarios pass and both NPCs have an exact hands-on
+  greeting retest. Commit each coherent defect as
+  `fix: restore <specific lakeside interaction behavior>`.
 
-| ID | Priority | Task | Concrete output / status |
-| --- | --- | --- | --- |
-| A1 | First | Keep notes and test handoff aligned with current code | October 5 cleanup completed; maintain after each relevant change |
-| A2 | Completed for focused scope | Fish, bulb and room-authoring verification | Six checks passed October 10; report links tested source state, existing diagnostics and pending editor/manual coverage. Run other checks only for a new relevant change or explicit broader task |
-| A3 | Next | Discuss what makes fish tells, Bellstriker pressure and water combat successful | Small decision note: intended feel, what to preserve, edge cases, and what only playing can settle; ready for conversation |
-| A4 | Then | Turn reported bugs into focused fixes | Reproduction, authorized fix, relevant verification, and a pending hands-on retest; waiting for a concrete bug/report |
-| A5 | Then | Plan one representative Blue room using existing geography | Baseline route, optional route, recovery and encounter purpose on paper; ready for discussion, geometry acceptance waits for H3 |
-| A6 | Later | Scope swordfish redirection and one barrier prototype | File-specific proposal, faction exception, teaching setup, edge cases and tests; planning can proceed, implementation follows applicable approval and encounter decisions |
-| A7 | Later | Audit release/source references and prepare export verification | Public-build baseline evidence, current asset/source map and candidate checklist; can progress independently of feel review |
+- [ ] **T03 - Breakable wall restoration.** Background task; can proceed
+  independently of NPC review. Reproduce the authored hit-count restoration
+  mismatch in `verify_lakeside_hud_and_breakables.gd`. Confirm the intended counts
+  from the authored instances, active-dash-only fracture, repeat F2 restoration
+  and ordinary terrain blocking. Preserve five enemy identities and spawn points.
+  Done when wall/reset behavior agrees with authored data and the focused
+  fish/wall/bulb and guardian reset checks pass.
+  Commit: `fix: preserve authored breakable wall state on reset`, or a precisely
+  named `test:` commit if the defect is exclusively in the fixture.
 
-Systems discussion and planning can advance while playtest items wait. Do not broaden an unresolved feel change merely to fill away time. Approved implementation can proceed where its dependencies are ready; passing automated checks leaves hands-on acceptance pending.
+- [ ] **T04 - Bring verification up to current content.** Background task; finish
+  after T01-T03; investigation can start independently. Replace obsolete
+  three-enemy/v2-heron assumptions with assertions about the actual authored
+  actors and active v3 bird. Keep the Eave Runner v3 integration failure explicit
+  as unfinished candidate work; do not install it or weaken checks to turn it
+  green. Make Forward+ requirements and unsupported headless outcomes explicit,
+  rather than trusting exit code 0 alone. Record new results with revision/engine
+  and isolated save data. Scope any shutdown-resource investigation separately
+  if it affects repeatability; existing warnings are not proof of harmlessness.
+  Done when active-content suites pass, every remaining failure/unsupported check
+  has a specific reason and next step, and historical results remain dated.
+  Commit by fixture/topic: `test: align <fixture> with current lakeside content`.
 
-### At-computer queue: Chase's hands-on decisions
+## Phase 2 - play, decide, fix, commit
 
-| ID | Priority | Task | Decision / dependency |
-| --- | --- | --- | --- |
-| H1 | First | Lake movement and player water combat | Keep/change on control, combo/special motion and transitions; next session is prepared |
-| H2 | Next | Fish, Reedhook and Bellstriker encounters | Keep/change on tells, commitment, reach, recoveries and interruption; use a separate session so H1 stays short |
-| H3 | Then | Bulb routes, representative room and player/world scale | Accept baseline/expressive/recovery routes and framing; informs final room/art production |
-| H4 | Then | Pavilion/deck rendering and performance | Accept collision/art agreement, foreground visibility and observed frame time |
-| H5 | Before a playable candidate | Full chamber/controller/save/ending regression and exported build | Shared-system reliability and candidate acceptance; do not infer this from an F6 lake restart |
+- [ ] **T05 / H1 - Player controls and water combat.** Chase at computer; independent
+  of the lakeside NPC fixes when using `blue_lake_greybox.tscn`. Use the
+  [30-minute controls checklist](next_test_session.md#h1-lake-controls-and-player-water-combat--about-30-minutes).
+  Check swimming, surfaces/dry pockets, all combo taps, specials/AP, both facings,
+  cancellations, air attacks/pogo and capsule wall/ledge contact. Also retest
+  the previously reported swim-idle sword arm, Flow afterimage jitter and taking
+  hits underwater; these are questions to verify, not newly confirmed bugs.
+  Done when each area is keep/change/untested with exact reproductions for up to
+  three priorities. Commit: `docs: record H1 controls and combat playtest`.
+  Each resulting authorized fix gets its own `fix:` commit and focused retest.
 
-Each implementation item may have its own short retest that comes before these broad sessions. Keep the next-session sheet current so a new fix's reproduction can become the first check without restarting the entire list.
+- [ ] **T06 / H2 - Enemy readability and fairness.** Chase at computer; follows H1
+  unless a separate enemy session is more practical. Lake: Tide Duelist, Reedhook,
+  Bellstriker. Lakeside landmarks: Eave Runner v2 and ranged Loom Heron v3.
+  Judge tells, aim commitment, dodges/blocking, interruption, recovery, contact,
+  terrain boundaries and repeated F2/reset behavior at normal speed.
+  Done when each actor has a keep/change/untested decision and blocking defects
+  have reproducible follow-ups. Commit: `docs: record Blue enemy encounter review`.
+  Combat-system/tuning proposals still follow the existing approval rules.
 
-## Milestone backlog
+- [ ] **T07 / H3 - Bulbs, barriers and return paths.** Chase at computer; use the
+  bulb-choice room and the representative existing route after T03. Check melee
+  recoil, dash lift, remote clear, visible ready/spent/refill states, a missed
+  launch, fish fracture teaching and a usable return path. Complete the baseline
+  with the existing kit; optional expression must not become progression gating.
+  Done when route purpose, recovery and unclear cues have explicit decisions.
+  Commit: `docs: record bulb and barrier route acceptance`; implement approved
+  corrections in separate focused commits.
 
-### Now: close the playtest loop
+- [ ] **T08 / H4 - Visual scale and measured performance.** Chase at computer;
+  background source review may proceed independently. Compare player/enemy/NPC
+  scale, hand/blade contact, heron silhouette, foreground occlusion, cutaways,
+  pavilion/deck seams and resize/mipmap behavior in real Forward+ rendering.
+  Record hardware, resolution/settings, repeatable scene/setup and typical/worst
+  observed frame times before proposing changes. No verified performance budget
+  exists yet; agree on one from the target experience and measurements.
+  Review retained Eave Runner v3/tower art separately; Chase must approve any
+  replacement before it is installed. Done when current visuals have decisions,
+  performance has a reproducible baseline and any optimization has a measured
+  target. Commit: `docs: record Blue visual and performance baseline`.
 
-- [ ] **Run focused lake playtests (H1/H2).** Record keep/change decisions for water movement, attacks, fish, Reedhook and Bellstriker. Capture short clips of specific problems. Independent Away work can continue between sessions.
-- [ ] **Fix the largest reproducible blocker.** Prioritize lost control, wrong damage, stuck transitions and unreachable routes, then unclear tells/contact. Recheck the exact reproduction and the adjacent action after a fix.
-- [ ] **Judge water-combo presentation.** The live combo now adapts the grounded `slash_2` segments with swimming legs; the separate manual water donor is historical. Review the runtime result before spending more time editing the older donor.
-- [ ] **Accept enemy tells and recovery.** Fish dash speed has already changed since the September feedback. Decide whether the current version achieves the intended release; do not treat the old “speed change pending” note as proof that it remains unimplemented.
-- [ ] **Compare player/world scale.** Use one room and fixed camera framing. Decide whether the concern is visual scale, camera framing or room proportions before changing movement/collision dimensions.
-- [ ] **Run the relevant existing Godot checks on this revision.** Record commit, result and new warnings. A passing code check still needs the visual/feel review above.
+## Phase 3 - accept the slice and check the candidate
 
-Done when: each reviewed item has a keep/change decision, blocking problems have reproducible fixes, and the relevant checks pass on the reviewed commit.
+- [ ] **T09 - Accept one representative Blue room.** Chase plus background fixes;
+  depends on relevant T01-T08 outcomes. Choose an existing room, document baseline,
+  optional and recovery routes, then test traversal alone, encounters alone and
+  the combined room through repeated completion and reset. Resolve blocking
+  findings before broader region/art production. Scene restructuring requires
+  the file-specific approval proposal before editing.
+  Done when the milestone above is observed on a recorded revision and remaining
+  polish is clearly separate. Commit: `docs: accept representative Blue room at <revision>`
+  only after acceptance; use a review-results title while acceptance is pending.
 
-### Next: one coherent Blue slice
+- [ ] **T10 / H5 - Shared-system and full-demo regression.** Background checks plus
+  Chase's hands-on session after shared fixes are ready. Use disposable save data.
+  Cover new/continue, keyboard/controller, menu cancel vs dash, grapple/guard/AP,
+  all objectives/doors, tutorial, boss/ending, Keep Exploring, repeated death,
+  save/Knot recovery and reload. Investigate new script errors and resource
+  ownership diagnostics rather than carrying them forward without a disposition.
+  Done when the candidate's exercised paths pass and all untested/blocking cases
+  are stated. Commit: `test: record candidate demo and input regression`;
+  each discovered defect gets a separate focused `fix:` commit.
 
-- [ ] Select one existing representative room and identify its safe baseline route, optional expressive route and recovery path.
-- [ ] Test traversal alone, each encounter alone, then their combination. Make sure enemies and bulbs help the room's purpose instead of merely adding pressure.
-- [ ] Review player/enemy silhouettes, foreground occlusion, terrain contact, water/air-pocket boundaries and sword feedback at normal speed.
-- [ ] Compare pavilion/deck experiments against the same scale and collision standards. Test stairs, roof landings, repeated-module seams and near/far art layers before extending the kit.
-- [ ] Measure frame time in the lake with the live player and enemies, then in the pavilion scene. Note hardware/settings and worst moments; there is no verified current performance baseline.
-- [ ] Run the chamber regression before making a shared player/enemy change part of a broader playable candidate.
+- [ ] **T11 - Review and integrate the saved work.** Git review; prepare the
+  checkpoint/stabilization PR with what changed, why, exact validation and current
+  limitations. Review the diff and active asset references. Keep WIP candidates
+  identifiable; open-source inputs retain provenance/licenses. Merge only after
+  review/authorization. Earlier PR preparation can proceed while playtests wait.
+  Done when the agreed integration base is recorded and subsequent work starts
+  from it. Existing topic commits supply the PR; no empty commit for opening it.
 
-Done when: the room is repeatably completable, has useful optional expression and recovery, reads clearly, and has an observed performance baseline.
+- [ ] **T12 - Exported candidate and release evidence.** Background provenance
+  audit can start now; export acceptance follows T09-T11. Identify the actual
+  public demo baseline, record candidate commit/version/engine/export settings,
+  and test the exported executable for fresh launch, saves, controller, endings
+  and performance. Keep generated builds outside source control. Do not publish
+  or tag a release as part of routine checkpointing.
+  Done when an exported candidate has a reproducible report and a separate
+  release decision. Commit: `docs: record exported candidate verification`.
 
-### Later: prove the ecosystem in small steps
+## Parked until the current milestone is accepted
 
-- [ ] Prototype swordfish damage against other enemies. Current shared damage handling rejects same-faction damage unless explicitly allowed; the reviewed fish path does not establish that exception.
-- [x] Current local work implements swordfish-fracturable greybox walls; the October 10 integration check passed for active-dash-only fracture, successive walls, solid terrain and dry pockets.
-- [ ] Accept barrier readability and one natural teaching encounter by playing; a passing synthetic wall fixture does not establish the authored route or teaching quality.
-- [ ] Test successive dash relocation and a usable return route; preserve base-kit completion and the current no-progression-gating rule.
-- [ ] Consider the multi-dash elite only after the common fish is accepted.
-- [ ] Prototype the Stillwater Tortoise shell interaction after redirection works in an ordinary room.
-- [ ] Expand Blue room production and finish art after representative geometry, scale and rendering are accepted.
+- Swordfish friendly damage/redirection, multi-dash elite, Stillwater Tortoise
+  and additional ecosystem mechanics: scope and obtain required approval first.
+- New enemy types, explosive bird/moth ideas and combat/equipment expansion.
+- Broad Blue-room production, installing a new tower, or replacing current art.
+- Eave Runner v3 installation: retained work needs review; its presence in Git
+  is not approval. No more speculative quality passes before current acceptance.
+- Lore/faction proposals remain documented proposals until explicitly approved.
 
-These are proposals to organize future work, not authorization to change combat, equipment, scene structure, lore or approved assets. Prepare the required file-specific approval proposal when implementing work covered by `AGENTS.md`.
+These items are saved ideas, not an instruction to implement them now.
+
+## Progress record and completion rules
+
+- [x] Recovery baseline: `16b3bd3c`, committed and pushed; all pending source work
+  saved. [Fresh verification](checkpoint_2026_10_21.md) records seven passing
+  suites, five failing suites and one graphical-only unsupported check.
+- [x] G00: write this ordered plan and persist the required Git checkpoints in
+  `AGENTS.md`. Commit subject: `docs: establish focused todo list and required git checkpoints`.
+  Use this document's Git history for its exact commit; no gameplay changes or
+  new game tests are part of this planning task.
+
+For each task add: `ID | state | tested commit | checks/results | Chase decision
+or pending review | task commit | next action`. An exact commit subject can
+identify a result in the same commit; add its hash on the next work-list update
+instead of creating a second commit only to record the first commit's hash.
+
+States: **Ready**, **In progress**, **Waiting on approval**, **Awaiting hands-on
+review**, **Accepted**. A checked item needs its own acceptance evidence; a code
+pass alone does not accept controls/art. New reports should record scene,
+input/setup, observed vs expected behavior and severity. Prioritize lost control,
+wrong damage, blocked routes and broken recovery before cosmetic polish.
 
 ## Manual test cards
 
@@ -125,7 +233,7 @@ Judge new attacks and tells at normal speed first. Slow motion helps locate a pr
 
 ## Existing automated checks to use
 
-The October 5 source review did not rerun checks. The October 10 [focused report](verification/focused_checks_2026_10_10.md) records the six fish/bulb/room-authoring checks now run; other checks in this table remain unrun for this pass. Run focused checks after relevant fixes; run the broader set before accepting a shared-system candidate. These tests vary in depth: some inspect source/configuration and others exercise live animations/physics. They do not collectively certify the full game.
+The October 21 checkpoint records the current passing, failing and unsupported checks. Use T04 to reconcile obsolete fixtures; do not treat the inventory below as a current pass report. Run relevant checks after a fix and broader checks for T10, keeping automated evidence separate from hands-on acceptance.
 
 | Change area | Existing checks |
 | --- | --- |
@@ -137,31 +245,6 @@ The October 5 source review did not rerun checks. The October 10 [focused report
 | Demo reliability | `tools/ui/verify_menu_cancel_guard.tscn`, `verify_game_over_recovery.tscn`; `tools/save/verify_thread_knot_recovery.tscn`; `tools/tutorial/verify_tutorial_completion.tscn`; `tools/boss_testing/verify_proto_weaver_boss.tscn`; `tools/demo_ending/verify_demo_ending.tscn`; `tools/playtest_support/verify_playtest_support.tscn` |
 
 For listed `.gd` scripts that extend `SceneTree`, use Godot's `--headless --path . --script res://<path>`. Run listed `.tscn` checks as scenes so their autoload-dependent setup initializes. Use an isolated user-data directory for checks that could persist settings/progress. Record new script errors separately from the historically documented log/certificate and shutdown warnings; do not assume all warnings are harmless.
-
-## Documentation and release housekeeping
-
-- [x] Refresh the September 25 lake checklist for the October 5 runtime: combos/specials, authored air integration, current fish release, three enemies and lake bulbs.
-- [x] Distinguish current runtime from historical sections in `docs/art/air_water_and_spin_combat.md`, `manual_aerial_animation_guide.md`, `water_combo_v1.md` and `bellstriker_v1.md`. Historical source work is preserved.
-- [x] Refresh the Blue roadmap's current priorities and availability split. Common fish and Bellstriker are implemented prototypes; ecosystem interactions remain separate work. Update acceptance after the next playtest.
-- [ ] For future work, use `threadbound/<type>-<description>`. The current branch is `water-cleanup`; it was left unchanged during this review.
-- [ ] Identify the actual public-demo commit/build. A clean working tree and a checkpoint commit establish saved source state, not a tested release.
-- [ ] Before sharing a new build, verify fresh launch, saves, controller, feedback/ending flow and performance from the exported executable; record its commit/version and intended scope.
-
-## A manageable session rhythm
-
-Keep at most **one Away implementation/planning task and one hands-on review session** active. Park additional ideas in the backlog. “Waiting for Chase to play” is a dependency on that item, not a freeze on independent work.
-
-1. **Away session:** take the highest ready A item. Discuss decisions, review source, run relevant checks or fix a concrete issue within authorized scope. Write the result and any exact hands-on retest into the handoff.
-2. **At-computer session:** use the prepared short list, starting with retests from recent fixes. Complete H1 in about 30 minutes; split enemy/bulb/environment/demo review into later sessions. Record keep/change or untested for each item.
-3. **After feedback:** turn observations into up to three prioritized actions, route code/investigation back to Away and feel/visual decisions to At-computer, and refresh the next-session sheet. Close an item only when its own acceptance conditions are met.
-
-Planning states: **Ready**, **In progress**, **Waiting on decision/approval**, **Awaiting hands-on review**, **Accepted**. For each active item record availability, priority, dependency, revision, result and next action. Do not turn “implemented” or “automated pass” into “Accepted” without the required review. Reprioritize reproducible blockers ahead of polish.
-
-Use this entry format for feedback:
-
-`Area | keep/change | scene + input/setup | observed | expected | clip timestamp | severity | next action`
-
-Severity: **P0** prevents play or recovery; **P1** breaks control, damage or an intended route; **P2** harms readability/feel; **P3** is polish. Unreviewed items are not confirmed bugs. Mark an item complete only after its observed result satisfies the acceptance step.
 
 ## References
 
