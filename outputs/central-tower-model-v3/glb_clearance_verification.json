@@ -1,0 +1,77 @@
+{
+  "CentralTower_Exterior.glb": {
+    "checks": [
+      {
+        "side": "Roof_Tier02_Left_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier02_Right_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier03_Left_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier03_Right_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier04_Left_Side_With_Corners",
+        "minimum_abs_x": 1.8023070096969604,
+        "wall_inner_abs_x": 1.7622556872797184
+      },
+      {
+        "side": "Roof_Tier04_Right_Side_With_Corners",
+        "minimum_abs_x": 1.8023070096969604,
+        "wall_inner_abs_x": 1.7622556872797184
+      }
+    ],
+    "has_hidden_return_objects": true,
+    "embedded_images": 12,
+    "uv_and_tangents": true
+  },
+  "CentralTower_Cutaway.glb": {
+    "checks": [
+      {
+        "side": "Roof_Tier02_Left_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier02_Right_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier03_Left_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier03_Right_Side_With_Corners",
+        "minimum_abs_x": 2.5833065509796143,
+        "wall_inner_abs_x": 2.5432553668695936
+      },
+      {
+        "side": "Roof_Tier04_Left_Side_With_Corners",
+        "minimum_abs_x": 1.8023070096969604,
+        "wall_inner_abs_x": 1.7622556872797184
+      },
+      {
+        "side": "Roof_Tier04_Right_Side_With_Corners",
+        "minimum_abs_x": 1.8023070096969604,
+        "wall_inner_abs_x": 1.7622556872797184
+      }
+    ],
+    "has_hidden_return_objects": false,
+    "embedded_images": 12,
+    "uv_and_tangents": true
+  },
+  "checks_passed": true
+}

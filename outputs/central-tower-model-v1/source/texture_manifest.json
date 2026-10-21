@@ -1,0 +1,77 @@
+{
+  "source_atlas_size": [
+    1254,
+    1254
+  ],
+  "materials": {
+    "walnut": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "source_art_crop": [
+        627,
+        627
+      ],
+      "repeat": "UV tiled; native 4K microvariation",
+      "maps": [
+        "BaseColor",
+        "NormalGL",
+        "Roughness"
+      ],
+      "runtime": "4K JPEG albedo; 2K lossless normal/roughness"
+    },
+    "plaster": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "source_art_crop": [
+        627,
+        627
+      ],
+      "repeat": "UV tiled; native 4K microvariation",
+      "maps": [
+        "BaseColor",
+        "NormalGL",
+        "Roughness"
+      ],
+      "runtime": "4K JPEG albedo; 2K lossless normal/roughness"
+    },
+    "blue_tiles": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "source_art_crop": [
+        627,
+        627
+      ],
+      "repeat": "UV tiled; native 4K microvariation",
+      "maps": [
+        "BaseColor",
+        "NormalGL",
+        "Roughness"
+      ],
+      "runtime": "4K JPEG albedo; 2K lossless normal/roughness"
+    },
+    "slate": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "source_art_crop": [
+        627,
+        627
+      ],
+      "repeat": "UV tiled; native 4K microvariation",
+      "maps": [
+        "BaseColor",
+        "NormalGL",
+        "Roughness"
+      ],
+      "runtime": "4K JPEG albedo; 2K lossless normal/roughness"
+    }
+  },
+  "note": "4K composite PBR maps; generated painted source is 627px per quadrant, not native 4K art. Repeating UVs supply high surface texel density."
+}

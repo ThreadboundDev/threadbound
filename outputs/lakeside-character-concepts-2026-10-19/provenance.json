@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-19",
+  "tool": "built-in image_gen__imagegen",
+  "status": "concept only, awaiting user selection",
+  "references": [
+    {
+      "path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-19\\can\\outputs\\LakesideBuildings_Review.png",
+      "sha256": "8400b6808b93afba799a997eb56eec66f4d93d4494e4a139c0e0c30c4cfd3ca6"
+    },
+    {
+      "path": "C:\\Users\\chase\\Documents\\Codex\\2026-10-19\\can\\outputs\\Lakeside_HUD.png",
+      "sha256": "698d2df820df55266c8d2df165c1ca0a9ad876af78902ca1e292aaf48c48a51d"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "Villagers.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "39aba930a792f56ed26d6295950b484cadda9123afa63ab0c376eae0df8f88a2"
+    },
+    {
+      "file": "Indoor_Enemies.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "d99ed1c6189ca4010ee6ecde3557cc2246cebab833fdf2e15c4d4d6301ef237c"
+    }
+  ]
+}

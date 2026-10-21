@@ -1,0 +1,223 @@
+{
+  "CentralTower_Exterior.glb": {
+    "bytes": 56411864,
+    "triangles": 79564,
+    "mesh_objects": 15,
+    "dimensions_gltf_xyz": [
+      9.375,
+      32.03125,
+      6.0
+    ],
+    "embedded_textures": [
+      {
+        "name": "plaster_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "plaster_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "plaster_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "slate_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "slate_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "slate_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "walnut_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "walnut_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "walnut_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "blue_tiles_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "blue_tiles_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "blue_tiles_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      }
+    ],
+    "has_uv": true,
+    "contains_removable_facade": true
+  },
+  "CentralTower_Cutaway.glb": {
+    "bytes": 55483900,
+    "triangles": 70516,
+    "mesh_objects": 10,
+    "dimensions_gltf_xyz": [
+      9.375,
+      32.03125,
+      6.0
+    ],
+    "embedded_textures": [
+      {
+        "name": "plaster_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "plaster_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "plaster_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "slate_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "slate_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "slate_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "walnut_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "walnut_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "walnut_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "blue_tiles_NormalGL_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      },
+      {
+        "name": "blue_tiles_BaseColor_4K",
+        "size": [
+          4096,
+          4096
+        ],
+        "format": "JPEG"
+      },
+      {
+        "name": "blue_tiles_Roughness_2K",
+        "size": [
+          2048,
+          2048
+        ],
+        "format": "PNG"
+      }
+    ],
+    "has_uv": true,
+    "contains_removable_facade": false
+  },
+  "checks_passed": true
+}

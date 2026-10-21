@@ -1,0 +1,25 @@
+{
+  "CentralTower_Exterior.glb": {
+    "import_success": true,
+    "meshes": 15,
+    "dimensions": [
+      9.375,
+      6.0,
+      32.03125
+    ],
+    "loaded_image_count": 12,
+    "has_facade": true
+  },
+  "CentralTower_Cutaway.glb": {
+    "import_success": true,
+    "meshes": 10,
+    "dimensions": [
+      9.375,
+      6.0,
+      32.03125
+    ],
+    "loaded_image_count": 12,
+    "has_facade": false
+  },
+  "checks_passed": true
+}

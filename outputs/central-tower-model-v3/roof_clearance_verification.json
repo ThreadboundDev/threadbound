@@ -1,0 +1,87 @@
+{
+  "version": "v3 interior roof clearance",
+  "input": "C:\\Users\\chase\\Documents\\threadbound\\outputs\\central-tower-model-v2\\CentralTower_Editable.blend",
+  "checks": [
+    {
+      "tier": 2,
+      "side": "Left",
+      "fixed_roof_minimum_abs_x": 2.5833065509796143,
+      "interior_wall_abs_x": 2.5432553668695936,
+      "trim_abs_x": 2.5833066324895873,
+      "surface_area_difference_full_exterior": 9.025907132809152e-08,
+      "fixed_side": "Roof_Tier02_Left_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier02_Left_Inner_Return_HideWithFacade"
+    },
+    {
+      "tier": 2,
+      "side": "Right",
+      "fixed_roof_minimum_abs_x": 2.5833065509796143,
+      "interior_wall_abs_x": 2.5432553668695936,
+      "trim_abs_x": 2.5833066324895873,
+      "surface_area_difference_full_exterior": 9.007309742514735e-08,
+      "fixed_side": "Roof_Tier02_Right_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier02_Right_Inner_Return_HideWithFacade"
+    },
+    {
+      "tier": 3,
+      "side": "Left",
+      "fixed_roof_minimum_abs_x": 2.5833065509796143,
+      "interior_wall_abs_x": 2.5432553668695936,
+      "trim_abs_x": 2.5833066324895873,
+      "surface_area_difference_full_exterior": 6.072898095510482e-08,
+      "fixed_side": "Roof_Tier03_Left_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier03_Left_Inner_Return_HideWithFacade"
+    },
+    {
+      "tier": 3,
+      "side": "Right",
+      "fixed_roof_minimum_abs_x": 2.5833065509796143,
+      "interior_wall_abs_x": 2.5432553668695936,
+      "trim_abs_x": 2.5833066324895873,
+      "surface_area_difference_full_exterior": 6.102657934548006e-08,
+      "fixed_side": "Roof_Tier03_Right_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier03_Right_Inner_Return_HideWithFacade"
+    },
+    {
+      "tier": 4,
+      "side": "Left",
+      "fixed_roof_minimum_abs_x": 1.8023070096969604,
+      "interior_wall_abs_x": 1.7622556872797184,
+      "trim_abs_x": 1.802306952899712,
+      "surface_area_difference_full_exterior": 5.95156777194461e-08,
+      "fixed_side": "Roof_Tier04_Left_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier04_Left_Inner_Return_HideWithFacade"
+    },
+    {
+      "tier": 4,
+      "side": "Right",
+      "fixed_roof_minimum_abs_x": 1.8023070096969604,
+      "interior_wall_abs_x": 1.7622556872797184,
+      "trim_abs_x": 1.802306952899712,
+      "surface_area_difference_full_exterior": 5.8767961164107874e-08,
+      "fixed_side": "Roof_Tier04_Right_Side_With_Corners",
+      "hidden_inner_return": "Roof_Tier04_Right_Inner_Return_HideWithFacade"
+    }
+  ],
+  "bottom_roof_tier_unchanged": true,
+  "other_meshes_unchanged": true,
+  "before_dimensions": [
+    9.375,
+    6.000000238418579,
+    32.03125
+  ],
+  "after_dimensions": [
+    9.375,
+    6.000000238418579,
+    32.03125
+  ],
+  "hidden_inner_returns": [
+    "Roof_Tier02_Left_Inner_Return_HideWithFacade",
+    "Roof_Tier02_Right_Inner_Return_HideWithFacade",
+    "Roof_Tier03_Left_Inner_Return_HideWithFacade",
+    "Roof_Tier03_Right_Inner_Return_HideWithFacade",
+    "Roof_Tier04_Left_Inner_Return_HideWithFacade",
+    "Roof_Tier04_Right_Inner_Return_HideWithFacade"
+  ],
+  "checks_passed": true
+}

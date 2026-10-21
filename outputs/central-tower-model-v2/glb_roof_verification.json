@@ -1,0 +1,150 @@
+{
+  "CentralTower_Exterior.glb": {
+    "bytes": 53023560,
+    "side_parts_with_corners": [
+      "Roof_Tier01_Left_Side_With_Corners",
+      "Roof_Tier01_Right_Side_With_Corners",
+      "Roof_Tier02_Left_Side_With_Corners",
+      "Roof_Tier02_Right_Side_With_Corners",
+      "Roof_Tier03_Left_Side_With_Corners",
+      "Roof_Tier03_Right_Side_With_Corners",
+      "Roof_Tier04_Left_Side_With_Corners",
+      "Roof_Tier04_Right_Side_With_Corners"
+    ],
+    "front_parts": [
+      "Roof_Tier01_Front_Mitered",
+      "Roof_Tier02_Front_Mitered",
+      "Roof_Tier03_Front_Mitered",
+      "Roof_Tier04_Front_Mitered"
+    ],
+    "back_parts": [
+      "Roof_Tier01_Back_Mitered",
+      "Roof_Tier02_Back_Mitered",
+      "Roof_Tier03_Back_Mitered",
+      "Roof_Tier04_Back_Mitered"
+    ],
+    "embedded_texture_sizes": [
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ]
+    ],
+    "uv_and_tangents_present": true
+  },
+  "CentralTower_Cutaway.glb": {
+    "bytes": 52534184,
+    "side_parts_with_corners": [
+      "Roof_Tier01_Left_Side_With_Corners",
+      "Roof_Tier01_Right_Side_With_Corners",
+      "Roof_Tier02_Left_Side_With_Corners",
+      "Roof_Tier02_Right_Side_With_Corners",
+      "Roof_Tier03_Left_Side_With_Corners",
+      "Roof_Tier03_Right_Side_With_Corners",
+      "Roof_Tier04_Left_Side_With_Corners",
+      "Roof_Tier04_Right_Side_With_Corners"
+    ],
+    "front_parts": [],
+    "back_parts": [
+      "Roof_Tier01_Back_Mitered",
+      "Roof_Tier02_Back_Mitered",
+      "Roof_Tier03_Back_Mitered",
+      "Roof_Tier04_Back_Mitered"
+    ],
+    "embedded_texture_sizes": [
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        2048,
+        2048
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        2048,
+        2048
+      ]
+    ],
+    "uv_and_tangents_present": true
+  },
+  "checks_passed": true
+}

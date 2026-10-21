@@ -1,0 +1,107 @@
+{
+  "pixels_per_unit": 128,
+  "target_gameplay_px": {
+    "height": 4100,
+    "maximum_width": 1200
+  },
+  "proposed_depth_px": 768.0,
+  "exterior": {
+    "mesh_objects": 15,
+    "triangles": 79564,
+    "dimensions": [
+      9.375,
+      6.0,
+      32.03125
+    ],
+    "bounds_min": [
+      -4.6875,
+      -3.0,
+      0.0
+    ],
+    "bounds_max": [
+      4.6875,
+      3.0,
+      32.03125
+    ],
+    "all_have_uv": true
+  },
+  "cutaway": {
+    "mesh_objects": 10,
+    "triangles": 70516,
+    "dimensions": [
+      9.375,
+      6.0,
+      32.03125
+    ],
+    "bounds_min": [
+      -4.6875,
+      -3.0,
+      0.0
+    ],
+    "bounds_max": [
+      4.6875,
+      3.0,
+      32.03125
+    ],
+    "all_have_uv": true
+  },
+  "open_basin_probe_blockers": [],
+  "texture_sizes": {
+    "blue_tiles_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "blue_tiles_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "blue_tiles_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "plaster_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "slate_Roughness_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_BaseColor_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_NormalGL_4K.png": [
+      4096,
+      4096
+    ],
+    "walnut_Roughness_4K.png": [
+      4096,
+      4096
+    ]
+  },
+  "source_reference": "central-tower-cutaway-and-exterior-v3.png",
+  "notes": [
+    "Geometry is newly authored; no game scene or production asset changed.",
+    "Both GLBs embed PBR texture images.",
+    "Facade is an independent collection/mesh assembly.",
+    "No collisions or runtime cutaway script added."
+  ],
+  "checks_passed": true
+}

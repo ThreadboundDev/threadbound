@@ -1,0 +1,194 @@
+{
+  "input_file": "C:\\Users\\chase\\Documents\\threadbound\\outputs\\central-tower-model-v1\\CentralTower_Editable.blend",
+  "version": "v2 roof joints",
+  "before_dimensions": [
+    9.375,
+    6.0,
+    32.03125
+  ],
+  "after_dimensions": [
+    9.375,
+    6.0,
+    32.03125
+  ],
+  "normalization_scale": [
+    1.00128164049984,
+    0.8136696930128161,
+    0.9925929456949234
+  ],
+  "raw_offset": [
+    0.0,
+    -0.30700016021728516,
+    0.009999999776482582
+  ],
+  "protected_mesh_hashes_unchanged": true,
+  "removed_faces": {
+    "04_Fixed_Blue_Roofs__blue_tiles": 19736,
+    "04_Fixed_Blue_Roofs__walnut": 168,
+    "02_Facade_Removable__walnut": 24,
+    "02_Facade_Removable__blue_tiles": 3704
+  },
+  "joint_checks": [
+    {
+      "tier": 1,
+      "side": "Left",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 1,
+      "side": "Right",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 1,
+      "end": "Front",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 1,
+      "end": "Front",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 1,
+      "end": "Back",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 1,
+      "end": "Back",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 2,
+      "side": "Left",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 2,
+      "side": "Right",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 2,
+      "end": "Front",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 2,
+      "end": "Front",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 2,
+      "end": "Back",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 2,
+      "end": "Back",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 3,
+      "side": "Left",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 3,
+      "side": "Right",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 3,
+      "end": "Front",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 3,
+      "end": "Front",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 3,
+      "end": "Back",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 3,
+      "end": "Back",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 4,
+      "side": "Left",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 4,
+      "side": "Right",
+      "seam_vertex_max_error": 0
+    },
+    {
+      "tier": 4,
+      "end": "Front",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 4,
+      "end": "Front",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 4,
+      "end": "Back",
+      "side": "Left",
+      "overlapping_roof_footprint_area": 0.0
+    },
+    {
+      "tier": 4,
+      "end": "Back",
+      "side": "Right",
+      "overlapping_roof_footprint_area": 0.0
+    }
+  ],
+  "exterior": {
+    "meshes": 30,
+    "triangles": 75420
+  },
+  "cutaway": {
+    "meshes": 22,
+    "triangles": 65916
+  },
+  "fixed_side_roof_parts": [
+    "Roof_Tier01_Left_Side_With_Corners",
+    "Roof_Tier01_Right_Side_With_Corners",
+    "Roof_Tier02_Left_Side_With_Corners",
+    "Roof_Tier02_Right_Side_With_Corners",
+    "Roof_Tier03_Left_Side_With_Corners",
+    "Roof_Tier03_Right_Side_With_Corners",
+    "Roof_Tier04_Left_Side_With_Corners",
+    "Roof_Tier04_Right_Side_With_Corners"
+  ],
+  "removable_front_roof_parts": [
+    "Roof_Tier01_Front_Mitered",
+    "Roof_Tier02_Front_Mitered",
+    "Roof_Tier03_Front_Mitered",
+    "Roof_Tier04_Front_Mitered"
+  ],
+  "checks_passed": true
+}
