@@ -6,7 +6,7 @@ This is the single current task order. The [checkpoint recap](checkpoint_2026_10
 is the evidence for the current state; older roadmaps and delivery reports do
 not override its failures or imply hands-on acceptance.
 
-**Current task: T01, finish house contact and deliberate door entry.**
+**Milestone priority: T01, finish house contact and deliberate door entry.**
 The layout fix is saved as `9abd15ff`. Chase approved the door change, which is
 implemented and checked; [delivery and validation](design/lakeside_house_entry_proposal.md).
 T01/T02 now await a short visible house/NPC review. Next independent background
@@ -31,6 +31,13 @@ now draw between background wood and rock faces; bulb runtime art/particles
 follow the placed object's depth. Verification passes; visible overlap review
 is pending. [Current depths and results](verification/lakeside_rock_overlap_2026_10_21.md).
 
+**Current scoped art task: T16, Eave Runner cleanup.** Chase explicitly reopened
+the model quality pass against the saved original concept. A separate v4 native
+source, GLB, fresh comparison/pose renders and independent Blender/Godot checks
+are prepared. [Delivery, evidence and exact proposed live-swap scope](art/eave_runner_cleanup_v4.md).
+The game still uses v2; **candidate review and live asset replacement approval
+are pending**. Finish this Git checkpoint before another implementation topic.
+
 ## Milestone and working limits
 
 Accept one existing representative Blue room: complete its baseline route with
@@ -44,8 +51,9 @@ background task below. Park new ideas in the backlog. A new idea does not silent
 replace the current task or bypass its Git checkpoint.
 
 Active assets: Eave Runner v2, villagers v2 and Loom Heron v3. Eave Runner v3 is
-retained unfinished work. Standalone tower v1-v3 deliveries are saved references,
-not a newly accepted replacement in the game. Preserve the current direction.
+retained unfinished work; v4 is a separate review candidate. Standalone tower
+v1-v3 deliveries are saved references, not a newly accepted replacement in the
+game. Preserve the current direction.
 
 ## Required commit rhythm
 
@@ -244,14 +252,32 @@ not authorize merging, publishing a build or protected implementation changes.
   Commit: `fix: tuck bridges and water bulbs behind rock art`. Done when bridge
   ends, bulb bases and pop effects sit correctly against overlapping rocks.
 
+- [ ] **T16 - Eave Runner model cleanup.** **Waiting on approval / visible review**.
+  Chase requested a substantial correction toward the original saved ninja
+  concept. Rebuilt hood, torso/wrap, scarf, shoulders, trousers and waist tabs;
+  fitted bracers/bindings and removed malformed cropped clothing geometry.
+  Preserved the sixty-bone rig and twelve named action durations. Native source,
+  self-contained GLB, fresh before/after/pose renders and validation reports are
+  saved under the linked delivery. **1,279 Blender and 127 isolated Godot checks
+  pass**; 372,508 triangles import with matching topology, rig and clips. Native
+  previews were inspected; in-game GPU appearance and acceptance remain pending.
+  Candidate checkpoint:
+  `art: refine Eave Runner toward saved concept` on
+  `threadbound/art-eave-runner-cleanup`, based on `96b2c039`.
+  The checked candidate is not installed; active v2 and old v2/v3 sources are
+  preserved. Done when Chase accepts the candidate, approves the file-scoped
+  live replacement, and its imported encounter/wrapper checks plus visible
+  normal-scale review pass. Integration gets a separate commit and push.
+
 ## Parked until the current milestone is accepted
 
 - Swordfish friendly damage/redirection, multi-dash elite, Stillwater Tortoise
   and additional ecosystem mechanics: scope and obtain required approval first.
 - New enemy types, explosive bird/moth ideas and combat/equipment expansion.
 - Broad Blue-room production, installing a new tower, or replacing current art.
-- Eave Runner v3 installation: retained work needs review; its presence in Git
-  is not approval. No more speculative quality passes before current acceptance.
+- Eave Runner v3 installation: superseded as the review target by Chase's T16
+  request and the separate v4 candidate. Retain v3 as historical source; the v4
+  delivery still needs review and live replacement approval.
 - Lore/faction proposals remain documented proposals until explicitly approved.
 
 These items are saved ideas, not an instruction to implement them now.

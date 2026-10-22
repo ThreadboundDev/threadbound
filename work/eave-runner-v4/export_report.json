@@ -1,0 +1,27 @@
+{
+  "candidate": true,
+  "model": "work/eave-runner-v4/EaveRunner_v4.glb",
+  "bytes": 224900208,
+  "triangles": 372508,
+  "skins": [
+    60
+  ],
+  "meshes": 18,
+  "materials": 17,
+  "embedded_images": 15,
+  "animations": [
+    "death",
+    "hurt",
+    "idle",
+    "jump_slash",
+    "land_recover",
+    "run",
+    "throw_release",
+    "throw_windup",
+    "wall_attach",
+    "wall_launch",
+    "wall_perch",
+    "wall_windup"
+  ],
+  "active_replacement": false
+}

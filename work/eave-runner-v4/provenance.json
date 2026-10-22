@@ -1,0 +1,133 @@
+{
+  "candidate": true,
+  "active_replacement": false,
+  "baseline_commit": "96b2c039998ebe9ac322ac3a19fa2cbff303dd64",
+  "branch": "threadbound/art-eave-runner-cleanup",
+  "generated_utc": "2026-10-22T03:02:05.971177+00:00",
+  "blender": "5.2.1 LTS",
+  "godot": "4.7.2 stable mono",
+  "artifacts": {
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v4.blend": {
+      "bytes": 217084910,
+      "sha256": "0dc6e95b16fd6770912204945458965d5454c5e04705770b26666c99ddb0208c"
+    },
+    "work/eave-runner-v4/.gdignore": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "work/eave-runner-v4/build_report.json": {
+      "bytes": 3717,
+      "sha256": "3470b5cbd3078bfb7ce842e61911d7be988f5375c5963d88ffcb7eaeb7011c4d"
+    },
+    "work/eave-runner-v4/EaveRunner_v4.glb": {
+      "bytes": 224900208,
+      "sha256": "eeee2e33aa8b26588a311e9d1d3952a85fe5a01bd5f9050d2a0fe6f92beaf90d"
+    },
+    "work/eave-runner-v4/export_report.json": {
+      "bytes": 461,
+      "sha256": "738398fe971d27b5980e908522eaac73cc027ace01c09264c1f43b743b26dd50"
+    },
+    "work/eave-runner-v4/godot_verification.json": {
+      "bytes": 2916,
+      "sha256": "6a409f98c40da045ac7385a381f747381dff4b32eca4842ba3d4e79fcea2859e"
+    },
+    "work/eave-runner-v4/renders/Eave_v2_Before.png": {
+      "bytes": 1905255,
+      "sha256": "58220058f76efdefe2f2062dcb8e7b39f3430b19be011b1d8d2832039e3976ef"
+    },
+    "work/eave-runner-v4/renders/Eave_v3_Before.png": {
+      "bytes": 1633425,
+      "sha256": "b630abdc5e24d6537683d4905334e48aff9ac11a866bc51044c1698b1f339106"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_Back.png": {
+      "bytes": 1061531,
+      "sha256": "0b71d3b6972d507b957b4223fb3222233f91e38f395125025441749ecc8ee5a5"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_Front.png": {
+      "bytes": 1081572,
+      "sha256": "0d2ff5df569476556556ff3ffb6c9be28d71d2f30aa49ce4cd60949821ca1645"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_GameReadability.png": {
+      "bytes": 127993,
+      "sha256": "d44aaa2b7adb70bca8f9458ba3ebe7cfd1256b87b33c9aa893481107a0046672"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_GameSide.png": {
+      "bytes": 1045982,
+      "sha256": "47802b47875c2faef6693a5ea791530c5df77d0287018572ceb30629e93dbb54"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_JumpSlash.png": {
+      "bytes": 1007473,
+      "sha256": "8ce3e5cd9405b86b888a4335f05b72c394e8c0e234ac34e64b6e10684ba78c47"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_Landing.png": {
+      "bytes": 1065941,
+      "sha256": "d6cfb11147c9fe9ee10773e085ddc8eb23961ad1eb43b4b6619296bd1e1a75e4"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_ThreeQuarter.png": {
+      "bytes": 1632839,
+      "sha256": "1d9d59d81e064996bbc6228678801c875e985a64a41cc655c6580a6188e02fcb"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_Throw.png": {
+      "bytes": 1076717,
+      "sha256": "3a3e36d569bfc14a3b42fa1aaaec193ba0fa2af4e22604d26312ef89cb149ff9"
+    },
+    "work/eave-runner-v4/renders/Eave_v4_WallPerch.png": {
+      "bytes": 1051509,
+      "sha256": "b254bbeee6b899541f0d78f585bb7f7a5beacae07ecc22eb14b535db904794eb"
+    },
+    "work/eave-runner-v4/source_verification.json": {
+      "bytes": 57800,
+      "sha256": "51f9eb83a0daba5842d5877bfe5a7f9f9dcd15ee5f715350e04da5e0c93881de"
+    }
+  },
+  "tools": {
+    "tools/art/build_eave_cleanup_v4.py": "8e088661aeb30a667312906f1f2bdda64bf48bbb8d9ca52de10d22b720e59fb6",
+    "tools/art/eave_v4_head.py": "4178ea53478633a81ec19d6c9d636af48b3fb6e234bb20dbb554e49d1eb21dc6",
+    "tools/art/export_eave_cleanup_v4.py": "702e760be66f1f2fcb87e71935588ea23dcf534877c34121aa077dd53e2caae6",
+    "tools/art/render_eave_cleanup_v4.py": "2e7cd534e8583ccc63f5e82e6d645c264a32e69e66cd070521444ea86edd2f3b",
+    "tools/art/verify_eave_cleanup_v4.py": "d1423ed4b60b4d6cf56e412ae079bdf25ec925c67c919c5c0c6b096c7c938eaa",
+    "tools/art/verify_eave_cleanup_v4.gd": "bef525f2c9d694e3c23767fca6db704d2c9c5327d0800ece64d8e76c321731ed"
+  },
+  "references": {
+    "outputs/lakeside-character-concepts-2026-10-19/Indoor_Enemies.png": "d99ed1c6189ca4010ee6ecde3557cc2246cebab833fdf2e15c4d4d6301ef237c",
+    "outputs/woven-blue-guardians-2026-10-20/EaveRunner_Woven_Concept.png": "bbaf5d7b29d58b14e5f92158ebbc6659540377d3f7cacba07637d9a7c6901c5b"
+  },
+  "preserved_inputs": {
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v2.blend": {
+      "before": "30294e19ad3b6b38e8c1bbc237cde8b0264515777b99ca7225c63f5f03458e56",
+      "after": "30294e19ad3b6b38e8c1bbc237cde8b0264515777b99ca7225c63f5f03458e56",
+      "unchanged": true
+    },
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v3.blend": {
+      "before": "d14160960350191905ea0a9bfb9251bec6a424953760894e55364559948fcef7",
+      "after": "d14160960350191905ea0a9bfb9251bec6a424953760894e55364559948fcef7",
+      "unchanged": true
+    },
+    "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v2.glb": {
+      "before": "aa061a2bc0772d75b80da10484c6d707646e81a81ad90f7d8e9e18fa26c7e134",
+      "after": "aa061a2bc0772d75b80da10484c6d707646e81a81ad90f7d8e9e18fa26c7e134",
+      "unchanged": true
+    },
+    "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v3.glb": {
+      "before": "eeb97b7b2b55d0d5a6c4be00bf8e2d5ee906c6f7a915da994cc03efc3ed5fe05",
+      "after": "eeb97b7b2b55d0d5a6c4be00bf8e2d5ee906c6f7a915da994cc03efc3ed5fe05",
+      "unchanged": true
+    },
+    "Src/Enemies/EaveRunner/eave_runner.tscn": {
+      "before": "237e4d571c35a389177918e5d8442aa8dc3dd3c6421a5b923a51c5d949cd6185",
+      "after": "237e4d571c35a389177918e5d8442aa8dc3dd3c6421a5b923a51c5d949cd6185",
+      "unchanged": true
+    },
+    "Src/Enemies/EaveRunner/eave_runner.gd": {
+      "before": "92cc0c1ebbb4e97f21feb0e27b6b60a82b19e1bf5f6485d18191dee2d9febc17",
+      "after": "92cc0c1ebbb4e97f21feb0e27b6b60a82b19e1bf5f6485d18191dee2d9febc17",
+      "unchanged": true
+    },
+    "Src/Enemies/EaveRunner/eave_runner_stats.tres": {
+      "before": "52af6563131aedebf99761bdfb97447e7e83c9829d261aae8f74700a572d5053",
+      "after": "52af6563131aedebf99761bdfb97447e7e83c9829d261aae8f74700a572d5053",
+      "unchanged": true
+    }
+  },
+  "visual_review": "Fresh native Blender previews; imported headless data checks; no Godot GPU appearance or user acceptance claimed."
+}

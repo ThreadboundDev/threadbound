@@ -1,0 +1,103 @@
+{
+  "asset": {
+    "bones": 60,
+    "clips": [
+      {
+        "maximum_bone_motion": 0.0336490087211132,
+        "name": "idle",
+        "rig_span": 1.6151956319809,
+        "root_drift": 0.0,
+        "seconds": 2.40000009536743
+      },
+      {
+        "maximum_bone_motion": 0.533366501331329,
+        "name": "run",
+        "rig_span": 1.56811082363129,
+        "root_drift": 0.0,
+        "seconds": 0.800000011920929
+      },
+      {
+        "maximum_bone_motion": 0.739785492420197,
+        "name": "wall_attach",
+        "rig_span": 1.60999989509583,
+        "root_drift": 0.0,
+        "seconds": 0.333333343267441
+      },
+      {
+        "maximum_bone_motion": 0.0221027713268995,
+        "name": "wall_perch",
+        "rig_span": 1.56692099571228,
+        "root_drift": 0.0,
+        "seconds": 1.60000002384186
+      },
+      {
+        "maximum_bone_motion": 0.186221957206726,
+        "name": "wall_windup",
+        "rig_span": 1.58999955654144,
+        "root_drift": 0.0,
+        "seconds": 0.466666668653488
+      },
+      {
+        "maximum_bone_motion": 0.73006808757782,
+        "name": "wall_launch",
+        "rig_span": 1.7459397315979,
+        "root_drift": 0.0,
+        "seconds": 0.300000011920929
+      },
+      {
+        "maximum_bone_motion": 0.979748845100403,
+        "name": "jump_slash",
+        "rig_span": 1.74639403820038,
+        "root_drift": 0.0,
+        "seconds": 0.666666686534882
+      },
+      {
+        "maximum_bone_motion": 0.362972766160965,
+        "name": "land_recover",
+        "rig_span": 1.60999989509583,
+        "root_drift": 0.0,
+        "seconds": 0.600000023841858
+      },
+      {
+        "maximum_bone_motion": 0.926618158817291,
+        "name": "throw_windup",
+        "rig_span": 1.6855376958847,
+        "root_drift": 0.0,
+        "seconds": 0.466666668653488
+      },
+      {
+        "maximum_bone_motion": 0.928613841533661,
+        "name": "throw_release",
+        "rig_span": 1.70515275001526,
+        "root_drift": 0.0,
+        "seconds": 0.333333343267441
+      },
+      {
+        "maximum_bone_motion": 0.168667048215866,
+        "name": "hurt",
+        "rig_span": 1.60999989509583,
+        "root_drift": 0.0,
+        "seconds": 0.400000005960464
+      },
+      {
+        "maximum_bone_motion": 0.649868369102478,
+        "name": "death",
+        "rig_span": 1.60999989509583,
+        "root_drift": 0.0,
+        "seconds": 1.20000004768372
+      }
+    ],
+    "meshes": 18,
+    "surfaces": 19,
+    "triangles": 372508,
+    "vertices": 208438
+  },
+  "checks": 127,
+  "display": "headless",
+  "failures": [],
+  "passed": true,
+  "scope": "Isolated imported candidate geometry and actions only; no active replacement or visual acceptance.",
+  "engine": "Godot 4.7.2 stable mono",
+  "baseline_commit": "96b2c039998ebe9ac322ac3a19fa2cbff303dd64",
+  "setup": "Isolated tmp/eave_cleanup_v4/import_project with isolated APPDATA; no gameplay prefab loaded"
+}

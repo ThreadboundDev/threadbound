@@ -1,0 +1,1873 @@
+{
+  "passed": true,
+  "checks": 1279,
+  "failures": [],
+  "asset": {
+    "source": "C:\\Users\\chase\\Documents\\threadbound\\ArtSource\\BlueBiome\\Enemies\\EaveRunner\\EaveRunner_Woven_v4.blend",
+    "triangles": 372508,
+    "vertices": 188574,
+    "components": 176,
+    "bones": 60,
+    "rest_bounds": [
+      [
+        -1.2135188579559326,
+        -0.21274636685848236,
+        0.021459104493260384
+      ],
+      [
+        0.985476553440094,
+        0.36347928643226624,
+        1.8369998931884766
+      ]
+    ],
+    "meshes": [
+      {
+        "name": "Continuous woven anatomy and articulated hands",
+        "vertices": 4304,
+        "triangles": 8312,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.041682359026659156
+      },
+      {
+        "name": "Overlapping woven waist sash 0",
+        "vertices": 480,
+        "triangles": 800,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.014836399059145427
+      },
+      {
+        "name": "Overlapping woven waist sash 1",
+        "vertices": 480,
+        "triangles": 800,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.014859561544196079
+      },
+      {
+        "name": "Overlapping woven waist sash 2",
+        "vertices": 480,
+        "triangles": 800,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01469757205985353
+      },
+      {
+        "name": "Double braided flax belt",
+        "vertices": 4356,
+        "triangles": 8696,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.014199519566471133
+      },
+      {
+        "name": "Double braided flax belt.001",
+        "vertices": 2178,
+        "triangles": 4348,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.014378106388586515
+      },
+      {
+        "name": "Interlaced paired guardian waist knot",
+        "vertices": 2848,
+        "triangles": 5672,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007412070731695422
+      },
+      {
+        "name": "Interlaced paired guardian waist knot.001",
+        "vertices": 1424,
+        "triangles": 2836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007212411220830979
+      },
+      {
+        "name": "Recessed dark cord backing upper_arm.L",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.15048597578486886
+      },
+      {
+        "name": "Organized woven upper_arm.L bundle",
+        "vertices": 1422,
+        "triangles": 2820,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.022771813392405537
+      },
+      {
+        "name": "Organized woven upper_arm.L bundle.001",
+        "vertices": 4977,
+        "triangles": 9870,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.023892987870782256
+      },
+      {
+        "name": "Tied joint braid upper_arm.L",
+        "vertices": 1292,
+        "triangles": 2568,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.015591892519642978
+      },
+      {
+        "name": "Tied joint braid upper_arm.L.001",
+        "vertices": 646,
+        "triangles": 1284,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.014620542414278478
+      },
+      {
+        "name": "Recessed dark cord backing forearm.L",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.15031778168580875
+      },
+      {
+        "name": "Organized woven forearm.L bundle",
+        "vertices": 1470,
+        "triangles": 2916,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.019333033346429634
+      },
+      {
+        "name": "Organized woven forearm.L bundle.001",
+        "vertices": 5145,
+        "triangles": 10206,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02170932263266033
+      },
+      {
+        "name": "Tied joint braid forearm.L",
+        "vertices": 1020,
+        "triangles": 2024,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.018613719403154937
+      },
+      {
+        "name": "Tied joint braid forearm.L.001",
+        "vertices": 1016,
+        "triangles": 2024,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007937649548837243
+      },
+      {
+        "name": "Recessed dark cord backing shin.L",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.20534994579476434
+      },
+      {
+        "name": "Organized woven shin.L bundle",
+        "vertices": 3501,
+        "triangles": 6966,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.022544642432281235
+      },
+      {
+        "name": "Organized woven shin.L bundle.001",
+        "vertices": 9336,
+        "triangles": 18576,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.023120865307888903
+      },
+      {
+        "name": "Tied joint braid shin.L",
+        "vertices": 1052,
+        "triangles": 2088,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.011335693076818174
+      },
+      {
+        "name": "Tied joint braid shin.L.001",
+        "vertices": 1048,
+        "triangles": 2088,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007197177842325993
+      },
+      {
+        "name": "Knee tied binding L",
+        "vertices": 2000,
+        "triangles": 3976,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008717694774048932
+      },
+      {
+        "name": "Knee tied binding L.001",
+        "vertices": 1000,
+        "triangles": 1988,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008636772483758616
+      },
+      {
+        "name": "Woven hand metacarpal tendon L",
+        "vertices": 2583,
+        "triangles": 5106,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.011155790387081727
+      },
+      {
+        "name": "Articulated woven finger finger1-1.L",
+        "vertices": 480,
+        "triangles": 948,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.005815689204439304
+      },
+      {
+        "name": "Articulated woven finger finger1-2.L",
+        "vertices": 552,
+        "triangles": 1092,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0058085478751181635
+      },
+      {
+        "name": "Finger joint tie finger1-2.L",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008643135297549497
+      },
+      {
+        "name": "Finger joint tie finger1-2.L.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007463953144738656
+      },
+      {
+        "name": "Articulated woven finger finger1-3.L",
+        "vertices": 432,
+        "triangles": 852,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0058003045610988315
+      },
+      {
+        "name": "Articulated woven finger finger2-1.L",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004837078199163816
+      },
+      {
+        "name": "Articulated woven finger finger2-2.L",
+        "vertices": 360,
+        "triangles": 708,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004834801732882188
+      },
+      {
+        "name": "Finger joint tie finger2-2.L",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008582680437255638
+      },
+      {
+        "name": "Finger joint tie finger2-2.L.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006242062325873513
+      },
+      {
+        "name": "Articulated woven finger finger2-3.L",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004834382070723475
+      },
+      {
+        "name": "Articulated woven finger finger3-1.L",
+        "vertices": 528,
+        "triangles": 1044,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004838976305797207
+      },
+      {
+        "name": "Articulated woven finger finger3-2.L",
+        "vertices": 432,
+        "triangles": 852,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004832234446735745
+      },
+      {
+        "name": "Finger joint tie finger3-2.L",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008572301545038774
+      },
+      {
+        "name": "Finger joint tie finger3-2.L.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006417365265534838
+      },
+      {
+        "name": "Articulated woven finger finger3-3.L",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004837433569502491
+      },
+      {
+        "name": "Articulated woven finger finger4-1.L",
+        "vertices": 456,
+        "triangles": 900,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004826418738750291
+      },
+      {
+        "name": "Articulated woven finger finger4-2.L",
+        "vertices": 384,
+        "triangles": 756,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004838249113668337
+      },
+      {
+        "name": "Finger joint tie finger4-2.L",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008562376865965936
+      },
+      {
+        "name": "Finger joint tie finger4-2.L.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006346384854504044
+      },
+      {
+        "name": "Articulated woven finger finger4-3.L",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004838922950662663
+      },
+      {
+        "name": "Articulated woven finger finger5-1.L",
+        "vertices": 336,
+        "triangles": 660,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004835392662087217
+      },
+      {
+        "name": "Articulated woven finger finger5-2.L",
+        "vertices": 240,
+        "triangles": 468,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0048383161384009206
+      },
+      {
+        "name": "Finger joint tie finger5-2.L",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008549156063572507
+      },
+      {
+        "name": "Finger joint tie finger5-2.L.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006905459649393161
+      },
+      {
+        "name": "Articulated woven finger finger5-3.L",
+        "vertices": 312,
+        "triangles": 612,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.005098876267717693
+      },
+      {
+        "name": "Carved bamboo bracer stave L 0",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.027574004263493927
+      },
+      {
+        "name": "Carved bamboo bracer stave L 1",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.027574117961995593
+      },
+      {
+        "name": "Carved bamboo bracer stave L 2",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02757389441435774
+      },
+      {
+        "name": "Carved bamboo bracer stave L 3",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.027574148285319858
+      },
+      {
+        "name": "Bracer fitted fastening bands L",
+        "vertices": 2672,
+        "triangles": 5328,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007324088857725281
+      },
+      {
+        "name": "Bracer fitted fastening bands L.001",
+        "vertices": 1336,
+        "triangles": 2664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007537499699928256
+      },
+      {
+        "name": "Bracer bronze fastening L",
+        "vertices": 64,
+        "triangles": 112,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01853919994701445
+      },
+      {
+        "name": "Recessed dark cord backing upper_arm.R",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.15048602498161412
+      },
+      {
+        "name": "Organized woven upper_arm.R bundle",
+        "vertices": 1422,
+        "triangles": 2820,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.022773494846992665
+      },
+      {
+        "name": "Organized woven upper_arm.R bundle.001",
+        "vertices": 4977,
+        "triangles": 9870,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02389548294063888
+      },
+      {
+        "name": "Tied joint braid upper_arm.R",
+        "vertices": 1292,
+        "triangles": 2568,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.015590929590993431
+      },
+      {
+        "name": "Tied joint braid upper_arm.R.001",
+        "vertices": 646,
+        "triangles": 1284,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01462193298385098
+      },
+      {
+        "name": "Recessed dark cord backing forearm.R",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.15031773853451638
+      },
+      {
+        "name": "Organized woven forearm.R bundle",
+        "vertices": 1470,
+        "triangles": 2916,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.019333764621258128
+      },
+      {
+        "name": "Organized woven forearm.R bundle.001",
+        "vertices": 5145,
+        "triangles": 10206,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02170965747197959
+      },
+      {
+        "name": "Tied joint braid forearm.R",
+        "vertices": 1020,
+        "triangles": 2024,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.018612760826031936
+      },
+      {
+        "name": "Tied joint braid forearm.R.001",
+        "vertices": 1016,
+        "triangles": 2024,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007937609357562452
+      },
+      {
+        "name": "Recessed dark cord backing shin.R",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.20534992605167685
+      },
+      {
+        "name": "Organized woven shin.R bundle",
+        "vertices": 3501,
+        "triangles": 6966,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.021928334987524122
+      },
+      {
+        "name": "Organized woven shin.R bundle.001",
+        "vertices": 9336,
+        "triangles": 18576,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02327246394973407
+      },
+      {
+        "name": "Tied joint braid shin.R",
+        "vertices": 1052,
+        "triangles": 2088,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.011635510072000454
+      },
+      {
+        "name": "Tied joint braid shin.R.001",
+        "vertices": 1048,
+        "triangles": 2088,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007197988922948684
+      },
+      {
+        "name": "Knee tied binding R",
+        "vertices": 2000,
+        "triangles": 3976,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008755036636767176
+      },
+      {
+        "name": "Knee tied binding R.001",
+        "vertices": 1000,
+        "triangles": 1988,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008636880581723709
+      },
+      {
+        "name": "Woven hand metacarpal tendon R",
+        "vertices": 2583,
+        "triangles": 5106,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.011165749569831022
+      },
+      {
+        "name": "Articulated woven finger finger1-1.R",
+        "vertices": 480,
+        "triangles": 948,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.00588889142411364
+      },
+      {
+        "name": "Articulated woven finger finger1-2.R",
+        "vertices": 552,
+        "triangles": 1092,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.005872519332464551
+      },
+      {
+        "name": "Finger joint tie finger1-2.R",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008956364099673354
+      },
+      {
+        "name": "Finger joint tie finger1-2.R.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007626181368249845
+      },
+      {
+        "name": "Articulated woven finger finger1-3.R",
+        "vertices": 432,
+        "triangles": 852,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.00585368317755014
+      },
+      {
+        "name": "Articulated woven finger finger2-1.R",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004885915590309105
+      },
+      {
+        "name": "Articulated woven finger finger2-2.R",
+        "vertices": 360,
+        "triangles": 708,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004880690255416499
+      },
+      {
+        "name": "Finger joint tie finger2-2.R",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008819754043813122
+      },
+      {
+        "name": "Finger joint tie finger2-2.R.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.00624488415383841
+      },
+      {
+        "name": "Articulated woven finger finger2-3.R",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004879717674743411
+      },
+      {
+        "name": "Articulated woven finger finger3-1.R",
+        "vertices": 528,
+        "triangles": 1044,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004890375729499067
+      },
+      {
+        "name": "Articulated woven finger finger3-2.R",
+        "vertices": 432,
+        "triangles": 852,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004874697152969799
+      },
+      {
+        "name": "Finger joint tie finger3-2.R",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008796079377377107
+      },
+      {
+        "name": "Finger joint tie finger3-2.R.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006472451532724298
+      },
+      {
+        "name": "Articulated woven finger finger3-3.R",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004886863200503084
+      },
+      {
+        "name": "Articulated woven finger finger4-1.R",
+        "vertices": 456,
+        "triangles": 900,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004861266606784422
+      },
+      {
+        "name": "Articulated woven finger finger4-2.R",
+        "vertices": 384,
+        "triangles": 756,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0048889213466880785
+      },
+      {
+        "name": "Finger joint tie finger4-2.R",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008773782758495514
+      },
+      {
+        "name": "Finger joint tie finger4-2.R.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006397450270136162
+      },
+      {
+        "name": "Articulated woven finger finger4-3.R",
+        "vertices": 408,
+        "triangles": 804,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004890211274904102
+      },
+      {
+        "name": "Articulated woven finger finger5-1.R",
+        "vertices": 336,
+        "triangles": 660,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004882036126342156
+      },
+      {
+        "name": "Articulated woven finger finger5-2.R",
+        "vertices": 240,
+        "triangles": 468,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0048889047703025565
+      },
+      {
+        "name": "Finger joint tie finger5-2.R",
+        "vertices": 424,
+        "triangles": 836,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008743763885446983
+      },
+      {
+        "name": "Finger joint tie finger5-2.R.001",
+        "vertices": 80,
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.006981083191981877
+      },
+      {
+        "name": "Articulated woven finger finger5-3.R",
+        "vertices": 312,
+        "triangles": 612,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.005240363257372343
+      },
+      {
+        "name": "Carved bamboo bracer stave R 0",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02757407637617654
+      },
+      {
+        "name": "Carved bamboo bracer stave R 1",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.027574045983190104
+      },
+      {
+        "name": "Carved bamboo bracer stave R 2",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02757384011102631
+      },
+      {
+        "name": "Carved bamboo bracer stave R 3",
+        "vertices": 136,
+        "triangles": 268,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.027573984143579606
+      },
+      {
+        "name": "Bracer fitted fastening bands R",
+        "vertices": 2672,
+        "triangles": 5328,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.00762508492343706
+      },
+      {
+        "name": "Bracer fitted fastening bands R.001",
+        "vertices": 1336,
+        "triangles": 2664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007263293600630761
+      },
+      {
+        "name": "Bracer bronze fastening R",
+        "vertices": 64,
+        "triangles": 112,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.018539184287969853
+      },
+      {
+        "name": "Sewn indigo tabi heel and ankle L",
+        "vertices": 200,
+        "triangles": 358,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.06633918374267994
+      },
+      {
+        "name": "Sewn split tabi toe L large",
+        "vertices": 608,
+        "triangles": 1182,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.022614798765079457
+      },
+      {
+        "name": "Tabi topstitch L large",
+        "vertices": 114,
+        "triangles": 224,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008078959221473656
+      },
+      {
+        "name": "Sewn split tabi toe L outer",
+        "vertices": 608,
+        "triangles": 1182,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02262284769173836
+      },
+      {
+        "name": "Tabi topstitch L outer",
+        "vertices": 114,
+        "triangles": 224,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008078958035604688
+      },
+      {
+        "name": "Braided split toe sandal sole L",
+        "vertices": 5262,
+        "triangles": 10500,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.013401362226055567
+      },
+      {
+        "name": "Braided split toe sandal sole L.001",
+        "vertices": 2631,
+        "triangles": 5250,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.012917761421229815
+      },
+      {
+        "name": "Crossed indigo sandal strap L",
+        "vertices": 2208,
+        "triangles": 4392,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008601194014980856
+      },
+      {
+        "name": "Tied ankle sandal binding L",
+        "vertices": 1032,
+        "triangles": 2052,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.012377111498913353
+      },
+      {
+        "name": "Tied ankle sandal binding L.001",
+        "vertices": 320,
+        "triangles": 636,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007159664472511459
+      },
+      {
+        "name": "Sewn indigo tabi heel and ankle R",
+        "vertices": 200,
+        "triangles": 358,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.06633918284147242
+      },
+      {
+        "name": "Sewn split tabi toe R large",
+        "vertices": 608,
+        "triangles": 1182,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.022614798765079457
+      },
+      {
+        "name": "Tabi topstitch R large",
+        "vertices": 114,
+        "triangles": 224,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008078929896532808
+      },
+      {
+        "name": "Sewn split tabi toe R outer",
+        "vertices": 608,
+        "triangles": 1182,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02262284769173836
+      },
+      {
+        "name": "Tabi topstitch R outer",
+        "vertices": 114,
+        "triangles": 224,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008078929303989566
+      },
+      {
+        "name": "Braided split toe sandal sole R",
+        "vertices": 5262,
+        "triangles": 10500,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.013401484637612369
+      },
+      {
+        "name": "Braided split toe sandal sole R.001",
+        "vertices": 2631,
+        "triangles": 5250,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.012917754093399266
+      },
+      {
+        "name": "Crossed indigo sandal strap R",
+        "vertices": 2208,
+        "triangles": 4392,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.008601192684521223
+      },
+      {
+        "name": "Tied ankle sandal binding R",
+        "vertices": 1032,
+        "triangles": 2052,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.012377111498913353
+      },
+      {
+        "name": "Tied ankle sandal binding R.001",
+        "vertices": 320,
+        "triangles": 636,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007159664472511459
+      },
+      {
+        "name": "Short articulated scarf tail L",
+        "vertices": 341,
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.026002236933164845
+      },
+      {
+        "name": "Short articulated scarf tail R",
+        "vertices": 341,
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0266664023016669
+      },
+      {
+        "name": "Pierced ivory face with angled cheek planes",
+        "vertices": 429,
+        "triangles": 736,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0493912759788723
+      },
+      {
+        "name": "Ceramic mask cut edge and eye recess walls",
+        "vertices": 248,
+        "triangles": 248,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.04918523730402246
+      },
+      {
+        "name": "Dark recessed mask backing",
+        "vertices": 429,
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0493912759788723
+      },
+      {
+        "name": "Restrained blue slit reflection",
+        "vertices": 90,
+        "triangles": 172,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0037547019946363317
+      },
+      {
+        "name": "Fine broken ceramic fracture",
+        "vertices": 60,
+        "triangles": 116,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.026014103286138485
+      },
+      {
+        "name": "Hairline indigo repaired fracture",
+        "vertices": 50,
+        "triangles": 96,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.025605255275601254
+      },
+      {
+        "name": "Small bronze ceramic repair staple",
+        "vertices": 36,
+        "triangles": 60,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.011199482141019516
+      },
+      {
+        "name": "Bronze paired thread forehead crest",
+        "vertices": 784,
+        "triangles": 1560,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.004399998741439015
+      },
+      {
+        "name": "Ceramic side fastening cord",
+        "vertices": 1824,
+        "triangles": 3632,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.002063631644191829
+      },
+      {
+        "name": "Ceramic side fastening cord.001",
+        "vertices": 912,
+        "triangles": 1816,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0020516187914210843
+      },
+      {
+        "name": "Short blade wrapped handle",
+        "vertices": 238,
+        "triangles": 472,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.026323051485999744
+      },
+      {
+        "name": "Tight blade grip flax crossing",
+        "vertices": 3560,
+        "triangles": 7108,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.00839995899538268
+      },
+      {
+        "name": "Tight blade grip flax crossing.001",
+        "vertices": 1200,
+        "triangles": 2396,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.007457159343762154
+      },
+      {
+        "name": "Patinated oval blade guard",
+        "vertices": 48,
+        "triangles": 92,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.0606218788756386
+      },
+      {
+        "name": "Forged dark blade flats",
+        "vertices": 24,
+        "triangles": 12,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.21948813237692835
+      },
+      {
+        "name": "Honed blade edge bevels",
+        "vertices": 24,
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.21772945492443305
+      },
+      {
+        "name": "Dark blade spine fuller",
+        "vertices": 156,
+        "triangles": 304,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.026020181040867965
+      },
+      {
+        "name": "Held pin dark iron shaft",
+        "vertices": 20,
+        "triangles": 36,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.17001819200159232
+      },
+      {
+        "name": "Held pin sharpened point",
+        "vertices": 20,
+        "triangles": 36,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.035210010673683775
+      },
+      {
+        "name": "V4 coherent charcoal under-shirt",
+        "vertices": 5504,
+        "triangles": 10136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.03004100177290431
+      },
+      {
+        "name": "V4 inner indigo cross-wrap",
+        "vertices": 1610,
+        "triangles": 3216,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.029902983498461395
+      },
+      {
+        "name": "V4 inner indigo cross-wrap narrow folded edge 0",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.020999244942545906
+      },
+      {
+        "name": "V4 inner indigo cross-wrap narrow folded edge 22",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.021855933833213857
+      },
+      {
+        "name": "V4 outer indigo cross-wrap",
+        "vertices": 1610,
+        "triangles": 3216,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02340089757138453
+      },
+      {
+        "name": "V4 outer indigo cross-wrap narrow folded edge 0",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02374468044979244
+      },
+      {
+        "name": "V4 outer indigo cross-wrap narrow folded edge 22",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01673093537917001
+      },
+      {
+        "name": "V4 soft folded scarf 0",
+        "vertices": 1584,
+        "triangles": 3168,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01598216995213607
+      },
+      {
+        "name": "V4 soft folded scarf 1",
+        "vertices": 1584,
+        "triangles": 3168,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.016891111753319102
+      },
+      {
+        "name": "V4 soft folded scarf 2",
+        "vertices": 1584,
+        "triangles": 3168,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01793932598887114
+      },
+      {
+        "name": "V4 asymmetric scarf front drape",
+        "vertices": 1610,
+        "triangles": 3216,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.026278233759080553
+      },
+      {
+        "name": "V4 asymmetric scarf front drape narrow folded edge 0",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02096235629526986
+      },
+      {
+        "name": "V4 asymmetric scarf front drape narrow folded edge 22",
+        "vertices": 140,
+        "triangles": 276,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01475356567293646
+      },
+      {
+        "name": "V4 layered cloth shoulder L0",
+        "vertices": 832,
+        "triangles": 1664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.019665265950410248
+      },
+      {
+        "name": "V4 layered cloth shoulder L1",
+        "vertices": 832,
+        "triangles": 1664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01829952105645695
+      },
+      {
+        "name": "V4 layered cloth shoulder R0",
+        "vertices": 832,
+        "triangles": 1664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02030653145512124
+      },
+      {
+        "name": "V4 layered cloth shoulder R1",
+        "vertices": 832,
+        "triangles": 1664,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.018297662930019616
+      },
+      {
+        "name": "V4 gathered full charcoal trouser L",
+        "vertices": 2296,
+        "triangles": 4588,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.12731706211194638
+      },
+      {
+        "name": "V4 gathered full charcoal trouser R",
+        "vertices": 2296,
+        "triangles": 4588,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.12731706951609062
+      },
+      {
+        "name": "V4 short asymmetric waist panel 0",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.021113037934856006
+      },
+      {
+        "name": "V4 short asymmetric waist panel 1",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01961611254693345
+      },
+      {
+        "name": "V4 short asymmetric waist panel 2",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.017279788795474423
+      },
+      {
+        "name": "V4 short asymmetric waist panel 3",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.020088518661415207
+      },
+      {
+        "name": "V4 short asymmetric waist panel 4",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.019001875819864917
+      },
+      {
+        "name": "V4 short asymmetric waist panel 5",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.01787117591897072
+      },
+      {
+        "name": "V4 short asymmetric waist panel 6",
+        "vertices": 570,
+        "triangles": 1136,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.02029501112370277
+      },
+      {
+        "name": "V4 continuous draped indigo hood with lined brow",
+        "vertices": 5296,
+        "triangles": 10592,
+        "degenerate_triangles": 0,
+        "edges_over_0_8m": 0,
+        "long_needle_triangles": 0,
+        "isolated_single_triangles": 0,
+        "maximum_edge_metres": 0.03607286592763053
+      }
+    ],
+    "clips": [
+      {
+        "name": "death",
+        "seconds": 1.2,
+        "maximum_span": 1.8155406713485718,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "hurt",
+        "seconds": 0.4,
+        "maximum_span": 1.8155406713485718,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "idle",
+        "seconds": 2.4,
+        "maximum_span": 1.8169116973876953,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "jump_slash",
+        "seconds": 0.6666666666666666,
+        "maximum_span": 1.7396016716957092,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "land_recover",
+        "seconds": 0.6,
+        "maximum_span": 1.8155406713485718,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "run",
+        "seconds": 0.8,
+        "maximum_span": 1.7805495597422123,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "throw_release",
+        "seconds": 0.3333333333333333,
+        "maximum_span": 1.8155407905578613,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "throw_windup",
+        "seconds": 0.4666666666666667,
+        "maximum_span": 1.8155405521392822,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "wall_attach",
+        "seconds": 0.3333333333333333,
+        "maximum_span": 1.9197461381554604,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "wall_launch",
+        "seconds": 0.3,
+        "maximum_span": 1.6986060440540314,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "wall_perch",
+        "seconds": 1.6,
+        "maximum_span": 1.5851178169250488,
+        "root_drift": 0.0,
+        "samples": 3
+      },
+      {
+        "name": "wall_windup",
+        "seconds": 0.4666666666666667,
+        "maximum_span": 1.5851178169250488,
+        "root_drift": 0.0,
+        "samples": 3
+      }
+    ],
+    "visual_acceptance": "Pending; these geometry/rig checks do not accept resemblance or rendered quality."
+  }
+}
