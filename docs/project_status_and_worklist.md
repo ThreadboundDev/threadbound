@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 21, 2026. Saved game baseline: `16b3bd3c` on
+Updated October 22, 2026. Saved recovery baseline: `16b3bd3c` on
 `threadbound/chore-october-development-checkpoint`, committed and pushed.
 This is the single current task order. The [checkpoint recap](checkpoint_2026_10_21.md)
 is the evidence for the current state; older roadmaps and delivery reports do
@@ -37,6 +37,17 @@ calling it rough. Gameplay and the art-only scene now use v4. Import, wrapper,
 guardian and authored lakeside/reset checks pass. Further polish and hands-on
 gameplay-scale review remain open; do not describe this as final concept parity.
 [Delivery, approval and validation](art/eave_runner_cleanup_v4.md).
+
+**Current task: T17, hard water/readability review.** The review diagnoses the
+detached surface strip, rock/player overlap, exterior dry-pocket masking,
+hard-coded opacity and inconsistent pocket presentation. Source audit, real
+Forward+ diagnostic images and existing water checks are saved in the
+[October 22 water review](design/lakeside_water_review_2026_10_22.md).
+The flat-surface and whole-rock-front images are temporary diagnostic previews,
+not installed changes. Recommended sequence: align the shared surface, add
+front contact rims while retaining collision inset, correct exterior/interior
+compositing, then integrate Chase's separate Krita underwater background.
+Implementation and required scene/art approvals remain separate from this review.
 
 ## Milestone and working limits
 
@@ -273,6 +284,22 @@ not authorize merging, publishing a build or protected implementation changes.
   Remaining acceptance: normal-scale in-game appearance and any specific polish
   follow-up Chase chooses. Do not extend this task into another speculative art
   pass; checkpoint the approved installation before changing topics.
+
+- [ ] **T17 - Water presentation and terrain contact.** **Review ready; correction
+  decisions pending.** Reviewed baseline `14710d84`, October 22. The water
+  polygon's upper edge is y=391..411 while its backdrop/mirror plane is y=391,
+  producing a 15–20px detached band at most landmarks. A temporary flat y=411
+  preview removes it. Rear cave/contact art at z=-5 cannot hide feet at z=0;
+  moving all rear art in front hides the whole player, so use separate contact
+  rims and preserve collision positions. The tower's dry mask also clears its
+  exterior facade; distinguish wet exterior from dry cutaway. See the linked
+  review for actual layer values, honest opacity controls, all three pockets,
+  Krita registration, validation and commit order. Existing authoring/readability
+  checks pass but do not cover these visual defects. Review checkpoint:
+  `docs: review lakeside water and contact readability` on
+  `threadbound/docs-water-readability-review`. No correction is installed by the
+  review. Next: agree on the first bounded correction before another art pass;
+  obtain the exact file-scoped approval for scene/art restructuring when needed.
 
 ## Parked until the current milestone is accepted
 

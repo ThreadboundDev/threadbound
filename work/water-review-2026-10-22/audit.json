@@ -1,0 +1,247 @@
+{
+  "air_pockets": [
+    {
+      "fill_shader": "res://Src/Environment/BlueBiome/Water/air_pocket_caustics.gdshader",
+      "fill_visible": true,
+      "fill_z": -2,
+      "lake_presentation": true,
+      "path": "Volumes/AirPocket",
+      "points": 13
+    },
+    {
+      "fill_shader": "res://Src/Environment/BlueBiome/Water/air_pocket_caustics.gdshader",
+      "fill_visible": true,
+      "fill_z": -2,
+      "lake_presentation": true,
+      "path": "Volumes/AirPocket2",
+      "points": 6
+    },
+    {
+      "fill_shader": "res://Src/Environment/Greybox/greybox_lake_fill.gdshader",
+      "fill_visible": false,
+      "fill_z": 20,
+      "lake_presentation": false,
+      "path": "Volumes/AirPocket3",
+      "points": 4
+    }
+  ],
+  "display": "Windows",
+  "draw_order": [
+    {
+      "children": 0,
+      "effective_z": -85,
+      "path": "LakePresentation/UnderwaterDepth"
+    },
+    {
+      "children": 0,
+      "effective_z": -10,
+      "path": "LakesideArtStage/LitBackgroundArt"
+    },
+    {
+      "children": 15,
+      "effective_z": -7,
+      "path": "Geometry/TerrainArtwork/rear_supports"
+    },
+    {
+      "children": 1,
+      "effective_z": -6,
+      "path": "Geometry/BridgeLandings/Deck08"
+    },
+    {
+      "children": 32,
+      "effective_z": -5,
+      "path": "Geometry/TerrainArtwork/rear_cave"
+    },
+    {
+      "children": 0,
+      "effective_z": -2,
+      "path": "Volumes/AirPocket/WaterPreviewFill"
+    },
+    {
+      "children": 0,
+      "effective_z": -1,
+      "path": "Volumes/Lake/WaterMovementRipples"
+    },
+    {
+      "children": 17,
+      "effective_z": 0,
+      "path": "Player"
+    },
+    {
+      "children": 9,
+      "effective_z": 5,
+      "path": "Geometry/TerrainArtwork/terrain"
+    },
+    {
+      "children": 0,
+      "effective_z": 9,
+      "path": "FrontFoliage"
+    },
+    {
+      "children": 0,
+      "effective_z": 10,
+      "path": "LakesideArtStage/RemovableForegroundArt"
+    },
+    {
+      "children": 0,
+      "effective_z": 20,
+      "path": "Volumes/Lake/WaterPreviewFill"
+    }
+  ],
+  "engine": "4.7.2-stable (official)",
+  "flat_plane_preview_y": 411,
+  "normal_alpha": 0.58,
+  "preview_variations_installed": false,
+  "representative_points": [
+    {
+      "dry_pockets": [],
+      "in_lake_polygon": true,
+      "point": "(2200.0, 1200.0)",
+      "wet": true
+    },
+    {
+      "dry_pockets": [
+        "Volumes/AirPocket"
+      ],
+      "in_lake_polygon": true,
+      "point": "(1472.0, 1200.0)",
+      "wet": false
+    },
+    {
+      "dry_pockets": [],
+      "in_lake_polygon": true,
+      "point": "(2816.0, 430.0)",
+      "wet": true
+    },
+    {
+      "dry_pockets": [],
+      "in_lake_polygon": false,
+      "point": "(128.0, 400.0)",
+      "wet": false
+    }
+  ],
+  "revision": "14710d84",
+  "scope": "Source review and disposable runtime previews; no saved gameplay/asset edits.",
+  "shoreline_samples": [
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 396.651245551601,
+      "uncovered_band_world_pixels": 5.65124555160145,
+      "x": -1000.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 410.886120996441,
+      "uncovered_band_world_pixels": 19.8861209964413,
+      "x": 0.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 410.890210430009,
+      "uncovered_band_world_pixels": 19.8902104300092,
+      "x": 128.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 409.660567246112,
+      "uncovered_band_world_pixels": 18.6605672461116,
+      "x": 1472.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 408.430924062214,
+      "uncovered_band_world_pixels": 17.4309240622141,
+      "x": 2816.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 407.259835315645,
+      "uncovered_band_world_pixels": 16.259835315645,
+      "x": 4096.0
+    },
+    {
+      "mirror_backdrop_plane_y": 391.0,
+      "polygon_top_y": 406.066788655078,
+      "uncovered_band_world_pixels": 15.0667886550777,
+      "x": 5400.0
+    }
+  ],
+  "submerged_alpha": 0.23,
+  "surface_y": 391.0,
+  "water_shader": "res://Src/Environment/BlueBiome/Water/polygon_lake.gdshader",
+  "generated_utc": "2026-10-22T12:27:05.832922+00:00",
+  "baseline_commit": "14710d84bd87a790667fd30e5a69b6622c46d08d",
+  "existing_checks": {
+    "authoring.log": {
+      "marker": "LAKE AUTHORING: PASS",
+      "passed": true
+    },
+    "readability.log": {
+      "marker": "PASS: dry-pocket precedence",
+      "passed": true
+    },
+    "rectangular.log": {
+      "marker": "BLUE_REFLECTIVE_WATER_VERIFY_OK",
+      "passed": true
+    }
+  },
+  "images": {
+    "cave_all_rock_front_preview.png": {
+      "sha256": "533041b604ba69f88d8a63a724925d6bc11ea68f44660d82cf7906d5c6e49169",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "cave_contact_current.png": {
+      "sha256": "a6dd6f3b9ce2c700583fa5e8e18587504bbf6d95030ab3d66a364a45113ab553",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "reported_surface_gap.png": {
+      "sha256": "4d3b4a87be944f12468005168da33e03c658a03200621036b6d544b0aeb9e592",
+      "dimensions": [
+        879,
+        131
+      ]
+    },
+    "shore_current.png": {
+      "sha256": "fbe669775633be58a78603a18b2c6a0d293854f9274c131aadf361b4fa1e9f9c",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "shore_flat_plane_preview.png": {
+      "sha256": "9697e285cae3695e059499a8b98bef5ca58a2e85fbf361748b485f85aba01400",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "tower_inside_dry.png": {
+      "sha256": "82410aca074206b24d8b6a229999f14de4b5f6ef6301980692e975d1cde1bff6",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    "tower_outside_submerged.png": {
+      "sha256": "7b47c748d42613d23b6ee14afaa4bd8f8d58519d4918b840a0a7c7055781c030",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    }
+  },
+  "concurrent_manual_scene_save": {
+    "path": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn",
+    "preserved_unstaged": true,
+    "water_volume_blocks_still_match_reviewed_baseline": true,
+    "change_not_authored_by_audit": "Bellstriker placement and Godot scene serialization; review does not checkpoint/accept those manual edits."
+  },
+  "diagnostics": "Existing camera/interpolation, 6 ObjectDB instances / 3 resources at shutdown; GPU texture/RID teardown diagnostics. Readability also logs Missing glove anim: Swim_Idle.",
+  "render_device": "AMD Radeon RX 6800 XT / Vulkan 1.4.315 / Forward+"
+}
