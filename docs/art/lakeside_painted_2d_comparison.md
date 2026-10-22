@@ -59,5 +59,11 @@ attack tells and motion, then judge depth/turning/lighting benefits separately.
 
 ## Delivery status
 
-In progress. No manual appearance acceptance is implied. Generation uses the
-built-in imagegen tool; prompts and final project-bound originals are retained.
+In progress. Source measurements/reference renders are pushed as `6e654911`.
+The four building sheets (including matching house/tower cutaways) and lantern
+are drawn; the fisher/tower plaster received a neutral-albedo cleanup to remove
+directional lighting inherited from the model references. These originals are
+saved under `Assets/BlueBiome/Art/PaintedComparison/`, with prompt records.
+Actor/bulb sheet registration, the live comparison controls and final verification
+are still in progress. No manual appearance acceptance is implied. Generation
+uses the built-in imagegen tool; project-bound original pixels are retained.
