@@ -12,8 +12,10 @@ extends Area2D
 		queue_redraw()
 @export_range(0.0, 1.0) var underwater_opacity := 0.16
 @export var deep_water_color := Color(0.018, 0.10, 0.18, 1.0)
+@export_range(0.0, 1.0) var pocket_caustic_intensity := 0.06
 var _submersion_blend := 0.0
 var _fill: Polygon2D
+var _immersion_fill: Polygon2D
 var _ripple_visual: Node2D
 var _ripples: Array[Dictionary] = []
 var _wake_timer := 0.0
@@ -57,6 +59,19 @@ func _ready() -> void:
 		_fill.z_index = -2
 	_fill.material = fill_material
 	add_child(_fill)
+	if lake_presentation and not air_pocket:
+		# Reflect scenery/building rear art before actors. A separate, light
+		# immersion grade covers actors but stays behind solid front contact art.
+		_fill.z_as_relative = false
+		_fill.z_index = -4
+		_immersion_fill = Polygon2D.new()
+		_immersion_fill.name = "WaterImmersionTint"
+		_immersion_fill.z_as_relative = false
+		_immersion_fill.z_index = 2
+		var immersion := ShaderMaterial.new()
+		immersion.shader = load("res://Src/Environment/BlueBiome/Water/polygon_lake_immersion.gdshader")
+		_immersion_fill.material = immersion
+		add_child(_immersion_fill)
 	_refresh()
 	set_process(true)
 	if not Engine.is_editor_hint():
@@ -174,6 +189,7 @@ func _update_water_preview(delta: float) -> void:
 		_fill.material.set_shader_parameter("boundary_count", boundary_count)
 		_fill.material.set_shader_parameter("pocket_top", bounds.position.y)
 		_fill.material.set_shader_parameter("pocket_bottom", bounds.end.y)
+		_fill.material.set_shader_parameter("intensity", pocket_caustic_intensity)
 		return
 	var tint := water_color
 	var is_submerged := false
@@ -212,6 +228,11 @@ func _update_water_preview(delta: float) -> void:
 	_fill.material.set_shader_parameter("air_points", vertices)
 	_fill.material.set_shader_parameter("air_counts", counts)
 	_fill.material.set_shader_parameter("pocket_count", count)
+	if is_instance_valid(_immersion_fill):
+		_immersion_fill.visible = _fill.visible
+		_immersion_fill.polygon = _fill.polygon
+		for parameter in ["surface_y", "water_opacity", "shallow_color", "deep_color", "air_points", "air_counts", "pocket_count"]:
+			_immersion_fill.material.set_shader_parameter(parameter, _fill.material.get_shader_parameter(parameter))
 	for i in range(_ripples.size()-1,-1,-1):
 		_ripples[i].age += delta
 		if _ripples[i].age >= 1.0:
@@ -239,3 +260,6 @@ func _is_visible_water(point: Vector2) -> bool:
 		if pocket.contains_global_point(point):
 			return false
 	return true
+
+func get_presentation_opacity() -> float:
+	return lerpf(water_color.a, underwater_opacity, _submersion_blend)

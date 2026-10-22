@@ -40,7 +40,12 @@ func rebuild() -> void:
 		for point in node.polygon:
 			world.append(node.to_global(point))
 		polygons.append(world)
-	var signature := hash([polygons, outside_width, inside_width])
+	# Moving painted chunks or this node in the editor must rebuild UVs too,
+	# even when the collision itself has not moved.
+	var sources := []
+	for source: Sprite2D in artwork.get_children():
+		sources.append([source.global_transform, source.get_rect(), source.texture, source.texture_filter])
+	var signature := hash([polygons, outside_width, inside_width, global_transform, sources])
 	if signature == _signature:
 		return
 	_signature = signature

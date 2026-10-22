@@ -5,7 +5,7 @@ uniform vec2 boundary[256];
 uniform int boundary_count = 0;
 uniform float pocket_top = 0.0;
 uniform float pocket_bottom = 1000.0;
-uniform float intensity : hint_range(0.0, 1.0) = 0.22;
+uniform float intensity : hint_range(0.0, 1.0) = 0.06;
 varying vec2 local_position;
 varying vec2 world_position;
 
@@ -32,6 +32,6 @@ void fragment() {
 	float rim = exp(-edge_distance/12.0)*(0.7+0.3*sin(time*1.4+p.x*0.35));
 	// Concentrate refracted light near the lower boundary, leaving the air clear.
 	float floor_light = smoothstep(0.35,0.9,depth)*exp(-edge_distance/160.0);
-	float glow = intensity*(rim*0.65+caustic*(0.08+floor_light*0.9));
+	float glow = intensity*(rim*0.35+caustic*floor_light*0.4);
 	COLOR = vec4(vec3(0.48,0.86,1.0),glow);
 }

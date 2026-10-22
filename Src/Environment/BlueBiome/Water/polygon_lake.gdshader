@@ -1,6 +1,8 @@
 shader_type canvas_item;
 render_mode unshaded;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
+uniform sampler2D facade_reflection_texture : repeat_disable, filter_linear;
+uniform bool has_facade_reflection = false;
 uniform vec2 air_points[256];
 uniform int air_counts[16];
 uniform int pocket_count = 0;
@@ -11,6 +13,14 @@ uniform float water_opacity : hint_range(0.0, 1.0) = 0.34;
 uniform vec4 shallow_color : source_color = vec4(.12,.48,.59,1.0);
 uniform vec4 deep_color : source_color = vec4(.018,.10,.18,1.0);
 varying vec2 world_position;
+vec3 reflection_at(vec2 uv) {
+	vec3 background=texture(screen_texture,uv).rgb;
+	if (has_facade_reflection) {
+		vec4 facade=texture(facade_reflection_texture,uv);
+		background=mix(background,facade.rgb,facade.a);
+	}
+	return background;
+}
 void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX,0.0,1.0)).xy; }
 void fragment() {
 	int start = 0;
@@ -38,9 +48,9 @@ void fragment() {
 	// a hard horizontal edge in the water.
 	float valid=smoothstep(.001,.065,reflected.y)*(1.0-smoothstep(.935,.999,reflected.y));
 	reflected.x+=wave*pixel.x*3.0;
-	vec3 reflection=texture(screen_texture,clamp(reflected,vec2(.001),vec2(.999))).rgb*.4;
-	reflection+=texture(screen_texture,clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999))).rgb*.3;
-	reflection+=texture(screen_texture,clamp(reflected-vec2(pixel.x*5.0,0),vec2(.001),vec2(.999))).rgb*.3;
+	vec3 reflection=reflection_at(clamp(reflected,vec2(.001),vec2(.999)))*.4;
+	reflection+=reflection_at(clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
+	reflection+=reflection_at(clamp(reflected-vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
 	vec3 water=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
 	float bands=.7+.3*sin(depth*.085+wave+TIME*.3);
 	float strength=mix(.40,.10,submersion_blend)*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;

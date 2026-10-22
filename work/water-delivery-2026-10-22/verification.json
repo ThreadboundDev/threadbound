@@ -1,9 +1,15 @@
 {
 	"captures": [
 		"cave_contact",
-		"shore"
+		"shore",
+		"tower_wet_exterior",
+		"swimmer",
+		"tower_dry_cutaway",
+		"tower_dusk",
+		"fisher_interior",
+		"workshop_interior"
 	],
-	"checks": 68,
+	"checks": 92,
 	"display": "Windows",
 	"failures": [],
 	"passed": true,

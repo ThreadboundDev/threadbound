@@ -84,6 +84,10 @@ func _make_sprite(view: SubViewport, depth: int) -> Sprite2D:
 	var unshaded := CanvasItemMaterial.new()
 	unshaded.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	sprite.material = unshaded
+	if depth > 0:
+		var wet_facade := ShaderMaterial.new()
+		wet_facade.shader = load("res://Src/Environment/BlueBiome/Water/submerged_facade.gdshader")
+		sprite.material = wet_facade
 	add_child(sprite)
 	return sprite
 
@@ -131,3 +135,20 @@ func _sync_camera() -> void:
 	for sprite in [far_sprite, near_sprite]:
 		sprite.global_position = center
 		sprite.global_scale = screen / Vector2(target_size) / zoom
+	var lake := get_parent().get_node_or_null("Volumes/Lake")
+	var wet_material := near_sprite.material as ShaderMaterial
+	if lake != null and wet_material != null:
+		var points := PackedVector2Array()
+		for point: Vector2 in lake.points:
+			points.append(lake.to_global(point))
+		var count := mini(points.size(),256)
+		points.resize(256)
+		wet_material.set_shader_parameter("lake_points",points)
+		wet_material.set_shader_parameter("lake_count",count)
+		wet_material.set_shader_parameter("surface_y",lake.get_surface_global_y())
+		wet_material.set_shader_parameter("water_opacity",lake.get_presentation_opacity())
+		wet_material.set_shader_parameter("shallow_color",Color(lake.water_color.r,lake.water_color.g,lake.water_color.b,1))
+		wet_material.set_shader_parameter("deep_color",lake.deep_water_color)
+		if is_instance_valid(lake._fill):
+			lake._fill.material.set_shader_parameter("facade_reflection_texture",near_view.get_texture())
+			lake._fill.material.set_shader_parameter("has_facade_reflection",true)

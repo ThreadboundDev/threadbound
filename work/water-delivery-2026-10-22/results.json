@@ -1,0 +1,26 @@
+{
+  "baseline": "4130555b",
+  "rock_collision_unchanged": true,
+  "rock_collision_sha256": "65270732908406bb43b202cdd4061c2adc0a8185213580cabbdb923531b8c086",
+  "render_checks": "verification.json",
+  "regressions": {
+    "water_surface": 14,
+    "lake_authoring": "PASS",
+    "house_entry": 405,
+    "walkways": 606,
+    "woven_lakeside_and_reset": 19,
+    "water_readability": "PASS"
+  },
+  "capture_renderer": "Godot 4.7.2 Forward+ / Vulkan / AMD Radeon RX 6800 XT",
+  "capture_pixels": [
+    1920,
+    1080
+  ],
+  "acceptance": "Manual appearance/movement acceptance and new Krita background integration pending",
+  "diagnostics": [
+    "Camera2D physics-interpolation override",
+    "Camera3D sync outside physics",
+    "Missing glove anim: Swim_Idle",
+    "ObjectDB/resource and GPU texture shutdown diagnostics remain open under T04"
+  ]
+}
