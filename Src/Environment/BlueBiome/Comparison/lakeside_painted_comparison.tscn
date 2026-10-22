@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn" id="1_room"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.gd" id="2_comparison"]
+
+[node name="LakesidePaintedComparison" instance=ExtResource("1_room")]
+
+[node name="ArtComparison" type="Node" parent="."]
+script = ExtResource("2_comparison")

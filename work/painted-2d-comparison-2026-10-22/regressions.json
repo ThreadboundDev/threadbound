@@ -1,0 +1,31 @@
+{
+  "source_baseline": "4448c06f",
+  "unchanged_gameplay_source_sha256_lf": {
+    "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn": "9e678dc56ca13a6825a225b10450e5c6362139e009d60face0dca899897af8b6",
+    "Src/Environment/BlueBiome/Prototypes/Rooms/lakeside_rock_collision.tscn": "65270732908406bb43b202cdd4061c2adc0a8185213580cabbdb923531b8c086",
+    "Src/Environment/Greybox/greybox_bumper.gd": "e4fcd221f94bd81461caee4c666e9dd973a535c8aa18497c199a8c1bc207d6c8",
+    "Src/Environment/Greybox/greybox_polygon_water.gd": "a761ed4281e62335154edcd7f8c9d7b96b30d1897c3119b3b6ea320d34fff7c3",
+    "Src/Characters/Player/player.tscn": "a92aa9796e12fe4b70a20759b64efdd5797aedea73b9facb25d785a20c523cb5",
+    "Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_art_stage_2d.gd": "345d4b2788e6c9e7b34c4fd0506de66020707e7ccabc15287968f1c7a69446f0",
+    "Src/Enemies/EaveRunner/eave_runner.gd": "92cc0c1ebbb4e97f21feb0e27b6b60a82b19e1bf5f6485d18191dee2d9febc17",
+    "Src/Enemies/LoomHeron/loom_heron.gd": "f4f72e71699db462d47c197176f85fb874dd97ea3a1ebc521d1415045a7b2d7b",
+    "Src/Enemies/Bellstriker/bellstriker.gd": "2a211d1322498eb8194d8a24434a34be66973eb3a99d6c90952484e305f9f6df",
+    "Src/Enemies/TideDuelist/tide_duelist.gd": "72508474d6e8ad99df0afc76ced6be46e97e06910b920e5bb326766ba52d07fa",
+    "Src/Enemies/Reedhook/reedhook.gd": "bdcd2ad593a1d3d522de63e325ecc54c2ad84b28d06a2764683944254f6ad99b"
+  },
+  "regressions": {
+    "house_entry": {
+      "checks": 405,
+      "failures": [],
+      "shutdown_diagnostics": "10 ObjectDB / 5 resources remain; not a clean-shutdown claim"
+    },
+    "authored_woven_lakeside_and_reset": {
+      "checks": 19,
+      "failures": [],
+      "shutdown_diagnostics": "6 ObjectDB / 3 resources remain"
+    }
+  },
+  "renderer": "Godot4.7.2 Forward+ Vulkan RX6800XT",
+  "comparison_checks": "verification.json",
+  "acceptance": "Pending Chase in-game style/motion review; performance is not benchmarked"
+}

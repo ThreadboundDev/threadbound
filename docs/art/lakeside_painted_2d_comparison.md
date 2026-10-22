@@ -59,11 +59,92 @@ attack tells and motion, then judge depth/turning/lighting benefits separately.
 
 ## Delivery status
 
-In progress. Source measurements/reference renders are pushed as `6e654911`.
-The four building sheets (including matching house/tower cutaways) and lantern
-are drawn; the fisher/tower plaster received a neutral-albedo cleanup to remove
-directional lighting inherited from the model references. These originals are
-saved under `Assets/BlueBiome/Art/PaintedComparison/`, with prompt records.
-Actor/bulb sheet registration, the live comparison controls and final verification
-are still in progress. No manual appearance acceptance is implied. Generation
-uses the built-in imagegen tool; project-bound original pixels are retained.
+**Ready for Chase's comparison; no permanent art-direction acceptance.** Source
+measurements/references are pushed as `6e654911`, buildings as `f47c62fe`, and
+LFS tracking as `9efac8e7`. The final comparison implementation checkpoint is
+recorded in the current work list. All new PNGs are retained unchanged from the
+built-in imagegen output; alpha/pose measurements create atlas metadata only.
+
+Open and F6:
+`res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+It starts in painted mode. **F7** switches all categories; the bottom controls
+switch **Buildings / Actors / Bulbs** separately. Unchecked means current models
+(or the existing rendered bulb frames). Existing landmarks, Day/dusk, Interact
+doors and **F2** still work. The main menu and original playtest are unchanged.
+
+The four building sheets include matched exterior/cutaway states where needed,
+with new joinery, rope, netting and basket details. Fisher/tower plaster received
+a neutral-albedo cleanup to remove directional lighting inherited from model
+references. The other nine sheets cover lantern, both villagers/workstations,
+all five model enemy types and bulb lifecycle.
+
+| Asset | Existing world envelope / registration |
+| --- | --- |
+| Fisher house | 744.96×835.321, same bottom anchor and centered door |
+| Workshop | 1000.96×636.921, same left door and floor |
+| Tower | 1200×4100, same prongs, tiers and bottom anchor |
+| Boat slip | 1034.24×972.921, same open center and footings |
+| Lantern | 38.4×69.44, same hanging anchor; all four placements |
+| Enemies | Initial alpha envelope measured from current render; fixed pose scale and existing facing/body transforms |
+| Villagers | Existing floor anchor and combined workstation envelope; work/greet poses plus separate station frame |
+| Bulbs | Sac diameter registered to existing hit/grapple square; all four placed instances |
+
+Painted contours naturally differ from model geometry. Existing physical shapes,
+door destinations and floors are retained; drawing a new contour does not move
+collision. Atlas regions preserve extended weapons/wings, and grounded poses
+share foot registration rather than resizing independently per pose.
+
+## Validation and captured comparison
+
+Godot 4.7.2 Forward+ / Vulkan, RX 6800 XT, 1920×1080 captures, isolated userdata:
+
+- **168 comparison checks pass**: 13 RGBA sheets / 50 atlas frames, exact building
+  envelopes, unchanged collision when switching, original player, five enemy
+  bindings including F2 replacement, existing projectile bone anchor, both house
+  interactions/floor contact, mixed resident rendering and real bulb lifecycle.
+- **405 original house-entry checks pass**; **19 authored encounter/reset checks
+  pass**. These exercise the unchanged base room; the comparison fixture above
+  exercises the inherited comparison scene itself.
+- Eleven original gameplay/layout sources match `4448c06f`, including room,
+  rocks, water, bulb logic, player scene, stage renderer and the five enemy scripts.
+  Hashes and regression results: [regressions.json](../../work/painted-2d-comparison-2026-10-22/regressions.json).
+- [Verification output](../../work/painted-2d-comparison-2026-10-22/verification.json)
+  records all 32 same-camera images: houses outside/inside, mixed NPCs, wet/dry
+  tower, dusk, boat slip, overview, each enemy and bulb ready/spent.
+
+Useful pairs:
+
+| View | Current models | Painted 2D |
+| --- | --- | --- |
+| Fisher house | [models](../../work/painted-2d-comparison-2026-10-22/fisher_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/fisher_painted.png) |
+| Workshop | [models](../../work/painted-2d-comparison-2026-10-22/workshop_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/workshop_painted.png) |
+| Boat slip | [models](../../work/painted-2d-comparison-2026-10-22/boat_slip_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/boat_slip_painted.png) |
+| Overview | [models](../../work/painted-2d-comparison-2026-10-22/overview_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/overview_painted.png) |
+| Eave Runner | [models](../../work/painted-2d-comparison-2026-10-22/eave_runner_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/eave_runner_painted.png) |
+| Water bulb | [rendered](../../work/painted-2d-comparison-2026-10-22/bulb_models.png) | [painted](../../work/painted-2d-comparison-2026-10-22/bulb_painted.png) |
+
+Camera interpolation and resource/RID shutdown diagnostics remain open under T04.
+This run reports six ObjectDB/three resources at GPU teardown; the house regression
+reports ten/five. Passing assertions does not establish a clean shutdown.
+
+## What this comparison can and cannot decide
+
+Judge material/color cohesion, contours, decoration, silhouette and gameplay-scale
+readability first. Layered 2D still provides foreground/rear-wall occlusion and
+working cutaways; models provide continuous 3D articulation/turning and real
+surface lighting/shadows. Both use the same water compositing and placements.
+
+Enemy sheets contain six key poses, NPCs two character poses, and bulbs six
+lifecycle poses. These are comparison animations, not a finished replacement
+for all continuous model clips. NPC greetings do not reproduce full 3D turning;
+enemy weapon/beak drawings can differ from retained physical/projectile anchors.
+Review motion/attachment at normal speed before choosing a production approach.
+
+The whole-tower atlas is softer under large diagnostic zoom; if selected, a
+production 2D tower should use higher-resolution storey exports. No performance
+claim follows from this test: hidden model animation/reference data remains,
+and mixed NPCs use a separate lit pass to remain in front of painted rear walls.
+Unused enemy render viewports are disabled, but this is not a stripped 2D build.
+
+New Krita underwater distance art remains pending under T17. No bridge rebuild,
+permanent art replacement, lore change or new gameplay system is included.
