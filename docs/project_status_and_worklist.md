@@ -55,12 +55,17 @@ and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
 
-**Current authorized task: T18, painted 2D comparison.** Chase requested a
-same-scale comparison of the current 3D buildings, enemies and other actors/props,
-plus newly painted bulbs, retaining the player. Work proceeds in a separate
-comparison scene/branch with the existing models available for an in-game switch.
-This is a review experiment, not permanent art-direction acceptance. T17 remains
-awaiting Chase's playtest and new Krita background.
+**Current review ready: T18, painted 2D comparison.** Delivered and pushed as
+`6d23110c` on `threadbound/art-painted-2d-comparison`; source measurements are
+`6e654911`, building sheets `f47c62fe`, LFS setup `9efac8e7`. Thirteen painted
+sheets cover four buildings, lanterns, two villagers/workstations, five enemy
+types and bulbs. The separate comparison scene retains the original player,
+gameplay, scale and placements; F7 switches art, with independent category
+controls for mixed choices. 168 focused checks, 405 house-entry and 19 authored
+encounter/reset checks pass; 32 captured views are saved. This remains a review
+experiment with pose-based animation, not permanent art-direction acceptance or
+a performance benchmark. **Awaiting Chase's comparison when home.** T17 also
+remains awaiting playtest and the new Krita background.
 [Scope, source measurements and delivery](art/lakeside_painted_2d_comparison.md).
 
 Accept one existing representative Blue room: complete its baseline route with
@@ -309,6 +314,21 @@ not authorize merging, publishing a build or protected implementation changes.
   [hands-on card](next_test_session.md), then integrate Chase's new Krita
   underwater-distance export as a separate asset checkpoint when supplied.
   Do not mark complete before that acceptance/integration is recorded.
+
+- [ ] **T18 - Painted 2D versus current model comparison.** **Delivered; awaiting
+  Chase's visual/motion decisions.** October 22 request explicitly authorizes this
+  reversible comparison while Chase is away. Implementation `6d23110c` is pushed
+  on `threadbound/art-painted-2d-comparison`. F6
+  `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`; F7 and
+  separate Buildings/Actors/Bulbs controls compare all painted or mixed choices.
+  Thirteen RGBA sheets / 50 atlas frames; 168 comparison checks, 405 original
+  house-entry and 19 encounter/reset checks pass. Original gameplay/layout source
+  matches `4448c06f`. Review [delivery and image pairs](art/lakeside_painted_2d_comparison.md)
+  and [test card](next_test_session.md). Six enemy key poses, two NPC character
+  poses and six bulb lifecycle poses are comparison animation; full production
+  animation, tower-resolution polish and any permanent replacements follow a
+  recorded choice. T04 diagnostics remain open. Do not mark accepted until
+  Chase's preferred categories and remaining polish are recorded.
 
 ## Parked until the current milestone is accepted
 

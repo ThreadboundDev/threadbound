@@ -1,5 +1,35 @@
 # Next hands-on test session
 
+## Latest: T18 painted 2D comparison — about 5 minutes
+
+Implementation `6d23110c` is committed and pushed. Open and F6
+`Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+It starts with painted buildings, actors and bulbs. The player/gameplay remain
+the same. **F7 switches all art**; the bottom controls switch Buildings, Actors
+and Bulbs independently. Uncheck for the current models/rendered bulb frames.
+
+1. Use **Fisher house**, **Workshop**, **Boat slip**, then **Tower**. Switch with
+   F7 at the same camera position. Compare silhouette, material colors, detail,
+   route readability and how well the art belongs with the rocks/bridges.
+2. Enter both houses with **Interact**. Compare cutaways, floor contact and
+   villagers. Try painted buildings with model actors, and the reverse. Greet
+   each resident to compare the painted work/greet poses with model turning.
+3. Use **Eave Runner** and **Loom Heron**, then swim near the fish/Bellstriker.
+   Compare tells and movement at normal zoom. The six painted enemy poses are
+   an art/motion prototype, not a full frame-by-frame animation pass.
+4. Pop or grapple a bulb, watch spent/refill and compare both looks. Use
+   **Day / dusk**, then **F2** and verify the chosen enemy art returns.
+
+Record **2D / current 3D / mixed** preferences separately for buildings, enemies,
+villagers and bulbs, with specific polish notes. A decision here does not require
+one medium everywhere. T17 water acceptance/new Krita background still follows.
+
+168 comparison checks plus 405 house / 19 encounter-reset checks pass. The
+[delivery](art/lakeside_painted_2d_comparison.md) has 32 captured views and known
+limitations. Hidden reference animation remains, so this scene does not compare
+the performance of a stripped 2D build. **Save and commit/push manual edits
+before switching to another task.**
+
 ## Latest: T17 water and rock contact — about 3 minutes
 
 October 22 implementation `fc40a9b2` is committed and pushed. F6

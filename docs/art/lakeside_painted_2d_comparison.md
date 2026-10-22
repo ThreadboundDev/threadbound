@@ -61,8 +61,8 @@ attack tells and motion, then judge depth/turning/lighting benefits separately.
 
 **Ready for Chase's comparison; no permanent art-direction acceptance.** Source
 measurements/references are pushed as `6e654911`, buildings as `f47c62fe`, and
-LFS tracking as `9efac8e7`. The final comparison implementation checkpoint is
-recorded in the current work list. All new PNGs are retained unchanged from the
+LFS tracking as `9efac8e7`. Final comparison implementation: **`6d23110c`**, pushed
+on `threadbound/art-painted-2d-comparison`. All new PNGs are retained unchanged from the
 built-in imagegen output; alpha/pose measurements create atlas metadata only.
 
 Open and F6:
