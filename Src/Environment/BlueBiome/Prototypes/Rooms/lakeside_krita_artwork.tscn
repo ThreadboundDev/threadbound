@@ -57,6 +57,7 @@
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_05_05.png" id="55"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/rear_supports_06_05.png" id="56"]
 [ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/rear_support_depth.tres" id="support_depth"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/lakeside_contact_rims.gd" id="contact_rims"]
 
 [node name="TerrainArtwork" type="Node2D"]
 editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."
@@ -68,6 +69,10 @@ material = ExtResource("support_depth")
 
 [node name="rear_cave" type="Node2D" parent="."]
 z_index = -5
+
+[node name="RockContactRims" type="Node2D" parent="."]
+z_index = 3
+script = ExtResource("contact_rims")
 
 [node name="terrain" type="Node2D" parent="."]
 z_index = 5

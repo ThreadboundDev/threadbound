@@ -36,3 +36,19 @@ of the dry-interior mask. Preserve existing entry/cutaway behavior.
 Focused verification tools, delivery images/reports, this document, the current
 work list and next test card are updated alongside each coherent checkpoint.
 The source review and its previews remain historical evidence, not final images.
+
+## Checkpoint 2 — front rock contact
+
+`RockContactRims` derives front strips from exposed floor-facing collision
+contours, rejecting internal seams and retaining source PNG alpha/UV registration.
+Only 3px projects outside the existing collision; the matching painted solid
+face continues 24px inward, preventing a boot from reappearing below a thin mask.
+The cave back wall stays at -5; rims draw at +3. No collision or source PNG is
+changed. Current build: 918 short boundary segments, 31 batched texture meshes,
+2,049 triangles. Editor rebuild follows edited collision; runtime builds once.
+
+Forward+ delivery fixture: 68 checks pass; cave contact and corrected shoreline
+captures inspected. Existing house entry: 405 checks pass. Shader/resource
+shutdown diagnostics remain tracked as above. Contact appearance still needs
+Chase's normal-speed review, including wide stances beside small painted rocks.
+Commit subject: `fix: add foreground rock contact rims`.

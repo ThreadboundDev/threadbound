@@ -1,0 +1,13 @@
+{
+	"captures": [
+		"cave_contact",
+		"shore"
+	],
+	"checks": 68,
+	"display": "Windows",
+	"failures": [],
+	"passed": true,
+	"rim_edges": 918,
+	"rim_meshes": 31,
+	"rim_triangles": 2049
+}
