@@ -6,6 +6,10 @@ uniform int air_counts[16];
 uniform int pocket_count = 0;
 uniform float surface_y = 450.0;
 uniform bool submerged = false;
+uniform float submersion_blend : hint_range(0.0, 1.0) = 0.0;
+uniform float water_opacity : hint_range(0.0, 1.0) = 0.34;
+uniform vec4 shallow_color : source_color = vec4(.12,.48,.59,1.0);
+uniform vec4 deep_color : source_color = vec4(.018,.10,.18,1.0);
 varying vec2 world_position;
 void vertex() { world_position = (MODEL_MATRIX * vec4(VERTEX,0.0,1.0)).xy; }
 void fragment() {
@@ -37,15 +41,13 @@ void fragment() {
 	vec3 reflection=texture(screen_texture,clamp(reflected,vec2(.001),vec2(.999))).rgb*.4;
 	reflection+=texture(screen_texture,clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999))).rgb*.3;
 	reflection+=texture(screen_texture,clamp(reflected-vec2(pixel.x*5.0,0),vec2(.001),vec2(.999))).rgb*.3;
-	vec3 shallow=vec3(.12,.48,.59);
-	vec3 deep=vec3(.018,.10,.18);
-	vec3 water=mix(shallow,deep,smoothstep(0.0,1800.0,depth));
+	vec3 water=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
 	float bands=.7+.3*sin(depth*.085+wave+TIME*.3);
-	float strength=(submerged?.10:.40)*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;
+	float strength=mix(.40,.10,submersion_blend)*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;
 	water=mix(water,reflection*vec3(.65,.85,.9),strength);
 	float rim=(1.0-smoothstep(0.0,8.0,depth))*(.6+.4*sin(world_position.x*.025-TIME*.65));
 	water=mix(water,vec3(.65,.9,.91),rim*.6);
 	float caustic=pow(max(0.0,sin(world_position.x*.013+world_position.y*.02+TIME*.4)*sin(world_position.x*.018-world_position.y*.01-TIME*.3)),12.0);
 	water+=vec3(.06,.12,.10)*caustic*.3;
-	COLOR=vec4(water,submerged?.23:.58);
+	COLOR=vec4(water,water_opacity);
 }

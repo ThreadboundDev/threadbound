@@ -103,9 +103,7 @@ func _update_waterline() -> void:
 	var lake := get_parent().get_node_or_null("Volumes/Lake")
 	if not lake:
 		return
-	var surface := INF
-	for point in lake.points:
-		surface = minf(surface, lake.to_global(point).y)
+	var surface: float = lake.get_surface_global_y()
 	if not is_finite(surface):
 		return
 	_depth_material.set_shader_parameter("water_surface_y", surface)

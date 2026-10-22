@@ -38,7 +38,13 @@ guardian and authored lakeside/reset checks pass. Further polish and hands-on
 gameplay-scale review remain open; do not describe this as final concept parity.
 [Delivery, approval and validation](art/eave_runner_cleanup_v4.md).
 
-**Current task: T17, hard water/readability review.** The review diagnoses the
+**Current task: T17, approved water/readability corrections.** Chase approved
+implementation on October 22. Manual level edits are saved as `4130555b`.
+The shared y=411 surface and real opacity/color controls pass the focused
+14-check fixture and existing authoring checks. Contact rims and exterior/dry
+interior compositing follow as separate checkpoints.
+[Current implementation results](verification/lakeside_water_delivery_2026_10_22.md).
+The original review diagnoses the
 detached surface strip, rock/player overlap, exterior dry-pocket masking,
 hard-coded opacity and inconsistent pocket presentation. Source audit, real
 Forward+ diagnostic images and existing water checks are saved in the

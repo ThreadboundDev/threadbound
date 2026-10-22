@@ -11,6 +11,8 @@ extends Area2D
 			_sync_pocket_group()
 		queue_redraw()
 @export_range(0.0, 1.0) var underwater_opacity := 0.16
+@export var deep_water_color := Color(0.018, 0.10, 0.18, 1.0)
+var _submersion_blend := 0.0
 var _fill: Polygon2D
 var _ripple_visual: Node2D
 var _ripples: Array[Dictionary] = []
@@ -26,7 +28,7 @@ var _reported_pocket_limit := false
 	set(value):
 		points = value
 		_refresh()
-@export var water_color := Color(0.08, 0.55, 0.98, 0.34):
+@export var water_color := Color(0.12, 0.48, 0.59, 0.34):
 	set(value):
 		water_color = value
 		queue_redraw()
@@ -174,16 +176,23 @@ func _update_water_preview(delta: float) -> void:
 		_fill.material.set_shader_parameter("pocket_bottom", bounds.end.y)
 		return
 	var tint := water_color
+	var is_submerged := false
 	if Engine.is_editor_hint():
 		tint = Color(0.10, 0.55, 0.85, 0.5)
 	if not Engine.is_editor_hint():
 		for body in get_overlapping_bodies():
 			if body.is_in_group("player") and body.has_method("is_in_prototype_water") and body.is_in_prototype_water():
+				is_submerged = true
 				tint.a = underwater_opacity
 	_fill.color = tint
 	if lake_presentation:
+		_submersion_blend = move_toward(_submersion_blend, 1.0 if is_submerged else 0.0, maxf(delta, 0.0) * 4.0)
 		_fill.material.set_shader_parameter("surface_y", get_surface_global_y())
-		_fill.material.set_shader_parameter("submerged", tint.a == underwater_opacity)
+		_fill.material.set_shader_parameter("submerged", is_submerged)
+		_fill.material.set_shader_parameter("submersion_blend", _submersion_blend)
+		_fill.material.set_shader_parameter("water_opacity", lerpf(water_color.a, underwater_opacity, _submersion_blend))
+		_fill.material.set_shader_parameter("shallow_color", Color(water_color.r, water_color.g, water_color.b, 1.0))
+		_fill.material.set_shader_parameter("deep_color", deep_water_color)
 	var vertices := PackedVector2Array()
 	var counts := PackedInt32Array()
 	var over_limit := false
