@@ -897,50 +897,41 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="BridgeLandings" type="Node2D" parent="Geometry" unique_id=1091014669]
-z_index = -1
+z_index = -6
 
 [node name="Deck01" parent="Geometry/BridgeLandings" unique_id=2071785988 instance=ExtResource("walk_veranda")]
-z_index = 0
 position = Vector2(4608, -1664)
 span_width = 640.0
 
 [node name="Deck02" parent="Geometry/BridgeLandings" unique_id=969137955 instance=ExtResource("walk_balcony")]
-z_index = 0
 position = Vector2(3052, -1134)
 span_width = 384.0
 
 [node name="Deck03" parent="Geometry/BridgeLandings" unique_id=998491023 instance=ExtResource("walk_plank")]
-z_index = 0
 position = Vector2(4864, -768)
 span_width = 128.0
 
 [node name="Deck04" parent="Geometry/BridgeLandings" unique_id=1485223545 instance=ExtResource("walk_plank")]
-z_index = 0
 position = Vector2(-640, -128)
 span_width = 256.0
 
 [node name="Deck05" parent="Geometry/BridgeLandings" unique_id=897058146 instance=ExtResource("walk_balcony")]
-z_index = 0
 position = Vector2(244, 397)
 span_width = 384.0
 
 [node name="Deck06" parent="Geometry/BridgeLandings" unique_id=1144824625 instance=ExtResource("walk_plank")]
-z_index = 0
 position = Vector2(2048, -128)
 span_width = 384.0
 
 [node name="Deck07" parent="Geometry/BridgeLandings" unique_id=1569005893 instance=ExtResource("walk_plank")]
-z_index = 0
 position = Vector2(-896, 384)
 span_width = 256.0
 
 [node name="Deck08" parent="Geometry/BridgeLandings" unique_id=1455332206 instance=ExtResource("walk_veranda")]
-z_index = 0
 position = Vector2(3200, 384)
 span_width = 512.0
 
 [node name="Deck09" parent="Geometry/BridgeLandings" unique_id=1104663311 instance=ExtResource("walk_veranda")]
-z_index = 0
 position = Vector2(4096, 384)
 span_width = 768.0
 

@@ -26,6 +26,11 @@ depth filter; Cave Walls/Under Cave Mouth remain combined. Implementation and
 focused checks are complete; **awaiting daylight/dusk visible review**. Gameplay
 geometry and the latest house/walkway work are unchanged.
 
+**Latest correction: T15, bridge/bulb rock overlap.** Bridge options and bulbs
+now draw between background wood and rock faces; bulb runtime art/particles
+follow the placed object's depth. Verification passes; visible overlap review
+is pending. [Current depths and results](verification/lakeside_rock_overlap_2026_10_21.md).
+
 ## Milestone and working limits
 
 Accept one existing representative Blue room: complete its baseline route with
@@ -228,6 +233,16 @@ not authorize merging, publishing a build or protected implementation changes.
   for hash). Done when Chase accepts the wood as clearly non-solid background
   in daylight/dusk while playable rock/timber edges remain clear. Record any
   material tweaks and checkpoint before switching art direction.
+
+- [ ] **T15 - Nest bridges and bulbs into rock.** **Awaiting visible review**.
+  All four reusable walkway types and nine placed decks use absolute z=-6;
+  combined cave rocks use z=-5, behind the player and ahead of the walkways.
+  Bulbs default to z=-6; runtime art/particles follow their editor depth,
+  including nested/reparented art. Geometry and source textures are unchanged.
+  Map, **606 walkway**, **30 bulb-art**, bulb-choice traversal and **405 house**
+  checks pass. [Delivery and current depth order](verification/lakeside_rock_overlap_2026_10_21.md).
+  Commit: `fix: tuck bridges and water bulbs behind rock art`. Done when bridge
+  ends, bulb bases and pop effects sit correctly against overlapping rocks.
 
 ## Parked until the current milestone is accepted
 

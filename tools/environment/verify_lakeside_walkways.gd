@@ -5,12 +5,6 @@ const LAYOUT := [Vector3(4608, -1664, 640), Vector3(3052, -1134, 384), Vector3(4
 const BODY_POSITIONS := [Vector2(4928, -1659), Vector2(3136, -1019), Vector2(4928, -763), Vector2(-512, -123), Vector2(704, -123), Vector2(2240, -123), Vector2(-768, 389), Vector2(3456, 389), Vector2(4480, 389)]
 var checks := 0
 
-func effective_z(item: CanvasItem) -> int:
-	var value := item.z_index
-	if item.z_as_relative and item.get_parent() is CanvasItem:
-		value += effective_z(item.get_parent())
-	return value
-
 func check(value: bool, message: String) -> void:
 	checks += 1
 	if not value:
@@ -25,7 +19,7 @@ func verify() -> void:
 	for prefab: String in ["plank_crossing_2d", "railed_veranda_2d", "engawa_balcony_2d", "broken_timber_bridge_2d"]:
 		var art: Node2D = load(PREFABS + prefab + ".tscn").instantiate()
 		check(art.find_children("*", "CollisionObject2D", true, false).is_empty(), prefab + ": no duplicate colliders")
-		check(art.get_node("WalkPlane").position == Vector2.ZERO and art.z_index < 0, prefab + ": left walk anchor and rear rails")
+		check(art.get_node("WalkPlane").position == Vector2.ZERO and art.z_index == -6 and not art.z_as_relative, prefab + ": left walk anchor and rock-nestable default depth")
 		for width: float in [32.0, 128.0, 256.0, 384.0, 512.0, 640.0, 768.0, 4096.0]:
 			art.span_width = width
 			var sections: Array[Dictionary] = art.get_draw_sections()
@@ -74,7 +68,7 @@ func verify() -> void:
 		check(outline.one_way_collision and outline.one_way_collision_margin == 12 and body.collision_layer == 1 and body.collision_mask == 0, label + ": one-way physics unchanged")
 		check(deck.global_position.is_equal_approx(bounds.position) and deck.span_width == bounds.size.x and deck.scale == Vector2.ONE, label + ": visual walk plane fits existing collision")
 		check(deck.stamp != deck.Stamp.BROKEN_TIMBER, label + ": no new broken route")
-		check(effective_z(deck) == -1 and effective_z(deck) < effective_z(player), label + ": original rear art layer behind player")
+		check(effective_z(deck) > effective_z(room.get_node("Geometry/TerrainArtwork/rear_supports")) and effective_z(deck) < effective_z(room.get_node("Geometry/TerrainArtwork/rear_cave")) and effective_z(deck) < effective_z(player), label + ": bridge ends tuck behind rock but ahead of background supports")
 		# Isolate each real authored platform from overlapping terrain for this
 		# fixture. Preserve real player gravity, capsule, input and one-way solver.
 		for other: PhysicsBody2D in room.find_children("*", "PhysicsBody2D", true, false):

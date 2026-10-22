@@ -92,7 +92,7 @@ func run() -> Dictionary:
 	check(fish.position.x < 950, "Fish stays before the dry pocket")
 	fish.end_attack()
 
-	# A bulb under a low-z parent still renders above the lake.
+	# The bulb owns editor/runtime depth, independent of a low-z parent.
 	var parent := Node2D.new()
 	parent.z_index = -100
 	parent.position = Vector2(300, 1400)
@@ -105,7 +105,20 @@ func run() -> Dictionary:
 	check(art != null and art.is_visible_in_tree(), "Every bulb has visible runtime art")
 	if art:
 		check(art.sprite_frames.resource_path.contains("PetalV2"), "Runtime uses the editor's petal art")
-		check(not art.z_as_relative and art.z_index == 30, "Backdrop depth cannot bury bulb art")
+		check(not bulb.z_as_relative and bulb.z_index == -6 and not art.z_as_relative and art.z_index == bulb.z_index, "Bulb and its art share nestable depth above the backdrop")
+		bulb.z_index = -4
+		await frames(2)
+		check(art.z_index == -4, "Runtime art follows a changed editor draw layer")
+		bulb.z_as_relative = true
+		bulb.z_index = 94
+		await frames(2)
+		check(art.z_index == -6, "Relative bulb depth accounts for its nested parent")
+		bulb.z_as_relative = false
+		bulb.z_index = -6
+		art.reparent(self, true)
+		await frames(2)
+		check(art.z_index == -6, "Reparented preview art retains the bulb's depth")
+		art.reparent(bulb, true)
 		check(art.animation == &"rush" and art.is_playing(), "Ready bulb animates")
 		check(art.global_position.is_equal_approx(bulb.global_position), "Art aligns with nested bulb position")
 		bulb.size = Vector2(160, 160)
@@ -113,6 +126,8 @@ func run() -> Dictionary:
 		check(bulb.get_node("ContactReceiver/CollisionShape2D").shape.size == Vector2(160, 160), "Art does not change gameplay collision")
 		bulb.activate_from_grapple()
 		check(art.animation == &"pop", "Pop starts with gameplay activation")
+		var spray := bulb.get_node("ReleasedCurrent") as CPUParticles2D
+		check(not spray.z_as_relative and spray.z_index == art.z_index, "Release particles stay on the bulb layer behind rock")
 		await get_tree().create_timer(0.2).timeout
 		check(art.animation == &"spent" and bulb.is_broken(), "Spent art matches spent gameplay")
 		await get_tree().create_timer(0.4).timeout

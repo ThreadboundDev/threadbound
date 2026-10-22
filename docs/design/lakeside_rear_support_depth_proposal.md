@@ -2,6 +2,9 @@
 
 October 21, 2026; inspected baseline `7531cbdf`, proposal saved as `bec89e67`.
 **Chase approved this scope; implementation is complete, visible review pending.**
+Subsequent T15 overlap fix keeps wood at -7, puts bridges/bulbs at -6 and moves
+combined cave rocks to -5. [Current depths and validation](../verification/lakeside_rock_overlap_2026_10_21.md)
+supersede the initial delivery depths recorded below.
 Chase reports that background beams/pillars read as gameplay until the player
 passes through them. He clarified that Cave Walls and Under Cave Mouth may
 remain together; wood must be separate, or become separate Godot objects.

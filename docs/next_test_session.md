@@ -1,5 +1,14 @@
 # Next hands-on test session
 
+## Latest: T15 bridge and bulb overlap — about 1 minute
+
+F6 the Krita playtest. Check a bridge end and a bulb base tucked into rock: the
+rock should cover their overlap. Pop a bulb and confirm its particles respect
+the same depth. Compare **Day / dusk**. Position, collision and bulb gameplay
+are unchanged; map, walkway, bulb-state/traversal and house checks pass.
+[Current layer order and results](verification/lakeside_rock_overlap_2026_10_21.md).
+Save and commit/push manual placement changes before changing topics.
+
 ## Latest: T14 background wood depth — about 2 minutes
 
 Run `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`

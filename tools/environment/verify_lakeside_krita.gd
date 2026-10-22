@@ -26,6 +26,12 @@ func frames(count: int) -> void:
 	for i in count:
 		await physics_frame
 
+func effective_z(item: CanvasItem) -> int:
+	var value := item.z_index
+	if item.z_as_relative and item.get_parent() is CanvasItem:
+		value += effective_z(item.get_parent())
+	return value
+
 func solid_at(at: Vector2) -> bool:
 	var query := PhysicsPointQueryParameters2D.new()
 	query.position = at
@@ -87,6 +93,15 @@ func verify() -> void:
 	var artwork: Node2D = room.get_node("Geometry/TerrainArtwork")
 	var rear_wood := artwork.get_node("rear_supports") as Node2D
 	var rear_rocks := artwork.get_node("rear_cave") as Node2D
+	var bulb_count := 0
+	for item in room.find_children("*", "Node2D", true, false):
+		if item is not GreyboxBumper2D:
+			continue
+		bulb_count += 1
+		var art := item.get_node("BulbArt") as AnimatedSprite2D
+		check(not item.z_as_relative and effective_z(item) > effective_z(rear_wood) and effective_z(item) < effective_z(rear_rocks), "Placed bulb stays between rear supports and rocks, including nested bulbs")
+		check(effective_z(art) == effective_z(item) and effective_z(art) > effective_z(room.get_node("Backdrop")), "Runtime bulb follows its editor depth above the backdrop")
+	check(bulb_count == 4, "All four authored bulbs retain runtime artwork")
 	check(rear_wood.z_index < rear_rocks.z_index and rear_rocks.z_index < player.z_index, "Non-solid wood must sit behind the combined cave rocks and player")
 	check(rear_wood.get_child_count() == 15 and rear_rocks.get_child_count() == 32, "Original support layer and combined rock layer must remain independent")
 	check(rear_wood.material is ShaderMaterial and rear_rocks.material == null and artwork.material == null, "Depth material belongs only to background timber")

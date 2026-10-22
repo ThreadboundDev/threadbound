@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/walkway_stamp_2d.gd" id="1"]
 
 [node name="BrokenTimberBridge2D" type="Node2D"]
-z_index = -1
+z_index = -6
+z_as_relative = false
 texture_filter = 4
 script = ExtResource("1")
 stamp = 3

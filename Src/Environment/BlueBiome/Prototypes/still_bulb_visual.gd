@@ -9,8 +9,6 @@ func setup(target: GreyboxBumper2D) -> void:
 	centered = false
 	offset = Vector2(-196.0, -311.4667)
 	sync_to_bulb()
-	z_index = 30
-	z_as_relative = false
 	bulb.broken.connect(_on_broken)
 	bulb.regenerated.connect(_on_regenerated)
 	speed_scale = 0.4
@@ -21,8 +19,20 @@ func sync_to_bulb() -> void:
 		return
 	scale = Vector2.ONE * (bulb.size.x / 202.6667)
 	position = Vector2.ZERO if get_parent() == bulb else bulb.position
+	_sync_depth()
+
+func _sync_depth() -> void:
+	# Match the placed bulb in the editor, including nested/reparented artwork.
+	var item: CanvasItem = bulb
+	var depth := item.z_index
+	while item.z_as_relative and item.get_parent() is CanvasItem:
+		item = item.get_parent() as CanvasItem
+		depth += item.z_index
+	z_as_relative = false
+	z_index = depth
 
 func _on_broken() -> void:
+	_sync_depth()
 	elapsed = 0.0
 	speed_scale = 4.0
 	play(&"pop")
@@ -33,7 +43,7 @@ func _emit_release() -> void:
 	spray.name = "ReleasedCurrent"
 	get_parent().add_child(spray)
 	spray.global_position = global_position
-	spray.z_index = z_index + 1
+	spray.z_index = z_index
 	spray.z_as_relative = false
 	spray.amount = 32
 	spray.lifetime = 0.32
@@ -72,6 +82,8 @@ func _on_regenerated() -> void:
 	play(&"rush")
 
 func _process(delta: float) -> void:
+	if is_instance_valid(bulb):
+		_sync_depth()
 	if elapsed < 0.0 or not is_instance_valid(bulb):
 		return
 	elapsed += delta

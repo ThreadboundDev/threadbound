@@ -17,9 +17,11 @@ repeated/clipped middle, with equal horizontal/vertical pixel scale. Spans too
 short to fit both caps shrink all details uniformly. Cuts meet along horizontal
 deck/rail beams; inspect joins at normal camera zoom after changing a length.
 The source walk lines are B04 y=126, J03 y=248 and A04 y=445, chosen along the
-front portion of the perspective deck top. Rails sit behind actors. Prefab roots
-default to z=-1; room instances use z=0 under the existing z=-1 landing group,
-preserving the old artwork's effective depth.
+front portion of the perspective deck top. Rails sit behind actors. All four
+prefab roots default to absolute z=-6, behind the combined cave rocks (z=-5)
+and main terrain (z=5), but ahead of rear wood supports (z=-7). Parent depth
+does not pull a newly placed walkway in front of its rock landing. The room's
+old z=0 instance overrides were removed so this default applies consistently.
 
 The broken pair always fits the **whole original image uniformly**, including
 its transparent gap; it never tiles a solid middle. It is available in the

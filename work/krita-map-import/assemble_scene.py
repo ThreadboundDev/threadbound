@@ -23,7 +23,7 @@ art=['[gd_scene format=3]','']
 for i,c in enumerate(manifest['chunks']):art.append(f'[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/{c["path"]}" id="{i+1}"]')
 art.append('[ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/rear_support_depth.tres" id="support_depth"]')
 art+=['','[node name="TerrainArtwork" type="Node2D"]','editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."']
-zs={'rear_supports':-7,'rear_cave':-6,'terrain':5,'bridges':6,'breakables':7,'foreground':9}
+zs={'rear_supports':-7,'rear_cave':-5,'terrain':5,'bridges':6,'breakables':7,'foreground':9}
 for g in manifest['groups']:
     name=g['name'];art += [f'\n[node name="{name}" type="Node2D" parent="."]',f'z_index = {zs[name]}']
     if name == 'rear_supports':
