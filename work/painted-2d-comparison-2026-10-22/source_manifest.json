@@ -1,0 +1,217 @@
+{
+	"bellstriker": {
+		"bounds": [
+			-190.31999206543,
+			-187.579986572266,
+			384.539978027344,
+			182.519989013672
+		],
+		"bounds_space": "visual_model_local",
+		"path": "Bellstriker",
+		"sprite_path": "Visuals/BellstrikerModel/@Sprite2D@39",
+		"used_pixels": [
+			116,
+			249,
+			493,
+			234
+		]
+	},
+	"boat_slip": {
+		"bounds": [
+			-517.1201171875,
+			-972.921020507813,
+			1034.240234375,
+			972.921020507813
+		],
+		"path": "Buildings/BoatSlip",
+		"position": [
+			2816.0,
+			477.440002441406
+		]
+	},
+	"boatwright": {
+		"bounds": [
+			-73.380859375,
+			-178.206176757813,
+			158.94140625,
+			177.515014648438
+		],
+		"path": "Residents/Boatwright",
+		"position": [
+			4038.0,
+			-1141.35998535156
+		]
+	},
+	"cave_lantern": {
+		"bounds": [
+			-19.199951171875,
+			-42.8800048828125,
+			38.39990234375,
+			69.4400024414063
+		],
+		"path": "Lighting/CaveLantern",
+		"position": [
+			-1080.0,
+			-650.0
+		]
+	},
+	"eave_runner": {
+		"bounds": [
+			-40.6124992370605,
+			-169.912506103516,
+			75.7624969482422,
+			168.149993896484
+		],
+		"bounds_space": "visual_model_local",
+		"path": "EaveRunner",
+		"sprite_path": "Visuals/Model/GuardianImage",
+		"used_pixels": [
+			597,
+			477,
+			319,
+			708
+		]
+	},
+	"fisher_house": {
+		"bounds": [
+			-372.47998046875,
+			-835.320983886719,
+			744.9599609375,
+			835.320983886719
+		],
+		"path": "Buildings/FisherHouse",
+		"position": [
+			-32.0,
+			408.0
+		]
+	},
+	"fisher_lantern": {
+		"bounds": [
+			-19.2000122070313,
+			-42.8800048828125,
+			38.4000091552734,
+			69.4400024414063
+		],
+		"path": "Lighting/FisherLantern",
+		"position": [
+			-240.0,
+			-96.0
+		]
+	},
+	"loom_heron": {
+		"bounds": [
+			-150.9375,
+			-183.024993896484,
+			243.225006103516,
+			177.387481689453
+		],
+		"bounds_space": "visual_model_local",
+		"path": "LoomHeron",
+		"sprite_path": "Visuals/Model/GuardianImage",
+		"used_pixels": [
+			243,
+			482,
+			846,
+			617
+		]
+	},
+	"net_mender": {
+		"bounds": [
+			-50.3440437316895,
+			-169.220520019531,
+			112.941558837891,
+			169.220520019531
+		],
+		"path": "Residents/NetMender",
+		"position": [
+			111.0,
+			326.720001220703
+		]
+	},
+	"reedhook": {
+		"bounds": [
+			-32.5300025939941,
+			-152.830001831055,
+			140.0,
+			152.880004882813
+		],
+		"bounds_space": "visual_model_local",
+		"path": "Reedhook",
+		"sprite_path": "Visuals/Model/ReedhookImage",
+		"used_pixels": [
+			163,
+			82,
+			250,
+			273
+		]
+	},
+	"slip_lantern": {
+		"bounds": [
+			-19.199951171875,
+			-42.8800048828125,
+			38.39990234375,
+			69.4400177001953
+		],
+		"path": "Lighting/SlipLantern",
+		"position": [
+			2460.0,
+			-242.0
+		]
+	},
+	"tide_duelist": {
+		"bounds": [
+			-128.400009155273,
+			-51.6000022888184,
+			249.000015258789,
+			73.2000045776367
+		],
+		"bounds_space": "visual_model_local",
+		"path": "TideDuelist",
+		"sprite_path": "Visuals/Fish/FishImage",
+		"used_pixels": [
+			42,
+			74,
+			415,
+			122
+		]
+	},
+	"tower": {
+		"bounds": [
+			-600.0,
+			-4100.0,
+			1200.0,
+			4100.0
+		],
+		"path": "Buildings/Tower",
+		"position": [
+			1472.0,
+			1920.0
+		]
+	},
+	"workshop": {
+		"bounds": [
+			-500.47998046875,
+			-636.921020507813,
+			1000.9599609375,
+			636.921020507813
+		],
+		"path": "Buildings/Workshop",
+		"position": [
+			3816.0,
+			-1078.0
+		]
+	},
+	"workshop_lantern": {
+		"bounds": [
+			-19.199951171875,
+			-42.8800048828125,
+			38.39990234375,
+			69.4400634765625
+		],
+		"path": "Lighting/WorkshopLantern",
+		"position": [
+			3499.0,
+			-1428.0
+		]
+	}
+}

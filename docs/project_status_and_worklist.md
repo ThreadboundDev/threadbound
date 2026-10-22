@@ -55,6 +55,14 @@ and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
 
+**Current authorized task: T18, painted 2D comparison.** Chase requested a
+same-scale comparison of the current 3D buildings, enemies and other actors/props,
+plus newly painted bulbs, retaining the player. Work proceeds in a separate
+comparison scene/branch with the existing models available for an in-game switch.
+This is a review experiment, not permanent art-direction acceptance. T17 remains
+awaiting Chase's playtest and new Krita background.
+[Scope, source measurements and delivery](art/lakeside_painted_2d_comparison.md).
+
 Accept one existing representative Blue room: complete its baseline route with
 the existing kit, use an optional expressive route, recover from a missed action,
 read enemy tells/contact, restart reliably and observe frame time at normal
