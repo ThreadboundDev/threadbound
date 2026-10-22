@@ -1,5 +1,30 @@
 # Next hands-on test session
 
+## Latest: T17 water and rock contact — about 3 minutes
+
+October 22 implementation `fc40a9b2` is committed and pushed. F6
+`blue_lakeside_krita_playtest.tscn`, then:
+
+1. Use **Shore**. Check the water/reflection join: the detached cyan strip should
+   be gone. Bridge ends and bulb bases should still tuck behind rock.
+2. Use **Cave**. Walk, stop and jump on small rock lips. A few pixels of boot
+   should disappear behind the painted contact edge while the player remains
+   visible in front of the broad cave wall. Check both directions/wide stances.
+3. Swim beside the tower. Check player/enemy contrast, reflection fade and the
+   transition into a dry pocket. A closed exterior should stay underwater in
+   appearance; its cutaway should read dry. Compare **Day / dusk**.
+4. Enter/exit **Fisher house** and **Workshop** with Interact. Check feet/floors,
+   facade restoration and no outdoor rock masking indoor feet. Press **F2** and
+   repeat the shore/cave check after reset.
+
+Forward+ fixture: 92 checks pass; surface 14, house 405, walkway 606 and
+encounter/reset 19 checks pass, plus existing authoring/readability fixtures.
+Appearance at normal movement speed and frame time still need hands-on review.
+[Delivery and captured views](verification/lakeside_water_delivery_2026_10_22.md).
+The new Krita background is pending; use the existing 6912×5888 registration,
+origin (-1408,-2560), with waterline at artwork row 2971. **Save and checkpoint
+manual Godot/Krita edits before switching tasks.**
+
 ## Latest: T16 installed Eave Runner v4 — about 2 minutes
 
 October 22: Chase approved installing the cleanup, accepting it for now while

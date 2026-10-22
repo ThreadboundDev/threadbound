@@ -38,22 +38,20 @@ guardian and authored lakeside/reset checks pass. Further polish and hands-on
 gameplay-scale review remain open; do not describe this as final concept parity.
 [Delivery, approval and validation](art/eave_runner_cleanup_v4.md).
 
-**Current task: T17, approved water/readability corrections.** Chase approved
-implementation on October 22. Manual level edits are saved as `4130555b`.
-The shared y=411 surface and real opacity/color controls pass the focused
-14-check fixture and existing authoring checks. Contact rims and exterior/dry
-interior compositing follow as separate checkpoints.
-[Current implementation results](verification/lakeside_water_delivery_2026_10_22.md).
-The original review diagnoses the
-detached surface strip, rock/player overlap, exterior dry-pocket masking,
-hard-coded opacity and inconsistent pocket presentation. Source audit, real
-Forward+ diagnostic images and existing water checks are saved in the
-[October 22 water review](design/lakeside_water_review_2026_10_22.md).
-The flat-surface and whole-rock-front images are temporary diagnostic previews,
-not installed changes. Recommended sequence: align the shared surface, add
-front contact rims while retaining collision inset, correct exterior/interior
-compositing, then integrate Chase's separate Krita underwater background.
-Implementation and required scene/art approvals remain separate from this review.
+**Latest implementation: T17, approved water/readability corrections delivered.**
+Manual level edits are saved as `4130555b`; the shared surface/real controls as
+`4ad653bc`, rock contact rims as `5428b96e`, and exterior/dry-interior compositing
+as `fc40a9b2`, all pushed on `threadbound/fix-water-readability`. The waterline is
+now y=411. Reflections sit behind actors, light immersion tint stays below front
+contact art, and submerged facades no longer inherit the interior's dry mask.
+All three pocket cues are consistent and quieter. Rock collision is unchanged.
+Final Forward+ fixture: 92 checks pass; surface 14, house entry 405, walkways 606,
+encounter/reset 19 and existing authoring/readability checks pass.
+[Delivery and captured views](verification/lakeside_water_delivery_2026_10_22.md).
+**Awaiting hands-on appearance acceptance and Chase's separate Krita background**;
+T17 remains open. The original [water review](design/lakeside_water_review_2026_10_22.md)
+and its temporary previews are historical diagnostics. Use the current delivery
+and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
 
@@ -291,21 +289,18 @@ not authorize merging, publishing a build or protected implementation changes.
   follow-up Chase chooses. Do not extend this task into another speculative art
   pass; checkpoint the approved installation before changing topics.
 
-- [ ] **T17 - Water presentation and terrain contact.** **Review ready; correction
-  decisions pending.** Reviewed baseline `14710d84`, October 22. The water
-  polygon's upper edge is y=391..411 while its backdrop/mirror plane is y=391,
-  producing a 15–20px detached band at most landmarks. A temporary flat y=411
-  preview removes it. Rear cave/contact art at z=-5 cannot hide feet at z=0;
-  moving all rear art in front hides the whole player, so use separate contact
-  rims and preserve collision positions. The tower's dry mask also clears its
-  exterior facade; distinguish wet exterior from dry cutaway. See the linked
-  review for actual layer values, honest opacity controls, all three pockets,
-  Krita registration, validation and commit order. Existing authoring/readability
-  checks pass but do not cover these visual defects. Review checkpoint:
-  `docs: review lakeside water and contact readability` on
-  `threadbound/docs-water-readability-review`. No correction is installed by the
-  review. Next: agree on the first bounded correction before another art pass;
-  obtain the exact file-scoped approval for scene/art restructuring when needed.
+- [ ] **T17 - Water presentation and terrain contact.** **Approved implementation
+  delivered; visible acceptance/background pending.** October 22: surface and
+  opacity controls `4ad653bc`, front rock contact `5428b96e`, wet exterior/dry
+  cutaway and consistent pockets `fc40a9b2`. All pushed. Manual placement edits
+  are preserved in `4130555b`; rock collision and original painted pixels remain
+  unchanged. Final 92-check Forward+ fixture and 14 surface / 405 house / 606
+  walkway / 19 encounter-reset checks pass, plus authoring/readability fixtures.
+  See the [delivery](verification/lakeside_water_delivery_2026_10_22.md) for draw
+  order, eight rendered views and remaining T04 diagnostics. Next: the short
+  [hands-on card](next_test_session.md), then integrate Chase's new Krita
+  underwater-distance export as a separate asset checkpoint when supplied.
+  Do not mark complete before that acceptance/integration is recorded.
 
 ## Parked until the current milestone is accepted
 

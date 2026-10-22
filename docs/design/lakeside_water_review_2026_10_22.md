@@ -1,5 +1,10 @@
 # Lakeside water review — October 22, 2026
 
+**Historical review.** Chase subsequently approved implementation. Surface,
+contact rims and exterior/interior corrections are delivered through `fc40a9b2`.
+Use the [delivery report](../verification/lakeside_water_delivery_2026_10_22.md)
+for installed behavior, final captures and remaining acceptance/background work.
+
 Reviewed game revision `14710d84`. Scope: active Krita lakeside room, polygon
 water/reflections, underwater backdrop, building compositing, dry pockets and
 rock/player contact. The older rectangular reflective water path was inspected
