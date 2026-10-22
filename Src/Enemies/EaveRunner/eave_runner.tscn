@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Src/Enemies/EaveRunner/eave_runner.gd" id="2"]
 [ext_resource type="Resource" path="res://Src/Enemies/EaveRunner/eave_runner_stats.tres" id="3"]
 [ext_resource type="Script" path="res://Src/Enemies/WovenGuardians/woven_guardian_visual.gd" id="4"]
-[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v2.glb" id="5"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v4.glb" id="5"]
 [sub_resource type="CapsuleShape2D" id="Body"]
 radius = 20.0
 height = 148.0

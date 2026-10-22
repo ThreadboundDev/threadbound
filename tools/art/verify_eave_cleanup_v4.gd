@@ -1,7 +1,8 @@
 extends SceneTree
-## Isolated candidate import only. Never loads or replaces the gameplay prefab.
-## Copy this script into the sandbox with EaveRunner_v4.glb and expected.json.
+## Default: isolated candidate import. --runtime checks approved active resources.
+## Optional --render-preview saves real GPU views; headless checks never claim pixels.
 const MODEL := "res://EaveRunner_v4.glb"
+const LIVE_MODEL := "res://Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v4.glb"
 const CLIPS := {
 	"idle": 2.4, "run": 0.8, "wall_attach": 10.0 / 30.0,
 	"wall_perch": 1.6, "wall_windup": 14.0 / 30.0, "wall_launch": 0.3,
@@ -12,8 +13,21 @@ const CLIPS := {
 var checks := 0
 var failures: Array[String] = []
 var actor: Node3D
+var arena: Node2D
+var runtime := false
 
 func _initialize() -> void:
+	runtime = "--runtime" in OS.get_cmdline_user_args()
+	if runtime:
+		for folder in ["res://Assets/BlueBiome/Characters/SharedTexturesV2", "res://Assets/BlueBiome/Enemies/EaveRunner/Models", "res://Assets/BlueBiome/Enemies/EaveRunner/Textures"]:
+			for file in DirAccess.get_files_at(folder):
+				if not file.ends_with(".import"):
+					continue
+				var config := ConfigFile.new()
+				if config.load(folder.path_join(file)) == OK:
+					var uid := ResourceUID.text_to_id(config.get_value("remap", "uid", ""))
+					if uid != -1 and not ResourceUID.has_id(uid):
+						ResourceUID.add_id(uid, folder.path_join(file.trim_suffix(".import")))
 	call_deferred("verify")
 
 func check(condition: bool, message: String) -> void:
@@ -26,13 +40,14 @@ func finite_transform(value: Transform3D) -> bool:
 	return value.origin.is_finite() and value.basis.x.is_finite() and value.basis.y.is_finite() and value.basis.z.is_finite()
 
 func verify() -> void:
-	var expected: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://expected.json"))
+	var expected_path := "res://work/eave-runner-v4/build_report.json" if runtime else "res://expected.json"
+	var expected: Variant = JSON.parse_string(FileAccess.get_file_as_string(expected_path))
 	check(expected is Dictionary and int(expected.get("triangles", 0)) > 0, "Expected source triangle count supplied")
 	if not expected is Dictionary:
 		await finish({})
 		return
-	var packed := load(MODEL) as PackedScene
-	check(packed != null, "Candidate GLB loads in the isolated sandbox")
+	var packed := load(LIVE_MODEL if runtime else MODEL) as PackedScene
+	check(packed != null, "Approved model GLB loads")
 	if packed == null:
 		await finish({})
 		return
@@ -157,12 +172,98 @@ func verify() -> void:
 		check(maximum_motion > 0.001, name + ": imported bones actually animate")
 		check(root_drift < 0.001 and attached, name + ": in-place root and wrist attachment retained")
 		clips.append({"name": name, "seconds": animation.length, "maximum_bone_motion": maximum_motion, "rig_span": maximum_span, "root_drift": root_drift})
+	if runtime:
+		await verify_live()
 	await finish({"triangles": triangles, "vertices": vertices, "surfaces": surfaces, "meshes": meshes.size(), "bones": skeleton.get_bone_count(), "clips": clips})
 
+func verify_live() -> void:
+	arena = Node2D.new()
+	root.add_child(arena)
+	current_scene = arena
+	var eave = load("res://Src/Enemies/EaveRunner/eave_runner.tscn").instantiate()
+	eave.process_mode = Node.PROCESS_MODE_DISABLED
+	arena.add_child(eave)
+	await process_frame
+	var visual = eave.get_node("Visuals/Model")
+	check(visual.model_scene.resource_path == LIVE_MODEL, "Gameplay prefab uses approved v4")
+	check(visual.actor != null and visual.animator != null and visual._skeleton != null, "Real gameplay wrapper initializes model, animator and skeleton")
+	if visual.actor == null or visual.animator == null or visual._skeleton == null:
+		return
+	check(visual._view.size == Vector2i(1536, 1536) and visual._view.msaa_3d == Viewport.MSAA_4X, "Existing render target and MSAA retained")
+	check(is_equal_approx(visual.camera_span, 3.8) and is_equal_approx(visual.camera_height, 1.05) and is_equal_approx(visual.model_yaw, 72.0), "Gameplay camera framing retained")
+	check(is_equal_approx(visual.image.scale.x * 1536, 3.8 * 96), "Existing 96 pixels/metre scale retained")
+	check(visual.actor.find_children("*", "CollisionObject3D", true, false).is_empty(), "Imported art adds no gameplay physics")
+	var body := eave.get_node("CollisionShape2D") as CollisionShape2D
+	var hurt := eave.get_node("Hurtbox/CollisionShape2D") as CollisionShape2D
+	check(body.shape is CapsuleShape2D and body.position == Vector2(0, -74) and is_equal_approx(body.shape.radius, 20) and is_equal_approx(body.shape.height, 148), "Body capsule remains unchanged")
+	check(hurt.shape == body.shape and hurt.position == body.position, "Hurtbox retains body alignment")
+	var blade := eave.get_node("AttackHitbox/CollisionShape2D") as CollisionShape2D
+	check(blade.shape is RectangleShape2D and blade.shape.size == Vector2(100, 92), "Existing attack rectangle retained")
+	var sidecar := ConfigFile.new()
+	check(sidecar.load(LIVE_MODEL + ".import") == OK and not sidecar.get_value("params", "meshes/generate_lods", true) and sidecar.get_value("params", "meshes/force_disable_compression", false), "Import preserves full geometry and precision")
+	for clip: String in CLIPS:
+		check(visual.animator.has_animation(clip), clip + ": gameplay wrapper resolves action")
+		if visual.animator.has_animation(clip):
+			var animation: Animation = visual.animator.get_animation(clip)
+			check(animation.loop_mode == (Animation.LOOP_LINEAR if clip in ["idle", "run", "wall_perch"] else Animation.LOOP_NONE), clip + ": gameplay loop mode retained")
+	var materials := 0
+	var glb_file := FileAccess.open(LIVE_MODEL, FileAccess.READ)
+	glb_file.seek(12)
+	var json_bytes := glb_file.get_32()
+	glb_file.get_32()
+	var glb: Dictionary = JSON.parse_string(glb_file.get_buffer(json_bytes).get_string_from_utf8())
+	var expected_materials := {}
+	for entry: Dictionary in glb["materials"]:
+		expected_materials[entry["name"]] = entry
+	for node: MeshInstance3D in visual.actor.find_children("*", "MeshInstance3D", true, false):
+		for index in node.mesh.get_surface_count():
+			var material := node.get_active_material(index) as StandardMaterial3D
+			check(material != null, node.name + ": active material resolves")
+			if material:
+				materials += 1
+				# Bronze, blade, crack and glow surfaces intentionally use solid
+				# materials. Require maps only where the approved GLB declares them.
+				var expected: Dictionary = expected_materials.get(material.resource_name, {})
+				check(not expected.is_empty(), material.resource_name + ": material identity retained")
+				var color_map: bool = expected.get("pbrMetallicRoughness", {}).has("baseColorTexture")
+				var normal_map: bool = expected.has("normalTexture")
+				check((material.albedo_texture != null) == color_map, material.resource_name + ": color-map contract retained")
+				check(material.normal_enabled == normal_map and (material.normal_texture != null) == normal_map, material.resource_name + ": normal-map contract retained")
+				if normal_map:
+					check(is_equal_approx(material.normal_scale, float(expected["normalTexture"].get("scale", 1.0))), material.resource_name + ": approved normal-map strength retained")
+				check(material.texture_filter == BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC and material.cull_mode == BaseMaterial3D.CULL_DISABLED, material.resource_name + ": wrapper filtering and cloth visibility retained")
+	check(materials == 19, "All nineteen imported material surfaces resolve in gameplay")
+	var art = load("res://Src/Enemies/EaveRunner/eave_runner_model_3d.tscn").instantiate()
+	art.process_mode = Node.PROCESS_MODE_DISABLED
+	root.add_child(art)
+	check(art.get_node("Character").scene_file_path == LIVE_MODEL and art.animator != null, "Art-only scene also uses v4 and initializes its animator")
+	art.queue_free()
+	if "--render-preview" in OS.get_cmdline_user_args():
+		check(DisplayServer.get_name() != "headless", "GPU preview requested with a real rendering device")
+		if DisplayServer.get_name() != "headless":
+			var folder := "res://work/eave-runner-v4/runtime_renders"
+			DirAccess.make_dir_recursive_absolute(folder)
+			for clip: String in ["idle", "jump_slash"]:
+				visual.animator.play(clip)
+				visual.animator.pause()
+				visual.animator.seek(0.0 if clip == "idle" else 0.3, true)
+				for frame in 3:
+					await process_frame
+				await RenderingServer.frame_post_draw
+				var image: Image = visual._view.get_texture().get_image()
+				check(image != null and not image.is_empty(), clip + ": GPU viewport produces pixels")
+				if image != null and not image.is_empty():
+					check(image.save_png(folder.path_join(clip + ".png")) == OK, clip + ": saved real gameplay-wrapper render")
+
 func finish(asset: Dictionary) -> void:
-	var result := {"passed": failures.is_empty(), "checks": checks, "failures": failures, "display": DisplayServer.get_name(), "asset": asset, "scope": "Isolated imported candidate geometry and actions only; no active replacement or visual acceptance."}
+	var result := {"passed": failures.is_empty(), "checks": checks, "failures": failures, "display": DisplayServer.get_name(), "asset": asset, "scope": "Active v4 references, gameplay wrapper and imported rig data." if runtime else "Isolated imported candidate geometry and actions only; no active replacement or visual acceptance."}
 	print("EAVE_V4_GODOT_CHECK " + JSON.stringify(result))
+	if arena != null:
+		arena.queue_free()
 	if actor != null:
 		actor.queue_free()
-	await process_frame
-	quit(0 if failures.is_empty() else 1)
+	for frame in 3:
+		await process_frame
+	# Let the calling verifier unwind its PackedScene/material references before
+	# engine teardown; GPU resources must outlive their final scripted references.
+	call_deferred("quit", 0 if failures.is_empty() else 1)

@@ -1,0 +1,313 @@
+{
+  "approved_on": "2026-10-22",
+  "candidate_commit": "4f8c79dd",
+  "model": "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v4.glb",
+  "candidate_sha256": "eeee2e33aa8b26588a311e9d1d3952a85fe5a01bd5f9050d2a0fe6f92beaf90d",
+  "runtime_sha256": "bd43007933be7db6e73fc0a5808726d9d2c45408e0e271089bae2793e998210a",
+  "bytes": 13704428,
+  "triangles": 372508,
+  "textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Roughness_4K_1d5c83efcd.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_Roughness_4K_cff3089430.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_BaseColor_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Roughness_4K_37ad58ea20.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_BaseColor_4K_c1fdcb3158.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_NormalGL_4K_fdd992393d.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_Roughness_4K_f26709e30e.png"
+  ],
+  "normal_textures": [
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_NormalGL_4K_fdd992393d.png"
+  ],
+  "texture_hashes": {
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_BaseColor_4K.png": "7fb6a095025e7593d44c63e4b7416314c908e4bfaeaf0a60c9555c1df7e3dc21",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Normal_4K.png": "50f539d3acb632133f34bafe5542fc6a64bfe858d986b5890272afec6b516c2a",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/AgedCeramic_Roughness_4K_1d5c83efcd.png": "1d5c83efcdc62b3de072fbcc23cba2f4cc8e0765c52644983f7918dd8cfbcf6e",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_BaseColor_4K.png": "7e3acbd754b0c3c8a2361fe25c164adea516a54ca71d23cf692c42d2bb7e8310",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/FlaxWeave_Normal_4K.png": "37dfb7d9bf4c21d35fd269e90f300cda9c540f2dd4d7f2bbf3fc49ee9d7c2d3c",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_BaseColor_4K.png": "dec8ebd25d4890c23b29ea9057b6e89d56de896613be23dd0f5ed4b475a27987",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/IndigoWeave_Roughness_4K_cff3089430.png": "cff308943057a036511ce0b751529107b8505c5efdf99fe17cdd024b4291fa41",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_BaseColor_4K.png": "b645b793d1362c0bf98620d63a6e13d80c5b238b75d2a4f01e1dd186eebc6540",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Normal_4K.png": "a125f483d524b487a881749a40c9dc405865c3a09583c51a780bfa76aa4e47d9",
+    "Assets/BlueBiome/Characters/SharedTexturesV2/WovenCord_Roughness_4K_37ad58ea20.png": "37ad58ea20f1a92c4658ba20936552bd8090fbb705300c5e2546cad52ede7baa",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_BaseColor_4K_c1fdcb3158.png": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_NormalGL_4K_fdd992393d.png": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680",
+    "Assets/BlueBiome/Enemies/EaveRunner/Textures/walnut_Roughness_4K_f26709e30e.png": "f26709e30e72a0f98f17b6582d075a89c35bc67d402b561d3f0ed019b1b1addc"
+  },
+  "geometry_animation_buffers_verified": 1995,
+  "material_parameters_unchanged": true,
+  "new_texture_files": 0,
+  "status": "installed; accepted for now with rough art polish deferred",
+  "generated_utc": "2026-10-22T12:10:12.328050+00:00",
+  "engine": "Godot 4.7.2 stable mono",
+  "runtime_art_headless": {
+    "asset": {
+      "bones": 60,
+      "clips": [
+        {
+          "maximum_bone_motion": 0.0336490087211132,
+          "name": "idle",
+          "rig_span": 1.6151956319809,
+          "root_drift": 0.0,
+          "seconds": 2.40000009536743
+        },
+        {
+          "maximum_bone_motion": 0.533366501331329,
+          "name": "run",
+          "rig_span": 1.56811082363129,
+          "root_drift": 0.0,
+          "seconds": 0.800000011920929
+        },
+        {
+          "maximum_bone_motion": 0.739785492420197,
+          "name": "wall_attach",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.333333343267441
+        },
+        {
+          "maximum_bone_motion": 0.0221027713268995,
+          "name": "wall_perch",
+          "rig_span": 1.56692099571228,
+          "root_drift": 0.0,
+          "seconds": 1.60000002384186
+        },
+        {
+          "maximum_bone_motion": 0.186221957206726,
+          "name": "wall_windup",
+          "rig_span": 1.58999955654144,
+          "root_drift": 0.0,
+          "seconds": 0.466666668653488
+        },
+        {
+          "maximum_bone_motion": 0.73006808757782,
+          "name": "wall_launch",
+          "rig_span": 1.7459397315979,
+          "root_drift": 0.0,
+          "seconds": 0.300000011920929
+        },
+        {
+          "maximum_bone_motion": 0.979748845100403,
+          "name": "jump_slash",
+          "rig_span": 1.74639403820038,
+          "root_drift": 0.0,
+          "seconds": 0.666666686534882
+        },
+        {
+          "maximum_bone_motion": 0.362972766160965,
+          "name": "land_recover",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.600000023841858
+        },
+        {
+          "maximum_bone_motion": 0.926618158817291,
+          "name": "throw_windup",
+          "rig_span": 1.6855376958847,
+          "root_drift": 0.0,
+          "seconds": 0.466666668653488
+        },
+        {
+          "maximum_bone_motion": 0.928613841533661,
+          "name": "throw_release",
+          "rig_span": 1.70515275001526,
+          "root_drift": 0.0,
+          "seconds": 0.333333343267441
+        },
+        {
+          "maximum_bone_motion": 0.168667048215866,
+          "name": "hurt",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.400000005960464
+        },
+        {
+          "maximum_bone_motion": 0.649868369102478,
+          "name": "death",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 1.20000004768372
+        }
+      ],
+      "meshes": 18,
+      "surfaces": 19,
+      "triangles": 372508,
+      "vertices": 208438
+    },
+    "checks": 271,
+    "display": "headless",
+    "failures": [],
+    "passed": true,
+    "scope": "Active v4 references, gameplay wrapper and imported rig data."
+  },
+  "runtime_art_forward_plus": {
+    "asset": {
+      "bones": 60,
+      "clips": [
+        {
+          "maximum_bone_motion": 0.0336490087211132,
+          "name": "idle",
+          "rig_span": 1.6151956319809,
+          "root_drift": 0.0,
+          "seconds": 2.40000009536743
+        },
+        {
+          "maximum_bone_motion": 0.533366501331329,
+          "name": "run",
+          "rig_span": 1.56811082363129,
+          "root_drift": 0.0,
+          "seconds": 0.800000011920929
+        },
+        {
+          "maximum_bone_motion": 0.739785492420197,
+          "name": "wall_attach",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.333333343267441
+        },
+        {
+          "maximum_bone_motion": 0.0221027713268995,
+          "name": "wall_perch",
+          "rig_span": 1.56692099571228,
+          "root_drift": 0.0,
+          "seconds": 1.60000002384186
+        },
+        {
+          "maximum_bone_motion": 0.186221957206726,
+          "name": "wall_windup",
+          "rig_span": 1.58999955654144,
+          "root_drift": 0.0,
+          "seconds": 0.466666668653488
+        },
+        {
+          "maximum_bone_motion": 0.73006808757782,
+          "name": "wall_launch",
+          "rig_span": 1.7459397315979,
+          "root_drift": 0.0,
+          "seconds": 0.300000011920929
+        },
+        {
+          "maximum_bone_motion": 0.979748845100403,
+          "name": "jump_slash",
+          "rig_span": 1.74639403820038,
+          "root_drift": 0.0,
+          "seconds": 0.666666686534882
+        },
+        {
+          "maximum_bone_motion": 0.362972766160965,
+          "name": "land_recover",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.600000023841858
+        },
+        {
+          "maximum_bone_motion": 0.926618158817291,
+          "name": "throw_windup",
+          "rig_span": 1.6855376958847,
+          "root_drift": 0.0,
+          "seconds": 0.466666668653488
+        },
+        {
+          "maximum_bone_motion": 0.928613841533661,
+          "name": "throw_release",
+          "rig_span": 1.70515275001526,
+          "root_drift": 0.0,
+          "seconds": 0.333333343267441
+        },
+        {
+          "maximum_bone_motion": 0.168667048215866,
+          "name": "hurt",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 0.400000005960464
+        },
+        {
+          "maximum_bone_motion": 0.649868369102478,
+          "name": "death",
+          "rig_span": 1.60999989509583,
+          "root_drift": 0.0,
+          "seconds": 1.20000004768372
+        }
+      ],
+      "meshes": 18,
+      "surfaces": 19,
+      "triangles": 372508,
+      "vertices": 208438
+    },
+    "checks": 276,
+    "display": "Windows",
+    "failures": [],
+    "passed": true,
+    "scope": "Active v4 references, gameplay wrapper and imported rig data."
+  },
+  "encounter_suites": {
+    "guardians": {
+      "checks": 134,
+      "passed": true,
+      "marker": "WOVEN_GUARDIANS_CHECKS 134 failures=[]"
+    },
+    "lakeside": {
+      "checks": 19,
+      "passed": true,
+      "marker": "WOVEN_LAKESIDE_CHECKS 19 captures=0 failures=[]"
+    }
+  },
+  "render_device": "AMD Radeon RX 6800 XT / Vulkan 1.4.315 / Forward+",
+  "runtime_renders": {
+    "work/eave-runner-v4/runtime_renders/idle.png": {
+      "sha256": "bbcc79e21498fa5491eec23ba01b078ffd46fe8b3a1907cf62a7b138c32529f6",
+      "size": [
+        1536,
+        1536
+      ],
+      "alpha_content_bounds": [
+        617,
+        449,
+        871,
+        1184
+      ]
+    },
+    "work/eave-runner-v4/runtime_renders/jump_slash.png": {
+      "sha256": "68ae17d4cd90356bc04f4fd89b67f5b05547a4f2087da2b23db607940d6707d8",
+      "size": [
+        1536,
+        1536
+      ],
+      "alpha_content_bounds": [
+        577,
+        408,
+        931,
+        1080
+      ]
+    }
+  },
+  "preserved_inputs": {
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v2.blend": "30294e19ad3b6b38e8c1bbc237cde8b0264515777b99ca7225c63f5f03458e56",
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v3.blend": "d14160960350191905ea0a9bfb9251bec6a424953760894e55364559948fcef7",
+    "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v2.glb": "aa061a2bc0772d75b80da10484c6d707646e81a81ad90f7d8e9e18fa26c7e134",
+    "Assets/BlueBiome/Enemies/EaveRunner/Models/EaveRunner_v3.glb": "eeb97b7b2b55d0d5a6c4be00bf8e2d5ee906c6f7a915da994cc03efc3ed5fe05",
+    "Src/Enemies/EaveRunner/eave_runner.gd": "92cc0c1ebbb4e97f21feb0e27b6b60a82b19e1bf5f6485d18191dee2d9febc17",
+    "Src/Enemies/EaveRunner/eave_runner_stats.tres": "52af6563131aedebf99761bdfb97447e7e83c9829d261aae8f74700a572d5053",
+    "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v4.blend": "0dc6e95b16fd6770912204945458965d5454c5e04705770b26666c99ddb0208c",
+    "work/eave-runner-v4/EaveRunner_v4.glb": "eeee2e33aa8b26588a311e9d1d3952a85fe5a01bd5f9050d2a0fe6f92beaf90d"
+  },
+  "only_scene_changes": "Two model resource paths: v2 -> v4; unchanged camera, collision, controller and stats.",
+  "tools": {
+    "tools/art/install_eave_cleanup_v4.py": "53e9c7f4c4ae8be4fd28b2f64fe82b6ee083bd130a1241ffcaf92d948d6d062a",
+    "tools/art/verify_eave_cleanup_v4.gd": "7b3bc0cd4f0397d7bdff59684713567651ff5a2fe881fa01918ba140a24d0cc1"
+  },
+  "shutdown_diagnostics": {
+    "lakeside": "Recorded Camera2D/Camera3D interpolation warnings; 6 ObjectDB instances, 3 resources still in use at exit.",
+    "gpu": "1 TextureStorage RID allocation and 2 Texture RIDs leaked at exit; CompressedTexture2D teardown reports null RenderingServer.",
+    "disposition": "Unresolved diagnostics tracked under T04. Assertion results passed; no claim that shutdown warnings are harmless."
+  },
+  "hands_on_review": "Normal gameplay scale, animation feel, remaining roughness and measured performance remain open."
+}

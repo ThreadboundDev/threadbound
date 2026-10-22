@@ -1,5 +1,17 @@
 # Next hands-on test session
 
+## Latest: T16 installed Eave Runner v4 — about 2 minutes
+
+October 22: Chase approved installing the cleanup, accepting it for now while
+noting it remains rough. F6 `blue_lakeside_krita_playtest.tscn` and use **Eave
+Runner**. At normal zoom, check the hood/scarf silhouette, shoulder edges,
+trousers and blade attachment during idle, wall leap, recovery and pin throw.
+Press **F2** and confirm the cleaned model returns. Keep any further polish
+request specific; this is provisional art acceptance, not final concept parity.
+The model/wrapper and existing guardian/encounter/reset checks pass.
+[Installation and validation](art/eave_runner_cleanup_v4.md).
+Save and checkpoint manual edits before switching topics.
+
 ## Latest: T15 bridge and bulb overlap — about 1 minute
 
 F6 the Krita playtest. Check a bridge end and a bulb base tucked into rock: the
@@ -56,8 +68,8 @@ marker placement, feet and transition feel are the acceptance decisions; the
 
 Earlier October 21 [checkpoint results](checkpoint_2026_10_21.md) remain dated
 evidence. Their house/NPC failures are superseded by the T01 results above.
-The active runner is v2; retained Eave Runner v3 is not installed. GPU appearance,
-frame time and hands-on acceptance remain open.
+The active runner is now v4 under T16; retained v2/v3 exports are historical.
+Frame time and hands-on appearance acceptance remain open.
 
 Current house delivery: `feature: add deliberate door entry to lakeside houses`
 on top of `9abd15ff`, October 21, 2026. Status: **Awaiting hands-on review**.
