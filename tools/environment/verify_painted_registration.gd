@@ -6,6 +6,7 @@ var camera: Camera2D
 var phase := 0.0
 var failures: Array[String] = []
 var results: Array[Dictionary] = []
+var contacts: Array[Dictionary] = []
 
 func _initialize() -> void:
 	call_deferred("verify")
@@ -46,6 +47,35 @@ func verify() -> void:
 	for n in 20:
 		await physics_frame
 	var art = room.get_node("ArtComparison")
+	# Inspect the actual shader's source/destination lookup knots, rather than
+	# merely asserting that physical collision survived an artwork toggle.
+	for entry: Dictionary in art.placements:
+		if not art.contact_registration.has(entry.key):
+			continue
+		for frame_key: String in art.contact_registration[entry.key]:
+			var frame := int(frame_key)
+			var sprite: Sprite2D = entry.far
+			sprite.texture = art._texture(entry.key,frame)
+			art._register_contacts(entry,sprite,frame)
+			var rows: PackedVector2Array = sprite.material.get_shader_parameter("rows")
+			var region: Rect2 = art._rect(art.manifest[entry.key].frames[frame])
+			var spec: Dictionary = art.contact_registration[entry.key][frame_key]
+			for contact: Dictionary in spec.rows:
+				var surface: Rect2 = art._contact_bounds(entry,contact.collision)
+				var normalized_source: float = (float(contact.y)-region.position.y)/region.size.y
+				var error := INF
+				for row: Vector2 in rows:
+					if absf(row.y-normalized_source)<.000001:
+						error = absf(entry.bounds.position.y+row.x*entry.bounds.size.y-surface.position.y)
+				contacts.append({"asset":entry.key,"frame":frame,"surface":contact.collision,"error_px":error})
+				if error>.01:
+					failures.append(entry.key+": painted contact misses "+contact.collision+" by "+str(error))
+	# A cutaway's own measured horizontal crop must not inherit exterior padding.
+	for key in ["fisher_house","workshop","tower"]:
+		var sheet: Dictionary = art.manifest[key]
+		var expected_left: float = sheet.pixels[0]/float(sheet.grid[0])+sheet.pose_alpha_bounds[1][0]
+		if absf(sheet.frames[1][0]-expected_left)>.01:
+			failures.append(key+": cutaway crop is displaced")
 	room.get_node("Player").set_physics_process(false)
 	room.get_node("Player/Camera2D").enabled = false
 	room.get_node("OverviewCamera").enabled = false
@@ -76,7 +106,7 @@ func verify() -> void:
 		results.append({"fps_cap":rate,"samples":45,"max_drift_px":maximum})
 		if maximum>1.5:
 			failures.append("Painted/direct camera drift at "+str(rate)+" FPS: "+str(maximum))
-	var report := {"passed":failures.is_empty(),"motion":results,"failures":failures}
+	var report := {"passed":failures.is_empty(),"motion":results,"contacts":contacts,"failures":failures}
 	DirAccess.make_dir_recursive_absolute("res://tmp/painted_registration")
 	FileAccess.open("res://tmp/painted_registration/result.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t")+"\n")
 	print("PAINTED_REGISTRATION_CHECK ",JSON.stringify(report))

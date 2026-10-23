@@ -2,6 +2,13 @@
 
 ## Latest: T18 painted 2D comparison — about 5 minutes
 
+First-test fixes: restart F6 to load the camera-drift/contact registration changes.
+Walk and jump inside both houses while watching floor contact during camera
+motion. Check enemy motion too; the extra art bob was removed. The tower cutaway
+crop and platform heights are corrected, but Chase's art preference remains open.
+Swordfish needs more animation frames; review the following delivery checkpoint
+before judging its motion again. [Findings](verification/painted_registration_2026_10_22.md).
+
 Implementation `6d23110c` is committed and pushed. Open and F6
 `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
 It starts with painted buildings, actors and bulbs. The player/gameplay remain

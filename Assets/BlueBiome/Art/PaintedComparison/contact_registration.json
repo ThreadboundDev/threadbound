@@ -1,0 +1,24 @@
+{
+  "description": "Source PNG pixel contacts, registered to live room collision; no collision changes.",
+  "fisher_house": {
+    "0": {"rows": [{"y": 885, "collision": "FisherFloor", "span": [98, 644]}], "door_x": 371},
+    "1": {"rows": [{"y": 879, "collision": "FisherFloor", "span": [821, 1362]}], "walls": [821, 1362]}
+  },
+  "workshop": {
+    "0": {"rows": [{"y": 786, "collision": "WorkshopFloor", "span": [108, 685]}], "door_x": 282},
+    "1": {"rows": [{"y": 784, "collision": "WorkshopFloor", "span": [894, 1470]}], "walls": [894, 1470]}
+  },
+  "tower": {
+    "1": {"vertical_only": true, "rows": [
+      {"y": 1121, "collision": "TowerPlatform0"},
+      {"y": 1040, "collision": "TowerPlatform1"},
+      {"y": 1001, "collision": "TowerPlatform2"},
+      {"y": 894, "collision": "TowerPlatform3"},
+      {"y": 785, "collision": "TowerPlatform4"},
+      {"y": 675, "collision": "TowerPlatform5"},
+      {"y": 565, "collision": "TowerPlatform6"},
+      {"y": 418, "collision": "TowerPlatform7"},
+      {"y": 261, "collision": "TowerPlatform8"}
+    ]}
+  }
+}

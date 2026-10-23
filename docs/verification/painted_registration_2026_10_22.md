@@ -30,7 +30,36 @@ these results do not claim to fix T04 shutdown cleanup.
 
 ## Contact alignment
 
-Still under investigation: overall image-envelope registration does not align
-every painted floor/platform to its original physical surface. The tower in
-particular needs individual platform contact anchors. Do not move established
-collision just to accommodate the comparison artwork.
+The two houses now register source-art floor contacts against the live floor
+polygons. Horizontal registration keeps doors and inner walls aligned through
+the house height; straight posts remain straight. The tower's nine platform
+heights use individually measured source rows. A comparison-only UV lookup
+fits the drawing to these anchors without editing original PNG pixels or moving
+established collision. The original room, collision and player are unchanged.
+
+Building cutaways now measure their own horizontal alpha crop. Reusing exterior
+padding displaced the central tower cutaway by roughly 95 world pixels and
+clipped its left edge. Missing roofs still retain empty vertical space; cutaways
+are not stretched to replace their missing roofs.
+
+The added worker/enemy sine bob is removed. Idle bulbs hold their registered
+first frame rather than flipping between separate, differently drawn poses.
+Existing enemy body/animation movement remains intact.
+
+Validation: 13 actual shader contact rows match physical floor heights within
+0.0001 world pixels (two states per house and nine tower platforms), independent
+cutaway crop assertions pass, and camera drift remains at most 0.71 pixels.
+`contacts_and_motion_after.json` records those results. The existing comparison
+fixture again passes all 168 assertions and refreshes its 32 GPU captures.
+
+These are contact-height checks, not a claim that every illustrated contour or
+tower platform width exactly matches the model geometry. The tower's appearance
+and overall 2D preference remain open for Chase's review.
+
+## Further playtest feedback
+
+Chase clarified that the mismatch was in the houses and could have been the
+bouncing artwork. Enemies bounced too. The central building looked weird and
+has not been accepted in 2D. Swordfish motion was clunky and needs more animation
+frames; other enemies have not yet been reviewed. Finish the registration Git
+checkpoint before that animation follow-up.

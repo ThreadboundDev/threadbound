@@ -2,6 +2,7 @@ extends Node
 ## Reversible presentation experiment; the inherited room owns all gameplay.
 const ASSETS := "res://Assets/BlueBiome/Art/PaintedComparison/"
 const SOURCES := "res://work/painted-2d-comparison-2026-10-22/source_manifest.json"
+const CONTACT_SHADER := preload("res://Src/Environment/BlueBiome/Comparison/painted_contact_registration.gdshader")
 var buildings_enabled := true
 var actors_enabled := true
 var bulbs_enabled := true
@@ -20,6 +21,8 @@ var _clock := 0.0
 var resident_view: SubViewport
 var resident_camera: Camera3D
 var resident_image: Sprite2D
+var contact_registration: Dictionary
+var _contact_materials := {}
 
 func _ready() -> void:
 	process_priority = 100
@@ -28,6 +31,7 @@ func _ready() -> void:
 	source_manifest = JSON.parse_string(FileAccess.get_file_as_string(SOURCES))
 	if FileAccess.file_exists(ASSETS+"manifest.json"):
 		manifest = JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"manifest.json"))
+	contact_registration = JSON.parse_string(FileAccess.get_file_as_string(ASSETS+"contact_registration.json"))
 	call_deferred("_setup")
 
 func _setup() -> void:
@@ -178,6 +182,7 @@ func _process(delta: float) -> void:
 		var target: Sprite2D = entry.near if front and not inside else entry.far
 		target.texture = _texture(entry.key,frame)
 		_fit(target,entry.bounds,node.global_transform)
+		_register_contacts(entry,target,frame)
 		target.visible = true
 		if is_actor and manifest[entry.key].frames.size()>1:
 			_update_worker(entry,target)
@@ -187,6 +192,85 @@ func _process(delta: float) -> void:
 		_scan_actors()
 	_update_actors(delta)
 	_update_bulbs(delta)
+
+func _contact_bounds(entry: Dictionary, collision: String) -> Rect2:
+	var shape: CollisionPolygon2D = room.get_node("Geometry/BuildingCollision/"+collision+"/Outline")
+	var points := PackedVector2Array()
+	for point: Vector2 in shape.polygon:
+		points.append(entry.node.to_local(shape.to_global(point)))
+	var bounds := Rect2(points[0],Vector2.ZERO)
+	for point: Vector2 in points:
+		bounds = bounds.expand(point)
+	return bounds
+
+func _register_contacts(entry: Dictionary, sprite: Sprite2D, frame: int) -> void:
+	sprite.material = null
+	if not contact_registration.has(entry.key) or not contact_registration[entry.key].has(str(frame)):
+		return
+	var cache_key := str(entry.node.get_instance_id())+":"+str(frame)
+	if _contact_materials.has(cache_key):
+		sprite.material = _contact_materials[cache_key]
+		return
+	var spec: Dictionary = contact_registration[entry.key][str(frame)]
+	var region := _rect(manifest[entry.key].frames[frame])
+	var bounds: Rect2 = entry.bounds
+	# Each row contains source/destination normalized coordinates. Keep frame
+	# edges fixed; interior contacts follow the physical surface and endpoints.
+	var grid: Array[Dictionary] = [{"y":Vector2.ZERO,"x":[Vector2.ZERO,Vector2.ONE]},
+		{"y":Vector2.ONE,"x":[Vector2.ZERO,Vector2.ONE]}]
+	for contact: Dictionary in spec.rows:
+		var physical := _contact_bounds(entry,contact.collision)
+		var source_y := (float(contact.y)-region.position.y)/region.size.y
+		var target_y := (physical.position.y-bounds.position.y)/bounds.size.y
+		var row: Dictionary = {}
+		for existing: Dictionary in grid:
+			if is_equal_approx(existing.y.x,target_y):
+				row = existing
+				break
+		if row.is_empty():
+			row = {"y":Vector2(target_y,source_y),"x":[Vector2.ZERO,Vector2.ONE]}
+			grid.append(row)
+		if spec.get("vertical_only",false):
+			continue
+		row.x.append(Vector2((physical.position.x-bounds.position.x)/bounds.size.x,
+			(float(contact.span[0])-region.position.x)/region.size.x))
+		row.x.append(Vector2((physical.end.x-bounds.position.x)/bounds.size.x,
+			(float(contact.span[1])-region.position.x)/region.size.x))
+		if spec.has("walls"):
+			# The playable inner wall lies slightly inside the floor's overhang.
+			for edge in 2:
+				var wall: float = entry.node.entry_rect.position.x if edge == 0 else entry.node.entry_rect.end.x
+				row.x.append(Vector2((wall-bounds.position.x)/bounds.size.x,
+					(float(spec.walls[edge])-region.position.x)/region.size.x))
+		if spec.has("door_x"):
+			row.x.append(Vector2((entry.node.get_node("Door").position.x-bounds.position.x)/bounds.size.x,
+				(float(spec.door_x)-region.position.x)/region.size.x))
+	# Houses use one horizontal registration through their entire height, so
+	# straight posts stay straight while door/floor anchors line up.
+	for row: Dictionary in grid:
+		row.x = grid[2].x
+	grid.sort_custom(func(a: Dictionary,b: Dictionary): return a.y.x<b.y.x)
+	var rows := PackedVector2Array()
+	var columns := PackedVector2Array()
+	for row: Dictionary in grid:
+		rows.append(row.y)
+		row.x.sort_custom(func(a: Vector2,b: Vector2): return a.x<b.x)
+		for index in 8:
+			columns.append(row.x[mini(index,row.x.size()-1)])
+	while rows.size()<24:
+		rows.append(Vector2.ONE)
+	while columns.size()<192:
+		columns.append(Vector2.ONE)
+	var material := ShaderMaterial.new()
+	material.shader = CONTACT_SHADER
+	material.set_shader_parameter("atlas_region",Vector4(region.position.x,region.position.y,region.size.x,region.size.y))
+	material.set_shader_parameter("atlas_size",_texture(entry.key,frame).atlas.get_size())
+	material.set_shader_parameter("row_count",grid.size())
+	material.set_shader_parameter("rows",rows)
+	material.set_shader_parameter("columns",columns)
+	material.set_meta("contact_grid",grid)
+	_contact_materials[cache_key] = material
+	sprite.material = material
 
 func _scan_actors() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -254,8 +338,6 @@ func _update_actors(_delta: float) -> void:
 			var pivot := Vector2(0,-54)
 			entry.painted.position = pivot+(entry.painted.position-pivot).rotated(entry.original.rotation)
 			entry.painted.rotation = entry.original.rotation
-		var speed: float = entry.enemy.velocity.length()
-		entry.painted.position.y += sin(_clock*(10.0 if speed>20 else 2.4))*minf(1.5,speed/80.0) if frame<2 else 0.0
 
 func _update_worker(entry: Dictionary, sprite: Sprite2D) -> void:
 	var worker: Node2D = entry.node
@@ -265,7 +347,6 @@ func _update_worker(entry: Dictionary, sprite: Sprite2D) -> void:
 	var greeting := bool(worker.render_model.interacting)
 	sprite.texture = _texture(entry.key,1 if greeting else 0)
 	_fit_pose(sprite,entry.key,entry.bounds,worker.global_transform,1 if greeting else 0)
-	sprite.position.y += sin(_clock*2.0)*.35
 
 func _update_bulbs(_delta: float) -> void:
 	for entry: Dictionary in bulbs:
@@ -281,7 +362,9 @@ func _update_bulbs(_delta: float) -> void:
 			&"pop": frame = 2
 			&"spent": frame = 3
 			&"refill": frame = 4+int(_clock*6.0)%2
-			_: frame = int(_clock*3.0)%2
+			# Idle frames are separate drawings, not registered in-between frames.
+			# Keep the contact sac steady until the actual lifecycle changes.
+			_: frame = 0
 		painted.texture = _texture("water_bulb",frame)
 		# Register the sac itself to the existing hit/grapple square. Stem/petals
 		# may have different illustrated contours, but the active bulb stays 1:1.

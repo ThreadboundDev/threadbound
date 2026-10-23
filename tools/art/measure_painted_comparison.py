@@ -58,7 +58,12 @@ def measure():
                 # Preserve the full pose cell so extended weapons/wings fit.
                 frames = regions
             else:
-                frames = [[round(i*cell[0])+left,top,right-left,bottom-top] for i in range(columns)]
+                # Cutaways can shift horizontally within their generated cell.
+                # Measure each actual silhouette instead of reusing the exterior
+                # crop (the tower's old crop displaced its cutaway by ~97px).
+                # Retain exterior Y/height: a missing roof must remain empty.
+                frames = [[round(i*cell[0])+used[0],top,used[2]-used[0],bottom-top]
+                          for i,used in enumerate(bounds)]
             offsets = [[0,0] for _ in bounds]
             if key == "water_bulb":
                 offsets = [[0,0],[0,0],[0,0],[0,12],[0,12],[0,12]]

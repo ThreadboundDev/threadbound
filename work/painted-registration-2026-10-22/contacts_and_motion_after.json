@@ -1,0 +1,101 @@
+{
+	"contacts": [
+		{
+			"asset": "fisher_house",
+			"error_px": 0.0000132122186187189,
+			"frame": 0,
+			"surface": "FisherFloor"
+		},
+		{
+			"asset": "fisher_house",
+			"error_px": 0.0000132122186187189,
+			"frame": 1,
+			"surface": "FisherFloor"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.00000691413879394531,
+			"frame": 1,
+			"surface": "TowerPlatform0"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.0000576972961425781,
+			"frame": 1,
+			"surface": "TowerPlatform1"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.0000669956207275391,
+			"frame": 1,
+			"surface": "TowerPlatform2"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.00000619888305664063,
+			"frame": 1,
+			"surface": "TowerPlatform3"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.0000104904174804688,
+			"frame": 1,
+			"surface": "TowerPlatform4"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.00000202655792236328,
+			"frame": 1,
+			"surface": "TowerPlatform5"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.000003814697265625,
+			"frame": 1,
+			"surface": "TowerPlatform6"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.00000274181365966797,
+			"frame": 1,
+			"surface": "TowerPlatform7"
+		},
+		{
+			"asset": "tower",
+			"error_px": 0.00000298023223876953,
+			"frame": 1,
+			"surface": "TowerPlatform8"
+		},
+		{
+			"asset": "workshop",
+			"error_px": 0.0000103497513919137,
+			"frame": 0,
+			"surface": "WorkshopFloor"
+		},
+		{
+			"asset": "workshop",
+			"error_px": 0.0000103497513919137,
+			"frame": 1,
+			"surface": "WorkshopFloor"
+		}
+	],
+	"failures": [],
+	"motion": [
+		{
+			"fps_cap": 30,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		},
+		{
+			"fps_cap": 90,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		},
+		{
+			"fps_cap": 144,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		}
+	],
+	"passed": true
+}

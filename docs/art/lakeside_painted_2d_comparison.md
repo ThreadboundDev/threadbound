@@ -59,7 +59,14 @@ attack tells and motion, then judge depth/turning/lighting benefits separately.
 
 ## Delivery status
 
-**Ready for Chase's comparison; no permanent art-direction acceptance.** Source
+**First playtest corrections delivered; no permanent art-direction acceptance.**
+Chase reported bouncing houses/enemies, apparent house collision mismatch,
+an odd central building and clunky swordfish motion. Camera drift is fixed as
+`8f2c7f6d`; contact registration, cutaway crops and added bob are corrected in
+the subsequent checkpoint. See the [current findings and evidence](../verification/painted_registration_2026_10_22.md).
+Further hands-on acceptance and swordfish animation follow-up remain open.
+
+Source
 measurements/references are pushed as `6e654911`, buildings as `f47c62fe`, and
 LFS tracking as `9efac8e7`. Final comparison implementation: **`6d23110c`**, pushed
 on `threadbound/art-painted-2d-comparison`. All new PNGs are retained unchanged from the
