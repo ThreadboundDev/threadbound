@@ -1,0 +1,21 @@
+{
+	"failures": [],
+	"motion": [
+		{
+			"fps_cap": 30,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		},
+		{
+			"fps_cap": 90,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		},
+		{
+			"fps_cap": 144,
+			"max_drift_px": 0.70710676908493,
+			"samples": 45
+		}
+	],
+	"passed": true
+}

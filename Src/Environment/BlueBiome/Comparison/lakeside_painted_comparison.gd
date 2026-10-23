@@ -12,7 +12,6 @@ var room: Node2D
 var stage: Node2D
 var manifest: Dictionary
 var source_manifest: Dictionary
-var cameras: Array[Camera2D] = []
 var grades: Array[CanvasModulate] = []
 var _rescan := 0.0
 var controls: CanvasLayer
@@ -33,12 +32,6 @@ func _ready() -> void:
 
 func _setup() -> void:
 	for view: SubViewport in [stage.far_view,stage.near_view]:
-		var camera := Camera2D.new()
-		camera.name = "PaintedArtCamera"
-		camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
-		view.add_child(camera)
-		camera.make_current()
-		cameras.append(camera)
 		var grade := CanvasModulate.new()
 		view.add_child(grade)
 		grades.append(grade)
@@ -62,6 +55,13 @@ func _setup() -> void:
 				light.position = placement.global_position
 		placements.append({"node":placement,"key":asset_key,"far":far,"near":near,"bounds":_rect(entry.bounds)})
 	_setup_resident_pass()
+	# These are screen composites, positioned from the already smoothed canvas
+	# each render frame. Interpolating them again makes the artwork swim away
+	# from world collision whenever the main camera moves between physics ticks.
+	for image: Sprite2D in [stage.far_sprite,stage.near_sprite,resident_image]:
+		image.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
+	for camera: Camera3D in [stage.far_camera,stage.near_camera]:
+		camera.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	_build_controls()
 	_scan_actors()
 	_process(0)
@@ -132,15 +132,16 @@ func _fit_pose(sprite: Sprite2D, key: String, bounds: Rect2, transform: Transfor
 	sprite.scale = transform.get_scale()*scale_to_world
 
 func _process(delta: float) -> void:
-	if cameras.is_empty():
+	if not is_instance_valid(resident_image):
 		return
 	_clock += delta
 	var canvas := room.get_viewport().get_canvas_transform()
-	var center := canvas.affine_inverse()*(room.get_viewport_rect().size*.5)
-	for index in cameras.size():
-		cameras[index].global_position = center
-		cameras[index].zoom = canvas.get_scale().abs()*stage.render_scale
-		cameras[index].force_update_scroll()
+	# No second Camera2D: its physics update/interpolation can overwrite the
+	# render-time transform. Both passes sample the same canvas as the room.
+	var supersample := Transform2D.IDENTITY.scaled(Vector2.ONE*stage.render_scale)
+	stage.far_view.canvas_transform = supersample*canvas
+	stage.near_view.canvas_transform = supersample*canvas
+	stage._sync_camera()
 	for grade: CanvasModulate in grades:
 		grade.color = Color(.44,.57,.76) if room.lighting_preset == 1 else Color(.82,.89,.97)
 	var mixed := buildings_enabled and not actors_enabled

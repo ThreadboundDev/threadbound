@@ -1,0 +1,25 @@
+{
+	"failures": [
+		"Painted/direct camera drift at 30 FPS: 9.21954441070557",
+		"Painted/direct camera drift at 90 FPS: 17.2046508789063",
+		"Painted/direct camera drift at 144 FPS: 11.7153749465942"
+	],
+	"motion": [
+		{
+			"fps_cap": 30,
+			"max_drift_px": 9.21954441070557,
+			"samples": 45
+		},
+		{
+			"fps_cap": 90,
+			"max_drift_px": 17.2046508789063,
+			"samples": 45
+		},
+		{
+			"fps_cap": 144,
+			"max_drift_px": 11.7153749465942,
+			"samples": 45
+		}
+	],
+	"passed": false
+}

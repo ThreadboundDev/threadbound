@@ -55,7 +55,13 @@ and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
 
-**Current review ready: T18, painted 2D comparison.** Delivered and pushed as
+**Current correction: T18 playtest reports collision mismatch and bouncing art.**
+The painted pass reproduced 9–17 px camera drift; direct canvas registration now
+measures at most 0.71 px in 135 GPU samples at 30/90/144 FPS. Contact alignment
+needs per-floor/platform correction; unchanged collision alone was insufficient
+validation. [Playtest findings and fixes](verification/painted_registration_2026_10_22.md).
+
+**T18, painted 2D comparison.** Delivered and pushed as
 `6d23110c` on `threadbound/art-painted-2d-comparison`; source measurements are
 `6e654911`, building sheets `f47c62fe`, LFS setup `9efac8e7`. Thirteen painted
 sheets cover four buildings, lanterns, two villagers/workstations, five enemy
