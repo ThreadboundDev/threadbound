@@ -60,6 +60,41 @@ and overall 2D preference remain open for Chase's review.
 
 Chase clarified that the mismatch was in the houses and could have been the
 bouncing artwork. Enemies bounced too. The central building looked weird and
-has not been accepted in 2D. Swordfish motion was clunky and needs more animation
-frames; other enemies have not yet been reviewed. Finish the registration Git
-checkpoint before that animation follow-up.
+has not been accepted in 2D. Swordfish motion was clunky and needed more animation
+frames; other enemies have not yet been reviewed. Registration was checkpointed
+and pushed as `ed0b4dd9`, after camera drift checkpoint `8f2c7f6d`.
+
+## Swordfish swim extension
+
+The comparison now uses a dedicated 12-frame swim sheet at 16 FPS while hovering,
+and 20 FPS for the existing dash-glide clip. Previously the generic mapping did
+not recognize `life/hover`, leaving the painted fish static during that clip.
+Curled windup, initial strike, recovery and hurt still use their original six-pose
+sheet and the existing combat-state timing. These transitions remain comparison
+key poses; this delivery does not claim fully in-betweened attack animation.
+
+The additional asset is
+`Assets/BlueBiome/Art/PaintedComparison/tide_duelist_swim_v2.png`, generated with
+the built-in imagegen tool using the original fish sheet as the design reference.
+The original six-pose sheet is preserved. The complete initial and layout-cleanup
+prompts are saved beside the new sheet in `tide_duelist_swim_v2.prompts.json`.
+PNG pixels are untouched; atlas metadata includes the bill gutters and excludes
+neighboring-frame tips. Alpha measurements register the rigid bill across poses,
+using one fixed scale derived from the existing world envelope.
+
+`tools/environment/verify_painted_swordfish_motion.gd`: **67 GPU checks pass**, with
+12 captured frames. Maximum computed rigid-bill anchor drift is **0.000137 world
+pixels** with the body held still. Real windup, strike, dash glide, recovery and
+hurt methods select the expected artwork; F7 restores either presentation.
+This is a registration/behavior check, not hands-on acceptance of smoothness.
+
+The complete comparison fixture subsequently passes **148 headless assertions**
+for 14 sheets / 62 frames, including original collision, entry, bulb and F2 paths.
+The earlier 168-assertion GPU run and its 32 captures were made at `ed0b4dd9`;
+the latest headless report is also saved as `comparison_headless_after_swim.json`.
+Swordfish GPU evidence is in `swordfish_motion.json` and `swordfish_swim_00.png`
+through `swordfish_swim_11.png` in the same evidence folder.
+
+Restart the comparison with F6 before retesting. Check both houses while walking
+and jumping, then the swordfish at rest and during a full attack. Tower art
+preference and the other enemies' animation quality remain open.

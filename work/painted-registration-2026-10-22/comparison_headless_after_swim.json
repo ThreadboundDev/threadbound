@@ -1,0 +1,11 @@
+{
+	"bulbs": 4,
+	"captures": [],
+	"checks": 148,
+	"display": "headless",
+	"enemies": 5,
+	"failures": [],
+	"passed": true,
+	"placements": 10,
+	"sheets": 14
+}

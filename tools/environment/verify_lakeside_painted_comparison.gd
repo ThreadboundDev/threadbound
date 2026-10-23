@@ -55,7 +55,7 @@ func verify() -> void:
 	await frames(30)
 	art = room.get_node("ArtComparison")
 	if "--draft" not in OS.get_cmdline_user_args():
-		check(art.manifest.size() == 13,"All thirteen requested painted asset sheets installed")
+		check(art.manifest.size() == 14,"All thirteen base sheets and swordfish swim extension installed")
 	for key: String in art.manifest:
 		for frame in art.manifest[key].frames.size():
 			check(art._texture(key,frame).atlas != null,key+": imported frame "+str(frame))

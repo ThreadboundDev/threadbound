@@ -60,8 +60,11 @@ The painted pass reproduced 9–17 px camera drift; pushed fix `8f2c7f6d` measur
 at most 0.71 px in 135 GPU samples at 30/90/144 FPS. House floor contacts and nine
 tower platform heights now use per-surface registration; the tower cutaway's
 horizontal crop offset is corrected. 13 contact-height assertions and the
-existing 168 comparison checks pass. Added visual bob is removed. Chase still
-wants to compare the tower's look; swordfish motion needs more frames next.
+existing 168 comparison checks pass; contact fixes are pushed as `ed0b4dd9`.
+Added visual bob is removed. Swordfish now has a dedicated 12-frame swim loop
+for hover/dash glide: 67 focused GPU checks and 148 broader headless checks pass.
+Attack transitions still use comparison key poses. Chase still wants to compare
+the tower's look; other enemies' animation quality remains unreviewed.
 Unchanged collision alone was insufficient validation.
 [Playtest findings and fixes](verification/painted_registration_2026_10_22.md).
 
@@ -331,11 +334,16 @@ not authorize merging, publishing a build or protected implementation changes.
   on `threadbound/art-painted-2d-comparison`. F6
   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`; F7 and
   separate Buildings/Actors/Bulbs controls compare all painted or mixed choices.
-  Thirteen RGBA sheets / 50 atlas frames; 168 comparison checks, 405 original
-  house-entry and 19 encounter/reset checks pass. Original gameplay/layout source
+  First playtest corrections: camera drift `8f2c7f6d`, house contacts and tower
+  cutaway registration `ed0b4dd9`, followed by the 12-frame swordfish swim loop.
+  Fourteen RGBA sheets / 62 atlas frames; 148 headless comparison and 67 swordfish
+  GPU checks pass. Earlier registration checkpoint: 168 comparison GPU checks;
+  original delivery: 405 house-entry and 19 encounter/reset checks. Original gameplay/layout source
   matches `4448c06f`. Review [delivery and image pairs](art/lakeside_painted_2d_comparison.md)
   and [test card](next_test_session.md). Six enemy key poses, two NPC character
-  poses and six bulb lifecycle poses are comparison animation; full production
+  poses and six bulb lifecycle poses are comparison animation; swordfish hover
+  and dash glide use the added 12-frame cycle. Its attack transitions remain key
+  poses. Full production
   animation, tower-resolution polish and any permanent replacements follow a
   recorded choice. T04 diagnostics remain open. Do not mark accepted until
   Chase's preferred categories and remaining polish are recorded.

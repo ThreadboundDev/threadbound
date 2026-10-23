@@ -11,6 +11,7 @@ LAYOUTS = {
     "net_mender": (3, 1), "boatwright": (3, 1),
     "tide_duelist": (3, 2), "reedhook": (3, 2), "bellstriker": (3, 2),
     "eave_runner": (3, 2), "loom_heron": (3, 2), "water_bulb": (3, 2),
+    "tide_duelist_swim_v2": (4, 3),
 }
 
 # Atlas-only regions preserve outstretched wings/weapons from generated layouts
@@ -42,6 +43,15 @@ def measure():
             width, height = image.size
             cell = (width / columns, height / rows)
             regions = REGIONS.get(key, [[round(i%columns*cell[0]),round(i//columns*cell[1]),round(cell[0]),round(cell[1])] for i in range(columns*rows)])
+            if key == "tide_duelist_swim_v2":
+                # Bills extend a few pixels into the next transparent gutter.
+                # Include them without resampling or clipping the original PNG.
+                regions = []
+                for i in range(columns*rows):
+                    gutter = 20 if i%columns else 0
+                    x = round(i%columns*cell[0])+gutter
+                    regions.append([x,round(i//columns*cell[1]),
+                                    min(round(cell[0])+20-gutter,width-x),round(cell[1])])
             bounds = []
             for index in range(columns * rows):
                 x,y,w,h = regions[index]
@@ -54,7 +64,7 @@ def measure():
             # All poses use ONE registration taken from the initial complete
             # silhouette. Missing roof / spent state must not enlarge remaining art.
             left, top, right, bottom = bounds[0]
-            if key in ("net_mender", "boatwright", "tide_duelist", "reedhook", "bellstriker", "eave_runner", "loom_heron", "water_bulb"):
+            if key in ("net_mender", "boatwright", "tide_duelist", "reedhook", "bellstriker", "eave_runner", "loom_heron", "water_bulb", "tide_duelist_swim_v2"):
                 # Preserve the full pose cell so extended weapons/wings fit.
                 frames = regions
             else:
@@ -65,6 +75,20 @@ def measure():
                 frames = [[round(i*cell[0])+used[0],top,used[2]-used[0],bottom-top]
                           for i,used in enumerate(bounds)]
             offsets = [[0,0] for _ in bounds]
+            bill_anchors = []
+            if key == "tide_duelist_swim_v2":
+                # Rigid bill registration is independent of moving fins/tails.
+                # Analyze alpha only; leave all generated pixels untouched.
+                for x,y,w,h in regions:
+                    pose = alpha.crop((x,y,x+w,y+h))
+                    solid = pose.point(lambda value: 255 if value >= 128 else 0)
+                    right_tip = solid.getbbox()[2]-1
+                    points = [(xx,yy) for xx in range(right_tip-5,right_tip-1)
+                              for yy in range(h) if solid.getpixel((xx,yy))]
+                    assert points, "Missing swordfish bill anchor"
+                    bill_anchors.append([right_tip-3,sum(yy for _,yy in points)/len(points)])
+                anchor = bill_anchors[0]
+                offsets = [[anchor[0]-p[0],anchor[1]-p[1]] for p in bill_anchors]
             if key == "water_bulb":
                 offsets = [[0,0],[0,0],[0,0],[0,12],[0,12],[0,12]]
             if key in ANCHORS:
@@ -88,6 +112,8 @@ def measure():
                     centers.append(sum(xx*weight for xx,weight in enumerate(weights))/max(sum(weights),1))
                 offsets = [[centers[0]-center,bottom-used[3]] for center,used in zip(centers,bounds)]
             manifest[key] = {"pixels":[width,height],"grid":[columns,rows],"frames":frames,"initial_alpha_bounds":[left,top,right-left,bottom-top],"pose_alpha_bounds":[[a,b,c-a,d-b] for a,b,c,d in bounds],"pose_offsets":offsets,"source":"built-in imagegen; original pixels retained"}
+            if bill_anchors:
+                manifest[key]["bill_anchors"] = bill_anchors
     (ASSETS/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8",newline="\n")
     print("Measured", len(manifest), "painted sheets:", ", ".join(manifest))
 

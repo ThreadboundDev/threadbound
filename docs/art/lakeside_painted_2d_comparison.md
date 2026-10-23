@@ -64,7 +64,10 @@ Chase reported bouncing houses/enemies, apparent house collision mismatch,
 an odd central building and clunky swordfish motion. Camera drift is fixed as
 `8f2c7f6d`; contact registration, cutaway crops and added bob are corrected in
 the subsequent checkpoint. See the [current findings and evidence](../verification/painted_registration_2026_10_22.md).
-Further hands-on acceptance and swordfish animation follow-up remain open.
+House contacts/cutaways are pushed as `ed0b4dd9`. Swordfish now has a dedicated
+12-frame swim extension, with 67 focused GPU checks and 148 broader headless
+checks passing. The full set is now 14 sheets / 62 frames; the original 13 sheets
+are retained. Further hands-on acceptance remains open.
 
 Source
 measurements/references are pushed as `6e654911`, buildings as `f47c62fe`, and
@@ -141,8 +144,9 @@ readability first. Layered 2D still provides foreground/rear-wall occlusion and
 working cutaways; models provide continuous 3D articulation/turning and real
 surface lighting/shadows. Both use the same water compositing and placements.
 
-Enemy sheets contain six key poses, NPCs two character poses, and bulbs six
-lifecycle poses. These are comparison animations, not a finished replacement
+Base enemy sheets contain six key poses, NPCs two character poses, and bulbs six
+lifecycle poses. Swordfish has an additional 12-frame hover/dash-glide swim loop;
+its attack transitions still use the base key poses. These are comparison animations, not a finished replacement
 for all continuous model clips. NPC greetings do not reproduce full 3D turning;
 enemy weapon/beak drawings can differ from retained physical/projectile anchors.
 Review motion/attachment at normal speed before choosing a production approach.

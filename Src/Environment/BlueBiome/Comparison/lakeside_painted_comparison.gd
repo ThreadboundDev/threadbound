@@ -331,6 +331,12 @@ func _update_actors(_delta: float) -> void:
 			frame = 4
 		elif "run" in clip or "walk" in clip or "flight" in clip or "swim" in clip:
 			frame = int(_clock*6.0)%2
+		if entry.key == "tide_duelist" and (clip in ["life/hover","still","life/dash_glide"] or clip.is_empty()) and not entry.enemy.is_dead:
+			var swim_key := "tide_duelist_swim_v2"
+			var swim_frame := int(_clock*(20.0 if clip == "life/dash_glide" else 16.0))%12
+			entry.painted.texture = _texture(swim_key,swim_frame)
+			_fit_pose(entry.painted,swim_key,entry.bounds,Transform2D.IDENTITY,swim_frame)
+			continue
 		entry.painted.texture = _texture(entry.key,frame)
 		var bounds: Rect2 = entry.bounds
 		_fit_pose(entry.painted,entry.key,bounds,Transform2D.IDENTITY,frame)

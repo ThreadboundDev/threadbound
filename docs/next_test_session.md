@@ -6,8 +6,9 @@ First-test fixes: restart F6 to load the camera-drift/contact registration chang
 Walk and jump inside both houses while watching floor contact during camera
 motion. Check enemy motion too; the extra art bob was removed. The tower cutaway
 crop and platform heights are corrected, but Chase's art preference remains open.
-Swordfish needs more animation frames; review the following delivery checkpoint
-before judging its motion again. [Findings](verification/painted_registration_2026_10_22.md).
+Swordfish now has a 12-frame swim loop; watch hovering, dash glide and the remaining
+key-pose attack transitions separately. Restart F6 to load it.
+[Findings](verification/painted_registration_2026_10_22.md).
 
 Implementation `6d23110c` is committed and pushed. Open and F6
 `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
@@ -22,8 +23,8 @@ and Bulbs independently. Uncheck for the current models/rendered bulb frames.
    villagers. Try painted buildings with model actors, and the reverse. Greet
    each resident to compare the painted work/greet poses with model turning.
 3. Use **Eave Runner** and **Loom Heron**, then swim near the fish/Bellstriker.
-   Compare tells and movement at normal zoom. The six painted enemy poses are
-   an art/motion prototype, not a full frame-by-frame animation pass.
+   Compare tells and movement at normal zoom. Swordfish now has a 12-frame swim
+   cycle; attack transitions and other enemies still use comparison key poses.
 4. Pop or grapple a bulb, watch spent/refill and compare both looks. Use
    **Day / dusk**, then **F2** and verify the chosen enemy art returns.
 
@@ -31,7 +32,9 @@ Record **2D / current 3D / mixed** preferences separately for buildings, enemies
 villagers and bulbs, with specific polish notes. A decision here does not require
 one medium everywhere. T17 water acceptance/new Krita background still follows.
 
-168 comparison checks plus 405 house / 19 encounter-reset checks pass. The
+Latest: 148 comparison headless / 67 swordfish GPU checks pass. The registration
+checkpoint passed 168 GPU checks; original delivery passed 405 house / 19
+encounter-reset checks. The
 [delivery](art/lakeside_painted_2d_comparison.md) has 32 captured views and known
 limitations. Hidden reference animation remains, so this scene does not compare
 the performance of a stripped 2D build. **Save and commit/push manual edits
