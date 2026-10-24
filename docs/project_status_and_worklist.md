@@ -63,7 +63,9 @@ retained painted alternative. V4 smooths the timber fascia, fixes tile UV
 projection/spacing and reduces tile normal strength. All 12 non-roof meshes,
 original bounds, nine platforms and six cutaway clearances are preserved.
 31 focused GPU / 149 comparison headless checks pass. **Roof appearance still
-awaits Chase's review.** [Delivery and evidence](art/central_tower_3d_polish_v4.md).
+awaits Chase's review.** Implementation **`4716a96d`** is pushed on
+`threadbound/art-central-tower-roof-polish`, including the editable source in LFS.
+[Delivery and evidence](art/central_tower_3d_polish_v4.md).
 
 **Current correction: T18 playtest reports collision mismatch and bouncing art.**
 The painted pass reproduced 9–17 px camera drift; pushed fix `8f2c7f6d` measures

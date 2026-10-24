@@ -8,6 +8,8 @@ front/rear/platform art and registration work to reproduce that depth. This choi
 does not settle the presentation of houses, enemies, villagers or bulbs.
 
 Branch: `threadbound/art-central-tower-roof-polish`, from `5cae90e0`.
+Implementation and recorded verification: **`4716a96d`**, committed and pushed
+with its Blender source and review captures in Git LFS.
 
 ## What changed
 
