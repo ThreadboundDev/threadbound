@@ -1,5 +1,10 @@
 # T18 — painted 2D comparison
 
+October 24 decision: retain the **central tower in 3D** and polish its roof.
+The comparison now defaults to the model tower; its separate Tower checkbox
+retains the painted alternative. F7 switches the other categories independently
+of that tower choice. [Current tower delivery](central_tower_3d_polish_v4.md).
+
 Chase requested this on October 22 while away from the computer. This explicitly
 authorizes a reversible art comparison of the current buildings, enemies,
 villagers/props and water bulbs, preserving scale, placement, palette and the

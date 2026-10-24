@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 22, 2026. Saved recovery baseline: `16b3bd3c` on
+Updated October 24, 2026. Saved recovery baseline: `16b3bd3c` on
 `threadbound/chore-october-development-checkpoint`, committed and pushed.
 This is the single current task order. The [checkpoint recap](checkpoint_2026_10_21.md)
 is the evidence for the current state; older roadmaps and delivery reports do
@@ -55,6 +55,16 @@ and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
 
+**Current delivery: T19, retain the central tower in 3D and polish its roof.**
+Chase authorized the medium choice and tower polish on October 24. Choose 3D
+for platform/wall/base-entry depth. The tower now defaults to 3D independently
+of the comparison's other categories, with a separate Tower checkbox for the
+retained painted alternative. V4 smooths the timber fascia, fixes tile UV
+projection/spacing and reduces tile normal strength. All 12 non-roof meshes,
+original bounds, nine platforms and six cutaway clearances are preserved.
+31 focused GPU / 149 comparison headless checks pass. **Roof appearance still
+awaits Chase's review.** [Delivery and evidence](art/central_tower_3d_polish_v4.md).
+
 **Current correction: T18 playtest reports collision mismatch and bouncing art.**
 The painted pass reproduced 9–17 px camera drift; pushed fix `8f2c7f6d` measures
 at most 0.71 px in 135 GPU samples at 30/90/144 FPS. House floor contacts and nine
@@ -63,8 +73,8 @@ horizontal crop offset is corrected. 13 contact-height assertions and the
 existing 168 comparison checks pass; contact fixes are pushed as `ed0b4dd9`.
 Added visual bob is removed. Swordfish now has a dedicated 12-frame swim loop
 for hover/dash glide: 67 focused GPU checks and 148 broader headless checks pass.
-Attack transitions still use comparison key poses. Chase still wants to compare
-the tower's look; other enemies' animation quality remains unreviewed.
+Attack transitions still use comparison key poses. T19 chooses the tower's 3D
+direction; other enemies' animation quality remains unreviewed.
 Unchanged collision alone was insufficient validation.
 [Playtest findings and fixes](verification/painted_registration_2026_10_22.md).
 
@@ -92,9 +102,9 @@ background task below. Park new ideas in the backlog. A new idea does not silent
 replace the current task or bypass its Git checkpoint.
 
 Active assets: Eave Runner v4, villagers v2 and Loom Heron v3. Eave Runner v2/v3
-are retained historical sources/exports. Standalone tower
-v1-v3 deliveries are saved references, not a newly accepted replacement in the
-game. Preserve the current direction.
+are retained historical sources/exports. The central tower now uses the scoped
+v4 roof polish from its existing 3D source; v1–v3 remain historical references.
+Roof appearance acceptance remains pending. Preserve the current direction.
 
 ## Required commit rhythm
 
@@ -349,6 +359,10 @@ not authorize merging, publishing a build or protected implementation changes.
   Chase's preferred categories and remaining polish are recorded.
 
 ## Parked until the current milestone is accepted
+
+T19 delivery checkpoint: retain the central tower's 3D direction; roof-polish
+implementation and automated verification are complete. Hands-on appearance
+acceptance remains unchecked in the [T19 delivery](art/central_tower_3d_polish_v4.md).
 
 - Swordfish friendly damage/redirection, multi-dash elite, Stillwater Tortoise
   and additional ecosystem mechanics: scope and obtain required approval first.

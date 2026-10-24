@@ -78,10 +78,17 @@ func verify() -> void:
 			for mesh: GeometryInstance3D in model.find_children("*","GeometryInstance3D",true,false):
 				check(not mesh.visible,"Painted lantern suppresses original mesh while retaining light")
 		else:
-			check(not model.visible,"Painted placement hides original model: "+entry.key)
+			check(model.visible if entry.key == "tower" else not model.visible,"Default presentation: "+entry.key)
+		if entry.key == "tower":
+			check(not entry.far.visible and not entry.near.visible,"Tower retains 3D depth with other painted buildings")
+			# Check its painted alternative only after explicitly selecting it;
+			# the default 3D mode does not initialize a hidden sprite's transform.
+			art.set_tower_painted(true)
 		if entry.key not in ["net_mender","boatwright"]:
 			var sprite: Sprite2D = entry.near if entry.near.visible else entry.far
 			check((sprite.texture.get_size()*sprite.scale.abs()).is_equal_approx(entry.bounds.size),"Exact original envelope: "+entry.key)
+		if entry.key == "tower":
+			art.set_tower_painted(false)
 	check(art.actors.size() == 5,"All five current model enemies have painted bindings")
 	check(art.bulbs.size() == 4,"All four placed bulbs have painted bindings")
 	for entry: Dictionary in art.actors:
@@ -126,16 +133,19 @@ func verify() -> void:
 	await frames(20)
 	for painted in [false,true]:
 		art.set_all(painted)
+		art.set_tower_painted(painted)
 		await capture("tower_wet_"+("painted" if painted else "models"),Vector2(1472,1150),.48)
 	player.global_position = Vector2(1472,1037.955)
 	player.reset_physics_interpolation()
 	await frames(20)
 	for painted in [false,true]:
 		art.set_all(painted)
+		art.set_tower_painted(painted)
 		await capture("tower_inside_"+("painted" if painted else "models"),Vector2(1472,1150),.48)
 	art.set_all(true)
 	room.lighting_preset = 1
 	await capture("tower_dusk_painted",Vector2(1472,1150),.48)
+	art.set_tower_painted(false)
 	room.lighting_preset = 0
 	for painted in [false,true]:
 		art.set_all(painted)

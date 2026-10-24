@@ -1,5 +1,17 @@
 # Next hands-on test session
 
+## Latest: T19 central tower in 3D — about 3 minutes
+
+Restart the comparison scene with F6. The tower defaults to **current 3D** even
+when the other categories are painted; F7 leaves that choice intact. Use the
+separate **Tower** checkbox only to compare the old painted alternative.
+
+Use the Tower landmark. Review the smoother timber eaves and tile direction,
+then enter the cutaway and jump across the platforms. Swim through the base
+opening and compare daylight/dusk. Record any roof silhouette, material or
+occlusion problems. The 3D direction is selected; v4 appearance still needs review.
+[Delivery and checks](art/central_tower_3d_polish_v4.md).
+
 ## Latest: T18 painted 2D comparison — about 5 minutes
 
 First-test fixes: restart F6 to load the camera-drift/contact registration changes.

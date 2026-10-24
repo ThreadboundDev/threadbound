@@ -1,0 +1,13 @@
+{
+	"baseline": true,
+	"captures": [
+		"before_roof_exterior.png",
+		"before_crown.png",
+		"before_tower_exterior.png",
+		"before_roof_cutaway.png",
+		"before_platform_depth.png",
+		"before_base_entrance.png",
+		"before_base_dusk.png"
+	],
+	"failures": []
+}

@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "protected_rendered_meshes": [
+    "01_Structure_iron",
+    "01_Structure_plaster",
+    "01_Structure_recess",
+    "01_Structure_rope",
+    "01_Structure_slate",
+    "01_Structure_walnut",
+    "02_Facade_Removable_iron",
+    "02_Facade_Removable_plaster",
+    "02_Facade_Removable_recess",
+    "02_Facade_Removable_walnut",
+    "03_Interior_Platforms_walnut",
+    "05_Open_Bottom_Basin_slate"
+  ],
+  "protected_triangle_positions_and_uvs_unchanged": true,
+  "all_mesh_identities_preserved": true,
+  "finite_positions_uv_tangents_present": true,
+  "roof_clearance": [
+    {
+      "mesh": "Roof_Tier02_Left_Side_With_Corners",
+      "minimum_abs_x": 2.5833065509796143,
+      "required_abs_x": 2.5833066324895873
+    },
+    {
+      "mesh": "Roof_Tier02_Right_Side_With_Corners",
+      "minimum_abs_x": 2.5833065509796143,
+      "required_abs_x": 2.5833066324895873
+    },
+    {
+      "mesh": "Roof_Tier03_Left_Side_With_Corners",
+      "minimum_abs_x": 2.5833065509796143,
+      "required_abs_x": 2.5833066324895873
+    },
+    {
+      "mesh": "Roof_Tier03_Right_Side_With_Corners",
+      "minimum_abs_x": 2.5833065509796143,
+      "required_abs_x": 2.5833066324895873
+    },
+    {
+      "mesh": "Roof_Tier04_Left_Side_With_Corners",
+      "minimum_abs_x": 1.8023070096969604,
+      "required_abs_x": 1.802306952899712
+    },
+    {
+      "mesh": "Roof_Tier04_Right_Side_With_Corners",
+      "minimum_abs_x": 1.8023070096969604,
+      "required_abs_x": 1.802306952899712
+    }
+  ],
+  "source_bounds": [
+    [
+      -4.6875,
+      0,
+      -3.000000238418579
+    ],
+    [
+      4.6875,
+      32.03125,
+      3
+    ]
+  ],
+  "new_bounds": [
+    [
+      -4.6875,
+      0,
+      -3.000000238418579
+    ],
+    [
+      4.6875,
+      32.03125,
+      3
+    ]
+  ],
+  "texture_sha256": {
+    "../Textures/slate_Roughness_4K.png": "c426e5abd6027f317e6d6fbd3547b499b64e2c0e6e0cc6758bc6a72e32414da5",
+    "../Textures/walnut_BaseColor_4K.png": "c1fdcb31583885488f9391a04fae76cf1c6cee08e939c02c0896858fd76dcf9d",
+    "../Textures/slate_NormalGL_4K.png": "136433b6a4abf571c457c2b723c77966006004879d6646bb8de2c032ccf49ec2",
+    "../Textures/plaster_BaseColor_4K.png": "c0167c177c3f2e5a69af5aaa9c5b4d4f8250a69b82016dcefbeef7629f7bb4ae",
+    "../Textures/slate_BaseColor_4K.png": "edb96bfcf62f24c8994f0486cb8893a15fa38130c25ac63a47ebf991f08a8a95",
+    "../Textures/plaster_Roughness_4K.png": "c9a34328105c2571a295af2718f471a8d0b4af455ed59acef329d569a9603ed3",
+    "../Textures/blue_tiles_NormalGL_4K.png": "5f12e1e279aae3a0561e3997076cb37e92e8f83b562d934b5c1848668236e8b8",
+    "../Textures/blue_tiles_Roughness_4K.png": "9582d7b70ccecda20862c72d18a31d1261d803dacd3d7b829d4b63dd37ca37a2",
+    "../Textures/walnut_NormalGL_4K.png": "fdd992393d8640b62b3f06d5bc6c424f90a259b484af644a88a29732990ab680",
+    "../Textures/plaster_NormalGL_4K.png": "679cff7ba67ea2db90843e05efd01cc4725f5a5c8825da86afc1ffd3748b022b",
+    "../Textures/walnut_Roughness_4K.png": "98f50367ba5d5022ac033db94361e9791963edd6e696a63a4bf22fd8b835837b",
+    "../Textures/blue_tiles_BaseColor_4K.png": "0ab47aa50bf2ea21ea34357d21a7d75ebfacd870f8f33ec074577ead74b1ccae"
+  },
+  "tile_normal_strength": 0.22
+}

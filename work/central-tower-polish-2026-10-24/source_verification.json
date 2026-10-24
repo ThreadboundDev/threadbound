@@ -1,0 +1,168 @@
+{
+  "source": "outputs/central-tower-model-v3/CentralTower_Editable.blend",
+  "roof_changes": [
+    {
+      "mesh": "Roof_Tier01_Front_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3760
+    },
+    {
+      "mesh": "Roof_Tier02_Front_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3280
+    },
+    {
+      "mesh": "Roof_Tier03_Front_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3280
+    },
+    {
+      "mesh": "Roof_Tier04_Front_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 2400
+    },
+    {
+      "mesh": "Roof_Tier02_Left_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 744
+    },
+    {
+      "mesh": "Roof_Tier02_Right_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 744
+    },
+    {
+      "mesh": "Roof_Tier03_Left_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 732
+    },
+    {
+      "mesh": "Roof_Tier03_Right_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 732
+    },
+    {
+      "mesh": "Roof_Tier04_Left_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 756
+    },
+    {
+      "mesh": "Roof_Tier04_Right_Inner_Return_HideWithFacade",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 756
+    },
+    {
+      "mesh": "Roof_Crown_Caps__blue_tiles",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 7872
+    },
+    {
+      "mesh": "Roof_Crown_Caps__walnut",
+      "fascia_vertices_smoothed": 0,
+      "fascia_rings": 0,
+      "uv_loops_remapped": 0
+    },
+    {
+      "mesh": "Roof_Tier01_Back_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3760
+    },
+    {
+      "mesh": "Roof_Tier01_Left_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 6536
+    },
+    {
+      "mesh": "Roof_Tier01_Right_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 6536
+    },
+    {
+      "mesh": "Roof_Tier02_Back_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3280
+    },
+    {
+      "mesh": "Roof_Tier02_Left_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9224
+    },
+    {
+      "mesh": "Roof_Tier02_Right_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9224
+    },
+    {
+      "mesh": "Roof_Tier03_Back_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 3280
+    },
+    {
+      "mesh": "Roof_Tier03_Left_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9236
+    },
+    {
+      "mesh": "Roof_Tier03_Right_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9236
+    },
+    {
+      "mesh": "Roof_Tier04_Back_Mitered",
+      "fascia_vertices_smoothed": 196,
+      "fascia_rings": 49,
+      "uv_loops_remapped": 2400
+    },
+    {
+      "mesh": "Roof_Tier04_Left_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9212
+    },
+    {
+      "mesh": "Roof_Tier04_Right_Side_With_Corners",
+      "fascia_vertices_smoothed": 144,
+      "fascia_rings": 36,
+      "uv_loops_remapped": 9212
+    }
+  ],
+  "protected_non_roof_hashes": {
+    "01_Structure__slate": "19f47463207e5bf988319071f117108945261b4071158bec7559b512dac6d468",
+    "01_Structure__walnut": "40e492d6aebab10fac45cbe38695a1081cd1b2d5cdc606e73a5a81b18002de85",
+    "01_Structure__plaster": "e2a6f07564113314a9f4cc5f678790b418584faf565b159371892b75ab65f47b",
+    "01_Structure__recess": "c8f67cd3bd5935b3219503f478a5a53445ff0135db0d73a86c0bde7ba14b23e9",
+    "01_Structure__iron": "cef6dbc34e7cb2d63c6c82c447bd68a7725b7de2a4f81cc01a951679e345a871",
+    "01_Structure__rope": "43dbd023eb8e22f18384a420f71d28f8a61f14fdebea975f24af0cceaf22de2f",
+    "02_Facade_Removable__plaster": "39ef28eaa183fdc8b12d6ba70e968e7e3c14e19dad475bc9828e953e61f25c99",
+    "02_Facade_Removable__walnut": "a59761587eedca60543411c44b2815a28c587e7a15fea2988a797951aef23ddb",
+    "02_Facade_Removable__recess": "e530641ea2d0ed403fbff1af9502b8f4a5239178c42b043081c9da16adac0b20",
+    "02_Facade_Removable__iron": "479a2a067402d9e3febfdab5254364ac4ea9a0d18af3b8257af3f175736d1fc7",
+    "03_Interior_Platforms__walnut": "e2dcd16e4d137a208d7652affe7bcf50390eff865376bf16301ec1c6f159718c",
+    "05_Open_Bottom_Basin__slate": "875cf1f4139974ae74667e62bb9fbe52f2dec261f2269c33f52b9e3974f87458"
+  },
+  "non_roof_geometry_uvs_unchanged": true,
+  "vertex_and_face_counts_unchanged": true,
+  "texture_bytes_unchanged": true,
+  "runtime": "Assets\\BlueBiome\\Art\\Lakeside3D\\Models\\central_tower_v4.glb",
+  "runtime_sha256": "cacc357bb5c4e8a44de88e15f565e2337a5895c3c4e619ff5b23f096ce2c83ab"
+}

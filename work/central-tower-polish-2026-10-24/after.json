@@ -1,0 +1,20 @@
+{
+	"baseline": false,
+	"captures": [
+		"after_roof_exterior.png",
+		"after_crown.png",
+		"after_tower_exterior.png",
+		"after_roof_cutaway.png",
+		"after_platform_depth.png",
+		"after_base_entrance.png",
+		"after_base_dusk.png",
+		"after_hybrid_default.png",
+		"before_roof_angle_exterior.png",
+		"before_roof_angle_cutaway.png",
+		"after_roof_angle_exterior.png",
+		"after_roof_angle_cutaway.png"
+	],
+	"checks": 31,
+	"failures": [],
+	"passed": true
+}

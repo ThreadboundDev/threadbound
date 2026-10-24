@@ -4,6 +4,7 @@ const ASSETS := "res://Assets/BlueBiome/Art/PaintedComparison/"
 const SOURCES := "res://work/painted-2d-comparison-2026-10-22/source_manifest.json"
 const CONTACT_SHADER := preload("res://Src/Environment/BlueBiome/Comparison/painted_contact_registration.gdshader")
 var buildings_enabled := true
+var tower_painted_enabled := false
 var actors_enabled := true
 var bulbs_enabled := true
 var placements: Array[Dictionary] = []
@@ -160,6 +161,8 @@ func _process(delta: float) -> void:
 		var model: Node3D = node.render_model
 		var is_actor: bool = entry.key in ["net_mender","boatwright"]
 		var enabled := actors_enabled if is_actor else buildings_enabled
+		if entry.key == "tower":
+			enabled = tower_painted_enabled
 		model.visible = node.is_visible_in_tree() and not enabled
 		if entry.key == "lantern":
 			# Keep its existing light for any model actors in a mixed comparison;
@@ -385,6 +388,11 @@ func set_all(enabled: bool) -> void:
 	_sync_buttons()
 	_process(0)
 
+func set_tower_painted(enabled: bool) -> void:
+	tower_painted_enabled = enabled
+	_sync_buttons()
+	_process(0)
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F7:
 		set_all(not (buildings_enabled and actors_enabled and bulbs_enabled))
@@ -402,28 +410,32 @@ func _build_controls() -> void:
 	var column := VBoxContainer.new()
 	panel.add_child(column)
 	var label := Label.new()
-	label.text = "T18 • F7 switches all art • Same gameplay / player / scale"
+	label.text = "T18 • F7 switches buildings/actors/bulbs • Tower switches separately"
 	column.add_child(label)
 	var row := HBoxContainer.new()
 	column.add_child(row)
-	for category: String in ["Buildings","Actors","Bulbs"]:
+	for category: String in ["Buildings","Tower","Actors","Bulbs"]:
 		var button := CheckButton.new()
 		button.name = category
 		button.text = category+": painted 2D"
-		button.button_pressed = true
+		button.button_pressed = category != "Tower"
 		row.add_child(button)
 		button.toggled.connect(func(enabled: bool):
 			match category:
 				"Buildings": buildings_enabled = enabled
+				"Tower": tower_painted_enabled = enabled
 				"Actors": actors_enabled = enabled
 				"Bulbs": bulbs_enabled = enabled
 			_sync_buttons()
 			_process(0))
+	_sync_buttons()
 
 func _sync_buttons() -> void:
 	if not controls:
 		return
 	for button: CheckButton in controls.find_children("*","CheckButton",true,false):
 		var enabled := buildings_enabled if button.name == "Buildings" else actors_enabled if button.name == "Actors" else bulbs_enabled
+		if button.name == "Tower":
+			enabled = tower_painted_enabled
 		button.set_pressed_no_signal(enabled)
 		button.text = String(button.name)+": "+("painted 2D" if enabled else "rendered" if button.name == "Bulbs" else "current 3D")
