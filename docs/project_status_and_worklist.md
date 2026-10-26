@@ -10,6 +10,12 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+October 26 follow-up from Chase's brother: entry animation looks good; exit
+repeats the entering motion, downhill movement loses smooth ground contact,
+and upward water dash travels diagonally. See the follow-up section in the
+linked report. Door/slope diagnosis is **In progress**; equipment dash changes
+need scoped approval. Feedback checkpoint: `docs: record brother's playtest feedback`.
+
 Chase confirmed that house bouncing is fixed and the villagers' work/greet
 interaction functions. The two villager poses are sufficient for now. Fisher's
 loft remains deferred. Keep 3D enemies for now; retain painted alternatives for

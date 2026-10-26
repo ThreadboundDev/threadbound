@@ -198,3 +198,22 @@ test uses the spacious right-hand approach. The retained painted-fish fixture
 explicitly selects its alternative now that enemies default to 3D. No gameplay
 was changed to make those fixture expectations pass. T03 authored reset-count
 reconciliation and T04 legacy/teardown diagnostics remain separate open tasks.
+
+## Brother's follow-up playtest — October 26
+
+Reported on `threadbound/fix-lakeside-playtest-feedback`, HEAD `cb68dfcc`.
+Exact running revision, slope/house landmark and input device were not supplied.
+A pre-existing local comparison-scene edit is present and must be preserved.
+
+- **Door exit — change.** Entering animation looked great. Exiting repeated the
+  entering motion; expected an outward-facing walk out of the same doorway.
+- **Downhill contact — change.** On a sloped platform the model fell with each
+  step; expected continuous grounded movement down the slope. Exact slope and
+  movement speed remain unspecified.
+- **Upward water dash — change.** Upward dash traveled diagonally upward;
+  expected straight upward travel. Code currently forces horizontal chest-dash
+  speed while swim input supplies vertical motion. Changing equipment dash
+  direction requires the scoped approval under AGENTS.md before implementation.
+
+These are reported observations, not acceptance of the remaining T20 items.
+Reproduce each separately and checkpoint each verified correction independently.
