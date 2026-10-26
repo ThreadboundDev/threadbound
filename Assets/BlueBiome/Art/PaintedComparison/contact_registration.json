@@ -5,8 +5,8 @@
     "1": {"rows": [{"y": 879, "collision": "FisherFloor", "span": [821, 1362]}], "walls": [821, 1362]}
   },
   "workshop": {
-    "0": {"rows": [{"y": 786, "collision": "WorkshopFloor", "span": [108, 685]}], "door_x": 282},
-    "1": {"rows": [{"y": 784, "collision": "WorkshopFloor", "span": [894, 1470]}], "walls": [894, 1470]}
+    "0": {"rows": [{"y": 788, "collision": "WorkshopFloor", "span": [108, 685]}], "door_x": 282},
+    "1": {"rows": [{"y": 787, "collision": "WorkshopFloor", "span": [894, 1470]}], "walls": [894, 1470]}
   },
   "tower": {
     "1": {"vertical_only": true, "rows": [

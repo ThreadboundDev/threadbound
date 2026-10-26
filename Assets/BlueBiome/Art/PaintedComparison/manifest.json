@@ -65,36 +65,36 @@
     ],
     "frames": [
       [
-        10,
-        237,
-        766,
-        621
+        8,
+        234,
+        769,
+        627
       ],
       [
-        797,
-        237,
-        766,
-        621
+        794,
+        234,
+        770,
+        627
       ]
     ],
     "initial_alpha_bounds": [
-      10,
-      237,
-      766,
-      621
+      8,
+      234,
+      769,
+      627
     ],
     "pose_alpha_bounds": [
       [
-        10,
-        237,
-        766,
-        621
+        8,
+        234,
+        769,
+        627
       ],
       [
-        11,
-        274,
-        766,
-        584
+        8,
+        273,
+        770,
+        587
       ]
     ],
     "pose_offsets": [
@@ -107,7 +107,8 @@
         0
       ]
     ],
-    "source": "built-in imagegen; original pixels retained"
+    "source": "built-in imagegen; original pixels retained",
+    "file": "workshop_v2.png"
   },
   "tower": {
     "pixels": [

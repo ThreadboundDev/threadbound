@@ -109,7 +109,7 @@ func _texture(key: String, frame: int) -> AtlasTexture:
 		return _textures[cache_key]
 	var entry: Dictionary = manifest[key]
 	var texture := AtlasTexture.new()
-	texture.atlas = load(ASSETS+key+".png")
+	texture.atlas = load(ASSETS+str(entry.get("file",key+".png")))
 	texture.region = _rect(entry.frames[clampi(frame,0,entry.frames.size()-1)])
 	texture.filter_clip = true
 	_textures[cache_key] = texture

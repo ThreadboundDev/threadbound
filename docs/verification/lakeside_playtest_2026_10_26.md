@@ -114,3 +114,27 @@ zero stem/petal-pixel changes, unchanged transforms/collision and correct spent
 state after actual grapple activation. The broader 166 comparison checks pass,
 including regeneration. See `bulb_idle_0.png`, `bulb_idle_1.png` and
 `bulb_current.json` in the evidence folder. Chase's idle-motion review is pending.
+
+## Clear workshop doorway
+
+The comparison loads `Assets/BlueBiome/Art/PaintedComparison/workshop_v2.png`;
+the original sheet is retained. Built-in imagegen removed the exterior table
+and bowl, restoring the door planks/threshold. The interior worktable remains.
+The RGBA canvas remains 1572×1001; alpha crops are remeasured and both floor
+contacts refitted to the existing geometry. The sheet imports successfully.
+Generated pixels outside the requested region vary slightly; no claim of
+pixel-identical preservation. Original world envelopes remain unchanged.
+
+Built-in edit prompt: “Remove ONLY the small wooden table and tiny bowl that
+obstruct the exterior door in the LEFT building, approximately x=176..358 and
+y=687..789. Reconstruct the same vertical timber door planks and lower door
+threshold behind that table so this exterior doorway is completely clear.
+Preserve the door's frame, exact x center and height; this is a functional door
+for entering. Preserve the RIGHT cutaway interior including its own worktable,
+untouched. Preserve everything else: both building silhouettes, existing canvas
+dimensions/transparent margins, blue roof tiles, floor at y786, stone step,
+wall decorations, window, barrel, palette, hand-painted style and two-frame
+positions. Do not move, crop, scale or redraw the buildings. Retain real
+transparency. The single requested change is removing the LEFT exterior
+table/bowl from in front of the door.” Target: original transparent 1572×1001
+workshop sheet; use case precise-object-edit. Awaiting Chase's in-game review.

@@ -99,6 +99,10 @@ Bulb idle correction: living currents/bubbles move within the painted sac while
 stem/petals/attachment stay fixed. 13 GPU checks and 166 comparison checks pass,
 including grapple/spent/regeneration. Manual motion review remains pending.
 
+Workshop door art: versioned sheet clears the exterior table; interior worktable
+is retained. Original world envelope and contact registration are preserved;
+alpha measurement and import pass. Manual doorway appearance review is pending.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

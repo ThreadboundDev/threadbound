@@ -5,6 +5,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "Assets/BlueBiome/Art/PaintedComparison"
+FILES = {"workshop": "workshop_v2.png"}
 LAYOUTS = {
     "fisher_house": (2, 1), "workshop": (2, 1), "tower": (2, 1),
     "boat_slip": (1, 1), "lantern": (1, 1),
@@ -32,7 +33,7 @@ ANCHORS = {
 def measure():
     manifest = {}
     for key, (columns, rows) in LAYOUTS.items():
-        path = ASSETS / f"{key}.png"
+        path = ASSETS / FILES.get(key, f"{key}.png")
         if not path.exists():
             continue
         with Image.open(path) as image:
@@ -112,6 +113,8 @@ def measure():
                     centers.append(sum(xx*weight for xx,weight in enumerate(weights))/max(sum(weights),1))
                 offsets = [[centers[0]-center,bottom-used[3]] for center,used in zip(centers,bounds)]
             manifest[key] = {"pixels":[width,height],"grid":[columns,rows],"frames":frames,"initial_alpha_bounds":[left,top,right-left,bottom-top],"pose_alpha_bounds":[[a,b,c-a,d-b] for a,b,c,d in bounds],"pose_offsets":offsets,"source":"built-in imagegen; original pixels retained"}
+            if key in FILES:
+                manifest[key]["file"] = FILES[key]
             if bill_anchors:
                 manifest[key]["bill_anchors"] = bill_anchors
     (ASSETS/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8",newline="\n")
