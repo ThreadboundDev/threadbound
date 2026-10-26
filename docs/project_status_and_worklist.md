@@ -75,6 +75,11 @@ Enemy correction: the comparison defaults to the existing 3D enemies and keeps
 painted villagers, with independent controls. 166 comparison checks pass,
 including F2 preserving the selected model display; manual review is pending.
 
+Roof landing correction: existing one-way roofs remain active outdoors; only
+interior floors are ignored until entering. 417 house-entry checks pass,
+including real player landings on six exposed roof locations. Rendered boot
+contact remains a separate open correction, and appearance needs manual review.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

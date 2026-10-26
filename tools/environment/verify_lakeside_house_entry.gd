@@ -29,7 +29,10 @@ func check_outside(house: Node2D, player: CharacterBody2D, mask: int, label: Str
 	check(not player.has_meta(house.HOUSE_META), label + ": indoor ownership cleared")
 	check(room.get_node("Geometry/RockCollision") not in player.get_collision_exceptions(), label + ": outdoor terrain restored")
 	for body: PhysicsBody2D in house._bodies:
-		check(body in player.get_collision_exceptions(), label + ": player passes exterior " + str(body.name))
+		if String(body.name).contains("Roof"):
+			check(body not in player.get_collision_exceptions(), label + ": exterior roof stays landable " + str(body.name))
+		else:
+			check(body in player.get_collision_exceptions(), label + ": player passes exterior interior-floor " + str(body.name))
 
 func verify() -> void:
 	room = load(ROOM).instantiate()
@@ -49,6 +52,23 @@ func verify() -> void:
 	player.add_collision_exception_with(sentinel)
 	var rows: Array[Dictionary] = []
 	for label: String in ["Fisher house", "Workshop"]:
+		var roof_house := room.get_landmark_house(label) as Node2D
+		var roof_prefix := "Fisher" if label == "Fisher house" else "Workshop"
+		# Use exposed slopes and ridge. The outermost eaves are embedded in cave
+		# art/terrain and intentionally are not free-standing landing surfaces.
+		for roof_index in [5, 10, 15]:
+			var roof := room.get_node("Geometry/BuildingCollision/" + roof_prefix + "Roof" + str(roof_index)) as StaticBody2D
+			player.global_position = roof.global_position - Vector2(0, roof_house.foot_offset(player) + 60)
+			player.velocity = Vector2(0, 100)
+			player.reset_physics_interpolation()
+			await frames(45)
+			check(player.is_on_floor(), label + ": actual player lands on roof segment " + str(roof_index))
+			var on_roof := false
+			for collision_index in player.get_slide_collision_count():
+				var collider := player.get_slide_collision(collision_index).get_collider()
+				if collider and String(collider.name).begins_with(roof_prefix + "Roof"):
+					on_roof = true
+			check(on_roof, label + ": roof rather than terrain supports the landing " + str(roof_index))
 		room.focus_landmark(label)
 		await frames(30)
 		var house := room.get_landmark_house(label) as Node2D

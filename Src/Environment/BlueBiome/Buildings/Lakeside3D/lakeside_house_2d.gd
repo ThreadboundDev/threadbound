@@ -81,6 +81,10 @@ func _track_players() -> void:
 		player.tree_exiting.connect(_untrack_player.bind(player))
 		var owned: Array[PhysicsBody2D] = []
 		for body: PhysicsBody2D in _bodies:
+			# Door gating applies to interior floors, not exterior roof landings.
+			# Roof outlines are already one-way, so walking past the facade stays free.
+			if String(body.name).contains("Roof"):
+				continue
 			if body not in player.get_collision_exceptions():
 				player.add_collision_exception_with(body)
 				owned.append(body)

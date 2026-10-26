@@ -51,3 +51,15 @@ animation, bone anchors and collision are unchanged. The broader comparison
 fixture passes 166 headless checks, including default viewport updates, F2
 respawn in 3D, painted alternatives, house entry and bulb regeneration. Existing
 ObjectDB/resource teardown warnings remain. Awaiting Chase's movement review.
+
+## Exterior roof landing correction
+
+Door-controlled houses now ignore only interior floor/loft collision outdoors;
+their existing one-way roof outlines remain landable. No geometry was moved.
+The expanded real-player entry fixture passes 417 headless checks, including
+landings on exposed left slope/ridge/right slope of both houses, plus interior
+walls, entry/exit, death, teleport and teardown restoration. All roof segments
+are checked against accidental collision exceptions. The very outer eaves are
+embedded in cave terrain, so landing tests use exposed segments 5/10/15.
+Existing Camera2D/interpolated Camera3D and teardown warnings remain. Rendered
+boot contact is a separate open issue; these are physical landing checks.
