@@ -589,6 +589,7 @@ var _hurtbox_collision_standing_size := Vector2.ZERO
 var _hurtbox_collision_standing_position := Vector2.ZERO
 var _hurt_animation_active := false
 var is_dead := false
+var house_door_transition_owner: Node
 var god_mode_enabled := false
 var death_reset_started := false
 var _death_recovery_forced := false
@@ -758,6 +759,9 @@ func unequip_gloves() -> void:
 # PHYSICS PROCESS
 # ===============================
 func _physics_process(delta: float) -> void:
+	if is_instance_valid(house_door_transition_owner) and not is_dead:
+		velocity = Vector2.ZERO
+		return
 	_process_debug_inputs()
 	_process_one_way_drop_input(delta)
 	_process_audio_timers(delta)
@@ -977,7 +981,7 @@ func _physics_process(delta: float) -> void:
 # ===============================
 func _process(_delta: float) -> void:
 	_sync_pattern_visual_transform()
-	if save_point_interaction_active:
+	if save_point_interaction_active or is_instance_valid(house_door_transition_owner):
 		return
 
 	if OS.is_debug_build():
@@ -4814,6 +4818,22 @@ func _on_ability_cooldown_timeout() -> void:
 # ===============================
 # SAVE POINT INTERACTION
 # ===============================
+func begin_house_door_transition(owner_node: Node) -> bool:
+	if is_dead or save_point_interaction_active or is_attacking or is_hurt or is_instance_valid(house_door_transition_owner):
+		return false
+	house_door_transition_owner = owner_node
+	velocity = Vector2.ZERO
+	return true
+
+func end_house_door_transition(owner_node: Node) -> void:
+	if house_door_transition_owner != owner_node:
+		return
+	house_door_transition_owner = null
+	velocity = Vector2.ZERO
+	if live_3d_visual:
+		live_3d_visual.end_house_door_transition()
+	play_character_anim("Death" if is_dead else "Idle")
+
 func begin_save_point_interaction(save_point: Node, sit_target_position: Vector2) -> bool:
 	if save_point_interaction_active or is_dead:
 		return false

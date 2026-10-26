@@ -3,6 +3,9 @@ extends "res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.
 ## Opt-in, same-room house entry. Other placements retain automatic cutaways.
 const BOUNDARY_LAYER := 1 << 31
 const HOUSE_META := &"lakeside_house_interior"
+const FOCUS := preload("res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_focus.gd")
+const DOOR_VISUAL := preload("res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_door_visual.gd")
+const DOOR_DURATION := 0.72
 @export var use_door_entry := false
 @export var floor_shape_path: NodePath
 @export var house_collision_paths: Array[NodePath] = []
@@ -22,6 +25,9 @@ var _cooldown := 0.0
 var _configured_model := 0
 var _occupied := false
 var _transition_generation := 0
+var _transition_player: CharacterBody2D
+var interior_focus: Node
+var door_visual: Node2D
 
 func _ready() -> void:
 	super._ready()
@@ -36,6 +42,12 @@ func _ready() -> void:
 		if body not in _bodies:
 			_bodies.append(body)
 	_build_boundaries()
+	interior_focus = FOCUS.new()
+	interior_focus.name = "InteriorFocus"
+	add_child(interior_focus)
+	door_visual = DOOR_VISUAL.new()
+	door_visual.name = "DoorPresentation"
+	$Door.add_child(door_visual)
 	_track_players()
 
 func _update_entry() -> void:
@@ -62,6 +74,10 @@ func _physics_process(delta: float) -> void:
 		return
 	_cooldown = maxf(0.0, _cooldown - delta)
 	_track_players()
+	if is_instance_valid(_transition_player) and (_transition_player.get("is_dead") == true or _transition_player.global_position.distance_to($Door.global_position) > 220.0):
+		_cancel_door_transition()
+		if is_instance_valid(inside_player):
+			leave_house(false)
 	if is_instance_valid(inside_player):
 		if inside_player.get("is_dead") == true or not entry_rect.grow(96.0).has_point(to_local(inside_player.global_position)):
 			leave_house(false)
@@ -91,6 +107,8 @@ func _track_players() -> void:
 		_owned_exceptions[player.get_instance_id()] = owned
 
 func _untrack_player(player: CharacterBody2D) -> void:
+	if _transition_player == player:
+		_cancel_door_transition()
 	if inside_player == player:
 		leave_house(false)
 	for body: PhysicsBody2D in _owned_exceptions.get(player.get_instance_id(), []):
@@ -138,7 +156,7 @@ func foot_offset(player: CharacterBody2D) -> float:
 
 func inside_destination(player: CharacterBody2D) -> Vector2:
 	var bounds := floor_bounds()
-	var x := clampf($InsideSpawn.global_position.x, bounds.position.x + 32.0, bounds.end.x - 32.0)
+	var x := clampf($Door.global_position.x, bounds.position.x + 32.0, bounds.end.x - 32.0)
 	return Vector2(x, bounds.position.y - foot_offset(player) - 2.0)
 
 func outside_destination(player: CharacterBody2D) -> Vector2:
@@ -164,6 +182,8 @@ func interaction_exclusions(player: CharacterBody2D) -> Array[RID]:
 
 func can_use_door(player: CharacterBody2D) -> bool:
 	if not use_door_entry or _transition_locked or _cooldown > 0.0 or player.get("is_dead") == true:
+		return false
+	if player.get("is_attacking") == true or player.get("is_hurt") == true or player.get("save_point_interaction_active") == true:
 		return false
 	if is_instance_valid(inside_player) and inside_player != player:
 		return false
@@ -192,12 +212,58 @@ func _apply_door(player: CharacterBody2D, generation: int) -> void:
 	if not door_bounds.intersects(player_bounds):
 		_transition_locked = false
 		return
-	if is_player_inside(player):
-		leave_house(true)
-	else:
-		_enter_house(player)
+	if not player.begin_house_door_transition(self):
+		_transition_locked = false
+		return
+	_transition_player = player
+	var entering := not is_player_inside(player)
+	var origin := player.global_position
+	var visual: Node = player.get_node_or_null("Live3DVisual")
+	if visual:
+		visual.begin_house_door_transition(entering)
+	var elapsed := 0.0
+	var switched := false
+	var expected := origin
+	while elapsed < DOOR_DURATION:
+		await get_tree().physics_frame
+		if generation != _transition_generation or not is_instance_valid(player) or not is_inside_tree():
+			return
+		if player.global_position.distance_to(expected) > 96.0 or player.get("is_dead") == true:
+			_cancel_door_transition()
+			if is_player_inside(player):
+				leave_house(false)
+			return
+		elapsed += get_physics_process_delta_time()
+		var progress := minf(elapsed/DOOR_DURATION,1.0)
+		if not switched:
+			# A short approach to the center of this door, never to InsideSpawn.
+			player.global_position.x = lerpf(origin.x,$Door.global_position.x,smoothstep(0.0,0.25,progress))
+		if progress >= 0.61 and not switched:
+			switched = true
+			if entering:
+				_enter_house(player)
+			else:
+				leave_house(true,true)
+		door_visual.opening = smoothstep(0.08,0.40,progress)*(1.0-smoothstep(0.85,1.0,progress))
+		door_visual.indoors = is_player_inside(player)
+		door_visual.threshold = floor_bounds().position.y-$Door.global_position.y if door_visual.indoors else 0.0
+		if visual:
+			visual.set_house_door_progress(progress)
+		expected = player.global_position
+	player.end_house_door_transition(self)
+	_transition_player = null
+	door_visual.opening = 0.0
 	_cooldown = 0.25
 	_transition_locked = false
+
+func _cancel_door_transition() -> void:
+	_transition_generation += 1
+	_transition_locked = false
+	if is_instance_valid(_transition_player):
+		_transition_player.end_house_door_transition(self)
+	_transition_player = null
+	if is_instance_valid(door_visual):
+		door_visual.opening = 0.0
 
 func _enter_house(player: CharacterBody2D) -> void:
 	_return_position = player.global_position
@@ -219,10 +285,16 @@ func _enter_house(player: CharacterBody2D) -> void:
 	player.velocity = Vector2.ZERO
 	player.reset_physics_interpolation()
 	_update_cutaway()
+	interior_focus.enter(player)
+	door_visual.indoors = true
+	door_visual.threshold = bounds_to_door_threshold()
 
-func leave_house(reposition := true) -> void:
-	_transition_generation += 1
-	_transition_locked = false
+func bounds_to_door_threshold() -> float:
+	return floor_bounds().position.y-$Door.global_position.y
+
+func leave_house(reposition := true, keep_transition := false) -> void:
+	if not keep_transition:
+		_cancel_door_transition()
 	var player := inside_player
 	inside_player = null
 	_occupied = false
@@ -242,6 +314,10 @@ func leave_house(reposition := true) -> void:
 			player.reset_physics_interpolation()
 	_terrain_exceptions.clear()
 	_update_cutaway()
+	if is_instance_valid(interior_focus):
+		interior_focus.leave(not reposition)
+	if is_instance_valid(door_visual):
+		door_visual.indoors = false
 
 func _exit_tree() -> void:
 	if use_door_entry and not Engine.is_editor_hint():

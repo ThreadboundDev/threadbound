@@ -4,6 +4,10 @@
 authorizes the door transition, indoor focus, exit cue and tower foreground rim
 described below. Implementation and visual acceptance are tracked separately.
 
+House entry/focus is implemented: 79 GPU, 417 existing house-entry and 166
+comparison checks pass. Captures are in `work/lakeside-entry-focus-2026-10-26/`.
+The tower foreground rim remains the next scoped implementation checkpoint.
+
 Chase's October 26 playtest confirms house bouncing is fixed and villager
 interactions work. The work/greet poses are acceptable for now. Remaining
 feedback is recorded in `docs/verification/lakeside_playtest_2026_10_26.md`.
@@ -76,6 +80,6 @@ from below. Check that the exit cue and camera framing agree with the actual
 door, and tower art adds no blocking collision.
 
 Approval is required under AGENTS.md: "Before making any architectural changes"
-and "Scene tree restructuring". This proposal is not yet approved. Bug fixes
+and "Scene tree restructuring". Chase approved the full scope on October 26. Bug fixes
 for reflections, visual contact, idle bulb presentation and crack depth can
-proceed separately; new house/camera/entrance architecture waits for approval.
+proceed separately; new house/camera/entrance architecture follows this approved scope.

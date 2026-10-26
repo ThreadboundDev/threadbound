@@ -14,7 +14,8 @@ func press_interact(held_frames := 2) -> void:
 	for index in held_frames:
 		await process_frame
 	Input.action_release("interact")
-	await frames(3)
+	# Door travel now owns a short animation, then releases input/cooldown.
+	await frames(65)
 
 func approach_exit(house: Node2D, player: CharacterBody2D) -> void:
 	player.global_position = Vector2(house.get_node("Door").global_position.x, house.floor_bounds().position.y - house.foot_offset(player) - 2)

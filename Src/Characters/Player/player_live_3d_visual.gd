@@ -60,6 +60,10 @@ var _display: Sprite2D
 var _display_rest_position := Vector2.ZERO
 var _land_display_offset := Vector2.ZERO
 var _sole_probes: Array[Dictionary] = []
+var _door_active := false
+var _door_entering := true
+var _door_progress := 0.0
+var _door_start_yaw := 0.0
 var _camera: Camera3D
 var _sword_mesh: MeshInstance3D
 var _sword_sweep: SwordSweepVFX
@@ -113,6 +117,9 @@ func _process(delta: float) -> void:
 		return
 	_hide_legacy_visuals()
 	if Engine.is_editor_hint():
+		return
+	if _door_active:
+		_update_house_door_pose()
 		return
 	var facing := _get_visual_facing(delta)
 	if _logical_animation in [&"Dash", &"Water_Dash"]:
@@ -172,6 +179,49 @@ func _sole_height() -> float:
 		var point: Vector3 = _skeleton.get_bone_global_pose(probe.bone) * probe.point
 		height = minf(height, point.y)
 	return height if is_finite(height) else 0.0
+
+
+func begin_house_door_transition(entering: bool) -> void:
+	_door_active = true
+	_door_entering = entering
+	_door_progress = 0.0
+	_door_start_yaw = PI if _player.last_direction < 0 else 0.0
+	_play_action(&"walk_1", &"idle_4", 0.0, true)
+	_update_house_door_pose()
+
+
+func set_house_door_progress(progress: float) -> void:
+	_door_progress = clampf(progress, 0.0, 1.0)
+	_update_house_door_pose()
+
+
+func _update_house_door_pose() -> void:
+	var p := _door_progress
+	var depth := smoothstep(0.16,0.57,p) if _door_entering else 1.0-smoothstep(0.55,0.9,p)
+	if _door_entering:
+		depth *= 1.0-smoothstep(0.66,1.0,p)
+	var turn := smoothstep(0.0,0.25,p)*(1.0-smoothstep(0.72,1.0,p)) if _door_entering else 1.0-smoothstep(0.62,1.0,p)
+	_model_root.rotation.y = lerp_angle(_door_start_yaw, PI*0.5, turn)
+	_model_root.position = Vector3.ZERO
+	_model_root.position.y = -_sole_height()
+	_display.flip_h = false
+	_display.rotation = 0.0
+	_display.scale = display_scale*(1.0-0.10*depth)
+	_display.offset = _land_display_offset
+	_display.position = _display_rest_position-Vector2(0,8.0*depth)
+	# Reconcile the indoor/outdoor floor while fully behind the doorway.
+	_display.modulate.a = 1.0-smoothstep(0.43,0.57,p)+smoothstep(0.66,0.9,p)
+
+
+func end_house_door_transition() -> void:
+	_door_active = false
+	_model_root.rotation.y = 0.0
+	_display.scale = display_scale
+	_display.position = _display_rest_position
+	_display.modulate.a = 1.0
+	_display.flip_h = _player.last_direction < 0
+	_logical_animation = &""
+	play_gameplay_animation(&"Idle")
 
 
 func _exit_tree() -> void:

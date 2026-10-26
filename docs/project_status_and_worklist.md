@@ -103,6 +103,12 @@ Workshop door art: versioned sheet clears the exterior table; interior worktable
 is retained. Original world envelope and contact registration are preserved;
 alpha measurement and import pass. Manual doorway appearance review is pending.
 
+Approved house entrance/focus implementation: same-door turn/walk/open/exit,
+smooth indoor framing, exterior dimming and amber exit cue are implemented.
+79 GPU checks, 417 house-entry and 166 comparison checks pass. Captures and
+interruption/restore evidence are in the October 26 report. Chase's feel review
+remains pending. The approved tower foreground rim is the remaining active item.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

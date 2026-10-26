@@ -38,7 +38,7 @@ func interact() -> void:
 	Input.action_press("interact")
 	await process_frame
 	Input.action_release("interact")
-	await frames(30)
+	await frames(65)
 
 func physics_snapshot() -> Dictionary:
 	var values := {}

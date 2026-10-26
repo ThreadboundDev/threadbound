@@ -138,3 +138,30 @@ positions. Do not move, crop, scale or redraw the buildings. Retain real
 transparency. The single requested change is removing the LEFT exterior
 table/bowl from in front of the door.” Target: original transparent 1572×1001
 workshop sheet; use case precise-object-edit. Awaiting Chase's in-game review.
+
+## Approved animated doors and indoor focus
+
+Chase approved the full entrance proposal on October 26. Both houses now use a
+0.72-second owned transition: approach the actual door center, turn the live 3D
+player away, open panels and walk in visually, reveal the cutaway while the
+player is behind the doorway, and resume at the same door x. Exit reverses it.
+The old offset InsideSpawn markers are retained but no longer used. Vertical
+floor reconciliation occurs while the character is occluded. Brief input locks
+cannot begin during hurt/attacks/save-point interaction and release on death,
+debug teleport or house removal.
+
+The occupied house gets a smooth, capped camera zoom/center with room limits;
+scenery outside the room dims/desaturates. HUD remains above the focus layer.
+Outdoor camera position/zoom/limits restore exactly. A quiet amber interior
+door outline, handle and floor glow mark the exit at the active door/floor.
+Tower camera/traversal is unchanged. No new equipment or combat system.
+
+`verify_lakeside_entry_focus.gd`: 79 Forward+ checks pass in both painted and 3D
+house modes, including actual Interact, turn/open states, blocked movement/jump,
+same-door position, health, visible exterior dimming/HUD preservation, resize,
+camera restoration, death/teleport and mid-entry house removal. Captures/report
+are under `work/lakeside-entry-focus-2026-10-26/`. Existing house-entry checks:
+417 pass; comparison checks: 166 pass. The comparison also now drops bindings
+for a removed house safely. No runtime script errors remain in this fixture;
+pre-existing interpolation, missing glove Death animation and rendering/resource
+teardown warnings remain. Chase's visible/feel acceptance is pending.

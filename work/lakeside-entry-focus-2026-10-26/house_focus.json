@@ -1,0 +1,15 @@
+{
+	"captures": [
+		"painted_fisher_house_entering",
+		"painted_fisher_house_inside",
+		"painted_workshop_entering",
+		"painted_workshop_inside",
+		"models_fisher_house_entering",
+		"models_fisher_house_inside",
+		"models_workshop_entering",
+		"models_workshop_inside"
+	],
+	"checks": 79,
+	"display": "Windows",
+	"failures": []
+}

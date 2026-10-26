@@ -158,7 +158,13 @@ func _process(delta: float) -> void:
 	resident_camera.transform = stage.far_camera.transform
 	resident_camera.size = stage.far_camera.size
 	resident_image.global_transform = stage.far_sprite.global_transform
-	for entry: Dictionary in placements:
+	for placement_index in range(placements.size()-1,-1,-1):
+		var entry: Dictionary = placements[placement_index]
+		if not is_instance_valid(entry.node):
+			entry.far.queue_free()
+			entry.near.queue_free()
+			placements.remove_at(placement_index)
+			continue
 		var node: Node2D = entry.node
 		var model: Node3D = node.render_model
 		var is_actor: bool = entry.key in ["net_mender","boatwright"]
@@ -172,8 +178,15 @@ func _process(delta: float) -> void:
 			model.visible = node.is_visible_in_tree()
 			for mesh: GeometryInstance3D in model.find_children("*","GeometryInstance3D",true,false):
 				mesh.visible = not enabled
-		if is_actor and buildings_enabled and not node.house_path.is_empty():
-			model.visible = model.visible and node.get_node(node.house_path).render_model.is_cutaway
+		if is_actor and not node.house_path.is_empty():
+			var house: Node2D = node.get_node_or_null(node.house_path)
+			if not is_instance_valid(house):
+				model.visible = false
+				entry.far.visible = false
+				entry.near.visible = false
+				continue
+			if buildings_enabled:
+				model.visible = model.visible and house.render_model.is_cutaway
 		if is_actor:
 			for mesh: GeometryInstance3D in model.find_children("*","GeometryInstance3D",true,false):
 				mesh.layers = 4 if mixed else 1
