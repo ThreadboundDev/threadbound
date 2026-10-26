@@ -3,6 +3,7 @@ extends Node
 const ASSETS := "res://Assets/BlueBiome/Art/PaintedComparison/"
 const SOURCES := "res://work/painted-2d-comparison-2026-10-22/source_manifest.json"
 const CONTACT_SHADER := preload("res://Src/Environment/BlueBiome/Comparison/painted_contact_registration.gdshader")
+const BULB_CURRENT := preload("res://Src/Environment/BlueBiome/Comparison/painted_bulb_current.gdshader")
 var buildings_enabled := true
 var tower_painted_enabled := false
 var actors_enabled := true
@@ -305,6 +306,10 @@ func _scan_actors() -> void:
 				continue
 			node.set_meta("painted_comparison_bound",true)
 			var painted := _sprite("water_bulb",0)
+			var current := ShaderMaterial.new()
+			current.shader = BULB_CURRENT
+			current.set_shader_parameter("atlas_size",_texture("water_bulb",0).atlas.get_size())
+			painted.material = current
 			node.add_child(painted)
 			bulbs.append({"node":node,"painted":painted})
 
@@ -376,6 +381,10 @@ func _update_bulbs(_delta: float) -> void:
 			# Keep the contact sac steady until the actual lifecycle changes.
 			_: frame = 0
 		painted.texture = _texture("water_bulb",frame)
+		var region := _rect(manifest.water_bulb.frames[frame])
+		painted.material.set_shader_parameter("atlas_region",Vector4(region.position.x,region.position.y,region.size.x,region.size.y))
+		painted.material.set_shader_parameter("current_time",_clock+float(bulb.get_instance_id()%29)*0.21)
+		painted.material.set_shader_parameter("idle_energy",1.0 if frame == 0 else 0.0)
 		# Register the sac itself to the existing hit/grapple square. Stem/petals
 		# may have different illustrated contours, but the active bulb stays 1:1.
 		painted.scale = Vector2.ONE*(bulb.size.x/286.0)

@@ -95,6 +95,10 @@ captures current scenery before water. Six actual reflection pixel checks and
 92 existing GPU water checks pass; shore/swimmer views are in the playtest report.
 Chase's water appearance acceptance and Krita background remain pending.
 
+Bulb idle correction: living currents/bubbles move within the painted sac while
+stem/petals/attachment stay fixed. 13 GPU checks and 166 comparison checks pass,
+including grapple/spent/regeneration. Manual motion review remains pending.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

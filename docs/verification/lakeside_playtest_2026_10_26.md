@@ -103,3 +103,14 @@ reports are `water_shore.png`, `water_swimmer.png`, `water_room.json` and
 `visible_reflection.json` in the playtest evidence folder. Deep underwater views
 still fade screen-space reflections when their source is offscreen. Chase's
 appearance acceptance and separate Krita background remain pending.
+
+## Living water inside painted bulbs
+
+The painted ready sac now has circulating water/highlights and rising bubbles.
+Its stem, petals, outline, attachment and interaction volumes remain stationary;
+spent/pop/refill use their existing lifecycle drawings without the idle effect.
+Thirteen GPU checks pass: 102,124 water-pixel changes across three idle comparisons,
+zero stem/petal-pixel changes, unchanged transforms/collision and correct spent
+state after actual grapple activation. The broader 166 comparison checks pass,
+including regeneration. See `bulb_idle_0.png`, `bulb_idle_1.png` and
+`bulb_current.json` in the evidence folder. Chase's idle-motion review is pending.
