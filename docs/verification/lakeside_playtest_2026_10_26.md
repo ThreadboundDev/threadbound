@@ -235,3 +235,30 @@ metadata cleanup; it also retains camera interpolation, missing glove Death
 and shutdown-resource diagnostics. These are separate from the passing door
 assertions and remain open under T04. Hands-on exit feel still needs review.
 Checkpoint: `fix: face outward when leaving house doors`.
+
+### Downhill contact correction
+
+The actual player reproduced repeated Run/Fall switching on all 12 mirrored
+slope/speed cases: slopes 0.25, 0.5 and 0.9, traveling left/right at 500 and
+1500 px/s (the latter is a controller stress speed). Before the fix, 32–40 of
+40 downhill frames lost floor contact per case. The default one-pixel snap
+was shorter than a single grounded downhill step.
+
+For an already-grounded, downward/level land step, snap now covers that step's
+horizontal travel projected onto the maximum walkable slope, plus safe margin.
+The authored snap setting restores immediately after movement; upward jumps,
+airborne landings and water retain their existing snap behavior. Scene trees,
+equipment and collision geometry are unchanged.
+
+`verify_downhill_contact.gd`: 61 checks pass, all 12 cases have **zero** airborne
+or falling-pose frames, travel down the slope and jump free. Existing capsule/
+ledge checks: 49 pass; house-entry/roof checks: 417 pass. Godot 4.7.2 headless,
+isolated APPDATA under `tmp/brother-*-userdata`. Evidence:
+`work/downhill-contact-2026-10-26/before.json`, `verification.json` and
+`capsule_ledges.json`. Existing interpolation and shutdown-resource diagnostics
+remain open under T04; final runs have no script errors. An initial local
+compile failure was corrected before these passing runs.
+
+Checkpoint: `fix: keep downhill movement grounded`. Awaiting hands-on review
+on the originally reported platform; this verifies controller contact and
+animation selection, not slope-specific boot placement or art acceptance.

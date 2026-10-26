@@ -954,7 +954,15 @@ func _physics_process(delta: float) -> void:
 	var pre_move_velocity := velocity
 	var pre_collision_downward_speed := maxf(velocity.y, 0.0)
 	_position_before_movement = global_position
+	# Keep a grounded step attached to any walkable downhill face. The default
+	# 1px snap is shorter than one frame of descent at ordinary run speed.
+	# Scale only this grounded step; jumps, water and airborne landings retain
+	# their normal detachment and the authored snap setting is restored below.
+	var authored_floor_snap := floor_snap_length
+	if was_on_floor and not god_mode_enabled and not is_in_prototype_water() and velocity.y >= 0.0:
+		floor_snap_length = maxf(authored_floor_snap, absf(velocity.x) * delta * tan(floor_max_angle) + safe_margin)
 	move_and_slide()
+	floor_snap_length = authored_floor_snap
 	if is_in_prototype_water():
 		_apply_prototype_water_wall_loss(pre_move_velocity)
 	if is_on_floor() and not god_mode_enabled:

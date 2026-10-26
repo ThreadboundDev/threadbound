@@ -23,6 +23,10 @@ and Enemies on **current 3D** for this first retest.
    houses and on tower platforms. Boots should touch the surface instead of
    floating. Jump onto the exposed slopes/ridge of each house roof. The very
    outer eaves are nested in cave terrain. Fisher loft stays disabled.
+   Walk down the originally reported sloped platform in both directions: the
+   player should stay grounded without repeatedly flashing a falling pose.
+   Jump away and check that detachment still feels normal. Upward water dash
+   is recorded separately and remains unchanged pending equipment approval.
 3. **Tower approach from below.** After clearing the existing breakable across
    its entrance with the swordfish, swim upward into the base. The front stone
    should hide the swimmer while passing behind it; the cutaway should reveal

@@ -1,0 +1,44 @@
+{
+	"checks": 49,
+	"display": "headless",
+	"failures": [],
+	"passed": true,
+	"results": {
+		"3d_grip_-1": {
+			"error_pixels": 0.0643334463238716,
+			"hand_offset": "(-51.1965, -135.0807)",
+			"root_position": "(25.22131, 51.02136)"
+		},
+		"3d_grip_1": {
+			"error_pixels": 0.0643416419625282,
+			"hand_offset": "(51.1963, -135.0812)",
+			"root_position": "(-25.2211, 51.02187)"
+		},
+		"ledge_candidates": {
+			"feet-1": false,
+			"feet1": false,
+			"full_wall-1": false,
+			"full_wall1": false,
+			"hand-1": true,
+			"hand1": true,
+			"hand_lower_tolerance-1": true,
+			"hand_lower_tolerance1": true,
+			"hand_upper_tolerance-1": true,
+			"hand_upper_tolerance1": true,
+			"knee-1": false,
+			"knee1": false,
+			"too_high-1": false,
+			"too_high1": false,
+			"too_low-1": false,
+			"too_low1": false,
+			"torso-1": false,
+			"torso1": false
+		},
+		"stance": {
+			"crouched_height": 78.2718969726563,
+			"feet": 69.2449970245361,
+			"standing_height": 126.244995117188,
+			"width": 37.0
+		}
+	}
+}

@@ -1,0 +1,115 @@
+{
+	"checks": 60,
+	"failures": [
+		"Continuous downhill ground contact 0.25/-1/500.0 (32 airborne frames)",
+		"No falling pose during downhill travel 0.25/-1/500.0",
+		"Continuous downhill ground contact 0.25/-1/1500.0 (37 airborne frames)",
+		"No falling pose during downhill travel 0.25/-1/1500.0",
+		"Continuous downhill ground contact 0.25/1/500.0 (32 airborne frames)",
+		"No falling pose during downhill travel 0.25/1/500.0",
+		"Continuous downhill ground contact 0.25/1/1500.0 (37 airborne frames)",
+		"No falling pose during downhill travel 0.25/1/1500.0",
+		"Continuous downhill ground contact 0.5/-1/500.0 (35 airborne frames)",
+		"No falling pose during downhill travel 0.5/-1/500.0",
+		"Continuous downhill ground contact 0.5/-1/1500.0 (39 airborne frames)",
+		"No falling pose during downhill travel 0.5/-1/1500.0",
+		"Continuous downhill ground contact 0.5/1/500.0 (35 airborne frames)",
+		"No falling pose during downhill travel 0.5/1/500.0",
+		"Continuous downhill ground contact 0.5/1/1500.0 (39 airborne frames)",
+		"No falling pose during downhill travel 0.5/1/1500.0",
+		"Continuous downhill ground contact 0.9/-1/500.0 (38 airborne frames)",
+		"No falling pose during downhill travel 0.9/-1/500.0",
+		"Continuous downhill ground contact 0.9/-1/1500.0 (40 airborne frames)",
+		"No falling pose during downhill travel 0.9/-1/1500.0",
+		"Continuous downhill ground contact 0.9/1/500.0 (38 airborne frames)",
+		"No falling pose during downhill travel 0.9/1/500.0",
+		"Continuous downhill ground contact 0.9/1/1500.0 (40 airborne frames)",
+		"No falling pose during downhill travel 0.9/1/1500.0"
+	],
+	"slopes": [
+		{
+			"airborne_frames": 32,
+			"direction": -1,
+			"falling_poses": 32,
+			"slope": 0.25,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 37,
+			"direction": -1,
+			"falling_poses": 37,
+			"slope": 0.25,
+			"speed": 1500.0
+		},
+		{
+			"airborne_frames": 32,
+			"direction": 1,
+			"falling_poses": 32,
+			"slope": 0.25,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 37,
+			"direction": 1,
+			"falling_poses": 37,
+			"slope": 0.25,
+			"speed": 1500.0
+		},
+		{
+			"airborne_frames": 35,
+			"direction": -1,
+			"falling_poses": 35,
+			"slope": 0.5,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 39,
+			"direction": -1,
+			"falling_poses": 39,
+			"slope": 0.5,
+			"speed": 1500.0
+		},
+		{
+			"airborne_frames": 35,
+			"direction": 1,
+			"falling_poses": 35,
+			"slope": 0.5,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 39,
+			"direction": 1,
+			"falling_poses": 39,
+			"slope": 0.5,
+			"speed": 1500.0
+		},
+		{
+			"airborne_frames": 38,
+			"direction": -1,
+			"falling_poses": 38,
+			"slope": 0.9,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 40,
+			"direction": -1,
+			"falling_poses": 40,
+			"slope": 0.9,
+			"speed": 1500.0
+		},
+		{
+			"airborne_frames": 38,
+			"direction": 1,
+			"falling_poses": 38,
+			"slope": 0.9,
+			"speed": 500.0
+		},
+		{
+			"airborne_frames": 40,
+			"direction": 1,
+			"falling_poses": 40,
+			"slope": 0.9,
+			"speed": 1500.0
+		}
+	]
+}
