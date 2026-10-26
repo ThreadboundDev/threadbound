@@ -41,3 +41,13 @@ its parent's depth. Collision, durability and fracture behavior are unchanged.
 `verify_breakable_cave_depth.gd`: 12 Forward+ checks pass, including pixel checks
 that cave art occludes stone/cracks at all four damage stages. Existing engine
 texture teardown warnings remain. Awaiting Chase's in-room overlap review.
+
+## Enemy presentation correction
+
+The comparison room now defaults to existing 3D enemies while preserving the
+accepted painted villagers. Villagers and Enemies have separate controls; F7
+still compares all categories except the independently selected tower. AI,
+animation, bone anchors and collision are unchanged. The broader comparison
+fixture passes 166 headless checks, including default viewport updates, F2
+respawn in 3D, painted alternatives, house entry and bulb regeneration. Existing
+ObjectDB/resource teardown warnings remain. Awaiting Chase's movement review.

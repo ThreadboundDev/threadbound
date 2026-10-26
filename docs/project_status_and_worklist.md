@@ -71,6 +71,10 @@ behind cave faces (-5). Twelve focused Forward+ checks pass, including actual
 occlusion pixels at all damage stages. Gameplay is unchanged; manual overlap
 review remains pending. See the linked playtest report for validation.
 
+Enemy correction: the comparison defaults to the existing 3D enemies and keeps
+painted villagers, with independent controls. 166 comparison checks pass,
+including F2 preserving the selected model display; manual review is pending.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

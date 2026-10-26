@@ -6,6 +6,7 @@ const CONTACT_SHADER := preload("res://Src/Environment/BlueBiome/Comparison/pain
 var buildings_enabled := true
 var tower_painted_enabled := false
 var actors_enabled := true
+var enemies_enabled := false
 var bulbs_enabled := true
 var placements: Array[Dictionary] = []
 var actors: Array[Dictionary] = []
@@ -313,11 +314,11 @@ func _update_actors(_delta: float) -> void:
 		if not is_instance_valid(entry.enemy):
 			actors.remove_at(index)
 			continue
-		entry.original.visible = not actors_enabled
-		entry.painted.visible = actors_enabled
+		entry.original.visible = not enemies_enabled
+		entry.painted.visible = enemies_enabled
 		for view: SubViewport in entry.model.find_children("*","SubViewport",true,false):
-			view.render_target_update_mode = SubViewport.UPDATE_DISABLED if actors_enabled else SubViewport.UPDATE_ALWAYS
-		if not actors_enabled:
+			view.render_target_update_mode = SubViewport.UPDATE_DISABLED if enemies_enabled else SubViewport.UPDATE_ALWAYS
+		if not enemies_enabled:
 			continue
 		# Animation/bone anchors continue to serve existing gameplay, while only
 		# the painted sprite is rendered. No AI/combat state is replaced.
@@ -384,6 +385,7 @@ func _update_bulbs(_delta: float) -> void:
 func set_all(enabled: bool) -> void:
 	buildings_enabled = enabled
 	actors_enabled = enabled
+	enemies_enabled = enabled
 	bulbs_enabled = enabled
 	_sync_buttons()
 	_process(0)
@@ -395,7 +397,7 @@ func set_tower_painted(enabled: bool) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F7:
-		set_all(not (buildings_enabled and actors_enabled and bulbs_enabled))
+		set_all(not (buildings_enabled and actors_enabled and enemies_enabled and bulbs_enabled))
 		get_viewport().set_input_as_handled()
 
 func _build_controls() -> void:
@@ -410,21 +412,22 @@ func _build_controls() -> void:
 	var column := VBoxContainer.new()
 	panel.add_child(column)
 	var label := Label.new()
-	label.text = "T18 • F7 switches buildings/actors/bulbs • Tower switches separately"
+	label.text = "F7: compare all 2D / 3D • Tower switches separately"
 	column.add_child(label)
 	var row := HBoxContainer.new()
 	column.add_child(row)
-	for category: String in ["Buildings","Tower","Actors","Bulbs"]:
+	for category: String in ["Buildings","Tower","Villagers","Enemies","Bulbs"]:
 		var button := CheckButton.new()
 		button.name = category
 		button.text = category+": painted 2D"
-		button.button_pressed = category != "Tower"
+		button.button_pressed = category not in ["Tower","Enemies"]
 		row.add_child(button)
 		button.toggled.connect(func(enabled: bool):
 			match category:
 				"Buildings": buildings_enabled = enabled
 				"Tower": tower_painted_enabled = enabled
-				"Actors": actors_enabled = enabled
+				"Villagers": actors_enabled = enabled
+				"Enemies": enemies_enabled = enabled
 				"Bulbs": bulbs_enabled = enabled
 			_sync_buttons()
 			_process(0))
@@ -434,7 +437,7 @@ func _sync_buttons() -> void:
 	if not controls:
 		return
 	for button: CheckButton in controls.find_children("*","CheckButton",true,false):
-		var enabled := buildings_enabled if button.name == "Buildings" else actors_enabled if button.name == "Actors" else bulbs_enabled
+		var enabled := buildings_enabled if button.name == "Buildings" else actors_enabled if button.name == "Villagers" else enemies_enabled if button.name == "Enemies" else bulbs_enabled
 		if button.name == "Tower":
 			enabled = tower_painted_enabled
 		button.set_pressed_no_signal(enabled)

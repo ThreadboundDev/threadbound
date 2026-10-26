@@ -54,6 +54,18 @@ func verify() -> void:
 	current_scene = room
 	await frames(30)
 	art = room.get_node("ArtComparison")
+	check(not art.enemies_enabled and art.actors_enabled,"Default keeps accepted painted villagers and current 3D enemies")
+	for entry: Dictionary in art.actors:
+		check(entry.original.visible and not entry.painted.visible,entry.key+": default displays existing 3D model")
+		for view: SubViewport in entry.model.find_children("*","SubViewport",true,false):
+			check(view.render_target_update_mode == SubViewport.UPDATE_ALWAYS,entry.key+": 3D animation viewport updates")
+	room.respawn_enemies()
+	await frames(20)
+	art._scan_actors()
+	art._process(0)
+	check(art.actors.size() == 5,"F2 restores exactly five model enemy bindings")
+	for entry: Dictionary in art.actors:
+		check(entry.original.visible and not entry.painted.visible,entry.key+": respawn retains default 3D art")
 	if "--draft" not in OS.get_cmdline_user_args():
 		check(art.manifest.size() == 14,"All thirteen base sheets and swordfish swim extension installed")
 	for key: String in art.manifest:
