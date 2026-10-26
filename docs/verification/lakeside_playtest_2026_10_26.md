@@ -32,3 +32,12 @@ Do not mark previous visual items complete from automated passes alone. Address
 contact against actual rendered frames. Keep each coherent correction in its
 own verified commit/push. Architectural house focus/door/tower-layer changes
 have a separate proposal: `docs/design/lakeside_entry_focus_proposal_2026_10_26.md`.
+
+## Breakable cave depth correction
+
+Stone is now absolute depth -6, immediately behind cave faces at -5. Crack
+strokes inherit the stone depth; spawned debris also retains -6 regardless of
+its parent's depth. Collision, durability and fracture behavior are unchanged.
+`verify_breakable_cave_depth.gd`: 12 Forward+ checks pass, including pixel checks
+that cave art occludes stone/cracks at all four damage stages. Existing engine
+texture teardown warnings remain. Awaiting Chase's in-room overlap review.

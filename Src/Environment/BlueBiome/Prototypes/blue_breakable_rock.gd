@@ -74,10 +74,9 @@ func _on_damaged(_hits: int, _required: int) -> void:
 func _build_crack_overlay() -> void:
 	_crack_overlay = Node2D.new()
 	_crack_overlay.name = "BlueCracks"
-	# Stone receives the lake's tint at depth 12. Emissive cracks remain legible
-	# above the water overlay, rather than bleaching the whole rock above it.
-	_crack_overlay.z_as_relative = false
-	_crack_overlay.z_index = 30
+	# Keep the emissive fissures with their stone. Cave faces must occlude both
+	# when the breakable stamp is nestled underneath the cave silhouette.
+	_crack_overlay.z_index = 0
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	_crack_overlay.material = unlit
@@ -214,6 +213,7 @@ func _spawn_fracture_effect(source: Node) -> void:
 	effect.name = "BlueRockShatter"
 	get_parent().add_child(effect, true)
 	effect.global_transform = global_transform
+	effect.z_as_relative = false
 	effect.z_index = z_index
 	var direction := Vector2.RIGHT
 	if source is Node2D:

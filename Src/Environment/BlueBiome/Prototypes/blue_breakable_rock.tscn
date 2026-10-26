@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/blue_breakable_rock.gd" id="2_visual"]
 
 [node name="BlueBreakableRock" instance=ExtResource("1_base")]
-z_index = 12
+z_as_relative = false
+z_index = -6
 script = ExtResource("2_visual")
 editor_description = "Painted cave stone. Swordfish dashes spread blue cracks through four visual stages. Set Hits To Break for durability; debris dissolves after shattering. Preview Damage Stage is editor-only."

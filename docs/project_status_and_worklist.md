@@ -66,6 +66,11 @@ New door/indoor-camera/tower-entry architecture has a separate
 Fix one coherent item at a time and commit/push each result. Previous visual
 acceptance remains pending unless specifically confirmed above.
 
+October 26 breakable depth correction: stone, cracks and debris now sit at -6,
+behind cave faces (-5). Twelve focused Forward+ checks pass, including actual
+occlusion pixels at all damage stages. Gameplay is unchanged; manual overlap
+review remains pending. See the linked playtest report for validation.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently
