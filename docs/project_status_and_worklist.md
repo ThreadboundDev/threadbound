@@ -90,6 +90,11 @@ heights (7.29–26.54 px lower than the old source-derived values). Twenty GPU
 checks pass against mesh vertices and actual player sweeps, with an in-room
 boot/deck capture in the playtest report. Manual appearance review remains open.
 
+Water correction: reflection coverage is independent of body translucency and
+captures current scenery before water. Six actual reflection pixel checks and
+92 existing GPU water checks pass; shore/swimmer views are in the playtest report.
+Chase's water appearance acceptance and Krita background remain pending.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

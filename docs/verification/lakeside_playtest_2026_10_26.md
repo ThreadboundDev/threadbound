@@ -88,3 +88,18 @@ remaining screenshot gap after boot registration. See `tower_floor_contact.png`
 and its JSON under the playtest evidence folder. Chase's visual review remains
 pending. Earlier T19 assertions verified physics against itself and missed the
 delivered-model normalization; they did not prove visible contact.
+
+## Visible water reflections
+
+Reflection coverage no longer gets multiplied by the body's translucency a
+second time. Its dry/wet surface coverage is now separate from immersion tint,
+with quieter band variation and a fresh scenery capture immediately before
+water. The six rendered-pixel checks prove that reflected source color remains
+visible in both observer states and follows moved scenery even after an earlier
+screen-reading effect. All 92 existing Forward+ water checks pass, including
+dry pockets, exterior wet facades and rock-contact layering. The shore capture
+shows bridge/post/background reflections without the old cyan gap. Captures and
+reports are `water_shore.png`, `water_swimmer.png`, `water_room.json` and
+`visible_reflection.json` in the playtest evidence folder. Deep underwater views
+still fade screen-space reflections when their source is offscreen. Chase's
+appearance acceptance and separate Krita background remain pending.

@@ -58,6 +58,15 @@ func _ready() -> void:
 		_fill.z_as_relative = false
 		_fill.z_index = -2
 	_fill.material = fill_material
+	if lake_presentation and not air_pocket:
+		# Other screen-reading effects can cache an earlier canvas. Refresh after
+		# rear scenery, before this water body and before any actors are drawn.
+		var reflection_copy := BackBufferCopy.new()
+		reflection_copy.name = "LakeReflectionCapture"
+		reflection_copy.copy_mode = BackBufferCopy.COPY_MODE_VIEWPORT
+		reflection_copy.z_as_relative = false
+		reflection_copy.z_index = -4
+		add_child(reflection_copy)
 	add_child(_fill)
 	if lake_presentation and not air_pocket:
 		# Reflect scenery/building rear art before actors. A separate, light

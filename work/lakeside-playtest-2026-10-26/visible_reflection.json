@@ -1,0 +1,17 @@
+{
+	"checks": 6,
+	"display": "Windows",
+	"failures": [],
+	"samples": [
+		{
+			"clear_red": 0.0470588244497776,
+			"reflected_red": 0.274509817361832,
+			"submerged": false
+		},
+		{
+			"clear_red": 0.0392156876623631,
+			"reflected_red": 0.196078434586525,
+			"submerged": true
+		}
+	]
+}

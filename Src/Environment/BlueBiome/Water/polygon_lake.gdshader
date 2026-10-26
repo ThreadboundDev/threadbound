@@ -52,12 +52,16 @@ void fragment() {
 	reflection+=reflection_at(clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
 	reflection+=reflection_at(clamp(reflected-vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
 	vec3 water=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
-	float bands=.7+.3*sin(depth*.085+wave+TIME*.3);
-	float strength=mix(.40,.10,submersion_blend)*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;
-	water=mix(water,reflection*vec3(.65,.85,.9),strength);
+	float bands=.85+.15*sin(depth*.085+wave+TIME*.3);
+	float strength=mix(.48,.32,submersion_blend)*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;
 	float rim=(1.0-smoothstep(0.0,8.0,depth))*(.6+.4*sin(world_position.x*.025-TIME*.65));
 	water=mix(water,vec3(.65,.9,.91),rim*.6);
 	float caustic=pow(max(0.0,sin(world_position.x*.013+world_position.y*.02+TIME*.4)*sin(world_position.x*.018-world_position.y*.01-TIME*.3)),12.0);
 	water+=vec3(.06,.12,.10)*caustic*.3;
-	COLOR=vec4(water,water_opacity);
+	// Reflection is its own surface coverage. Multiplying it by the already
+	// translucent body a second time reduced it to almost nothing underwater.
+	float alpha=water_opacity*(1.0-strength)+strength;
+	vec3 premultiplied=water*water_opacity*(1.0-strength)
+		+reflection*vec3(.78,.92,.98)*strength;
+	COLOR=vec4(premultiplied/max(alpha,.0001),alpha);
 }
