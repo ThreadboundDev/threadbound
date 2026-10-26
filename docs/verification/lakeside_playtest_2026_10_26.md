@@ -165,3 +165,24 @@ are under `work/lakeside-entry-focus-2026-10-26/`. Existing house-entry checks:
 for a removed house safely. No runtime script errors remain in this fixture;
 pre-existing interpolation, missing glove Death animation and rendering/resource
 teardown warnings remain. Chase's visible/feel acceptance is pending.
+
+## Tower entrance foreground stone
+
+Tower v5 splits the original basin into 288 front triangles and 672 rear
+triangles, retaining all 960 original triangles exactly once. The front stone
+uses the existing foreground pass even during a cutaway; rear stone stays in
+the background. All original runtime buffer bytes, 35 other meshes, materials,
+texture paths, roofs and deck positions are preserved exactly. The editable
+v5 Blender source is delivered with the corresponding split and packed textures.
+No new geometry or collision is added.
+
+Thirteen Forward+ checks pass, including actual player silhouette occlusion
+(9,392 exposed pixels become 401 within the stone footprint), facade reveal
+behind the lip and clear swimming after the existing authored breakable is
+fractured through its swordfish API. The uncleared breakable still blocks as
+authored; this change adds/removes no gating. Three approach/inside captures,
+geometry and render reports are in `work/lakeside-entry-focus-2026-10-26/`.
+The standalone geometry verifier confirms byte-exact preservation. Blender
+saved the editable source despite an unavailable thumbnail-cache path. Existing
+Godot interpolation, missing glove Swim_Idle and teardown diagnostics remain.
+Chase's visible entrance-depth acceptance remains pending.

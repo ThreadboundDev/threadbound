@@ -19,10 +19,11 @@ func _ready() -> void:
 	_set_layers(self, false)
 	set_cutaway(preview_inside)
 
-func _set_layers(node: Node, facade: bool) -> void:
+func _set_layers(node: Node, facade: bool, entry_foreground := false) -> void:
 	facade = facade or "Facade_Removable" in str(node.name)
+	entry_foreground = entry_foreground or "Entry_Foreground_Always" in str(node.name)
 	if node is GeometryInstance3D:
-		(node as GeometryInstance3D).layers = 2 if facade and facade_foreground else 1
+		(node as GeometryInstance3D).layers = 2 if entry_foreground or (facade and facade_foreground) else 1
 	if node is MeshInstance3D:
 		var mesh := node as MeshInstance3D
 		for surface in mesh.mesh.get_surface_count():
@@ -30,7 +31,7 @@ func _set_layers(node: Node, facade: bool) -> void:
 			if material:
 				material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 	for child in node.get_children():
-		_set_layers(child, facade)
+		_set_layers(child, facade, entry_foreground)
 
 func set_cutaway(inside: bool) -> void:
 	is_cutaway = inside

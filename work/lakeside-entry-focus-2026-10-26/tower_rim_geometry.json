@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "protected_meshes": [
+    "01_Structure_iron",
+    "01_Structure_plaster",
+    "01_Structure_recess",
+    "01_Structure_rope",
+    "01_Structure_slate",
+    "01_Structure_walnut",
+    "02_Facade_Removable_iron",
+    "02_Facade_Removable_plaster",
+    "02_Facade_Removable_recess",
+    "02_Facade_Removable_walnut",
+    "Roof_Tier01_Front_Mitered",
+    "Roof_Tier02_Front_Mitered",
+    "Roof_Tier02_Left_Side_With_Corners.001",
+    "Roof_Tier02_Right_Side_With_Corners.001",
+    "Roof_Tier03_Front_Mitered",
+    "Roof_Tier03_Left_Side_With_Corners.001",
+    "Roof_Tier03_Right_Side_With_Corners.001",
+    "Roof_Tier04_Front_Mitered",
+    "Roof_Tier04_Left_Side_With_Corners.001",
+    "Roof_Tier04_Right_Side_With_Corners.001",
+    "03_Interior_Platforms_walnut",
+    "04_Fixed_Blue_Roofs_blue_tiles",
+    "04_Fixed_Blue_Roofs_walnut",
+    "Roof_Tier01_Back_Mitered",
+    "Roof_Tier01_Left_Side_With_Corners",
+    "Roof_Tier01_Right_Side_With_Corners",
+    "Roof_Tier02_Back_Mitered",
+    "Roof_Tier02_Left_Side_With_Corners",
+    "Roof_Tier02_Right_Side_With_Corners",
+    "Roof_Tier03_Back_Mitered",
+    "Roof_Tier03_Left_Side_With_Corners",
+    "Roof_Tier03_Right_Side_With_Corners",
+    "Roof_Tier04_Back_Mitered",
+    "Roof_Tier04_Left_Side_With_Corners",
+    "Roof_Tier04_Right_Side_With_Corners"
+  ],
+  "protected_mesh_count": 35,
+  "original_data_bytes_preserved": 5025840,
+  "triangle_partition": [
+    {
+      "original": 960,
+      "rear": 672,
+      "front": 288
+    }
+  ],
+  "textures_materials_unchanged": true
+}

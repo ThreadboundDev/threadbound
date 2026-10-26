@@ -109,6 +109,12 @@ smooth indoor framing, exterior dimming and amber exit cue are implemented.
 interruption/restore evidence are in the October 26 report. Chase's feel review
 remains pending. The approved tower foreground rim is the remaining active item.
 
+Tower rim delivered: v5 separates the existing front stone into the foreground
+while preserving all geometry/UVs/textures and 35 other meshes byte-for-byte.
+13 GPU checks pass, including actual swimmer occlusion and the clear route after
+the existing breakable is fractured. All October 26 requested implementation is
+now delivered; final fixture reconciliation and a focused acceptance card follow.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

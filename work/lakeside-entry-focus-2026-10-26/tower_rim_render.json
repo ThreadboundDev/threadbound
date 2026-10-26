@@ -1,0 +1,12 @@
+{
+	"captures": [
+		"tower_below_approach",
+		"tower_behind_rim",
+		"tower_swim_inside"
+	],
+	"checks": 13,
+	"display": "Windows",
+	"exposed_player_pixels": 9392,
+	"failures": [],
+	"occluded_player_pixels_remaining": 401
+}

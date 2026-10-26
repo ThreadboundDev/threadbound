@@ -1,0 +1,16 @@
+{
+  "source": "Assets\\BlueBiome\\Art\\Lakeside3D\\Models\\central_tower_v4.glb",
+  "runtime": "Assets\\BlueBiome\\Art\\Lakeside3D\\Models\\central_tower_v5.glb",
+  "runtime_sha256": "4163fe35a187b5e387c9b9d230e5498905bae0134eb637537bbac49688200728",
+  "front_depth_cut": 2.4759967105898797,
+  "triangle_partition": [
+    {
+      "front_triangles": 288,
+      "rear_triangles": 672
+    }
+  ],
+  "editable_front_faces": 144,
+  "original_runtime_buffer_bytes_preserved": true,
+  "new_geometry_or_collision": false,
+  "texture_uris_unchanged": true
+}

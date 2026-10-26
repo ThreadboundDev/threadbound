@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_building_3d.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v4.glb" id="2"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v5.glb" id="2"]
 
 [node name="CentralTower3D" type="Node3D"]
 script = ExtResource("1")

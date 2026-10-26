@@ -6,7 +6,8 @@ described below. Implementation and visual acceptance are tracked separately.
 
 House entry/focus is implemented: 79 GPU, 417 existing house-entry and 166
 comparison checks pass. Captures are in `work/lakeside-entry-focus-2026-10-26/`.
-The tower foreground rim remains the next scoped implementation checkpoint.
+Tower foreground rim is implemented in v5: 13 GPU checks and exact geometry/data
+preservation pass. The entire approved scope awaits Chase's feel/appearance review.
 
 Chase's October 26 playtest confirms house bouncing is fixed and villager
 interactions work. The work/greet poses are acceptable for now. Remaining
