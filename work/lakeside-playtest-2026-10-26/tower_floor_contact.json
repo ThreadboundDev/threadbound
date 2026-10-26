@@ -1,0 +1,52 @@
+{
+	"checks": 20,
+	"display": "Windows",
+	"failures": [],
+	"floors": [
+		{
+			"collision_top_y": 1114.49108886719,
+			"mesh_top_y": 1114.5126953125,
+			"platform": 0
+		},
+		{
+			"collision_top_y": 874.362915039063,
+			"mesh_top_y": 874.384399414063,
+			"platform": 1
+		},
+		{
+			"collision_top_y": 780.344604492188,
+			"mesh_top_y": 780.374877929688,
+			"platform": 2
+		},
+		{
+			"collision_top_y": 462.71484375,
+			"mesh_top_y": 462.718383789063,
+			"platform": 3
+		},
+		{
+			"collision_top_y": 104.428466796875,
+			"mesh_top_y": 104.432373046875,
+			"platform": 4
+		},
+		{
+			"collision_top_y": -238.611572265625,
+			"mesh_top_y": -238.60205078125,
+			"platform": 5
+		},
+		{
+			"collision_top_y": -575.299072265625,
+			"mesh_top_y": -575.28173828125,
+			"platform": 6
+		},
+		{
+			"collision_top_y": -1000.92309570313,
+			"mesh_top_y": -1000.88720703125,
+			"platform": 7
+		},
+		{
+			"collision_top_y": -1464.66235351563,
+			"mesh_top_y": -1464.66235351563,
+			"platform": 8
+		}
+	]
+}

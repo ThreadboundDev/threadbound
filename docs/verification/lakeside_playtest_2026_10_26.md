@@ -75,3 +75,16 @@ Forward+ checks pass, 49 capsule/ledge checks pass (hands within 0.1 px of lip),
 and the water-combo regression passes. Captures and pixel measurements are in
 `work/lakeside-playtest-2026-10-26/boot_contact.json` and `grounded_*.png`.
 Tower front timber/floor alignment remains a separate correction.
+
+## Tower floor alignment
+
+The installed tower's final normalized deck heights differ from the earlier
+source values used for collision. All nine physical platforms now use the
+installed GLB deck surfaces, lowering them by 7.29–26.54 world pixels without
+changing width or one-way behavior. Twenty Forward+ checks pass: imported mesh
+vertices agree within 0.04 px, actual player sweeps contact every platform, and
+the live grounded player is captured on the visible deck. This corrects the
+remaining screenshot gap after boot registration. See `tower_floor_contact.png`
+and its JSON under the playtest evidence folder. Chase's visual review remains
+pending. Earlier T19 assertions verified physics against itself and missed the
+delivered-model normalization; they did not prove visible contact.

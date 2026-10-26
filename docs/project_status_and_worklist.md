@@ -85,6 +85,11 @@ world pixels in idle/walk/crouch samples. 14 GPU contact and 49 ledge checks plu
 water-combo regression pass. Tower front timber/collision alignment remains
 open; this does not by itself close Chase's tower screenshot defect.
 
+Tower contact correction: nine platforms now match the installed GLB deck
+heights (7.29–26.54 px lower than the old source-derived values). Twenty GPU
+checks pass against mesh vertices and actual player sweeps, with an in-room
+boot/deck capture in the playtest report. Manual appearance review remains open.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

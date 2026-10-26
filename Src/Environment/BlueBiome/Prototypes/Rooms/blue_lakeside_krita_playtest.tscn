@@ -145,7 +145,7 @@ collision_mask = 0
 polygon = PackedVector2Array(-67.2, -117.12, 67.2, -117.12, 67.2, 117.12, -67.2, 117.12)
 
 [node name="TowerPlatform0" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=236746087]
-position = Vector2(1472, 1113.2)
+position = Vector2(1472, 1120.491028)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform0" unique_id=827713663]
@@ -154,7 +154,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform1" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=769484661]
-position = Vector2(1273.6, 871.28)
+position = Vector2(1273.6, 880.362915)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform1" unique_id=1848862072]
@@ -163,7 +163,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform2" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1432181877]
-position = Vector2(1667.2, 776.56)
+position = Vector2(1667.2, 786.344604)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform2" unique_id=531639473]
@@ -172,7 +172,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform3" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1320304730]
-position = Vector2(1472, 456.56)
+position = Vector2(1472, 468.714844)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform3" unique_id=1640182206]
@@ -181,7 +181,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform4" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2014806335]
-position = Vector2(1622.4, 95.6)
+position = Vector2(1622.4, 110.428467)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform4" unique_id=1291808210]
@@ -190,7 +190,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform5" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2093626303]
-position = Vector2(1318.4, -250)
+position = Vector2(1318.4, -232.611572)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform5" unique_id=2036807186]
@@ -199,7 +199,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform6" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=2084972276]
-position = Vector2(1472, -589.2)
+position = Vector2(1472, -569.299072)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform6" unique_id=1260719095]
@@ -208,7 +208,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform7" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=165366417]
-position = Vector2(1472, -1018)
+position = Vector2(1472, -994.923096)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform7" unique_id=349643172]
@@ -217,7 +217,7 @@ one_way_collision = true
 one_way_collision_margin = 12.0
 
 [node name="TowerPlatform8" type="StaticBody2D" parent="Geometry/BuildingCollision" unique_id=1818163696]
-position = Vector2(1472, -1485.2)
+position = Vector2(1472, -1458.662354)
 collision_mask = 0
 
 [node name="Outline" type="CollisionPolygon2D" parent="Geometry/BuildingCollision/TowerPlatform8" unique_id=1789953239]
