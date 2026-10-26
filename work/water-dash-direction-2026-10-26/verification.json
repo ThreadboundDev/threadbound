@@ -1,0 +1,147 @@
+{
+	"checks": 245,
+	"directions": [
+		{
+			"displacement": "(0.0, -240.025)",
+			"facing": -1,
+			"input": "(0.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(0.0, -1108.449)"
+		},
+		{
+			"displacement": "(0.0, 240.025)",
+			"facing": -1,
+			"input": "(0.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(0.0, 1108.449)"
+		},
+		{
+			"displacement": "(-240.025, 0.0)",
+			"facing": -1,
+			"input": "(-1.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(-1108.449, 0.0)"
+		},
+		{
+			"displacement": "(240.025, 0.0)",
+			"facing": -1,
+			"input": "(1.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(1108.449, 0.0)"
+		},
+		{
+			"displacement": "(-169.7233, -169.7233)",
+			"facing": -1,
+			"input": "(-1.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(-783.7919, -783.7919)"
+		},
+		{
+			"displacement": "(169.7233, -169.7233)",
+			"facing": -1,
+			"input": "(1.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(783.7919, -783.7919)"
+		},
+		{
+			"displacement": "(-169.7233, 169.7233)",
+			"facing": -1,
+			"input": "(-1.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(-783.7919, 783.7919)"
+		},
+		{
+			"displacement": "(169.7233, 169.7233)",
+			"facing": -1,
+			"input": "(1.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(783.7919, 783.7919)"
+		},
+		{
+			"displacement": "(-240.025, 0.0)",
+			"facing": -1,
+			"input": "(0.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(-1108.449, 0.0)"
+		},
+		{
+			"displacement": "(0.0, -240.025)",
+			"facing": -1,
+			"input": "(0.0, -1.0)",
+			"jump_as_up": true,
+			"velocity": "(0.0, -1108.449)"
+		},
+		{
+			"displacement": "(0.0, -240.025)",
+			"facing": 1,
+			"input": "(0.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(0.0, -1108.449)"
+		},
+		{
+			"displacement": "(0.0, 240.025)",
+			"facing": 1,
+			"input": "(0.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(0.0, 1108.449)"
+		},
+		{
+			"displacement": "(-240.025, 0.0)",
+			"facing": 1,
+			"input": "(-1.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(-1108.449, 0.0)"
+		},
+		{
+			"displacement": "(240.025, 0.0)",
+			"facing": 1,
+			"input": "(1.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(1108.449, 0.0)"
+		},
+		{
+			"displacement": "(-169.7233, -169.7233)",
+			"facing": 1,
+			"input": "(-1.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(-783.7919, -783.7919)"
+		},
+		{
+			"displacement": "(169.7233, -169.7233)",
+			"facing": 1,
+			"input": "(1.0, -1.0)",
+			"jump_as_up": false,
+			"velocity": "(783.7919, -783.7919)"
+		},
+		{
+			"displacement": "(-169.7233, 169.7233)",
+			"facing": 1,
+			"input": "(-1.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(-783.7919, 783.7919)"
+		},
+		{
+			"displacement": "(169.7233, 169.7233)",
+			"facing": 1,
+			"input": "(1.0, 1.0)",
+			"jump_as_up": false,
+			"velocity": "(783.7919, 783.7919)"
+		},
+		{
+			"displacement": "(240.025, 0.0)",
+			"facing": 1,
+			"input": "(0.0, 0.0)",
+			"jump_as_up": false,
+			"velocity": "(1108.449, 0.0)"
+		},
+		{
+			"displacement": "(0.0, -240.025)",
+			"facing": 1,
+			"input": "(0.0, -1.0)",
+			"jump_as_up": true,
+			"velocity": "(0.0, -1108.449)"
+		}
+	],
+	"engine": "4.7.2-stable (official)",
+	"failures": []
+}

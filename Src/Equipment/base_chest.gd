@@ -10,6 +10,7 @@ var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 var dash_direction: int = 1
+var _water_dash_direction := Vector2.ZERO
 
 func _init(_player = null):
 	super(_player)
@@ -31,6 +32,12 @@ func _start_dash() -> bool:
 	if player.has_method("get_dash_direction_intent"):
 		requested_direction = int(player.get_dash_direction_intent())
 	dash_direction = signi(requested_direction) if requested_direction != 0 else 1
+	_water_dash_direction = Vector2.ZERO
+	if player.is_inside_tree() and player.has_method("is_in_prototype_water") and player.is_in_prototype_water():
+		_water_dash_direction = player.get_water_dash_direction_intent()
+		# A vertical dash preserves facing; recent horizontal input must not add
+		# a sideways component to a currently held up/down direction.
+		dash_direction = int(signf(_water_dash_direction.x)) if not is_zero_approx(_water_dash_direction.x) else player.last_direction
 	if player.has_method("prepare_for_dash"):
 		player.prepare_for_dash(dash_direction)
 
@@ -41,7 +48,7 @@ func _start_dash() -> bool:
 	if player.has_method("start_dash_iframe"):
 		player.start_dash_iframe(
 			dash_duration + maxf(0.0, dash_iframe_grace),
-			Vector2(float(dash_direction), 0.0)
+			_water_dash_direction if not _water_dash_direction.is_zero_approx() else Vector2(float(dash_direction), 0.0)
 		)
 	if player.has_method("report_momentum_action"):
 		player.report_momentum_action(&"Dash")
@@ -52,7 +59,13 @@ func process_passive(delta: float) -> void:
 	if is_dashing:
 		dash_timer = maxf(0.0, dash_timer - delta)
 		var speed_multiplier: float = player.get_momentum_dash_speed_multiplier() if player.has_method("get_momentum_dash_speed_multiplier") else 1.0
-		player.velocity.x = dash_direction * dash_speed * speed_multiplier
+		if not _water_dash_direction.is_zero_approx():
+			if player.is_in_prototype_water():
+				player.velocity = _water_dash_direction * dash_speed * speed_multiplier
+			# After a breach, the existing launch/gravity controller owns velocity.
+			# Do not inject facing-based horizontal speed into an upward exit.
+		else:
+			player.velocity.x = dash_direction * dash_speed * speed_multiplier
 		
 		if dash_timer <= 0.0:
 			is_dashing = false
@@ -63,7 +76,10 @@ func stop_dash_on_enemy_contact() -> void:
 	is_dashing = false
 	dash_timer = 0.0
 	if player:
-		player.velocity.x = 0.0
+		if not _water_dash_direction.is_zero_approx():
+			player.velocity = Vector2.ZERO
+		else:
+			player.velocity.x = 0.0
 
 func get_dash_cooldown_remaining() -> float:
 	return dash_cooldown_timer

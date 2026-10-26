@@ -262,3 +262,48 @@ compile failure was corrected before these passing runs.
 Checkpoint: `fix: keep downhill movement grounded`. Awaiting hands-on review
 on the originally reported platform; this verifies controller contact and
 animation selection, not slope-specific boot placement or art acceptance.
+
+### Approved water-dash direction correction
+
+October 26: the user answered **"Approve the scoped water-dash correction"**
+to the proposal to capture held swim direction at dash start, normalize diagonal
+speed, use facing when no direction is held, and retain the existing land dash.
+This explicitly authorizes the equipment change under AGENTS.md. Implementation
+files: `Src/Equipment/base_chest.gd`, `Src/Characters/Player/player.gd` and
+`tools/environment/verify_water_dash_direction.gd`; evidence is saved in
+`work/water-dash-direction-2026-10-26/`. This report, the current work list and
+the current retest card track delivery and pending hands-on review.
+
+Swimming and dash now read the same direction input, including Jump-as-up.
+Water dash captures a normalized vector at launch; Up/Down alone have no
+horizontal component, diagonals have the same total speed as cardinal directions,
+and neutral input uses facing without stale horizontal intent. Changing or
+releasing input cannot redirect an active dash. After a water exit, propulsion
+hands off to the existing breach/gravity controller without adding horizontal
+speed. Water-dash cancellation stops its owned axes; bulb boost installs its
+new velocity after cancelling the dash so both launch components survive.
+Land dash keeps its buffered horizontal direction and existing vertical motion.
+
+On Godot 4.7.2, `verify_water_dash_direction.gd` passes **245 checks**, using the
+actual player controller and Dash action. Twenty direction cases cover eight
+directions plus neutral and Jump-as-up in both facings. Additional cases cover
+upward water exit, input release/change, AP/cooldown/immunity expiry, no-AP
+rejection, contact cancellation, bulb launch, solid-wall blocking and land
+behavior. Up alone travels `(0, -240.025)` over the sampled active window in
+both facings, with zero sideways velocity. The focused fixture explicitly
+unlocks swimming before entering water; it uses isolated APPDATA under
+`tmp/water-dash-userdata`. Results: `work/water-dash-direction-2026-10-26/verification.json`.
+
+Existing `verify_bulb_choices.tscn` (all three routes), `verify_water_combo.gd`
+and `verify_water_specials.gd` also pass, each with separate disposable APPDATA.
+These and the focused direction run have no script errors.
+`verify_combat_feedback.tscn` reports all assertions passed, but its unparented
+neutral-special actors emit null-tree errors in existing water/pocket queries.
+That result is qualified, not a clean regression pass. T04 must parent those
+fixture actors and rerun; the chest's new water query checks tree membership
+so it adds no unparented water queries. Missing legacy glove Swim/Swim_Idle/Dash
+animation notices and engine resource/RID/ObjectDB shutdown diagnostics also
+remain separate T04 work; these passes do not establish a clean engine teardown.
+
+Checkpoint: `fix: follow held swim direction for water dash`. Hands-on dash
+feel and surface/diagonal presentation still need review at normal speed.

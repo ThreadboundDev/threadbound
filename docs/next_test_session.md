@@ -25,8 +25,7 @@ and Enemies on **current 3D** for this first retest.
    outer eaves are nested in cave terrain. Fisher loft stays disabled.
    Walk down the originally reported sloped platform in both directions: the
    player should stay grounded without repeatedly flashing a falling pose.
-   Jump away and check that detachment still feels normal. Upward water dash
-   is recorded separately and remains unchanged pending equipment approval.
+   Jump away and check that detachment still feels normal.
 3. **Tower approach from below.** After clearing the existing breakable across
    its entrance with the swordfish, swim upward into the base. The front stone
    should hide the swimmer while passing behind it; the cutaway should reveal
@@ -37,6 +36,11 @@ and Enemies on **current 3D** for this first retest.
    swim through the surface, and compare Day/dusk. Check player contrast and
    boots sinking slightly behind solid rock contact edges. The separate Krita
    water background is still pending; this is a reflection/layering review.
+   For the approved dash correction, hold **Up alone + Dash** underwater in both
+   facings: travel should be straight up. Jump also supplies upward swim aim.
+   Check Down, both diagonals, releasing/changing direction during the dash,
+   and an upward dash through the surface. With no direction held, dash follows
+   facing. On land, dash should retain its existing horizontal behavior.
 5. **Living bulbs and nested breakable stone.** Watch an idle painted bulb for
    a few seconds: the inner water should circulate/bubble while stem and sac
    attachment stay steady. Pop/grapple, watch spent/refill, then idle again.

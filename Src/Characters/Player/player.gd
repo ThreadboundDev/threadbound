@@ -1816,18 +1816,30 @@ func _process_prototype_swim_vertical(delta: float) -> void:
 func _process_prototype_swim_movement(delta: float, horizontal_input: float) -> void:
 	if _prototype_swim_exit_lock_timer > 0.0:
 		return
-	var vertical_input := Input.get_axis("move_up", "move_down")
-	if Input.is_action_pressed("Jump"):
-		vertical_input = -1.0
-	var input_direction := Vector2(horizontal_input, vertical_input)
-	if input_direction.length_squared() > 1.0:
-		input_direction = input_direction.normalized()
+	var input_direction := _get_swim_input_direction(horizontal_input)
 	var target := input_direction * lake_swim_speed
 	var rate := lake_swim_acceleration if input_direction.length_squared() > 0.001 else lake_swim_braking
 	# A dash or bulb may exceed cruise speed; shed that excess progressively.
 	if velocity.length() > lake_swim_speed + 30.0 and input_direction.dot(velocity) > 0.0:
 		rate = lake_swim_burst_resistance
 	velocity = velocity.move_toward(target, rate * delta)
+
+
+func _get_swim_input_direction(horizontal_input: float) -> Vector2:
+	var vertical_input := Input.get_axis("move_up", "move_down")
+	if Input.is_action_pressed("Jump"):
+		vertical_input = -1.0
+	var input_direction := Vector2(horizontal_input, vertical_input)
+	if input_direction.length_squared() > 1.0:
+		input_direction = input_direction.normalized()
+	return input_direction
+
+
+func get_water_dash_direction_intent() -> Vector2:
+	var direction := _get_swim_input_direction(Input.get_axis("move_left", "move_right"))
+	if direction.length_squared() > 0.001:
+		return direction.normalized()
+	return Vector2(float(last_direction if last_direction != 0 else 1), 0.0)
 
 
 func _apply_prototype_water_wall_loss(pre_move_velocity: Vector2) -> void:
@@ -1841,7 +1853,7 @@ func _apply_prototype_water_wall_loss(pre_move_velocity: Vector2) -> void:
 
 
 func apply_water_bulb_dash_boost(incoming: Vector2, multiplier: float, lift: float) -> void:
-	# Capture velocity before cancelling dash, which clears horizontal speed.
+	# Capture velocity before cancelling dash, which clears dash-owned axes.
 	var boosted := incoming * multiplier
 	boosted.y = minf(boosted.y, -lift)
 	apply_traversal_launch(boosted.normalized())
@@ -1855,8 +1867,9 @@ func apply_water_bulb_boost(direction: Vector2, multiplier: float, minimum_speed
 	if boost_direction == Vector2.ZERO:
 		boost_direction = Vector2.UP
 	var boosted_speed := maxf(velocity.length() * multiplier, minimum_speed)
-	velocity = boost_direction * minf(boosted_speed, prototype_swim_breach_max_speed)
 	cancel_dash_for_traversal_launch()
+	# Cancellation clears dash-owned axes; install the new launch afterward.
+	velocity = boost_direction * minf(boosted_speed, prototype_swim_breach_max_speed)
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
 

@@ -13,19 +13,28 @@ Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
 and upward water dash travels diagonally. See the follow-up section in the
-linked report. Door/slope corrections are **Awaiting hands-on review**;
-equipment dash changes are **Waiting on approval**. Feedback checkpoint: `1718dffa`.
+linked report. Door/slope/water-dash corrections are **Awaiting hands-on review**.
+User approved the scoped equipment dash correction October 26.
+Feedback checkpoint: `1718dffa`.
 
 Door exit correction delivered: `651b5ff0`;
 91 Forward+ / 76 headless checks pass, entry/exit renders inspected. Awaiting
 hands-on feel review. Local comparison-scene metadata errors remain T04.
 
-Downhill contact correction delivered: `fix: keep downhill movement grounded`;
+Downhill contact correction delivered: `1bad5eef`;
 61 focused checks (12 mirrored slope/speed cases), 49 capsule/ledge and 417
 house-entry checks pass on Godot 4.7.2. Before/after evidence is linked from the
 playtest report. Retest the brother's original sloped platform at normal speed;
-its exact landmark remains unspecified. Water dash remains unchanged pending
-equipment approval. Do not mark T20 accepted from these automated results.
+its exact landmark remains unspecified. Do not mark T20 accepted from these
+automated results.
+
+Approved water-dash correction delivered: `fix: follow held swim direction for water dash`.
+245 focused checks pass across eight directions, neutral-facing fallback,
+Jump-as-up, both facings, input release/change, water exit, AP/cooldown/immunity,
+wall contact and bulb cancellation. Existing bulb-route, water-combo and
+water-special checks pass; combat-feedback assertions pass with unparented-actor
+script errors (qualified result; T04). Retest Up alone underwater and through
+the surface; diagonal input should remain diagonal. Land dash remains horizontal.
 
 Chase confirmed that house bouncing is fixed and the villagers' work/greet
 interaction functions. The two villager poses are sufficient for now. Fisher's
