@@ -58,6 +58,8 @@ var _left_hand_index := -1
 var _pelvis_rest_y := 0.0
 var _display: Sprite2D
 var _display_rest_position := Vector2.ZERO
+var _land_display_offset := Vector2.ZERO
+var _sole_probes: Array[Dictionary] = []
 var _camera: Camera3D
 var _sword_mesh: MeshInstance3D
 var _sword_sweep: SwordSweepVFX
@@ -118,6 +120,7 @@ func _process(delta: float) -> void:
 		if wet != (_logical_animation == &"Water_Dash"):
 			play_gameplay_animation(&"Dash")
 	_display.flip_h = facing < 0
+	_display.offset = Vector2(0, -255) if _player.is_in_prototype_water() else _land_display_offset
 	_sync_special_medium()
 	if _air_slash_active and (not _player.is_attacking or not _player.current_attack_uses_air_double):
 		_air_slash_active = false
@@ -156,7 +159,19 @@ func _process(delta: float) -> void:
 			# On land, compensate only upward motion so attacks keep their feet planted
 			# without pulling naturally crouched poses away from the floor.
 			_model_root.position.y = -maxf(0.0, pelvis_displacement)
+			if _player.is_on_floor() and _current_action not in [&"run_1", &"run_2", &"roll_1", &"jump_1", &"jump_2"]:
+				# Crouched and planted poses need the soles, not the pelvis, aligned
+				# with the floor. Preserve authored flight phases in runs/rolls/jumps.
+				_model_root.position.y = -_sole_height()
 	_update_sword_smears(delta)
+
+
+func _sole_height() -> float:
+	var height := INF
+	for probe: Dictionary in _sole_probes:
+		var point: Vector3 = _skeleton.get_bone_global_pose(probe.bone) * probe.point
+		height = minf(height, point.y)
+	return height if is_finite(height) else 0.0
 
 
 func _exit_tree() -> void:
@@ -676,6 +691,15 @@ func _build_viewport() -> void:
 		_left_hand_index = _skeleton.find_bone("hand.L")
 		if _pelvis_index >= 0:
 			_pelvis_rest_y = _skeleton.get_bone_global_rest(_pelvis_index).origin.y
+		# Heel and toe contact points are on the model's authored ground plane.
+		# Store them in bone space so crouching and toe flex keep their contact.
+		for bone_name: String in ["foot.L", "toe.L", "foot.R", "toe.R"]:
+			var bone := _skeleton.find_bone(bone_name)
+			if bone >= 0:
+				var rest := _skeleton.get_bone_global_rest(bone)
+				var sole := rest.origin
+				sole.y = 0.0
+				_sole_probes.append({"bone":bone,"point":rest.affine_inverse() * sole})
 	_install_authored_attacks(_animation_player, _skeleton)
 	_install_water_combo(_animation_player, _skeleton)
 	_index_clips()
@@ -724,7 +748,10 @@ func _build_viewport() -> void:
 	_display.texture = _viewport.get_texture()
 	_display.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_display.scale = display_scale
-	_display.offset = Vector2(0, -255)
+	# Register the actual model ground plane after viewport expansion. The old
+	# fixed -255 crop left even planted idle boots several world pixels high.
+	_land_display_offset = Vector2(0, _viewport.size.y * 0.5 - _camera.unproject_position(Vector3.ZERO).y)
+	_display.offset = _land_display_offset
 	var collider := _player.get_node("CollisionShape2D") as CollisionShape2D
 	_display.position = Vector2(0, collider.position.y + collider.shape.get_rect().end.y)
 	_display_rest_position = _display.position

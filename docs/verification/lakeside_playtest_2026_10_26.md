@@ -63,3 +63,15 @@ are checked against accidental collision exceptions. The very outer eaves are
 embedded in cave terrain, so landing tests use exposed segments 5/10/15.
 Existing Camera2D/interpolated Camera3D and teardown warnings remain. Rendered
 boot contact is a separate open issue; these are physical landing checks.
+
+## Rendered boot registration
+
+The live player's fixed crop left idle soles 5.5 world pixels above the capsule
+foot. The crop now derives from the camera's projection of the model ground
+plane. Heel/toe probes keep planted/crouched poses grounded; run/roll/jump flight
+phases and the swimming crop remain authored. Four phases each of idle, walk
+and crouch render within 0.79 world pixels of the physical floor. Fourteen
+Forward+ checks pass, 49 capsule/ledge checks pass (hands within 0.1 px of lip),
+and the water-combo regression passes. Captures and pixel measurements are in
+`work/lakeside-playtest-2026-10-26/boot_contact.json` and `grounded_*.png`.
+Tower front timber/floor alignment remains a separate correction.

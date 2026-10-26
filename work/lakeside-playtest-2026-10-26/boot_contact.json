@@ -1,0 +1,67 @@
+{
+	"checks": 14,
+	"display": "Windows",
+	"failures": [],
+	"samples": [
+		{
+			"action": "idle_4",
+			"phase": 0.0,
+			"rendered_sole_error_world_pixels": -0.71429443359375
+		},
+		{
+			"action": "idle_4",
+			"phase": 0.25,
+			"rendered_sole_error_world_pixels": -0.71429443359375
+		},
+		{
+			"action": "idle_4",
+			"phase": 0.5,
+			"rendered_sole_error_world_pixels": -0.71429443359375
+		},
+		{
+			"action": "idle_4",
+			"phase": 0.75,
+			"rendered_sole_error_world_pixels": -0.71429443359375
+		},
+		{
+			"action": "walk_1",
+			"phase": 0.0,
+			"rendered_sole_error_world_pixels": -0.21429443359375
+		},
+		{
+			"action": "walk_1",
+			"phase": 0.25,
+			"rendered_sole_error_world_pixels": 0.78570556640625
+		},
+		{
+			"action": "walk_1",
+			"phase": 0.5,
+			"rendered_sole_error_world_pixels": 0.78570556640625
+		},
+		{
+			"action": "walk_1",
+			"phase": 0.75,
+			"rendered_sole_error_world_pixels": 0.78570556640625
+		},
+		{
+			"action": "crouch_idle_1",
+			"phase": 0.0,
+			"rendered_sole_error_world_pixels": -0.21429443359375
+		},
+		{
+			"action": "crouch_idle_1",
+			"phase": 0.25,
+			"rendered_sole_error_world_pixels": -0.21429443359375
+		},
+		{
+			"action": "crouch_idle_1",
+			"phase": 0.5,
+			"rendered_sole_error_world_pixels": -0.21429443359375
+		},
+		{
+			"action": "crouch_idle_1",
+			"phase": 0.75,
+			"rendered_sole_error_world_pixels": -0.21429443359375
+		}
+	]
+}

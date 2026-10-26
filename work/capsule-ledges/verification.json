@@ -5,14 +5,14 @@
 	"passed": true,
 	"results": {
 		"3d_grip_-1": {
-			"error_pixels": 0.0779571533203125,
-			"hand_offset": "(-51.20387, -139.3488)",
-			"root_position": "(25.23386, 55.27689)"
+			"error_pixels": 0.0643334463238716,
+			"hand_offset": "(-51.1965, -135.0807)",
+			"root_position": "(25.22131, 51.02138)"
 		},
 		"3d_grip_1": {
-			"error_pixels": 0.0779571533203125,
-			"hand_offset": "(51.20387, -139.3488)",
-			"root_position": "(-25.23386, 55.27689)"
+			"error_pixels": 0.0954955816268921,
+			"hand_offset": "(51.18457, -135.1101)",
+			"root_position": "(-25.22112, 51.02185)"
 		},
 		"ledge_candidates": {
 			"feet-1": false,

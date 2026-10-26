@@ -80,6 +80,11 @@ interior floors are ignored until entering. 417 house-entry checks pass,
 including real player landings on six exposed roof locations. Rendered boot
 contact remains a separate open correction, and appearance needs manual review.
 
+Player boot registration: measured/rendered contact corrected to within 0.79
+world pixels in idle/walk/crouch samples. 14 GPU contact and 49 ledge checks plus
+water-combo regression pass. Tower front timber/collision alignment remains
+open; this does not by itself close Chase's tower screenshot defect.
+
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
 for platform/wall/base-entry depth. The tower now defaults to 3D independently

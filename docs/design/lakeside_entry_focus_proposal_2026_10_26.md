@@ -1,5 +1,9 @@
 # Lakeside entrance depth and house focus — approval proposal
 
+**Approved by Chase on October 26, 2026:** “Approve the proposed scope.” This
+authorizes the door transition, indoor focus, exit cue and tower foreground rim
+described below. Implementation and visual acceptance are tracked separately.
+
 Chase's October 26 playtest confirms house bouncing is fixed and villager
 interactions work. The work/greet poses are acceptable for now. Remaining
 feedback is recorded in `docs/verification/lakeside_playtest_2026_10_26.md`.
