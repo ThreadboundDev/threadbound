@@ -36,6 +36,11 @@ and Enemies on **current 3D** for this first retest.
    swim through the surface, and compare Day/dusk. Check player contrast and
    boots sinking slightly behind solid rock contact edges. The separate Krita
    water background is still pending; this is a reflection/layering review.
+   New immersion follow-up: crossing the surface should no longer fade the
+   entire lake or its reflections. Submerged body pixels should pick up a cool
+   veil with subtle moving light and small rising bubbles; above-water parts
+   and dry air pockets should stay clear. Surface wakes are flattened ripples.
+   Reflections can still fade when their source scenery leaves the camera.
    For the approved dash correction, hold **Up alone + Dash** underwater in both
    facings: travel should be straight up. Jump also supplies upward swim aim.
    Check Down, both diagonals, releasing/changing direction during the dash,

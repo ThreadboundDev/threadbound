@@ -4,7 +4,7 @@ uniform vec2 air_points[256];
 uniform int air_counts[16];
 uniform int pocket_count = 0;
 uniform float surface_y = 411.0;
-uniform float water_opacity = .34;
+uniform float immersion_opacity : hint_range(0.0,1.0) = .22;
 uniform vec4 shallow_color : source_color = vec4(.12,.48,.59,1.0);
 uniform vec4 deep_color : source_color = vec4(.018,.10,.18,1.0);
 varying vec2 world_position;
@@ -26,5 +26,12 @@ void fragment() {
 	}
 	float depth=max(0.0,world_position.y-surface_y);
 	vec3 tint=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
-	COLOR=vec4(tint,min(water_opacity*.45,.12));
+	// World-space movement and depth keep the swimmer inside the water without
+	// fading the entire environment whenever the observer crosses the surface.
+	float current=sin(world_position.x*.035+world_position.y*.022+TIME*.7)
+		*sin(world_position.x*.018-world_position.y*.031-TIME*.45);
+	float light=pow(max(0.0,current),8.0);
+	tint+=vec3(.10,.17,.16)*light;
+	float coverage=clamp(immersion_opacity*(1.0+smoothstep(0.0,900.0,depth)*.4),0.0,1.0);
+	COLOR=vec4(tint,coverage);
 }

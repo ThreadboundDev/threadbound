@@ -1,5 +1,5 @@
 extends SceneTree
-const OUT := "res://work/water-delivery-2026-10-22"
+var out := "res://work/water-delivery-2026-10-22"
 var room
 var failures: Array[String] = []
 var checks := 0
@@ -7,6 +7,8 @@ var camera: Camera2D
 var captures: Array[String] = []
 
 func _initialize() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--output="): out = argument.trim_prefix("--output=")
 	call_deferred("verify")
 
 func check(ok: bool, message: String) -> void:
@@ -26,11 +28,11 @@ func capture(label: String, center: Vector2, zoom: float) -> void:
 	for frame in 12:
 		await process_frame
 	await RenderingServer.frame_post_draw
-	check(root.get_texture().get_image().save_png(OUT.path_join(label+".png")) == OK, "Saved GPU view: "+label)
+	check(root.get_texture().get_image().save_png(out.path_join(label+".png")) == OK, "Saved GPU view: "+label)
 	captures.append(label)
 
 func verify() -> void:
-	DirAccess.make_dir_recursive_absolute(OUT)
+	DirAccess.make_dir_recursive_absolute(out)
 	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
@@ -50,10 +52,13 @@ func verify() -> void:
 	rims.rebuild()
 	check(rims._signature == original_signature, "Restored painted art restores contact registration")
 	var lake = room.get_node("Volumes/Lake")
+	# Physics frames can finish before the first idle presentation update.
+	lake._update_water_preview(0.0)
 	check(lake._fill.z_index == -4 and not lake._fill.z_as_relative, "Reflection body is behind player and contact rims")
 	check(lake._immersion_fill.z_index == 2 and not lake._immersion_fill.z_as_relative, "Light immersion tint is above actors but below contact art")
-	for parameter: String in ["surface_y","water_opacity","air_counts","pocket_count"]:
+	for parameter: String in ["surface_y","shallow_color","deep_color","air_counts","pocket_count"]:
 		check(lake._fill.material.get_shader_parameter(parameter) == lake._immersion_fill.material.get_shader_parameter(parameter), "Both water passes share "+parameter)
+	check(is_equal_approx(float(lake._immersion_fill.material.get_shader_parameter("immersion_opacity")),lake.immersion_opacity), "Actor immersion uses its independent opacity")
 	for pocket in get_nodes_in_group("lake_air_pockets"):
 		check(pocket.lake_presentation and pocket.pocket_caustic_intensity <= .06, "Every dry pocket uses the same restrained presentation")
 	var stage = room.get_node("LakesideArtStage")
@@ -119,7 +124,7 @@ func verify() -> void:
 			await capture("fisher_interior" if label == "Fisher house" else "workshop_interior",house.floor_bounds().get_center()+Vector2(0,-120),1.5)
 			house.leave_house()
 	var result := {"passed":failures.is_empty(),"checks":checks,"failures":failures,"display":DisplayServer.get_name(),"rim_meshes":rims.get_child_count(),"rim_edges":rims.edge_count,"rim_triangles":rims.triangle_count,"captures":captures}
-	FileAccess.open(OUT.path_join("verification.json"),FileAccess.WRITE).store_string(JSON.stringify(result,"\t")+"\n")
+	FileAccess.open(out.path_join("verification.json"),FileAccess.WRITE).store_string(JSON.stringify(result,"\t")+"\n")
 	print("WATER_DELIVERY_CHECK ",JSON.stringify(result))
 	room.queue_free()
 	await frames(3)

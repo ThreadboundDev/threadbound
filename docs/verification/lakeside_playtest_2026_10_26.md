@@ -307,3 +307,45 @@ remain separate T04 work; these passes do not establish a clean engine teardown.
 
 Checkpoint: `fix: follow held swim direction for water dash`. Hands-on dash
 feel and surface/diagonal presentation still need review at normal speed.
+
+### Water entry fade and swimmer immersion
+
+Chase reports improved reflections, but a gradual reveal while swimming and a
+character who looks pasted over the water. A fixed-camera GPU baseline confirms
+that entering water changes scenery opacity from .34 to .16 and reflection
+strength from .48 to .32. The foreground veil also drops to .072, leaving a
+submerged white actor patch at RGB (.937, .961, .969).
+
+Lake scenery opacity, reflection coverage and the exterior facade grade now
+stay independent of the player's wet state. The existing foreground pass has
+its own `immersion_opacity` control (.22), increasing gradually with world depth,
+with faint moving highlights. Only pixels inside the lake and outside dry
+pockets receive the veil. Existing wake drawing now uses flattened surface
+ripples and small rising underwater bubbles, above actors and below solid rock
+contact. Legacy non-lake greybox opacity/rings retain their existing behavior.
+No scene structure, gameplay, equipment or assets changed.
+
+Godot 4.7.2 Forward+ on RX 6800 XT: **10 focused pixel/layer checks**, **6 reflected
+pixel checks**, **94 water-room checks** pass; **16 headless surface checks** pass.
+The final fixed-camera reflection red sample is .255 in both observer states; shallow
+and deep white patches become (.808,.886,.910) and (.792,.875,.898). Above-water
+pixels, dry pocket color and foreground rock color are preserved. The surface
+fixture deliberately now asserts independent scenery/actor opacity rather than
+requiring the removed observer-dependent fade. Reflection tests move a real
+observer and retain the earlier screen-reader/moving-scenery checks.
+
+Before/after player captures, pixel fixtures, reports and eight room views are
+in `work/water-immersion-2026-10-26/`; surface results were reported to the console.
+These use the authored base room, preserving Chase's uncommitted comparison
+scene edit. Initial fixture errors (type inference, viewport world property and
+reading an unset shader parameter before the first idle update) were corrected;
+their hidden test processes were closed. Final runs have no script errors.
+Existing camera interpolation, missing legacy glove Swim_Idle and engine
+resource/RID/ObjectDB shutdown diagnostics remain T04.
+
+The reflection still samples the visible camera image: its source leaving the
+viewport can fade it independently of wet state. This small correction does
+not establish camera-independent reflection capture. Hands-on review should
+distinguish surface entry from deep camera movement and judge the new immersion
+strength. Appearance is not yet accepted. Checkpoint:
+`fix: keep lake steady and immerse swimmers`.

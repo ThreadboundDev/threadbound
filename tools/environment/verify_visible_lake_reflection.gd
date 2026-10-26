@@ -2,13 +2,18 @@ extends SceneTree
 ## Exercise reflected pixels, including an earlier screen reader and movement.
 var failures: Array[String] = []
 var checks := 0
-const OUT := "res://work/lakeside-playtest-2026-10-26"
+var out := "res://work/lakeside-playtest-2026-10-26"
+class Observer extends CharacterBody2D:
+	func is_in_prototype_water() -> bool:
+		return global_position.y > 200.0
 func check(ok: bool, message: String) -> void:
 	checks += 1
 	if not ok:
 		failures.append(message)
 		push_error(message)
 func _initialize() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--output="): out = argument.trim_prefix("--output=")
 	call_deferred("run")
 func rectangle(at: Rect2, color: Color, depth: int) -> Polygon2D:
 	var polygon := Polygon2D.new()
@@ -27,6 +32,7 @@ func run() -> void:
 		return
 	var view := SubViewport.new()
 	view.size = Vector2i(512,512)
+	view.world_2d = World2D.new()
 	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(view)
 	view.add_child(rectangle(Rect2(0,0,512,512),Color(.02,.08,.12),-30))
@@ -39,30 +45,39 @@ func run() -> void:
 	view.add_child(earlier)
 	var marker := rectangle(Rect2(128,120,80,50),Color(1,.02,.7),-10)
 	view.add_child(marker)
+	var observer := Observer.new()
+	observer.add_to_group("player")
+	var shape := CollisionShape2D.new()
+	var box := RectangleShape2D.new()
+	box.size = Vector2(8,8)
+	shape.shape = box
+	observer.add_child(shape)
+	observer.position = Vector2(475,90)
+	view.add_child(observer)
 	var lake = load("res://Src/Environment/Greybox/greybox_polygon_water.tscn").instantiate()
 	lake.lake_presentation = true
 	lake.points = PackedVector2Array([Vector2(0,200),Vector2(512,200),Vector2(512,512),Vector2(0,512)])
 	view.add_child(lake)
 	lake.set_process(false)
 	var results := []
+	DirAccess.make_dir_recursive_absolute(out)
 	for wet in [false,true]:
-		lake._submersion_blend = 1.0 if wet else 0.0
-		lake._update_water_preview(0)
-		lake._fill.material.set_shader_parameter("submersion_blend",1.0 if wet else 0.0)
-		lake._fill.material.set_shader_parameter("water_opacity",.16 if wet else .34)
+		observer.position.y = 300 if wet else 90
+		for i in 3: await physics_frame
+		lake._update_water_preview(.5)
 		marker.position.x = 0
 		var image := await frame_image(view)
 		var reflected := image.get_pixel(168,250)
 		var clear := image.get_pixel(340,250)
 		check(reflected.r-clear.r > .12,"Visible magenta reflection with %s observer" % ("underwater" if wet else "dry"))
 		check(reflected.b-clear.b > .05,"Reflected source color survives water tint")
-		image.save_png(OUT.path_join("reflection_"+("wet" if wet else "dry")+".png"))
+		image.save_png(out.path_join("reflection_"+("wet" if wet else "dry")+".png"))
 		marker.position.x = 180
 		image = await frame_image(view)
 		check(image.get_pixel(348,250).r-image.get_pixel(168,250).r > .12,"Reflection follows moved scenery despite earlier cached screen reader")
 		results.append({"submerged":wet,"reflected_red":reflected.r,"clear_red":clear.r})
 	var result := {"checks":checks,"failures":failures,"samples":results,"display":DisplayServer.get_name()}
-	FileAccess.open(OUT.path_join("visible_reflection.json"),FileAccess.WRITE).store_string(JSON.stringify(result,"\t")+"\n")
+	FileAccess.open(out.path_join("visible_reflection.json"),FileAccess.WRITE).store_string(JSON.stringify(result,"\t")+"\n")
 	print("VISIBLE_LAKE_REFLECTION ",JSON.stringify(result))
 	view.queue_free()
 	await process_frame

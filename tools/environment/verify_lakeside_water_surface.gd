@@ -30,6 +30,7 @@ func verify() -> void:
 	lake.water_color = Color(.17, .43, .51, .29)
 	lake.deep_water_color = Color(.02, .04, .08, 1)
 	lake.underwater_opacity = .071
+	lake.immersion_opacity = .19
 	var material: ShaderMaterial = lake._fill.material
 	for wet: bool in [false, true]:
 		var target := Vector2(2816, surface + (1 if wet else -1))
@@ -39,8 +40,9 @@ func verify() -> void:
 			await physics_frame
 		check(player.is_in_prototype_water() == wet, "Physical wet state agrees at the actual surface")
 		lake._update_water_preview(.5)
-		check(bool(material.get_shader_parameter("submerged")) == wet, "Presentation wet state agrees with physical wet state")
-		check(is_equal_approx(float(material.get_shader_parameter("water_opacity")), .071 if wet else .29), "Inspector opacity reaches the presented material")
+		check(is_equal_approx(lake.get_presentation_opacity(),.29), "Scenery opacity stays steady across the physical wet-state boundary")
+		check(is_equal_approx(float(material.get_shader_parameter("water_opacity")), .29), "Inspector scenery opacity reaches the rear material in both observer states")
+		check(is_equal_approx(float(lake._immersion_fill.material.get_shader_parameter("immersion_opacity")),.19), "Foreground immersion has an independent inspector opacity")
 	check((material.get_shader_parameter("shallow_color") as Color).is_equal_approx(Color(.17,.43,.51,1)), "Shallow color reaches shader")
 	check((material.get_shader_parameter("deep_color") as Color).is_equal_approx(lake.deep_water_color), "Deep color reaches shader")
 	lake.water_color.a = .071
@@ -48,7 +50,7 @@ func verify() -> void:
 	for frame in 3:
 		await physics_frame
 	lake._update_water_preview(.5)
-	check(not bool(material.get_shader_parameter("submerged")), "Equal wet/dry alpha values cannot falsely mark a dry player submerged")
+	check(not player.is_in_prototype_water(), "Matching legacy/scenery opacity cannot affect physical wet-state classification")
 	print("LAKESIDE_WATER_SURFACE_CHECK ", JSON.stringify({"passed":failures.is_empty(),"checks":checks,"failures":failures}))
 	room.queue_free()
 	await process_frame

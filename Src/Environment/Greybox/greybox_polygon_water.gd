@@ -10,10 +10,12 @@ extends Area2D
 		if is_inside_tree():
 			_sync_pocket_group()
 		queue_redraw()
+## Legacy greybox fill opacity when the player is wet. Painted lakes stay steady.
 @export_range(0.0, 1.0) var underwater_opacity := 0.16
+## Foreground veil over submerged actors; independent of scenery/reflections.
+@export_range(0.0, 1.0) var immersion_opacity := 0.22
 @export var deep_water_color := Color(0.018, 0.10, 0.18, 1.0)
 @export_range(0.0, 1.0) var pocket_caustic_intensity := 0.06
-var _submersion_blend := 0.0
 var _fill: Polygon2D
 var _immersion_fill: Polygon2D
 var _ripple_visual: Node2D
@@ -44,9 +46,9 @@ func _ready() -> void:
 	_sync_pocket_group()
 	_ripple_visual = Node2D.new()
 	_ripple_visual.name = "WaterMovementRipples"
-	# The water tint stays in front; contact rings render behind the player.
+	# Lake wakes/bubbles can cross the swimmer, below solid rock contact art.
 	_ripple_visual.z_as_relative = false
-	_ripple_visual.z_index = -1
+	_ripple_visual.z_index = 2 if lake_presentation else -1
 	add_child(_ripple_visual)
 	_ripple_visual.draw.connect(_draw_movement_ripples)
 	_fill = Polygon2D.new()
@@ -136,18 +138,48 @@ func _draw() -> void:
 func _draw_movement_ripples() -> void:
 	for ripple in _ripples:
 		var age: float = ripple.age
+		if lake_presentation and not ripple.surface:
+			# Small rising bubbles read as displaced water, rather than expanding
+			# surface rings around a swimmer who is already below the surface.
+			for bubble in 3:
+				var drift := Vector2(
+					sin(age * 4.0 + bubble * 2.1) * 5.0 + bubble * 6.0 - 6.0,
+					-age * (28.0 + bubble * 5.0) - bubble * 8.0
+				)
+				_draw_water_ring(ripple.position + drift, 1.5 + bubble * 0.6 + age,
+					Vector2.ONE, (1.0-age)*0.42, 12, 1.0)
+			continue
 		var radius := 7.0 + age * 55.0
-		for segment in 32:
-			var a: Vector2 = ripple.position + Vector2.from_angle(float(segment)/32.0*TAU)*radius
-			var b: Vector2 = ripple.position + Vector2.from_angle(float(segment+1)/32.0*TAU)*radius
-			if _is_visible_water(to_global(a)) and _is_visible_water(to_global(b)) and _is_visible_water(to_global(a.lerp(b, 0.5))):
-				_ripple_visual.draw_line(a, b, Color(0.7,0.95,1,(1.0-age)*0.6), 1.5, true)
+		var stretch := Vector2(1.0,0.15) if lake_presentation else Vector2.ONE
+		_draw_water_ring(ripple.position, radius, stretch, (1.0-age)*0.6, 32, 1.5)
+
+
+func _draw_water_ring(center: Vector2, radius: float, stretch: Vector2, alpha: float, segments: int, width: float) -> void:
+	for segment in segments:
+		var a := center + Vector2.from_angle(float(segment)/segments*TAU)*radius*stretch
+		var b := center + Vector2.from_angle(float(segment+1)/segments*TAU)*radius*stretch
+		if _is_visible_water(to_global(a)) and _is_visible_water(to_global(b)) and _is_visible_water(to_global(a.lerp(b, 0.5))):
+			_ripple_visual.draw_line(a, b, Color(0.7,0.95,1,alpha), width, true)
+
+
+func _add_movement_cue(body: Node2D, crossing := false) -> void:
+	var point: Vector2 = body.get_water_sample_position() if body.has_method("get_water_sample_position") else body.global_position
+	if not lake_presentation:
+		_ripples.append({"position": to_local(body.global_position if crossing else point), "age": 0.0})
+		return
+	if _ripples.size() >= 32 or not body is CharacterBody2D:
+		return
+	var surface := absf(point.y-get_surface_global_y()) < (112.0 if crossing else 40.0)
+	if surface:
+		point.y = get_surface_global_y() + 3.0
+	if _is_visible_water(point):
+		_ripples.append({"position": to_local(point), "age": 0.0, "surface": surface})
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if air_pocket:
 		return
-	_ripples.append({"position": to_local(body.global_position), "age": 0.0})
+	_add_movement_cue(body, true)
 	if body.has_method("enter_prototype_water"):
 		body.call("enter_prototype_water", self, get_surface_global_y())
 
@@ -155,7 +187,7 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if air_pocket:
 		return
-	_ripples.append({"position": to_local(body.global_position), "age": 0.0})
+	_add_movement_cue(body, true)
 	if body.has_method("exit_prototype_water"):
 		body.call("exit_prototype_water", self)
 
@@ -201,21 +233,16 @@ func _update_water_preview(delta: float) -> void:
 		_fill.material.set_shader_parameter("intensity", pocket_caustic_intensity)
 		return
 	var tint := water_color
-	var is_submerged := false
 	if Engine.is_editor_hint():
 		tint = Color(0.10, 0.55, 0.85, 0.5)
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not lake_presentation:
 		for body in get_overlapping_bodies():
 			if body.is_in_group("player") and body.has_method("is_in_prototype_water") and body.is_in_prototype_water():
-				is_submerged = true
 				tint.a = underwater_opacity
 	_fill.color = tint
 	if lake_presentation:
-		_submersion_blend = move_toward(_submersion_blend, 1.0 if is_submerged else 0.0, maxf(delta, 0.0) * 4.0)
 		_fill.material.set_shader_parameter("surface_y", get_surface_global_y())
-		_fill.material.set_shader_parameter("submerged", is_submerged)
-		_fill.material.set_shader_parameter("submersion_blend", _submersion_blend)
-		_fill.material.set_shader_parameter("water_opacity", lerpf(water_color.a, underwater_opacity, _submersion_blend))
+		_fill.material.set_shader_parameter("water_opacity", water_color.a)
 		_fill.material.set_shader_parameter("shallow_color", Color(water_color.r, water_color.g, water_color.b, 1.0))
 		_fill.material.set_shader_parameter("deep_color", deep_water_color)
 	var vertices := PackedVector2Array()
@@ -240,7 +267,8 @@ func _update_water_preview(delta: float) -> void:
 	if is_instance_valid(_immersion_fill):
 		_immersion_fill.visible = _fill.visible
 		_immersion_fill.polygon = _fill.polygon
-		for parameter in ["surface_y", "water_opacity", "shallow_color", "deep_color", "air_points", "air_counts", "pocket_count"]:
+		_immersion_fill.material.set_shader_parameter("immersion_opacity", immersion_opacity)
+		for parameter in ["surface_y", "shallow_color", "deep_color", "air_points", "air_counts", "pocket_count"]:
 			_immersion_fill.material.set_shader_parameter(parameter, _fill.material.get_shader_parameter(parameter))
 	for i in range(_ripples.size()-1,-1,-1):
 		_ripples[i].age += delta
@@ -253,7 +281,7 @@ func _update_water_preview(delta: float) -> void:
 			if body is CharacterBody2D and body.velocity.length() > 80 and _ripples.size() < 32:
 				var point: Vector2 = body.get_water_sample_position() if body.has_method("get_water_sample_position") else body.global_position
 				if _is_visible_water(point) and (not body.has_method("is_in_prototype_water") or body.is_in_prototype_water()):
-					_ripples.append({"position": to_local(point), "age": 0.0})
+					_add_movement_cue(body)
 	_ripple_visual.queue_redraw()
 	queue_redraw()
 
@@ -271,4 +299,5 @@ func _is_visible_water(point: Vector2) -> bool:
 	return true
 
 func get_presentation_opacity() -> float:
-	return lerpf(water_color.a, underwater_opacity, _submersion_blend)
+	# Exterior facades share the lake's spatial grade, not the observer's state.
+	return water_color.a

@@ -36,6 +36,16 @@ water-special checks pass; combat-feedback assertions pass with unparented-actor
 script errors (qualified result; T04). Retest Up alone underwater and through
 the surface; diagonal input should remain diagonal. Land dash remains horizontal.
 
+Water immersion follow-up delivered: `fix: keep lake steady and immerse swimmers`.
+Entering water no longer fades the lake/reflections or exterior facade grade.
+An independent foreground veil, faint currents and small rising bubbles put
+submerged actors inside the water; dry pockets and foreground rocks stay clear.
+10 focused GPU pixel checks, 6 reflection pixel checks, 16 surface checks and
+94 room checks pass. Appearance remains **Awaiting hands-on review**. Screen-space
+reflection fading when its source leaves the camera remains a known limitation;
+this correction removes the additional observer-state fade. Evidence and the
+current retest card are linked above.
+
 Chase confirmed that house bouncing is fixed and the villagers' work/greet
 interaction functions. The two villager poses are sufficient for now. Fisher's
 loft remains deferred. Keep 3D enemies for now; retain painted alternatives for
