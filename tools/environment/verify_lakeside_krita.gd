@@ -160,7 +160,7 @@ func verify() -> void:
 			await process_frame
 			await process_frame
 			Input.action_release("interact")
-			await frames(25)
+			await frames(65) # Door turn/walk completes before checking the interior.
 			check(house.is_player_inside(player), "Interact must enter the house: " + landmark)
 		var building := "FisherHouse" if landmark == "Fisher house" else landmark
 		var marker: Node2D = room.get_node("Buildings/" + building)

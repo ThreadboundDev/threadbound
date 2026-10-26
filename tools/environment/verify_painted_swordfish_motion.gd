@@ -22,6 +22,7 @@ func verify() -> void:
 	current_scene = room
 	await frames(20)
 	var art = room.get_node("ArtComparison")
+	art.enemies_enabled = true # Opt into the retained painted experiment explicitly.
 	art.set_process(false)
 	room.get_node("Player").set_physics_process(false)
 	room.get_node("Player").visible = false

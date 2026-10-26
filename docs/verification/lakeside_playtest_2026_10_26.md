@@ -186,3 +186,15 @@ The standalone geometry verifier confirms byte-exact preservation. Blender
 saved the editable source despite an unavailable thumbnail-cache path. Existing
 Godot interpolation, missing glove Swim_Idle and teardown diagnostics remain.
 Chase's visible entrance-depth acceptance remains pending.
+
+## Final integration regression
+
+On the v5 implementation (`3e887e82`), the authored-map fixture passes with
+zero rock-mask mismatches across 9,871 samples, 51 villager checks pass, 166
+comparison checks pass, 55 headless painted-fish checks pass, and water-combo
+regression passes. Fixtures now wait for actual door travel before inspecting
+interiors; greeting fixtures stand beyond the exit range, and the obstruction
+test uses the spacious right-hand approach. The retained painted-fish fixture
+explicitly selects its alternative now that enemies default to 3D. No gameplay
+was changed to make those fixture expectations pass. T03 authored reset-count
+reconciliation and T04 legacy/teardown diagnostics remain separate open tasks.

@@ -52,10 +52,19 @@ func focus_resident(label: String) -> void:
 	room.focus_landmark(label)
 	await frames(25)
 	await press_interact()
+	await frames(65) # Wait for the approved door walk before placing the NPC fixture.
 	var house := room.get_landmark_house(label) as Node2D
 	var player := room.get_node("Player") as CharacterBody2D
 	check(house.is_player_inside(player), "Enter the house before greeting its resident")
 	player.global_position = room.get_interior_landmark_position(label)
+	# Door-centered entry no longer deposits the player beyond the exit range.
+	# Stand just past that range on the resident's side before testing greetings.
+	var door := house.get_node("Door") as Area2D
+	var range_shape := door.get_node("Range") as CollisionShape2D
+	var player_shape := player.get_node("CollisionShape2D") as CollisionShape2D
+	var clearance := range_shape.shape.get_rect().size.x*0.5+player_shape.shape.get_rect().size.x*0.5+4.0
+	if absf(player.global_position.x-door.global_position.x)<clearance:
+		player.global_position.x = door.global_position.x+clearance
 	player.velocity = Vector2.ZERO
 	player.reset_physics_interpolation()
 	await frames(35)
@@ -137,8 +146,13 @@ func run() -> void:
 	# A wall between player and NPC prevents greeting through the wall.
 	await focus_resident("Net mender")
 	var mender = room.get_node("Residents/NetMender")
+	# Use the spacious right-hand approach for this independent wall-ray test.
+	player.global_position.x = mender.global_position.x+90
+	player.velocity = Vector2.ZERO
+	player.reset_physics_interpolation()
+	await frames(5)
 	var blocker := StaticBody2D.new()
-	blocker.position = mender.global_position + Vector2(-30, -65)
+	blocker.position = mender.global_position + Vector2(45, -65)
 	var collider := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
 	shape.size = Vector2(5, 125)

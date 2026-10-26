@@ -9,17 +9,17 @@
 		"Fisher house": {
 			"cutaway": true,
 			"on_floor": true,
-			"position": "(68.0, 257.4731)"
+			"position": "(-32.0, 257.4731)"
 		},
 		"Tower": {
 			"cutaway": true,
 			"on_floor": true,
-			"position": "(1472.0, 1037.955)"
+			"position": "(1472.0, 1045.237)"
 		},
 		"Workshop": {
 			"cutaway": true,
 			"on_floor": true,
-			"position": "(3727.584, -1210.607)"
+			"position": "(3627.584, -1210.607)"
 		}
 	},
 	"godot": "4.7.2-stable (official)",
@@ -44,10 +44,12 @@
 		-1408.0,
 		-2560.0
 	],
-	"painted_chunks": 41,
+	"painted_chunks": 56,
 	"passed": true,
 	"physics_alpha_mismatches": 0,
 	"physics_alpha_samples": 9871,
+	"rear_rock_chunks": 32,
+	"rear_wood_chunks": 15,
 	"render_scale": 2.0,
 	"rendered_images": [],
 	"rock_polygons": 51

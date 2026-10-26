@@ -1,20 +1,7 @@
 {
-	"checks": 67,
+	"checks": 55,
 	"failures": [],
-	"gpu_captures": [
-		"swordfish_swim_00.png",
-		"swordfish_swim_01.png",
-		"swordfish_swim_02.png",
-		"swordfish_swim_03.png",
-		"swordfish_swim_04.png",
-		"swordfish_swim_05.png",
-		"swordfish_swim_06.png",
-		"swordfish_swim_07.png",
-		"swordfish_swim_08.png",
-		"swordfish_swim_09.png",
-		"swordfish_swim_10.png",
-		"swordfish_swim_11.png"
-	],
+	"gpu_captures": [],
 	"max_bill_anchor_drift_px": 0.00013647876039613,
 	"passed": true,
 	"swim_frames": 12
