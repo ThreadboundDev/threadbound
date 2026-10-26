@@ -1,172 +1,56 @@
 # Threadbound current TODO list
 
-Updated October 26, 2026. Saved recovery baseline: `16b3bd3c` on
-`threadbound/chore-october-development-checkpoint`, committed and pushed.
-This is the single current task order. The [checkpoint recap](checkpoint_2026_10_21.md)
-is the evidence for the current state; older roadmaps and delivery reports do
-not override its failures or imply hands-on acceptance.
+Updated October 26, 2026. This is the single current priority list. The saved
+recovery baseline remains `16b3bd3c`; dated evidence is in the
+[October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Milestone priority: T01, finish house contact and deliberate door entry.**
-The layout fix is saved as `9abd15ff`. Chase approved the door change, which is
-implemented and checked; [delivery and validation](design/lakeside_house_entry_proposal.md).
-T01/T02 now await a short visible house/NPC review. Next independent background
-task is T03 when Chase is unavailable to play.
+**Current priority: T20 — accept the October 26 playtest corrections.**
+Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
+**awaiting Chase's appearance/feel review**.
+[Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
+Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-Chase's subsequent scoped request is **T13: matching walkway stamp objects**.
-Chase approved the [2D integration](design/lakeside_walkway_stamp_proposal.md),
-excluding the rock-attached landing. Four reusable timber options and nine
-fitted intact landing visuals are implemented and checked; visible review is
-pending. This scoped correction does not approve broader art production or a
-3D rebuild. T01/T02 house review remains pending too.
+Chase confirmed that house bouncing is fixed and the villagers' work/greet
+interaction functions. The two villager poses are sufficient for now. Fisher's
+loft remains deferred. Keep 3D enemies for now; retain painted alternatives for
+comparison. The tower remains 3D. Chase approved the full
+[door/focus/rim proposal](design/lakeside_entry_focus_proposal_2026_10_26.md).
 
-**Current visual correction: T14, background wood depth separation.** Chase
-approved the [scoped correction](design/lakeside_rear_support_depth_proposal.md).
-The original wood supports now have a separate background layer and tunable
-depth filter; Cave Walls/Under Cave Mouth remain combined. Implementation and
-focused checks are complete; **awaiting daylight/dusk visible review**. Gameplay
-geometry and the latest house/walkway work are unchanged.
+| T20 delivered correction | Commit | Validation / acceptance |
+| --- | --- | --- |
+| Breakable stone, cracks and debris behind cave faces | `6c4f4ed6` | 12 GPU checks; overlap review pending |
+| 3D enemy default; villagers selected independently | `92dcf437` | 166 comparison checks incl. F2; movement review pending |
+| Exterior one-way roofs landable | `0a932de0` | 417 house checks incl. six exposed roof landings |
+| Rendered player soles grounded | `ed560f63` | 14 GPU pixel checks; <0.79 px error; 49 ledge checks and water combo pass |
+| Nine tower floors follow installed deck geometry | `56f69ef8` | 20 GPU checks; mesh/physics agree within 0.04 px; appearance pending |
+| Visible water reflections restored | `d797f051` | 6 reflection pixel checks + 92 water checks; appearance/background pending |
+| Living water currents/bubbles in painted bulbs | `c2b12563` | 13 GPU checks, fixed attachment and lifecycle; motion review pending |
+| Workshop exterior table removed | `ed36e5e3` | Same RGBA canvas/world envelope; crop/contact/import checked |
+| Same-door animated entry/exit, indoor focus and amber exit cue | `a30c4ca0` | 79 GPU + 417 house + 166 comparison checks; feel review pending |
+| Tower front stone occludes swimmers during cutaway | `3e887e82` | 13 GPU checks; all 35 other meshes/data preserved; depth review pending |
+| Fixtures follow door travel and explicit art selection | `ef396db3` | Map: 0/9,871 mask mismatches; 51 NPC / 166 comparison / 55 optional fish checks; water combo passes |
 
-**Latest correction: T15, bridge/bulb rock overlap.** Bridge options and bulbs
-now draw between background wood and rock faces; bulb runtime art/particles
-follow the placed object's depth. Verification passes; visible overlap review
-is pending. [Current depths and results](verification/lakeside_rock_overlap_2026_10_21.md).
+- [ ] **T20 acceptance.** Review doors/camera/exit cues, visible boot contact,
+  roof landings, tower approach, water, bulbs, breakables and default 3D enemies.
+  Record keep/change/untested and fix any reproducible blocker as its own
+  verified commit/push. Automated passes do not accept visuals or controls.
+- [ ] **Next independent implementation: T03.** Reconcile authored breakable
+  wall reset counts. The depth correction did not change durability/reset logic.
+- [ ] **Then T04.** Reconcile obsolete fixtures and investigate existing
+  rendering/resource teardown diagnostics. They remain open, not a clean run.
 
-**Latest scoped art delivery: T16, Eave Runner v4 installation.** Chase approved
-the swap on October 22, accepting the current model for now while explicitly
-calling it rough. Gameplay and the art-only scene now use v4. Import, wrapper,
-guardian and authored lakeside/reset checks pass. Further polish and hands-on
-gameplay-scale review remain open; do not describe this as final concept parity.
-[Delivery, approval and validation](art/eave_runner_cleanup_v4.md).
+Current comparison default: painted houses/villagers/bulbs, 3D tower/enemies,
+existing live 3D player. Tower v5 retains the v4 roof polish and adds only the
+front-rim split. Eave Runner v4, villagers v2 and Loom Heron v3 remain active
+model sources. Prior versions are retained references. Chase's separate Krita
+water background remains pending; waterline registration is still y=411.
 
-**Latest implementation: T17, approved water/readability corrections delivered.**
-Manual level edits are saved as `4130555b`; the shared surface/real controls as
-`4ad653bc`, rock contact rims as `5428b96e`, and exterior/dry-interior compositing
-as `fc40a9b2`, all pushed on `threadbound/fix-water-readability`. The waterline is
-now y=411. Reflections sit behind actors, light immersion tint stays below front
-contact art, and submerged facades no longer inherit the interior's dry mask.
-All three pocket cues are consistent and quieter. Rock collision is unchanged.
-Final Forward+ fixture: 92 checks pass; surface 14, house entry 405, walkways 606,
-encounter/reset 19 and existing authoring/readability checks pass.
-[Delivery and captured views](verification/lakeside_water_delivery_2026_10_22.md).
-**Awaiting hands-on appearance acceptance and Chase's separate Krita background**;
-T17 remains open. The original [water review](design/lakeside_water_review_2026_10_22.md)
-and its temporary previews are historical diagnostics. Use the current delivery
-and [test card](next_test_session.md) for this implementation.
-
-## Milestone and working limits
-
-**Current work: October 26 playtest corrections.** Chase confirms the house
-bouncing fix and working villagers; the two villager poses are sufficient for
-now. Water reflections, rendered boot/platform contact, roof landing, tower-base
-occlusion, enemy frame jitter, static bulb idle, breakable-rock depth and the
-blocked workshop door remain reported defects. Prefer current 3D enemies now.
-[Exact feedback and screenshots](verification/lakeside_playtest_2026_10_26.md).
-New door/indoor-camera/tower-entry architecture has a separate
-[approval proposal](design/lakeside_entry_focus_proposal_2026_10_26.md).
-Fix one coherent item at a time and commit/push each result. Previous visual
-acceptance remains pending unless specifically confirmed above.
-
-October 26 breakable depth correction: stone, cracks and debris now sit at -6,
-behind cave faces (-5). Twelve focused Forward+ checks pass, including actual
-occlusion pixels at all damage stages. Gameplay is unchanged; manual overlap
-review remains pending. See the linked playtest report for validation.
-
-Enemy correction: the comparison defaults to the existing 3D enemies and keeps
-painted villagers, with independent controls. 166 comparison checks pass,
-including F2 preserving the selected model display; manual review is pending.
-
-Roof landing correction: existing one-way roofs remain active outdoors; only
-interior floors are ignored until entering. 417 house-entry checks pass,
-including real player landings on six exposed roof locations. Rendered boot
-contact remains a separate open correction, and appearance needs manual review.
-
-Player boot registration: measured/rendered contact corrected to within 0.79
-world pixels in idle/walk/crouch samples. 14 GPU contact and 49 ledge checks plus
-water-combo regression pass. Tower front timber/collision alignment remains
-open; this does not by itself close Chase's tower screenshot defect.
-
-Tower contact correction: nine platforms now match the installed GLB deck
-heights (7.29–26.54 px lower than the old source-derived values). Twenty GPU
-checks pass against mesh vertices and actual player sweeps, with an in-room
-boot/deck capture in the playtest report. Manual appearance review remains open.
-
-Water correction: reflection coverage is independent of body translucency and
-captures current scenery before water. Six actual reflection pixel checks and
-92 existing GPU water checks pass; shore/swimmer views are in the playtest report.
-Chase's water appearance acceptance and Krita background remain pending.
-
-Bulb idle correction: living currents/bubbles move within the painted sac while
-stem/petals/attachment stay fixed. 13 GPU checks and 166 comparison checks pass,
-including grapple/spent/regeneration. Manual motion review remains pending.
-
-Workshop door art: versioned sheet clears the exterior table; interior worktable
-is retained. Original world envelope and contact registration are preserved;
-alpha measurement and import pass. Manual doorway appearance review is pending.
-
-Approved house entrance/focus implementation: same-door turn/walk/open/exit,
-smooth indoor framing, exterior dimming and amber exit cue are implemented.
-79 GPU checks, 417 house-entry and 166 comparison checks pass. Captures and
-interruption/restore evidence are in the October 26 report. Chase's feel review
-remains pending. The approved tower foreground rim is the remaining active item.
-
-Tower rim delivered: v5 separates the existing front stone into the foreground
-while preserving all geometry/UVs/textures and 35 other meshes byte-for-byte.
-13 GPU checks pass, including actual swimmer occlusion and the clear route after
-the existing breakable is fractured. All October 26 requested implementation is
-now delivered; final fixture reconciliation and a focused acceptance card follow.
-
-**Current delivery: T19, retain the central tower in 3D and polish its roof.**
-Chase authorized the medium choice and tower polish on October 24. Choose 3D
-for platform/wall/base-entry depth. The tower now defaults to 3D independently
-of the comparison's other categories, with a separate Tower checkbox for the
-retained painted alternative. V4 smooths the timber fascia, fixes tile UV
-projection/spacing and reduces tile normal strength. All 12 non-roof meshes,
-original bounds, nine platforms and six cutaway clearances are preserved.
-31 focused GPU / 149 comparison headless checks pass. **Roof appearance still
-awaits Chase's review.** Implementation **`4716a96d`** is pushed on
-`threadbound/art-central-tower-roof-polish`, including the editable source in LFS.
-[Delivery and evidence](art/central_tower_3d_polish_v4.md).
-
-**Current correction: T18 playtest reports collision mismatch and bouncing art.**
-The painted pass reproduced 9–17 px camera drift; pushed fix `8f2c7f6d` measures
-at most 0.71 px in 135 GPU samples at 30/90/144 FPS. House floor contacts and nine
-tower platform heights now use per-surface registration; the tower cutaway's
-horizontal crop offset is corrected. 13 contact-height assertions and the
-existing 168 comparison checks pass; contact fixes are pushed as `ed0b4dd9`.
-Added visual bob is removed. Swordfish now has a dedicated 12-frame swim loop
-for hover/dash glide: 67 focused GPU checks and 148 broader headless checks pass.
-Attack transitions still use comparison key poses. T19 chooses the tower's 3D
-direction; other enemies' animation quality remains unreviewed.
-Unchanged collision alone was insufficient validation.
-[Playtest findings and fixes](verification/painted_registration_2026_10_22.md).
-
-**T18, painted 2D comparison.** Delivered and pushed as
-`6d23110c` on `threadbound/art-painted-2d-comparison`; source measurements are
-`6e654911`, building sheets `f47c62fe`, LFS setup `9efac8e7`. Thirteen painted
-sheets cover four buildings, lanterns, two villagers/workstations, five enemy
-types and bulbs. The separate comparison scene retains the original player,
-gameplay, scale and placements; F7 switches art, with independent category
-controls for mixed choices. 168 focused checks, 405 house-entry and 19 authored
-encounter/reset checks pass; 32 captured views are saved. This remains a review
-experiment with pose-based animation, not permanent art-direction acceptance or
-a performance benchmark. **Awaiting Chase's comparison when home.** T17 also
-remains awaiting playtest and the new Krita background.
-[Scope, source measurements and delivery](art/lakeside_painted_2d_comparison.md).
-
-Accept one existing representative Blue room: complete its baseline route with
-the existing kit, use an optional expressive route, recover from a missed action,
-read enemy tells/contact, restart reliably and observe frame time at normal
-playing scale. Fix reproducible blockers before extending content production.
-
-Keep one implementation task active and at most one prepared hands-on session.
-If a task waits for Chase's playtest or approval, take the next independent ready
-background task below. Park new ideas in the backlog. A new idea does not silently
-replace the current task or bypass its Git checkpoint.
-
-Active assets: Eave Runner v4, villagers v2 and Loom Heron v3. Eave Runner v2/v3
-are retained historical sources/exports. The central tower now uses the scoped
-v4 roof polish from its existing 3D source; v1–v3 remain historical references.
-Roof appearance acceptance remains pending. Preserve the current direction.
+The milestone remains one reliable representative Blue room: complete the
+baseline and optional expressive route, recover from a miss, read enemy tells,
+restart reliably and observe frame time. Do not extend content production while
+reproducible blockers remain. Keep one implementation task and one prepared
+hands-on session active. Save manual Godot/Blender/Krita files and checkpoint
+before changing topics.
 
 ## Required commit rhythm
 
@@ -197,30 +81,20 @@ not authorize merging, publishing a build or protected implementation changes.
 
 ## Phase 1 - establish reliable current behavior
 
-- [ ] **T01 - House floors and cutaways.** Partially complete; first priority.
-  Current state: **Awaiting hands-on review**. Layout/shortcut fix: `9abd15ff`.
-  Approved Interact doors are implemented: walk past outdoors, enter/exit at the
-  door, stand on the aligned floor with no outdoor rock interference, and greet
-  residents only inside. Fisher loft remains disabled. The 405-check house,
-  51-check NPC, map, 19-check guardian and legacy art-prep fixtures pass.
-  [Approved scope and results](design/lakeside_house_entry_proposal.md).
-  [Dated diagnosis and fix results](verification/lakeside_floor_diagnosis_2026_10_21.md)
-  retain the original failures and current limitations. Done when approved
-  entry/exit behavior and indoor contact pass focused checks and Chase's visible
-  retest. Implementation commit subject:
-  `feature: add deliberate door entry to lakeside houses`.
+- [ ] **T01 - House floors and cutaways.** Latest implementation and pending
+  review are T20 above. Same-door animated entry, indoor focus and exit cues are
+  delivered, with 417 house-entry / 79 focused GPU checks. Fisher loft remains
+  disabled. Chase must accept the new transition/contact feel. Earlier
+  [door delivery](design/lakeside_house_entry_proposal.md) and
+  [floor diagnosis](verification/lakeside_floor_diagnosis_2026_10_21.md) are dated
+  evidence; October 26 supersedes their immediate-teleport behavior.
 
-- [ ] **T02 - Villager interaction.** Awaiting hands-on review; depends on T01's
-  entry behavior for final acceptance. Verify Net Mender and Boatwright
-  selection/prompt, real interact input, work-to-talk transition, facing, return
-  to work and obstruction behavior. The original checkpoint recorded 12 failures;
-  after the approved door delivery, all 51 headless checks now pass,
-  including greeting, facing, obstruction and range exit. Hands-on acceptance
-  is still pending; the fixture explicitly enters each house before greeting.
-  Done when the corrected scenarios pass and both NPCs have an exact hands-on
-  greeting retest. Commit each coherent defect as
-  `fix: restore <specific lakeside interaction behavior>`.
-
+- [x] **T02 - Core villager interaction.** Chase confirms both residents function
+  in the October 26 playtest (`3c640e96` feedback checkpoint), and accepts two
+  work/greet poses for now. After the new door travel, 51 interaction checks
+  pass (`ef396db3`), including left/right greeting, return to work and obstruction.
+  New entrance/exit prompt comfort is part of T20 acceptance; no additional
+  villager idle animation is requested.
 - [ ] **T03 - Breakable wall restoration.** Background task; can proceed
   independently of NPC review. Reproduce the authored hit-count restoration
   mismatch in `verify_lakeside_hud_and_breakables.gd`. Confirm the intended counts
@@ -345,7 +219,7 @@ not authorize merging, publishing a build or protected implementation changes.
   art direction.
 
 - [ ] **T14 - Background wood depth separation.** **Awaiting visible review**.
-  Approved scope/provenance and delivery are in the linked correction above.
+  Approved scope/provenance: [wood depth correction](design/lakeside_rear_support_depth_proposal.md).
   Original `STAMP REAR SUPPORTS`: 15 independent wood chunks behind 32 combined
   rock chunks, with reduced saturation/contrast and a cool haze shader. Layout,
   collision and unrelated artwork are unchanged. Unfiltered recomposition
@@ -395,8 +269,10 @@ not authorize merging, publishing a build or protected implementation changes.
   unchanged. Final 92-check Forward+ fixture and 14 surface / 405 house / 606
   walkway / 19 encounter-reset checks pass, plus authoring/readability fixtures.
   See the [delivery](verification/lakeside_water_delivery_2026_10_22.md) for draw
-  order, eight rendered views and remaining T04 diagnostics. Next: the short
-  [hands-on card](next_test_session.md), then integrate Chase's new Krita
+  order, eight rendered views and remaining T04 diagnostics. The October 26
+  reflection correction `d797f051` adds six rendered-pixel checks and restores
+  visible coverage; use T20's [current card](next_test_session.md) for acceptance.
+  Then integrate Chase's new Krita
   underwater-distance export as a separate asset checkpoint when supplied.
   Do not mark complete before that acceptance/integration is recorded.
 
@@ -405,9 +281,13 @@ not authorize merging, publishing a build or protected implementation changes.
   reversible comparison while Chase is away. Implementation `6d23110c` is pushed
   on `threadbound/art-painted-2d-comparison`. F6
   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`; F7 and
-  separate Buildings/Actors/Bulbs controls compare all painted or mixed choices.
+  separate Buildings/Tower/Villagers/Enemies/Bulbs controls compare mixed choices.
   First playtest corrections: camera drift `8f2c7f6d`, house contacts and tower
   cutaway registration `ed0b4dd9`, followed by the 12-frame swordfish swim loop.
+  October 26: Chase confirms house bouncing is fixed and NPC poses function;
+  enemies now default to 3D because painted transitions still jitter. Bulb idle
+  motion and door/focus corrections are delivered under T20; its current mixed
+  default and acceptance card supersede the original comparison setup below.
   Fourteen RGBA sheets / 62 atlas frames; 148 headless comparison and 67 swordfish
   GPU checks pass. Earlier registration checkpoint: 168 comparison GPU checks;
   original delivery: 405 house-entry and 19 encounter/reset checks. Original gameplay/layout source
