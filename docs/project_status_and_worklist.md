@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 24, 2026. Saved recovery baseline: `16b3bd3c` on
+Updated October 26, 2026. Saved recovery baseline: `16b3bd3c` on
 `threadbound/chore-october-development-checkpoint`, committed and pushed.
 This is the single current task order. The [checkpoint recap](checkpoint_2026_10_21.md)
 is the evidence for the current state; older roadmaps and delivery reports do
@@ -54,6 +54,17 @@ and its temporary previews are historical diagnostics. Use the current delivery
 and [test card](next_test_session.md) for this implementation.
 
 ## Milestone and working limits
+
+**Current work: October 26 playtest corrections.** Chase confirms the house
+bouncing fix and working villagers; the two villager poses are sufficient for
+now. Water reflections, rendered boot/platform contact, roof landing, tower-base
+occlusion, enemy frame jitter, static bulb idle, breakable-rock depth and the
+blocked workshop door remain reported defects. Prefer current 3D enemies now.
+[Exact feedback and screenshots](verification/lakeside_playtest_2026_10_26.md).
+New door/indoor-camera/tower-entry architecture has a separate
+[approval proposal](design/lakeside_entry_focus_proposal_2026_10_26.md).
+Fix one coherent item at a time and commit/push each result. Previous visual
+acceptance remains pending unless specifically confirmed above.
 
 **Current delivery: T19, retain the central tower in 3D and polish its roof.**
 Chase authorized the medium choice and tower polish on October 24. Choose 3D
