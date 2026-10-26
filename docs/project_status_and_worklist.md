@@ -16,6 +16,10 @@ and upward water dash travels diagonally. See the follow-up section in the
 linked report. Door/slope diagnosis is **In progress**; equipment dash changes
 need scoped approval. Feedback checkpoint: `docs: record brother's playtest feedback`.
 
+Door exit correction delivered: `fix: face outward when leaving house doors`;
+91 Forward+ / 76 headless checks pass, entry/exit renders inspected. Awaiting
+hands-on feel review. Local comparison-scene metadata errors remain T04.
+
 Chase confirmed that house bouncing is fixed and the villagers' work/greet
 interaction functions. The two villager poses are sufficient for now. Fisher's
 loft remains deferred. Keep 3D enemies for now; retain painted alternatives for

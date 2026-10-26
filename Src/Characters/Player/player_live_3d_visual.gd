@@ -201,7 +201,10 @@ func _update_house_door_pose() -> void:
 	if _door_entering:
 		depth *= 1.0-smoothstep(0.66,1.0,p)
 	var turn := smoothstep(0.0,0.25,p)*(1.0-smoothstep(0.72,1.0,p)) if _door_entering else 1.0-smoothstep(0.62,1.0,p)
-	_model_root.rotation.y = lerp_angle(_door_start_yaw, PI*0.5, turn)
+	# The walk clip faces into the doorway on entry and toward the camera on
+	# exit. Reusing the away-facing yaw made leaving look like walking back in.
+	var door_yaw := PI*0.5 if _door_entering else -PI*0.5
+	_model_root.rotation.y = lerp_angle(_door_start_yaw, door_yaw, turn)
 	_model_root.position = Vector3.ZERO
 	_model_root.position.y = -_sole_height()
 	_display.flip_h = false

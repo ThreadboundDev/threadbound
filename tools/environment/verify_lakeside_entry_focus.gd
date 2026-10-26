@@ -1,5 +1,5 @@
 extends SceneTree
-const OUT := "res://work/lakeside-entry-focus-2026-10-26"
+const OUT := "res://work/lakeside-door-exit-2026-10-26"
 var room: Node2D
 var failures: Array[String] = []
 var checks := 0
@@ -92,7 +92,12 @@ func run() -> void:
 			root.content_scale_size = scale_before
 			await frames(12)
 			await press()
-			await frames(80)
+			await frames(15)
+			check(visual._door_active and not visual._door_entering,"Exit uses outward door travel")
+			# Frontal yaw must oppose entry in every house/art mode.
+			check(is_equal_approx(sin(visual._model_root.rotation.y),-1.0),"Exiting model faces toward camera instead of repeating entry")
+			await capture(("painted_" if painted else "models_")+label.to_snake_case()+"_exiting")
+			await frames(65)
 			check(not house.is_player_inside(player) and not house._transition_locked,"Animated exit completes once")
 			check(player.global_position.distance_to(outside)<1.0,"Exit returns to the same exterior doorway")
 			check(camera_state(camera)==initial,"Outdoor camera position, zoom and limits restore exactly")

@@ -217,3 +217,21 @@ A pre-existing local comparison-scene edit is present and must be preserved.
 
 These are reported observations, not acceptance of the remaining T20 items.
 Reproduce each separately and checkpoint each verified correction independently.
+
+### Door exit correction
+
+Exit now rotates the existing walk clip toward the camera; entry keeps the
+approved away-facing turn. This fixes the shared away-facing yaw without
+changing door timing or scene structure. `verify_lakeside_entry_focus.gd`
+passes 91 Forward+ checks and 76 headless checks on Godot 4.7.2, covering both
+houses in painted and model modes, outward yaw, completion, input release,
+camera restoration and interrupted transitions. Rendered entry/exit captures
+were inspected; the face is visible on exit and the back on entry. Evidence:
+`work/lakeside-door-exit-2026-10-26/`. Isolated APPDATA: `tmp/brother-playtest-userdata`.
+
+The run includes the preserved local comparison-scene edit. It emits four
+`is_editable_instance` ancestor errors from the room's existing `_enter_tree`
+metadata cleanup; it also retains camera interpolation, missing glove Death
+and shutdown-resource diagnostics. These are separate from the passing door
+assertions and remain open under T04. Hands-on exit feel still needs review.
+Checkpoint: `fix: face outward when leaving house doors`.

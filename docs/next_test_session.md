@@ -17,6 +17,8 @@ and Enemies on **current 3D** for this first retest.
    and HUD readable? Walk away, greet the resident, then find the amber door cue
    and exit. Check the camera/ground restore. Try holding Interact once; it should
    enter once. Workshop's exterior table should be gone.
+   Brother's follow-up: entry looks good; now check that **exit faces toward
+   you and walks out**, rather than repeating the turn-away entry motion.
 2. **Visible floor contact and roofs.** Stand still, walk and crouch inside both
    houses and on tower platforms. Boots should touch the surface instead of
    floating. Jump onto the exposed slopes/ridge of each house roof. The very
