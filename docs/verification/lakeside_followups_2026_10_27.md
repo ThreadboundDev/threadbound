@@ -91,3 +91,16 @@ resource/RID/ObjectDB shutdown diagnostics remain; final focused runs have no
 script errors. Hands-on throw-then-fall feel still needs review.
 
 Checkpoint: `fix: cancel grapple and casting pose on water entry`.
+
+## Manual enemy placement checkpoint and parenting proposal
+
+Save Chase's current comparison-scene edits as **WIP**, including the two added
+enemies, their positions and editor metadata. The dolphin remains nested and
+can inherit unchecked motion; the added heron is also nested. This checkpoint
+preserves work, not accepted behavior. The exact dolphin-only reparenting fix
+is [prepared for approval](../design/dolphin_parenting_proposal_2026_10_27.md).
+AGENTS.md explicitly requires approval for scene tree restructuring, so that
+scene edit remains pending. Longer dolphin detection is a separate requested
+parameter adjustment and can proceed without changing the saved hierarchy.
+
+Checkpoint: `level: checkpoint WIP duplicate enemy placements`.

@@ -1,9 +1,37 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://d36j7hrweokl2"]
 
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn" id="1_room"]
-[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.gd" id="2_comparison"]
+[ext_resource type="PackedScene" uid="uid://ci64gwc2i38ww" path="res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn" id="1_room"]
+[ext_resource type="Script" uid="uid://bamkhj07wlnbj" path="res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.gd" id="2_comparison"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/TideDuelist/tide_duelist.tscn" id="2_ewax1"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/LoomHeron/loom_heron.tscn" id="3_3cre7"]
 
-[node name="LakesidePaintedComparison" instance=ExtResource("1_room")]
+[node name="LakesidePaintedComparison" unique_id=1638775151 instance=ExtResource("1_room")]
 
-[node name="ArtComparison" type="Node" parent="."]
+[node name="RockContactRims" parent="Geometry/TerrainArtwork" parent_id_path=PackedInt32Array(1220208181) index="2"]
+z_as_relative = false
+
+[node name="TideDuelist" parent="TideDuelist" parent_id_path=PackedInt32Array(553997636) index="13" unique_id=1067205541 instance=ExtResource("2_ewax1")]
+position = Vector2(-275, 1185)
+attack_range = 380.0
+dash_speed = 1050.0
+maximum_dash_distance = 2400.0
+footprint_radius = 132.0
+patrol_height = 100.0
+water_path = NodePath("")
+start_facing = 1
+
+[node name="LoomHeron" parent="LoomHeron" parent_id_path=PackedInt32Array(1061336384) index="13" unique_id=1300258399 instance=ExtResource("3_3cre7")]
+position = Vector2(1182, -1246)
+needle_speed = 520.0
+home_leash = 950.0
+patrol_distance = 135.0
+
+[node name="ArtComparison" type="Node" parent="." index="19" unique_id=696682254]
 script = ExtResource("2_comparison")
+
+[editable path="Geometry/TerrainArtwork"]
+[editable path="Geometry/RockCollision"]
+[editable path="Volumes/Lake"]
+[editable path="Volumes/AirPocket"]
+[editable path="Volumes/AirPocket2"]
+[editable path="Volumes/AirPocket3"]

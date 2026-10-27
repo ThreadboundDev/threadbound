@@ -30,6 +30,12 @@ state is cancelled without changing movement velocity. Retest throw-then-fall.
 The legacy broad grapple fixture retains 20 identical failures on the prior
 scripts and current fix; reconciliation remains T04.
 
+Chase's saved duplicate-enemy placement edits are checkpointed as **WIP**; this
+does not accept their nested behavior. The added dolphin's
+[exact reparenting proposal](design/dolphin_parenting_proposal_2026_10_27.md)
+awaits approval for scene tree restructuring. Its current world position will
+be preserved. Leave the added heron unchanged in that scoped correction.
+
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
 and upward water dash travels diagonally. See the follow-up section in the
