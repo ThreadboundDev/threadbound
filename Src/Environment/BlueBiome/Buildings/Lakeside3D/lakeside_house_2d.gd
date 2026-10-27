@@ -282,6 +282,11 @@ func _enter_house(player: CharacterBody2D) -> void:
 			player.add_collision_exception_with(terrain)
 			_terrain_exceptions.append(terrain)
 	player.global_position = inside_destination(player)
+	# Resolve the two-pixel placement clearance while the doorway hides the
+	# player. Otherwise releasing the lock briefly enters an airborne pose before
+	# gravity finds the floor, making the walk-to-idle handoff visibly jump.
+	player.velocity = Vector2.DOWN * 3.0 / player.get_physics_process_delta_time()
+	player.move_and_slide()
 	player.velocity = Vector2.ZERO
 	player.reset_physics_interpolation()
 	_update_cutaway()

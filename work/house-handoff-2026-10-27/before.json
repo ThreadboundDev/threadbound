@@ -1,0 +1,1812 @@
+{
+	"cases": [
+		{
+			"fall_frames": 0,
+			"house": "Fisher house",
+			"maximum_sole_step": 5.80258178710938,
+			"painted": true,
+			"trace": [
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 0,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 1,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 2,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 3,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 4,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150634765625,
+					"tick": 5,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150054931641,
+					"tick": 6,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.063781738281,
+					"tick": 7,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.843322753906,
+					"tick": 8,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.505920410156,
+					"tick": 9,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.06884765625,
+					"tick": 10,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 388.549438476563,
+					"tick": 11,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 387.964904785156,
+					"tick": 12,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 387.332550048828,
+					"tick": 13,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 386.669647216797,
+					"tick": 14,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 385.993499755859,
+					"tick": 15,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 385.321350097656,
+					"tick": 16,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 384.670471191406,
+					"tick": 17,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 384.058135986328,
+					"tick": 18,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 383.501678466797,
+					"tick": 19,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 383.018310546875,
+					"tick": 20,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.625366210938,
+					"tick": 21,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.340057373047,
+					"tick": 22,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.179718017578,
+					"tick": 23,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.150634765625,
+					"tick": 24,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.150634765625,
+					"tick": 25,
+					"y": 320.905639648438
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.720001220703,
+					"tick": 26,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.720001220703,
+					"tick": 27,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.745910644531,
+					"tick": 28,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.949676513672,
+					"tick": 29,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 317.330871582031,
+					"tick": 30,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 317.859161376953,
+					"tick": 31,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 318.504302978516,
+					"tick": 32,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 319.235931396484,
+					"tick": 33,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 320.023803710938,
+					"tick": 34,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 320.837646484375,
+					"tick": 35,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 321.647094726563,
+					"tick": 36,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 322.421875,
+					"tick": 37,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 323.131713867188,
+					"tick": 38,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 323.746276855469,
+					"tick": 39,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.2353515625,
+					"tick": 40,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.568542480469,
+					"tick": 41,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.715576171875,
+					"tick": 42,
+					"y": 255.475006103516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": 324.720001220703,
+					"tick": 43,
+					"y": 255.475006103516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": 330.169036865234,
+					"tick": 44,
+					"y": 256.422241210938
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 332.54443359375,
+					"tick": 45,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 332.282684326172,
+					"tick": 46,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 330.217010498047,
+					"tick": 47,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 324.414428710938,
+					"tick": 48,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 322.059844970703,
+					"tick": 49,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 320.230499267578,
+					"tick": 50,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 318.726593017578,
+					"tick": 51,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 317.639312744141,
+					"tick": 52,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 313.588104248047,
+					"tick": 53,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 308.543975830078,
+					"tick": 54,
+					"y": 257.473052978516
+				}
+			],
+			"ungrounded_frames": 2
+		},
+		{
+			"fall_frames": 0,
+			"house": "Workshop",
+			"maximum_sole_step": 10.0408935546875,
+			"painted": true,
+			"trace": [
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 0,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 1,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 2,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 3,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 4,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 5,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.5419921875,
+					"tick": 6,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.62817382813,
+					"tick": 7,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.84875488281,
+					"tick": 8,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.18603515625,
+					"tick": 9,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.62316894531,
+					"tick": 10,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.142578125,
+					"tick": 11,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.72705078125,
+					"tick": 12,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.35949707031,
+					"tick": 13,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.02233886719,
+					"tick": 14,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.69848632813,
+					"tick": 15,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.37072753906,
+					"tick": 16,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.02160644531,
+					"tick": 17,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.63391113281,
+					"tick": 18,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1152.19030761719,
+					"tick": 19,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1152.67370605469,
+					"tick": 20,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.06665039063,
+					"tick": 21,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.35192871094,
+					"tick": 22,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.51232910156,
+					"tick": 23,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.54138183594,
+					"tick": 24,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.54138183594,
+					"tick": 25,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.36010742188,
+					"tick": 26,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.36010742188,
+					"tick": 27,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.33422851563,
+					"tick": 28,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.13037109375,
+					"tick": 29,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.74926757813,
+					"tick": 30,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.22094726563,
+					"tick": 31,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.57580566406,
+					"tick": 32,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.84411621094,
+					"tick": 33,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.05627441406,
+					"tick": 34,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.24243164063,
+					"tick": 35,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.43298339844,
+					"tick": 36,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.658203125,
+					"tick": 37,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1144.94836425781,
+					"tick": 38,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1144.33386230469,
+					"tick": 39,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.8447265625,
+					"tick": 40,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.51159667969,
+					"tick": 41,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.36450195313,
+					"tick": 42,
+					"y": -1212.60510253906
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": -1143.36010742188,
+					"tick": 43,
+					"y": -1212.60510253906
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": -1138.9169921875,
+					"tick": 44,
+					"y": -1211.65783691406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1135.73046875,
+					"tick": 45,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1135.306640625,
+					"tick": 46,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1140.61340332031,
+					"tick": 47,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1145.79858398438,
+					"tick": 48,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1147.68139648438,
+					"tick": 49,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1149.40002441406,
+					"tick": 50,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1150.341796875,
+					"tick": 51,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1154.02734375,
+					"tick": 52,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1159.04797363281,
+					"tick": 53,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1169.0888671875,
+					"tick": 54,
+					"y": -1210.60705566406
+				}
+			],
+			"ungrounded_frames": 2
+		},
+		{
+			"fall_frames": 0,
+			"house": "Fisher house",
+			"maximum_sole_step": 7.25656127929688,
+			"painted": false,
+			"trace": [
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 0,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 1,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 2,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 3,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 4,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.150512695313,
+					"tick": 5,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.149932861328,
+					"tick": 6,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 390.063659667969,
+					"tick": 7,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.843200683594,
+					"tick": 8,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.505798339844,
+					"tick": 9,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 389.068725585938,
+					"tick": 10,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 388.54931640625,
+					"tick": 11,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 387.964782714844,
+					"tick": 12,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 387.332427978516,
+					"tick": 13,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 386.669525146484,
+					"tick": 14,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 385.993377685547,
+					"tick": 15,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 385.321228027344,
+					"tick": 16,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 384.670349121094,
+					"tick": 17,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 384.058013916016,
+					"tick": 18,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 383.501556396484,
+					"tick": 19,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 383.018188476563,
+					"tick": 20,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.625244140625,
+					"tick": 21,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.339935302734,
+					"tick": 22,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.179595947266,
+					"tick": 23,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.150512695313,
+					"tick": 24,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 382.150512695313,
+					"tick": 25,
+					"y": 320.905517578125
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.720001220703,
+					"tick": 26,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.720001220703,
+					"tick": 27,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.745910644531,
+					"tick": 28,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 316.949676513672,
+					"tick": 29,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 317.330871582031,
+					"tick": 30,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 317.859161376953,
+					"tick": 31,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 318.504302978516,
+					"tick": 32,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 319.235931396484,
+					"tick": 33,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 320.023803710938,
+					"tick": 34,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 320.837646484375,
+					"tick": 35,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 321.647094726563,
+					"tick": 36,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 322.421875,
+					"tick": 37,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 323.131713867188,
+					"tick": 38,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 323.746276855469,
+					"tick": 39,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.2353515625,
+					"tick": 40,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.568542480469,
+					"tick": 41,
+					"y": 255.475006103516
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": 324.715576171875,
+					"tick": 42,
+					"y": 255.475006103516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": 324.720001220703,
+					"tick": 43,
+					"y": 255.475006103516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": 329.163055419922,
+					"tick": 44,
+					"y": 256.422241210938
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 332.349700927734,
+					"tick": 45,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 332.773529052734,
+					"tick": 46,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 330.348999023438,
+					"tick": 47,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 323.092437744141,
+					"tick": 48,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 320.398742675781,
+					"tick": 49,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 318.680084228516,
+					"tick": 50,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 317.738342285156,
+					"tick": 51,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 314.052795410156,
+					"tick": 52,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 309.032165527344,
+					"tick": 53,
+					"y": 257.473052978516
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": 302.629486083984,
+					"tick": 54,
+					"y": 257.473052978516
+				}
+			],
+			"ungrounded_frames": 2
+		},
+		{
+			"fall_frames": 0,
+			"house": "Workshop",
+			"maximum_sole_step": 7.0078125,
+			"painted": false,
+			"trace": [
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 0,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 1,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 2,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 3,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 4,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.54138183594,
+					"tick": 5,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.5419921875,
+					"tick": 6,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.62817382813,
+					"tick": 7,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.84875488281,
+					"tick": 8,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.18603515625,
+					"tick": 9,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.62316894531,
+					"tick": 10,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.142578125,
+					"tick": 11,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.72705078125,
+					"tick": 12,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.35949707031,
+					"tick": 13,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.02233886719,
+					"tick": 14,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.69848632813,
+					"tick": 15,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.37072753906,
+					"tick": 16,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.02160644531,
+					"tick": 17,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.63391113281,
+					"tick": 18,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1152.19030761719,
+					"tick": 19,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1152.67370605469,
+					"tick": 20,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.06665039063,
+					"tick": 21,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.35192871094,
+					"tick": 22,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.51232910156,
+					"tick": 23,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.54138183594,
+					"tick": 24,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1153.54138183594,
+					"tick": 25,
+					"y": -1214.78637695313
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.36010742188,
+					"tick": 26,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.36010742188,
+					"tick": 27,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.33422851563,
+					"tick": 28,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1151.13037109375,
+					"tick": 29,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.74926757813,
+					"tick": 30,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1150.22094726563,
+					"tick": 31,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1149.57580566406,
+					"tick": 32,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.84411621094,
+					"tick": 33,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1148.05627441406,
+					"tick": 34,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1147.24243164063,
+					"tick": 35,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1146.43298339844,
+					"tick": 36,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1145.658203125,
+					"tick": 37,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1144.94836425781,
+					"tick": 38,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1144.33386230469,
+					"tick": 39,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.8447265625,
+					"tick": 40,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.51159667969,
+					"tick": 41,
+					"y": -1212.60510253906
+				},
+				{
+					"active": true,
+					"animation": "Idle",
+					"grounded": true,
+					"sole_y": -1143.36450195313,
+					"tick": 42,
+					"y": -1212.60510253906
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": -1143.36010742188,
+					"tick": 43,
+					"y": -1212.60510253906
+				},
+				{
+					"active": false,
+					"animation": "Jump_Apex",
+					"grounded": false,
+					"sole_y": -1137.30261230469,
+					"tick": 44,
+					"y": -1211.65783691406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1135.0234375,
+					"tick": 45,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1135.79260253906,
+					"tick": 46,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1140.48181152344,
+					"tick": 47,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1145.79858398438,
+					"tick": 48,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1147.68139648438,
+					"tick": 49,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1149.40002441406,
+					"tick": 50,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1151.99450683594,
+					"tick": 51,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1156.37780761719,
+					"tick": 52,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1162.0810546875,
+					"tick": 53,
+					"y": -1210.60705566406
+				},
+				{
+					"active": false,
+					"animation": "Jump_Land",
+					"grounded": true,
+					"sole_y": -1169.0888671875,
+					"tick": 54,
+					"y": -1210.60705566406
+				}
+			],
+			"ungrounded_frames": 2
+		}
+	],
+	"checks": 20,
+	"display": "headless",
+	"failures": [
+		"Fisher house: no airborne frames after release (2)",
+		"Fisher house: sole handoff has no visible jump (5.803 px)",
+		"Workshop: no airborne frames after release (2)",
+		"Workshop: sole handoff has no visible jump (10.041 px)",
+		"Fisher house: no airborne frames after release (2)",
+		"Fisher house: sole handoff has no visible jump (7.257 px)",
+		"Workshop: no airborne frames after release (2)",
+		"Workshop: sole handoff has no visible jump (7.008 px)"
+	]
+}

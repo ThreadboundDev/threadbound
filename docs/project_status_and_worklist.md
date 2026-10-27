@@ -18,6 +18,11 @@ commit at a time. The tower's exterior water cutout is still unaccepted;
 Chase's approval before architectural implementation.
 [Feedback and per-fix results](verification/lakeside_followups_2026_10_27.md).
 
+House handoff correction delivered: `fix: ground house entry before releasing door animation`.
+20 headless / 20 GPU handoff checks and 417 house checks pass. Both houses retain
+floor contact at the exact release frame in painted/model modes. Retest entry's
+last turn/walk-to-idle moment; appearance/feel awaits Chase's review.
+
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
 and upward water dash travels diagonally. See the follow-up section in the

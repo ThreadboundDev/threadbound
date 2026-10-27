@@ -17,6 +17,8 @@ and Enemies on **current 3D** for this first retest.
    and HUD readable? Walk away, greet the resident, then find the amber door cue
    and exit. Check the camera/ground restore. Try holding Interact once; it should
    enter once. Workshop's exterior table should be gone.
+   October 27 handoff correction: watch the last instant of entry; the player
+   should settle directly into idle without the small jump after the animation.
    Brother's follow-up: entry looks good; now check that **exit faces toward
    you and walks out**, rather than repeating the turn-away entry motion.
 2. **Visible floor contact and roofs.** Stand still, walk and crouch inside both

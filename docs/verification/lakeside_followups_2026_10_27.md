@@ -31,3 +31,28 @@ metadata. Preserve it. Three previously committed verification scripts now have
 editor-generated UID sidecars; record those without changing their script bodies.
 
 Implementation results and focused retests will be appended below.
+
+## House animation handoff
+
+Baseline `d1fab6e6` reproduced two airborne frames immediately after releasing
+the door lock in both houses, in painted and model modes. Projected sole movement
+at that handoff reached 5.8–10.0 world pixels. Entry placed the capsule two pixels
+above the interior floor, then held physics until the walk-to-idle transition;
+the next ordinary movement tick had to rediscover its floor.
+
+The existing house controller now resolves that placement clearance with a
+three-pixel collision-checked downward step while the character is still hidden
+behind the doorway. It establishes floor contact before control returns; the
+same-door placement, camera, animation duration and collision geometry remain.
+
+`verify_house_handoff.gd`: 20 headless and 20 Forward+ checks pass for both houses
+in both presentation modes, with no airborne/falling-pose frames after release
+and no visible sole jump. `verify_lakeside_house_entry.gd`: 417 checks pass.
+Before/after per-frame body/sole traces: `work/house-handoff-2026-10-27/`.
+GPU fixture uses a smaller scenery render scale beside the open editor/game;
+the player's model resolution and world-space measurements are unchanged.
+An initial full-size GPU run could not allocate a Vulkan swapchain; the smaller
+run completed. Existing interpolation and engine resource/RID/ObjectDB teardown
+diagnostics remain T04; final runs have no script errors. Hands-on feel is pending.
+
+Checkpoint: `fix: ground house entry before releasing door animation`.
