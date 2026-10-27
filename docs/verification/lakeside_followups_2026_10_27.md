@@ -104,3 +104,30 @@ scene edit remains pending. Longer dolphin detection is a separate requested
 parameter adjustment and can proceed without changing the saved hierarchy.
 
 Checkpoint: `level: checkpoint WIP duplicate enemy placements`.
+
+## Dolphin awareness and engagement distance
+
+Detection grows from **600 to 1,000 pixels**, with the stationary dolphin's
+dash trigger growing from **380 to 850 pixels**. This lets it actually engage
+from the new distance while keeping a 150-pixel outer awareness/tell band. The
+authored room and added comparison dolphin both receive the tuning; their
+explicit old overrides no longer hold them at the shorter distance. Damage,
+dash speed, warning/flash duration, wall checks and dry-pocket occlusion remain.
+This parameter adjustment implements Chase's requested longer aggro range.
+
+`verify_dolphin_aggro.gd`: **32 checks pass** across all four directions,
+awareness/engagement/out-of-range bands, solid-wall and six-pixel dry-seam
+occlusion, harmless windup, and all authored instance overrides. The baseline
+has 13 failures demonstrating the old short range. Evidence:
+`work/dolphin-aggro-2026-10-27/`. The existing Tide Duelist integration suite
+passes idle/eye tells, committed dash, one-hit damage, wall termination, hurt,
+dry pockets, shoreline, death and save reset. Its awareness probe moved to
+950 pixels, inside the new detector and outside the new attack range; the
+assertions remain intact. An initial new-fixture path-label error was corrected.
+
+These were headless physics/state checks on Godot 4.7.2. The focused range run
+has no engine/script errors; the older integration fixture retains its existing
+two ObjectDB / one-resource teardown diagnostics. Range feel needs hands-on
+review. Duplicate-parent synchronization remains a separate pending correction.
+
+Checkpoint: `fix: extend dolphin awareness and engagement range`.

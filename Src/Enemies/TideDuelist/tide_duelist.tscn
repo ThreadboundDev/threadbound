@@ -10,7 +10,7 @@ radius = 58.0
 [sub_resource type="CircleShape2D" id="Blade"]
 radius = 42.0
 [sub_resource type="CircleShape2D" id="Detection"]
-radius = 600.0
+radius = 1000.0
 
 [node name="TideDuelist" instance=ExtResource("1")]
 script = ExtResource("2")

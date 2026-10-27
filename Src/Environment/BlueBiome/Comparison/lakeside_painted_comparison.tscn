@@ -12,7 +12,7 @@ z_as_relative = false
 
 [node name="TideDuelist" parent="TideDuelist" parent_id_path=PackedInt32Array(553997636) index="13" unique_id=1067205541 instance=ExtResource("2_ewax1")]
 position = Vector2(-275, 1185)
-attack_range = 380.0
+attack_range = 850.0
 dash_speed = 1050.0
 maximum_dash_distance = 2400.0
 footprint_radius = 132.0

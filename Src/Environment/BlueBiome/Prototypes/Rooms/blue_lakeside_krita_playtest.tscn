@@ -1006,7 +1006,7 @@ show_terrain_art = true
 
 [node name="TideDuelist" parent="." unique_id=553997636 instance=ExtResource("8_fish")]
 position = Vector2(624, 823)
-attack_range = 380.0
+attack_range = 850.0
 dash_speed = 1050.0
 maximum_dash_distance = 2400.0
 footprint_radius = 132.0

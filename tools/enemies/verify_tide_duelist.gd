@@ -81,7 +81,8 @@ func run() -> void:
 				flexible_bones += 1
 		check(flexible_bones >= 4, "Idle and glide animate the body/head/tail chain, not just the image")
 	check(fish._footprint_fits(fish.position), "Idle must stay in water")
-	player.position = fish.position + Vector2(480,0)
+	# Inside awareness but outside the deliberately widened dash trigger.
+	player.position = fish.position + Vector2(950,0)
 	await frames(12)
 	check(fish.position.distance_to(origin) < 0.1, "Detected target must not cause swimming")
 	check(fish.fish_visual.tell_intensity > 0.0, "Awareness lights the eye")

@@ -19,12 +19,12 @@ Chase's approval before architectural implementation.
 [Feedback and per-fix results](verification/lakeside_followups_2026_10_27.md).
 
 House handoff correction delivered: `fix: ground house entry before releasing door animation`.
-20 headless / 20 GPU handoff checks and 417 house checks pass. Both houses retain
+Checkpoint `8b6a0470`: 20 headless / 20 GPU handoff checks and 417 house checks pass. Both houses retain
 floor contact at the exact release frame in painted/model modes. Retest entry's
 last turn/walk-to-idle moment; appearance/feel awaits Chase's review.
 
 Grapple water-entry correction delivered: `fix: cancel grapple and casting pose on water entry`.
-122 headless / 122 GPU checks pass across all four gloves, and water combo passes.
+Checkpoint `92c7e72d`: 122 headless / 122 GPU checks pass across all four gloves, and water combo passes.
 The active rope and upper-body cast clear on wet entry; delayed pull/snap/release
 state is cancelled without changing movement velocity. Retest throw-then-fall.
 The legacy broad grapple fixture retains 20 identical failures on the prior
@@ -35,6 +35,12 @@ does not accept their nested behavior. The added dolphin's
 [exact reparenting proposal](design/dolphin_parenting_proposal_2026_10_27.md)
 awaits approval for scene tree restructuring. Its current world position will
 be preserved. Leave the added heron unchanged in that scoped correction.
+
+Dolphin range adjustment delivered: `fix: extend dolphin awareness and engagement range`.
+Detection is 1,000 px and dash engagement is 850 px, retaining the outer tell
+band and existing damage/speed/warning timing. 32 focused range/occlusion checks
+and the existing Tide Duelist integration suite pass. Retest engagement distance;
+the duplicated actor's hierarchy correction still awaits approval.
 
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,

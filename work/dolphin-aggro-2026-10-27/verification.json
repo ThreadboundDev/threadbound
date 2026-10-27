@@ -1,0 +1,6 @@
+{
+	"attack_range": 850.0,
+	"checks": 32,
+	"detection_radius": 1000.0,
+	"failures": []
+}

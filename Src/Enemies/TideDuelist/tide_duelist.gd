@@ -1,7 +1,7 @@
 extends EnemyBase
 ## Aquatic skirmisher. Uses the existing enemy states and combat components.
 
-@export var attack_range := 380.0
+@export var attack_range := 850.0
 @export var dash_speed := 1050.0
 @export var maximum_dash_distance := 2400.0
 @export var footprint_radius := 132.0

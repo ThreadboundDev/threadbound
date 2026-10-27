@@ -1,0 +1,20 @@
+{
+	"attack_range": 380.0,
+	"checks": 32,
+	"detection_radius": 600.0,
+	"failures": [
+		"Detection radius is 1000 pixels",
+		"Stationary fish can commit from 850 pixels",
+		"Acquire a clear wet target 950 pixels away: (1.0, 0.0)",
+		"Commit from 800 pixels after acquisition: (1.0, 0.0)",
+		"Acquire a clear wet target 950 pixels away: (-1.0, 0.0)",
+		"Commit from 800 pixels after acquisition: (-1.0, 0.0)",
+		"Acquire a clear wet target 950 pixels away: (0.0, -1.0)",
+		"Commit from 800 pixels after acquisition: (0.0, -1.0)",
+		"Acquire a clear wet target 950 pixels away: (0.0, 1.0)",
+		"Commit from 800 pixels after acquisition: (0.0, 1.0)",
+		"Authored dolphin keeps the wider trigger: ",
+		"Authored dolphin keeps the wider trigger: ",
+		"Authored dolphin keeps the wider trigger: "
+	]
+}
