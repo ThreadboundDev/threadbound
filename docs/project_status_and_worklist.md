@@ -23,6 +23,13 @@ House handoff correction delivered: `fix: ground house entry before releasing do
 floor contact at the exact release frame in painted/model modes. Retest entry's
 last turn/walk-to-idle moment; appearance/feel awaits Chase's review.
 
+Grapple water-entry correction delivered: `fix: cancel grapple and casting pose on water entry`.
+122 headless / 122 GPU checks pass across all four gloves, and water combo passes.
+The active rope and upper-body cast clear on wet entry; delayed pull/snap/release
+state is cancelled without changing movement velocity. Retest throw-then-fall.
+The legacy broad grapple fixture retains 20 identical failures on the prior
+scripts and current fix; reconciliation remains T04.
+
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
 and upward water dash travels diagonally. See the follow-up section in the

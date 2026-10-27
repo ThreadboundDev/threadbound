@@ -1,0 +1,91 @@
+{
+	"checks": 122,
+	"display": "Windows",
+	"failures": [],
+	"samples": [
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": false,
+			"phase": "retracting"
+		}
+	]
+}

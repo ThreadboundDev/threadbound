@@ -180,6 +180,8 @@ func apply_grapple_velocity(delta: float) -> void:
 	_apply_attached_rope_limit(delta)
 
 func thread_mechanic(delta: float) -> void:
+	if _block_grapple_underwater():
+		return
 	if action_anim_lock_timer > 0.0:
 		action_anim_lock_timer -= delta
 
@@ -258,6 +260,15 @@ func _begin_charge() -> void:
 	_tension_timer = 0.0
 	_range_spent = false
 	AudioManager.play_sfx(&"grapple")
+
+func cancel_grapple_for_water_entry() -> void:
+	_cancel_charge()
+	_reset_red_combat_target()
+	grapple_max_distance = _base_grapple_max_distance
+	grapple_speed = _base_grapple_speed
+	active_rope_total_length = _base_active_rope_total_length
+	action_anim_lock_timer = 0.0
+	super.cancel_grapple_for_water_entry()
 
 func _process_charge(delta: float) -> void:
 	_charge_amount = clampf(_charge_amount + delta / maxf(max_charge_time, 0.001), 0.0, 1.0)

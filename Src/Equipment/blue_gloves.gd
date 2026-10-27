@@ -95,6 +95,10 @@ func _reset_blue_state() -> void:
 	_release_jump_buffer_timer = 0.0
 	blue_debug_snapshot.clear()
 
+func cancel_grapple_for_water_entry() -> void:
+	_reset_blue_state()
+	super.cancel_grapple_for_water_entry()
+
 func _apply_blue_tuning() -> void:
 	grapple_speed = grapple_fire_speed
 	grapple_max_distance = maximum_grapple_range

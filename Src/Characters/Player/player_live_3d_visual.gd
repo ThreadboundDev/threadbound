@@ -365,6 +365,13 @@ func play_grapple_throw() -> void:
 	_begin_upper_body_grapple_throw()
 
 
+func cancel_grapple_throw() -> bool:
+	if not _upper_body_overlay_active:
+		return false
+	_finish_upper_body_overlay()
+	return true
+
+
 func play_water_entry() -> void:
 	_cancel_upper_body_overlay()
 	_action_sequence.clear()
@@ -374,6 +381,9 @@ func play_water_entry() -> void:
 
 
 func finish_water_entry() -> void:
+	# Replacing casting_2 stops its animation_finished signal. Clear its owned
+	# overlay first, or locomotion keeps updating only the hidden leg sampler.
+	_cancel_upper_body_overlay()
 	_action_sequence.clear()
 	_action_sequence_name = &""
 	_logical_animation = &""

@@ -43,6 +43,10 @@ and Enemies on **current 3D** for this first retest.
    veil with subtle moving light and small rising bubbles; above-water parts
    and dry air pockets should stay clear. Surface wakes are flattened ripples.
    Reflections can still fade when their source scenery leaves the camera.
+   October 27 grapple correction: throw from above the water and fall in before
+   the cast finishes. Rope/needle and held-arm pose should clear immediately.
+   Try base/blue/red/yellow gloves, including an attached rope. Holding Grapple
+   underwater should not cast again; dry pockets and throws after exiting work.
    For the approved dash correction, hold **Up alone + Dash** underwater in both
    facings: travel should be straight up. Jump also supplies upward swim aim.
    Check Down, both diagonals, releasing/changing direction during the dash,

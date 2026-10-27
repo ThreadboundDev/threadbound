@@ -50,6 +50,13 @@ func _apply_yellow_tuning() -> void:
 	active_rope_total_length = grapple_range
 	enforce_player_rope_limit = false
 
+func cancel_grapple_for_water_entry() -> void:
+	_snap_pending = false
+	_snap_platform_phase_requested = false
+	_snap_input_bias = Vector2.ZERO
+	_snap_collision_normal = Vector2.ZERO
+	super.cancel_grapple_for_water_entry()
+
 func is_base_grapple_restricting() -> bool:
 	return has_enemy_grapple_target()
 

@@ -56,3 +56,38 @@ run completed. Existing interpolation and engine resource/RID/ObjectDB teardown
 diagnostics remain T04; final runs have no script errors. Hands-on feel is pending.
 
 Checkpoint: `fix: ground house entry before releasing door animation`.
+
+## Grapple cancellation on water entry
+
+The cast owns a live 3D upper-body overlay. `finish_water_entry()` replaced its
+`casting_2` animation without clearing that overlay; its completion signal could
+then never release the held-arm pose. Base/blue/yellow gloves also retracted
+gradually on water entry, while red's separate state loop did not block water.
+
+Water entry now clears the cast overlay before starting its swim clip. The
+shared glove loop cancels the active rope immediately once on entering wet
+space and blocks fresh grapples while wet. Each variant clears its own delayed
+action: blue swing-release buffer/momentum, red charge/tow/target state, yellow
+pending snap. The existing rope reset clears attachment, target and needle/line
+visuals. Cancellation preserves the player's movement velocity. Dry pockets
+and dry throws after exit remain available. Chase explicitly requested this
+temporary water-entry cancellation; no unrelated combat/equipment tuning changed.
+
+`verify_water_entry_cancel.gd`: **122 headless and 122 Forward+ checks pass** with
+the actual player and all four gloves. Cases include firing, attachment, retraction,
+casting interruption, underwater input, sustained swim, subsequent dry throws,
+red charge entry and dry pockets. The first baseline has 69 failures in 117
+checks, reproducing the reported arm lock and delayed/variant rope state.
+Evidence: `work/grapple-water-entry-2026-10-27/`. Existing water-combo regression
+passes. Initial fixture startup/monitoring issues and a mistaken regression
+script path were corrected before the final passing runs.
+
+The older `verify_base_grapple.tscn` fixture still has **20 assertion failures**
+for legacy animation libraries, coordinate expectations and impact/recovery
+expectations. An isolated copy of the `8b6a0470` glove/visual scripts produces
+the **identical 20 failures**; see `legacy_fixture_comparison.json`. This is
+baseline-confirmed T04 work, not a passing broad grapple suite. Existing engine
+resource/RID/ObjectDB shutdown diagnostics remain; final focused runs have no
+script errors. Hands-on throw-then-fall feel still needs review.
+
+Checkpoint: `fix: cancel grapple and casting pose on water entry`.

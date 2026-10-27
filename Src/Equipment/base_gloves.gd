@@ -99,6 +99,7 @@ var player: CharacterBody2D = null
 @export var save_point_hand_position := Vector2(-12.0, -34.0)
 @export var save_point_wrist_rotation := -0.35
 var action_anim_lock_timer := 0.0
+var _water_grapple_cancelled := false
 
 # ===============================
 # GRAPPLE STATE
@@ -1510,23 +1511,39 @@ func _apply_base_idle_swing_resistance(delta: float, tangent: Vector2) -> void:
 # ===============================
 # MAIN ABILITY LOOP
 # ===============================
+func cancel_grapple_for_water_entry() -> void:
+	var had_grapple := grapple_state != GrappleState.STOWED
+	if player:
+		var visual = player.get("live_3d_visual")
+		if visual and visual.has_method("cancel_grapple_throw"):
+			had_grapple = visual.cancel_grapple_throw() or had_grapple
+	_reset_active_grapple_visuals()
+	if had_grapple:
+		action_anim_lock_timer = 0.0
+		play_equipment_anim("Idle")
+
+
+func _block_grapple_underwater() -> bool:
+	var wet: bool = player != null and player.has_method("is_in_prototype_water") and player.is_in_prototype_water()
+	if not wet:
+		_water_grapple_cancelled = false
+		return false
+	if not _water_grapple_cancelled:
+		cancel_grapple_for_water_entry()
+		_water_grapple_cancelled = true
+	return true
+
+
 func thread_mechanic(delta: float) -> void:
 	if action_anim_lock_timer > 0.0:
 		action_anim_lock_timer -= delta
-	var grapple_blocked: bool = bool(
-		player != null
-		and player.has_method("is_in_prototype_water")
-		and player.is_in_prototype_water()
-	)
-	if grapple_blocked:
-		if grapple_state != GrappleState.STOWED:
-			_begin_grapple_retract()
+	if _block_grapple_underwater():
+		return
 
 	# Always check climbing while grapple is attached.
-	if not grapple_blocked:
-		_handle_rope_climb(delta)
+	_handle_rope_climb(delta)
 
-	if not grapple_blocked and InputMap.has_action(grapple_input_action):
+	if InputMap.has_action(grapple_input_action):
 		if Input.is_action_just_pressed(grapple_input_action):
 			if grapple_state == GrappleState.STOWED:
 				if not player.has_method("spend_action_points") or player.spend_action_points(1):

@@ -1,0 +1,161 @@
+{
+	"checks": 117,
+	"display": "headless",
+	"failures": [
+		"base firing: rope cancels immediately",
+		"base firing: no active rope/needle remains",
+		"base firing: casting arm lock clears",
+		"base firing: equipment action lock clears",
+		"base firing: swimmer remains free of the cast after its old duration",
+		"base attached: rope cancels immediately",
+		"base attached: no active rope/needle remains",
+		"base attached: casting arm lock clears",
+		"base attached: equipment action lock clears",
+		"base attached: swimmer remains free of the cast after its old duration",
+		"base retracting: rope cancels immediately",
+		"base retracting: no active rope/needle remains",
+		"base retracting: casting arm lock clears",
+		"base retracting: equipment action lock clears",
+		"base retracting: swimmer remains free of the cast after its old duration",
+		"blue firing: rope cancels immediately",
+		"blue firing: no active rope/needle remains",
+		"blue firing: casting arm lock clears",
+		"blue firing: equipment action lock clears",
+		"Blue water entry clears delayed release momentum",
+		"blue firing: swimmer remains free of the cast after its old duration",
+		"blue attached: rope cancels immediately",
+		"blue attached: no active rope/needle remains",
+		"blue attached: casting arm lock clears",
+		"blue attached: equipment action lock clears",
+		"Blue water entry clears delayed release momentum",
+		"blue attached: swimmer remains free of the cast after its old duration",
+		"blue retracting: rope cancels immediately",
+		"blue retracting: no active rope/needle remains",
+		"blue retracting: casting arm lock clears",
+		"blue retracting: equipment action lock clears",
+		"Blue water entry clears delayed release momentum",
+		"blue retracting: swimmer remains free of the cast after its old duration",
+		"red firing: rope cancels immediately",
+		"red firing: no active rope/needle remains",
+		"red firing: casting arm lock clears",
+		"red firing: equipment action lock clears",
+		"Red water entry clears towing/charge state",
+		"red firing: underwater input cannot restart rope",
+		"red firing: swimmer remains free of the cast after its old duration",
+		"red attached: rope cancels immediately",
+		"red attached: no active rope/needle remains",
+		"red attached: casting arm lock clears",
+		"red attached: equipment action lock clears",
+		"Red water entry clears towing/charge state",
+		"red attached: underwater input cannot restart rope",
+		"red attached: swimmer remains free of the cast after its old duration",
+		"red retracting: rope cancels immediately",
+		"red retracting: no active rope/needle remains",
+		"red retracting: casting arm lock clears",
+		"red retracting: equipment action lock clears",
+		"Red water entry clears towing/charge state",
+		"red retracting: swimmer remains free of the cast after its old duration",
+		"yellow firing: rope cancels immediately",
+		"yellow firing: no active rope/needle remains",
+		"yellow firing: casting arm lock clears",
+		"yellow firing: equipment action lock clears",
+		"yellow firing: swimmer remains free of the cast after its old duration",
+		"yellow attached: rope cancels immediately",
+		"yellow attached: no active rope/needle remains",
+		"yellow attached: casting arm lock clears",
+		"yellow attached: equipment action lock clears",
+		"Yellow water entry clears pending snap",
+		"yellow attached: swimmer remains free of the cast after its old duration",
+		"yellow retracting: rope cancels immediately",
+		"yellow retracting: no active rope/needle remains",
+		"yellow retracting: casting arm lock clears",
+		"yellow retracting: equipment action lock clears",
+		"yellow retracting: swimmer remains free of the cast after its old duration"
+	],
+	"samples": [
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "base",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "blue",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 1,
+			"overlay": true,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 1,
+			"overlay": true,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "red",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "retracting"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "firing"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "attached"
+		},
+		{
+			"action": "swimming_1",
+			"gloves": "yellow",
+			"grapple_state": 0,
+			"overlay": true,
+			"phase": "retracting"
+		}
+	]
+}
