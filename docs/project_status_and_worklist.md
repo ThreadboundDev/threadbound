@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 26, 2026. This is the single current priority list. The saved
+Updated October 27, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -9,6 +9,14 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 **awaiting Chase's appearance/feel review**.
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
+
+**October 27 active follow-ups:** fix the post-entry house jump, cancel grapple
+and its held-arm pose on water entry, extend dolphin awareness, and stop nested
+dolphins inheriting movement through walls. Work through one verified fix and
+commit at a time. The tower's exterior water cutout is still unaccepted;
+[a concrete proposal](design/tower_water_exterior_proposal_2026_10_27.md) awaits
+Chase's approval before architectural implementation.
+[Feedback and per-fix results](verification/lakeside_followups_2026_10_27.md).
 
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
