@@ -50,6 +50,13 @@ and preserve its terms. Any future pack supplied under QAL fails this policy.
 
 ## Recommendation on 2D and 3D — pending Chase's decision
 
+October 28 follow-up: Chase prefers stylized/low-poly 3D and is interested in a
+separate experimental project. The [curated shortlist](curated_asset_shortlist_2026_10_28.md)
+now supplies specific primary-page CC0 checks rather than search terms alone.
+The [separate 3D study proposal](../design/separate_3d_study_proposal_2026_10_28.md)
+distinguishes a visual/camera study from the later traversal evidence needed for
+a conversion decision. No conversion or study implementation is approved yet.
+
 Continue evaluating **hybrid 2.5D**. A complete 3D conversion is not required to
 benefit from free 3D assets. Source format and final presentation are separate
 choices: a model can become a live actor, a rendered animation sheet, or a fixed

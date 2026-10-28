@@ -10,6 +10,20 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 curated assets / separate 3D study (T25): Recommendations delivered; selection pending.**
+Chase requested filtering the free-assets directory by usefulness and licensing,
+and expressed interest in a separate stylized/low-poly 3D experiment. The
+[ranked shortlist](assets/curated_asset_shortlist_2026_10_28.md) identifies five
+first choices, eight optional additions/alternatives and three music candidates
+with primary-page CC0 evidence; it also records reuse priorities and source
+triage. New archive inspection, audio listening and engine import are unperformed.
+The [small separate-project proposal](design/separate_3d_study_proposal_2026_10_28.md)
+records art/camera/movement goals, later traversal questions and proposed files.
+No assets downloaded/replaced and no experiment or conversion implemented.
+Validation: primary listing/license review and documentation diff/link checks.
+Checkpoint: `docs: curate asset shortlist and scope separate 3d study`.
+T20 remains the production priority; asset picks and experiment scope await Chase.
+
 **October 28 armored golem assessment (T24): Review delivered; selection pending.**
 Chase explicitly requested review of a newly downloaded Fab golem and pasted
 its license. [License, source inventory, stills and attack preview](assets/armored_golem_review_2026_10_28.md).
