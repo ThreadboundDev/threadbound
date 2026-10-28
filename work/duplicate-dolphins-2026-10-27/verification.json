@@ -1,0 +1,9 @@
+{
+	"checks": 28,
+	"failures": [],
+	"samples": {
+		"authored_position": "(349.0, 2008.0)",
+		"duplicate_wall_stop": "(1028.358, 1400.0)",
+		"inherited_motion_pixels": 0.0
+	}
+}

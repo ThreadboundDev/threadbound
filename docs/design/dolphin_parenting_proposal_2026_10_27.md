@@ -1,6 +1,9 @@
 # Independent duplicate dolphin — scene correction proposal
 
-Status: awaiting approval. The comparison scene's added dolphin is a child of
+**Approved by Chase on October 27, 2026:** "Approve the dolphin reparenting fix."
+Implementation/verification are tracked in the October 27 follow-up report.
+
+The comparison scene's added dolphin was a child of
 the original Tide Duelist. Parent movement carries it without running the child's
 wall sweep. Parent death/hiding and process changes also affect the child.
 Changing only its transform-inheritance flag would leave those lifetime problems.
@@ -37,5 +40,5 @@ reset preserving both actors and their art selection. Existing idle phase offset
 already keep their breathing/tail motions separate.
 
 AGENTS.md explicitly lists "Scene tree restructuring" as requiring approval.
-This corrects the reported cause, but it still changes the saved parent/child
-relationship, so wait for Chase's approval before applying the scene edit.
+This correction changes the saved parent/child relationship; Chase's explicit
+approval above authorizes the scoped scene edit. Appearance/feel acceptance is separate.

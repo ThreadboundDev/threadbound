@@ -14,8 +14,8 @@ Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 and its held-arm pose on water entry, extend dolphin awareness, and stop nested
 dolphins inheriting movement through walls. Work through one verified fix and
 commit at a time. The tower's exterior water cutout is still unaccepted;
-[a concrete proposal](design/tower_water_exterior_proposal_2026_10_27.md) awaits
-Chase's approval before architectural implementation.
+[the exterior-water proposal](design/tower_water_exterior_proposal_2026_10_27.md)
+and dolphin reparenting were explicitly approved by Chase on October 27.
 [Feedback and per-fix results](verification/lakeside_followups_2026_10_27.md).
 
 House handoff correction delivered: `fix: ground house entry before releasing door animation`.
@@ -30,17 +30,18 @@ state is cancelled without changing movement velocity. Retest throw-then-fall.
 The legacy broad grapple fixture retains 20 identical failures on the prior
 scripts and current fix; reconciliation remains T04.
 
-Chase's saved duplicate-enemy placement edits are checkpointed as **WIP**; this
-does not accept their nested behavior. The added dolphin's
-[exact reparenting proposal](design/dolphin_parenting_proposal_2026_10_27.md)
-awaits approval for scene tree restructuring. Its current world position will
-be preserved. Leave the added heron unchanged in that scoped correction.
+Chase's saved duplicate-enemy placement edits were preserved in WIP checkpoint
+`bd9c11bb`. The approved dolphin-only parenting correction is now delivered:
+`fix: separate duplicated dolphin from parent movement`. It preserves `(349,2008)`
+and makes the added dolphin a room sibling. 28 checks pass for independent motion,
+walls, targeting, death, save reset and repeated F2/3D selection. The added heron's
+nesting remains unchanged in this scoped correction. Hands-on review is pending.
 
 Dolphin range adjustment delivered: `fix: extend dolphin awareness and engagement range`.
 Detection is 1,000 px and dash engagement is 850 px, retaining the outer tell
 band and existing damage/speed/warning timing. 32 focused range/occlusion checks
 and the existing Tide Duelist integration suite pass. Retest engagement distance;
-the duplicated actor's hierarchy correction still awaits approval.
+the separate hierarchy correction is delivered above.
 
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,

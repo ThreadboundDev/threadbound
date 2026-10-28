@@ -64,8 +64,10 @@ and Enemies on **current 3D** for this first retest.
    being accepted as the default. Villager two-pose behavior is already accepted.
    October 27 dolphin range: it should notice you from about 1,000 px and wind
    up within 850 px, while walls and dry gaps still block aggro. Damage/speed
-   and the eye-flash warning are unchanged. The nested duplicate's parenting
-   correction is awaiting approval; do not treat its behavior as fixed yet.
+   and the eye-flash warning are unchanged. The approved duplicate fix is now
+   delivered: the added dolphin should move/stop at its own walls independently.
+   Killing the original should leave it visible; F2 should restore both dolphins
+   at their saved positions with 3D art. The added heron was left unchanged.
 
 For each issue, send the **nearest landmark + action + expected/observed result**,
 with a screenshot when useful. Give **keep / change / untested** for camera focus,

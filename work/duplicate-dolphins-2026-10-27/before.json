@@ -1,0 +1,19 @@
+{
+	"checks": 24,
+	"failures": [
+		"Dolphins are independent sibling actors",
+		"Original dash cannot carry the other dolphin (600.0 px inherited)",
+		"Idle duplicate does not pass through its own wall",
+		"Original death/hiding does not hide or kill the other dolphin",
+		"Resetting the original cannot move the other dolphin",
+		"F2 keeps dolphin as a room sibling",
+		"F2 preserves each authored dolphin position",
+		"F2 keeps dolphin as a room sibling",
+		"F2 preserves each authored dolphin position"
+	],
+	"samples": {
+		"authored_position": "(349.0, 2008.0)",
+		"duplicate_wall_stop": "(1028.358, 1400.0)",
+		"inherited_motion_pixels": 600.0
+	}
+}

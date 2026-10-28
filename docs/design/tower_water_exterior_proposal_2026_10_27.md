@@ -1,6 +1,9 @@
 # Tower exterior water continuity — proposed correction
 
-Status: awaiting Chase's approval. October 27 screenshot shows the submerged
+**Approved by Chase on October 27, 2026:** "Approve exterior-water plan; keep dry interior."
+Implementation and verification follow the approved dolphin correction.
+
+The October 27 screenshot shows the submerged
 tower facade much drier/brighter than the surrounding lake. The tower's air
 pocket currently removes the water presentation even while the exterior is
 closed. The always-front facade also receives a lighter grade than scenery
@@ -46,4 +49,5 @@ their presentation, and tower movement/collision remain unchanged.
 Approval is required because this changes the relationship between the room's
 air-pocket presentation and building cutaway. AGENTS.md requires: "Before making
 any architectural changes" explain the change, reason and files, then "Wait for
-approval before editing." This is a prepared proposal, not implementation.
+approval before editing." Chase's approval above authorizes this scope;
+implementation and appearance acceptance are tracked separately.

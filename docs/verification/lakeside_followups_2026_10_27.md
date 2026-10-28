@@ -23,7 +23,8 @@ change unrelated attacks, damage, equipment progression or enemy art.
 The tower needs a choice about its dry interior. A concrete file-by-file
 [proposal](../design/tower_water_exterior_proposal_2026_10_27.md) is prepared:
 keep water over the closed exterior and reveal the existing dry mask only on
-entry. Architectural implementation is awaiting approval under AGENTS.md.
+entry. Chase approved this exterior-water plan on October 27; implementation
+follows the approved dolphin correction below.
 
 Pre-existing worktree changes: the comparison scene contains Chase's added
 Tide Duelist and Loom Heron, both nested under their originals, plus editor
@@ -99,8 +100,8 @@ enemies, their positions and editor metadata. The dolphin remains nested and
 can inherit unchecked motion; the added heron is also nested. This checkpoint
 preserves work, not accepted behavior. The exact dolphin-only reparenting fix
 is [prepared for approval](../design/dolphin_parenting_proposal_2026_10_27.md).
-AGENTS.md explicitly requires approval for scene tree restructuring, so that
-scene edit remains pending. Longer dolphin detection is a separate requested
+AGENTS.md explicitly requires approval for scene tree restructuring. Chase has
+since approved that exact edit; delivery is below. Longer dolphin detection is a separate requested
 parameter adjustment and can proceed without changing the saved hierarchy.
 
 Checkpoint: `level: checkpoint WIP duplicate enemy placements`.
@@ -128,6 +129,36 @@ assertions remain intact. An initial new-fixture path-label error was corrected.
 These were headless physics/state checks on Godot 4.7.2. The focused range run
 has no engine/script errors; the older integration fixture retains its existing
 two ObjectDB / one-resource teardown diagnostics. Range feel needs hands-on
-review. Duplicate-parent synchronization remains a separate pending correction.
+review. Duplicate-parent synchronization is addressed in the separate approved correction below.
 
 Checkpoint: `fix: extend dolphin awareness and engagement range`.
+
+## Approved independent duplicate dolphin
+
+Chase answered **"Approve the dolphin reparenting fix"** on October 27. Only
+the added dolphin is reparented to the room as `TideDuelist2`, preserving its
+world position `(349,2008)`, unique ID and existing tuning. The comparison
+controller's sibling index follows the added room child. The added heron and
+other user/editor scene edits remain unchanged.
+
+The baseline reproduced **600 pixels of inherited, unchecked movement** through
+the duplicate's wall when the original dashed, plus inherited death/hiding and
+reset movement. After the correction, inherited movement is **0 pixels**, and
+the duplicate's own sweep stops at the near wall at x=1028.358 in the fixture.
+
+`verify_duplicate_dolphins.gd`: **28 headless checks pass** for authored placement,
+independent motion/walls, separate real detection targets and attack directions,
+death/hiding, individual save reset, and two actual F2-handler resets. Both
+dolphins restore at their own saved positions with selected 3D art. The baseline
+has nine failures in 24 checks. Reports: `work/duplicate-dolphins-2026-10-27/`.
+The source pair is tested in controlled water/wall lanes, then the actual
+comparison scene exercises its F2 snapshots. An initial fixture owner warning
+was removed by clearing only extracted test-node ownership before relocation.
+
+The comparison scene retains its existing editable-instance ancestor metadata
+errors during snapshot packing, plus camera interpolation and resource/ObjectDB
+teardown diagnostics (T04). Assertions pass; this is not a clean engine-diagnostic
+run. No attack timing randomization or new enemy behavior was added. Hands-on
+movement/placement review remains pending.
+
+Checkpoint: `fix: separate duplicated dolphin from parent movement`.

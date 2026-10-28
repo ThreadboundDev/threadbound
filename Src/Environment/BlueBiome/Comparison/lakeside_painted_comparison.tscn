@@ -10,8 +10,8 @@
 [node name="RockContactRims" parent="Geometry/TerrainArtwork" parent_id_path=PackedInt32Array(1220208181) index="2"]
 z_as_relative = false
 
-[node name="TideDuelist" parent="TideDuelist" parent_id_path=PackedInt32Array(553997636) index="13" unique_id=1067205541 instance=ExtResource("2_ewax1")]
-position = Vector2(-275, 1185)
+[node name="TideDuelist2" parent="." unique_id=1067205541 instance=ExtResource("2_ewax1")]
+position = Vector2(349, 2008)
 attack_range = 850.0
 dash_speed = 1050.0
 maximum_dash_distance = 2400.0
@@ -26,7 +26,7 @@ needle_speed = 520.0
 home_leash = 950.0
 patrol_distance = 135.0
 
-[node name="ArtComparison" type="Node" parent="." index="19" unique_id=696682254]
+[node name="ArtComparison" type="Node" parent="." index="20" unique_id=696682254]
 script = ExtResource("2_comparison")
 
 [editable path="Geometry/TerrainArtwork"]
