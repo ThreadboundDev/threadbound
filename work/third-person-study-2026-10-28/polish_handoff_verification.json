@@ -1,0 +1,20 @@
+{
+  "installed_project": "C:\\Users\\chase\\Documents\\Threadbound 3D Study",
+  "managed_files_match_source": 120,
+  "gameplay_checks": {
+    "polish": 61,
+    "combat_traversal": 59,
+    "movement_camera": 20
+  },
+  "installer_safety_cases": 4,
+  "native_ui_check": "Not completed: Computer Use app approval timed out",
+  "gpu_motion_review": [
+    "player sword and skinned trail",
+    "sentinel attack",
+    "golem attack",
+    "Flow",
+    "swimming"
+  ],
+  "production_game_code_changed": false,
+  "implementation_checkpoint": "8956422c995773a5cf6145b6fdcc2918b604b99b"
+}

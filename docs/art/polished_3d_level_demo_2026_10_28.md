@@ -101,7 +101,7 @@ run Godot's editor import and `install_third_person_study.py`.
 
 ## Verification and playtest card
 
-Current automated baseline: 55 integrated polish checks, 59 combat/traversal
+Current automated baseline: 61 integrated polish checks, 59 combat/traversal
 checks and 20 movement/camera checks pass. New tests include ordinary wall,
 floor and ceiling hookshots, evaluated boss bone scale, actual pogo contact,
 mantle clearance, air-jump costs, water specials/dash, meditation and Flow.
@@ -114,3 +114,15 @@ ordinary roofs/decks; fight the two field silhouettes; swim below the bridge and
 try both specials; cross to the guardian and read/dodge/parry its three attacks.
 Chain movement and attacks to earn Flow, then try meditation after taking damage.
 R restores every encounter, AP, health, Momentum and traversal state.
+
+Final installed verification: **61 + 59 + 20 = 140 gameplay checks pass**, as do
+four installer preservation/recovery/path-safety cases. All 120 installed source
+files match the canonical copy, including authorized local derivatives.
+[Handoff evidence](../../work/third-person-study-2026-10-28/polish_handoff_verification.json).
+[Village view](../../work/third-person-study-2026-10-28/polished_village.png) ·
+[Guardian view](../../work/third-person-study-2026-10-28/polished_guardian.png).
+Run `tools/study/verify_polished_study.ps1 -Capture` to repeat installed validation.
+Native keyboard/mouse automation could not finish: the desktop tool returned
+“Computer Use app approval timed out.” Scripted input-driven physics checks and
+GPU motion review completed; no claim of human feel acceptance is made.
+Implementation checkpoint: `8956422c` (pushed).

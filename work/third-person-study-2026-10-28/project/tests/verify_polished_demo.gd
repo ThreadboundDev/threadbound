@@ -34,6 +34,11 @@ func run() -> void:
 	await frames(40)
 	check("Four field enemies and downloaded boss",enemies.size()==5 and world.boss.downloaded)
 	check("Three added cottages",get_nodes_in_group("study_houses").size()==3)
+	for house in get_nodes_in_group("study_houses"):
+		var a: Vector3 = house.to_global(Vector3(-3,1.25,-2))
+		var b: Vector3 = house.to_global(Vector3(3,1.25,-2))
+		var wall_hit: Dictionary = world.get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(a,b,1))
+		check("Cottage side walls retain assembled transforms",not wall_hit.is_empty() and house.is_ancestor_of(wall_hit.collider),house.global_position)
 	check("Baked navigation contains walkable polygons",world.navigation.navigation_mesh.get_polygon_count()>0)
 	for enemy in enemies:
 		check(enemy.display_name+" has full rig and motion set",enemy.skeleton.get_bone_count()>=60 and enemy.animation.get_animation_list().size()>=10)
@@ -99,7 +104,12 @@ func run() -> void:
 	enemy.global_position = actor.global_position+Vector3(0,0,-1.4)
 	actor.visual.rotation.y = PI
 	check("Basic attack starts",actor.combat.attack())
-	await frames(38)
+	await frames(20)
+	var visible_trails: Array = world.fx.trails.filter(func(t):return t.owner_actor==actor and t.blade.visible and t.samples.size()>1)
+	check("Sword swing emits a blade surface trail",not visible_trails.is_empty())
+	check("Trail spans the blade instead of its thickness",visible_trails.all(func(t):return Vector3(t.samples.back().a).distance_to(t.samples.back().b)>0.55))
+	check("Skinned sword trail stays beside the actual character",visible_trails.all(func(t):return t.samples.all(func(s):return Vector3(s.a).distance_to(actor.global_position)<3 and Vector3(s.b).distance_to(actor.global_position)<3)),visible_trails.map(func(t):return t.samples.back()))
+	await frames(18)
 	check("Basic sword strike damages one target once",enemy.health==enemy.max_health-25,enemy.health)
 	await fixture()
 	Input.action_press("block")

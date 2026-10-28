@@ -105,7 +105,7 @@
 		},
 		{
 			"check": "House/bench collision stops entry",
-			"detail": "(0.0, 0.20408, -5.351108)",
+			"detail": "(0.0, 0.204028, -5.350865)",
 			"passed": true
 		},
 		{

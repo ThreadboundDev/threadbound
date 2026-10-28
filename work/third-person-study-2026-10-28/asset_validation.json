@@ -1281,8 +1281,8 @@
     },
     {
       "path": "assets\\village\\cottage.glb",
-      "bytes": 838432,
-      "sha256": "de75fba271ec1919b47a668bc4ca43d8e0da118c35500c8b55090eda9a75244b",
+      "bytes": 838952,
+      "sha256": "d13bba4be036170cc3585693aa536a7e39cafa81b26b7d7ff67acce4eb4d145b",
       "images": [
         {
           "name": "map_0",
@@ -1740,5 +1740,5 @@
     "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v4.glb"
   ],
   "resource_links_checked": 36,
-  "project_source_bytes": 456612868
+  "project_source_bytes": 456767132
 }

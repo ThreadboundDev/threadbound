@@ -218,8 +218,17 @@ def sentinel(gender, weapon, destination):
 def village():
     bpy.ops.wm.open_mainfile(filepath=str(ROOT / 'work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend'))
     scene = bpy.context.scene
+    keep = [ob for ob in scene.objects if ob.type == 'MESH' and not any(m.type == 'ARMATURE' for m in ob.modifiers)
+            and not ob.name.startswith(('Preview', 'Work ', 'Authored / apron', 'Authored / canvas', 'Authored / patch'))]
+    matrices = {ob:ob.matrix_world.copy() for ob in keep}
+    for ob in keep:
+        ob.parent = None
+        ob.matrix_world = matrices[ob]
+    bpy.context.view_layer.update()
+    for ob in keep:
+        assert max((ob.matrix_world @ v.co-matrices[ob] @ v.co).length for v in ob.data.vertices) < 0.00001
     for ob in list(scene.objects):
-        if ob.type != 'MESH' or any(m.type == 'ARMATURE' for m in ob.modifiers) or ob.name.startswith(('Preview', 'Work ', 'Authored / apron', 'Authored / canvas', 'Authored / patch')):
+        if ob not in keep:
             bpy.data.objects.remove(ob, do_unlink=True)
     for ob in scene.objects: ob.animation_data_clear()
     bpy.ops.object.select_all(action='SELECT')

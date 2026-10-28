@@ -238,17 +238,17 @@ func _physics_process(delta: float) -> void:
 		jump_buffer = 0
 		coyote = 0
 		get_parent().audio.play("jump", global_position, -18)
-		report_momentum("jump")
+		report_momentum("jump",0.55)
 	elif jump_buffer > 0 and wall_normal.length() > 0.5:
 		velocity = wall_normal*6.2 + Vector3.UP*6.8*momentum_multiplier("jump")
 		jump_buffer = 0
 		wall_hold = 0
-		report_momentum("jump")
+		report_momentum("jump",0.7)
 	elif jump_buffer > 0 and air_jump_available and not swimming and combat.action == "" and combat.spend_ap(1):
 		velocity.y = 7.3 * momentum_multiplier("jump")
 		air_jump_available = false
 		jump_buffer = 0
-		report_momentum("jump")
+		report_momentum("jump",1.35)
 		get_parent().audio.play("jump", global_position, -19, 1.12)
 	if grapple.active and grapple.connected:
 		pass
@@ -360,9 +360,9 @@ func request_dash(direction: Vector3) -> bool:
 func momentum_multiplier(key: String) -> float:
 	return momentum.multiplier(key)
 
-func report_momentum(category: String) -> void:
+func report_momentum(category: String, strength := 1.0) -> void:
 	var was_flow: bool = momentum.flow
-	momentum.report(category)
+	momentum.report(category,strength)
 	if momentum.flow and not was_flow:
 		get_parent().notice("FLOW · keep weaving movement and attacks")
 		get_parent().audio.play("grapple_connect", global_position, -13, 0.65)

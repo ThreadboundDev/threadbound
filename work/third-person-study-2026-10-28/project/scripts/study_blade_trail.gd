@@ -28,11 +28,15 @@ void fragment(){
 	if blade.skin != null:
 		rig = blade.get_node_or_null(blade.skeleton) as Skeleton3D
 	var bound := blade.mesh.get_aabb()
-	var root := Vector3(bound.get_center().x,bound.get_center().y,bound.end.z-bound.size.z*0.28)
-	var tip := Vector3(bound.get_center().x,bound.get_center().y,bound.position.z)
-	if not owner_actor.has_method("facing"):
-		root = Vector3(bound.get_center().x,bound.position.y+bound.size.y*0.25,bound.get_center().z)
-		tip = Vector3(bound.get_center().x,bound.end.y,bound.get_center().z)
+	var axis := bound.size.max_axis_index()
+	var root := bound.get_center()
+	var tip := bound.get_center()
+	if owner_actor.has_method("facing"):
+		root[axis] = bound.end[axis]-bound.size[axis]*0.28
+		tip[axis] = bound.position[axis]
+	else:
+		root[axis] = bound.position[axis]+bound.size[axis]*0.25
+		tip[axis] = bound.end[axis]
 	references = [reference(root),reference(tip)]
 
 func _process(delta: float) -> void:

@@ -16,7 +16,7 @@ Chase reviewed T27 and requested a more polished level using his downloads.
 Four field opponents, downloaded golem boss, four houses/workshop, market/ruins,
 collision hookshot, authored directional air/pogo/water actions, AP/Momentum/Flow,
 meditation, navigation and blade-driven effects are implemented in the separate
-project. 55 new integration, 59 combat/traversal and 20 movement checks pass.
+project. 61 new integration, 59 combat/traversal and 20 movement checks pass.
 The original 2D game is preserved. The FreeStylized website origin is confirmed;
 custom-licensed derivatives stay local. Chase's appearance/feel acceptance is
 pending. Branch: `threadbound/feature-polished-3d-demo`. Implementation checkpoint:

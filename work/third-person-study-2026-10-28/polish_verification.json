@@ -11,6 +11,21 @@
 			"passed": true
 		},
 		{
+			"check": "Cottage side walls retain assembled transforms",
+			"detail": "(-17.0, 0.05, 4.0)",
+			"passed": true
+		},
+		{
+			"check": "Cottage side walls retain assembled transforms",
+			"detail": "(-9.0, 0.05, -16.0)",
+			"passed": true
+		},
+		{
+			"check": "Cottage side walls retain assembled transforms",
+			"detail": "(22.0, 0.05, -12.0)",
+			"passed": true
+		},
+		{
 			"check": "Baked navigation contains walkable polygons",
 			"detail": null,
 			"passed": true
@@ -158,6 +173,27 @@
 		{
 			"check": "Basic attack starts",
 			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Sword swing emits a blade surface trail",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Trail spans the blade instead of its thickness",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Skinned sword trail stays beside the actual character",
+			"detail": [
+				{
+					"a": "(-0.048727, 1.107991, 16.0592)",
+					"b": "(0.292975, 1.406418, 15.59579)",
+					"time": 21.2333333333334
+				}
+			],
 			"passed": true
 		},
 		{

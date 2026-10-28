@@ -14,26 +14,40 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def installed_path(name):
+    path = DESTINATION / name
+    if not path.resolve().is_relative_to(DESTINATION.resolve()):
+        raise ValueError(f'Install path escapes the study folder: {name}')
+    return path
+
+
 def main():
     files = [p for p in SOURCE.rglob('*') if p.is_file() and '.godot' not in p.parts
              and p.suffix not in {'.log', '.import'}
-             and p.name not in {'test_results.json', 'combat_test_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
+             and p.name not in {'test_results.json', 'combat_test_results.json', 'polish_test_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
              and not (p.parent in {SOURCE / 'assets', SOURCE / 'assets/enemies', SOURCE / 'assets/village', SOURCE / 'assets/local_licensed'} and p.suffix in {'.png', '.jpg'})]
     if DESTINATION.exists():
         if not MARKER.exists():
             raise SystemExit(f'Refusing to overwrite an existing unrecognized folder: {DESTINATION}')
         previous = json.loads(MARKER.read_text(encoding='utf-8'))
         changed = [name for name, sha in previous['files'].items()
-                   if (DESTINATION / name).exists() and digest(DESTINATION / name) != sha]
+                   if installed_path(name).exists() and digest(installed_path(name)) != sha
+                   and (not (SOURCE / name).exists() or digest(installed_path(name)) != digest(SOURCE / name))]
         if changed:
             raise SystemExit(f'Preserved manually edited study files; reconcile before updating: {changed}')
     DESTINATION.mkdir(parents=True, exist_ok=True)
+    # Validate the complete update before copying any file. Identical existing files
+    # can be adopted safely, including Godot-generated UID files and interrupted copies.
+    for file in files:
+        relative = file.relative_to(SOURCE)
+        destination = installed_path(relative)
+        if destination.exists() and (not MARKER.exists() or relative.as_posix() not in previous['files']):
+            if digest(destination) != digest(file):
+                raise SystemExit(f'Preserved unexpected existing file: {destination}')
     manifest = {}
     for file in files:
         relative = file.relative_to(SOURCE)
-        destination = DESTINATION / relative
-        if destination.exists() and (not MARKER.exists() or relative.as_posix() not in previous['files']):
-            raise SystemExit(f'Preserved unexpected existing file: {destination}')
+        destination = installed_path(relative)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(file, destination)
         manifest[relative.as_posix()] = digest(destination)

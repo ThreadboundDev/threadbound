@@ -1,0 +1,316 @@
+{
+	"checks": [
+		{
+			"check": "Four field enemies plus distinct boss",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Six usable thread anchors",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "AP starts full",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Audio ambience playing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Attack and grapple controller mappings",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Combat animation clips",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "reedhook rig and animation available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "eave rig and animation available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "reedhook rig and animation available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "eave rig and animation available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "boss rig and animation available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Light windup harmless",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Basic sword connects",
+			"detail": 70,
+			"passed": true
+		},
+		{
+			"check": "No repeated damage within strike",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Tap buffering starts second combo strike",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Buffered combo deals one hit per segment",
+			"detail": 45,
+			"passed": true
+		},
+		{
+			"check": "Neutral special starts on ground",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Special spends exactly two AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Neutral charge harmless",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Neutral burst hits behind player",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Burst cannot repeatedly hit same enemy",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Directional spin moves player",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spin damages nearby enemy",
+			"detail": 50,
+			"passed": true
+		},
+		{
+			"check": "Insufficient AP rejects special",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spent AP recharge independently",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Fresh frontal guard parries",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Held frontal guard reduces damage",
+			"detail": 96,
+			"passed": true
+		},
+		{
+			"check": "Guard does not block rear attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dash has initial invulnerability",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dash traverses substantial distance",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dash cooldown prevents spam",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Enemy windup deals no contact damage",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Reedhook sweep delivers one hit",
+			"detail": 82,
+			"passed": true
+		},
+		{
+			"check": "Hurt interrupts enemy attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Boss death disables damage and collision",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Reset restores every enemy and player",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Camera collision still retracts",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Visible anchor can be selected",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Hookshot fires",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Hookshot pulls through 3D space",
+			"detail": "(-4.189892, 0.000822, 1.706653)",
+			"passed": true
+		},
+		{
+			"check": "Hookshot connection feedback fired",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Grapple release clears all rope strands",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Enemy grapple strike deals 30 once",
+			"detail": 65,
+			"passed": true
+		},
+		{
+			"check": "Grapple ignores occluded target",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 1",
+			"detail": "(-9.0, 0.700824, -1.396463)",
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 2",
+			"detail": "(-13.0, 1.900813, -5.325741)",
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 3",
+			"detail": "(-16.0, 3.100813, -10.32575)",
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 4",
+			"detail": "(-9.0, 4.600842, -16.32575)",
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 5",
+			"detail": "(1.0, 4.400839, -17.32575)",
+			"passed": true
+		},
+		{
+			"check": "Traversal deck collision landing 6",
+			"detail": "(19.0, 3.500831, -10.32575)",
+			"passed": true
+		},
+		{
+			"check": "Eave Runner commits a forward lunge",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Eave lunge hits once",
+			"detail": 87,
+			"passed": true
+		},
+		{
+			"check": "Boss plays all three downloaded attack clips",
+			"detail": [
+				"attack1",
+				"attack2",
+				"",
+				"attack3"
+			],
+			"passed": true
+		},
+		{
+			"check": "Pause freezes gameplay and releases cursor",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Resume restarts gameplay",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Mute control affects master sound",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Falls recover to last safe landing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Player can die",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Death resets to playable clearing",
+			"detail": null,
+			"passed": true
+		}
+	],
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"failed": 0
+}
