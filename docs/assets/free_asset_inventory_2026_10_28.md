@@ -1,5 +1,13 @@
 # Downloaded asset library — October 28, 2026
 
+**Historical initial audit.** Chase subsequently requested CC0-only retention.
+P01, P04 and P05 were removed; ten packs with included CC0 notices remain.
+Use the [current library policy and search plan](cc0_library_and_search_plan.md)
+and [disposition manifest](library_disposition_2026_10_28.json) for current holdings.
+Counts, paths and music/Bestiary suggestions below describe the original batch;
+those removed packs are no longer available for reuse. Their original extracted
+evidence was deleted locally; textual findings remain as historical records.
+
 ## Result and location
 
 13 newly downloaded ZIPs, **3,407,872,422 bytes (3.17 GiB)** compressed;

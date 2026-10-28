@@ -1,0 +1,240 @@
+{
+  "date": "2026-10-28",
+  "policy": "CC0 only; retained based on bundled notices; website discrepancy recorded in plan",
+  "library_path": "C:/Users/chase/Documents/Threadbound Asset Library",
+  "packs": [
+    {
+      "id": "P01",
+      "archive": "Bestiary - Dungeon Monsters Kit[Standard].zip",
+      "bytes": 47299856,
+      "sha256": "94dbeed196b6ead9776c2ed0cfa02de818730886a25a507fb9d6c379bbbc4645",
+      "file_count": 22,
+      "expanded_bytes": 48790292,
+      "extensions": {
+        ".fbx": 2,
+        ".glb": 2,
+        ".jpg": 1,
+        ".png": 16,
+        ".txt": 1
+      },
+      "crc": "pass",
+      "disposition": "removed_non_cc0"
+    },
+    {
+      "id": "P02",
+      "archive": "Essentials_Series_NOX_SOUND.zip",
+      "bytes": 1036374981,
+      "sha256": "0df9a98cc8d0499787cb3c29f3e278fdacd75ca3e94106828ea8b5c115ae8d3d",
+      "file_count": 1661,
+      "expanded_bytes": 1146347868,
+      "extensions": {
+        ".jpg": 13,
+        ".pdf": 2,
+        ".png": 1,
+        ".url": 1,
+        ".wav": 1644
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P03",
+      "archive": "Fantasy Props MegaKit[Standard].zip",
+      "bytes": 150213360,
+      "sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+      "file_count": 517,
+      "expanded_bytes": 162871281,
+      "extensions": {
+        ".bin": 94,
+        ".fbx": 94,
+        ".gltf": 94,
+        ".jpg": 3,
+        ".mtl": 94,
+        ".obj": 94,
+        ".png": 43,
+        ".txt": 1
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P04",
+      "archive": "Fantasy RPG Music Pack.zip",
+      "bytes": 749999903,
+      "sha256": "d0a3929f300f43c272a2c22061ec909a60774798dd063b64f81a364b62e8672a",
+      "file_count": 57,
+      "expanded_bytes": 868078903,
+      "extensions": {
+        ".mp3": 28,
+        ".pdf": 1,
+        ".wav": 28
+      },
+      "crc": "pass",
+      "disposition": "removed_non_cc0"
+    },
+    {
+      "id": "P05",
+      "archive": "Fantasy RPG Music Vol. 2.zip",
+      "bytes": 791104630,
+      "sha256": "799ad89a88424d7c0b61aeb7f3af74512079d385ac2f334db3ac67ffbf50c9dd",
+      "file_count": 88,
+      "expanded_bytes": 911009598,
+      "extensions": {
+        ".mp3": 29,
+        ".ogg": 29,
+        ".pdf": 1,
+        ".wav": 29
+      },
+      "crc": "pass",
+      "disposition": "removed_non_cc0"
+    },
+    {
+      "id": "P06",
+      "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+      "bytes": 3375694,
+      "sha256": "1017144f85a994f405b731befa71ced360f5b60ed0b9c00c72e711c1633ce2d2",
+      "file_count": 196,
+      "expanded_bytes": 6177289,
+      "extensions": {
+        ".bin": 31,
+        ".fbx": 62,
+        ".gltf": 31,
+        ".mtl": 31,
+        ".obj": 31,
+        ".png": 6,
+        ".txt": 1,
+        ".url": 3
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P07",
+      "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+      "bytes": 8520574,
+      "sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+      "file_count": 466,
+      "expanded_bytes": 17618275,
+      "extensions": {
+        ".bin": 76,
+        ".fbx": 152,
+        ".gltf": 76,
+        ".mtl": 76,
+        ".obj": 76,
+        ".png": 6,
+        ".txt": 1,
+        ".url": 3
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P08",
+      "archive": "kenney_retro-fantasy-kit.zip",
+      "bytes": 2024232,
+      "sha256": "d3462b453018d0d150406d85af3c4ae1322ceef8f1754c4eb4e6355adfeaab0f",
+      "file_count": 562,
+      "expanded_bytes": 5607892,
+      "extensions": {
+        ".fbx": 105,
+        ".glb": 105,
+        ".html": 1,
+        ".mtl": 105,
+        ".obj": 105,
+        ".png": 137,
+        ".txt": 1,
+        ".url": 3
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P09",
+      "archive": "Medieval Village MegaKit[Standard].zip",
+      "bytes": 161003471,
+      "sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+      "file_count": 936,
+      "expanded_bytes": 174347235,
+      "extensions": {
+        ".bin": 176,
+        ".fbx": 176,
+        ".gltf": 176,
+        ".jpg": 1,
+        ".mtl": 176,
+        ".obj": 176,
+        ".png": 54,
+        ".txt": 1
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P10",
+      "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+      "bytes": 294347394,
+      "sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+      "file_count": 121,
+      "expanded_bytes": 305995429,
+      "extensions": {
+        ".bin": 24,
+        ".fbx": 24,
+        ".gltf": 24,
+        ".jpg": 1,
+        ".png": 46,
+        ".txt": 2
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P11",
+      "archive": "Universal Animation Library 2[Standard].zip",
+      "bytes": 18735003,
+      "sha256": "4008ea208a604773a2b2177d965f0f5d3195498b5bf838c3f5785d68e95f2a68",
+      "file_count": 13,
+      "expanded_bytes": 72807306,
+      "extensions": {
+        ".blend": 1,
+        ".fbx": 3,
+        ".glb": 3,
+        ".png": 3,
+        ".txt": 3
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P12",
+      "archive": "Universal Animation Library[Standard].zip",
+      "bytes": 15904933,
+      "sha256": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724",
+      "file_count": 9,
+      "expanded_bytes": 63648179,
+      "extensions": {
+        ".fbx": 2,
+        ".glb": 2,
+        ".png": 3,
+        ".txt": 2
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    },
+    {
+      "id": "P13",
+      "archive": "Universal Base Characters[Standard].zip",
+      "bytes": 128968391,
+      "sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+      "file_count": 112,
+      "expanded_bytes": 132571039,
+      "extensions": {
+        ".bin": 18,
+        ".fbx": 26,
+        ".gltf": 18,
+        ".png": 48,
+        ".txt": 2
+      },
+      "crc": "pass",
+      "disposition": "retained_bundled_cc0"
+    }
+  ]
+}

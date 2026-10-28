@@ -12,8 +12,13 @@ Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
 **October 28 asset-library audit (T21):** Chase requested an inventory and reuse
 recommendations for the new free asset downloads. See the
-[13-pack catalog, license findings and shortlist](assets/free_asset_inventory_2026_10_28.md).
-Original archives are staged outside the project in
+[original 13-pack audit](assets/free_asset_inventory_2026_10_28.md) and the
+[current CC0-only library/search plan](assets/cc0_library_and_search_plan.md).
+Chase then requested CC0-only retention: Bestiary and both custom-license music
+packs removed; ten packs with included CC0 notices retained. Low-poly is a
+preferred look, but a full 3D conversion is undecided. Hybrid reuse and one later
+workshop comparison are recommendations, not an implementation authorization.
+Remaining original archives are staged outside the project in
 `C:\Users\chase\Documents\Threadbound Asset Library`; raw assets remain local,
 not part of the Git backup. No imports, art replacements, combat/equipment
 changes or lore changes were made. T20 remains the implementation priority.
@@ -26,6 +31,9 @@ changes or lore changes were made. T20 remains the implementation priority.
   working-copy import fix. Audio audition, Godot import/retargeting, appearance and any future
   installation remain untested/unapproved. Next: review shortlist, then scope
   one reuse trial after stabilization. Weapon upgrades/finds are proposals only.
+  CC0 policy follow-up checkpoint:
+  `docs: apply CC0-only asset policy and focus reuse searches`; verified retained
+  hashes/counts and removal paths. No gameplay or visual acceptance is implied.
 
 **October 27 follow-ups delivered:** house handoff, water-entry grapple/arm reset,
 dolphin range, independent duplicate dolphin, and continuous water over the closed
