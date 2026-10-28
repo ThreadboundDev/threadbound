@@ -1,0 +1,117 @@
+{
+  "source": "CC0 download library; exact ZIP/member hashes in source_manifest.json",
+  "master_rig_joint_count": 65,
+  "source_action": "UAL1 / Idle_Loop",
+  "max_rest_matrix_difference": 0.19216322898864746,
+  "max_rest_rotation_difference_radians": 0.21192993223667145,
+  "retarget_method": "Bone-name mapping with rest-axis rotation compensation; no source translations",
+  "work_action": "Threadbound_Work_Plane_Loop_96f",
+  "frames": 96,
+  "fps": 24,
+  "duration_seconds": 4,
+  "body_below_neck_removed": true,
+  "production_files_modified": false,
+  "contact_samples": [
+    {
+      "frame": 1,
+      "wrist_target_errors": [
+        6.07850493620966e-07,
+        3.8743019104003906e-07
+      ],
+      "tool_board_gap": 0.0025000573694706762
+    },
+    {
+      "frame": 13,
+      "wrist_target_errors": [
+        2.7314279645418166e-07,
+        2.0647654623614278e-07
+      ],
+      "tool_board_gap": 0.004500031620264133
+    },
+    {
+      "frame": 25,
+      "wrist_target_errors": [
+        3.95372484964776e-07,
+        2.457562461863554e-07
+      ],
+      "tool_board_gap": 0.00650000587105759
+    },
+    {
+      "frame": 37,
+      "wrist_target_errors": [
+        1.7881393432617188e-07,
+        8.429369702178807e-08
+      ],
+      "tool_board_gap": 0.004500031620264133
+    },
+    {
+      "frame": 49,
+      "wrist_target_errors": [
+        2.7314279645418166e-07,
+        1.7881393432617188e-07
+      ],
+      "tool_board_gap": 0.0025000573694706762
+    },
+    {
+      "frame": 61,
+      "wrist_target_errors": [
+        8.429369702178807e-08,
+        3.4240261593687705e-07
+      ],
+      "tool_board_gap": 0.004500031620264133
+    },
+    {
+      "frame": 73,
+      "wrist_target_errors": [
+        2.980232238769531e-07,
+        2.1490760299348766e-07
+      ],
+      "tool_board_gap": 0.00650000587105759
+    },
+    {
+      "frame": 85,
+      "wrist_target_errors": [
+        2.980232238769531e-07,
+        2.6656007498500226e-07
+      ],
+      "tool_board_gap": 0.004500031620264133
+    },
+    {
+      "frame": 97,
+      "wrist_target_errors": [
+        6.07850493620966e-07,
+        3.8743019104003906e-07
+      ],
+      "tool_board_gap": 0.0025000573694706762
+    }
+  ],
+  "worker_bounds_frame13": [
+    [
+      0.38499999046325684,
+      1.021376609802246
+    ],
+    [
+      -0.6981920003890991,
+      -0.1152019202709198
+    ],
+    [
+      0.0760323628783226,
+      1.8717042207717896
+    ]
+  ],
+  "house_bounds": [
+    [
+      -2.3706228733062744,
+      2.3706228733062744
+    ],
+    [
+      -1.399999976158142,
+      4.599999904632568
+    ],
+    [
+      0.05999961495399475,
+      4.257147312164307
+    ]
+  ],
+  "mesh_triangles": 32510
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "renders/cc0_house_worker.png",
+    "bytes": 1055872,
+    "sha256": "36f5c5b32fdfed5fcef5bd8e0400f9be55f51f18837364922304bb26bc7c039f"
+  },
+  {
+    "file": "renders/cc0_worker_detail.png",
+    "bytes": 822534,
+    "sha256": "0cc846ab424c476d854aa6e7830e63c46571ba713da3e02998e448c3f3d01cb8"
+  },
+  {
+    "file": "renders/house_villager_motion.gif",
+    "bytes": 487985,
+    "sha256": "e6d60c35daf04c93722e58f7d22ba8769a90e26288b4fed89897fb70f7b82e7f"
+  },
+  {
+    "file": "renders/house_villager_side_by_side.png",
+    "bytes": 962635,
+    "sha256": "eb6e32782a63ad2b8944d4cc2c4035605c58f13bb73a3a3e4f95b027be305c6e"
+  },
+  {
+    "file": "renders/worker_motion.gif",
+    "bytes": 791565,
+    "sha256": "a4b04fbe072dadfcb4545586e5a5a50bbd83b941fcd40e5a5746af5d7a121600"
+  },
+  {
+    "file": "renders/worker_side_by_side.png",
+    "bytes": 597777,
+    "sha256": "201cf43b4a268b4cffc1c7966f3259f09b963a101493772622dcf228c4d1b864"
+  }
+]

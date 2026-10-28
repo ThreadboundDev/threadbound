@@ -10,6 +10,19 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 CC0 reuse comparison (T22): Awaiting hands-on appearance/motion review.**
+Chase authorized a side-by-side house/villager study and simple table-work motion
+using the downloaded rig, clothes and animation stock. Delivered as isolated
+[stills, motion loops and editable Blender source](art/cc0_house_villager_comparison_2026_10_28.md).
+Existing painted workshop/villager on the left; CC0 modular house and clothed,
+animated worker on the right. 97 saved-scene pose checks verify wrist targets,
+planted feet, loop closure and packed images; both GIFs contain 48 frames / 4 s.
+Checkpoint: `art: compare CC0 house and animated clothed villager`.
+No game assets replaced; runtime import/performance remain untested. Chase's
+keep/change decision is pending. Full 3D conversion remains undecided; after
+this review delivery, T20 is still the implementation priority. NOX's 1,644 CC0
+SFX files remain available; only the two custom-license music packs were removed.
+
 **October 28 asset-library audit (T21):** Chase requested an inventory and reuse
 recommendations for the new free asset downloads. See the
 [original 13-pack audit](assets/free_asset_inventory_2026_10_28.md) and the
