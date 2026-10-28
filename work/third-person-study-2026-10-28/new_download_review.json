@@ -1,0 +1,29 @@
+[
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "bytes": 382352236,
+    "sha256": "555a2594af20b4016230a87873d0691bc4fe9b6a0f374706c1a95947280ee114",
+    "crc": "pass",
+    "files": 42,
+    "license_notice_in_zip": false,
+    "disposition": "Held outside strict CC0 library; FreeStylized custom terms; no imports or deletion"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "bytes": 139501198,
+    "sha256": "32bd2a079e5009b9126a970a704ebb9a6a5379757846ce2f7f7bfa417b0be964",
+    "crc": "pass",
+    "files": 65,
+    "license_notice_in_zip": false,
+    "disposition": "Held outside strict CC0 library; FreeStylized custom terms; no imports or deletion"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "bytes": 203976606,
+    "sha256": "c7dc4463d31b5c800f9f77b4ba39e4c0728af940443ec3aa154621bef43b9e46",
+    "crc": "pass",
+    "files": 46,
+    "license_notice_in_zip": false,
+    "disposition": "Held outside strict CC0 library; FreeStylized custom terms; no imports or deletion"
+  }
+]

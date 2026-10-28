@@ -10,6 +10,22 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 3D combat/traversal playtest (T27): Verified implementation; hands-on review pending.**
+Chase authorized two enemies, a boss, grapple, specials, platforming, sound and
+broad polish of the separate study. [Delivery and controls](art/third_person_combat_playtest_2026_10_28.md):
+Reedhook, Eave Runner and a Bellstriker champion; six-ring elevated route;
+combo/air strike, guard/parry, dash, neutral/spin specials, AP recharge,
+enemy hookshot strike, checkpoints, audio, pause/help and full reset. Current
+Threadborne identity and existing woven enemy art retained. 57 combat/traversal
+and 20 movement/camera checks pass; ten self-contained GLBs pass asset audit.
+GPU views inspected; a fresh standalone import also passes 57 checks and the
+installed action/arena/route captures are clean. Chase's feel/listening review
+remains pending. New FreeStylized downloads are inventoried but held
+outside the strict CC0 collection under their custom terms. No production game
+systems changed. Checkpoint:
+`feature: expand 3d study with combat and threaded traversal`.
+T20 remains the production priority; this is the authorized separate experiment.
+
 **October 28 playable third-person study (T26): Delivered; appearance/feel review pending.**
 Chase authorized the separate 3D experiment, keeping the current character and
 avoiding chibi proportions; new sword/shield options are allowed. The

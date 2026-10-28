@@ -11,12 +11,19 @@ ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/third-person-study-2026-10-28'
 PROJECT = WORK / 'project'
 report = {'models': [], 'source_inputs_unchanged': [], 'resource_links_checked': 0}
-for record in json.loads((PROJECT / 'assets/provenance.json').read_text(encoding='utf-8')):
+records = json.loads((PROJECT / 'assets/provenance.json').read_text(encoding='utf-8'))
+if (PROJECT / 'assets/combat_provenance.json').exists():
+    records += json.loads((PROJECT / 'assets/combat_provenance.json').read_text(encoding='utf-8'))
+if (PROJECT / 'assets/eave_runner_provenance.json').exists():
+    records.append(json.loads((PROJECT / 'assets/eave_runner_provenance.json').read_text(encoding='utf-8')))
+for record in records:
     if 'source' in record and 'sha256' in record:
         path = ROOT / record['source']
         matches = hashlib.sha256(path.read_bytes()).hexdigest() == record['sha256']
         assert matches, path
         report['source_inputs_unchanged'].append(record['source'])
+    if 'target_sha256' in record:
+        assert hashlib.sha256((PROJECT / record['target']).read_bytes()).hexdigest() == record['target_sha256']
 for path in (PROJECT / 'assets').rglob('*.glb'):
     blob = path.read_bytes()
     size = struct.unpack_from('<I', blob, 12)[0]

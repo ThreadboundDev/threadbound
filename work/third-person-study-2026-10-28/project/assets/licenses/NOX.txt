@@ -1,0 +1,6 @@
+NOX Essentials Series - bundled README license statement
+
+Instagram â€“ AsoundEffect â€“ Freesound â€“ Unity
+All these sounds are under CC0 license.
+
+Original archive and member hashes are recorded in the catalog / asset audit.

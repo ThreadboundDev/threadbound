@@ -1,5 +1,9 @@
 # Third-person 3D study — October 28, 2026
 
+**Follow-up:** the [combat/traversal playtest](third_person_combat_playtest_2026_10_28.md)
+now extends this initial delivery with enemies, a champion, grapple, specials
+and sound. Movement-only limitations below describe the original study checkpoint.
+
 Chase authorized building the separate 3D experiment and downloading/using
 appropriate assets. Keep the current character, avoid chibi proportions, use
 stylized/low-poly surroundings that fit together, and permit a different sword

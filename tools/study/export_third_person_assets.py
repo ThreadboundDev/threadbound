@@ -57,7 +57,8 @@ for old_name, stem, name in [('Threadborne_Sword', 'sword_B', 'Study_Sword'),
         bpy.data.objects.remove(ob, do_unlink=True)
 
 rig = bpy.data.objects['Threadborne_Rig']
-keep = ['idle_4', 'walk_1', 'run_1', 'jump_1', 'block_idle_1']
+keep = ['idle_4', 'walk_1', 'run_1', 'jump_1', 'block_idle_1', 'slash_2',
+        'attack_2', 'power_up_1', 'roll_1', 'grapple_swinging_1', 'casting_1', 'air_light_1', 'impact_1', 'death_1']
 print('NLA', [t.name for t in rig.animation_data.nla_tracks], flush=True)
 for track in list(rig.animation_data.nla_tracks):
     if not any(track.name == clip or track.name.endswith(clip) for clip in keep):
@@ -71,6 +72,8 @@ for ob in bpy.context.scene.objects:
 bpy.ops.export_scene.gltf(filepath=str(OUT / 'threadborne_study.glb'), export_format='GLB',
                           use_selection=True, export_animation_mode='NLA_TRACKS',
                           export_animations=True, export_apply=False)
+if '--player-only' in sys.argv:
+    sys.exit(0)
 
 # Export the already-authored workshop + rigged work loop, excluding its render stage.
 bpy.ops.wm.open_mainfile(filepath=str(ROOT / 'work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend'))

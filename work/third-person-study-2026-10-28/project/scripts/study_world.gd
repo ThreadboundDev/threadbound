@@ -202,8 +202,11 @@ func foliage() -> void:
 		var z := rng.randf_range(-22, 20)
 		if (x > 7 and x < 17) or (absf(x) < 5 and z > -14 and z < 10) or (x < -5 and x > -12 and z > -8 and z < 1):
 			continue
+		if not foliage_position_allowed(Vector3(x,0,z)): continue
 		var tree: Node3D = BROADLEAF.instantiate() if i % 4 == 0 else TREE.instantiate()
 		add_child(tree)
+		tree.add_to_group("study_foliage")
+		tree.set_meta("is_tree", true)
 		tint_foliage(tree)
 		var bound := model_bounds(tree)
 		var factor := rng.randf_range(4.5, 7.0) / bound.size.y
@@ -215,13 +218,18 @@ func foliage() -> void:
 		var z := rng.randf_range(-20, 19)
 		if (x > 8 and x < 17) or (absf(x) < 4 and z > -13 and z < 9):
 			continue
+		if not foliage_position_allowed(Vector3(x,0,z)): continue
 		var shrub: Node3D = SHRUB.instantiate()
 		add_child(shrub)
+		shrub.add_to_group("study_foliage")
 		tint_foliage(shrub)
 		var bound := model_bounds(shrub)
 		var factor := rng.randf_range(0.65, 1.1) / bound.size.y
 		shrub.scale *= factor
 		shrub.position = Vector3(x, -bound.position.y * factor, z)
+
+func foliage_position_allowed(_point: Vector3) -> bool:
+	return true
 
 func tint_foliage(root: Node3D) -> void:
 	for mesh in root.find_children("*", "MeshInstance3D", true, false):

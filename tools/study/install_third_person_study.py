@@ -17,8 +17,8 @@ def digest(path):
 def main():
     files = [p for p in SOURCE.rglob('*') if p.is_file() and '.godot' not in p.parts
              and p.suffix not in {'.log', '.import'}
-             and p.name != 'test_results.json' and 'captures' not in p.relative_to(SOURCE).parts
-             and not (p.parent == SOURCE / 'assets' and p.suffix in {'.png', '.jpg'})]
+             and p.name not in {'test_results.json', 'combat_test_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
+             and not (p.parent in {SOURCE / 'assets', SOURCE / 'assets/enemies'} and p.suffix in {'.png', '.jpg'})]
     if DESTINATION.exists():
         if not MARKER.exists():
             raise SystemExit(f'Refusing to overwrite an existing unrecognized folder: {DESTINATION}')

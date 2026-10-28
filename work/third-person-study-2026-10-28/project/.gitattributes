@@ -1,0 +1,2 @@
+assets/audio/*.wav filter=lfs diff=lfs merge=lfs -text
+assets/audio/*.ogg filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,11 @@
+Project license-evidence record, October 28, 2026
+
+Work: Cathedral in the forest (ambient loop)
+Creator: congusbongus
+Primary work page: https://opengameart.org/content/cathedral-in-the-forest-ambient-loop
+The individual work page identifies its license as CC0.
+License: https://creativecommons.org/publicdomain/zero/1.0/
+Original download: https://opengameart.org/sites/default/files/forest_2_0.ogg
+Working filename: assets/audio/forest_ambient.ogg
+The audio is unchanged; runtime mix level is reduced. Optional credit is retained
+here as provenance. This is our evidence record, not an invented author notice.

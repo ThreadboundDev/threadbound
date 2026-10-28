@@ -1,0 +1,136 @@
+[
+  {
+    "source": "Assets/BlueBiome/Enemies/Models/Reedhook_animated.glb",
+    "target": "assets\\enemies\\reedhook.glb",
+    "sha256": "21bea72f06d6d6ca347f3a138cfc45fe50d4461f5b57d1bf7e9ef1725d500c83",
+    "provenance": "Existing Threadbound asset; original provenance retained",
+    "target_sha256": "21bea72f06d6d6ca347f3a138cfc45fe50d4461f5b57d1bf7e9ef1725d500c83"
+  },
+  {
+    "source": "Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v4.glb",
+    "target": "assets\\enemies\\bellstriker.glb",
+    "sha256": "f10c3ed62dc93a82cac1174e5f0b8d2d83dc594b87cdea75af2ea85bce0384ea",
+    "provenance": "Existing Threadbound asset; original provenance retained",
+    "target_sha256": "f10c3ed62dc93a82cac1174e5f0b8d2d83dc594b87cdea75af2ea85bce0384ea"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_weapon_attack.wav",
+    "target": "assets/audio/sword.wav",
+    "sha256": "505fd846b4451f6a0a4e9a0f60facc6867a126a914cde1e4b4b0023412a3e58e",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "505fd846b4451f6a0a4e9a0f60facc6867a126a914cde1e4b4b0023412a3e58e"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\jump_1.wav",
+    "target": "assets/audio/jump.wav",
+    "sha256": "b7567d190d9f70d7e1dff851362ea752a9c882c1e7f7956f0786c5d4bd19e9a7",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "b7567d190d9f70d7e1dff851362ea752a9c882c1e7f7956f0786c5d4bd19e9a7"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\dash.wav",
+    "target": "assets/audio/dash.wav",
+    "sha256": "7822f08799de759e7e09a0e9bcfa37cc75ffd730745c31e440e8c8119e11c50a",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "7822f08799de759e7e09a0e9bcfa37cc75ffd730745c31e440e8c8119e11c50a"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_grapple_throw.wav",
+    "target": "assets/audio/grapple_throw.wav",
+    "sha256": "10e011f53592e062b98a7a61284da447ed2ff88666e243557a7c025cb8a6ccc3",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "10e011f53592e062b98a7a61284da447ed2ff88666e243557a7c025cb8a6ccc3"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_grapple_connect.wav",
+    "target": "assets/audio/grapple_connect.wav",
+    "sha256": "3280fa430fb4126d31e6da4a356666df200f7cf106d469d2336bd6dbed55ccc4",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "3280fa430fb4126d31e6da4a356666df200f7cf106d469d2336bd6dbed55ccc4"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_take_damage(cloth_rip).wav",
+    "target": "assets/audio/hurt.wav",
+    "sha256": "0810304830a04e215e5a08bf58523501b19a15f42aa152c02dae5b7e3cd9a4cf",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "0810304830a04e215e5a08bf58523501b19a15f42aa152c02dae5b7e3cd9a4cf"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_sword_attack.wav",
+    "target": "assets/audio/enemy_swing.wav",
+    "sha256": "6bada44851a9592453cc2aaa8b956e553eb6f081e2b82f51be1755f4cfaf9179",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "6bada44851a9592453cc2aaa8b956e553eb6f081e2b82f51be1755f4cfaf9179"
+  },
+  {
+    "source": "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_stomp_attack.wav",
+    "target": "assets/audio/stomp.wav",
+    "sha256": "f3c41e632c42c77addd356c5977aa8cc7bef679c1c9cd187bfc0de5b85dc2b7b",
+    "provenance": "Existing registered game SFX",
+    "target_sha256": "f3c41e632c42c77addd356c5977aa8cc7bef679c1c9cd187bfc0de5b85dc2b7b"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Nature_Essentials_NOX_SOUND/Ambiance_Wind_Forest_Loop_Stereo.wav",
+    "sha256": "e2ec7e5d2e74db52bc21a5b1830c2b983ec8270e976d6b0ef393912f6d383133",
+    "target": "assets/audio/wind.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "296fb2cb2e6dd8fb590d53e696e44dc2e440cc25beb700e68dfa9a8d807df471"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Nature_Essentials_NOX_SOUND/Ambiance_River_Moderate_Loop_Stereo.wav",
+    "sha256": "7e0b5da588fe861f8612ba46bac087fac19b60b0a16edb7698ea50dfa810e00b",
+    "target": "assets/audio/river.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "ba04ccb2fab02bddafa572f1aaa92713634e8e605327706e3f29e4464449030d"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Grass/Footsteps_Grass_Walk/Footsteps_Walk_Grass_Mono_01.wav",
+    "sha256": "a452be5e6489743a6b9218b1a1e13c82af5e4a2f5c8317c5aed7890ffdd74b6f",
+    "target": "assets/audio/step_grass_1.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "73e8d1e353132a874601874dfccf423439830be2af3f20c59b86e935da7110b9"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Grass/Footsteps_Grass_Run/Footsteps_Grass_Run_01.wav",
+    "sha256": "2058e6f0f9bf089be490002e092338bc0f5317564eeef0ca2636fccd245e3fa2",
+    "target": "assets/audio/step_grass_2.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "7322891c22f6826ed47fca79e28f3f7fd75c0f58148bd1c5de21af36bbb549b1"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Wood/Footsteps_Wood_Walk/Footsteps_Wood_Walk_01.wav",
+    "sha256": "ced3c3e067d9e9e7d46075a5cfdcc8063153c0099c076fdfa27cd171f16f18d6",
+    "target": "assets/audio/step_wood_1.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "b2be7cdb1e593acfa178f9dfb982ffbff2183a159b1b29cb4fabdd211a379133"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Wood/Footsteps_Wood_Walk/Footsteps_Wood_Walk_02.wav",
+    "sha256": "0fbf01e67ceeefa6489d3b82d070c3b03df67ea4daf12503da7aa46a97c9b03b",
+    "target": "assets/audio/step_wood_2.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "66c1123c272e72308393d9fac699289b5bd2f5e9b94877b95e0507d2509f3927"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Grass/Footsteps_Grass_Jump/Footsteps_Grass_Jump_Land_01.wav",
+    "sha256": "d0cb8f8ab412b135361414ecf74edec204b932d6761ee5c2adaf6f569ff67357",
+    "target": "assets/audio/land.wav",
+    "license": "CC0; retained NOX notice",
+    "target_sha256": "eaf79594e13db0c5f7e79256468d13c31dd9251c9c39a285080becbeeef83ea4"
+  },
+  {
+    "target": "assets/audio/forest_ambient.ogg",
+    "source_page": "https://opengameart.org/content/cathedral-in-the-forest-ambient-loop",
+    "creator": "congusbongus",
+    "license": "CC0",
+    "sha256": "b9e05a1fcd5869b63193515e2a9c1bd578906a78e628e307f19527d387262593",
+    "target_sha256": "b9e05a1fcd5869b63193515e2a9c1bd578906a78e628e307f19527d387262593"
+  }
+]

@@ -2,8 +2,8 @@
   "models": [
     {
       "path": "assets\\threadborne_study.glb",
-      "bytes": 69422004,
-      "sha256": "4ec7878aef0961da35a623dfe857470de860e55ac928542519b506d67f77394f",
+      "bytes": 70006412,
+      "sha256": "03dfaae8895ee8485b460406cb3948601de1db6857a53aa9432e863a45d526f4",
       "images": [
         {
           "name": "Threadborne_Normal",
@@ -57,11 +57,20 @@
       ],
       "animations": [
         "walk_1",
+        "slash_2",
         "run_1",
+        "roll_1",
+        "power_up_1",
         "jump_1",
+        "impact_1",
         "idle_4",
+        "grapple_swinging_1",
+        "death_1",
         "crouch_block_idle_1",
-        "block_idle_1"
+        "casting_1",
+        "block_idle_1",
+        "attack_2",
+        "air_light_1"
       ]
     },
     {
@@ -159,6 +168,227 @@
       ]
     },
     {
+      "path": "assets\\enemies\\bellstriker.glb",
+      "bytes": 10477048,
+      "sha256": "f10c3ed62dc93a82cac1174e5f0b8d2d83dc594b87cdea75af2ea85bce0384ea",
+      "images": [
+        {
+          "name": "Image_0",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "name": "Image_1",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ],
+      "animations": [
+        "box_idle",
+        "box_recover",
+        "charge_1",
+        "charge_2",
+        "charge_3",
+        "cross",
+        "dead",
+        "hurt",
+        "idle",
+        "jab",
+        "leap",
+        "smash",
+        "swim",
+        "swim_idle",
+        "walk",
+        "water_box_recover",
+        "water_charge_1",
+        "water_charge_2",
+        "water_charge_3",
+        "water_cross",
+        "water_jab",
+        "water_smash"
+      ]
+    },
+    {
+      "path": "assets\\enemies\\eave_runner.glb",
+      "bytes": 29232164,
+      "sha256": "73c4706aa4febad273a92a422bd1f2aac04aec6030fd45843d06844af20554e7",
+      "images": [
+        {
+          "name": "eave_map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_9",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_11",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_10",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_12",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "eave_map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": [
+        "wall_windup",
+        "wall_perch",
+        "wall_launch",
+        "wall_attach",
+        "throw_windup",
+        "throw_release",
+        "run",
+        "land_recover",
+        "jump_slash",
+        "idle",
+        "hurt",
+        "death"
+      ]
+    },
+    {
+      "path": "assets\\enemies\\reedhook.glb",
+      "bytes": 2837820,
+      "sha256": "21bea72f06d6d6ca347f3a138cfc45fe50d4461f5b57d1bf7e9ef1725d500c83",
+      "images": [
+        {
+          "name": "Indigo_cloth_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Dark_recess_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Worn_slate_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Aged_porcelain_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Weathered_walnut_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Flax_binding_Paint",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "Blade_steel_Paint",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "animations": [
+        "hurt",
+        "idle",
+        "recover",
+        "sweep",
+        "walk",
+        "windup"
+      ]
+    },
+    {
       "path": "assets\\foliage\\plant_bushLarge.glb",
       "bytes": 3680,
       "sha256": "087c9b4645d92ae7ad1b43c4fb349318ad99c8951c072ee5cf20af5fc9cf2e80",
@@ -196,8 +426,19 @@
   ],
   "source_inputs_unchanged": [
     "Assets\\Threadborne\\Player\\Equipped3DTest\\threadborne_equipped_combat_swings.glb",
-    "work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend"
+    "work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend",
+    "Assets/BlueBiome/Enemies/Models/Reedhook_animated.glb",
+    "Assets/BlueBiome/Enemies/Models/Bellstriker_Boxing_v4.glb",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_weapon_attack.wav",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\jump_1.wav",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\dash.wav",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_grapple_throw.wav",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_grapple_connect.wav",
+    "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_take_damage(cloth_rip).wav",
+    "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_sword_attack.wav",
+    "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_stomp_attack.wav",
+    "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v4.glb"
   ],
-  "resource_links_checked": 9,
-  "project_source_bytes": 93939412
+  "resource_links_checked": 21,
+  "project_source_bytes": 177426926
 }
