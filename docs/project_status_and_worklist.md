@@ -10,6 +10,18 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 sound audition (T23): Awaiting Chase's listening review.**
+Chase requested environmental SFX candidates and current-source comparisons.
+[Local audition browser and use guide](assets/nox_sound_audition_2026_10_28.md):
+60 starter candidates, all 1,644 NOX sounds and 27 current SFX sources; search,
+surface/category filters, filename/duration sorting, playback, current-source
+comparisons, favorites, notes and pick export. Original-level previews stream
+from the external archive; no sounds installed or replaced. Focused catalog,
+PCM and HTTP checks pass; browser interaction checked. Listening acceptance is
+pending; choose sounds before a separate implementation task. Checkpoint:
+`chore: add NOX sound audition browser and environment shortlist`.
+T20 remains the implementation priority; this is a standalone review aid.
+
 **October 28 CC0 reuse comparison (T22): Awaiting hands-on appearance/motion review.**
 Chase authorized a side-by-side house/villager study and simple table-work motion
 using the downloaded rig, clothes and animation stock. Delivered as isolated

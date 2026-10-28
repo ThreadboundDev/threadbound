@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Threadbound · Sound audition</title>
+  <link rel="stylesheet" href="/audition.css">
+  <script src="/audition.js" defer></script>
+</head>
+<body>
+<main>
+  <header><p class="eyebrow">THREADBOUND / AUDIO EXPLORATION</p>
+    <h1>Find a sound for the world.</h1>
+    <p class="intro">An environment-first shortlist, the full NOX CC0 collection, and current game clips to compare. Nothing here replaces a game sound.</p>
+    <p id="summary" class="muted" aria-live="polite">Loading local catalog…</p>
+    <nav class="jump-links" aria-label="Audition navigation"><a href="#sounds">Browse sound list</a><a href="#title">Player &amp; notes</a></nav>
+  </header>
+  <section class="filters" aria-label="Find sounds">
+    <label class="search">Search by sound, action, surface or filename<input id="search" type="search" placeholder="Try wood, splash, cave, cloth, door…"></label>
+    <label>Collection<select id="collection"><option value="shortlist">Start here · shortlist</option><option value="nox">All NOX sounds</option><option value="game">Current game sounds</option><option value="favorites">Favorites</option><option value="reviewed">Reviewed sounds</option></select></label>
+    <label>Use / category<select id="category"><option value="">All uses</option></select></label>
+    <label>Surface<select id="surface"><option value="">All surfaces</option></select></label>
+    <label>Sort by<select id="sort"><option value="recommended">Suggested order</option><option value="name">Name A–Z</option><option value="filename">Original filename A–Z</option><option value="duration">Duration · shortest first</option><option value="longest">Duration · longest first</option><option value="category">Use / category</option></select></label>
+  </section>
+  <div class="workspace">
+    <section class="results" aria-label="Sound list">
+      <div class="results-bar"><p id="count" aria-live="polite"></p><div class="actions"><button id="clear">Reset filters</button><button id="export">Export my picks</button></div></div>
+      <div class="table-scroll"><table><thead><tr><th>Play</th><th>Sound / suggested use</th><th>Category</th><th>Length</th><th>Pick</th></tr></thead><tbody id="sounds"></tbody></table></div>
+      <p id="empty" hidden>No matches. Try All NOX sounds or clear a filter.</p>
+      <div class="pagination"><button id="previous-page">Previous page</button><span id="page"></span><button id="next-page">Next page</button></div>
+    </section>
+    <aside class="audition" aria-label="Selected sound">
+      <p class="eyebrow">AUDITION</p><h2 id="title">Choose a clip</h2>
+      <p id="purpose">Play a candidate, then compare with a current source when one is available.</p>
+      <p id="source" class="muted"></p><p id="caution" class="caution"></p>
+      <div class="transport"><button id="play-candidate" class="primary" disabled>Play candidate</button><button id="stop" disabled>Stop</button><button id="next-clip" disabled>Next sound</button></div>
+      <a class="jump-back" href="#sounds">Back to sound list</a>
+      <label class="loop-control"><input type="checkbox" id="loop">Loop this clip</label>
+      <p id="playing" class="muted" aria-live="polite">No sound playing.</p>
+      <audio id="player" controls preload="none" aria-label="Audition audio"></audio>
+      <label>Master volume <output id="volume-label">45%</output><input id="volume" type="range" min="0" max="100" value="45"></label>
+      <p class="small">Original recording levels. Full-length browser previews use PCM16 at the original sample rate. Current files play without the game’s pitch changes, volume offsets or bus mix.</p>
+      <div class="compare"><label>Compare with current game source<select id="baseline"><option value="">No matching registered source</option></select></label><button id="play-baseline" disabled>Play current source</button><p id="baseline-note" class="small"></p></div>
+      <hr>
+      <label>My decision<select id="decision" disabled><option value="">Not reviewed</option><option value="favorite">Favorite</option><option value="maybe">Maybe</option><option value="pass">Pass</option></select></label>
+      <label>Notes<textarea id="notes" rows="3" placeholder="Softer landing? Good for the porch? Too much surf?" disabled></textarea></label>
+      <p id="saved" class="small" aria-live="polite">Picks stay in this browser. Export them to share your choices.</p>
+      <details><summary>Original filename and source details</summary><p id="filename" class="filename"></p><p id="path" class="filename"></p><p id="metadata" class="small"></p></details>
+    </aside>
+  </div>
+  <footer>Suggested uses come from filenames and the project’s audio registry. These are audition candidates, not sounds accepted by listening. Modern vehicles and electronic recordings remain available under All NOX sounds, outside the starter list.</footer>
+  <p id="error" role="alert" hidden></p>
+</main>
+</body></html>

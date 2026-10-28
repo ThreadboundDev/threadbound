@@ -1,0 +1,23 @@
+{
+  "nox_files": 1644,
+  "current_files": 27,
+  "shortlist_files": 60,
+  "category_counts": {
+    "Experimental": 74,
+    "Landings": 92,
+    "Jump takeoffs": 87,
+    "Footsteps": 492,
+    "Village & nature": 13,
+    "Water splashes": 9,
+    "Water ambience": 42,
+    "Cave ambience": 3,
+    "Hearth & fire": 3,
+    "Weather & wind": 5,
+    "Cloth & handling": 4,
+    "Doors & objects": 2,
+    "Modern / low priority": 161,
+    "Character efforts": 657
+  },
+  "archive_sha256": "0df9a98cc8d0499787cb3c29f3e278fdacd75ca3e94106828ea8b5c115ae8d3d",
+  "total_duration_seconds": 4638.79
+}
