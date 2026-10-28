@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 27, 2026. This is the single current priority list. The saved
+Updated October 28, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -9,6 +9,23 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 **awaiting Chase's appearance/feel review**.
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
+
+**October 28 asset-library audit (T21):** Chase requested an inventory and reuse
+recommendations for the new free asset downloads. See the
+[13-pack catalog, license findings and shortlist](assets/free_asset_inventory_2026_10_28.md).
+Original archives are staged outside the project in
+`C:\Users\chase\Documents\Threadbound Asset Library`; raw assets remain local,
+not part of the Git backup. No imports, art replacements, combat/equipment
+changes or lore changes were made. T20 remains the implementation priority.
+
+- [x] **T21 — asset inventory delivery.** Complete as an audit, not art acceptance.
+  Checkpoint: `docs: inventory downloaded asset library and reuse candidates`.
+  Validation: 13 ZIP CRC passes; 4,760 file entries; 531 glTF/GLB inspections;
+  archived SHA-256 verification; bundled license/PDF review and creator-page
+  checks. Found three missing P13 texture references, documented for a later
+  working-copy import fix. Audio audition, Godot import/retargeting, appearance and any future
+  installation remain untested/unapproved. Next: review shortlist, then scope
+  one reuse trial after stabilization. Weapon upgrades/finds are proposals only.
 
 **October 27 follow-ups delivered:** house handoff, water-entry grapple/arm reset,
 dolphin range, independent duplicate dolphin, and continuous water over the closed
