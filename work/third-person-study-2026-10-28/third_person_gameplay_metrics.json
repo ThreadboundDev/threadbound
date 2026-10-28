@@ -1,0 +1,10 @@
+{
+	"adapter": "AMD Radeon RX 6800 XT",
+	"draw_calls": 1029.0,
+	"median_frame_ms": 4.16666666666667,
+	"p95_frame_ms": 4.76190476190476,
+	"renderer": "GL Compatibility",
+	"resolution": "(1440.0, 900.0)",
+	"sample_frames": 120,
+	"triangles": 939268.0
+}

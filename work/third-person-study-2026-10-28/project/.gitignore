@@ -1,0 +1,8 @@
+.godot/
+*.log
+test_results.json
+captures/
+*.import
+# Godot extracts these from the self-contained GLBs during import.
+/assets/*.png
+/assets/*.jpg

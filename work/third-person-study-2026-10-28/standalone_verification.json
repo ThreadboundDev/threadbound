@@ -1,0 +1,123 @@
+{
+	"checks": [
+		{
+			"check": "Separate project name",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Original named Threadborne skeleton",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Floor contact at spawn",
+			"detail": "(0.0, 0.000095, 4.0)",
+			"passed": true
+		},
+		{
+			"check": "Third-person camera current",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Existing movement clips imported",
+			"detail": [
+				"block_idle_1",
+				"crouch_block_idle_1",
+				"idle_4",
+				"jump_1",
+				"run_1",
+				"walk_1"
+			],
+			"passed": true
+		},
+		{
+			"check": "Worker animation playing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Worker wrist bone available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Imported work loop moves wrist",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "New sword visible by default",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Original sword comparison",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "3D horizontal movement",
+			"detail": "(1.808351, 0.000942, 4.000004)",
+			"passed": true
+		},
+		{
+			"check": "3D depth movement",
+			"detail": "(0.0, 0.000095, 2.191658)",
+			"passed": true
+		},
+		{
+			"check": "Jump rises above ground",
+			"detail": 1.22399711608887,
+			"passed": true
+		},
+		{
+			"check": "Jump lands safely",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "House/bench collision stops entry",
+			"detail": "(0.0, 0.000073, -5.228334)",
+			"passed": true
+		},
+		{
+			"check": "Bridge has a walkable surface",
+			"detail": "(12.5, 0.250329, 2.5)",
+			"passed": true
+		},
+		{
+			"check": "Fall recovery returns to clearing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Movement relative to rotated camera",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Camera spring arm bounded",
+			"detail": 5.40000009536743,
+			"passed": true
+		},
+		{
+			"check": "Camera retracts against house",
+			"detail": 2.63671875,
+			"passed": true
+		}
+	],
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"failed": 0
+}

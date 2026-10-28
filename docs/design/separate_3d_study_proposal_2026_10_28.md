@@ -1,5 +1,11 @@
 # Separate 3D study proposal — October 28, 2026
 
+**Historical planning record:** Chase subsequently authorized building the
+separate study, preserving Threadborne and avoiding chibi proportions, with
+new sword/shield options allowed. See the [implementation delivery](../art/third_person_3d_study_2026_10_28.md)
+for actual scope, files and validation. References below to pending implementation
+describe the original proposal, not the current delivery state.
+
 Chase likes stylized/low-poly 3D and is considering a separate project to see
 whether Threadbound would benefit from 3D presentation or gameplay. This records
 that interest and a proposed experiment, not approval to convert the game or

@@ -1,0 +1,203 @@
+{
+  "models": [
+    {
+      "path": "assets\\threadborne_study.glb",
+      "bytes": 69422004,
+      "sha256": "4ec7878aef0961da35a623dfe857470de860e55ac928542519b506d67f77394f",
+      "images": [
+        {
+          "name": "Threadborne_Normal",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "name": "Threadborne_BaseColor",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "name": "Threadborne_Occlusion_Roughness_Metallic",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "name": "weapons_bits_texture",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "NormalGL_663e8d12-f981-429b-babe-2406f36f0653",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "name": "Color_663e8d12-f981-429b-babe-2406f36f0653",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "name": "ORM_663e8d12-f981-429b-babe-2406f36f0653",
+          "size": [
+            4096,
+            4096
+          ]
+        }
+      ],
+      "animations": [
+        "walk_1",
+        "run_1",
+        "jump_1",
+        "idle_4",
+        "crouch_block_idle_1",
+        "block_idle_1"
+      ]
+    },
+    {
+      "path": "assets\\workshop.glb",
+      "bytes": 10373348,
+      "sha256": "a4d7fefed2d614420bf2154e372aad9782f31bc8c88bceee6efa6f2e1a9f0c70",
+      "images": [
+        {
+          "name": "workshop_map_10",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_9",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_11",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "T_Eye_Normal",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "T_Eye_Brown",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "workshop_map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "workshop_map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "resource_bits_texture",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": [
+        "Animation"
+      ]
+    },
+    {
+      "path": "assets\\foliage\\plant_bushLarge.glb",
+      "bytes": 3680,
+      "sha256": "087c9b4645d92ae7ad1b43c4fb349318ad99c8951c072ee5cf20af5fc9cf2e80",
+      "images": [],
+      "animations": []
+    },
+    {
+      "path": "assets\\foliage\\rock_largeD.glb",
+      "bytes": 8324,
+      "sha256": "a8ede24f4e4070d6df05288c71f64f5fd4f055583f742f32235ec33e006c5b30",
+      "images": [],
+      "animations": []
+    },
+    {
+      "path": "assets\\foliage\\rock_smallFlatA.glb",
+      "bytes": 3632,
+      "sha256": "d4ea4148b66aedff99eac946ceea990acdb45e15f031e415d8a1031eb1cd63d7",
+      "images": [],
+      "animations": []
+    },
+    {
+      "path": "assets\\foliage\\tree_detailed.glb",
+      "bytes": 29968,
+      "sha256": "9499a5be534d1a29befee2d3728d55cf4702640ad21eea4fd1dd29026486b9d7",
+      "images": [],
+      "animations": []
+    },
+    {
+      "path": "assets\\foliage\\tree_pineTallA_detailed.glb",
+      "bytes": 10380,
+      "sha256": "31e9d42ceff57abfc8df2ed4f8783eeaad82407b56cf8853bdf121d655aab517",
+      "images": [],
+      "animations": []
+    }
+  ],
+  "source_inputs_unchanged": [
+    "Assets\\Threadborne\\Player\\Equipped3DTest\\threadborne_equipped_combat_swings.glb",
+    "work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend"
+  ],
+  "resource_links_checked": 9,
+  "project_source_bytes": 93939412
+}

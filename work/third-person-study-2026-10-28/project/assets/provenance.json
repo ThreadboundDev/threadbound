@@ -1,0 +1,107 @@
+[
+  {
+    "source": "Assets\\Threadborne\\Player\\Equipped3DTest\\threadborne_equipped_combat_swings.glb",
+    "sha256": "7716ab47250a28d87a762a82ddeed481e39de980e0cd9ca84ebeca0f047084f2",
+    "license": "Existing Threadbound player; unchanged character identity; existing provenance applies"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "sha256": "1017144f85a994f405b731befa71ced360f5b60ed0b9c00c72e711c1633ce2d2",
+    "license": "CC0",
+    "crc": "pass",
+    "source_page": "https://kaylousberg.itch.io/fantasy-weapons-bits",
+    "selected": [
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/fbx/weapons_bits_texture.png",
+        "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/fbx(unity)/weapons_bits_texture.png",
+        "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.bin",
+        "sha256": "16ae59caefcb170de13ee252e669deacb3a396697a4487b5e08f314b6fbdb9bb"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.gltf",
+        "sha256": "4dfe59a9d33a950cbac48cdef2c7cb09b95482949ad07e815722d7537726c6b6"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.bin",
+        "sha256": "f076069f94986ec221cb46c71a16bc966be47ff35544db8c7f7b6623fdaf2c64"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.gltf",
+        "sha256": "265840768f36afc22fc75e7a5a8c98fd33d199b2b4a6b76653fd2bd37fb8093f"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/weapons_bits_texture.png",
+        "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/obj/weapons_bits_texture.png",
+        "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be"
+      },
+      {
+        "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Textures/weapons_bits_texture.png",
+        "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be"
+      }
+    ]
+  },
+  {
+    "archive": "kenney_nature-kit_OGA_2.1.zip",
+    "sha256": "fa7974a0d342bfe63c38664ba9f8ec1a4aab8ea25f099bdc56870e33588c4d9d",
+    "license": "CC0",
+    "crc": "pass",
+    "source_page": "https://opengameart.org/content/nature-kit",
+    "selected": [
+      {
+        "member": "Models/OBJ format/plant_bushLarge.mtl",
+        "sha256": "b186368ad09ddb6673f90f63c45ecac3f793b36fe14f96bd62e6d44922e7e874"
+      },
+      {
+        "member": "Models/OBJ format/plant_bushLarge.obj",
+        "sha256": "2e2d31669c312c86cdd2eac7b625a30ccd8e7cd0a9161e48769279e55ee7c3a8"
+      },
+      {
+        "member": "Models/OBJ format/rock_largeD.mtl",
+        "sha256": "db75535695bc97d26e50a03f55306f04938b123f0fc3622cac4ac15e5ef27ab8"
+      },
+      {
+        "member": "Models/OBJ format/rock_largeD.obj",
+        "sha256": "7deb3676590e82cf9180ece19666b7a8395b259240937c5b779c80325c576138"
+      },
+      {
+        "member": "Models/OBJ format/rock_smallFlatA.mtl",
+        "sha256": "b1f406513a297dd69c38653fd9b9de390123ff45242be9bf204f775d9e88c98c"
+      },
+      {
+        "member": "Models/OBJ format/rock_smallFlatA.obj",
+        "sha256": "f7dd53ee86b38fcf47b54dc1f9b78db81587fc571c203e45e344917598df6e26"
+      },
+      {
+        "member": "Models/OBJ format/tree_detailed.mtl",
+        "sha256": "4037993d8d84f1c7528962076bcf796ba368801622874a2bf2960e70d8b8fc99"
+      },
+      {
+        "member": "Models/OBJ format/tree_detailed.obj",
+        "sha256": "0a67913edf811aabb1c2f54b671c0626eb7c17e6818536484f34d4444030a9c7"
+      },
+      {
+        "member": "Models/OBJ format/tree_pineTallA_detailed.mtl",
+        "sha256": "933a40d74e752aa7baf489cd76a1ca36c7fffe95f2c16410772c715c4e102ec6"
+      },
+      {
+        "member": "Models/OBJ format/tree_pineTallA_detailed.obj",
+        "sha256": "c92abb1eaf23ac94a09ee5f5f9a1adfc183c561c8c76ae3435ac2bbdf254070e"
+      }
+    ]
+  },
+  {
+    "source": "work/cc0-house-villager-2026-10-28/CC0_House_WorkingVillager_Comparison.blend",
+    "sha256": "d82c281344860da0d0713022b00792aa9595c21560cd974df8479f0d92ed8d89",
+    "license": "Retained CC0 sources plus Threadbound authored assembly and work motion",
+    "source_manifest": "workshop_source_manifest.json"
+  }
+]

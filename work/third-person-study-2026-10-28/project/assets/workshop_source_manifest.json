@@ -1,0 +1,822 @@
+[
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Bucket_Wooden_1.bin",
+    "source_sha256": "be608473cd78557d466be9b9e2f6ff15f1edf1e4f5fcdd27be75d494f52578f2",
+    "extracted_sha256": "be608473cd78557d466be9b9e2f6ff15f1edf1e4f5fcdd27be75d494f52578f2",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/Bucket_Wooden_1.bin"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Bucket_Wooden_1.gltf",
+    "source_sha256": "b4f93568d96d38dca162098e75fb3eb4ffaf5ff6e41f8f788476abd3be4984cf",
+    "extracted_sha256": "b4f93568d96d38dca162098e75fb3eb4ffaf5ff6e41f8f788476abd3be4984cf",
+    "selected_model": true,
+    "local_path": "temp/source/P03/Exports/glTF/Bucket_Wooden_1.gltf"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Crate_Wooden.bin",
+    "source_sha256": "7ae016386790e5998fbdf1656a5dc53a3f1374c3525b22798d84397a36ae937b",
+    "extracted_sha256": "7ae016386790e5998fbdf1656a5dc53a3f1374c3525b22798d84397a36ae937b",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/Crate_Wooden.bin"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Crate_Wooden.gltf",
+    "source_sha256": "fb06d4b7b9bbfbb9dc51fa56ecff3fe7ba8e9142d643cabedd17a55d7ea46ee5",
+    "extracted_sha256": "fb06d4b7b9bbfbb9dc51fa56ecff3fe7ba8e9142d643cabedd17a55d7ea46ee5",
+    "selected_model": true,
+    "local_path": "temp/source/P03/Exports/glTF/Crate_Wooden.gltf"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Lantern_Wall.bin",
+    "source_sha256": "fe9f3816130587308b73bb8b4b28031b71fe9405a111f115463022709fa04b2e",
+    "extracted_sha256": "fe9f3816130587308b73bb8b4b28031b71fe9405a111f115463022709fa04b2e",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/Lantern_Wall.bin"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Lantern_Wall.gltf",
+    "source_sha256": "9e7623e1d3a16f9212ff7cb41c939746435187f0071bd94849ee7bc6a59785a2",
+    "extracted_sha256": "9e7623e1d3a16f9212ff7cb41c939746435187f0071bd94849ee7bc6a59785a2",
+    "selected_model": true,
+    "local_path": "temp/source/P03/Exports/glTF/Lantern_Wall.gltf"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Rope_1.bin",
+    "source_sha256": "950d7977e2dcd8fa40c6103f7cd6d4bc9eb93dbc2da37bd3a3b092868efd61c4",
+    "extracted_sha256": "950d7977e2dcd8fa40c6103f7cd6d4bc9eb93dbc2da37bd3a3b092868efd61c4",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/Rope_1.bin"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Rope_1.gltf",
+    "source_sha256": "b4722ec5baf1313b654d2500ba36e2a2b512bbd9b037f304b94b6665d2286313",
+    "extracted_sha256": "b4722ec5baf1313b654d2500ba36e2a2b512bbd9b037f304b94b6665d2286313",
+    "selected_model": true,
+    "local_path": "temp/source/P03/Exports/glTF/Rope_1.gltf"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Furniture_BaseColor.png",
+    "source_sha256": "075fbc9ec2fabc15732bd4025b6f63a0b25762df38440d06bf30437565d39bab",
+    "extracted_sha256": "075fbc9ec2fabc15732bd4025b6f63a0b25762df38440d06bf30437565d39bab",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Furniture_BaseColor.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Furniture_Normal.png",
+    "source_sha256": "3340c4cc47ff06d5e94a2dbe2a2a12d914d0ef055fcf66f63d876666bd160e42",
+    "extracted_sha256": "3340c4cc47ff06d5e94a2dbe2a2a12d914d0ef055fcf66f63d876666bd160e42",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Furniture_Normal.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Furniture_ORM.png",
+    "source_sha256": "7bf417e82baf313793c5791bf48cdc8e573f1f7136197785bf0eb235cb0f8153",
+    "extracted_sha256": "7bf417e82baf313793c5791bf48cdc8e573f1f7136197785bf0eb235cb0f8153",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Furniture_ORM.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Metal_BaseColor.png",
+    "source_sha256": "50422bbda9661effc259caf8b386224cac4b5ca811d2c5b3b8b25ae8efc714db",
+    "extracted_sha256": "50422bbda9661effc259caf8b386224cac4b5ca811d2c5b3b8b25ae8efc714db",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Metal_BaseColor.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Metal_Normal.png",
+    "source_sha256": "ab7315c864c9a9e6d716c940a599928506e1569d3b0c9085f8f1a64ec520d790",
+    "extracted_sha256": "ab7315c864c9a9e6d716c940a599928506e1569d3b0c9085f8f1a64ec520d790",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Metal_Normal.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/T_Trim_Metal_ORM.png",
+    "source_sha256": "7407bccfc39ca74ecd68a61217395959bf56ac2063e6c93b384b11f07f5687c5",
+    "extracted_sha256": "7407bccfc39ca74ecd68a61217395959bf56ac2063e6c93b384b11f07f5687c5",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/T_Trim_Metal_ORM.png"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Workbench.bin",
+    "source_sha256": "d26f2a0ba01b4a8db8d6820d1bd0d281297fea30e48c9952484167d18a637b39",
+    "extracted_sha256": "d26f2a0ba01b4a8db8d6820d1bd0d281297fea30e48c9952484167d18a637b39",
+    "selected_model": false,
+    "local_path": "temp/source/P03/Exports/glTF/Workbench.bin"
+  },
+  {
+    "pack_id": "P03",
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "archive_sha256": "8b6f7e806d222e585478f0e1bdc6b271bbc7bc6f84dd6af8ca703a7c64f0cb1e",
+    "member": "Exports/glTF/Workbench.gltf",
+    "source_sha256": "518fc5c955def18cfcb781b3b955da0e8edcf4f37830a21561ef32c03ad0397e",
+    "extracted_sha256": "518fc5c955def18cfcb781b3b955da0e8edcf4f37830a21561ef32c03ad0397e",
+    "selected_model": true,
+    "local_path": "temp/source/P03/Exports/glTF/Workbench.gltf"
+  },
+  {
+    "pack_id": "P07",
+    "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+    "archive_sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+    "member": "KayKit_ResourceBits_1.0_FREE/Assets/gltf/Textiles_Stack_Small.bin",
+    "source_sha256": "742d0a2a32af11e743ae7275a811dd7a462584e39261f0e001cd6ab11f0bda14",
+    "extracted_sha256": "742d0a2a32af11e743ae7275a811dd7a462584e39261f0e001cd6ab11f0bda14",
+    "selected_model": false,
+    "local_path": "temp/source/P07/KayKit_ResourceBits_1.0_FREE/Assets/gltf/Textiles_Stack_Small.bin"
+  },
+  {
+    "pack_id": "P07",
+    "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+    "archive_sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+    "member": "KayKit_ResourceBits_1.0_FREE/Assets/gltf/Textiles_Stack_Small.gltf",
+    "source_sha256": "24861a1d9b0d631a5a2a70f6a7caf5c77f1d6ebcb7c4adc354243564e770626d",
+    "extracted_sha256": "24861a1d9b0d631a5a2a70f6a7caf5c77f1d6ebcb7c4adc354243564e770626d",
+    "selected_model": true,
+    "local_path": "temp/source/P07/KayKit_ResourceBits_1.0_FREE/Assets/gltf/Textiles_Stack_Small.gltf"
+  },
+  {
+    "pack_id": "P07",
+    "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+    "archive_sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+    "member": "KayKit_ResourceBits_1.0_FREE/Assets/gltf/Wood_Planks_Stack_Small.bin",
+    "source_sha256": "e7718185294ffa144582e8df5e0c3cb0d9e23e7d175adb1c2d935e66428a728c",
+    "extracted_sha256": "e7718185294ffa144582e8df5e0c3cb0d9e23e7d175adb1c2d935e66428a728c",
+    "selected_model": false,
+    "local_path": "temp/source/P07/KayKit_ResourceBits_1.0_FREE/Assets/gltf/Wood_Planks_Stack_Small.bin"
+  },
+  {
+    "pack_id": "P07",
+    "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+    "archive_sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+    "member": "KayKit_ResourceBits_1.0_FREE/Assets/gltf/Wood_Planks_Stack_Small.gltf",
+    "source_sha256": "40919a583027b72239cb23b86d6560799d24ece07d988bd8c84490c3fc4be212",
+    "extracted_sha256": "40919a583027b72239cb23b86d6560799d24ece07d988bd8c84490c3fc4be212",
+    "selected_model": true,
+    "local_path": "temp/source/P07/KayKit_ResourceBits_1.0_FREE/Assets/gltf/Wood_Planks_Stack_Small.gltf"
+  },
+  {
+    "pack_id": "P07",
+    "archive": "KayKit_ResourceBits_1.0_FREE.zip",
+    "archive_sha256": "7056f1310896a4612a67703fd6d5af389fcccdeb46df0a89e2322aa8e3bcfcf7",
+    "member": "KayKit_ResourceBits_1.0_FREE/Assets/gltf/resource_bits_texture.png",
+    "source_sha256": "62a252aba7bc9382effe48d93b976605d8fa70a3a40af7fc52362f5ca89c135b",
+    "extracted_sha256": "62a252aba7bc9382effe48d93b976605d8fa70a3a40af7fc52362f5ca89c135b",
+    "selected_model": false,
+    "local_path": "temp/source/P07/KayKit_ResourceBits_1.0_FREE/Assets/gltf/resource_bits_texture.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/DoorFrame_Round_WoodDark.bin",
+    "source_sha256": "1899a064497568422c4d2a9246be0f7dba9e1f9fae6483f4dc39fe63c398b824",
+    "extracted_sha256": "1899a064497568422c4d2a9246be0f7dba9e1f9fae6483f4dc39fe63c398b824",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/DoorFrame_Round_WoodDark.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/DoorFrame_Round_WoodDark.gltf",
+    "source_sha256": "d96fb7e3b6b7a5cb97339a7667dee3d9e03b5b0a02cbea283bd75a69f58bb4a7",
+    "extracted_sha256": "d96fb7e3b6b7a5cb97339a7667dee3d9e03b5b0a02cbea283bd75a69f58bb4a7",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/DoorFrame_Round_WoodDark.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Door_1_Round.bin",
+    "source_sha256": "783db477a76115724668f8846695651725b955af6b5b23a503f834b206ebc958",
+    "extracted_sha256": "783db477a76115724668f8846695651725b955af6b5b23a503f834b206ebc958",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Door_1_Round.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Door_1_Round.gltf",
+    "source_sha256": "243fe5e3418e2459bcab858055d34e5441b60180a5efaadef440419e25cc27aa",
+    "extracted_sha256": "243fe5e3418e2459bcab858055d34e5441b60180a5efaadef440419e25cc27aa",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Door_1_Round.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Floor_WoodDark.bin",
+    "source_sha256": "cb43341c0969b62d82c11e2759caec854ea97ecba3bcb505d3300d57ebba7b81",
+    "extracted_sha256": "cb43341c0969b62d82c11e2759caec854ea97ecba3bcb505d3300d57ebba7b81",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Floor_WoodDark.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Floor_WoodDark.gltf",
+    "source_sha256": "2ee57724a06289164fee75ad62eb770f7f8cc9cb1b51c041da477c086775cd8d",
+    "extracted_sha256": "2ee57724a06289164fee75ad62eb770f7f8cc9cb1b51c041da477c086775cd8d",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Floor_WoodDark.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Prop_Support.bin",
+    "source_sha256": "c0aa629b294c52071f66feb89e7bc771480391bfe012f33c60b5cb4aa9881897",
+    "extracted_sha256": "c0aa629b294c52071f66feb89e7bc771480391bfe012f33c60b5cb4aa9881897",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Prop_Support.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Prop_Support.gltf",
+    "source_sha256": "c7292aa4f0f73a3d83c2ea5d0f9f3c726e17b13156679c9dfa043646a9f08037",
+    "extracted_sha256": "c7292aa4f0f73a3d83c2ea5d0f9f3c726e17b13156679c9dfa043646a9f08037",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Prop_Support.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_Front_Brick4.bin",
+    "source_sha256": "749472d85fbbe9996b20162c8d58dbb49b7271a7d865b3856e761d0a288cc8e5",
+    "extracted_sha256": "749472d85fbbe9996b20162c8d58dbb49b7271a7d865b3856e761d0a288cc8e5",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_Front_Brick4.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_Front_Brick4.gltf",
+    "source_sha256": "a231d35e4929f087526a6126a25a2732efa3799be6119d55107c241ca124564f",
+    "extracted_sha256": "a231d35e4929f087526a6126a25a2732efa3799be6119d55107c241ca124564f",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_Front_Brick4.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_RoundTiles_4x6.bin",
+    "source_sha256": "f68f36721d6d1000c1f16d1d1482c33479aa6ea518d2872e9649ce762b01c52c",
+    "extracted_sha256": "f68f36721d6d1000c1f16d1d1482c33479aa6ea518d2872e9649ce762b01c52c",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_RoundTiles_4x6.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_RoundTiles_4x6.gltf",
+    "source_sha256": "4d969026106822eb2106a32a8d596416e069f63e20f53b475839076fb635ed5a",
+    "extracted_sha256": "4d969026106822eb2106a32a8d596416e069f63e20f53b475839076fb635ed5a",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_RoundTiles_4x6.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_Support2.bin",
+    "source_sha256": "7b32d83006209fb62d8bc7868a767ff8eabb5369bb77ccde7b303a313b6262be",
+    "extracted_sha256": "7b32d83006209fb62d8bc7868a767ff8eabb5369bb77ccde7b303a313b6262be",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_Support2.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Roof_Support2.gltf",
+    "source_sha256": "819006c2dd411105ef3d4a8514cab26303844a4ddaa04e58310ccb58167bc2ed",
+    "extracted_sha256": "819006c2dd411105ef3d4a8514cab26303844a4ddaa04e58310ccb58167bc2ed",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Roof_Support2.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Brick_BaseColor.png",
+    "source_sha256": "5515f57e61767838f53f4b9e25aa83b1382ad345ff6b446482718b5140c33813",
+    "extracted_sha256": "5515f57e61767838f53f4b9e25aa83b1382ad345ff6b446482718b5140c33813",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Brick_BaseColor.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Brick_Normal.png",
+    "source_sha256": "6349f1fb3eed9985e6f969c1de04b9e92490020a12ba19a44b96ea808fb27c1a",
+    "extracted_sha256": "6349f1fb3eed9985e6f969c1de04b9e92490020a12ba19a44b96ea808fb27c1a",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Brick_Normal.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Brick_Roughness.png",
+    "source_sha256": "981e7a4f8e3119749b2fb3d557e3d0ba0551e75a39b467cff0a3a948a9392716",
+    "extracted_sha256": "981e7a4f8e3119749b2fb3d557e3d0ba0551e75a39b467cff0a3a948a9392716",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Brick_Roughness.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Plaster_BaseColor.png",
+    "source_sha256": "98547ca83888307e3ffa96384ce058b7622affe0a42add3b36d0b48618c5eda4",
+    "extracted_sha256": "98547ca83888307e3ffa96384ce058b7622affe0a42add3b36d0b48618c5eda4",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Plaster_BaseColor.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Plaster_Normal.png",
+    "source_sha256": "8b9617b561466cce00d5a0628eae7bef208dcf63445d72570e7f8e5057fed0d4",
+    "extracted_sha256": "8b9617b561466cce00d5a0628eae7bef208dcf63445d72570e7f8e5057fed0d4",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Plaster_Normal.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_Plaster_ORM.png",
+    "source_sha256": "7be9d64a6154ba12bb7086e1d6774a7d5bbbc95775efb614f6ff40a4787fe0c7",
+    "extracted_sha256": "7be9d64a6154ba12bb7086e1d6774a7d5bbbc95775efb614f6ff40a4787fe0c7",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_Plaster_ORM.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RockTrim_BaseColor.png",
+    "source_sha256": "aa571cd612091a8f4c95393f8f938bd6e5d47a8cdfd9c896b60a4b37903e2c7c",
+    "extracted_sha256": "aa571cd612091a8f4c95393f8f938bd6e5d47a8cdfd9c896b60a4b37903e2c7c",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RockTrim_BaseColor.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RockTrim_Normal.png",
+    "source_sha256": "f93f82f7e69aa0bf1900f8ab3f252390f091b771f0b84a345c5fefb0f0155cd3",
+    "extracted_sha256": "f93f82f7e69aa0bf1900f8ab3f252390f091b771f0b84a345c5fefb0f0155cd3",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RockTrim_Normal.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RockTrim_ORM.png",
+    "source_sha256": "5287dd9a4e9fb7423af8d8440a8de8bdb8910f9f37ba148f619a6eddf58d5bc8",
+    "extracted_sha256": "5287dd9a4e9fb7423af8d8440a8de8bdb8910f9f37ba148f619a6eddf58d5bc8",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RockTrim_ORM.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_BaseColor.png",
+    "source_sha256": "acf388ebd1a97346e1e5b59091cfc609ed15b4f70b83a626089f12a82a2d9997",
+    "extracted_sha256": "acf388ebd1a97346e1e5b59091cfc609ed15b4f70b83a626089f12a82a2d9997",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_BaseColor.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_Normal.png",
+    "source_sha256": "e8cf202fbc1ec36c3f5389a25ab9c99f015d49ae0ca963d0404614c3e1e8f687",
+    "extracted_sha256": "e8cf202fbc1ec36c3f5389a25ab9c99f015d49ae0ca963d0404614c3e1e8f687",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_Normal.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_Roughness.png",
+    "source_sha256": "02c5cdbb6768de6ac674a343265c020c5bd6ef70fd7ba555d9b9dc7445179366",
+    "extracted_sha256": "02c5cdbb6768de6ac674a343265c020c5bd6ef70fd7ba555d9b9dc7445179366",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_RoundTiles_Roughness.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_BaseColor.png",
+    "source_sha256": "a59f410b07a9bc5f0664df3ba7a2c1e37acffc7979795911f3fc8730ab60e33e",
+    "extracted_sha256": "a59f410b07a9bc5f0664df3ba7a2c1e37acffc7979795911f3fc8730ab60e33e",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_BaseColor.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_Normal.png",
+    "source_sha256": "5847623e4ed6c206e59f32d1718ee75dcb2b49a1d55ede7ef70a254739caf4a8",
+    "extracted_sha256": "5847623e4ed6c206e59f32d1718ee75dcb2b49a1d55ede7ef70a254739caf4a8",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_Normal.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_Roughness.png",
+    "source_sha256": "e888464fd4199d458d8cf39e00fa07d56f8a0bcb658aa03b4a7c95d466ceefa3",
+    "extracted_sha256": "e888464fd4199d458d8cf39e00fa07d56f8a0bcb658aa03b4a7c95d466ceefa3",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/T_WoodTrim_Roughness.png"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Door_Round.bin",
+    "source_sha256": "0b347db7975bcf39d97b7df77e884e2df8877b024f396b517d0a7cb6bf56332e",
+    "extracted_sha256": "0b347db7975bcf39d97b7df77e884e2df8877b024f396b517d0a7cb6bf56332e",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Door_Round.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Door_Round.gltf",
+    "source_sha256": "15514442b52ed9e4bea685faaf83c45ca68a227810d5cec5f66b0f311f5f6fc7",
+    "extracted_sha256": "15514442b52ed9e4bea685faaf83c45ca68a227810d5cec5f66b0f311f5f6fc7",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Door_Round.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Straight.bin",
+    "source_sha256": "986bf171c62e9019eea9aab709d19d07a3bd5021ff76ab749f57563f364858f3",
+    "extracted_sha256": "986bf171c62e9019eea9aab709d19d07a3bd5021ff76ab749f57563f364858f3",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Straight.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Straight.gltf",
+    "source_sha256": "3bef920cbba4d124df4ca401439d893e0569f88f56049239e3480a04008fd0ac",
+    "extracted_sha256": "3bef920cbba4d124df4ca401439d893e0569f88f56049239e3480a04008fd0ac",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Straight.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Window_Wide_Round.bin",
+    "source_sha256": "833f44b4d5c60805e081604cebb5f763cd88712fb9aeab321af2c5a2cf5cafcc",
+    "extracted_sha256": "833f44b4d5c60805e081604cebb5f763cd88712fb9aeab321af2c5a2cf5cafcc",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Window_Wide_Round.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Window_Wide_Round.gltf",
+    "source_sha256": "99400c34093727a7fb82345c1afc9ae151797c1d4452ebf32fdb314ce85ea0aa",
+    "extracted_sha256": "99400c34093727a7fb82345c1afc9ae151797c1d4452ebf32fdb314ce85ea0aa",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Wall_Plaster_Window_Wide_Round.gltf"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Window_Wide_Round1.bin",
+    "source_sha256": "6b595d00be1c585ba1d4656617cfbf8834b6ce63f44b644e688438268a46b309",
+    "extracted_sha256": "6b595d00be1c585ba1d4656617cfbf8834b6ce63f44b644e688438268a46b309",
+    "selected_model": false,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Window_Wide_Round1.bin"
+  },
+  {
+    "pack_id": "P09",
+    "archive": "Medieval Village MegaKit[Standard].zip",
+    "archive_sha256": "e60dea67c10f30dccccfbff92a7933f5ea5cfe99be0e2a0fa5118cceabeec5c4",
+    "member": "Medieval Village MegaKit[Standard]/glTF/Window_Wide_Round1.gltf",
+    "source_sha256": "031c380ad522cae16c4fdbc8d74b18017e3ad3214f05ff1e8696624fc6329a4e",
+    "extracted_sha256": "031c380ad522cae16c4fdbc8d74b18017e3ad3214f05ff1e8696624fc6329a4e",
+    "selected_model": true,
+    "local_path": "temp/source/P09/Medieval Village MegaKit[Standard]/glTF/Window_Wide_Round1.gltf"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.bin",
+    "source_sha256": "e46bde795f7b69b351d322d7a5628e07131cfb48ed0afe366293f1b3f530433c",
+    "extracted_sha256": "e46bde795f7b69b351d322d7a5628e07131cfb48ed0afe366293f1b3f530433c",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.bin"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.gltf",
+    "source_sha256": "8f5a6cf6c1cf96e0a0f8e1a861b4245d42b7f88d44e5076da3d48f3fc52f4e76",
+    "extracted_sha256": "8f5a6cf6c1cf96e0a0f8e1a861b4245d42b7f88d44e5076da3d48f3fc52f4e76",
+    "selected_model": true,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.gltf"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_BaseColor.png",
+    "source_sha256": "a43635628d95571cd62fd4db0cc3a6ea32778b2bc02f242dda224c89d07f1ade",
+    "extracted_sha256": "a43635628d95571cd62fd4db0cc3a6ea32778b2bc02f242dda224c89d07f1ade",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_BaseColor.png"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_Normal.png",
+    "source_sha256": "7598fa7b63e46fd4dac29708bf5a81e05eb9a67280f7b13c61e28a9110eeb679",
+    "extracted_sha256": "7598fa7b63e46fd4dac29708bf5a81e05eb9a67280f7b13c61e28a9110eeb679",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_Normal.png"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_ORM.png",
+    "source_sha256": "e1932f5f91104afca89c501416a5fec09069b8552734237fc09045fabc4ca9b4",
+    "extracted_sha256": "e1932f5f91104afca89c501416a5fec09069b8552734237fc09045fabc4ca9b4",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_ORM.png"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Dark_BaseColor.png",
+    "source_sha256": "b4dcc0f4139aab548d7c070c4655bd2080ef16caeaaabee6c4aeb693c524e802",
+    "extracted_sha256": "b4dcc0f4139aab548d7c070c4655bd2080ef16caeaaabee6c4aeb693c524e802",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Dark_BaseColor.png"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Normal.png",
+    "source_sha256": "10cd71e2453e577fdd43e912b6016a99baf64964f0593e524bdd304855e15e2a",
+    "extracted_sha256": "10cd71e2453e577fdd43e912b6016a99baf64964f0593e524bdd304855e15e2a",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Normal.png"
+  },
+  {
+    "pack_id": "P10",
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "archive_sha256": "c3468b18871cc8c8f05ab14df7712baf22cb9f389cbd870babf130e595187f70",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Roughness.png",
+    "source_sha256": "086c2eb25bddfdb77d8e639ccbffb8df723ef4a1910d8e1b217e852f8668bfe5",
+    "extracted_sha256": "086c2eb25bddfdb77d8e639ccbffb8df723ef4a1910d8e1b217e852f8668bfe5",
+    "selected_model": false,
+    "local_path": "temp/source/P10/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Roughness.png"
+  },
+  {
+    "pack_id": "P12",
+    "archive": "Universal Animation Library[Standard].zip",
+    "archive_sha256": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724",
+    "member": "Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard.glb",
+    "source_sha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+    "extracted_sha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+    "selected_model": true,
+    "local_path": "temp/source/P12/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard.glb"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.bin",
+    "source_sha256": "459003f9745853ae562a85506a2b94dd56515c1f37728f9fa3d2ce1a3e4cd92f",
+    "extracted_sha256": "459003f9745853ae562a85506a2b94dd56515c1f37728f9fa3d2ce1a3e4cd92f",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.bin"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.gltf",
+    "source_sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4",
+    "extracted_sha256": "44edff7b00066970e628fc7412850fb9c1c388372d3c9386fb45698024857e2f",
+    "selected_model": true,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/Superhero_Male_FullBody.gltf"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Eye_Brown.png",
+    "source_sha256": "d08e3356a83211bc6ca21fe3a8e39f4b5c1a3b8f85457fc2c0fb57be09935025",
+    "extracted_sha256": "d08e3356a83211bc6ca21fe3a8e39f4b5c1a3b8f85457fc2c0fb57be09935025",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Eye_Brown.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Eye_Normal.png",
+    "source_sha256": "9ed61f7726a54fe346a78b9e5a18905d8e2b88f86235d97f53cd207a26f3f8c7",
+    "extracted_sha256": "9ed61f7726a54fe346a78b9e5a18905d8e2b88f86235d97f53cd207a26f3f8c7",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Eye_Normal.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Hair_1_BaseColor.png",
+    "source_sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e",
+    "extracted_sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Hair_1_BaseColor.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Hair_1_Normal.png",
+    "source_sha256": "57fd0ad8c96a4d01b38769637e066cecaa285b456f6e48ce00863754a457affb",
+    "extracted_sha256": "57fd0ad8c96a4d01b38769637e066cecaa285b456f6e48ce00863754a457affb",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Hair_1_Normal.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Dark.png",
+    "source_sha256": "df680cbc1967a61e85998bfafb8f7bc0a36dd604bb3266486c4b06b1a184bb45",
+    "extracted_sha256": "df680cbc1967a61e85998bfafb8f7bc0a36dd604bb3266486c4b06b1a184bb45",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Dark.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Normal.png",
+    "source_sha256": "9b25cf9200216eb754b79cf4c63b5380c419780788322f3c57cdd2b3e02679a6",
+    "extracted_sha256": "9b25cf9200216eb754b79cf4c63b5380c419780788322f3c57cdd2b3e02679a6",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Normal.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Roughness.png",
+    "source_sha256": "c70dabf48574cda55644d556beae1ee7cf1bdcf68a50d259d20f2f2358f27991",
+    "extracted_sha256": "c70dabf48574cda55644d556beae1ee7cf1bdcf68a50d259d20f2f2358f27991",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Base Characters/Godot - UE/T_Superhero_Male_Roughness.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_Beard.bin",
+    "source_sha256": "bf2f46ef5808665ef31082f787bc68c51ff063e81b76ca1a51ac86a9ae723be7",
+    "extracted_sha256": "bf2f46ef5808665ef31082f787bc68c51ff063e81b76ca1a51ac86a9ae723be7",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_Beard.bin"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_Beard.gltf",
+    "source_sha256": "80013b9791ce12c65fbe693cf669b02ef5c38091c653bf13b9415d2d8380e0ce",
+    "extracted_sha256": "80013b9791ce12c65fbe693cf669b02ef5c38091c653bf13b9415d2d8380e0ce",
+    "selected_model": true,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_Beard.gltf"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_SimpleParted.bin",
+    "source_sha256": "ecd7c81959f3985d6254458a440daaaa18a8bfbb1dbe111c68a04a72374d54db",
+    "extracted_sha256": "ecd7c81959f3985d6254458a440daaaa18a8bfbb1dbe111c68a04a72374d54db",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_SimpleParted.bin"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_SimpleParted.gltf",
+    "source_sha256": "fe0f354d7f95d83d38e15c60794dcc063fa4d60550706f3d7ba51491cdc07c56",
+    "extracted_sha256": "fe0f354d7f95d83d38e15c60794dcc063fa4d60550706f3d7ba51491cdc07c56",
+    "selected_model": true,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/Hair_SimpleParted.gltf"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/T_Hair_1_BaseColor.png",
+    "source_sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e",
+    "extracted_sha256": "bc7aa863bd22ab0a995cd838cceb4d3a5186ee54ee2fb0108fad85d20c057e6e",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/T_Hair_1_BaseColor.png"
+  },
+  {
+    "pack_id": "P13",
+    "archive": "Universal Base Characters[Standard].zip",
+    "archive_sha256": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "member": "Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/T_Hair_1_Normal.png",
+    "source_sha256": "57fd0ad8c96a4d01b38769637e066cecaa285b456f6e48ce00863754a457affb",
+    "extracted_sha256": "57fd0ad8c96a4d01b38769637e066cecaa285b456f6e48ce00863754a457affb",
+    "selected_model": false,
+    "local_path": "temp/source/P13/Universal Base Characters[Standard]/Hairstyles/Rigged to Head Bone/glTF (Godot -Unreal)/T_Hair_1_Normal.png"
+  }
+]

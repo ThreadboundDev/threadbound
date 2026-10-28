@@ -10,6 +10,17 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 playable third-person study (T26): Delivered; appearance/feel review pending.**
+Chase authorized the separate 3D experiment, keeping the current character and
+avoiding chibi proportions; new sword/shield options are allowed. The
+[study delivery](art/third_person_3d_study_2026_10_28.md) records the independent
+project, selected CC0 assets, controls, provenance and verification. Twenty focused
+checks pass in both the source and freshly installed standalone copy; seven GLBs
+pass dependency/texture/source-hash audit, and GPU captures were inspected. Production
+game files are not changed. Checkpoint:
+`feature: add isolated third-person Threadbound study`.
+T20 remains the production priority; this authorized experiment has its own scope.
+
 **October 28 curated assets / separate 3D study (T25): Recommendations delivered; selection pending.**
 Chase requested filtering the free-assets directory by usefulness and licensing,
 and expressed interest in a separate stylized/low-poly 3D experiment. The
