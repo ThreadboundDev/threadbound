@@ -20,9 +20,10 @@ func _ready() -> void:
 		["planks", "927e62"], ["flax", "c0b18b"], ["indigo", "405965"], ["path", "a29577"]]:
 		palette[item[0]] = material(Color(item[1]))
 	lighting()
-	terrain(-24, 10, -24, 24)
-	terrain(15, 28, -24, 24)
+	terrain(-90, 10, -90, 90)
+	terrain(15, 90, -90, 90)
 	water()
+	box("Riverbed", Vector3(12.5,-3.1,0), Vector3(5,0.2,60), palette.stone, true)
 	var workshop: Node3D = WORKSHOP.instantiate()
 	workshop.name = "WorkingVillageWorkshop"
 	add_child(workshop)
@@ -49,6 +50,9 @@ func _ready() -> void:
 		slab.rotation.y = rng.randf_range(-0.15, 0.15)
 		for mesh in slab.find_children("*", "MeshInstance3D", true, false):
 			mesh.material_override = palette.stone
+	village_details()
+	forest_backdrop()
+	licensed_environment_details()
 	bridge()
 	foliage()
 	for i in range(24):
@@ -86,11 +90,11 @@ func lighting() -> void:
 	env.sky = sky
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("a6b8c0")
-	env.ambient_light_energy = 0.32
+	env.ambient_light_energy = 0.48
 	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 	env.fog_enabled = true
 	env.fog_light_color = Color("9cbbb9")
-	env.fog_density = 0.009
+	env.fog_density = 0.0045
 	environment.environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
@@ -129,6 +133,8 @@ func terrain(x0: int, x1: int, z0: int, z1: int) -> void:
 			for vertex in [Vector3(x, 0, z), Vector3(x+2, 0, z), Vector3(x, 0, z+2), Vector3(x+2, 0, z), Vector3(x+2, 0, z+2), Vector3(x, 0, z+2)]:
 				var variation := 0.5 + 0.2 * sin(vertex.x * 0.2) + 0.2 * cos(vertex.z * 0.25)
 				tool.set_color(Color("52695b").lerp(Color("495f55"), variation))
+				var outskirts := clampf(maxf(absf(vertex.x)-32, absf(vertex.z)-28)/15.0,0,1)
+				vertex.y = outskirts*(5.0+2*sin(vertex.x*0.13)+2*cos(vertex.z*0.11))
 				tool.add_vertex(vertex)
 	tool.generate_normals()
 	var mesh := tool.commit()
@@ -137,19 +143,21 @@ func terrain(x0: int, x1: int, z0: int, z1: int) -> void:
 	var mat := material(Color.WHITE)
 	mat.vertex_color_use_as_albedo = true
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-	instance.material_override = mat
+	var ground_material := ShaderMaterial.new()
+	ground_material.shader = preload("res://scripts/study_ground.gdshader")
+	instance.material_override = ground_material
 	add_child(instance)
 	instance.create_trimesh_collision()
 
 func rock(pos: Vector3, size: Vector3) -> void:
-	var instance: Node3D = ROCK.instantiate()
+	var instance: Node3D = local_model("rock_a",ROCK).instantiate()
 	add_child(instance)
 	var bound := model_bounds(instance)
 	instance.scale = size / bound.size
 	instance.position = pos - bound.position * instance.scale
 	instance.rotation.y = rng.randf_range(0, TAU)
 	for mesh in instance.find_children("*", "MeshInstance3D", true, false):
-		mesh.material_override = palette.stone
+		if not ResourceLoader.exists("res://assets/local_licensed/rock_a.glb"): mesh.material_override = palette.stone
 		mesh.create_trimesh_collision()
 
 func water() -> void:
@@ -160,6 +168,7 @@ void fragment() {
 float ripple = sin(UV.x * 180.0 + TIME * 1.2) * sin(UV.y * 155.0 - TIME * 0.8);
 ALBEDO = water_color.rgb + vec3(ripple * 0.018);
 ROUGHNESS = 0.32;
+ALPHA = 0.72;
 METALLIC = 0.1;
 NORMAL_MAP = vec3(0.5 + ripple * 0.045, 0.5, 1.0);
 }
@@ -168,10 +177,10 @@ NORMAL_MAP = vec3(0.5 + ripple * 0.045, 0.5, 1.0);
 	mat.shader = shader
 	var instance := MeshInstance3D.new()
 	var mesh := PlaneMesh.new()
-	mesh.size = Vector2(190, 190)
+	mesh.size = Vector2(5,180)
 	instance.mesh = mesh
 	instance.material_override = mat
-	instance.position.y = -0.33
+	instance.position = Vector3(12.5,-0.33,0)
 	add_child(instance)
 
 func bridge() -> void:
@@ -189,12 +198,17 @@ func bridge() -> void:
 func model_bounds(root: Node3D) -> AABB:
 	var total := AABB()
 	var first := true
-	for mesh in root.find_children("*", "MeshInstance3D", true, false):
+	for mesh in mesh_nodes(root):
 		var local: Transform3D = root.global_transform.affine_inverse() * mesh.global_transform
 		var bound: AABB = local * mesh.get_aabb()
 		total = bound if first else total.merge(bound)
 		first = false
 	return total
+
+func mesh_nodes(root: Node3D) -> Array:
+	var result: Array = root.find_children("*","MeshInstance3D",true,false)
+	if root is MeshInstance3D: result.push_front(root)
+	return result
 
 func foliage() -> void:
 	for i in range(55):
@@ -203,11 +217,12 @@ func foliage() -> void:
 		if (x > 7 and x < 17) or (absf(x) < 5 and z > -14 and z < 10) or (x < -5 and x > -12 and z > -8 and z < 1):
 			continue
 		if not foliage_position_allowed(Vector3(x,0,z)): continue
-		var tree: Node3D = BROADLEAF.instantiate() if i % 4 == 0 else TREE.instantiate()
+		var tree: Node3D = local_model("tree_b",BROADLEAF).instantiate() if i % 4 == 0 else local_model("tree_a",TREE).instantiate()
 		add_child(tree)
+		if ResourceLoader.exists("res://assets/local_licensed/tree_a.glb"): tree.set_meta("native_materials",true)
 		tree.add_to_group("study_foliage")
 		tree.set_meta("is_tree", true)
-		tint_foliage(tree)
+
 		var bound := model_bounds(tree)
 		var factor := rng.randf_range(4.5, 7.0) / bound.size.y
 		tree.scale *= factor
@@ -232,6 +247,7 @@ func foliage_position_allowed(_point: Vector3) -> bool:
 	return true
 
 func tint_foliage(root: Node3D) -> void:
+	if root.has_meta("native_materials"): return
 	for mesh in root.find_children("*", "MeshInstance3D", true, false):
 		for surface in range(mesh.mesh.get_surface_count()):
 			var source: Material = mesh.get_active_material(surface)
@@ -316,3 +332,110 @@ func capture() -> void:
 		"draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)}, "\t"))
 	print("STUDY_CAPTURE_SAVED")
 	get_tree().quit()
+
+func village_prop(stem: String, point: Vector3, height: float, yaw_angle := 0.0, collision := true) -> Node3D:
+	var path := "res://assets/village/"+stem+".glb"
+	if not ResourceLoader.exists(path): return null
+	var node: Node3D = load(path).instantiate()
+	add_child(node)
+	var bound := model_bounds(node)
+	var factor := height/maxf(0.01, bound.size.y)
+	node.scale = Vector3.ONE*factor
+	node.position = point-Vector3(0,bound.position.y*factor,0)
+	node.rotation.y = yaw_angle
+	if collision:
+		for mesh in mesh_nodes(node): mesh.create_trimesh_collision()
+	return node
+
+func village_details() -> void:
+	for item in [[Vector3(-17,0.05,4), PI/2, 0.9], [Vector3(-9,0.05,-16), -0.18, 1.0], [Vector3(22,0.05,-12), -PI/2, 1.1]]:
+		var cottage: Node3D = load("res://assets/village/cottage.glb").instantiate()
+		add_child(cottage)
+		cottage.add_to_group("study_houses")
+		cottage.position = item[0]
+		cottage.rotation.y = item[1]
+		cottage.scale = Vector3.ONE*item[2]
+		for mesh in mesh_nodes(cottage): mesh.create_trimesh_collision()
+		var lamp := OmniLight3D.new()
+		lamp.position = Vector3(0,1.9,1.65)
+		lamp.light_color = Color("ffd39b")
+		lamp.light_energy = 0.65
+		lamp.omni_range = 4.0
+		cottage.add_child(lamp)
+	village_prop("stall_empty", Vector3(5.1,0,-5), 2.6, -0.25)
+	village_prop("stall_cart_empty", Vector3(4.4,0,-1), 1.1, -0.5)
+	village_prop("barrel_apples", Vector3(4.4,0,-5), 0.85)
+	village_prop("barrel", Vector3(6.1,0,-5.4), 0.8)
+	village_prop("bench", Vector3(-3.8,0,-4), 0.75, PI/2)
+	village_prop("crate_wooden", Vector3(3.8,0,-2), 0.75, 0.2)
+	village_prop("crate_wooden", Vector3(3.8,0.75,-2), 0.62, -0.2)
+	village_prop("pot_1", Vector3(3.4,0,-3.1), 0.5)
+	village_prop("barrel", Vector3(-14,0,5.9), 0.85)
+	village_prop("bucket_wooden_1", Vector3(-14.6,0,5), 0.5)
+	village_prop("weaponstand", Vector3(-3.3,0,6.8), 1.65, 0.4)
+	village_prop("dummy", Vector3(-2.8,0,9), 1.9)
+	village_prop("anvil_log", Vector3(2.8,0,-6), 0.7)
+	village_prop("chest_wood", Vector3(23.2,0,-9.4), 0.85)
+	for point in [Vector3(-2.25,1.7,-5.4),Vector3(5.1,2,-4.2),Vector3(-15.5,1.65,4.7),Vector3(20.4,1.9,-12)]:
+		village_prop("lantern_wall", point, 0.36, 0, false)
+		var light := OmniLight3D.new()
+		light.position = point
+		light.light_color = Color("ffd7a1")
+		light.light_energy = 0.6
+		light.omni_range = 3.8
+		add_child(light)
+	# Modest garden fences frame the lanes without enclosing movement or encounters.
+	for start in [Vector3(-20,0,1), Vector3(-12,0,-21), Vector3(18,0,-17)]:
+		for i in range(5):
+			box("GardenFencePost", start+Vector3(i*1.1,0.45,0), Vector3(0.08,0.9,0.08), palette.wood, true)
+		for y in [0.32,0.67]: box("GardenFenceRail", start+Vector3(2.2,y,0), Vector3(4.5,0.07,0.06), palette.wood, true)
+
+func forest_backdrop() -> void:
+	for i in range(64):
+		var angle := i*TAU/64
+		var radius := rng.randf_range(45,55)
+		var point := Vector3(cos(angle)*radius,0,sin(angle)*radius)
+		if point.x>9 and point.x<16: continue
+		var outskirts := clampf(maxf(absf(point.x)-32,absf(point.z)-28)/15.0,0,1)
+		point.y = outskirts*(5+2*sin(point.x*0.13)+2*cos(point.z*0.11))
+		var tree: Node3D = local_model("tree_a" if i%3==0 else "tree_b",TREE if i%3==0 else BROADLEAF).instantiate()
+		add_child(tree)
+		var bound := model_bounds(tree)
+		var scale_factor := rng.randf_range(5,9)/bound.size.y
+		tree.scale = Vector3.ONE*scale_factor
+		tree.position = point-Vector3.UP*bound.position.y*scale_factor
+		tree.rotation.y = rng.randf_range(0,TAU)
+
+
+func local_model(stem: String, fallback: PackedScene) -> PackedScene:
+	var path := "res://assets/local_licensed/"+stem+".glb"
+	return load(path) if ResourceLoader.exists(path) else fallback
+
+func licensed_prop(stem: String, point: Vector3, height: float, angle := 0.0, collision := true) -> Node3D:
+	var path := "res://assets/local_licensed/"+stem+".glb"
+	if not ResourceLoader.exists(path): return null
+	var node: Node3D = load(path).instantiate()
+	add_child(node)
+	var bound := model_bounds(node)
+	var factor := height/maxf(0.01,bound.size.y)
+	node.scale = Vector3.ONE*factor
+	node.position = point-Vector3.UP*bound.position.y*factor
+	node.rotation.y = angle
+	if collision:
+		for mesh in mesh_nodes(node): mesh.create_trimesh_collision()
+	return node
+
+func licensed_environment_details() -> void:
+	licensed_prop("ruin_arch",Vector3(25,0,16.5),5.5,-0.4)
+	licensed_prop("ruin_wall",Vector3(18.4,0,17),2.7,0.6)
+	licensed_prop("ruin_wall",Vector3(27.7,0,10),2.1,PI/2)
+	licensed_prop("ruin_block",Vector3(18,0,7.1),1.1,0.4)
+	licensed_prop("rock_b",Vector3(27,0,-3),3.5,-0.5)
+	licensed_prop("rock_c",Vector3(-21,0,-14),3.7,0.3)
+	licensed_prop("rock_b",Vector3(-19,0,16),2.4,1.3)
+	for i in range(130):
+		var point := Vector3(rng.randf_range(-23,29),0,rng.randf_range(-23,24))
+		if point.x>8 and point.x<17: continue
+		if absf(point.x)<2.2 or absf(point.z-2.5)<2: continue
+		if point.distance_to(Vector3(22,0,12))<6: continue
+		licensed_prop("flowers" if i%7==0 else "grass",point,rng.randf_range(0.2,0.5),rng.randf_range(0,TAU),false)

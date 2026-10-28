@@ -12,6 +12,7 @@ var notification_time := 0.0
 var anchors: Array[Node3D] = []
 var reset_serial := 0
 var shutting_down := false
+var navigation: NavigationRegion3D
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -25,19 +26,22 @@ func _ready() -> void:
 	arena()
 	spawn_enemy("reedhook", Vector3(-6.5, 0.2, 10))
 	spawn_enemy("eave", Vector3(4, 0.2, 14))
+	spawn_enemy("reedhook", Vector3(-19,0.1,-11))
+	spawn_enemy("eave", Vector3(23,0.1,-1))
 	boss = spawn_enemy("boss", Vector3(22, 0.3, 12))
 	# Low approach ramps remove accidental porch/bridge lips from the movement test.
 	ramp(Vector3(0, 0.03, -4.5), Vector3(0, 0.23, -5.7), 2.0)
 	ramp(Vector3(8.3, 0.03, 2.5), Vector3(9.6, 0.26, 2.5), 2.4)
 	ramp(Vector3(15.4, 0.26, 2.5), Vector3(16.7, 0.03, 2.5), 2.4)
-	sign_at("FIELD ENCOUNTERS\nReedhook · Eave Runner", Vector3(-1, 1.4, 9.0))
-	sign_at("CHAMPION CLEARING\nCross the stream", Vector3(7.3, 1.5, 4.4))
-	notice("H for controls · R resets all encounters · Hold E toward a thread ring")
+	build_navigation()
+	sign_at("Training clearing\nWoven sentinels", Vector3(-1, 1.4, 9.0))
+	sign_at("Guardian clearing\nAcross the stream", Vector3(7.3, 1.5, 4.4))
+	notice("H for controls · R resets all encounters · E grapples any solid surface")
 	if "--capture-action" in OS.get_cmdline_user_args(): call_deferred("capture_playtest")
 
 func configure_inputs() -> void:
 	super.configure_inputs()
-	for item in [["dash", KEY_CTRL], ["special", KEY_Q], ["grapple", KEY_E], ["lock", KEY_TAB], ["help", KEY_H], ["mute", KEY_M]]:
+	for item in [["dash", KEY_CTRL], ["special", KEY_Q], ["grapple", KEY_E], ["lock", KEY_TAB], ["help", KEY_H], ["mute", KEY_M], ["descend", KEY_C], ["meditate", KEY_F]]:
 		if not InputMap.has_action(item[0]): InputMap.add_action(item[0])
 		var event := InputEventKey.new()
 		event.physical_keycode = item[1]
@@ -47,7 +51,7 @@ func configure_inputs() -> void:
 		var event := InputEventMouseButton.new()
 		event.button_index = item[1]
 		InputMap.action_add_event(item[0], event)
-	for item in [["dash", JOY_BUTTON_B], ["special", JOY_BUTTON_X], ["grapple", JOY_BUTTON_RIGHT_SHOULDER], ["lock", JOY_BUTTON_RIGHT_STICK], ["release_mouse", JOY_BUTTON_START]]:
+	for item in [["dash", JOY_BUTTON_B], ["special", JOY_BUTTON_X], ["grapple", JOY_BUTTON_RIGHT_SHOULDER], ["lock", JOY_BUTTON_RIGHT_STICK], ["release_mouse", JOY_BUTTON_START], ["descend", JOY_BUTTON_LEFT_STICK], ["meditate", JOY_BUTTON_DPAD_DOWN]]:
 		var event := InputEventJoypadButton.new()
 		event.button_index = item[1]
 		InputMap.action_add_event(item[0], event)
@@ -72,13 +76,15 @@ func foliage() -> void:
 				mesh.create_trimesh_collision()
 				for child in mesh.get_children():
 					if child is StaticBody3D:
-						child.collision_layer = 8
+						child.collision_layer = 1
 						child.collision_mask = 0
 
 func foliage_position_allowed(point: Vector3) -> bool:
 	if point.distance_to(Vector3(22,0,12)) < 12 or point.distance_to(Vector3(-6.5,0,10)) < 4 or point.distance_to(Vector3(4,0,14)) < 4: return false
+	for house in [Vector3(-17,0,4),Vector3(-9,0,-16),Vector3(22,0,-12)]:
+		if point.distance_to(house)<6.5: return false
 	for landing in [Vector3(-9,0,-1), Vector3(-13,0,-5), Vector3(-16,0,-10), Vector3(-9,0,-16), Vector3(1,0,-17), Vector3(19,0,-10)]:
-		if point.distance_to(landing) < 3.8: return false
+		if point.distance_to(landing) < 7.0: return false
 	return true
 
 func notice(text: String) -> void:
@@ -113,13 +119,14 @@ func shutdown() -> void:
 	queue_free()
 
 func sign_at(text: String, at: Vector3) -> void:
+	box("SignPost",Vector3(at.x,at.y*0.5,at.z),Vector3(0.08,at.y,0.08),palette.wood,true)
+	box("CarvedWaymarker",at,Vector3(2.15,0.56,0.08),palette.wood,true)
 	var label := Label3D.new()
 	label.text = text
-	label.position = at
-	label.font_size = 30
-	label.pixel_size = 0.006
-	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.modulate = Color("c3b58f")
+	label.position = at+Vector3(0,0,0.05)
+	label.font_size = 26
+	label.pixel_size = 0.003
+	label.modulate = Color("d9c8a1")
 	add_child(label)
 
 func ramp(a: Vector3, b: Vector3, width: float) -> void:
@@ -153,23 +160,35 @@ func anchor(label: String, point: Vector3, landing: Vector3) -> void:
 	add_child(marker)
 	thread_ring(point, 0.43, true)
 	anchors.append(marker)
-	var thread: MeshInstance3D = fx.strand(point+Vector3.UP*0.55, point+Vector3.UP*1.4, Color("bdae88"), 0.018)
+	var thread: MeshInstance3D = fx.strand(point+Vector3.UP*0.45, point+Vector3.UP*0.8, Color("bdae88"), 0.018)
 	thread.name = "AnchorSuspension"
 	var landing_marker := Marker3D.new()
 	landing_marker.position = landing
 	landing_marker.add_to_group("study_checkpoints")
 	add_child(landing_marker)
 	thread_ring(landing+Vector3.UP*0.025, 0.6)
-	box("ThreadPost", landing+Vector3(1.3, 1.3, 0), Vector3(0.15, 2.6, 0.15), palette.wood)
+	box("ThreadPost", landing+Vector3(1.3, 1.8, 0), Vector3(0.15, 3.6, 0.15), palette.wood)
+	box("AnchorCrossbeam",landing+Vector3(0.65,3.6,0),Vector3(1.6,0.14,0.15),palette.wood,true)
+	var knot := StaticBody3D.new()
+	knot.position = point
+	add_child(knot)
+	var shape := CollisionShape3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = 0.16
+	shape.shape = sphere
+	knot.add_child(shape)
 	box("IndigoWaymarker", landing+Vector3(1.3, 1.75, 0), Vector3(0.7, 0.65, 0.05), palette.indigo)
 	for i in range(3):
 		box("WaymarkerStitch", landing+Vector3(1.3, 1.58+i*0.13, 0.032), Vector3(0.25, 0.025, 0.012), palette.flax)
 
 func platform_route() -> void:
-	var route := [Vector3(-9, 0.7, -1), Vector3(-13, 1.9, -5), Vector3(-16, 3.1, -10), Vector3(-9, 4.2, -16), Vector3(1, 4.4, -17), Vector3(19, 3.5, -10)]
+	var route := [Vector3(-9, 0.7, -1), Vector3(-13, 1.9, -5), Vector3(-16, 3.1, -10), Vector3(-9, 4.6, -16), Vector3(1, 4.4, -17), Vector3(19, 3.5, -10)]
 	for i in range(route.size()):
 		var point: Vector3 = route[i]
-		var platform := box("ThreadmarkedPlatform"+str(i), Vector3(point.x, point.y/2, point.z), Vector3(3.3, point.y, 3.4), palette.stone, true)
+		var platform := box("ThreadmarkedPlatform"+str(i), Vector3(point.x, point.y/2, point.z), Vector3(3.3, point.y, 3.4), palette.stone, true, false)
+		for x in [-1.45,1.45]:
+			for z in [-1.45,1.45]: box("ScaffoldUpright",Vector3(point.x+x,point.y/2,point.z+z),Vector3(0.15,point.y,0.15),palette.wood,true)
+		for j in range(9): box("ScaffoldDeck",point+Vector3(-1.45+j*0.36,-0.07,0),Vector3(0.33,0.14,3.4),palette.planks)
 		box("WovenLanding", point+Vector3.UP*0.035, Vector3(2.4, 0.07, 2.5), palette.indigo)
 		for j in range(7):
 			box("LandingWeft", point+Vector3(-1.05+j*0.35, 0.077, 0), Vector3(0.025, 0.008, 2.3), palette.flax)
@@ -197,8 +216,8 @@ func arena() -> void:
 	add_child(stage)
 	stage.create_trimesh_collision()
 	thread_ring(Vector3(22, 0.1, 12), 4.85)
-	for i in range(8):
-		var angle := i*TAU/8
+	for i in range(4):
+		var angle := i*TAU/4+PI/4
 		var point := Vector3(22+cos(angle)*5.2, 0, 12+sin(angle)*5.2)
 		box("ArenaLoomPost", point+Vector3.UP*1.4, Vector3(0.18, 2.8, 0.18), palette.wood)
 		box("ArenaBanner", point+Vector3(0, 2.0, 0), Vector3(0.7, 0.9, 0.06), palette.indigo)
@@ -244,3 +263,24 @@ func capture_playtest() -> void:
 	get_viewport().get_texture().get_image().save_png("res://captures/playtest_"+mode+".png")
 	print("PLAYTEST_CAPTURE_SAVED ", mode)
 	shutdown()
+
+func is_swimming(point: Vector3) -> bool:
+	return point.x > 10 and point.x < 15 and absf(point.z) < 28 and point.y < -0.65
+
+func build_navigation() -> void:
+	add_to_group("study_nav_geometry")
+	navigation = NavigationRegion3D.new()
+	var nav := NavigationMesh.new()
+	nav.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_STATIC_COLLIDERS
+	nav.geometry_collision_mask = 1
+	nav.geometry_source_geometry_mode = NavigationMesh.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
+	nav.geometry_source_group_name = "study_nav_geometry"
+	nav.cell_size = 0.25
+	nav.cell_height = 0.25
+	nav.agent_height = 2.0
+	nav.agent_radius = 0.5
+	nav.agent_max_climb = 0.5
+	nav.filter_baking_aabb = AABB(Vector3(-30,-4,-26),Vector3(64,13,54))
+	navigation.navigation_mesh = nav
+	add_child(navigation)
+	navigation.bake_navigation_mesh(false)

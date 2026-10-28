@@ -10,7 +10,19 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 28 3D combat/traversal playtest (T27): Verified implementation; hands-on review pending.**
+**October 28 polished 3D level demo (T28): implementation verified; review in progress.**
+Chase reviewed T27 and requested a more polished level using his downloads.
+[Scope, assets, mechanics, licensing and playtest card](art/polished_3d_level_demo_2026_10_28.md).
+Four field opponents, downloaded golem boss, four houses/workshop, market/ruins,
+collision hookshot, authored directional air/pogo/water actions, AP/Momentum/Flow,
+meditation, navigation and blade-driven effects are implemented in the separate
+project. 55 new integration, 59 combat/traversal and 20 movement checks pass.
+The original 2D game is preserved. The FreeStylized website origin is confirmed;
+custom-licensed derivatives stay local. Chase's appearance/feel acceptance is
+pending. Branch: `threadbound/feature-polished-3d-demo`. Implementation checkpoint:
+`feature: build downloaded-asset 3d level and restore base mechanics`.
+
+**October 28 3D combat/traversal playtest (T27): superseded by T28 after Chase requested more polish.**
 Chase authorized two enemies, a boss, grapple, specials, platforming, sound and
 broad polish of the separate study. [Delivery and controls](art/third_person_combat_playtest_2026_10_28.md):
 Reedhook, Eave Runner and a Bellstriker champion; six-ring elevated route;

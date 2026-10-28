@@ -11,6 +11,8 @@ var help: PanelContainer
 var pause_label: Label
 var marker: Label
 var clock := 0.0
+var flow_label: Label
+var flow_bar: ProgressBar
 
 func style_bar(bar: ProgressBar, color: Color) -> void:
 	var background := StyleBoxFlat.new()
@@ -39,7 +41,19 @@ func label(parent: Node, text: String, pos: Vector2, size := 16) -> Label:
 func _ready() -> void:
 	world = get_parent()
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	label(self, "THREADBOUND  /  THIRD-PERSON PLAYTEST", Vector2(28, 22), 20)
+	var panel := Panel.new()
+	panel.position = Vector2(16,14)
+	panel.size = Vector2(410,218)
+	var backdrop := StyleBoxFlat.new()
+	backdrop.bg_color = Color(0.055,0.09,0.10,0.82)
+	backdrop.border_color = Color(0.57,0.50,0.35,0.5)
+	backdrop.border_width_left = 2
+	backdrop.corner_radius_top_right = 8
+	backdrop.corner_radius_bottom_right = 8
+	panel.add_theme_stylebox_override("panel",backdrop)
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(panel)
+	label(self, "THREADBOUND  ·  3D STUDY", Vector2(28, 22), 19)
 	status = label(self, "", Vector2(28, 56))
 	health_bar = ProgressBar.new()
 	health_bar.position = Vector2(28, 83)
@@ -49,11 +63,21 @@ func _ready() -> void:
 	style_bar(health_bar, Color("8ab5a2"))
 	add_child(health_bar)
 	ap = label(self, "", Vector2(28, 102), 20)
-	label(self, "Workshop → field encounters → bridge champion\nThread rings lead across the elevated route", Vector2(28, 142), 14)
+	label(self, "Village → rooftops → river → guardian\nGrapple solid surfaces · C + air attack: pogo", Vector2(28, 142), 14)
+	flow_label = label(self, "", Vector2(28, 188), 14)
+	flow_bar = ProgressBar.new()
+	flow_bar.position = Vector2(28, 214)
+	flow_bar.size = Vector2(240, 5)
+	flow_bar.max_value = 100
+	flow_bar.show_percentage = false
+	style_bar(flow_bar, Color("c4ad75"))
+	add_child(flow_bar)
 	context = label(self, "", Vector2(520, 512), 16)
+	context.size = Vector2(400,75)
+	context.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	marker = label(self, "+", Vector2(711, 434), 24)
 	message = label(self, "", Vector2(450, 740), 17)
-	label(self, "LMB attack   RMB guard/parry   Q special (+ movement: spin)   E hold grapple   Ctrl dash   Tab lock", Vector2(28, 813), 14)
+	label(self, "LMB attack   RMB guard/parry   Q special (+ movement: spin)   E grapple / release   Ctrl dash   Tab lock", Vector2(28, 813), 14)
 	label(self, "WASD / mouse   Space jump / grapple release   Shift run   R reset all   V weapons   H help   M mute   Esc pause", Vector2(28, 839), 14)
 	boss_label = label(self, "", Vector2(510, 28), 19)
 	boss_bar = ProgressBar.new()
@@ -63,11 +87,11 @@ func _ready() -> void:
 	style_bar(boss_bar, Color("b88b66"))
 	add_child(boss_bar)
 	help = PanelContainer.new()
-	help.position = Vector2(380, 210)
-	help.size = Vector2(680, 420)
+	help.position = Vector2(380, 155)
+	help.size = Vector2(720, 570)
 	add_child(help)
 	var instructions := Label.new()
-	instructions.text = "THREAD & STONE · PLAYTEST CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump; release grapple with a jump\nShift / LB — run     Ctrl / B — dash with brief invulnerability\nLMB / RT — tap-to-buffer sword combo; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — neutral burst; hold movement for directional spin (2 AP)\nE / RB — hold grapple toward a thread ring or locked enemy\nTab / right-stick click — lock/unlock nearest visible enemy\nV / Y — compare original and new sword/shield\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nEach spent AP recharges independently in 10 seconds.\nFalls return to the last thread-marked landing."
+	instructions.text = "THREAD & STONE · PLAYTEST CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump / air jump; jump releases grapple\nShift / LB — run     Ctrl / B — dash with brief invulnerability\nLMB / RT — tap-to-buffer sword combo; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — neutral burst; hold movement for directional spin (2 AP)\nE / RB — fire/release grapple at any solid surface or enemy\nTab / right-stick click — lock/unlock nearest visible enemy\nV / Y — compare original and new sword/shield\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nAP recharges independently; Momentum and meditation affect speed.\nC / left-stick click — down air attack / swim down\nHold Space + air attack — upward attack\nHold F / D-pad down — meditate; trade Momentum for healing\nFalls return to the last thread-marked landing."
 	instructions.add_theme_font_size_override("font_size", 16)
 	help.add_child(instructions)
 	help.visible = false
@@ -97,6 +121,8 @@ func _process(delta: float) -> void:
 	var actor = world.actor
 	var combat = actor.combat
 	clock += delta
+	flow_label.text = ("FLOW" if actor.momentum.flow else "MOMENTUM") + "  %d / 100" % actor.momentum.amount
+	flow_bar.value = actor.momentum.amount
 	health_bar.value = combat.health
 	status.text = "THREADBORNE   %d / 100" % combat.health
 	var count: int = combat.available_ap()
@@ -104,10 +130,10 @@ func _process(delta: float) -> void:
 	ap.modulate = Color("c4ad75") if count >= 2 else Color("9ba9a6")
 	context.text = ""
 	if actor.grapple.active:
-		context.text = "THREAD ATTACHED · release E or jump to release"
+		context.text = "THREAD ATTACHED · E or Space to release"
 	elif is_instance_valid(actor.grapple.candidate):
 		var node = actor.grapple.candidate
-		context.text = "E  ·  " + (node.display_name if node.is_in_group("study_enemies") else str(node.name))
+		context.text = "E  ·  " + (node.display_name if node.is_in_group("study_enemies") else "Solid surface")
 	if is_instance_valid(actor.lock_target):
 		context.text += "\nLOCKED  " + actor.lock_target.display_name
 	marker.modulate = Color("edcd8b") if is_instance_valid(actor.grapple.candidate) else Color("b8c4bc")

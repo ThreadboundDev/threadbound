@@ -58,7 +58,9 @@ for old_name, stem, name in [('Threadborne_Sword', 'sword_B', 'Study_Sword'),
 
 rig = bpy.data.objects['Threadborne_Rig']
 keep = ['idle_4', 'walk_1', 'run_1', 'jump_1', 'block_idle_1', 'slash_2',
-        'attack_2', 'power_up_1', 'roll_1', 'grapple_swinging_1', 'casting_1', 'air_light_1', 'impact_1', 'death_1']
+        'attack_2', 'power_up_1', 'roll_1', 'grapple_swinging_1', 'casting_1', 'air_light_1', 'impact_1', 'death_1',
+        'get_up_from_hang_1', 'hanging_idle_1', 'jump_into_wall_hang_1', 'swimming_1', 'water_idle_1',
+        'stand_to_sit_1', 'sit_to_stand_1']
 print('NLA', [t.name for t in rig.animation_data.nla_tracks], flush=True)
 for track in list(rig.animation_data.nla_tracks):
     if not any(track.name == clip or track.name.endswith(clip) for clip in keep):

@@ -88,4 +88,8 @@ func run() -> void:
 	var file := FileAccess.open("res://test_results.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({"checks": checks, "failed": failed, "engine": Engine.get_version_info()}, "\t"))
 	print("STUDY_CHECKS ", checks.size(), " FAILED ", failed)
+	scene.queue_free()
+	await process_frame
+	await process_frame
+	OS.delay_msec(150)
 	quit(1 if failed else 0)

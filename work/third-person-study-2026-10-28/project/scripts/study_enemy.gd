@@ -25,6 +25,13 @@ var tell_material: StandardMaterial3D
 var health_label: Label3D
 var display_name := "Reedhook"
 var death_time := 0.0
+var downloaded := true
+var skeleton: Skeleton3D
+var root_rest := Vector3.ZERO
+var model_origin := Vector3.ZERO
+var pelvis_index := -1
+var navigator: NavigationAgent3D
+var navigation_clock := 0.0
 
 func _ready() -> void:
 	world = get_parent()
@@ -33,33 +40,47 @@ func _ready() -> void:
 	collision_layer = 4
 	collision_mask = 1 | 2 | 4
 	home = global_position
+	navigator = NavigationAgent3D.new()
+	navigator.path_desired_distance = 0.35
+	navigator.target_desired_distance = 0.6
+	add_child(navigator)
 	max_health = 95 if kind == "reedhook" else (75 if kind == "eave" else 420)
 	health = max_health
 	body_radius = 0.4 if kind == "reedhook" else (0.45 if kind == "eave" else 0.95)
 	target_height = 1.1 if kind != "boss" else 1.65
-	display_name = "Reedhook" if kind == "reedhook" else ("Eave Runner" if kind == "eave" else "Bellstriker · Arena Champion")
+	display_name = "Woven Swordsman" if kind == "reedhook" else ("Spindle Runner" if kind == "eave" else "Armored Guardian")
 	var shape := CapsuleShape3D.new()
 	shape.radius = body_radius
-	shape.height = 2.0 if kind == "reedhook" else (1.25 if kind == "eave" else 2.8)
+	shape.height = 1.9 if kind != "boss" else 3.0
 	var collider := CollisionShape3D.new()
 	collider.shape = shape
 	collider.position.y = shape.height * 0.5
 	add_child(collider)
 	visual = Node3D.new()
 	add_child(visual)
-	var path := "res://assets/enemies/" + ("eave_runner" if kind == "eave" else ("bellstriker" if kind == "boss" else "reedhook")) + ".glb"
+	var path := "res://assets/enemies/woven_swordsman.glb" if kind == "reedhook" else ("res://assets/enemies/woven_pikewarden.glb" if kind == "eave" else "res://assets/local_licensed/armored_golem.glb")
+	if not ResourceLoader.exists(path):
+		path = "res://assets/enemies/bellstriker.glb"
+		downloaded = false
+	visual = Node3D.new()
+	add_child(visual)
 	model = load(path).instantiate()
 	visual.add_child(model)
 	for node in model.find_children("*", "AnimationPlayer", true, false): animation = node
+	for node in model.find_children("*", "Skeleton3D", true, false): skeleton = node
 	var bound: AABB = world.model_bounds(model)
-	var height := 2.15 if kind == "reedhook" else (1.55 if kind == "eave" else 3.0)
+	var height := 1.95 if kind != "boss" else 3.15
 	var factor := height / maxf(0.1, bound.size.y)
 	model.scale *= factor
 	model.position.y -= bound.position.y * factor
 	# Existing side-view rigs face +X; normalize their forward axis to +Z.
-	model.rotation.y = -PI/2
+	model.rotation.y = 0 if downloaded else -PI/2
+	model_origin = model.position
+	if skeleton:
+		pelvis_index = skeleton.find_bone("pelvis")
+		if pelvis_index >= 0: root_rest = skeleton.get_bone_global_rest(pelvis_index).origin
 	for clip in animation.get_animation_list():
-		if clip in ["idle", "walk", "run", "box_idle"]: animation.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
+		if clip in ["idle", "walk", "run", "box_idle", "Idle", "Sword_Idle", "Walk", "Jog_Fwd", "idle1", "walkF", "jogF"]: animation.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 	play("box_idle" if kind == "boss" else "idle")
 	var mesh := CylinderMesh.new()
 	mesh.top_radius = attack_range()
@@ -81,13 +102,58 @@ func _ready() -> void:
 	health_label.position.y = height + 0.4
 	add_child(health_label)
 	update_label()
+	apply_woven_accents()
+	for mesh_node in model.find_children("*", "MeshInstance3D", true, false):
+		if String(mesh_node.name).begins_with("Downloaded_"): world.fx.watch_blade(self, mesh_node)
 
 func play(clip: String) -> void:
+	if downloaded:
+		var mapping := {"idle":"Sword_Idle", "box_idle":"idle1", "walk":"Walk", "run":"Jog_Fwd", "hurt":"Hit_Chest", "death":"Death01", "dead":"death1"}
+		if kind == "boss": mapping.merge({"walk":"walkF", "run":"jogF", "hurt":"gethit1", "charge_1":"attack1", "charge_2":"attack2", "charge_3":"attack3", "jab":"attack1", "cross":"attack2", "smash":"attack3"}, true)
+		else: mapping.merge({"windup":"Sword_Regular_A", "sweep":"Sword_Regular_A", "throw_windup":"Sword_Dash", "jump_slash":"Sword_Dash"}, true)
+		if clip in ["recover", "land_recover", "box_recover"]: return
+		clip = mapping.get(clip, clip)
 	if animation and animation.has_animation(clip):
-		animation.play(clip, 0.08)
+		if animation.current_animation == clip and animation.is_playing(): return
+		animation.speed_scale = 1
+		animation.play(clip, 0.12)
+
+func _process(_delta: float) -> void:
+	if skeleton and pelvis_index >= 0:
+		var shift := skeleton.get_bone_global_pose(pelvis_index).origin-root_rest
+		var local_shift := model.global_basis.inverse()*(skeleton.global_basis*shift)
+		model.position = model_origin-Vector3(local_shift.x,0,local_shift.z)
+	health_label.visible = not dead and (actor.lock_target == self or (health < max_health and global_position.distance_to(actor.global_position)<12))
 
 func attack_range() -> float:
 	return 2.45 if kind == "reedhook" else (1.65 if kind == "eave" else 3.3)
+
+func apply_woven_accents() -> void:
+	var cloth := ShaderMaterial.new()
+	cloth.shader = preload("res://scripts/study_weave.gdshader")
+	cloth.set_shader_parameter("cloth_color",Color("344c51") if kind != "boss" else Color("3d5358"))
+	for mesh in model.find_children("*","MeshInstance3D",true,false):
+		if "head and neck" in String(mesh.name).to_lower(): mesh.material_override = cloth
+		for surface in range(mesh.mesh.get_surface_count()):
+			var mat: Material = mesh.get_active_material(surface)
+			if kind == "boss" and mat and "Body" in mat.resource_name: mesh.set_surface_override_material(surface,cloth)
+	if not skeleton: return
+	var unit := skeleton.global_basis.get_scale().length()/sqrt(3.0)
+	for name_part in ["lowerarm_l","lowerarm_r","calf_l","calf_r"]:
+		if skeleton.find_bone(name_part)<0: continue
+		var attachment := BoneAttachment3D.new()
+		attachment.bone_name = name_part
+		skeleton.add_child(attachment)
+		var wrap := MeshInstance3D.new()
+		var cylinder := CylinderMesh.new()
+		cylinder.top_radius = (0.105 if kind != "boss" else 0.17)/unit
+		cylinder.bottom_radius = cylinder.top_radius*0.92
+		cylinder.height = (0.18 if kind != "boss" else 0.28)/unit
+		cylinder.radial_segments = 12
+		wrap.mesh = cylinder
+		wrap.material_override = cloth
+		wrap.position.y = cylinder.height*0.65
+		attachment.add_child(wrap)
 
 func update_label() -> void:
 	health_label.text = display_name + "\n" + str(health) + " / " + str(max_health)
@@ -112,11 +178,11 @@ func receive_hit(amount: int, push: Vector3, _heavy := false) -> void:
 	if health == 0:
 		dead = true
 		state = "dead"
-		death_time = 1.2
+		death_time = 3.0
 		tell.visible = false
 		collision_layer = 0
 		collision_mask = 1
-		play("dead" if kind == "boss" else ("death" if kind == "eave" else "hurt"))
+		play("dead" if kind == "boss" else "death")
 		world.fx.burst(global_position + Vector3.UP * target_height, Color("c4b89b"), true)
 		if kind == "boss": world.notice("Champion unraveled · R resets all encounters")
 	else:
@@ -144,10 +210,13 @@ func begin_attack() -> void:
 	attack_direction = difference.normalized()
 	visual.rotation.y = atan2(attack_direction.x, attack_direction.z)
 	state = "windup"
-	timer = (0.6 if kind == "reedhook" else 0.55) if kind != "boss" else [0.36, 0.33, 0.66][combo]
+	timer = (0.6 if kind == "reedhook" else 0.55) if kind != "boss" else [0.85, 0.7, 0.8][combo]
 	if kind == "boss" and health < max_health*0.5: timer *= 0.85
 	tell.visible = true
 	play(("windup" if kind == "reedhook" else "throw_windup") if kind != "boss" else "charge_" + str(combo+1))
+	if downloaded:
+		var total: float = timer+(0.267 if kind == "reedhook" else (0.32 if kind == "eave" else [0.23,0.23,0.33][combo]))+(0.65 if kind != "boss" else (0.55 if combo < 2 else 1.0))
+		animation.speed_scale = animation.current_animation_length/total
 	world.audio.play("enemy_swing" if kind != "boss" else "grapple_connect", global_position, -22, 0.75)
 
 func release_attack() -> void:
@@ -160,12 +229,13 @@ func release_attack() -> void:
 	world.audio.play("stomp" if kind == "boss" and combo == 2 else "enemy_swing", global_position, -15, 0.8 if kind == "boss" else 1.1)
 
 func _physics_process(delta: float) -> void:
+	navigation_clock -= delta
 	if not is_on_floor(): velocity.y -= delta * 19
 	velocity.x = move_toward(velocity.x, 0, 16*delta)
 	velocity.z = move_toward(velocity.z, 0, 16*delta)
 	if dead:
 		death_time -= delta
-		if kind == "reedhook": visual.rotation.z = lerpf(visual.rotation.z, 1.45, delta*6)
+		if not downloaded and kind == "reedhook": visual.rotation.z = lerpf(visual.rotation.z, 1.45, delta*6)
 		if death_time <= 0: visible = false
 		move_and_slide()
 		return
@@ -188,6 +258,13 @@ func _physics_process(delta: float) -> void:
 				begin_attack()
 			else:
 				var direction := flat.normalized()
+				if NavigationServer3D.map_get_iteration_id(get_world_3d().navigation_map)>0:
+					if navigation_clock<=0:
+						navigator.target_position = actor.global_position
+						navigation_clock = 0.3
+					var next := navigator.get_next_path_position()-global_position
+					next.y = 0
+					if next.length()>0.15: direction = next.normalized()
 				var ahead := global_position + direction * 0.9
 				var probe := PhysicsRayQueryParameters3D.create(ahead+Vector3.UP, ahead-Vector3.UP*2, 1)
 				if not get_world_3d().direct_space_state.intersect_ray(probe).is_empty():
@@ -212,7 +289,7 @@ func _physics_process(delta: float) -> void:
 				if actor.combat.receive_hit(amount, global_position, kind == "boss" and combo == 2): attacks_connected += 1
 			if timer <= 0:
 				state = "recover"
-				timer = 0.65 if kind != "boss" else (0.24 if combo < 2 else 1.15)
+				timer = 0.65 if kind != "boss" else (0.55 if combo < 2 else 1.0)
 				play(("recover" if kind == "reedhook" else "land_recover") if kind != "boss" else "box_recover")
 		"recover":
 			if timer <= 0:

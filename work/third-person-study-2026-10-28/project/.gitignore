@@ -3,9 +3,14 @@
 test_results.json
 combat_test_results.json
 captures/
+polish_test_results.json
+# Fab / custom-licensed derivatives are installed locally; this repository is public.
+/assets/local_licensed/
 *.import
 # Godot extracts these from the self-contained GLBs during import.
 /assets/*.png
 /assets/*.jpg
 /assets/enemies/*.png
 /assets/enemies/*.jpg
+/assets/village/*.png
+/assets/village/*.jpg

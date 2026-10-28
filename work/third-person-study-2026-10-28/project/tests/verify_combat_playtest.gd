@@ -33,14 +33,14 @@ func run() -> void:
 	enemies = get_nodes_in_group("study_enemies")
 	for enemy in enemies: enemy.ai_enabled = false
 	await frames(40)
-	check("Two enemies plus distinct boss", enemies.size() == 3 and world.boss.kind == "boss")
+	check("Four field enemies plus distinct boss", enemies.size() == 5 and world.boss.kind == "boss")
 	check("Six usable thread anchors", get_nodes_in_group("study_anchors").size() == 6)
 	check("AP starts full", actor.combat.available_ap() == 6)
 	check("Audio ambience playing", world.audio.wind.playing and world.audio.river.playing and world.audio.music.playing)
 	check("Attack and grapple controller mappings", InputMap.action_get_events("attack").size() >= 2 and InputMap.action_get_events("grapple").size() >= 2)
 	check("Combat animation clips", actor.animation.has_animation("slash_2") and actor.animation.has_animation("power_up_1") and actor.animation.has_animation("attack_2") and actor.animation.has_animation("roll_1"))
 	for enemy in enemies:
-		check(enemy.kind + " rig and animation available", enemy.animation != null and enemy.animation.has_animation("hurt"))
+		check(enemy.kind + " rig and animation available", enemy.animation != null and enemy.animation.has_animation("gethit1" if enemy.kind=="boss" else "Hit_Chest"))
 		print("ENEMY_MODEL ", enemy.kind, " ", world.model_bounds(enemy.visual))
 	await fixture()
 	var reed = enemies.filter(func(e):return e.kind == "reedhook")[0]
@@ -173,19 +173,25 @@ func run() -> void:
 	check("Grapple ignores occluded target", actor.grapple.candidate != hidden)
 	hidden.queue_free()
 	await fixture()
+	# Aim at each real deck surface; free collision grappling does not teleport to marker metadata.
 	for i in range(world.anchors.size()):
 		var ring: Node3D = world.anchors[i]
-		var aim: Vector3 = ring.global_position-(actor.global_position+Vector3.UP*1.4)
-		actor.yaw = atan2(-aim.x, -aim.z)
-		actor.pitch = clampf(atan2(aim.y, Vector2(aim.x,aim.z).length()), -1.0, 0.7)
+		var landing: Vector3 = ring.get_meta("landing")-Vector3.UP*0.45
+		# Independent approach fixtures keep AP recharges and intervening rooftops out of this collision test.
+		await fixture(landing+Vector3(0,1.0,3.0))
+		actor.global_position.y = landing.y+1.0
+		actor.velocity = Vector3.ZERO
+		var aim: Vector3 = landing+Vector3.UP*0.02-(actor.global_position+Vector3.UP*1.4)
+		actor.yaw = atan2(-aim.x,-aim.z)
+		actor.pitch = atan2(aim.y,Vector2(aim.x,aim.z).length())
+		await frames(2)
 		actor.grapple.cooldown = 0
-		await frames(5)
-		actor.grapple.fire()
-		await frames(160)
-		var landing: Vector3 = ring.get_meta("landing")
-		check("Traversal route landing " + str(i+1), actor.global_position.distance_to(landing) < 2.0 and not actor.grapple.active, str(actor.global_position))
+		var fired: bool = actor.grapple.fire()
+		print("DECK_AIM ",i," FIRED ",fired," POINT ",actor.grapple.candidate_point," ACTOR ",actor.global_position)
+		await frames(130)
+		print("DECK_END ",i," ACTIVE ",actor.grapple.active," MANTLE ",actor.mantling," COLLIDER ",actor.grapple.candidate)
+		check("Traversal deck collision landing "+str(i+1),actor.global_position.distance_to(landing)<2.0 and not actor.grapple.active,str(actor.global_position))
 		actor.grapple.detach()
-		# Continue from the actual arrival, so this checks successive reachability.
 	await fixture(Vector3(4,0.2,17))
 	var eave = enemies.filter(func(e):return e.kind == "eave")[0]
 	eave.ai_enabled = true
@@ -199,10 +205,10 @@ func run() -> void:
 	world.boss.ai_enabled = true
 	world.boss.begin_attack()
 	var seen := {}
-	for i in range(245):
+	for i in range(360):
 		await frames(1)
 		seen[str(world.boss.animation.current_animation)] = true
-	check("Boss telegraphs and releases all three punches", seen.has("charge_1") and seen.has("charge_2") and seen.has("charge_3") and seen.has("jab") and seen.has("cross") and seen.has("smash"), seen.keys())
+	check("Boss plays all three downloaded attack clips", seen.has("attack1") and seen.has("attack2") and seen.has("attack3"), seen.keys())
 	await fixture()
 	start = actor.global_position
 	world.hud_layer.set_pause(true)

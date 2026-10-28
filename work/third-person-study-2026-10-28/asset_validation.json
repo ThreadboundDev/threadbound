@@ -1,9 +1,22 @@
 {
   "models": [
     {
+      "path": "assets\\threadborne_authored_attacks.glb",
+      "bytes": 227172,
+      "sha256": "ea3a53191a58b3bc0f55801e4725d6f262810d76bf2c31657b4d84858863b456",
+      "images": [],
+      "animations": [
+        "air_attack_down",
+        "air_attack_forward",
+        "air_attack_up",
+        "water_attack_idle",
+        "water_attack_move"
+      ]
+    },
+    {
       "path": "assets\\threadborne_study.glb",
-      "bytes": 70006412,
-      "sha256": "03dfaae8895ee8485b460406cb3948601de1db6857a53aa9432e863a45d526f4",
+      "bytes": 70594096,
+      "sha256": "bad6719c43a788bec09a63972f9910d46d62818f97807a241062cd234e3203a7",
       "images": [
         {
           "name": "Threadborne_Normal",
@@ -56,15 +69,22 @@
         }
       ],
       "animations": [
+        "water_idle_1",
         "walk_1",
+        "swimming_1",
+        "stand_to_sit_1",
         "slash_2",
+        "sit_to_stand_1",
         "run_1",
         "roll_1",
         "power_up_1",
+        "jump_into_wall_hang_1",
         "jump_1",
         "impact_1",
         "idle_4",
+        "hanging_idle_1",
         "grapple_swinging_1",
+        "get_up_from_hang_1",
         "death_1",
         "crouch_block_idle_1",
         "casting_1",
@@ -389,6 +409,174 @@
       ]
     },
     {
+      "path": "assets\\enemies\\woven_pikewarden.glb",
+      "bytes": 11535016,
+      "sha256": "5dc5d15ddffe0413b8959995475477b32a8cbe87d275c9fafe5201e111d2d9cb",
+      "images": [
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_9",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": [
+        "Idle_Loop",
+        "Sword_Idle",
+        "Walk_Loop",
+        "Jog_Fwd_Loop",
+        "Hit_Chest",
+        "Death01",
+        "Sword_Regular_A",
+        "Sword_Regular_B",
+        "Sword_Regular_C",
+        "Sword_Heavy_Combo",
+        "Sword_Dash",
+        "Sword_Block"
+      ]
+    },
+    {
+      "path": "assets\\enemies\\woven_swordsman.glb",
+      "bytes": 11208604,
+      "sha256": "102eb350b163e0a03c2e98db3ecf85d26ad4b58f10561f96762324e80820a141",
+      "images": [
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_9",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": [
+        "Idle_Loop",
+        "Sword_Idle",
+        "Walk_Loop",
+        "Jog_Fwd_Loop",
+        "Hit_Chest",
+        "Death01",
+        "Sword_Regular_A",
+        "Sword_Regular_B",
+        "Sword_Regular_C",
+        "Sword_Heavy_Combo",
+        "Sword_Dash",
+        "Sword_Block"
+      ]
+    },
+    {
       "path": "assets\\foliage\\plant_bushLarge.glb",
       "bytes": 3680,
       "sha256": "087c9b4645d92ae7ad1b43c4fb349318ad99c8951c072ee5cf20af5fc9cf2e80",
@@ -422,6 +610,1118 @@
       "sha256": "31e9d42ceff57abfc8df2ed4f8783eeaad82407b56cf8853bdf121d655aab517",
       "images": [],
       "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\armored_golem.glb",
+      "bytes": 13195016,
+      "sha256": "6d1f7cf435d3a02d2515b810bb8a876c8b1f62cf88de3e684a7a30a6e1d292ea",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "T_StoneGolem_Armor_Metallic-T_StoneGolem_Armor_Roughness",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "T_StoneGolem_Body_Metallic-T_StoneGolem_Body_Roughness",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "T_StoneGolem_Weapon_Metallic-T_StoneGolem_Weapon_Roughness",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": [
+        "idle1",
+        "walkF",
+        "jogF",
+        "attack1",
+        "attack2",
+        "attack3",
+        "attack4",
+        "attack5",
+        "gethit1",
+        "death1"
+      ]
+    },
+    {
+      "path": "assets\\local_licensed\\bush.glb",
+      "bytes": 492704,
+      "sha256": "6dfcc23032a0f7d31e5c5c934d11bc51ce2cfeb940f8da663a1914a1d9d71863",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\flowers.glb",
+      "bytes": 459568,
+      "sha256": "00dcc72b5c73b698061a1be9ec6ba4cba1c6b58744ff77f1b3b7b789afc99f88",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\grass.glb",
+      "bytes": 456632,
+      "sha256": "c5e116cbcbb81fd2c8c6550e17e4e3bb693a190aaf80132a9eb23789d766e934",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\rock_a.glb",
+      "bytes": 1114572,
+      "sha256": "7775307b0a2914b8dcddeed941096e19a25746e11ec11e4e153517ba42143704",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\rock_b.glb",
+      "bytes": 1096004,
+      "sha256": "ac625e7e5c72c7eed54be964f9492a8c776ef7b72c563ada2728f9ad04302c3a",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\rock_c.glb",
+      "bytes": 1105792,
+      "sha256": "b13ba3d1aafd1f2fcdc53d44739faa34bbe77e5d838350cb959c6fdbb2a8a44c",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\ruin_arch.glb",
+      "bytes": 1006236,
+      "sha256": "9a9738b20792b6a57511d199b5844e48b949b0d07d2ee9595f9afc0e43c55073",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\ruin_block.glb",
+      "bytes": 962516,
+      "sha256": "f915f44e77e081dd13ed5a6254bcdae2bae10b0399a123fdf35511ee3ab9ea93",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\ruin_ring.glb",
+      "bytes": 952008,
+      "sha256": "b17d862a255bc13481dc7948fbf6a3dd98658252cb0b7bb81a71ee2a95668614",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\ruin_wall.glb",
+      "bytes": 996592,
+      "sha256": "d8dbc4bfb9452b610b8401cb38d54718e1728c265ecaf8e7c00ee49cc980246d",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\tree_a.glb",
+      "bytes": 1192440,
+      "sha256": "ee3a0f509bb845fa40336dca2e47391c836e9d533d97541d60d01c2dcfa1af6d",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\local_licensed\\tree_b.glb",
+      "bytes": 1254504,
+      "sha256": "87b40d7230bbb8130aae9ed64ae5c208995f8e8f44dc07dc1d74861f43f7b97c",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\anvil_log.glb",
+      "bytes": 8791844,
+      "sha256": "d9ad4c052c530577e6d99804232278f358f1a961e7bfe0472362150691180729",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\banner_1.glb",
+      "bytes": 7505320,
+      "sha256": "7fe00b52835d185bcd7d2fcf73060492d2d133fe6aca06c928b4f7ee4d557997",
+      "images": [
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\barrel.glb",
+      "bytes": 5289864,
+      "sha256": "5e6def7296297f67f0bfd037d6a45d49008eb9f8173380d2a02b1cbefdd0b5d6",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\barrel_apples.glb",
+      "bytes": 8773684,
+      "sha256": "f14dae0632e2a4ac5ba6ace8fbe006f2a1f2ef9ce34639ee786ed2e1555d0dae",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\bench.glb",
+      "bytes": 5250548,
+      "sha256": "386898eed4b8e3ad1c9f35f06f8677de932ebd93cd64fdf6d8323803bec0441d",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\bucket_wooden_1.glb",
+      "bytes": 5259324,
+      "sha256": "f92857701f2b32c2f2e87c51e87f530e3df3f93ea5c7d761b020dab5f93c5c13",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\chest_wood.glb",
+      "bytes": 5418524,
+      "sha256": "9151d4cb216c8f0d24776114c52cb336198051e08570dfd5a46446743a75d41f",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\cottage.glb",
+      "bytes": 838432,
+      "sha256": "de75fba271ec1919b47a668bc4ca43d8e0da118c35500c8b55090eda9a75244b",
+      "images": [
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\crate_wooden.glb",
+      "bytes": 5299288,
+      "sha256": "f44d0d7e6d0ccca9008c5451706365a7dfa8ba92618c5b728a8c1b44f7e43e62",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\dummy.glb",
+      "bytes": 7563148,
+      "sha256": "4c1e9e53a01ef462aca34149bd52d2ee8c514b0ebe6c4975258ebdad06a9c98d",
+      "images": [
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\lantern_wall.glb",
+      "bytes": 2601096,
+      "sha256": "62167a46ff70ae96410aef39f9f2080ac5e0de71254f9e2e589a182ced53e0d4",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\pot_1.glb",
+      "bytes": 2517248,
+      "sha256": "c8129fe293ba75261e3010b245cc9f292d49c723cfab810a97d688dbe97409cb",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\rope_1.glb",
+      "bytes": 2788684,
+      "sha256": "1cf90a87344f6ddefaf9b93276b9ad37123c41cf7738a0945547ae8afaf597ef",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\stall_cart_empty.glb",
+      "bytes": 7748336,
+      "sha256": "bb16df34caf4e58133f84feb2dcffa81fbdf825e602f64402dc165c35c026987",
+      "images": [
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\stall_empty.glb",
+      "bytes": 7582184,
+      "sha256": "0f4b3e5c2f5dc935f394f360358d8c0192c8b7c528d6bcc1a64f26aa3fb76a86",
+      "images": [
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\stool.glb",
+      "bytes": 2760244,
+      "sha256": "295ba615e48a1bca8d7bcae8c717a18a682b2ee342a25cb43c268602ebef7f82",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
+      "path": "assets\\village\\weaponstand.glb",
+      "bytes": 5303952,
+      "sha256": "36d1bacb23ffdcf2ab5c924ec563508b085555b138c77b20992b727fca7826cb",
+      "images": [
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
     }
   ],
   "source_inputs_unchanged": [
@@ -439,6 +1739,6 @@
     "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_stomp_attack.wav",
     "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v4.glb"
   ],
-  "resource_links_checked": 21,
-  "project_source_bytes": 177426926
+  "resource_links_checked": 36,
+  "project_source_bytes": 456612868
 }

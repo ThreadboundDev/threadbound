@@ -1,0 +1,280 @@
+{
+	"checks": [
+		{
+			"check": "Four field enemies and downloaded boss",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Three added cottages",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Baked navigation contains walkable polygons",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Woven Swordsman has full rig and motion set",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spindle Runner has full rig and motion set",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Woven Swordsman has full rig and motion set",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spindle Runner has full rig and motion set",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Armored Guardian has full rig and motion set",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Authored up/down/forward air attacks installed",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Water combo and both underwater specials installed",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Player and enemy blade trails installed",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Evaluated boss head matches physical scale",
+			"detail": "(22.04947, 2.653538, 11.97167)",
+			"passed": true
+		},
+		{
+			"check": "Boss animation preserves unit bone scales",
+			"detail": "(1.0, 1.0, 1.0)",
+			"passed": true
+		},
+		{
+			"check": "Ordinary unmarked wall is targetable",
+			"detail": "<Freed Object>",
+			"passed": true
+		},
+		{
+			"check": "Collision hookshot fires and costs 1 AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Wall pull arrives outside solid geometry",
+			"detail": "(0.0, 0.000149, 10.54094)",
+			"passed": true
+		},
+		{
+			"check": "Hookshot arrives once and detaches safely",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ordinary ground accepts hookshot",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Floor hookshot lands above terrain",
+			"detail": "(3.101155, 0.000831, 11.77927)",
+			"passed": true
+		},
+		{
+			"check": "Ceiling underside accepts hookshot",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ceiling hookshot fires",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ceiling pull never puts head through ceiling",
+			"detail": "(0.0, 0.000937, 12.43673)",
+			"passed": true
+		},
+		{
+			"check": "Sky does not create a phantom grapple target",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Enemy collision accepts hookshot",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Enemy grapple strike damages once",
+			"detail": 65,
+			"passed": true
+		},
+		{
+			"check": "Dash costs one AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dash blocks immediate damage",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dash cooldown prevents repeat spending",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Special costs two AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Base AP timers are independent",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "AP restores after base ten-second timers",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Basic attack starts",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Basic sword strike damages one target once",
+			"detail": 70,
+			"passed": true
+		},
+		{
+			"check": "Fresh shield parries frontal attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Held guard retains chip damage",
+			"detail": 96,
+			"passed": true
+		},
+		{
+			"check": "Down air attack uses authored downward pose",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Pogo refreshes air strike and lifts player",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Pogo does not restore AP or air jump",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Downward contact produces a real pogo rebound",
+			"detail": "(0.0, 4.69439, 0.0)",
+			"passed": true
+		},
+		{
+			"check": "Contact pogo leaves air jump spent",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Second jump spends one AP and refreshes upward movement",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ledge mantle finds an unmarked solid top",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Mantle finishes on top with capsule clearance",
+			"detail": "(-0.0, 1.197305, 16.16)",
+			"passed": true
+		},
+		{
+			"check": "River enters swimming state",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Grapple is blocked underwater",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Underwater neutral special works",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Underwater spin special works",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Underwater dash uses vertical direction and AP",
+			"detail": "(0.0, -8.853418, -8.853418)",
+			"passed": true
+		},
+		{
+			"check": "Meditation trades ten Momentum for critical healing",
+			"detail": 35,
+			"passed": true
+		},
+		{
+			"check": "Repeated actions become stale",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Full Momentum enters Flow",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Flow persists while its meter drains",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Flow exits when depleted",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Reset restores all five enemies",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Reset restores AP, health and Momentum",
+			"detail": null,
+			"passed": true
+		}
+	],
+	"failed": 0
+}

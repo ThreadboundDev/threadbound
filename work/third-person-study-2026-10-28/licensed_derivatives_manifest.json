@@ -1,0 +1,80 @@
+[
+  {
+    "file": "armored_golem.glb",
+    "sha256": "6d1f7cf435d3a02d2515b810bb8a876c8b1f62cf88de3e684a7a30a6e1d292ea",
+    "bytes": 13195016,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "bush.glb",
+    "sha256": "6dfcc23032a0f7d31e5c5c934d11bc51ce2cfeb940f8da663a1914a1d9d71863",
+    "bytes": 492704,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "flowers.glb",
+    "sha256": "00dcc72b5c73b698061a1be9ec6ba4cba1c6b58744ff77f1b3b7b789afc99f88",
+    "bytes": 459568,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "grass.glb",
+    "sha256": "c5e116cbcbb81fd2c8c6550e17e4e3bb693a190aaf80132a9eb23789d766e934",
+    "bytes": 456632,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "rock_a.glb",
+    "sha256": "7775307b0a2914b8dcddeed941096e19a25746e11ec11e4e153517ba42143704",
+    "bytes": 1114572,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "rock_b.glb",
+    "sha256": "ac625e7e5c72c7eed54be964f9492a8c776ef7b72c563ada2728f9ad04302c3a",
+    "bytes": 1096004,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "rock_c.glb",
+    "sha256": "b13ba3d1aafd1f2fcdc53d44739faa34bbe77e5d838350cb959c6fdbb2a8a44c",
+    "bytes": 1105792,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "ruin_arch.glb",
+    "sha256": "9a9738b20792b6a57511d199b5844e48b949b0d07d2ee9595f9afc0e43c55073",
+    "bytes": 1006236,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "ruin_block.glb",
+    "sha256": "f915f44e77e081dd13ed5a6254bcdae2bae10b0399a123fdf35511ee3ab9ea93",
+    "bytes": 962516,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "ruin_ring.glb",
+    "sha256": "b17d862a255bc13481dc7948fbf6a3dd98658252cb0b7bb81a71ee2a95668614",
+    "bytes": 952008,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "ruin_wall.glb",
+    "sha256": "d8dbc4bfb9452b610b8401cb38d54718e1728c265ecaf8e7c00ee49cc980246d",
+    "bytes": 996592,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "tree_a.glb",
+    "sha256": "ee3a0f509bb845fa40336dca2e47391c836e9d533d97541d60d01c2dcfa1af6d",
+    "bytes": 1192440,
+    "distribution": "local only; custom source license"
+  },
+  {
+    "file": "tree_b.glb",
+    "sha256": "87b40d7230bbb8130aae9ed64ae5c208995f8e8f44dc07dc1d74861f43f7b97c",
+    "bytes": 1254504,
+    "distribution": "local only; custom source license"
+  }
+]

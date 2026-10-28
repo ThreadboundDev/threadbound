@@ -1,0 +1,3025 @@
+[
+  {
+    "archive": "Universal Animation Library[Standard].zip",
+    "member": "Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard.glb",
+    "sha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+    "local": "temp/polish/ual1/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard.glb"
+  },
+  {
+    "archive": "Universal Animation Library 2[Standard].zip",
+    "member": "Universal Animation Library 2[Standard]/Unreal-Godot/UAL2_Standard.glb",
+    "sha256": "8cee20ab1bc55130092447e810e26df22dd2803eccc54f52137a7d54d7ab88a8",
+    "local": "temp/polish/ual2/Universal Animation Library 2[Standard]/Unreal-Godot/UAL2_Standard.glb"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Arms.bin",
+    "sha256": "b79abe12089d1894fa5349fbc29d2864f8c1e6f976665eb74edb328204872565",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Arms.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Arms.gltf",
+    "sha256": "7f2446a7bab93b882e4095a9583219de3f381962551e8a7d451c287d74a8987e",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Arms.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Body.bin",
+    "sha256": "f1346372e81f9e906709b3adb84320c8f86f520efcbfa0292323fabecd2f4f22",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Body.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Body.gltf",
+    "sha256": "9c4edd8d18a028ee721fbaa5431a42e6ae1b579ac3bd756604bf888b387d4529",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Body.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Feet.bin",
+    "sha256": "0e1f7ac2f5a349dbeb3560c820f9b8588ab5c205fc2b0b70f852c153a19c6262",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Feet.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Feet.gltf",
+    "sha256": "1c8cfde62c44e578d10194f769a568dd40a7f0523d0d286661660141704715de",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Feet.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Legs.bin",
+    "sha256": "4a86e2896a6efec9c72828b0fd9a0c8d483495061c45ef1f3e434a6951823abb",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Legs.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Legs.gltf",
+    "sha256": "1369d75a8197e9e9fdbaf9491b276e7a31c08944377145ff5e497a7c1ac81ea3",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Peasant_Legs.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Acc_Pauldrons.bin",
+    "sha256": "32213f8f5d44bc2a060c21e822db501e92ae3c9782d01df68bc670958c7a312c",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Acc_Pauldrons.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Acc_Pauldrons.gltf",
+    "sha256": "9ebbd79c8cf2316f0edf1ab76c6613ff8f7c5842d9faf98825b9afc205f6ce1e",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Acc_Pauldrons.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Arms.bin",
+    "sha256": "55592d6a2c47f120f76fd84a5caa6728fb8ec169c9b19d71f8132d32f8bedf12",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Arms.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Arms.gltf",
+    "sha256": "98a1b7a5d5d98b6de2f914f810cf75b359d7e11c62f33197948cf4c17c2c95eb",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Arms.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Body.bin",
+    "sha256": "3c9ce3dfc1511ab2a44a1f5050dc0c3ffd67d8814fd8a87dcdf0c8150839f01b",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Body.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Body.gltf",
+    "sha256": "7215f19c1c31fa8f19286357f93e6e043b0dd162d4418fdc73f530a88717db35",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Body.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Feet.bin",
+    "sha256": "35c4350bed0931ad015cd959d9750de0d103d7575deb3ac4c257488daf294b54",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Feet.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Feet.gltf",
+    "sha256": "11fef23ffa6099722f44f7411622f24db8728e9b7b5c028d5c40f980f5f97501",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Feet.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Head_Hood.bin",
+    "sha256": "ad02a4529f77562e248a2de6f5f69e3625ae18740c1abb975d957b28017959f3",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Head_Hood.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Head_Hood.gltf",
+    "sha256": "3ac6867e32cba7793d9393d4844cc21f38c53e833d468d7d5adebfb42bba7d0e",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Head_Hood.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Legs.bin",
+    "sha256": "aeab54821bec8c817b519af10129f5a8c5d71c10d9800c60922470fc00c5e81e",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Legs.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Legs.gltf",
+    "sha256": "804932b0e0b49601a565aef57422bc7ca17e526656518e399ef5d72f7134db6c",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Female_Ranger_Legs.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Arms.bin",
+    "sha256": "d24f6475c4edf51fe9383eca73a0cff76762c54df3a4cc96506533a20617f660",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Arms.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Arms.gltf",
+    "sha256": "4eb0fff5637cb65909103fee86c799f13883c9fa18a0118cc5233a77b67db1d2",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Arms.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Body.bin",
+    "sha256": "d9b380153cbac7850ab3c65c95e831164873f1f7ff696cf8d20a9532c8a45e0f",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Body.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Body.gltf",
+    "sha256": "daaa452abe8762c3bee7b1b30066c76d62077873c72cbf826de1a0f575ac3cb0",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Body.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Feet.bin",
+    "sha256": "cb35f50fb3e784cac5e3193ed82034454af550a9e7f33d01345ce615d7b05add",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Feet.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Feet.gltf",
+    "sha256": "191a2d70d6c2e550669bb7b1fc1c07be650d7168512e18eb2acb0e55d0535c52",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Feet.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Legs.bin",
+    "sha256": "529bfc210a2de7e7ef6e704b59a11f88704068726cdda7d3b8db8e705273d5dc",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Legs.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Legs.gltf",
+    "sha256": "207933393b7a2ef436c0ffea65b70e35feaee084992e798c3eb31e0c771fabb0",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Peasant_Legs.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Acc_Pauldron.bin",
+    "sha256": "e8ccb52c8e2bc771ffa53d03dd6bda9e13680b91f3feec78e2d6451f8d3a20be",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Acc_Pauldron.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Acc_Pauldron.gltf",
+    "sha256": "967bd4e8d85821fbc7116269440b9a90904f6c7eeb0fc17b86349ee1fa3a7aa9",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Acc_Pauldron.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Arms.bin",
+    "sha256": "d630f5cd806c8edce8c48f807d64468ef4207d317baf238d942fe630afd4c023",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Arms.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Arms.gltf",
+    "sha256": "437d71553d79dbf4583351718b5cb5c6d342f5e0682b287a7cd806630ed2b349",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Arms.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Body.bin",
+    "sha256": "e3ebad21b1865c37e46b93c9249d0eb58949498ad99773e9db415b48d8df925e",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Body.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Body.gltf",
+    "sha256": "c5bb520006116222bad30533bd39e0f215abbf8d44e3fa1769ebad12043eac57",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Body.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Feet_Boots.bin",
+    "sha256": "8079ffa4ac2c9a3522a6aa08386e6df92f2de900ece8102d12cdeb96e4476625",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Feet_Boots.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Feet_Boots.gltf",
+    "sha256": "e71cd92792aeabca0dd1621556c54945dd97d154147790a5cb1afd75415a4e02",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Feet_Boots.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Head_Hood.bin",
+    "sha256": "d126c2e0438508983ca092847b772691c3cd6a80fc355c7ea7921324c1ff8053",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Head_Hood.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Head_Hood.gltf",
+    "sha256": "57affa34c145d2c1a02a3d9b17066e22b84eb4ce2bb79c6c7b90588af00846b6",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Head_Hood.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Legs.bin",
+    "sha256": "74691dd17e15f755436fafdc75da25ddc156c7c7811c43f08a4b9f55eba90666",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Legs.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Legs.gltf",
+    "sha256": "c415a01384d34b77a98ff4b0d01d42453dfe98bee259e58a328a803d36ac9df2",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/Male_Ranger_Legs.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_BaseColor.png",
+    "sha256": "a43635628d95571cd62fd4db0cc3a6ea32778b2bc02f242dda224c89d07f1ade",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_Normal.png",
+    "sha256": "7598fa7b63e46fd4dac29708bf5a81e05eb9a67280f7b13c61e28a9110eeb679",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_ORM.png",
+    "sha256": "e1932f5f91104afca89c501416a5fec09069b8552734237fc09045fabc4ca9b4",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Peasant_ORM.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_BaseColor.png",
+    "sha256": "846ef2170b04ee584ad83bb8a1e86dab57a9a43b1193204505912c274d949925",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_Normal.png",
+    "sha256": "dd64da2af3180f0c8f0b721cfc5f0d2720c351b97da8285c6cf49e7717c84147",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_ORM.png",
+    "sha256": "aca03d2fba12508ef07d5968ca22267fb207ea26ae898b6b2def8a296bd44f1c",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Ranger_ORM.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Dark_BaseColor.png",
+    "sha256": "3b6ab973f9f3d6f8961226a0dbd99cf6d1b72df3795a8a5c1620a55754c161c2",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Dark_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Normal.png",
+    "sha256": "e1051d3d56df9cf061bc14c769c37253aecd595f8275f9d4c0d6e0e953c00e18",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Roughness.png",
+    "sha256": "da541fbd4b3bffe754fada5c29f8a0d8f836bf20ce7df8273607af4729a3a5ae",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Female_Roughness.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Dark_BaseColor.png",
+    "sha256": "b4dcc0f4139aab548d7c070c4655bd2080ef16caeaaabee6c4aeb693c524e802",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Dark_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Normal.png",
+    "sha256": "10cd71e2453e577fdd43e912b6016a99baf64964f0593e524bdd304855e15e2a",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Roughness.png",
+    "sha256": "086c2eb25bddfdb77d8e639ccbffb8df723ef4a1910d8e1b217e852f8668bfe5",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Modular Parts/T_Regular_Male_Roughness.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Peasant.bin",
+    "sha256": "40eccaa2bd545c893142ef7dca0866ea8f20df3a86c67c5615024bc4fe546e83",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Peasant.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Peasant.gltf",
+    "sha256": "43ba98058b933cae9acbde0f3ef8c3dda4ba9f69f338606f9d87666d9efffb31",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Peasant.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Ranger.bin",
+    "sha256": "d015964ba0a26eee9c9d2ea6f07aa660bba88aa536cf8bb6b67944b9e97c46df",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Ranger.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Ranger.gltf",
+    "sha256": "9b98b2ae6af3b4a1ec22bf8928b939e0751f08b25b636de82bfa7364fb34d3e1",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Female_Ranger.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.bin",
+    "sha256": "e46bde795f7b69b351d322d7a5628e07131cfb48ed0afe366293f1b3f530433c",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.gltf",
+    "sha256": "8f5a6cf6c1cf96e0a0f8e1a861b4245d42b7f88d44e5076da3d48f3fc52f4e76",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Peasant.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Ranger.bin",
+    "sha256": "5bbb0d42cb324c6c27ce00417e68a876d92978f07d161f83590f0d7c0570eff6",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Ranger.bin"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Ranger.gltf",
+    "sha256": "e1033a212332d84d98c19bc4927c621635478d0aa15d13c79da68d3ba9e0196f",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/Male_Ranger.gltf"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_BaseColor.png",
+    "sha256": "a43635628d95571cd62fd4db0cc3a6ea32778b2bc02f242dda224c89d07f1ade",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_Normal.png",
+    "sha256": "7598fa7b63e46fd4dac29708bf5a81e05eb9a67280f7b13c61e28a9110eeb679",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_ORM.png",
+    "sha256": "e1932f5f91104afca89c501416a5fec09069b8552734237fc09045fabc4ca9b4",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Peasant_ORM.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_BaseColor.png",
+    "sha256": "846ef2170b04ee584ad83bb8a1e86dab57a9a43b1193204505912c274d949925",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_Normal.png",
+    "sha256": "dd64da2af3180f0c8f0b721cfc5f0d2720c351b97da8285c6cf49e7717c84147",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_ORM.png",
+    "sha256": "aca03d2fba12508ef07d5968ca22267fb207ea26ae898b6b2def8a296bd44f1c",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Ranger_ORM.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Dark_BaseColor.png",
+    "sha256": "3b6ab973f9f3d6f8961226a0dbd99cf6d1b72df3795a8a5c1620a55754c161c2",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Dark_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Normal.png",
+    "sha256": "e1051d3d56df9cf061bc14c769c37253aecd595f8275f9d4c0d6e0e953c00e18",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Roughness.png",
+    "sha256": "da541fbd4b3bffe754fada5c29f8a0d8f836bf20ce7df8273607af4729a3a5ae",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Female_Roughness.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Dark_BaseColor.png",
+    "sha256": "b4dcc0f4139aab548d7c070c4655bd2080ef16caeaaabee6c4aeb693c524e802",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Dark_BaseColor.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Normal.png",
+    "sha256": "10cd71e2453e577fdd43e912b6016a99baf64964f0593e524bdd304855e15e2a",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Normal.png"
+  },
+  {
+    "archive": "Modular Character Outfits - Fantasy[Standard].zip",
+    "member": "Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Roughness.png",
+    "sha256": "086c2eb25bddfdb77d8e639ccbffb8df723ef4a1910d8e1b217e852f8668bfe5",
+    "local": "temp/polish/outfits/Modular Character Outfits - Fantasy[Standard]/Exports/glTF (Godot-Unreal)/Outfits/T_Regular_Male_Roughness.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Anvil.bin",
+    "sha256": "d52a9ab436577e8ee8ca00b2929b15595a60b0294c6275a39ecfe1f27408bfcf",
+    "local": "temp/polish/props/Exports/glTF/Anvil.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Anvil.gltf",
+    "sha256": "29e0a6a19f9a579ffe8d463c2a8d445c531a39271ba4eab9754d3f5d9f9d9ce1",
+    "local": "temp/polish/props/Exports/glTF/Anvil.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Anvil_Log.bin",
+    "sha256": "7d3d078f1be72c9c56abc0ee2fc5dfa23826b8a03beaaa756d27054a7443919c",
+    "local": "temp/polish/props/Exports/glTF/Anvil_Log.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Anvil_Log.gltf",
+    "sha256": "878f803a0d8d7a4db5ad31f4839bc87ac03fd409cb69e30aa078c00729a38df2",
+    "local": "temp/polish/props/Exports/glTF/Anvil_Log.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Axe_Bronze.bin",
+    "sha256": "d608e8dea796ae8a200cd78bb1836d2705944f628abb6ac2e03c76e6637187b2",
+    "local": "temp/polish/props/Exports/glTF/Axe_Bronze.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Axe_Bronze.gltf",
+    "sha256": "338ce6e6947b8849774aac2deb9d2bf3a1cb14dc869effb7be0a91053e67b64f",
+    "local": "temp/polish/props/Exports/glTF/Axe_Bronze.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bag.bin",
+    "sha256": "6bf8ad99d0048264aa37157a92f394ab32aeeb5270dab2f3f76282b1eda4e012",
+    "local": "temp/polish/props/Exports/glTF/Bag.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bag.gltf",
+    "sha256": "ccbf22a9162a2a2173caa7346e796b8f92a86dbbbe02a196530bf5642293e545",
+    "local": "temp/polish/props/Exports/glTF/Bag.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_1.bin",
+    "sha256": "7d98308055e39b01192ec5fe9a44688f9ba549ec1d2b12c94d6e5fc4f094cf32",
+    "local": "temp/polish/props/Exports/glTF/Banner_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_1.gltf",
+    "sha256": "a00162c8ef35912d0fe9137b0ee53f94752a1b61fcd8033d4f1e50bd2c54eca1",
+    "local": "temp/polish/props/Exports/glTF/Banner_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_1_Cloth.bin",
+    "sha256": "30cc64edb6898f378dbcc573acbff6ab7731f448025b13ff884541348fce5ea5",
+    "local": "temp/polish/props/Exports/glTF/Banner_1_Cloth.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_1_Cloth.gltf",
+    "sha256": "ab59fad1699f4d04993e6bd3b3c2e909de8b5255b023b061cca22c4400196ffc",
+    "local": "temp/polish/props/Exports/glTF/Banner_1_Cloth.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_2.bin",
+    "sha256": "bb694e19ced6d0a7da5d6d8c1f6b518f3cecdb751b8dea69a21a47fdd798d4e3",
+    "local": "temp/polish/props/Exports/glTF/Banner_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_2.gltf",
+    "sha256": "c759b5da84c6b7b9d10ee69f498f4ac9022a6f7003e4deb7f6cd49f4fa6f29df",
+    "local": "temp/polish/props/Exports/glTF/Banner_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_2_Cloth.bin",
+    "sha256": "258fa990f109353326ff14f71581fa71f3a2bd5aaa3b62c0cddf05d0b55d3dc0",
+    "local": "temp/polish/props/Exports/glTF/Banner_2_Cloth.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Banner_2_Cloth.gltf",
+    "sha256": "fd5e8d3ededb8404bec7b872a569d12025ed5e3bca617a7432674ffe746ffea7",
+    "local": "temp/polish/props/Exports/glTF/Banner_2_Cloth.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel.bin",
+    "sha256": "d8f963e2975b6bbd4b631b5cd7ade2d5dfc76dfb9f8387e2d398935f5405cf20",
+    "local": "temp/polish/props/Exports/glTF/Barrel.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel.gltf",
+    "sha256": "cececb2da345addb21567e3ce1b30a9da071b689bcec59d85cd7a4446f531e87",
+    "local": "temp/polish/props/Exports/glTF/Barrel.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel_Apples.bin",
+    "sha256": "774c97d9b2b2faa04ef40c681540ca3be74a3942ab8bbbd8c8d260b66121f8c8",
+    "local": "temp/polish/props/Exports/glTF/Barrel_Apples.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel_Apples.gltf",
+    "sha256": "07520279b51bd1cc75b6db88b572b5ec445fc7decf0b115fba5c9e20f8caa111",
+    "local": "temp/polish/props/Exports/glTF/Barrel_Apples.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel_Holder.bin",
+    "sha256": "a4aa5eb66d4261565dea3389f73005b6c5cac1f6b226d090cecbc5791d5a418a",
+    "local": "temp/polish/props/Exports/glTF/Barrel_Holder.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Barrel_Holder.gltf",
+    "sha256": "aa318d71e8d5ebcae5f7aff76ed2046eec3d398d2b71f474a04150fa845859c3",
+    "local": "temp/polish/props/Exports/glTF/Barrel_Holder.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bed_Twin1.bin",
+    "sha256": "72bdaa973e348dea5429ea2ecf465e25b4a1ae834de068d14ace57ad5def6421",
+    "local": "temp/polish/props/Exports/glTF/Bed_Twin1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bed_Twin1.gltf",
+    "sha256": "fcb79a79d71d1b24b74113f83684d4e4f0c69e9dacc8b5c9078ca88d286d253e",
+    "local": "temp/polish/props/Exports/glTF/Bed_Twin1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bed_Twin2.bin",
+    "sha256": "57131a881f542545644676b26fc547cc35488f903183898c3a0a6fbae81bfea2",
+    "local": "temp/polish/props/Exports/glTF/Bed_Twin2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bed_Twin2.gltf",
+    "sha256": "339511be568ed72a8a1f3af9890675d99ad7bc3a60396cd883c22bba0fd7e4c4",
+    "local": "temp/polish/props/Exports/glTF/Bed_Twin2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bench.bin",
+    "sha256": "08d6976112645dc1f6a554019e2fc965d0bceba7a01c4f6013615ac46520b418",
+    "local": "temp/polish/props/Exports/glTF/Bench.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bench.gltf",
+    "sha256": "0184d3b128a8a3bcc828d7bc6aa867038e2a85a339130ed015f2727e739f9ab7",
+    "local": "temp/polish/props/Exports/glTF/Bench.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bookcase_2.bin",
+    "sha256": "2d61ba836ecd93e3c0ac9d590b183c600bcb9e1bd32a84960e83b5f77520f2bb",
+    "local": "temp/polish/props/Exports/glTF/Bookcase_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bookcase_2.gltf",
+    "sha256": "58bb7dcdc7f0a9e49b4edb6b9d6d142999133104965bd5ab1d0237dd3b5c1b55",
+    "local": "temp/polish/props/Exports/glTF/Bookcase_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_1.bin",
+    "sha256": "cd8cefe75031456ef5418de5476faab904325a7c950b58b95294b839e31d9553",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_1.gltf",
+    "sha256": "4c6977e7e3f3380001a2b855255f35fe8bd11a740cf72316a440d1dd861c73cd",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_2.bin",
+    "sha256": "ebb1753b10d01163eb0eba391943352a9f2b036783c3984487d4847779ceaf62",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_2.gltf",
+    "sha256": "d59e653417907c5ac964597a4cd9f077da02f8ab2ddb64fa6f810e30133a8a2b",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_3.bin",
+    "sha256": "0a1b75cf436490ed03e9ba99bd59b15d443344e9706e4d19f07540a6d1580119",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_3.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Medium_3.gltf",
+    "sha256": "9ed38c0df898d9e84e903cf02855a1dd06388b53ffcd7de96c91293aab25b38a",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Medium_3.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_1.bin",
+    "sha256": "0c76ff8480fadbee859acff78fdec4e0c693f2a5055e0b6dd6cdbb4ccfd20cb3",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_1.gltf",
+    "sha256": "81228320dc30d9cb447627fae0405f77cabfac011267fb3cc62e106948536a37",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_2.bin",
+    "sha256": "6bf51789b559ff21f78fff8c4e92570d1d2306cbc3cafc48620a34c6b75861b6",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_2.gltf",
+    "sha256": "1dec2d5166936357d4358ab083a0bda86037b5a688fe0844a8a8a0668ae80cec",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_3.bin",
+    "sha256": "007557c58c3bdde0beb467e2ea4dffd9c0a8c699c51b77e81c9b7f70c4e206a8",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_3.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookGroup_Small_3.gltf",
+    "sha256": "07e7c65cd831fde0b3d7704e6d04d4048b329215ec38fb31669d193e3a2763d3",
+    "local": "temp/polish/props/Exports/glTF/BookGroup_Small_3.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookStand.bin",
+    "sha256": "153aa58a6296d61d39832600c80ceeb2f00011d90c7da477c3f326f4744140dd",
+    "local": "temp/polish/props/Exports/glTF/BookStand.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/BookStand.gltf",
+    "sha256": "c7b717e6388bc151cb026256aee8a0b611bf759d294f5070a1c11157483eb07e",
+    "local": "temp/polish/props/Exports/glTF/BookStand.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_5.bin",
+    "sha256": "32060c5c94d297a4409a02f93c73fc86b221311bfa0bee627626e050023836f5",
+    "local": "temp/polish/props/Exports/glTF/Book_5.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_5.gltf",
+    "sha256": "10b082a9984c355bb68e288362bb5e39c62d037ae5a24e3fcec2a5ded4a3b1ec",
+    "local": "temp/polish/props/Exports/glTF/Book_5.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_7.bin",
+    "sha256": "0716b65db72ba78e157b0cac3c2d05283e95a9255dec1863539be70d642ec56c",
+    "local": "temp/polish/props/Exports/glTF/Book_7.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_7.gltf",
+    "sha256": "7f12a3d7a0d8d108dbdd467695129cb9ff1da11ddcfa78122e10e5f1db849e24",
+    "local": "temp/polish/props/Exports/glTF/Book_7.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Simplified_Single.bin",
+    "sha256": "22aeb14e052eb5ffffa30a2565fa7e075dab1742f3d12c8ebf3646218d62cad1",
+    "local": "temp/polish/props/Exports/glTF/Book_Simplified_Single.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Simplified_Single.gltf",
+    "sha256": "70c50a7dd573f49e17a2767c9eabe249f82d72098d5080c553538eecbba814bf",
+    "local": "temp/polish/props/Exports/glTF/Book_Simplified_Single.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Stack_1.bin",
+    "sha256": "cdbe0b7f468ac1713989e0c7f67c93dd83a899825d518b4911d56f4613c85fb7",
+    "local": "temp/polish/props/Exports/glTF/Book_Stack_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Stack_1.gltf",
+    "sha256": "aac90f5a6859acb1edf12b248e12a914f652e8a0a0af0fa6cee6dda3225a7fd2",
+    "local": "temp/polish/props/Exports/glTF/Book_Stack_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Stack_2.bin",
+    "sha256": "3f3e48b029bb932c2169fd40d603ddb587e475ea9724275c9bed3f76396c5860",
+    "local": "temp/polish/props/Exports/glTF/Book_Stack_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Book_Stack_2.gltf",
+    "sha256": "5c0fdceea92115521460a568cd3e0841adafb8da004110cb6be8c65204ebbe8c",
+    "local": "temp/polish/props/Exports/glTF/Book_Stack_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bottle_1.bin",
+    "sha256": "9f4147c9184b86c92f7cc290e525815ad5728141b59bb2a02dc4f0547273c68d",
+    "local": "temp/polish/props/Exports/glTF/Bottle_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bottle_1.gltf",
+    "sha256": "d23c52823303be9d7bbe068b069b8c470294f5c5a40986948ff35bc0d0d48d60",
+    "local": "temp/polish/props/Exports/glTF/Bottle_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bucket_Metal.bin",
+    "sha256": "21ed9b3699a07707180d980c9b9e16a8f19924268e199e7ba17b8b5c06c4f35f",
+    "local": "temp/polish/props/Exports/glTF/Bucket_Metal.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bucket_Metal.gltf",
+    "sha256": "0601c71ce5291f7cc23e33278d3cb70817b3a4410b44588298dbef606c8efb48",
+    "local": "temp/polish/props/Exports/glTF/Bucket_Metal.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bucket_Wooden_1.bin",
+    "sha256": "be608473cd78557d466be9b9e2f6ff15f1edf1e4f5fcdd27be75d494f52578f2",
+    "local": "temp/polish/props/Exports/glTF/Bucket_Wooden_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Bucket_Wooden_1.gltf",
+    "sha256": "b4f93568d96d38dca162098e75fb3eb4ffaf5ff6e41f8f788476abd3be4984cf",
+    "local": "temp/polish/props/Exports/glTF/Bucket_Wooden_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cabinet.bin",
+    "sha256": "dcfed47cc915564061483171ea8b8a4b4563177a4692e37ea91308b8b6f41450",
+    "local": "temp/polish/props/Exports/glTF/Cabinet.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cabinet.gltf",
+    "sha256": "43df513943cde0590ca1925c3920ace9d08e4694d51282a1f5ab70b42e79fe44",
+    "local": "temp/polish/props/Exports/glTF/Cabinet.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cage_Small.bin",
+    "sha256": "bdee89659cd0bf76c480c822ad2d5c05bb7d6f943fd0059f4f59cd8d68009523",
+    "local": "temp/polish/props/Exports/glTF/Cage_Small.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cage_Small.gltf",
+    "sha256": "17c14a9f1f6d1d332f8c3b71f0a31e829a879fab04476e75c8abfb6b74d41506",
+    "local": "temp/polish/props/Exports/glTF/Cage_Small.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick.bin",
+    "sha256": "45ad392961f6389aa7616f5efa03b5f7edf7285866743b1c704670d01f7284cd",
+    "local": "temp/polish/props/Exports/glTF/CandleStick.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick.gltf",
+    "sha256": "f57eaff5b2b61bda1c3b17460295b9fc708e9700e5070aee6e3afd0c297131a3",
+    "local": "temp/polish/props/Exports/glTF/CandleStick.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick_Stand.bin",
+    "sha256": "8d3300e0ab2563b72f4f7ae7f1c7032f9f7c8a0f13f37177b43689a61e5568b2",
+    "local": "temp/polish/props/Exports/glTF/CandleStick_Stand.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick_Stand.gltf",
+    "sha256": "4255072b144deb6abadaa604cdb52d09a64dfee2df690cd0f1c71c829454380b",
+    "local": "temp/polish/props/Exports/glTF/CandleStick_Stand.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick_Triple.bin",
+    "sha256": "35bf25557f28b7c6b4824d6f876698485b3131f09d619c994787573166a4309c",
+    "local": "temp/polish/props/Exports/glTF/CandleStick_Triple.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/CandleStick_Triple.gltf",
+    "sha256": "a65eea34c6af2372ce4490341481d48a17a2611e9815229bac060b6d5e13fa08",
+    "local": "temp/polish/props/Exports/glTF/CandleStick_Triple.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Candle_1.bin",
+    "sha256": "18ce193bb732642969a897b709dd2aa5b59c7fdb87ddc330152794e48b9d981b",
+    "local": "temp/polish/props/Exports/glTF/Candle_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Candle_1.gltf",
+    "sha256": "9539cc17bdc7b774ae7adbfe9c148e89f81e3eba09079d7310f0b789113b6cad",
+    "local": "temp/polish/props/Exports/glTF/Candle_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Candle_2.bin",
+    "sha256": "0d7edbc4ddb7bff3939fb6285b3a2311e4839c823196b44a83786d023a755fe5",
+    "local": "temp/polish/props/Exports/glTF/Candle_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Candle_2.gltf",
+    "sha256": "4856167e1e1c6c039d9f6d162e7cf6e98586640a04d57ccb759c631d91deab39",
+    "local": "temp/polish/props/Exports/glTF/Candle_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Carrot.bin",
+    "sha256": "a551591fc5f300e4fc9df6b872492860ade722d1c585ae899f9441b77ec865ab",
+    "local": "temp/polish/props/Exports/glTF/Carrot.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Carrot.gltf",
+    "sha256": "7554921323c16180f3fdc35891042a031e1a671eb34e005213370f8330d6b20b",
+    "local": "temp/polish/props/Exports/glTF/Carrot.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cauldron.bin",
+    "sha256": "63fd1b9d8d44a12fcb421f74a4f3d806f023b4aa1be9391a7c313a996a8f7f4b",
+    "local": "temp/polish/props/Exports/glTF/Cauldron.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Cauldron.gltf",
+    "sha256": "3937dcadb9b920ae88d7674009b73e2da6c6d9f73d0f4fe6e79408a04dbffec1",
+    "local": "temp/polish/props/Exports/glTF/Cauldron.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chain_Coil.bin",
+    "sha256": "ee403f5a0068cbadcf002231985668993c8231007ef59e06087e4c2cb902ace9",
+    "local": "temp/polish/props/Exports/glTF/Chain_Coil.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chain_Coil.gltf",
+    "sha256": "a1ddf045b66e6433459a68b871ea9a31162c55fa1d5fc5f6ea1685bac3225c97",
+    "local": "temp/polish/props/Exports/glTF/Chain_Coil.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chair_1.bin",
+    "sha256": "dc16da2a14704460a4050ef08782bb46b56b911eb161965b3f2676a1b24c201d",
+    "local": "temp/polish/props/Exports/glTF/Chair_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chair_1.gltf",
+    "sha256": "9c3e659f25c850990cbf8a4d850b6222110248cd5c1419a2c0f548a312dd8457",
+    "local": "temp/polish/props/Exports/glTF/Chair_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chalice.bin",
+    "sha256": "5e71580a7eb8e26254edcdcb95ca5d5f4412354e7fb2124a0d1e9331bcf7e7f9",
+    "local": "temp/polish/props/Exports/glTF/Chalice.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chalice.gltf",
+    "sha256": "435d3f90c2be5f1d76cfd8a5d2f478ee9d384370f0a583e7c2d1e14fa870d271",
+    "local": "temp/polish/props/Exports/glTF/Chalice.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chandelier.bin",
+    "sha256": "6ee3fc5a8dcd4b5ff5e7fa9a5d057f1744c8f0721d9b878e245fa9136f8c4bbd",
+    "local": "temp/polish/props/Exports/glTF/Chandelier.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chandelier.gltf",
+    "sha256": "2fa74c8bb413a86430aa0be69ef2d82cc6cdc6d9505567410dc0abf34b37e272",
+    "local": "temp/polish/props/Exports/glTF/Chandelier.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chest_Wood.bin",
+    "sha256": "e4aea6f99587b8ad9ac08fac82013c55111a748c2e3febedbc4de3e301253901",
+    "local": "temp/polish/props/Exports/glTF/Chest_Wood.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Chest_Wood.gltf",
+    "sha256": "b2022f69b76526fcbbc7f7a8855848beeefa6e8a6f55337d923bce38ed03b2b6",
+    "local": "temp/polish/props/Exports/glTF/Chest_Wood.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin.bin",
+    "sha256": "090091faeeb77273e3ca18daaddfd7f8d12ed690508c8ec0e1ce6684ad4ba54a",
+    "local": "temp/polish/props/Exports/glTF/Coin.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin.gltf",
+    "sha256": "79c3f75e5d8d56c8f7bcc2d095ebdbb6d4f649701880414ab463fc0f98ef7124",
+    "local": "temp/polish/props/Exports/glTF/Coin.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin_Pile.bin",
+    "sha256": "e18ad9b7cfe2304f2476662b43079f2f2d273fc845aa5ca0b41a6f84bd0f3a20",
+    "local": "temp/polish/props/Exports/glTF/Coin_Pile.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin_Pile.gltf",
+    "sha256": "aec9db3acc8a8011e0287e9a4b29b6d7ff25234f12387ba8899a6622d52487bd",
+    "local": "temp/polish/props/Exports/glTF/Coin_Pile.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin_Pile_2.bin",
+    "sha256": "24f55251a466526ded6ec0d3445bbfba066f75adb90dd9a9a01fbacb5a96aff3",
+    "local": "temp/polish/props/Exports/glTF/Coin_Pile_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Coin_Pile_2.gltf",
+    "sha256": "13e3fcf52255db66e22b09ea8279fe88162ab0b06e5797cb0daf89f0856089e4",
+    "local": "temp/polish/props/Exports/glTF/Coin_Pile_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Crate_Metal.bin",
+    "sha256": "cb52d28715b6a9089447ca9ed828a5ab2d5e8f1453502d52df6698269e083f92",
+    "local": "temp/polish/props/Exports/glTF/Crate_Metal.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Crate_Metal.gltf",
+    "sha256": "55fd4a7f499cededac939eade7a842353ed4764a49cd8e586d8bf733668d4456",
+    "local": "temp/polish/props/Exports/glTF/Crate_Metal.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Crate_Wooden.bin",
+    "sha256": "7ae016386790e5998fbdf1656a5dc53a3f1374c3525b22798d84397a36ae937b",
+    "local": "temp/polish/props/Exports/glTF/Crate_Wooden.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Crate_Wooden.gltf",
+    "sha256": "fb06d4b7b9bbfbb9dc51fa56ecff3fe7ba8e9142d643cabedd17a55d7ea46ee5",
+    "local": "temp/polish/props/Exports/glTF/Crate_Wooden.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Dummy.bin",
+    "sha256": "a8c0897c085b0cee9ef3f7f2f88bc37fd29d9cde1cc281f45d936f620adb98c1",
+    "local": "temp/polish/props/Exports/glTF/Dummy.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Dummy.gltf",
+    "sha256": "e7acf49819a78d0ff8ebf8982ee6e9fa1f56e61adb98355743ead4d180d4ba30",
+    "local": "temp/polish/props/Exports/glTF/Dummy.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Apple.bin",
+    "sha256": "9f764bf2f2e960ec32ff31198f6b54787391e71bec166da59372f596299d24e6",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Apple.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Apple.gltf",
+    "sha256": "56de7097ddbf22801537f38b77335b2d85a4e2d24bdcbe9ceb1b3bc666a24997",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Apple.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Carrot.bin",
+    "sha256": "18858970c67b1e6fb2d174a4b4a946787cdde12b42d88cce9d846fc4ede50e19",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Carrot.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Carrot.gltf",
+    "sha256": "6aaa750a27ee652c8090fe7415f1bdd1d66b17d6cfecafc0767559afaef3248c",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Carrot.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Empty.bin",
+    "sha256": "9c380c8ff9314aa5ca94deaf816527be4aae60802c8bba42d30978f1685b520d",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Empty.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/FarmCrate_Empty.gltf",
+    "sha256": "7dccd0a93f29a31ffc05b8b5d39704b2d6c65eb477c895325ecf19c6dc17c644",
+    "local": "temp/polish/props/Exports/glTF/FarmCrate_Empty.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Key_Gold.bin",
+    "sha256": "d610e8bafb8a2e4a7836f649deec0b4f044bc29391b9d8606b2c4c20681885e4",
+    "local": "temp/polish/props/Exports/glTF/Key_Gold.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Key_Gold.gltf",
+    "sha256": "12decc702c2933e5d7519ac82e397a076867278f61bd44a4196a7abdca60755c",
+    "local": "temp/polish/props/Exports/glTF/Key_Gold.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Key_Metal.bin",
+    "sha256": "18ba4046bfb0c97a99b36be0ac28ce5fd104b66c96d20c796532c104b4261c99",
+    "local": "temp/polish/props/Exports/glTF/Key_Metal.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Key_Metal.gltf",
+    "sha256": "e77faacb776d80829be581e6238724dc57b210d2185f1198769b6858dfbd7767",
+    "local": "temp/polish/props/Exports/glTF/Key_Metal.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Lantern_Wall.bin",
+    "sha256": "fe9f3816130587308b73bb8b4b28031b71fe9405a111f115463022709fa04b2e",
+    "local": "temp/polish/props/Exports/glTF/Lantern_Wall.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Lantern_Wall.gltf",
+    "sha256": "9e7623e1d3a16f9212ff7cb41c939746435187f0071bd94849ee7bc6a59785a2",
+    "local": "temp/polish/props/Exports/glTF/Lantern_Wall.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Mug.bin",
+    "sha256": "bbf61011611387a248b9107b13f40a9cddb31e605f677b2102b236147bf31691",
+    "local": "temp/polish/props/Exports/glTF/Mug.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Mug.gltf",
+    "sha256": "73c4cb7e575685d0220a5d1dd40f1a68de9e64bfd34a54bcba6085b62a119a9d",
+    "local": "temp/polish/props/Exports/glTF/Mug.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Nightstand_Shelf.bin",
+    "sha256": "8b3be7b1a3ae6e30ef2c263df48677304c4f4d224f866fbb1fb919b4e496e4a9",
+    "local": "temp/polish/props/Exports/glTF/Nightstand_Shelf.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Nightstand_Shelf.gltf",
+    "sha256": "31d1a892ebfc4221c945c703cb5ad4f9d29968003fc6c5526a84a09a5b58e092",
+    "local": "temp/polish/props/Exports/glTF/Nightstand_Shelf.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Peg_Rack.bin",
+    "sha256": "47cc2c0d449f96c7db4ea5b1f32df7d8a0ea2a1cb6848fc80bd647236d070ae0",
+    "local": "temp/polish/props/Exports/glTF/Peg_Rack.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Peg_Rack.gltf",
+    "sha256": "7fa0747b6225a259c5cd0b38d1c3d73cc7561bbfb02d9f07b130505714662709",
+    "local": "temp/polish/props/Exports/glTF/Peg_Rack.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pickaxe_Bronze.bin",
+    "sha256": "df51d6075a9d1a8c44ed1b1596796c1b301546c8c2607ddbc88c82d691121bef",
+    "local": "temp/polish/props/Exports/glTF/Pickaxe_Bronze.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pickaxe_Bronze.gltf",
+    "sha256": "2a934389f82610fc7702e45dcac859b75181633befad409de238932f5f8f2c7f",
+    "local": "temp/polish/props/Exports/glTF/Pickaxe_Bronze.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_1.bin",
+    "sha256": "6838b7e7a740a91f3bbdce0c79482638f095a79f90e2e1a59158c9750171665c",
+    "local": "temp/polish/props/Exports/glTF/Potion_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_1.gltf",
+    "sha256": "fc53caca616741a21790b54a742a4fe3b4b3dfc88f4d50716fa8f65eece5c2ef",
+    "local": "temp/polish/props/Exports/glTF/Potion_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_2.bin",
+    "sha256": "f1eb3a0b72839076d0836f6fd0ae28c79a2b7759ba5aec09260aae1dccfc5d33",
+    "local": "temp/polish/props/Exports/glTF/Potion_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_2.gltf",
+    "sha256": "42d889170fdad73d6f3f38070ecb0ae1b928de96ce71d78856dcebdbec7d3a15",
+    "local": "temp/polish/props/Exports/glTF/Potion_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_4.bin",
+    "sha256": "e656d1279c6e010cf6330f1b690f8de083c90255d945aa69cfd7506881ab3050",
+    "local": "temp/polish/props/Exports/glTF/Potion_4.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Potion_4.gltf",
+    "sha256": "1040842ccc81da5f3204ed14bbae38e84e73c63abc899ab0e43a29e969bfdd2d",
+    "local": "temp/polish/props/Exports/glTF/Potion_4.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pot_1.bin",
+    "sha256": "eebe6918dbdc743501bdcb2d9f576a52028eb3451bdcf95d92674b97918cafc9",
+    "local": "temp/polish/props/Exports/glTF/Pot_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pot_1.gltf",
+    "sha256": "d925a5e5541d83d2d1885b9d3928fbf553cf4a37ff902cf22d33280805efcf6f",
+    "local": "temp/polish/props/Exports/glTF/Pot_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pot_1_Lid.bin",
+    "sha256": "5c125852b29cf3afa17ec2f0a28585651cb9fbc6b1dd84339288a3a0d504ec8a",
+    "local": "temp/polish/props/Exports/glTF/Pot_1_Lid.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pot_1_Lid.gltf",
+    "sha256": "b8455f37f1eee179893d08a396aff3b6e715878d1a2bedcdaa4ea6b596d9b5b2",
+    "local": "temp/polish/props/Exports/glTF/Pot_1_Lid.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pouch_Large.bin",
+    "sha256": "e83904bdef5ea9b4038f0005a76d5e47367900b4af2bdd44e9869af6e042967b",
+    "local": "temp/polish/props/Exports/glTF/Pouch_Large.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Pouch_Large.gltf",
+    "sha256": "9af4639dfbf39f07142e3491e62e80161164ec0729dc92e9cb0d00abc50d3358",
+    "local": "temp/polish/props/Exports/glTF/Pouch_Large.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_1.bin",
+    "sha256": "950d7977e2dcd8fa40c6103f7cd6d4bc9eb93dbc2da37bd3a3b092868efd61c4",
+    "local": "temp/polish/props/Exports/glTF/Rope_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_1.gltf",
+    "sha256": "b4722ec5baf1313b654d2500ba36e2a2b512bbd9b037f304b94b6665d2286313",
+    "local": "temp/polish/props/Exports/glTF/Rope_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_2.bin",
+    "sha256": "412afce0c7a43f3b8d87ade3298ef4d76b2124937ec8bc1809fe471a6b7b56cb",
+    "local": "temp/polish/props/Exports/glTF/Rope_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_2.gltf",
+    "sha256": "2df33e9eef473315c9c65abf63152c2ee264c53391e244e1a5cebe77cb0826bf",
+    "local": "temp/polish/props/Exports/glTF/Rope_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_3.bin",
+    "sha256": "8c647df0b8dce95ed0a3310ff5f42c7c38dc9b20298f74bed9833abf077dd7ec",
+    "local": "temp/polish/props/Exports/glTF/Rope_3.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Rope_3.gltf",
+    "sha256": "b87badbc1eeff6905b5f89d7d4096e57eb80378239e74f4b4b925701dca6a874",
+    "local": "temp/polish/props/Exports/glTF/Rope_3.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Scroll_1.bin",
+    "sha256": "884fe80cb3075c274acbac22d44e1cb6dba63ac3e62d7df167ccbf52f8f35308",
+    "local": "temp/polish/props/Exports/glTF/Scroll_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Scroll_1.gltf",
+    "sha256": "f8b03860718121bfe6975b31996a0bb36e978e208a7df5a52fe4b0f3efbb14aa",
+    "local": "temp/polish/props/Exports/glTF/Scroll_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Scroll_2.bin",
+    "sha256": "5e1dfa4c4eaa03b3841f6f2cc1948e4a54b17b3a1e165890981e4186b4e30427",
+    "local": "temp/polish/props/Exports/glTF/Scroll_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Scroll_2.gltf",
+    "sha256": "4dfb8f44b30afdbe1f65f922484484c6a41ecc3ae2a9ccc6a4f5f6a7314bba1d",
+    "local": "temp/polish/props/Exports/glTF/Scroll_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Arch.bin",
+    "sha256": "4e1d171e1a4c1ad593e0aea94f89ba29cff757a4f385043a1ef01a0f7633004c",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Arch.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Arch.gltf",
+    "sha256": "f8fb72e169162f99e47abbf530307f4a70e967b8b5eaf3844295cc9a212a574f",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Arch.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Simple.bin",
+    "sha256": "0064b2a3fc0f3252c55587ec582a49e085b2aa05dca2aa33e9e6a313f88139c6",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Simple.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Simple.gltf",
+    "sha256": "aaddd9bf393cf4ed685a810f1d03cfe2a27dba98c060f889e09a968f91d91106",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Simple.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Small_Bottles.bin",
+    "sha256": "af17c1712a12f1ca7b1fa15462605848a379cec403ebf76eedc42fdf43d63221",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Small_Bottles.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shelf_Small_Bottles.gltf",
+    "sha256": "acc121bf8385e8cf4a928a7ce0ac73dc2639ef89fc5f71e3b52a83c6eec51f93",
+    "local": "temp/polish/props/Exports/glTF/Shelf_Small_Bottles.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shield_Wooden.bin",
+    "sha256": "98b663ab52b6e72bb796363feef172eebbf6316594d1737d8546078664680452",
+    "local": "temp/polish/props/Exports/glTF/Shield_Wooden.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Shield_Wooden.gltf",
+    "sha256": "57d46c4a5f34cad7b8a391805d6d4def373778a7b84ef3e4184f83f791082209",
+    "local": "temp/polish/props/Exports/glTF/Shield_Wooden.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/SmallBottle.bin",
+    "sha256": "b94056fc489201a821cb474a54e1ee455e990c1ac52a5617f6d26520d2ce1c09",
+    "local": "temp/polish/props/Exports/glTF/SmallBottle.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/SmallBottle.gltf",
+    "sha256": "70447d0fe55cbbf87ba61caafca816cf26133a57326a462dc575c1d45b72f10c",
+    "local": "temp/polish/props/Exports/glTF/SmallBottle.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/SmallBottles_1.bin",
+    "sha256": "723e7877365cec968535bc92d5c1c905ae52d8c09b60e7799ba097c2c1173010",
+    "local": "temp/polish/props/Exports/glTF/SmallBottles_1.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/SmallBottles_1.gltf",
+    "sha256": "dd4b7672bd0faccd8ca6da0d7a70b7689127ece17c255e49a448dafe3fc6d4fd",
+    "local": "temp/polish/props/Exports/glTF/SmallBottles_1.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stall_Cart_Empty.bin",
+    "sha256": "d70b989c539d9883e9e83f0428390857bf846bb109715a60cb5d526753c33deb",
+    "local": "temp/polish/props/Exports/glTF/Stall_Cart_Empty.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stall_Cart_Empty.gltf",
+    "sha256": "aaeda0ad9ffe8c317909d7450c994b28b1e608fdf04690fa07726b810fb64c88",
+    "local": "temp/polish/props/Exports/glTF/Stall_Cart_Empty.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stall_Empty.bin",
+    "sha256": "9ddececa6f5e0922ee32b064c400abea4dd068be2bfc78891017fca334158826",
+    "local": "temp/polish/props/Exports/glTF/Stall_Empty.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stall_Empty.gltf",
+    "sha256": "b0e6b4f6cb6b9dc0b35d92eceb89ebc27addac167fe56fe38cfc77e3afd62af9",
+    "local": "temp/polish/props/Exports/glTF/Stall_Empty.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stool.bin",
+    "sha256": "6ca3a6bc9b415409d842a338a74c174d0efe4d4972bf8a924fda87c8bda40191",
+    "local": "temp/polish/props/Exports/glTF/Stool.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Stool.gltf",
+    "sha256": "55a111d97463adb71a59eddb8bbee777c5743e66a58403b06e869cc35e4da670",
+    "local": "temp/polish/props/Exports/glTF/Stool.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Sword_Bronze.bin",
+    "sha256": "01a7a7136344687330f4f2c6109b13a229092e105a4245114f2b68733381645c",
+    "local": "temp/polish/props/Exports/glTF/Sword_Bronze.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Sword_Bronze.gltf",
+    "sha256": "fcfbcee736bc6b0408e49922a2eefc11d9131f60777e6053e92d262c1ea37a98",
+    "local": "temp/polish/props/Exports/glTF/Sword_Bronze.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Fork.bin",
+    "sha256": "ea1fab5b06e061cca6e5d50c5900d701f29b165cd3a66cca1a9455b82261c72f",
+    "local": "temp/polish/props/Exports/glTF/Table_Fork.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Fork.gltf",
+    "sha256": "f64b0048d2f2facfc96508ee94296ddd4b27c1403d9f89076785b3804970fd02",
+    "local": "temp/polish/props/Exports/glTF/Table_Fork.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Knife.bin",
+    "sha256": "88c0560af9520d919c3d673487dd888e8319d0e6f4a49980b97a37a077df18a8",
+    "local": "temp/polish/props/Exports/glTF/Table_Knife.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Knife.gltf",
+    "sha256": "df21830a582ba5c1d39573ef6c3014280a315f312ee112f2652f473196e191f1",
+    "local": "temp/polish/props/Exports/glTF/Table_Knife.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Large.bin",
+    "sha256": "af7bfe0cbf0532e01543e4fd5d6d710df70106a7d938c4d74a50c8911ee9bf35",
+    "local": "temp/polish/props/Exports/glTF/Table_Large.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Large.gltf",
+    "sha256": "ffd4e5b803f38f02922c2b0303ae3b5a602f7c239e717b725c0553019be8fcf2",
+    "local": "temp/polish/props/Exports/glTF/Table_Large.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Plate.bin",
+    "sha256": "23c73317b3936f395002c7be5089c4e70ee1cbdcf9f1abdb49af314faf7fe7dc",
+    "local": "temp/polish/props/Exports/glTF/Table_Plate.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Plate.gltf",
+    "sha256": "306bf85a1b02df6dda78a13b47ad2c1cf0646aac47818ec937e0be0c5f2997a3",
+    "local": "temp/polish/props/Exports/glTF/Table_Plate.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Spoon.bin",
+    "sha256": "e48524e0b974fb0c251c804ce82fb00ec58c6f372041e10ff1f4254af95902c0",
+    "local": "temp/polish/props/Exports/glTF/Table_Spoon.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Table_Spoon.gltf",
+    "sha256": "f6bde9a1928e169af7a3b9e773f5c815577da837904e3f16d6edc5e4394e55f5",
+    "local": "temp/polish/props/Exports/glTF/Table_Spoon.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Torch_Metal.bin",
+    "sha256": "522de8798b4c2e0db9ba640d69a5c6e506b558f22b98e95c0cfc95ba2d7b79e7",
+    "local": "temp/polish/props/Exports/glTF/Torch_Metal.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Torch_Metal.gltf",
+    "sha256": "f28978f4f351030766996ccb5585f258882b6892f3944bbf06609a761ffb01a5",
+    "local": "temp/polish/props/Exports/glTF/Torch_Metal.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Page_Noise.png",
+    "sha256": "4d4069a8d588dab3dcd36f9ea309fc617815b766ce225b78bcd487751585e312",
+    "local": "temp/polish/props/Exports/glTF/T_Page_Noise.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Cloth_BaseColor.png",
+    "sha256": "c4d0e14506e05cc56e7ca62ebeeb2d45de055296a55e5a8e9c1330ff8ff1833a",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Cloth_BaseColor.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Cloth_Normal.png",
+    "sha256": "e91a490f94bc00707fb5be08045e316b4a18962f07a3b6e3d9d7c2058cfc51c0",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Cloth_Normal.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Cloth_ORM.png",
+    "sha256": "9bdaa0d1be8c393b07d6185165d73c7cddc058d5c123ad49449945f45a7e0c0d",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Cloth_ORM.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Furniture_BaseColor.png",
+    "sha256": "075fbc9ec2fabc15732bd4025b6f63a0b25762df38440d06bf30437565d39bab",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Furniture_BaseColor.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Furniture_Normal.png",
+    "sha256": "3340c4cc47ff06d5e94a2dbe2a2a12d914d0ef055fcf66f63d876666bd160e42",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Furniture_Normal.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Furniture_ORM.png",
+    "sha256": "7bf417e82baf313793c5791bf48cdc8e573f1f7136197785bf0eb235cb0f8153",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Furniture_ORM.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Metal_BaseColor.png",
+    "sha256": "50422bbda9661effc259caf8b386224cac4b5ca811d2c5b3b8b25ae8efc714db",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Metal_BaseColor.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Metal_Normal.png",
+    "sha256": "ab7315c864c9a9e6d716c940a599928506e1569d3b0c9085f8f1a64ec520d790",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Metal_Normal.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Metal_ORM.png",
+    "sha256": "7407bccfc39ca74ecd68a61217395959bf56ac2063e6c93b384b11f07f5687c5",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Metal_ORM.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Props_BaseColor.png",
+    "sha256": "75225a4ccfd8cc358c871de7a7a3cab7118ef197419a88464e807b81716215c8",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Props_BaseColor.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Props_Normal.png",
+    "sha256": "c4b28a8ba8efe3108cd11356ecab67e8bf75a10cebf29c78ee7724552c305a3e",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Props_Normal.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/T_Trim_Props_ORM.png",
+    "sha256": "2d83d8df79aca2c8f630d389b43f09113afee98e746dfd42ddc3ce3302a136a2",
+    "local": "temp/polish/props/Exports/glTF/T_Trim_Props_ORM.png"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_2.bin",
+    "sha256": "1dce19b5d65d83c271b4ca1340446a482aefbd4a03dac61bb2a94ca3c71f99ea",
+    "local": "temp/polish/props/Exports/glTF/Vase_2.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_2.gltf",
+    "sha256": "92218a88b02bac2bf4b3855dff452f209068cbfd58724585b7bf20556ac17ab5",
+    "local": "temp/polish/props/Exports/glTF/Vase_2.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_4.bin",
+    "sha256": "3348683b971156e44965efbcec6008970adc73d9efe97a5131965e216cac892f",
+    "local": "temp/polish/props/Exports/glTF/Vase_4.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_4.gltf",
+    "sha256": "bfc60358ab3bab21ff6fed8141ea9bc910877f752ef2bb5a22f6215086aa17e3",
+    "local": "temp/polish/props/Exports/glTF/Vase_4.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_Rubble_Medium.bin",
+    "sha256": "0667be3cbda69ec6659d680344994ea16bc7d912843627a8f888df9f31389313",
+    "local": "temp/polish/props/Exports/glTF/Vase_Rubble_Medium.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Vase_Rubble_Medium.gltf",
+    "sha256": "e6177cb94c8eca55e3eead68d485fc66081b17fe4107fd027357ca4e1945f60e",
+    "local": "temp/polish/props/Exports/glTF/Vase_Rubble_Medium.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/WeaponStand.bin",
+    "sha256": "ac76bb8f6a511179842ecf0610ceabd96486e9cc5ca8dfa7639118f9796e4441",
+    "local": "temp/polish/props/Exports/glTF/WeaponStand.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/WeaponStand.gltf",
+    "sha256": "039675f0ea79a8615a27e544eb9ec7799a2a1a94e070858dc400cb50be9a76f9",
+    "local": "temp/polish/props/Exports/glTF/WeaponStand.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Whetstone.bin",
+    "sha256": "c3aae752f1a92cc58d8ca0ca033c8d5d9f90b00238c0e369f835198c0f9cbb6a",
+    "local": "temp/polish/props/Exports/glTF/Whetstone.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Whetstone.gltf",
+    "sha256": "ec0f5173ac53dba3bf112b384b7c88efb6e8814f22b4092cafd1c38345f3001c",
+    "local": "temp/polish/props/Exports/glTF/Whetstone.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Workbench.bin",
+    "sha256": "d26f2a0ba01b4a8db8d6820d1bd0d281297fea30e48c9952484167d18a637b39",
+    "local": "temp/polish/props/Exports/glTF/Workbench.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Workbench.gltf",
+    "sha256": "518fc5c955def18cfcb781b3b955da0e8edcf4f37830a21561ef32c03ad0397e",
+    "local": "temp/polish/props/Exports/glTF/Workbench.gltf"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Workbench_Drawers.bin",
+    "sha256": "1c59f665e4c12ee9de34ba9d22f48c3c6ba7086c3ee483883ff5881fab3dd87f",
+    "local": "temp/polish/props/Exports/glTF/Workbench_Drawers.bin"
+  },
+  {
+    "archive": "Fantasy Props MegaKit[Standard].zip",
+    "member": "Exports/glTF/Workbench_Drawers.gltf",
+    "sha256": "f7f5a88b34e29dbc58402dce54b80d0404f4b6eb1042f4002479b712e36fa10f",
+    "local": "temp/polish/props/Exports/glTF/Workbench_Drawers.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_A.bin",
+    "sha256": "6ad254651117d72fbeb6f4da2415bbf1f47e4f44c196d845355fb7376898f3ca",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_A.gltf",
+    "sha256": "5bad1b841eb691d61c2229b2e4c8830002752fcf1ab5a2547bfc35cad74685c9",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_B.bin",
+    "sha256": "3685a0a4feedcbdff6b1097374be565b67341a9c5be9ea1cab799d1235a9b972",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_B.gltf",
+    "sha256": "dc55236fb90c6b72f7cc9bb55b547dfd919a8f5ff335a53414d4938a51974d4e",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/arrow_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_A.bin",
+    "sha256": "37ee058a478aed5df61accacbb745baf7e73ebccce1f350042389bd2bedd3ba8",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_A.gltf",
+    "sha256": "94441195e9a690a58119bf78d6dabe90a313afc5d8a97d84604661d16840535c",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_B.bin",
+    "sha256": "3ef2aa6ae5777668cc22b048a50ad503ef9de87df936d501874d48b9c567fe84",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_B.gltf",
+    "sha256": "675b5a1da2b2b003962ee7999ef07f4e8ff8233d085d10e023156bcae36048c6",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_C.bin",
+    "sha256": "d37bd736a6ec17ac5911410f73beb06bc8f3fa0c46eb76ce5bff07ee372917a7",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_C.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_C.gltf",
+    "sha256": "afb302b8f3dd916d98156eb940ac968de8c592642df0a32567c69f7ce02f5292",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/axe_C.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A.bin",
+    "sha256": "b0b2f61713f1c1f8c44f8bf6f291723587993f2f4e3b688a2e4cbdfbe3c3e68f",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A.gltf",
+    "sha256": "479ba466ddcf3e11656fc1a7f414b7b5be23fe1d652fb992e1ee8eee0d5ef4dd",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A_withString.bin",
+    "sha256": "9b37ca7c90f9e621bef63b7fe0fc5bb9aebc2862248ccfb498b0c0faab1b8e48",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A_withString.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A_withString.gltf",
+    "sha256": "a01fc3f9412b414efa62aed49e3556bb270d6dce11011fafded55f6af75bb152",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_A_withString.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B.bin",
+    "sha256": "a095106726bc1f258c91d398ea6b3663b2ec8aae87f67bee4f2cebde0fa24d3c",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B.gltf",
+    "sha256": "b3a51fd8d2533cfe5aef83ba5ae04e845e9d5e80b22d4d15d48fba96372439b7",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B_withString.bin",
+    "sha256": "9fd233703aba359ef255037554af62b7c6920fd5565c7378ba753d5416052bcd",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B_withString.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B_withString.gltf",
+    "sha256": "7c6d4d8e5b568d022f3fe14dbe048fa4862f17d8055ef4bf1a28c83de4ba97c8",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/bow_B_withString.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_A.bin",
+    "sha256": "99bb9f33a2c859fbec0056c40889eb803da3c1f64b8ca039e35c0ae2121ce750",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_A.gltf",
+    "sha256": "a1f98d2184ebd1d91c853173ce6f56c89787d3177ed54b50e036e8c33cbb800c",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_B.bin",
+    "sha256": "64e070a22aa1b38920815df3548baecdfd8d0d3f995777fad362dbb7eb8fdab0",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_B.gltf",
+    "sha256": "38ed89d667417ef0b92c6259e0c2fa97b7f5f3b83fc18d9f3a9e8387f091a60a",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/dagger_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A.bin",
+    "sha256": "6e2136c2bbf9d9154189b8a7be79132ceacf2c74f35f175ec2c4cef87cc2fff4",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A.gltf",
+    "sha256": "a9f24c5b04631488d4b295fe3b718073cf6b96f38c2e300836a569acee65c46b",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A_stacked.bin",
+    "sha256": "ec75277a042e93b96bf7254f5bbb3d99035e741b4eb699fc35e614a0279f6d4c",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A_stacked.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A_stacked.gltf",
+    "sha256": "9cf2c428d24f54b094c8ebbb1b5f18b3aa007d62530b093228968dadabe6a2ae",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_A_stacked.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B.bin",
+    "sha256": "6d1c9c02f5e678ed2347b9bac61cc5d66bc3a26c6cacdc975dddc9154f8b4d33",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B.gltf",
+    "sha256": "8c1a0decb26f4b5ed3e52e30b0fe544fff3a430f5cbd2fac8cfe194201f32823",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B_stacked.bin",
+    "sha256": "9a158c8bb5bd7b5ba3fd4a518889b4bf378bd394f853cec7309138ca9615821e",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B_stacked.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B_stacked.gltf",
+    "sha256": "60393d6bdbe62f4f7a171f5e423d3cd284caef26ea6224d7f2a971fc2c92ea0d",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/fistweapon_B_stacked.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/halberd.bin",
+    "sha256": "9a1f589764623a8b8289abcf97d242f352a134bc8274bc14ed77d984bfb04015",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/halberd.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/halberd.gltf",
+    "sha256": "0b9d3f0c56525c181b6088f652caf2eec25216d9ec5abdb59646582392ef791e",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/halberd.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_A.bin",
+    "sha256": "da08cee13731cc62eebb987c709ec7220a5d5ee95076ba89b5206d3d68a80cd1",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_A.gltf",
+    "sha256": "499544e3488326e5d51851c05a1fd77b515fe10e6c00ff54150e17feabd3b5ea",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_B.bin",
+    "sha256": "3c60075409aad2202fb33709bc872773f04af0d987eb8aca888186109c5def6b",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_B.gltf",
+    "sha256": "90ed7353fefc6b63d8f3dac157f966205b7a5ffbeb1556a230dd6e69f04c8d82",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_C.bin",
+    "sha256": "f41f00fccda5d8aef905dc8828e2a5ccccc4971056fe1d92fe80e1325aff9fa3",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_C.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_C.gltf",
+    "sha256": "238cddce1fededc0833a7b4b7fd08e41013893728afd5df05ee8c4c9352cb439",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/hammer_C.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_A.bin",
+    "sha256": "274bf02beaf4a9c8e936b62e18189c2bf11ceda1f1720b6c86dffe6ad42e60df",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_A.gltf",
+    "sha256": "3634e520841d408a021c247c613084299e3a57458a4d3fa1ee84a9ba37fd5d9b",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.bin",
+    "sha256": "16ae59caefcb170de13ee252e669deacb3a396697a4487b5e08f314b6fbdb9bb",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.gltf",
+    "sha256": "4dfe59a9d33a950cbac48cdef2c7cb09b95482949ad07e815722d7537726c6b6",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_C.bin",
+    "sha256": "254470c082fc712214acdd1625195de8d907acd43eda00b0b59744c6fcdd15db",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_C.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_C.gltf",
+    "sha256": "047cf9da3e52c8d8f38932d9a5649e86e7ee28c5e692d7efa767d67a64378d95",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/shield_C.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/spear_A.bin",
+    "sha256": "2fff457925f370c4e4ef7bfb7434bcefcc054a96c569c653be8df5687931c59d",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/spear_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/spear_A.gltf",
+    "sha256": "7299baf7d4f948b7839d616746c791fa57af74a9ccb8903692715f1fd8c947e4",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/spear_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_A.bin",
+    "sha256": "2c08abd861d4a57a85b058e1f0d5b96054bb43d1a993dd6669d3118ebbe1ac2b",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_A.gltf",
+    "sha256": "f369dd0b26fb9cb922141e8ac2772b4bf99a18df04e2d8848e9679f8b35fbc80",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_B.bin",
+    "sha256": "0d8db36107969448593704ea70b4ee59b4e9ce6ff4390eb3ffde2f6db1f7efd9",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_B.gltf",
+    "sha256": "15f6015928ddb4aba4d523606571e1648942ad81c1e8ea239f1c87e3aac93833",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_A.bin",
+    "sha256": "5b3d293758c6a33d792d7c2a055c71d84848e77a1c9d0f203508cc9955db4aeb",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_A.gltf",
+    "sha256": "137cc318e9f36339a088524243071187da8adff3b5735f1d5330ed1577f54851",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.bin",
+    "sha256": "f076069f94986ec221cb46c71a16bc966be47ff35544db8c7f7b6623fdaf2c64",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.gltf",
+    "sha256": "265840768f36afc22fc75e7a5a8c98fd33d199b2b4a6b76653fd2bd37fb8093f",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_B.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_C.bin",
+    "sha256": "d47c90f6991c4d8bcd551afc3903d2f7404b93b0ebfd469076b6f696e3a8b6ca",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_C.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_C.gltf",
+    "sha256": "f18406c1792f90ba214bd836d88be06b498252f6e937a3bbd5e36a0617650573",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_C.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_D.bin",
+    "sha256": "41d025afce9fe509b1244e9e136a48af6a675ca3cb80a3450328af95c59155e4",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_D.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_D.gltf",
+    "sha256": "3a475e38d3f6a52da3829b4bc78cc8a67c3945408b188f7e9092ab5c53a740ea",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_D.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_E.bin",
+    "sha256": "01db950a538d33ae2a0bcc78ffe48a03236542b9c02c0de526eba3be1f8a590a",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_E.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_E.gltf",
+    "sha256": "94fa216bac0984dac29cb7d0a4ebea4b1981c131624d0fc9ecec142b230ee998",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/sword_E.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/wand_A.bin",
+    "sha256": "ec6c0221b6fc29a4ab6874d6a66051539ff2a8cf59f7adc334ea15e2a3ace45e",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/wand_A.bin"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/wand_A.gltf",
+    "sha256": "f914bb6a9a5d581e5f46da466a9e6cb925727997bbe0924e2fcc41e7db68f0d2",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/wand_A.gltf"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/weapons_bits_texture.png",
+    "sha256": "c153429a49928594b00b53c07c4ab3d6352087b7f5df6c272d4aedfdb99a40be",
+    "local": "temp/polish/weapons/KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/weapons_bits_texture.png"
+  },
+  {
+    "archive": "mesh.zip",
+    "member": "Mesh/StoneGolem.fbx",
+    "sha256": "67d3707e15d5fbd933389cb50c650048c22f6b82dd95dc910d3dad4b2fde88a9",
+    "local": "temp/polish/golem/Mesh/StoneGolem.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@attack1.fbx",
+    "sha256": "135e96902404f6164444db1dcd60bece9d1a2e5df0d5663a2fcad641126fefab",
+    "local": "temp/polish/golem/Animations/StoneGolem@attack1.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@attack2.fbx",
+    "sha256": "0d59eb4197204412775298c17ba97f0e1733f4504d49c1e01c1abe0348ede03f",
+    "local": "temp/polish/golem/Animations/StoneGolem@attack2.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@attack3.fbx",
+    "sha256": "95770fb43b273ebf7798dae66e623d93b2616ef8ed297297423495211b2d0a25",
+    "local": "temp/polish/golem/Animations/StoneGolem@attack3.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@attack4.fbx",
+    "sha256": "08f29ac7fdf44915139925c4021a08b0c2afd3ac13ca45d3f9612e9e7875a873",
+    "local": "temp/polish/golem/Animations/StoneGolem@attack4.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@attack5.fbx",
+    "sha256": "2536d7c1723457520868b8651ec2392a1e716b8981ec46caa201e295a3214c9a",
+    "local": "temp/polish/golem/Animations/StoneGolem@attack5.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@death1.fbx",
+    "sha256": "3bfa708edc383bfdcac7eb1aae25c93e600fc2615134accb2842c4fa62480ada",
+    "local": "temp/polish/golem/Animations/StoneGolem@death1.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@gethit1.fbx",
+    "sha256": "5873d0d91df84ac146acb4bb0544d93d2eb299773cac6ed6556843afd3d06664",
+    "local": "temp/polish/golem/Animations/StoneGolem@gethit1.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@idle1.fbx",
+    "sha256": "cb82778b4cb35311933ae7627c38b1ca5daa6def210e91932a8207bf195de175",
+    "local": "temp/polish/golem/Animations/StoneGolem@idle1.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@jogF.fbx",
+    "sha256": "33e2be65be0d5dcd35fc6b893d9ee8b981fc6af1992e1f3cb629f263f27f608b",
+    "local": "temp/polish/golem/Animations/StoneGolem@jogF.fbx"
+  },
+  {
+    "archive": "animations.zip",
+    "member": "Animations/StoneGolem@walkF.fbx",
+    "sha256": "34fcd36a533edab1ab6a89d514796e92bdedf6f9cba1444a9123efa6b3a10ae6",
+    "local": "temp/polish/golem/Animations/StoneGolem@walkF.fbx"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Armor_Albedo_Skin1.tga",
+    "sha256": "27a45a4eafb500bb074fc299d9c8e30f32ca793f870249ab564e948b9d207fc0",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Armor_Albedo_Skin1.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Armor_Metallic.tga",
+    "sha256": "cce8d09e4d2e0decd3999076a621250027850853fc2387f0066096a6456a59e0",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Armor_Metallic.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Armor_Roughness.tga",
+    "sha256": "ece03fb87623f8a7393739da7d0a1a2296d0571ed95094d59e709175565ca4b3",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Armor_Roughness.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Body_Albedo_Skin1.tga",
+    "sha256": "9383e195fde9e5730578bc2106d5f76f4db752c253053c5ab85adffb90fcf069",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Body_Albedo_Skin1.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Body_Metallic.tga",
+    "sha256": "88a475a1e2b8b54a377d3e3a9d3650d4bb113de8a5ff261113765a9222b48c6c",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Body_Metallic.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Body_Roughness.tga",
+    "sha256": "1e1445c7053d7ab7ae63f55bb393e29bef0867f10261b0cf02f6ba76d55108ad",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Body_Roughness.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Weapon_Albedo_Skin1.tga",
+    "sha256": "d3ec5dff0058089519fff4268094bb4c13b029803961b3a848d9f133505510f8",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Weapon_Albedo_Skin1.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Weapon_Metallic.tga",
+    "sha256": "dc23db7e55de0457d4fcb2ef820741f1235ef7987aa83933dca067027c014efa",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Weapon_Metallic.tga"
+  },
+  {
+    "archive": "textures.zip",
+    "member": "Textures/T_StoneGolem_Weapon_Roughness.tga",
+    "sha256": "bc9cc5d263487637bdff64fbcc543c0bc264063285902af58d881bb892ff5cca",
+    "local": "temp/polish/golem/Textures/T_StoneGolem_Weapon_Roughness.tga"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall1.fbx",
+    "sha256": "9b47537945e1c4a44fcc51ce6e6a05c8957b47b3cc2b57bb51147952a6541769",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall3.fbx",
+    "sha256": "197fd02e16e293367c358b3a1b04201515995804682471a6fa9b69ea9c6d03cb",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall3.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall5.fbx",
+    "sha256": "c5bb6937b934028b9ed5bdb82746eb01f3bdb19a9756a5a1c578dacaa996feff",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A1/AP4_A1_StoneWall5.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone1.fbx",
+    "sha256": "67f086e789825e375eed9173b74cb567b96c18046ef17eba121814c641e61737",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone2.fbx",
+    "sha256": "4768176d8ab857d5f741e7d1f4ae0d19b01d1f06c8211743a2587bf1d4a797c1",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone2.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone3.fbx",
+    "sha256": "ba71952b5ca0adac99195725311a1e76c3063b7c23be5d0fcc1b1216e8fe0ebe",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone3.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone4.fbx",
+    "sha256": "91e723ffee02b372fda29e39e657c668a662f599daf47b0fc58500e725e9ca93",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone4.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone5.fbx",
+    "sha256": "93e4a87275e3d333a14512d5f22bfba51102d5737909731bba2dec0daf6165a8",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone5.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone6.fbx",
+    "sha256": "b998ca97f6e1b96537ee8a0ca635d148956b086a96ab28b96129f5dce1832090",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone6.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone7.fbx",
+    "sha256": "9ff8c8f28a3ae43b52f08bb8330fc860e0a7e6b9773a7ae18e4e26534e9f0cfc",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone7.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone8.fbx",
+    "sha256": "21925815b083abca7b458b0f74c149407419b69e2b472bbe6c45e81e91dc9c89",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_Stone8.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall2.fbx",
+    "sha256": "5c6bfa0470f2c9bf3bb216f1664d1f7fecccba724cc5093d98b7686b63e31e64",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall2.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall4.fbx",
+    "sha256": "f4f9f7192e6824c0e1032089f801d69f49f9fe2db0ab67a21cdea76af70fbddb",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall4.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall6.fbx",
+    "sha256": "f1639d8977cdb22254d4983730d27737f0fe490fd48e4f3168e0d885f513dc65",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A2/AP4_A2_StoneWall6.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_Door1.fbx",
+    "sha256": "54956d04d0b0f6f3706521b719dc8c550d628b610af41c8c6d31fdc219761532",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_Door1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_DoorStone1.fbx",
+    "sha256": "36b897b4434bd013efc684225a95cbd5c8d0b166d519daf9bf13cc9f73b05220",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_DoorStone1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_DoorStone2.fbx",
+    "sha256": "bf534e2d6a7d922f15ccda7838ba1bb492efb4656fc835f04dcc60727382c000",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_DoorStone2.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_Gothic1.fbx",
+    "sha256": "35184f790bfaa484fcbfa16a3b80315a8864837918b1cf4ff685898fefacb4f3",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_Gothic1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_LongStone1.fbx",
+    "sha256": "dfa5ff6264984ee441aaa8b7d2f4bd25cf8c15edb414e1fef0f9c490f163593f",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_LongStone1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_LongStone2.fbx",
+    "sha256": "9384cecd88dbf3df80afc9ff07b14492e472620c810fd1062982c6d7709a8b6c",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_LongStone2.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_StoneRing1.fbx",
+    "sha256": "9381cb0b5e648088aa19f227bc8a1e56ddb79722b0b3a0b7fdbbe7a96fe3d77a",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/FBX/A3/AP4_A3_StoneRing1.fbx"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_BaseColor(Alpha-Smoothness).png",
+    "sha256": "b3d216696b98edf85e7730d74a85a4cd15d374475d1846ca81ea8ba0f57d921c",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_BaseColor(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_BaseColor.png",
+    "sha256": "08eed093887f5802427ebde01f0350467806761654f96e957565f6aba43796d5",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_BaseColor.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Mixed_AO.png",
+    "sha256": "f6560ca136745935680358015856266a9cc72f9958dae6a5eb8fb433656d6e30",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Mixed_AO.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Normal_DX.png",
+    "sha256": "f26f476b69f7293252799348c911604edf7efe5fd3c7a442b96cebec03233036",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Normal_DX.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Normal_GL.png",
+    "sha256": "a673d19c801ded7919431822b859f55683edff5e992d686a97eca42b352a3743",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Normal_GL.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Roughness.png",
+    "sha256": "75ed6cf8a35d2cdccadbd3931793a6d8f5af66af2dd9caa367a7272fedde0645",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas1/AP4_Atlas_1_Roughness.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_BaseColor(Alpha-Smoothness).png",
+    "sha256": "d432735c212cca5f008a8d0a2a49f3f6c18d5642441980246b2fddda6ce81d21",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_BaseColor(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_BaseColor.png",
+    "sha256": "9aa90b9a0622924e70b95d8066a0e67863f2551af937c6207693b3a033bf1e49",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_BaseColor.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Mixed_AO.png",
+    "sha256": "570045f568f9fed02f48dd6321c811dad4f821b7739fd096fd9addf9e7304ce6",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Mixed_AO.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Normal_DX.png",
+    "sha256": "1072b9c793e40f78763133753c0dd403add6377fbd62ef7d952747ada21d0e03",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Normal_DX.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Normal_GL.png",
+    "sha256": "92e866996d8f7411662aa6dcd6d943b24f8009b1190a11da6052a5513f5dd129",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Normal_GL.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Roughness.png",
+    "sha256": "ef02d975558d0bb662a3d33012c841192a96f96de498c517bb0cd8ac55db34fd",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas2/AP4_Atlas_2_Roughness.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_BaseColor(Alpha-Smoothness).png",
+    "sha256": "89748b0db20568b18b0e1e71fba2503d656c0bf3d9b12609ec76285f55bc17c9",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_BaseColor(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_BaseColor.png",
+    "sha256": "458f306717cba8950cbbbf11ade873bfbea83692912d69e33265159e35c887b4",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_BaseColor.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Mixed_AO.png",
+    "sha256": "1ee7510c8da6ced31608f1e8add8931f3336e9c603b8472a04a31d616d96f12b",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Mixed_AO.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Normal_DX.png",
+    "sha256": "da81ae105015273f7cf42fb4e1072a3ee2b208fe4f9bdcd6e3f915b64651cd93",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Normal_DX.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Normal_GL.png",
+    "sha256": "0b1a9274775454a6441fff43f488b63c052fc3d0a633094054c6ebec7eaef061",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Normal_GL.png"
+  },
+  {
+    "archive": "Ruins1_(AssetPack4).zip",
+    "member": "Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Roughness.png",
+    "sha256": "f9fc26e50f4ca7b756294a544960c4e7a1059f308e179478782eca7229159521",
+    "local": "temp/polish/stylized/Ruins1_(AssetPack4)/FBX_Textures/Textures/Atlas3/AP4_Atlas_3_Roughness.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD0.fbx",
+    "sha256": "57810b2391dd86237d5902e45e2b9efd2b7cce5525b261f502d8ebdd5475deb9",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD1.fbx",
+    "sha256": "a9c336fe95e3de77a269588ae4eddfbfbcba22302ba6b9f463c064e112e18413",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD2.fbx",
+    "sha256": "c2bb568e44a8d84a9ad826cf908ab33fb9d2df8c989cffe860806978672999c4",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock10_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD0.fbx",
+    "sha256": "9e28633bf33861c20e0a30287c1db564a4369382cfc8c38a1bdf35158807ea83",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD1.fbx",
+    "sha256": "e4e1db99ff913b352728717734d17e84d49ae68f93a104d01d05e62b9dc5448f",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD2.fbx",
+    "sha256": "338aa83605afeaf65804fcaa49be7a4708e80a79de3a344957f06c4e5f2c8f48",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock11_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD0.fbx",
+    "sha256": "c6e691e7dcb14951b68356c136062295e2ccaef4e31d982ed793ff0153732f66",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD1.fbx",
+    "sha256": "9dcfae5bcaaecc71c7d4fc5b57256ba4652b0180a9b4792042b2b4effe087930",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD2.fbx",
+    "sha256": "1dd120748bd8e36e1be64f0ed93297629f50d3f4cc96dfe2bef662e1bd1a2539",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock12_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD0.fbx",
+    "sha256": "2333290ebce0ef3267928095aa81dd9fa55b2ec4b07da94c8718216583486727",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD1.fbx",
+    "sha256": "c6784235d8928eed34ae93f330930d7e7b40f4e03a7101b18309c636d3e7bc25",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD2.fbx",
+    "sha256": "58c3c177fb24c7b66ebe6129b643429055ff20fe24e58f40e358aa86c3210281",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock13_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD0.fbx",
+    "sha256": "234ab083c165781b859b9dd9d9d7d6b487aaf0305fc7723a4e268e335612f590",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD1.fbx",
+    "sha256": "1ad541b4c051dd667513958cc607aee8d71f905e0b4c0771135e291ee4983545",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD2.fbx",
+    "sha256": "ed6abbbc46d297504f788be08484045ce69206c4ec024d31655abc908d0a16cb",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock14_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD0.fbx",
+    "sha256": "e19ab899c38fd781099d8ac9f3e81342f3c26e8c44477616a6d8e569b1dec31d",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD1.fbx",
+    "sha256": "8a2b54a95c13c893e759dc016f1ec890463e994675e354f6ac20dcc7aa5869e1",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD2.fbx",
+    "sha256": "d786f9483d2b30ee56e6bd4c1fbcec5c5d888b8670e9b11aac9e959463edb9c4",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock15_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD0.fbx",
+    "sha256": "5c7fab571788e423fd11dfa442234a5ab3e1a18364ae2100c6a86b38becb2025",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD1.fbx",
+    "sha256": "6a9dcbe2fa76fa86dbce46811d5bb5f33723e5f4fee6cd4956ef116ff49a5b3b",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD2.fbx",
+    "sha256": "308ae60a031e0a2dcc7201a5e4b2fe74730ba712105dd80f010cac2ea0841351",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock16_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD0.fbx",
+    "sha256": "244c53b33430e018e15e42216ee54715310c88893adef4e41d0a69b002280b82",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD1.fbx",
+    "sha256": "b0676d89e386fac6dce960ea26d03207d0887008edf755a408b2c4b4fa395d71",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD2.fbx",
+    "sha256": "bb9dcbadd163ba0d4ac8239403ffce72a83f570920d7a020e11cda368ae0dd3e",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock17_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD0.fbx",
+    "sha256": "7f9d0380392adf0743f49ca5b309fea9aac5774423603193a2738752d197ea90",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD1.fbx",
+    "sha256": "45f5bb8ffa331419e9d13df43e27528b58a7d1bd4ea90ef2f8e5685332fa41c9",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD2.fbx",
+    "sha256": "d306700b73c2809bcfeef3af91750a05ee04159369b2da62988988d088b5a2db",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock1_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD0.fbx",
+    "sha256": "26cc85729a579c2d4e517262fe789d23e17eaf8025373ca3d3fe44158cc7b5ba",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD1.fbx",
+    "sha256": "ed8c2f7650bad327be6123271cd9039da215a32217e71d7ed65208e6b996ff61",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD2.fbx",
+    "sha256": "703a6059c9a22b6649a0f343e84fa7f170c2f48be9f5c363ccff1844c1d7de6d",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock2_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD0.fbx",
+    "sha256": "e583cd9bf5ae4e688dfd2537905211dbb9d7a4dd5c4046dc067d51fae33aea43",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD1.fbx",
+    "sha256": "06f7fe364c5d0173deb5a8e336a0445bf04193f1426eab80e199e7edcb936678",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD2.fbx",
+    "sha256": "eed9908a86aa85ac49e4686beb2df3e2576659b5383ccaf8a220b53cbdb99b59",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock3_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD0.fbx",
+    "sha256": "6be86f988e2afa19b1949161054b9c9ab085ff275433851ca509f59c02521d1d",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD1.fbx",
+    "sha256": "64280ef928c0522db6c59964db89440fc70adec518a2dffd4a5b0a17707c3146",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD2.fbx",
+    "sha256": "17123ffcb7956f8f02a2d2682bd2cf47226f6ee670a77491f43fee73e19c6a7b",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock4_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD0.fbx",
+    "sha256": "35ca2f7aa91fe31345752e9595d69c549b733d79ad6345a66fd240248588be22",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD1.fbx",
+    "sha256": "bb759f724ba25a3e8d8bc64bfaafb3175051736276e9298dc56ba8b17f739ac7",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD2.fbx",
+    "sha256": "bebc0f510cabf0376b05c82824d548f6f732bb0bbf5e77b695dbb975f84d83ac",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock5_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD0.fbx",
+    "sha256": "f89f4f5857a757d308ac17b49fee6df85deba02aeeed073490f9f10ad6f12d79",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD1.fbx",
+    "sha256": "e73b0bbc156383ac45b27b043ca4cfdbbbe31a2df0cf06edb18ef90e91c1cfb7",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD2.fbx",
+    "sha256": "2371d433ab6af608639d2534e501b93c7de716aaef8566698db317d3c799d5b3",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock6_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD0.fbx",
+    "sha256": "25a748fb221e807d672a46390ad0d0862c9140f583b06b888aeb193262605f76",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD1.fbx",
+    "sha256": "e5eecab308cf3f17834582c8e0d1a9cf3f5c39d49d8030f4de16bb440dc65772",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD2.fbx",
+    "sha256": "1db4a8348356116313625f1584b82771d7f254da2b75669caeefa2ae19f8a418",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock7_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD0.fbx",
+    "sha256": "c84086044114ea3bbd9a9819d8df221a7ab39ff2c87fa3799a9ec4e5c84689a6",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD1.fbx",
+    "sha256": "8c4db839135ae14b5b18ac2353f03dd3eaa79b05948cf2547009f6e54bc0a9da",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD2.fbx",
+    "sha256": "853bab27ef610c0db546cebc84c44bac15df0a8ef1c80c7401dd30dce1f52dcd",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock8_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD0.fbx",
+    "sha256": "3c12f8d82716ff0b89615701f95c8cb03439da4646a173e1f7130239a0411f9f",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD0.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD1.fbx",
+    "sha256": "bb583b62ff6d5457e11896f4963ed94fd5a46aa07d9d8ac7258aacf58af44653",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD1.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD2.fbx",
+    "sha256": "16c1d9a11d40785ff096417069fcdba4d1f0ce9d7ed82f3eb16d00fb59da80f6",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/FBX/AP2_Rock9_LOD2.fbx"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor(Alpha-Smoothness).png",
+    "sha256": "059d1a77cebd2e047c01493f5cec11b57a3e7b9297afc296151fab16158fe992",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor.png",
+    "sha256": "5d2b2125369e54557fcc085eae8570e8978898d9f81a6d8a413e0b0c2047f442",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor_V2(Alpha-Smoothness).png",
+    "sha256": "a0680ab0aae11c240253778dc9b4551c8eb4d147e20a91b27ce3dfd83a367bbd",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor_V2(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor_V2.png",
+    "sha256": "4745a787e4ebdf13db4a804fa2350700dd51ea50614ec186f527548740b37fc3",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_BaseColor_V2.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Clean_BaseColor(Alpha-Smoothness).png",
+    "sha256": "5fd1e422269f97ce1f1d23a719c588bf3cab879998fb65fe0ec965aa2079d595",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Clean_BaseColor(Alpha-Smoothness).png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Clean_BaseColor.png",
+    "sha256": "ede5c635c03af52a7e6a0b5c41650172544d8829a1f7f9315c9e1882c3bdb804",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Clean_BaseColor.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_DirtColorMask.png",
+    "sha256": "f7b383f487a91545f196630d03269b4cacf92c87c23a4e254ba54409a569af9a",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_DirtColorMask.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_GradientColorMask.png",
+    "sha256": "3de3c5a10b721e346ed4f17b5b63bbda16f9e08fcb2b03b735039c9fe410127e",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_GradientColorMask.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Normal_DX.png",
+    "sha256": "e5847fbdb0eb059e545b2017607eb6dcf6ead91d933381d0515ab7013947e80a",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Normal_DX.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Normal_GL.png",
+    "sha256": "9f7c994135a3a021b24f92ec5087f963696c8c8658e167c8ed99e90ccd942c43",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Normal_GL.png"
+  },
+  {
+    "archive": "Rocks1_(AssetPack2).zip",
+    "member": "Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Roughness.png",
+    "sha256": "833c07fea30d14809470fd4f9fcdf1e0a27c6414394b44b22adac0dc8f6177fa",
+    "local": "temp/polish/stylized/Rocks1_(AssetPack2)/FBX_Textures/Textures/AP2_Rocks_Roughness.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushHigh.fbx",
+    "sha256": "54b526979966edb5d865c6bc79e18a0cffad64d79f063673235744065e96830d",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushHigh.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushLow.fbx",
+    "sha256": "4f1013b348e6fe240e23c65d6d9447522594abb85ff8217c0cc1565e1e3029aa",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushLow.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushMid.fbx",
+    "sha256": "dadc260339a54c6d01eaf1752cc09542eb2339a3ac9e6e5f31379b6445367de1",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_BushMid.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower1.fbx",
+    "sha256": "0eb61539cc33fbf5fb1aa894a3830c065a6fa497ac5303281691c103687e3760",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower1.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower1Patch.fbx",
+    "sha256": "9595975bf3b4b11a1c3cac77deba8993c5932b17a229cacb845213019f97f67d",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower1Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower2.fbx",
+    "sha256": "56eddcc5934aa01beca1d2c08da8fc1d2e434a5ae84894c28ac1dda366296a28",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower2.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower2Patch.fbx",
+    "sha256": "02afea58771ea8078c999845a7b2dcc2ba968a2332029af2bebb880c9762531a",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower2Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower3.fbx",
+    "sha256": "e256d7621033acad3ff0bc77b5b8300a93a7b0e9d9fae279543c02966109a373",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower3.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower3Patch.fbx",
+    "sha256": "feed67daf26a69d041ce00a016ab353fa5134da2e9df61bc5d95a787e3e43217",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower3Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower4.fbx",
+    "sha256": "ffbbd4ecaa1ab11007a42b4f82e98f7cd7b0a9b38606f81e9364cf620a908097",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower4.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower4Patch.fbx",
+    "sha256": "7a5bb8387ea6d7a8752964189b87236ceb23447827b599d79ca8480df3ae2770",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower4Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower5.fbx",
+    "sha256": "25b2e9fc1baf1c606d39f9937b3a37bdfc92deb4c3570d5db96268d73a9f336e",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower5.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower5Patch.fbx",
+    "sha256": "f2819b92138f77da52ba5405baeaff89516edfe6090a2e3362a5848d79cf635e",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Flower5Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1A.fbx",
+    "sha256": "7b53373d408e6b4022cc49279f4e39477972afe06e56f200967613bb34f350d7",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1A.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1B.fbx",
+    "sha256": "dcebd6c9864a1659fcb1cb7794cd861a47fb8cfc47287e132ea671afbb65bbe6",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1B.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1Patch.fbx",
+    "sha256": "d0d487f1172d9f99fc8799a038b7b19cbcb60f56bd6c90805fcabbec0af80424",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage1Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2A.fbx",
+    "sha256": "120668a3a7cf42007f490eafac19993f64069193a7d1a50f56ac9f576a73cfec",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2A.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2B.fbx",
+    "sha256": "a2ba51c31017ad0c11efaf685950a55961d1351c33918db8139d888c21f9d32e",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2B.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2Patch.fbx",
+    "sha256": "de77ce40660e177642cb9af6255bbbefd8a413177e03bfaf667146946ad4a450",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage2Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3A.fbx",
+    "sha256": "dfa7cb9de3635e4308208cf3e9b3ccc00a7620799aba2c82b6523197ea141ab8",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3A.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3B.fbx",
+    "sha256": "ecab32142017de118f7492eeaf8bc001d07e6efa447c12a7411cb06ea4a1ae14",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3B.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3Patch.fbx",
+    "sha256": "fee0e96876c2d2d9ce1fab431848cf7ffc8915cfb83569e7b9069ea68f1db5a3",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage3Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4A.fbx",
+    "sha256": "4b36690a40591e0614e1424a25662bec90cda656b7b7c271aaa9edde760e1f46",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4A.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4B.fbx",
+    "sha256": "e4f27da730ee289e1c977c6cb3829db6da2e40a75304005ffe3ecfd5125fec7e",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4B.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4Patch.fbx",
+    "sha256": "54b3b6dd5f0be24598fba418574b18793214e579e6735fcb2182482ada04a5d5",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage4Patch.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage5.fbx",
+    "sha256": "bb6a0613b146c53a347533ddec5cba0b72672db0052dfbba310346519ff3ec52",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Foliage5.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_HighGrass.fbx",
+    "sha256": "694c9c4321cc85f69d25a3ecbffb5e0719abe453c8121cf8aceead142f1cc250",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_HighGrass.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_LowGrass.fbx",
+    "sha256": "dc0db3ba21ea11c963820b7013070f0d62e4718cd4c653bebe3c2482470b479f",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_LowGrass.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_MidGrass.fbx",
+    "sha256": "1d7cdbab68180dafdd7cb048af3afb730ed8393c787c637f087e026b817dbff8",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_MidGrass.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree1.fbx",
+    "sha256": "0da5f4bcd4ab1703ad427741164f5d58bdde4071ea062907daa9302948360417",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree1.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree2.fbx",
+    "sha256": "4bd7cfaba08a0deb0aa01be136833afa2e37565095d2d6f4a900c9fc696bd3a1",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree2.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree3.fbx",
+    "sha256": "0184adc64af30846cdfcbf7985b0212f2fc09342562329f85fe8994f4a3cec52",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree3.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree4.fbx",
+    "sha256": "270ab66184557708a0cd14008fbee17e51f6ea997be20adbd8d0c123396f0a08",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/FBX/F1_Tree4.fbx"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_baseColor.png",
+    "sha256": "d7107b08eb48c9f0208fcb8d76ed6191992bb4c372125962971d5f4123d788c1",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_baseColor.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_normal_DX.png",
+    "sha256": "5f0076916e260a1e486b38c9c37f41bd3f6edc87248dd817fc173220560ed63c",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_normal_DX.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_normal_GL.png",
+    "sha256": "b930a5b4ce2d69307c227aa7b648e793c4ca34ce17e82c4815ed1e514b0f9499",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Bark1/bark1_normal_GL.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/F1_Foliage_Map1.png",
+    "sha256": "10279d75668cac05eb48da25291dc511d1e5b73b9129d8d2874b71273e6276c9",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/F1_Foliage_Map1.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/F1_Leaves_Map1.png",
+    "sha256": "840c7bf94ab6610042d6ccc9c1abb1df351c7f3269e2d0df63616bad72ca9cf5",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/F1_Leaves_Map1.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Grass1/grass_baseColor.png",
+    "sha256": "0bc6d382e69a670fd5951b552fa6cc8a5997a7c86c5b75fb5f1a5a323af739c3",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Grass1/grass_baseColor.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Grass1/grass_normal.png",
+    "sha256": "0010ec88772b96e8db936b91063b84cbda97af4d8360f24d443eb2b4312c2eec",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Grass1/grass_normal.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_baseColor.png",
+    "sha256": "c45898196ebdbe5f0447db20776ba75a073331c23e4b6b7c486855e8680269e9",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_baseColor.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_m_ao_h_r.png",
+    "sha256": "b92dd2ce221775db0bd0a7c5f8cca29c832c246fe7215eddd7823a1c315e5a1f",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_m_ao_h_r.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_normal_DX.png",
+    "sha256": "93ea48de306d54e257396e2cbc30d333ccb6f48b319a3fbb2a97892b540490b2",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_normal_DX.png"
+  },
+  {
+    "archive": "StarterNaturePack_(FoliageKit1).zip",
+    "member": "StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_normal_GL.png",
+    "sha256": "02ff8e20e20c13733c60b1d103f2d3db62aa797c93c89978aaa043245b28f70a",
+    "local": "temp/polish/stylized/StarterNaturePack_(FoliageKit1)/FBX_Textures/Textures/Ground1/ground_normal_GL.png"
+  },
+  {
+    "source": "Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb",
+    "target": "project/assets/threadborne_authored_attacks.glb",
+    "sha256": "ea3a53191a58b3bc0f55801e4725d6f262810d76bf2c31657b4d84858863b456"
+  }
+]
