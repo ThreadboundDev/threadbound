@@ -23,6 +23,10 @@ No assets downloaded/replaced and no experiment or conversion implemented.
 Validation: primary listing/license review and documentation diff/link checks.
 Checkpoint: `docs: curate asset shortlist and scope separate 3d study`.
 T20 remains the production priority; asset picks and experiment scope await Chase.
+Follow-up: Chase selected **full 3D movement with a third-person camera** for the
+separate experiment. Direction recorded; no production conversion or prototype
+implementation performed. Decision checkpoint:
+`docs: record third-person direction for separate 3d study`.
 
 **October 28 armored golem assessment (T24): Review delivered; selection pending.**
 Chase explicitly requested review of a newly downloaded Fab golem and pasted

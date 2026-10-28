@@ -14,7 +14,9 @@ cannot establish whether a third-person camera, depth judgments or grapple
 target selection work. We should test those separately and keep either result
 useful even if we retain the current side-on game.
 
-Two meanings of 3D remain open:
+**Chase selected full 3D movement with a third-person camera on October 28.**
+This is the direction for the separate experiment. The distinction below keeps
+that experiment's purpose clear:
 
 - **3D art with side-on movement:** reusable models, rigs, lighting and animation
   while preserving planar route reading. This can already benefit the game.
@@ -22,9 +24,10 @@ Two meanings of 3D remain open:
   depth axis. Camera obstruction, target selection, combat direction, swimming
   and level composition need fresh design/verification.
 
-The camera/control choice remains open. This proposal treats third-person
-movement as the more exploratory option and side-on presentation as a comparison
-view. Neither is an accepted direction.
+Third-person movement is the selected study direction. Side-on presentation is
+only an optional visual comparison against the existing game. This selection
+does not approve converting the production game; the implementation scope and
+specific asset copies still need to be finalized before starting the study.
 
 ## Small first scene
 
@@ -101,6 +104,7 @@ game; use models to render 2D scenery/animation; continue a full-3D prototype; o
 retain the current mixed presentation. Prefer the approach that improves feel
 and makes production sustainable, rather than choosing solely from a still image.
 
-T20 remains the production priority. This study is proposed, unimplemented and
-unaccepted. No scene restructuring, asset replacement, gameplay architecture,
+T20 remains the production priority. The study's full-3D/third-person direction
+is selected; its implementation is proposed, unimplemented and unaccepted.
+No production scene restructuring, asset replacement, gameplay architecture,
 combat/equipment change or lore change has been approved through this document.
