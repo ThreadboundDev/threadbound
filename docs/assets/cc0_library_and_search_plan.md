@@ -5,6 +5,11 @@ download library. Do not retain packs requiring credit, prohibiting commercial
 use, or carrying a custom license. This is a policy for the newly collected
 library, not an instruction to delete existing installed game assets.
 
+Later October 28, Chase explicitly requested assessment of a new Fab Standard
+[armored golem candidate](armored_golem_review_2026_10_28.md). That review is
+separate from this CC0 collection; a specific retention/use exception remains
+undecided. Do not treat the review as a general licensing-policy change.
+
 ## Current library
 
 Ten original ZIPs remain in `C:\Users\chase\Documents\Threadbound Asset Library\archives`:

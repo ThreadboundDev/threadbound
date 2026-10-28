@@ -1,0 +1,724 @@
+{
+  "listing": "https://www.fab.com/listings/e40713f0-ebea-4f4d-ad9b-b577db4432d5",
+  "supplied_license_sha256": "235aa241899fe090f5152aaf3130dfd70436f5c7819d9bce0cbfe699ab9d45c4",
+  "archives": [
+    {
+      "filename": "mesh.zip",
+      "bytes": 10735378,
+      "sha256": "84eb25ff47ae087cc761e6da1c347e3855f023c9dc546a974e636ed6a3115756",
+      "file_count": 40,
+      "expanded_bytes": 23020789,
+      "crc": "pass",
+      "files": [
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_Belt.fbx",
+          "bytes": 339584
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_Bracers.fbx",
+          "bytes": 446704
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_ChestArmor.fbx",
+          "bytes": 463520
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_Greaves.fbx",
+          "bytes": 392208
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_HandArmor.fbx",
+          "bytes": 352096
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_Helmet.fbx",
+          "bytes": 344176
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_Pauldron.fbx",
+          "bytes": 377232
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Armor_ThighArmor.fbx",
+          "bytes": 304944
+        },
+        {
+          "path": "Mesh/Parts/FBX/SKM_StoneGolem_Body.fbx",
+          "bytes": 799456
+        },
+        {
+          "path": "Mesh/Parts/FBX/SM_StoneGolem_Hammer.fbx",
+          "bytes": 221728
+        },
+        {
+          "path": "Mesh/Parts/FBX/SM_StoneGolem_Shield.fbx",
+          "bytes": 175728
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Belt.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Belt.obj",
+          "bytes": 137795
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Bracers.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Bracers.obj",
+          "bytes": 335299
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_ChestArmor.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_ChestArmor.obj",
+          "bytes": 348725
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Greaves.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Greaves.obj",
+          "bytes": 185133
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_HandArmor.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_HandArmor.obj",
+          "bytes": 87523
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Helmet.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Helmet.obj",
+          "bytes": 195203
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Pauldron.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_Pauldron.obj",
+          "bytes": 162129
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_ThighArmor.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Armor_ThighArmor.obj",
+          "bytes": 76075
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Body.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Body.obj",
+          "bytes": 846111
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Hammer OBJ.mtl",
+          "bytes": 362
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Hammer OBJ.obj",
+          "bytes": 601580
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Shield OBJ.mtl",
+          "bytes": 362
+        },
+        {
+          "path": "Mesh/Parts/OBJ/Shield OBJ.obj",
+          "bytes": 418204
+        },
+        {
+          "path": "Mesh/SKM_StoneGolem.fbx",
+          "bytes": 1873296
+        },
+        {
+          "path": "Mesh/Stone Golem OBJ.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Stone Golem OBJ.obj",
+          "bytes": 2541901
+        },
+        {
+          "path": "Mesh/Stone Golem WH OBJ.mtl",
+          "bytes": 330
+        },
+        {
+          "path": "Mesh/Stone Golem WH OBJ.obj",
+          "bytes": 3678941
+        },
+        {
+          "path": "Mesh/StoneGolem copy.mb",
+          "bytes": 5138312
+        },
+        {
+          "path": "Mesh/StoneGolem.fbx",
+          "bytes": 2172832
+        }
+      ]
+    },
+    {
+      "filename": "animations.zip",
+      "bytes": 8025642,
+      "sha256": "00be14e71f4891c4f338ccae97631adffe692f0929ac2574256ac6e45f4c7849",
+      "file_count": 25,
+      "expanded_bytes": 57912112,
+      "crc": "pass",
+      "files": [
+        {
+          "path": "Animations/StoneGolem@attack1.fbx",
+          "bytes": 2661840
+        },
+        {
+          "path": "Animations/StoneGolem@attack2.fbx",
+          "bytes": 2425376
+        },
+        {
+          "path": "Animations/StoneGolem@attack3.fbx",
+          "bytes": 2136528
+        },
+        {
+          "path": "Animations/StoneGolem@attack4.fbx",
+          "bytes": 2111952
+        },
+        {
+          "path": "Animations/StoneGolem@attack5.fbx",
+          "bytes": 2349824
+        },
+        {
+          "path": "Animations/StoneGolem@death1.fbx",
+          "bytes": 2893696
+        },
+        {
+          "path": "Animations/StoneGolem@death2.fbx",
+          "bytes": 2288768
+        },
+        {
+          "path": "Animations/StoneGolem@death3.fbx",
+          "bytes": 2426752
+        },
+        {
+          "path": "Animations/StoneGolem@dodge.fbx",
+          "bytes": 1444320
+        },
+        {
+          "path": "Animations/StoneGolem@gethit1.fbx",
+          "bytes": 1702176
+        },
+        {
+          "path": "Animations/StoneGolem@gethit2.fbx",
+          "bytes": 2186960
+        },
+        {
+          "path": "Animations/StoneGolem@gethit3.fbx",
+          "bytes": 2185840
+        },
+        {
+          "path": "Animations/StoneGolem@idle1.fbx",
+          "bytes": 3717248
+        },
+        {
+          "path": "Animations/StoneGolem@idle2.fbx",
+          "bytes": 3225328
+        },
+        {
+          "path": "Animations/StoneGolem@idle3.fbx",
+          "bytes": 3886720
+        },
+        {
+          "path": "Animations/StoneGolem@idle4.fbx",
+          "bytes": 4431008
+        },
+        {
+          "path": "Animations/StoneGolem@jogB.fbx",
+          "bytes": 1576896
+        },
+        {
+          "path": "Animations/StoneGolem@jogF.fbx",
+          "bytes": 1576720
+        },
+        {
+          "path": "Animations/StoneGolem@jogL.fbx",
+          "bytes": 1577856
+        },
+        {
+          "path": "Animations/StoneGolem@jogR.fbx",
+          "bytes": 1578016
+        },
+        {
+          "path": "Animations/StoneGolem@turn180.fbx",
+          "bytes": 2349360
+        },
+        {
+          "path": "Animations/StoneGolem@walkB.fbx",
+          "bytes": 1796416
+        },
+        {
+          "path": "Animations/StoneGolem@walkF.fbx",
+          "bytes": 1793232
+        },
+        {
+          "path": "Animations/StoneGolem@walkL.fbx",
+          "bytes": 1795024
+        },
+        {
+          "path": "Animations/StoneGolem@walkR.fbx",
+          "bytes": 1794256
+        }
+      ]
+    },
+    {
+      "filename": "textures.zip",
+      "bytes": 801321049,
+      "sha256": "06519b4a93d1876873598ebdf9c7ce46cd2b4f6522d24b317d4044097a405505",
+      "file_count": 42,
+      "expanded_bytes": 2617246556,
+      "crc": "pass",
+      "files": [
+        {
+          "path": "Textures/T_StoneGolem_Armor_Albedo_Skin1.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Albedo_Skin2.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Albedo_Skin3.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Albedo_Skin4.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Emission.tga",
+          "bytes": 50331692
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Gloss.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Metallic+Gloss.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Metallic+Roughness.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Metallic.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Normal.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Occlusion.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Roughness.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Armor_Specular.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Albedo_Skin1.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Albedo_Skin2.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Albedo_Skin3.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Albedo_Skin4.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Emission_Skin1.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Emission_Skin2.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Emission_Skin3.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Emission_Skin4.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Gloss.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Metallic+Gloss.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Metallic+Roughness.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Metallic.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Normal.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Occlusion.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Roughness.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Body_Specular.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin1.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin2.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin3.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin4.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Emission.tga",
+          "bytes": 50331692
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Gloss.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Metallic+Gloss.tga",
+          "bytes": 67108908
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Metallic+Roughness.tga",
+          "bytes": 67108908
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Metallic.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Normal.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Occlusion.tga",
+          "bytes": 50331666
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Roughness.tga",
+          "bytes": 67108882
+        },
+        {
+          "path": "Textures/T_StoneGolem_Weapon_Specular.tga",
+          "bytes": 67108882
+        }
+      ]
+    },
+    {
+      "filename": "armored_stone_golem_unity.unitypackage",
+      "bytes": 840099547,
+      "sha256": "f4f15f9cca14156aa08cf4db0bf92efb30eb2086ff16a9f34b1ec3acaf8327de",
+      "inspection": "Hash/size only; Unity package not executed or installed."
+    }
+  ],
+  "textures": [
+    {
+      "path": "Textures/T_StoneGolem_Armor_Albedo_Skin1.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Albedo_Skin2.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Albedo_Skin3.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Albedo_Skin4.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Emission.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Metallic+Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Metallic+Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Metallic.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Normal.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Occlusion.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Armor_Specular.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Albedo_Skin1.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Albedo_Skin2.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Albedo_Skin3.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Albedo_Skin4.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Emission_Skin1.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Emission_Skin2.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Emission_Skin3.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Emission_Skin4.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Metallic+Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Metallic+Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Metallic.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Normal.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Occlusion.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Body_Specular.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin1.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin2.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin3.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Albedo_Skin4.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Emission.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Metallic+Gloss.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Metallic+Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Metallic.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Normal.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Occlusion.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 24
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Roughness.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    },
+    {
+      "path": "Textures/T_StoneGolem_Weapon_Specular.tga",
+      "width": 4096,
+      "height": 4096,
+      "bits_per_pixel": 32
+    }
+  ]
+}

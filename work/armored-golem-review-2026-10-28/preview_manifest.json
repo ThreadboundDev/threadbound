@@ -1,0 +1,22 @@
+[
+  {
+    "file": "renders/golem_attack1.gif",
+    "bytes": 2496255,
+    "sha256": "0c9fc3a2ad477297e013525db7ddeb5cdb7084dbf828a01f2149b3fac4bcb05c"
+  },
+  {
+    "file": "renders/golem_gameplay_side.png",
+    "bytes": 876798,
+    "sha256": "9e4daf477827af5cbe65337fac8b1f36b6e1c5574df681eeb3ad3877195c23be"
+  },
+  {
+    "file": "renders/golem_review.png",
+    "bytes": 1074000,
+    "sha256": "03e9ba7fac85fa0ddcbd1f9eb08ccbd4dbfa33474f0726faf64e9a9eb1cf1f64"
+  },
+  {
+    "file": "renders/golem_three_quarter.png",
+    "bytes": 863633,
+    "sha256": "f44cbfa8648c1e51137f81b26ff56ff986309946d7663a3e3d5d00d7fc49e9af"
+  }
+]

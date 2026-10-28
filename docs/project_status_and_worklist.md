@@ -10,6 +10,19 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 28 armored golem assessment (T24): Review delivered; selection pending.**
+Chase explicitly requested review of a newly downloaded Fab golem and pasted
+its license. [License, source inventory, stills and attack preview](assets/armored_golem_review_2026_10_28.md).
+Measured 45,704 triangles with equipment, 90 bones, three material families and
+25 animation FBXs. Three ZIP CRC passes; all mesh/animation FBXs inspected;
+idle1/attack1 converted for local rendering after rest-pose mismatch was found.
+Fab Standard permits intended commercial use without required attribution but
+is not CC0. This is a separate licensed candidate; CC0 collection policy remains
+unchanged, and using it as an exception is undecided. Raw source stays local in
+Downloads; only renders/metadata/scripts are checkpointed. No boss/scene/lore
+changes or runtime validation. Checkpoint:
+`docs: assess armored golem license and boss-source suitability`.
+
 **October 28 sound audition (T23): Awaiting Chase's listening review.**
 Chase requested environmental SFX candidates and current-source comparisons.
 [Local audition browser and use guide](assets/nox_sound_audition_2026_10_28.md):

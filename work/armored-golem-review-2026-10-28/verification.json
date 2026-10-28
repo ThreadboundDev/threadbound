@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "checks": [
+    "Three original ZIP CRC passes",
+    "Four original download SHA-256 hashes",
+    "All extracted mesh and animation FBXs imported in background Blender",
+    "Full mesh 45704 triangles; body and armor 31772; equipment 13932",
+    "Full mesh and every animation rig have 90 named bones",
+    "25 animation files each contain one armature action at 30 FPS",
+    "42 texture headers are 4096x4096",
+    "Idle1 and attack1 converted through absolute bone poses for review",
+    "36 attack frames and packaged GIF verified",
+    "Representative rendered frames inspected; no production import"
+  ],
+  "limitations": [
+    "Godot import, runtime costs, full 25-clip motion/loop/root-motion validation and gameplay are untested",
+    "Proper acquisition/tier and asset-specific license receipt not independently checked",
+    "Fab Standard candidate remains separate from CC0-only collection"
+  ]
+}
