@@ -3,6 +3,9 @@ class_name GreyboxPolygonWater2D
 extends Area2D
 
 @export var lake_presentation := false
+## Optional building reveal controlling only this air pocket's visible mask.
+## Physical dry-state and movement queries always keep the authored polygon.
+@export var presentation_owner_path: NodePath
 
 @export var air_pocket := false:
 	set(value):
@@ -211,10 +214,21 @@ func _sync_pocket_group() -> void:
 		remove_from_group("lake_air_pockets")
 		add_to_group("lake_water_volumes")
 
+func is_presentation_active() -> bool:
+	if not air_pocket or presentation_owner_path.is_empty():
+		return true
+	var reveal_owner := get_node_or_null(presentation_owner_path)
+	if is_instance_valid(reveal_owner) and reveal_owner.has_method("is_cutaway_open"):
+		return reveal_owner.is_cutaway_open()
+	# Unlinked/invalid placements retain the existing standalone pocket behavior.
+	return true
+
 func _update_water_preview(delta: float) -> void:
 	if not is_instance_valid(_fill):
 		return
 	_fill.visible = (not air_pocket or lake_presentation) and points.size() >= 3 and not Geometry2D.triangulate_polygon(points).is_empty()
+	if lake_presentation and air_pocket:
+		_fill.visible = _fill.visible and is_presentation_active()
 	_fill.polygon = points if _fill.visible else PackedVector2Array()
 	if lake_presentation and air_pocket:
 		var boundary := points.slice(0,256)
@@ -249,6 +263,8 @@ func _update_water_preview(delta: float) -> void:
 	var counts := PackedInt32Array()
 	var over_limit := false
 	for pocket in get_tree().get_nodes_in_group("lake_air_pockets"):
+		if lake_presentation and not pocket.is_presentation_active():
+			continue
 		if counts.size() >= 16 or vertices.size() + pocket.points.size() > 256:
 			over_limit = true
 			continue
@@ -294,7 +310,7 @@ func _is_visible_water(point: Vector2) -> bool:
 	if not contains_global_point(point):
 		return false
 	for pocket in get_tree().get_nodes_in_group("lake_air_pockets"):
-		if pocket.contains_global_point(point):
+		if (not lake_presentation or pocket.is_presentation_active()) and pocket.contains_global_point(point):
 			return false
 	return true
 

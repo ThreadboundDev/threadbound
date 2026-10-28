@@ -1,7 +1,8 @@
 # Tower exterior water continuity — proposed correction
 
 **Approved by Chase on October 27, 2026:** "Approve exterior-water plan; keep dry interior."
-Implementation and verification follow the approved dolphin correction.
+Implemented: 33 focused GPU checks, 97 water-room GPU checks, 6 reflection pixel
+checks and 16 headless surface checks pass. Appearance acceptance remains pending.
 
 The October 27 screenshot shows the submerged
 tower facade much drier/brighter than the surrounding lake. The tower's air

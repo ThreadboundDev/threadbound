@@ -949,6 +949,7 @@ polygon = PackedVector2Array(369, -531, 5834, -531, 5838, 2334, -1041, 2334, -10
 [node name="AirPocket" parent="Volumes" unique_id=1581545087 instance=ExtResource("3")]
 position = Vector2(-38, 657)
 lake_presentation = true
+presentation_owner_path = NodePath("../../Buildings/Tower")
 air_pocket = true
 points = PackedVector2Array(1117, 676, 1140, 121, 1140, -21, 1117, -270, 1908, -268, 1888, -4, 1884, 307, 1888, 634, 1907, 797, 2013, 858, 1996, 1169, 1026, 1169, 1011, 801)
 

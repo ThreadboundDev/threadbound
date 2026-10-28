@@ -23,8 +23,8 @@ change unrelated attacks, damage, equipment progression or enemy art.
 The tower needs a choice about its dry interior. A concrete file-by-file
 [proposal](../design/tower_water_exterior_proposal_2026_10_27.md) is prepared:
 keep water over the closed exterior and reveal the existing dry mask only on
-entry. Chase approved this exterior-water plan on October 27; implementation
-follows the approved dolphin correction below.
+entry. Chase approved this exterior-water plan on October 27; both approved
+corrections are delivered below.
 
 Pre-existing worktree changes: the comparison scene contains Chase's added
 Tide Duelist and Loom Heron, both nested under their originals, plus editor
@@ -162,3 +162,42 @@ run. No attack timing randomization or new enemy behavior was added. Hands-on
 movement/placement review remains pending.
 
 Checkpoint: `fix: separate duplicated dolphin from parent movement`.
+
+## Approved continuous water over the closed tower exterior
+
+Chase answered **"Approve exterior-water plan; keep dry interior"** on October 27.
+The tower air pocket now optionally links its presentation to `Buildings/Tower`.
+Its dry water mask and caustics activate only while that existing cutaway is
+open. Physical air-pocket membership and movement retain the original polygon;
+unlinked pockets keep their existing behavior. The building exposes its actual
+cutaway state through a read-only query. The front facade shader now reproduces
+both lake and immersion grades, including the same depth/current treatment,
+because it draws after those passes. No new render pass, model or collision was
+added. Closed-side water no longer reveals a bright dry wedge beside the stone.
+
+Godot 4.7.2 Forward+ / RX 6800 XT: **33 focused GPU checks pass**, with **97 existing
+water-room GPU checks**, **6 reflection pixel checks** and **16 headless surface
+checks** passing. The baseline has seven failures in 27 checks. Before/after
+fixtures and exterior/base/interior captures are in
+`work/tower-water-exterior-2026-10-27/`; the final run adds an actual dry standing
+platform capture and a return-to-water check.
+
+The synthetic closed rear/facade white patches are RGB (.518,.663,.718) and
+(.510,.651,.706), within .025 per channel; opening the pocket restores a clear
+white interior. Unlinked pockets remain clear in both states. In the real room,
+the player remains wet outside, stands dry on TowerPlatform0, and returns to wet
+classification on exit. The front stone hides about **96%** of the actual test
+silhouette at the opening (25,939 exposed pixels / 1,045 remaining). Building
+collision signature **3332942524** and the physical pocket polygon match the
+baseline exactly. The shared surface remains y=411.
+
+The room fixture accepts `--render-scale=0.5` for verification beside an open
+editor/game; it does not change the project's default rendering quality. The
+focused fixture uses a scenery scale of 1.0. Initial fixture type inference and
+window-stretch ROI issues were corrected; an uncapped frame watchdog run ended
+early and was rerun at 60 FPS. Final runs complete without script errors. Existing
+camera interpolation, missing legacy glove Swim_Idle and resource/RID/ObjectDB
+shutdown diagnostics remain T04. Screenshots were visually inspected. The dry
+interior remains intentional; hands-on appearance/transition acceptance is pending.
+
+Checkpoint: `fix: keep tower exterior submerged until cutaway opens`.

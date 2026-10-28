@@ -1,5 +1,6 @@
 extends SceneTree
 var out := "res://work/water-delivery-2026-10-22"
+var scenery_render_scale := -1.0
 var room
 var failures: Array[String] = []
 var checks := 0
@@ -9,6 +10,7 @@ var captures: Array[String] = []
 func _initialize() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="): out = argument.trim_prefix("--output=")
+		if argument.begins_with("--render-scale="): scenery_render_scale = clampf(argument.trim_prefix("--render-scale=").to_float(),.5,2.0)
 	call_deferred("verify")
 
 func check(ok: bool, message: String) -> void:
@@ -36,6 +38,7 @@ func verify() -> void:
 	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
+	if scenery_render_scale>0.0: room.get_node("LakesideArtStage").render_scale = scenery_render_scale
 	await frames(5)
 	var rims = room.get_node("Geometry/TerrainArtwork/RockContactRims")
 	check(rims.z_index == 3 and not rims.z_as_relative, "Contact rims draw in front of player")
@@ -61,8 +64,15 @@ func verify() -> void:
 	check(is_equal_approx(float(lake._immersion_fill.material.get_shader_parameter("immersion_opacity")),lake.immersion_opacity), "Actor immersion uses its independent opacity")
 	for pocket in get_nodes_in_group("lake_air_pockets"):
 		check(pocket.lake_presentation and pocket.pocket_caustic_intensity <= .06, "Every dry pocket uses the same restrained presentation")
+	var tower_pocket = room.get_node("Volumes/AirPocket")
+	check(tower_pocket.get_node(tower_pocket.presentation_owner_path)==room.get_node("Buildings/Tower"),"Only tower pocket presentation follows its cutaway")
+	var presented := 0
+	for pocket in get_nodes_in_group("lake_air_pockets"):
+		if pocket.is_presentation_active(): presented += 1
+	check(int(lake._fill.material.get_shader_parameter("pocket_count"))==presented,"Visible dry masks follow reveal state independently of physical pockets")
 	var stage = room.get_node("LakesideArtStage")
 	check(stage.near_sprite.material is ShaderMaterial, "Exterior facade has its own submerged grade")
+	check(is_equal_approx(float(stage.near_sprite.material.get_shader_parameter("immersion_opacity")),lake.immersion_opacity),"Foreground facade shares actor immersion strength")
 	check(int(stage.near_sprite.material.get_shader_parameter("lake_count")) == lake.points.size(), "Exterior wet mask follows lake geometry independently of dry pockets")
 	check(bool(lake._fill.material.get_shader_parameter("has_facade_reflection")), "Rear reflection includes the separate foreground facade texture")
 	for rim: MeshInstance2D in rims.get_children():

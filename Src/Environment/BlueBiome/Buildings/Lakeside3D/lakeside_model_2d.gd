@@ -68,6 +68,11 @@ func _update_cutaway() -> void:
 	if is_instance_valid(render_model) and render_model.has_method("set_cutaway"):
 		render_model.set_cutaway(preview_inside or not occupants.is_empty())
 
+func is_cutaway_open() -> bool:
+	if is_instance_valid(render_model):
+		return render_model.get("is_cutaway") == true
+	return preview_inside
+
 func _process(_delta: float) -> void:
 	if not is_instance_valid(render_model):
 		return

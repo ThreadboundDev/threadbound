@@ -1,0 +1,19 @@
+{
+	"captures": [
+		"cave_contact",
+		"shore",
+		"tower_wet_exterior",
+		"swimmer",
+		"tower_dry_cutaway",
+		"tower_dusk",
+		"fisher_interior",
+		"workshop_interior"
+	],
+	"checks": 97,
+	"display": "Windows",
+	"failures": [],
+	"passed": true,
+	"rim_edges": 918,
+	"rim_meshes": 31,
+	"rim_triangles": 2049
+}

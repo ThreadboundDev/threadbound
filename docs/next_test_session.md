@@ -33,6 +33,10 @@ and Enemies on **current 3D** for this first retest.
    should hide the swimmer while passing behind it; the cutaway should reveal
    the interior as you rise inside. Check for premature disappearance, trapped
    movement or body parts drawn over solid stone. No new barrier was added.
+   October 27 exterior-water correction: while swimming beside the closed
+   tower, water should continue across its exterior without the old dry wedge
+   along the stone sides. Enter to reveal the dry interior, stand on a platform,
+   then leave; the exterior should become continuously wet again.
 4. **Water and rock contact.** Use **Shore**. Reflections of posts/bridge/scenery
    should meet the waterline without a detached cyan strip. Move the camera,
    swim through the surface, and compare Day/dusk. Check player contrast and

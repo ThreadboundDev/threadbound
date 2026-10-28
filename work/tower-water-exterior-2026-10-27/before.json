@@ -1,0 +1,22 @@
+{
+	"checks": 27,
+	"display": "Windows",
+	"failures": [
+		"Air pocket supports an independently linked presentation owner",
+		"Closed tower excludes only its own visual dry mask",
+		"Closed tower has no dry-pocket caustic overlay",
+		"Water continues across the closed tower pocket",
+		"Foreground facade shares the surrounding underwater grade",
+		"Authored tower pocket links its presentation to the tower",
+		"Closed exterior leaves only the two unrelated visual air pockets"
+	],
+	"samples": {
+		"building_collision_signature": 3332942524,
+		"closed_facade": "(0.6902, 0.7804, 0.8118, 1.0)",
+		"closed_rear": "(1.0, 1.0, 1.0, 1.0)",
+		"open_interior": "(1.0, 1.0, 1.0, 1.0)",
+		"physical_pocket_points": "[(1117.0, 676.0), (1140.0, 121.0), (1140.0, -21.0), (1117.0, -270.0), (1908.0, -268.0), (1888.0, -4.0), (1884.0, 307.0), (1888.0, 634.0), (1907.0, 797.0), (2013.0, 858.0), (1996.0, 1169.0), (1026.0, 1169.0), (1011.0, 801.0)]",
+		"rim_exposed_pixels": 26117,
+		"rim_remaining_pixels": 1101
+	}
+}

@@ -147,6 +147,7 @@ func _sync_camera() -> void:
 		wet_material.set_shader_parameter("lake_count",count)
 		wet_material.set_shader_parameter("surface_y",lake.get_surface_global_y())
 		wet_material.set_shader_parameter("water_opacity",lake.get_presentation_opacity())
+		wet_material.set_shader_parameter("immersion_opacity",lake.immersion_opacity)
 		wet_material.set_shader_parameter("shallow_color",Color(lake.water_color.r,lake.water_color.g,lake.water_color.b,1))
 		wet_material.set_shader_parameter("deep_color",lake.deep_water_color)
 		if is_instance_valid(lake._fill):

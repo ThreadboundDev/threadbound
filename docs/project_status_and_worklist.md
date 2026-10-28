@@ -10,12 +10,11 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 27 active follow-ups:** fix the post-entry house jump, cancel grapple
-and its held-arm pose on water entry, extend dolphin awareness, and stop nested
-dolphins inheriting movement through walls. Work through one verified fix and
-commit at a time. The tower's exterior water cutout is still unaccepted;
-[the exterior-water proposal](design/tower_water_exterior_proposal_2026_10_27.md)
-and dolphin reparenting were explicitly approved by Chase on October 27.
+**October 27 follow-ups delivered:** house handoff, water-entry grapple/arm reset,
+dolphin range, independent duplicate dolphin, and continuous water over the closed
+tower exterior. Each implementation has its own verified commit/push. Chase approved
+the [exterior-water plan](design/tower_water_exterior_proposal_2026_10_27.md) and
+dolphin reparenting on October 27. Appearance/feel acceptance remains pending.
 [Feedback and per-fix results](verification/lakeside_followups_2026_10_27.md).
 
 House handoff correction delivered: `fix: ground house entry before releasing door animation`.
@@ -32,16 +31,24 @@ scripts and current fix; reconciliation remains T04.
 
 Chase's saved duplicate-enemy placement edits were preserved in WIP checkpoint
 `bd9c11bb`. The approved dolphin-only parenting correction is now delivered:
-`fix: separate duplicated dolphin from parent movement`. It preserves `(349,2008)`
+`9f09f306` (`fix: separate duplicated dolphin from parent movement`). It preserves `(349,2008)`
 and makes the added dolphin a room sibling. 28 checks pass for independent motion,
 walls, targeting, death, save reset and repeated F2/3D selection. The added heron's
 nesting remains unchanged in this scoped correction. Hands-on review is pending.
 
-Dolphin range adjustment delivered: `fix: extend dolphin awareness and engagement range`.
+Dolphin range adjustment delivered: `4bd9966d` (`fix: extend dolphin awareness and engagement range`).
 Detection is 1,000 px and dash engagement is 850 px, retaining the outer tell
 band and existing damage/speed/warning timing. 32 focused range/occlusion checks
 and the existing Tide Duelist integration suite pass. Retest engagement distance;
 the separate hierarchy correction is delivered above.
+
+Tower exterior-water correction delivered: `fix: keep tower exterior submerged until cutaway opens`.
+The closed tower no longer punches its dry pocket through the visible lake;
+opening it restores the dry interior. Foreground facade/stone shares the lake's
+immersion grade. Physical pocket geometry, platforms and entrance collision are
+unchanged. 33 focused GPU, 97 water-room GPU, 6 reflection pixel and 16 surface
+checks pass; actual player standing dry and swimming outside are verified.
+Inspect the left exterior, base approach, dry interior and exit for appearance.
 
 October 26 follow-up from Chase's brother: entry animation looks good; exit
 repeats the entering motion, downhill movement loses smooth ground contact,
