@@ -61,7 +61,7 @@ func face_attack() -> void:
 func attack() -> bool:
 	if dead: return false
 	if actor.grapple.active: actor.grapple.detach()
-	if action in ["light", "water"]:
+	if action in ["light", "water", "pole", "ranged"]:
 		if combo<2 and elapsed>=duration-0.18 and elapsed<duration-0.015:
 			buffered = true
 			buffer_deadline = duration+0.02
@@ -99,7 +99,8 @@ func start_light() -> void:
 		actor.animation.speed_scale = 1.0
 	actor.report_momentum("attack")
 	clip_speed = actor.animation.speed_scale
-	world.audio.play("sword", actor.global_position, -13, 0.95 + combo * 0.08)
+	if actor.kit: actor.kit.configure_basic()
+	world.audio.play("grapple_throw" if actor.kit and actor.kit.slot==1 else "sword", actor.global_position, -13, 0.95 + combo * 0.08)
 
 func special(directional: bool) -> bool:
 	if dead or action != "" or (not actor.is_on_floor() and not actor.swimming) or actor.grapple.active or special_cooldown > 0: return false
@@ -121,6 +122,7 @@ func special(directional: bool) -> bool:
 	world.fx.ring(actor.global_position + Vector3.UP * 0.05, 0.55, Color("93bfc2"), active_start)
 	world.audio.play("grapple_connect", actor.global_position, -16, 0.7)
 	actor.report_momentum("utility")
+	if actor.kit: actor.kit.configure_special(directional)
 	return true
 
 func damage_targets(radius: float, damage: int, radial := false, push := 2.0) -> void:
@@ -138,7 +140,7 @@ func damage_targets(radius: float, damage: int, radial := false, push := 2.0) ->
 		var amount := roundi(damage*actor.momentum_multiplier("damage"))
 		if action == "neutral" and difference.length() > radius * 0.45:
 			amount = roundi(damage * 0.55)
-		enemy.receive_hit(amount, horizontal.normalized() * push, action in ["spin","neutral"] or combo==2 or (action=="air" and air_direction=="down"))
+		enemy.receive_hit(amount, horizontal.normalized() * push, action in ["spin","neutral","lance"] or combo==2 or (action=="air" and air_direction=="down"))
 		confirmed_strikes += 1
 		impact_time = maxf(impact_time,0.11 if combo==2 or radial else 0.065)
 		if not enemy.last_hit_armored: enemy.freeze_impact(impact_time)
@@ -146,6 +148,14 @@ func damage_targets(radius: float, damage: int, radial := false, push := 2.0) ->
 		total_hits += 1
 		actor.camera_kick = maxf(actor.camera_kick, 0.06)
 		if action == "air" and air_direction == "down": pogo_bounce()
+
+func pulse_receivers(radius: float) -> void:
+	for receiver in get_tree().get_nodes_in_group("weave_receivers"):
+		if hit_targets.has(receiver.get_instance_id()): continue
+		var delta: Vector3=receiver.global_position-(actor.global_position+Vector3.UP)
+		if delta.length()<=radius and delta.normalized().dot(strike_direction)>.1:
+			hit_targets[receiver.get_instance_id()]=true
+			receiver.receive_pulse()
 
 func pogo_bounce() -> void:
 	actor.velocity.y = 7.3*actor.momentum_multiplier("jump")
@@ -247,9 +257,9 @@ func tick(delta: float) -> void:
 	guard_time = guard_time + delta if guarding and previous_guard else 0.0
 	if action == "": return
 	var before := elapsed
-	if action in ["light","air","water","spin","neutral"]: actor.animation.speed_scale = clip_speed*actor.momentum_multiplier("attack_speed")
-	elapsed += delta*actor.momentum_multiplier("attack_speed") if action in ["light", "air", "water", "spin", "neutral"] else delta
-	if before < active_start and elapsed >= active_start and action in ["light", "air", "water", "spin", "neutral"]:
+	if action in ["light","air","water","spin","neutral","pole","ranged","ranged_air","orb","volley","lance"]: actor.animation.speed_scale = clip_speed*actor.momentum_multiplier("attack_speed")
+	elapsed += delta*actor.momentum_multiplier("attack_speed") if action in ["light", "air", "water", "spin", "neutral", "pole", "ranged", "ranged_air", "orb", "volley", "lance"] else delta
+	if before < active_start and elapsed >= active_start and action in ["light", "air", "water", "spin", "neutral", "pole", "ranged", "ranged_air", "orb", "volley", "lance"]:
 		var radial := action in ["spin", "neutral"]
 		if radial: world.fx.ring(actor.global_position+Vector3.UP*0.08, 3.2 if action == "neutral" else 2.5, Color("e1cd9a"), 0.35)
 		if action == "neutral":
@@ -259,19 +269,23 @@ func tick(delta: float) -> void:
 	if elapsed >= active_start and elapsed <= active_end:
 		match action:
 			"light", "air", "water": damage_targets(2.05, 25 if combo < 2 else 32)
+			"ranged", "ranged_air", "orb", "volley": actor.kit.fire_bolts()
+			"pole": damage_targets(2.7,[20,24,36][combo],false,3.0)
+			"lance": damage_targets(2.8,55,false,4.0)
 			"spin": damage_targets(2.5, 45, true, 4)
 			"neutral": damage_targets(3.2, 70, true, 6)
+		if action in ["light","air","pole","spin","neutral","lance"]: pulse_receivers(2.9 if action=="pole" else 2.1)
 		if action == "air" and air_direction == "down" and actor.velocity.y < 0:
 			var query := PhysicsRayQueryParameters3D.create(actor.global_position+Vector3.UP*0.4, actor.global_position-Vector3.UP*0.32, 1, [actor.get_rid()])
 			if not actor.get_world_3d().direct_space_state.intersect_ray(query).is_empty(): pogo_bounce()
 	if elapsed >= duration:
-		if action in ["light", "water"] and buffered and elapsed<=buffer_deadline+0.04 and combo < 2:
+		if action in ["light", "water", "pole", "ranged"] and buffered and elapsed<=buffer_deadline+0.04 and combo < 2:
 			combo += 1
 			start_light()
 		else:
 			var ended := action
-			action = "recover" if ended in ["light","water","spin","neutral"] else ""
-			recovery_time = (0.36 if combo==2 else (0.20 if not hit_targets.is_empty() else 0.30)) if ended in ["light","water"] else 0.18
+			action = "recover" if ended in ["light","water","pole","ranged","spin","neutral","orb","volley","lance"] else ""
+			recovery_time = (0.36 if combo==2 else (0.20 if not hit_targets.is_empty() else 0.30)) if ended in ["light","water","pole","ranged"] else 0.18
 			buffered = false
 			actor.animation.speed_scale = 1
 			if action=="recover": actor.animation.pause()

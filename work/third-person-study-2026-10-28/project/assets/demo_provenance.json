@@ -19,5 +19,18 @@
     "license": "CC0; existing verified NOX Sound library",
     "target": "assets/audio/armor.wav",
     "target_sha256": "5bc8a944df56ad42416401719ab385c843c055a233331d03895f93f3c44614b2"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Water/Footsteps_Water_Jump/Footsteps_Water_Jump_Big_01.wav",
+    "license": "CC0; verified NOX Sound library",
+    "target": "assets/audio/swim.wav",
+    "target_sha256": "bc7d69fa4e08e609d1c2033f830cb87fad89c7501760421463ef15e1d3b8b78c"
+  },
+  {
+    "source": "ArtSource/Player/Blender/imported_character/mixamo_library/Threadborne_Animation_Library.blend",
+    "sha256": "97f661ca1c76cb5e66e2a1d762e784ecf93bd9a3678797cfffac3f982351af6a",
+    "license": "Existing retained Mixamo animation library; game-use donor, original source unchanged",
+    "purpose": "Native same-rig strafes, heavy reaction, staff casting and pole combos; no invented replacement run"
   }
 ]

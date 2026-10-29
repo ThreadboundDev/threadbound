@@ -5,6 +5,7 @@ const MODEL = preload("res://assets/player_3d_demo.glb")
 const COMBAT = preload("res://scripts/study_combat.gd")
 const MOTION = preload("res://scripts/study_motion.gd")
 const GRAPPLE = preload("res://scripts/study_grapple.gd")
+const WEAPON_KIT = preload("res://scripts/study_weapon_kit.gd")
 const MOMENTUM = preload("res://scripts/study_momentum.gd")
 const AUTHORED_ATTACKS = preload("res://assets/threadborne_authored_attacks.glb")
 const LOWER_BODY_BONES: Array[StringName] = [&"pelvis", &"thigh.L", &"thigh.R", &"shin.L", &"shin.R", &"foot.L", &"foot.R", &"toe.L", &"toe.R"]
@@ -17,11 +18,13 @@ var mantle_time := 0.0
 var mantle_from := Vector3.ZERO
 var mantle_to := Vector3.ZERO
 var swimming := false
+var was_in_water := false
 var water_attack_leg_motion_strength := 0.65
 var water_attack_swim_leg_blend := 0.75
 var previous_position := Vector3.ZERO
 var combat
 var grapple
+var kit
 var lock_target
 var checkpoint := Vector3(0, 0.5, 4)
 var dash_time := 0.0
@@ -29,6 +32,7 @@ var dash_cooldown := 0.0
 var dash_direction := Vector3.FORWARD
 var camera_kick := 0.0
 var step_clock := 0.0
+var swim_clock := 0.0
 var step_index := 0
 var coyote := 0.0
 var jump_buffer := 0.0
@@ -111,6 +115,8 @@ func _ready() -> void:
 	add_child(combat)
 	grapple = GRAPPLE.new()
 	add_child(grapple)
+	kit=WEAPON_KIT.new()
+	add_child(kit)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	reset_to_spawn()
 	add_child(preload("res://scripts/study_flow_visual.gd").new())
@@ -156,7 +162,7 @@ func reset_to_spawn() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		yaw -= event.relative.x * 0.0028
-		pitch = clampf(pitch - event.relative.y * 0.0025, -1.05, 0.75)
+		pitch = clampf(pitch - event.relative.y * 0.0025, -1.05, 1.20)
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -168,14 +174,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"):
 		get_parent().reset_playtest()
 	if event.is_action_pressed("weapons"):
-		set_weapons(not use_new_weapons)
+		if kit: kit.set_slot(kit.slot+1)
+		else: set_weapons(not use_new_weapons)
 		report_momentum("swap")
 	if event.is_action_pressed("lock"): toggle_lock()
 
 func _process(delta: float) -> void:
 	var stick := Input.get_vector("look_left", "look_right", "look_up", "look_down", 0.18)
 	yaw -= stick.x * delta * 2.4
-	pitch = clampf(pitch - stick.y * delta * 1.8, -1.05, 0.75)
+	pitch = clampf(pitch - stick.y * delta * 1.8, -1.05, 1.20)
 	if is_instance_valid(lock_target):
 		if lock_target.dead or global_position.distance_to(lock_target.global_position) > 28:
 			lock_target = null
@@ -198,8 +205,17 @@ func _physics_process(delta: float) -> void:
 	momentum.tick(delta, global_position.distance_to(previous_position), not combat.dead and combat.action != "hurt")
 	previous_position = global_position
 	var in_water: bool = get_parent().has_method("is_swimming") and get_parent().is_swimming(global_position)
-	if in_water and not swimming: grapple.detach()
+	if in_water and not was_in_water:
+		swim_clock=.55
+		grapple.detach()
+		get_parent().audio.play("swim",global_position,-15,.85)
+		get_parent().fx.ring(Vector3(global_position.x,-.30,global_position.z),.4,Color("a9d2c7"),.4)
+	was_in_water=in_water
 	swimming = in_water
+	swim_clock=maxf(0,swim_clock-delta)
+	if swimming and velocity.length()>1 and swim_clock<=0:
+		swim_clock=.55
+		get_parent().audio.play("swim",global_position,-24,1.05)
 	if mantling:
 		mantle_time += delta
 		var phase := clampf(mantle_time/0.32, 0, 1)
@@ -215,7 +231,7 @@ func _physics_process(delta: float) -> void:
 	coyote = 0.12 if is_on_floor() else maxf(0, coyote-delta)
 	jump_buffer = maxf(0, jump_buffer-delta)
 	if not combat.dead:
-		if Input.is_action_just_pressed("jump"): jump_buffer = 0.13
+		if Input.is_action_just_pressed("jump") and not swimming: jump_buffer = 0.13
 		if Input.is_action_just_pressed("dash"): request_dash(input_direction)
 		if Input.is_action_just_pressed("attack") and capture_grace <= 0: combat.attack()
 		if Input.is_action_just_pressed("special"):
@@ -231,8 +247,8 @@ func _physics_process(delta: float) -> void:
 		return
 	var was_grounded := is_on_floor()
 	if is_on_floor() or swimming: air_jump_available = true
-	if not is_on_floor() and not swimming and not grapple.connected:
-		var jump_cut := 2.25 if velocity.y > 0 and not Input.is_action_pressed("jump") and combat.pogo_grace <= 0 else 1.0
+	if not is_on_floor() and not swimming and (not grapple.connected or grapple.mode=="swing"):
+		var jump_cut := 2.25 if velocity.y > 0 and not Input.is_action_pressed("jump") and combat.pogo_grace <= 0 and not grapple.connected else 1.0
 		velocity.y -= 19.0 * jump_cut * delta
 	if jump_buffer > 0 and grapple.active:
 		grapple.jump_release()
@@ -272,15 +288,15 @@ func _physics_process(delta: float) -> void:
 		velocity.x = dash_direction.x*dodge_speed*momentum_multiplier("dash")
 		velocity.z = dash_direction.z*dodge_speed*momentum_multiplier("dash")
 		velocity.y = maxf(velocity.y, -1.0)
-	elif combat.action == "spin" and combat.elapsed >= combat.active_start and combat.elapsed < combat.active_end:
+	elif combat.action in ["spin","lance"] and combat.elapsed >= combat.active_start and combat.elapsed < combat.active_end:
 		velocity.x = combat.strike_direction.x*7
 		velocity.z = combat.strike_direction.z*7
 	else:
 		var speed := 5.2
 		speed *= momentum_multiplier("move")
 		if combat.guarding: speed = 1.4
-		if combat.action in ["light", "air"]: speed *= 0.3
-		if combat.action in ["neutral", "hurt", "dead", "recover"]: speed = 0
+		if combat.action in ["light", "air", "pole", "ranged", "ranged_air"]: speed *= 0.3
+		if combat.action in ["neutral", "orb", "volley", "ranged", "hurt", "dead", "recover"]: speed = 0
 		if combat.meditating: speed = 0
 		var acceleration := 22.0 if is_on_floor() else 5.0
 		velocity.x = move_toward(velocity.x, input_direction.x*speed, acceleration*delta)
@@ -304,6 +320,7 @@ func _physics_process(delta: float) -> void:
 			step_clock = 1.0/3.0/maxf(0.2,momentum_multiplier("move"))
 			var wood := global_position.x > 9 and global_position.x < 16 and absf(global_position.z-2.5) < 1.5
 			wood = wood or (absf(global_position.x)<2.5 and global_position.z < -5.4 and global_position.z > -12)
+			if get_parent().has_method("wood_at"): wood=get_parent().wood_at(global_position)
 			get_parent().audio.play(("step_wood_" if wood else "step_grass_") + str(1+step_index%2), global_position, -23)
 			step_index += 1
 	if combat.action == "" and dash_time <= 0 and not grapple.active:

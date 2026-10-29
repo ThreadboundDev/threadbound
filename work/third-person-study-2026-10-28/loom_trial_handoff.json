@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-29",
+  "scene": "res://scenes/loom_crossing_trial.tscn",
+  "source": {
+    "polish_test_results.json": {
+      "checks": 61,
+      "failed": 0
+    },
+    "combat_test_results.json": {
+      "checks": 60,
+      "failed": 0
+    },
+    "test_results.json": {
+      "checks": 20,
+      "failed": 0
+    },
+    "demo_feel_test_results.json": {
+      "checks": 46,
+      "failed": 0
+    },
+    "committed_combat_test_results.json": {
+      "checks": 23,
+      "failed": 0
+    },
+    "loom_trial_test_results.json": {
+      "checks": 40,
+      "failed": 0
+    }
+  },
+  "installed": {
+    "polish_test_results.json": {
+      "checks": 61,
+      "failed": 0
+    },
+    "combat_test_results.json": {
+      "checks": 60,
+      "failed": 0
+    },
+    "test_results.json": {
+      "checks": 20,
+      "failed": 0
+    },
+    "demo_feel_test_results.json": {
+      "checks": 46,
+      "failed": 0
+    },
+    "committed_combat_test_results.json": {
+      "checks": 23,
+      "failed": 0
+    },
+    "loom_trial_test_results.json": {
+      "checks": 40,
+      "failed": 0
+    }
+  },
+  "human_acceptance": "pending",
+  "production_2d_modified": false,
+  "installed_managed_files_match": 171,
+  "checks_per_copy": 250,
+  "asset_audit": {
+    "glbs": 46,
+    "resource_links": 54,
+    "unchanged_original_inputs": 16
+  },
+  "installer_safety_cases": 5
+}

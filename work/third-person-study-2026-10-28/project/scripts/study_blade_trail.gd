@@ -50,7 +50,7 @@ func _process(delta: float) -> void:
 	var emitting := false
 	if owner_actor.has_method("facing"):
 		var combat = owner_actor.combat
-		emitting = combat.action in ["light", "air", "water", "spin"] and combat.elapsed >= combat.active_start-0.025 and combat.elapsed < combat.active_end+0.025
+		emitting = combat.action in ["light", "air", "water", "spin", "pole", "lance"] and combat.elapsed >= combat.active_start-0.025 and combat.elapsed < combat.active_end+0.025
 	else: emitting = owner_actor.state == "active"
 	if emitting and blade.is_visible_in_tree():
 		samples.append({"a":posed_reference(references[0]),"b":posed_reference(references[1]),"time":clock})

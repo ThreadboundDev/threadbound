@@ -10,17 +10,22 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 29 3D combat pressure / overnight slice (T31): combat checkpoint verified; expansion in progress.**
-Chase gave full approval to expand the separate 3D experiment overnight, using
-library animations, additional weapon roles, traversal, a puzzle and swimming.
-The combat checkpoint removes the invented player name, fixes held-jump air
-selection, adds Mixamo strafes/heavy reactions, committed recovery, a timed
-vulnerable/immune dodge and aggressive enemies with frontal armor/stance breaks.
-F2 selects repeatable duels in the existing clearing. Source checks: 210 passing;
-scripted light spam loses to armor, while dodges/parries and counters win.
-[Combat evidence and references](art/combat_pressure_2026_10_29.md).
-Checkpoint: `feature: add committed combat and armored enemy pressure`.
-The 2D project remains untouched. Expanded slice is the next coherent checkpoint.
+**October 29 3D Loom Crossing trial (T31): implemented; Chase's playtest/3D decision pending.**
+Chase gave full approval for the separate overnight experiment. It now opens a
+compact village-to-guardian route with five running jumps, an optional three-spool
+bridge puzzle, swimming, zip/swing grapples and three immediately available weapon
+roles. Existing Mixamo clips supply casting, pole combos, strafes and reactions;
+the original run cleanup is preserved. Combat retains committed recovery, armor,
+stance breaks and aggressive follow-ups, with heavier sound/contact feedback.
+The guardian pressures ranged play with a fixed, avoidable ground telegraph.
+Source validation: 250 passing checks (210 existing plus 40 trial), five installer
+safety cases; 46 self-contained GLBs, 54 resource links and 16 unchanged original
+inputs. All five decks are reached using real running/jump inputs in sequence.
+[Trial controls, evidence and retest card](art/loom_crossing_trial_2026_10_29.md).
+Earlier combat checkpoint: `0d3ed1a6`. Expanded checkpoint:
+`feature: build three-weapon Loom Crossing 3d trial` (see Git history).
+The production 2D project is unchanged; this is an experiment, not an accepted
+conversion or a published release. Current production priority remains T20.
 
 **October 28 library run / shield-hand grapple correction (T30): implemented; Chase's retest pending.**
 Chase rejected the replacement gait. Restored the existing `run_1` used by Shift,

@@ -125,11 +125,11 @@ rig.animation_data.action=None
 library=ROOT/'ArtSource/Player/Blender/imported_character/mixamo_library/Threadborne_Animation_Library.blend'
 with bpy.data.libraries.load(str(library),link=False) as (available,chosen):
     chosen.objects=['Threadborne_Rig']
-    chosen.actions=['strafe_3','strafe_4','impact_2']
+    chosen.actions=['strafe_3','strafe_4','impact_2','casting_2','attack_1','attack_3','attack_4']
 donor=chosen.objects[0];scene.collection.objects.link(donor)
 donor.animation_data_create()
 for t in donor.animation_data.nla_tracks:t.mute=True
-aliases={'strafe_3':'combat_strafe_left','strafe_4':'combat_strafe_right','impact_2':'heavy_hit'}
+aliases={'strafe_3':'combat_strafe_left','strafe_4':'combat_strafe_right','impact_2':'heavy_hit','casting_2':'staff_cast','attack_1':'pole_jab','attack_3':'pole_sweep','attack_4':'pole_finish'}
 for imported in chosen.actions:
     donor.animation_data.action=imported
     if imported.slots:donor.animation_data.action_slot=imported.slots[0]

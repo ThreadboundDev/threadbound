@@ -19,6 +19,8 @@ var cooldown := 0.0
 var origin_position := Vector3.ZERO
 var rope: Array[MeshInstance3D] = []
 var locked_enemy := false
+var mode := "zip"
+var rope_length := 0.0
 var connections := 0
 var strikes := 0
 var tip_position := Vector3.ZERO
@@ -87,10 +89,12 @@ func fire() -> bool:
 		world.notice("Aim at a solid surface or enemy within 25 metres")
 		return false
 	if actor.swimming or not actor.combat.spend_ap(1): return false
+	mode="swing" if Input.is_action_pressed("sprint") and not candidate.is_in_group("study_enemies") else "zip"
 	select_hit(candidate, candidate_point, candidate_normal)
 	origin_position = actor.grapple_origin()
 	tip_position = origin_position
 	last_distance = origin_position.distance_to(candidate_point)
+	rope_length=last_distance
 	launch_time = last_distance / 35.0
 	elapsed = 0
 	stall_time = 0
@@ -147,6 +151,7 @@ func tick(delta: float) -> void:
 			connected = true
 		elif next.distance_to(point) < 0.06: connected = true
 		if connected:
+			if mode=="swing": rope_length=swing_origin().distance_to(point)
 			connections += 1
 			last_distance = actor.global_position.distance_to(arrival_position())
 			world.audio.play("grapple_connect", point, -12)
@@ -159,6 +164,10 @@ func tick(delta: float) -> void:
 			detach()
 			return
 		tip_position = point
+		if mode=="swing":
+			swing_tick(delta,point)
+			draw_rope(hand)
+			return
 		actor.play_clip("grapple_swinging_1")
 		actor.animation.speed_scale = 1.2
 		var difference: Vector3 = arrival_position() - actor.global_position
@@ -186,6 +195,9 @@ func tick(delta: float) -> void:
 		actor.velocity = difference.normalized() * minf((16.0 if locked_enemy else 12.0)*multiplier, distance/maxf(delta, 0.001))
 		var horizontal := Vector3(difference.x, 0, difference.z)
 		if horizontal.length() > 0.1: actor.visual.rotation.y = atan2(horizontal.x, horizontal.z)
+	draw_rope(hand)
+
+func draw_rope(hand: Vector3) -> void:
 	needle.visible = true
 	needle.position = tip_position
 	if hand.distance_to(tip_position) > 0.001: needle.quaternion = Quaternion(Vector3.UP, (tip_position-hand).normalized())
@@ -197,3 +209,23 @@ func tick(delta: float) -> void:
 		rope[i].position = (a+b)*0.5
 		rope[i].mesh.height = maxf(0.01, a.distance_to(b))
 		if a.distance_to(b) > 0.001: rope[i].quaternion = Quaternion(Vector3.UP, (b-a).normalized())
+
+func swing_origin() -> Vector3:
+	# Animation must not inject energy into the pendulum. The visible rope still
+	# launches from hand.L; physical tension acts at a stable capsule attachment.
+	return actor.global_position+Vector3.UP*1.35
+
+func swing_tick(delta: float, anchor: Vector3) -> void:
+	actor.play_clip("grapple_swinging_1")
+	var radial: Vector3=(swing_origin()-anchor).normalized()
+	var pending:=Vector3.DOWN*19*delta if not actor.is_on_floor() and not actor.swimming else Vector3.ZERO
+	var v: Vector3=actor.velocity+pending
+	var pump: Vector3=actor.input_direction-radial*actor.input_direction.dot(radial)
+	v+=pump*delta*14
+	var distance: float=swing_origin().distance_to(anchor)
+	if distance>=rope_length-.12:
+		var outward: float=v.dot(radial)
+		if outward>0: v-=radial*outward
+		v-=radial*maxf(0,distance-rope_length)*10
+	actor.velocity=v.limit_length(18)-pending
+	if actor.input_direction.length()>.1: actor.visual.rotation.y=atan2(actor.input_direction.x,actor.input_direction.z)

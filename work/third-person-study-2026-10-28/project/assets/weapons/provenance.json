@@ -1,0 +1,20 @@
+[
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "archive_sha256": "1017144f85a994f405b731befa71ced360f5b60ed0b9c00c72e711c1633ce2d2",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/staff_A.gltf",
+    "target": "assets/weapons/ranged_staff.glb",
+    "target_sha256": "5e23afbeaf019249d620def701491356da6f4da8f05e0d949d86963efd7a1b6e",
+    "license": "CC0 1.0; retained KayKit pack license",
+    "derivative": "Grip origin, uniform gameplay scale, same geometry/materials"
+  },
+  {
+    "archive": "KayKit_FantasyWeaponsBits_1.0_FREE.zip",
+    "archive_sha256": "1017144f85a994f405b731befa71ced360f5b60ed0b9c00c72e711c1633ce2d2",
+    "member": "KayKit_FantasyWeaponsBits_1.0_FREE/Assets/gltf/spear_A.gltf",
+    "target": "assets/weapons/balance_spear.glb",
+    "target_sha256": "b1154058e44e3d0135fe25a776dc4fffd5df7b7217c15c64e813621c946427d8",
+    "license": "CC0 1.0; retained KayKit pack license",
+    "derivative": "Grip origin, uniform gameplay scale, same geometry/materials"
+  }
+]

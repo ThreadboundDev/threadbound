@@ -10,14 +10,14 @@ $prefix = if ($RepositoryCopy) { 'final_source' } else { 'final_installed' }
 $importLog = Join-Path $logFolder ($prefix+'_import.log')
 & $engineExe --headless --editor --path $projectFolder --import --quit *> $importLog
 if ($LASTEXITCODE -ne 0) { throw "Godot import failed. See $importLog" }
-foreach ($test in @('verify_polished_demo', 'verify_combat_playtest', 'verify_study', 'verify_demo_feel', 'verify_committed_combat')) {
+foreach ($test in @('verify_polished_demo', 'verify_combat_playtest', 'verify_study', 'verify_demo_feel', 'verify_committed_combat', 'verify_loom_trial')) {
     $logPath = Join-Path $logFolder ($prefix+'_'+$test+'.log')
     & $engineExe --headless --path $projectFolder --fixed-fps 60 --script ('tests/'+$test+'.gd') *> $logPath
     if ($LASTEXITCODE -ne 0) { throw "Godot check failed: $test. See $logPath" }
     Get-Content -LiteralPath $logPath -Tail 1
 }
 if ($Capture) {
-    foreach ($script in @('capture_chamber', 'capture_3d_feel')) {
+    foreach ($script in @('capture_chamber', 'capture_3d_feel', 'capture_loom_trial')) {
         $logPath = Join-Path $logFolder ($prefix+'_'+$script+'.log')
         & $engineExe --path $projectFolder --script ('tests/'+$script+'.gd') *> $logPath
         if ($LASTEXITCODE -ne 0) { throw "Godot capture failed: $script. See $logPath" }

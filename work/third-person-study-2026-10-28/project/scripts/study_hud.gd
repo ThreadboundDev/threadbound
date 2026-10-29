@@ -77,7 +77,7 @@ func _ready() -> void:
 	context.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	marker = label(self, "+", Vector2(711, 434), 24)
 	message = label(self, "", Vector2(450, 740), 17)
-	label(self, "LMB attack   RMB guard/parry   Q special (+ movement: spin)   E grapple / release   Ctrl dash   Tab lock", Vector2(28, 813), 14)
+	label(self, "LMB attack   RMB guard/parry   Q special (+ movement)   E grapple / release   Ctrl dash   Tab lock", Vector2(28, 813), 14)
 	label(self, "WASD / mouse   Space jump / grapple release   R restart   G interact   H help   M mute   Esc pause", Vector2(28, 839), 14)
 	boss_label = label(self, "", Vector2(510, 28), 19)
 	boss_bar = ProgressBar.new()
@@ -91,7 +91,7 @@ func _ready() -> void:
 	help.size = Vector2(720, 570)
 	add_child(help)
 	var instructions := Label.new()
-	instructions.text = "PLAYER · 3D DEMO CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump / air jump; jump releases grapple\nRun by default     Ctrl / B — dodge; brief invulnerability after startup\nF2 — combat practice opponent selector\nLMB / RT — time taps near the end of each sword swing; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — neutral burst; hold movement for directional spin (2 AP)\nE / RB — fire/release grapple at any solid surface or enemy\nTab / right-stick click — lock/unlock nearest visible enemy\nG / D-pad Up — interact / shrine / workshop\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nAP recharges independently; Momentum and meditation affect speed.\nC / left-stick click — down air attack / swim down\nHold X / D-pad Left + air attack — upward attack\nHold F / D-pad down — meditate; trade Momentum for healing\nFalls return to the last thread-marked landing."
+	instructions.text = "PLAYER · 3D DEMO CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump / air jump; jump releases grapple\nRun by default     Ctrl / B — dodge; brief invulnerability after startup\nF2 — combat practice opponent selector\nLMB / RT — time taps near the end of each attack; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — weapon special; hold movement for its directional variant (2 AP)\n1 / 2 / 3 — sword, ranged staff, balance spear; V / Y cycles\nE / RB — zip grapple; hold Shift / LB + E / RB for rope swing\nTab / right-stick click — lock/unlock nearest visible enemy\nG / D-pad Up — interact / shrine / puzzle\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nAP recharges independently; Momentum and meditation affect speed.\nC / left-stick click — down air attack / swim down\nHold X / D-pad Left + air attack — upward attack\nHold F / D-pad down — meditate; trade Momentum for healing\nFalls return to the last thread-marked landing."
 	instructions.add_theme_font_size_override("font_size", 16)
 	help.add_child(instructions)
 	help.visible = false

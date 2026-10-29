@@ -18,6 +18,9 @@ if (PROJECT / 'assets/eave_runner_provenance.json').exists():
     records.append(json.loads((PROJECT / 'assets/eave_runner_provenance.json').read_text(encoding='utf-8')))
 if (PROJECT / 'assets/demo_provenance.json').exists():
     records += json.loads((PROJECT / 'assets/demo_provenance.json').read_text(encoding='utf-8'))
+for folder in ['textures', 'weapons']:
+    extra = json.loads((PROJECT / 'assets' / folder / 'provenance.json').read_text(encoding='utf-8'))
+    records += extra if isinstance(extra,list) else [dict(extra,target='assets/textures/polyhaven_dirt_1k.jpg',target_sha256=extra['sha256'])]
 for record in records:
     if 'source' in record and 'sha256' in record:
         path = ROOT / record['source']

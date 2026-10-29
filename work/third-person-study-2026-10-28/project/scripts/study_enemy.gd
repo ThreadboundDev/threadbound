@@ -43,6 +43,10 @@ var armor_exposed := 0.0
 var quiet_time := 0.0
 var last_hit_armored := false
 var armor_surfaces: Array[Dictionary]=[]
+var ranged_cooldown:=0.0
+var threat_point:=Vector3.ZERO
+var foot_clock:=0.0
+var foot_index:=0
 var impulse := Vector3.ZERO
 var desired_motion := Vector3.ZERO
 var path_target := Vector3.ZERO
@@ -163,6 +167,8 @@ func apply_woven_accents() -> void:
 		for surface in range(mesh.mesh.get_surface_count()):
 			var mat: Material = mesh.get_active_material(surface)
 			if kind == "boss" and mat and "Body" in mat.resource_name: mesh.set_surface_override_material(surface,cloth)
+			if kind != "boss" and (String(mesh.name).ends_with("_Body") or String(mesh.name).ends_with("_Legs") or String(mesh.name).ends_with("_Head_Hood")):
+				mesh.set_surface_override_material(surface,cloth)
 	if not skeleton: return
 	var unit := skeleton.global_basis.get_scale().length()/sqrt(3.0)
 	for name_part in ["lowerarm_l","lowerarm_r","calf_l","calf_r"]:
@@ -223,6 +229,8 @@ func stagger(length: float) -> void:
 func receive_hit(amount: int, push: Vector3, heavy := false) -> void:
 	if dead: return
 	quiet_time=0
+	if world.has_method("on_enemy_hit"): world.on_enemy_hit(self)
+	if ai_enabled and state in ["idle","return"]: state="chase"
 	var to_player: Vector3=(actor.global_position-global_position)*Vector3(1,0,1)
 	var forward:=Vector3(sin(visual.rotation.y),0,cos(visual.rotation.y))
 	var rear:=to_player.length()>.01 and forward.dot(to_player.normalized())<-.35
@@ -264,6 +272,7 @@ func reset_enemy() -> void:
 	impact_time=0
 	reaction_cooldown=0
 	poise=140.0 if kind=="boss" else 100.0
+	ranged_cooldown=0
 	armor_exposed=0;quiet_time=0;last_hit_armored=false
 	safe_velocity=Vector3.ZERO
 	navigation_clock=0
@@ -325,6 +334,7 @@ func _physics_process(delta: float) -> void:
 		animation.speed_scale=0
 		if impact_time<=0: animation.speed_scale=impact_animation_speed
 		return
+	ranged_cooldown=maxf(0,ranged_cooldown-delta)
 	navigation_clock-=delta
 	reaction_cooldown=maxf(0,reaction_cooldown-delta)
 	var old_poise: int=ceili(poise)
@@ -349,12 +359,23 @@ func _physics_process(delta: float) -> void:
 			"idle":
 				if not actor.combat.dead and distance<(13 if kind=="boss" else 10.5) and absf(difference.y)<2.5 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP): state="chase"
 			"chase":
-				if actor.combat.dead or distance>20 or global_position.distance_to(home)>17: state="return"
+				if actor.combat.dead or distance>(28 if kind=="boss" else 24) or global_position.distance_to(home)>(24 if kind=="boss" else 21): state="return"
+				elif kind=="boss" and distance>6 and distance<26 and ranged_cooldown<=0 and world.clear_sight(global_position+Vector3.UP*2,actor.global_position+Vector3.UP):
+					state="ranged_windup";timer=.65;threat_point=actor.global_position;ranged_cooldown=2.6
+					world.fx.ring(threat_point+Vector3.UP*.08,1.5,Color("cdb786"),.7)
+					play("charge_1")
 				elif distance<=attack_range() and absf(difference.y)<1.6 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP):
 					combo=0
 					begin_attack()
 				else:
 					desired_motion=path_direction(actor.global_position,delta)*(3.8 if kind=="reedhook" else (4.7 if kind=="eave" else 2.8))
+			"ranged_windup":
+				if timer<=0:
+					world.fx.burst(threat_point+Vector3.UP*.4,Color("e2cf9c"),true)
+					world.audio.play("stomp",threat_point,-12,.8)
+					var offset: Vector3=actor.global_position-threat_point
+					if Vector2(offset.x,offset.z).length()<1.5 and absf(offset.y)<1.6: actor.combat.receive_hit(26,global_position,true)
+					state="recover";timer=.55
 			"windup":
 				if timer>windup_length()*.55 and flat.length()>.01:
 					attack_direction=attack_direction.slerp(flat.normalized(),1-exp(-delta*9)).normalized()
@@ -402,5 +423,10 @@ func _physics_process(delta: float) -> void:
 		play("run" if kind!="boss" else "walk")
 		animation.speed_scale=clampf(Vector2(velocity.x,velocity.z).length()/(2.8 if kind!="boss" else 2.0),0.65,1.5)
 	elif state in ["chase","return"]: play("box_idle" if kind=="boss" else "idle")
+	foot_clock=maxf(0,foot_clock-delta)
+	if desired_motion.length()>1 and global_position.distance_to(actor.global_position)<12 and foot_clock<=0:
+		foot_clock=.6 if kind=="boss" else .3
+		world.audio.play("stomp" if kind=="boss" else "step_grass_"+str(1+foot_index%2),global_position,-25,.8 if armored else 1.0)
+		foot_index+=1
 	MOTION.move(self,delta)
 	if global_position.y< -4: reset_enemy()

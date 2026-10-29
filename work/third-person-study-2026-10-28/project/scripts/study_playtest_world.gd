@@ -21,6 +21,7 @@ func hit_feedback(point: Vector3, direction: Vector3, heavy: bool, armor := fals
 	var mark: Node3D=fx.ring(point,0.16 if not heavy else 0.28,Color("e9d7ac"),0.14)
 	if direction.length()>0.1: mark.quaternion=Quaternion(Vector3.UP,direction.normalized())
 	audio.play("armor" if armor else "contact",point,-14 if armor else (-10 if heavy else -14),.9 if heavy else 1.08)
+	if heavy and not armor: audio.play("stomp",point,-21,.78)
 	for device in Input.get_connected_joypads(): Input.start_joy_vibration(device,0.15,0.35 if heavy else 0.2,0.08)
 
 func _ready() -> void:

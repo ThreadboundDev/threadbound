@@ -305,7 +305,11 @@
   "additional_library_clips": [
     "combat_strafe_left",
     "combat_strafe_right",
-    "heavy_hit"
+    "heavy_hit",
+    "staff_cast",
+    "pole_jab",
+    "pole_sweep",
+    "pole_finish"
   ],
   "library_sha256": "97f661ca1c76cb5e66e2a1d762e784ecf93bd9a3678797cfffac3f982351af6a"
 }

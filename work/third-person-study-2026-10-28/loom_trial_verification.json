@@ -1,0 +1,231 @@
+{
+	"checks": [
+		{
+			"check": "Trial opens with weapon and route instructions",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Safe village start",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Three field encounters and guardian",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Five checkpointed jump decks",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Working villager retained",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Running jump deck 1",
+			"detail": [
+				"(-4.0, 0.800822, 2.978831)",
+				"(-4.0, 0.8, 2.0)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Running jump deck 2",
+			"detail": [
+				"(-6.505422, 1.600824, 0.730347)",
+				"(-7.2, 1.6, -0.4)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Running jump deck 3",
+			"detail": [
+				"(-9.677879, 2.500823, -2.184898)",
+				"(-10.0, 2.5, -3.2)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Running jump deck 4",
+			"detail": [
+				"(-7.166539, 3.100835, -6.301471)",
+				"(-7.1, 3.1, -6.4)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Running jump deck 5",
+			"detail": [
+				"(-3.842271, 3.800833, -8.892071)",
+				"(-3.7, 3.8, -9.0)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Staff held on real rig; shield hidden",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Staff bolt collides and damages once",
+			"detail": 74,
+			"passed": true
+		},
+		{
+			"check": "Staff neutral special uses two AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Charged thread orb hits target",
+			"detail": 40,
+			"passed": true
+		},
+		{
+			"check": "Directional staff volley hits",
+			"detail": 35,
+			"passed": true
+		},
+		{
+			"check": "Spear mesh and existing animation installed",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spear full size, palm grip and forward-blade trail",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Spear reaches beyond sword range",
+			"detail": 75,
+			"passed": true
+		},
+		{
+			"check": "Spear has a three-hit combo",
+			"detail": 3,
+			"passed": true
+		},
+		{
+			"check": "Spear directional special lunges",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Sword and shield restore on swap",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Wrong spool order resets gently",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Staff projectile activates physical spool",
+			"detail": 1,
+			"passed": true
+		},
+		{
+			"check": "Spools also accept close interaction",
+			"detail": 2,
+			"passed": true
+		},
+		{
+			"check": "Correct sequence raises physical bridge",
+			"detail": [
+				3,
+				"",
+				"forward",
+				"(5.3, 0.000093, -9.2)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Woven bridge supports collision",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swimming staff special keeps authored water animation",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swimming supports deliberate dive",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swimming ramp permits shore exit",
+			"detail": "(16.24389, 0.000936, 8.0)",
+			"passed": true
+		},
+		{
+			"check": "Shift hook selects rope swing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swing maintains live tether",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swing gravity creates a real pendulum drop",
+			"detail": [
+				"(-0.712379, -3.269579, 0.621403)",
+				"(-2.058661, 1.267461, 1.05117)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Swing input produces tangential movement",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Rope constraint limits distance",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Swing jump releases with upward motion",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ranged contact wakes distant guardian",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Guardian warns before ranged pressure",
+			"detail": [
+				"ranged_windup",
+				100
+			],
+			"passed": true
+		},
+		{
+			"check": "Standing in telegraph takes meaningful damage",
+			"detail": 74,
+			"passed": true
+		},
+		{
+			"check": "Moving out of guardian telegraph avoids damage",
+			"detail": 100,
+			"passed": true
+		},
+		{
+			"check": "Guardian leaves trial ending blossom",
+			"detail": null,
+			"passed": true
+		}
+	],
+	"failed": 0
+}

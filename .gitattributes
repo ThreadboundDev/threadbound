@@ -27,3 +27,5 @@ work/lakeside-villagers/source/** -text -whitespace
 # Upstream's seven-character Markdown heading is not a merge conflict.
 work/lakeside-villagers/source/LICENSE.md conflict-marker-size=32
 Assets/BlueBiome/Art/PaintedComparison/*.png filter=lfs diff=lfs merge=lfs -text
+
+work/third-person-study-2026-10-28/project/assets/audio/swim.wav filter=lfs diff=lfs merge=lfs -text
