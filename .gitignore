@@ -73,3 +73,6 @@ __pycache__/
 /work/lakeside-ui-rock/fracture_[0-9]*.png*
 /work/lakeside-villagers/renders/greeting_[0-9]*.png*
 /work/eave-runner/renders/motion_*.png*
+
+# Separate 3D demo verification output (curated report lives above project/).
+/work/third-person-study-2026-10-28/project/demo_feel*results.json

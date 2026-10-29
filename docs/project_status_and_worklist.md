@@ -10,7 +10,16 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 28 polished 3D level demo (T28): implementation verified; review in progress.**
+**October 28 3D demo feel corrections (T29): implementation verified; Chase's playtest pending.**
+Chase requested an athletic default run, separate 3D animation sources, firmer
+combat, correct weapon grips, smoother enemies and a demo-shaped level.
+[Changes, validation and retest route](art/chamber_3d_feel_pass_2026_10_28.md).
+The source copy passes 178 gameplay checks. The original 2D runtime and art
+sources remain unchanged. Water appearance remains deferred. Commit checkpoint:
+`feature: refine 3d run combat and chamber demo` on
+`threadbound/feature-polished-3d-demo`. Standalone handoff validation follows.
+
+**October 28 polished 3D level demo (T28): superseded by T29 after appearance/feel feedback.**
 Chase reviewed T27 and requested a more polished level using his downloads.
 [Scope, assets, mechanics, licensing and playtest card](art/polished_3d_level_demo_2026_10_28.md).
 Four field opponents, downloaded golem boss, four houses/workshop, market/ruins,

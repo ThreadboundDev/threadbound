@@ -57,9 +57,9 @@ func run() -> void:
 	reed.global_position = actor.global_position + Vector3(0, 0, -1.65)
 	actor.visual.rotation.y = PI
 	actor.combat.attack()
-	await frames(8)
-	actor.combat.attack()
 	await frames(24)
+	check("Late attack tap accepted",actor.combat.attack())
+	await frames(12)
 	check("Tap buffering starts second combo strike", actor.combat.combo == 1)
 	await frames(25)
 	check("Buffered combo deals one hit per segment", reed.health == reed.max_health-50, reed.health)
@@ -199,6 +199,7 @@ func run() -> void:
 	start = eave.global_position
 	await frames(75)
 	check("Eave Runner commits a forward lunge", eave.global_position.distance_to(start) > 0.8)
+	print("EAVE_END ",eave.global_position," ACTOR ",actor.global_position," STATE ",eave.state)
 	check("Eave lunge hits once", actor.combat.health == 87, actor.combat.health)
 	await fixture(Vector3(22,0.3,14.8))
 	actor.combat.invulnerable = 99

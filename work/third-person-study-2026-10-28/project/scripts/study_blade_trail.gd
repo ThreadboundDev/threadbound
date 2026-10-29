@@ -37,6 +37,11 @@ void fragment(){
 	else:
 		root[axis] = bound.position[axis]+bound.size[axis]*0.25
 		tip[axis] = bound.end[axis]
+	if blade.has_meta("blade_base_gltf") and blade.has_meta("blade_tip_gltf"):
+		var a: Array = blade.get_meta("blade_base_gltf")
+		var b: Array = blade.get_meta("blade_tip_gltf")
+		root = Vector3(a[0],a[1],a[2])
+		tip = Vector3(b[0],b[1],b[2])
 	references = [reference(root),reference(tip)]
 
 func _process(delta: float) -> void:

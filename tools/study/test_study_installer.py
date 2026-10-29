@@ -55,3 +55,8 @@ with TemporaryDirectory(prefix='installer-check-', dir=TEMP) as temporary:
         print('PASS install paths cannot escape the destination')
     else:
         raise AssertionError('Path traversal was accepted')
+
+    (source / "b.txt").unlink()
+    installer.main()
+    assert not (target / "b.txt").exists()
+    print("PASS only unchanged obsolete managed files are removed")

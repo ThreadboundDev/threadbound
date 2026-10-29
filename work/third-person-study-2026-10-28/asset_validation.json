@@ -1,22 +1,9 @@
 {
   "models": [
     {
-      "path": "assets\\threadborne_authored_attacks.glb",
-      "bytes": 227172,
-      "sha256": "ea3a53191a58b3bc0f55801e4725d6f262810d76bf2c31657b4d84858863b456",
-      "images": [],
-      "animations": [
-        "air_attack_down",
-        "air_attack_forward",
-        "air_attack_up",
-        "water_attack_idle",
-        "water_attack_move"
-      ]
-    },
-    {
-      "path": "assets\\threadborne_study.glb",
-      "bytes": 70594096,
-      "sha256": "bad6719c43a788bec09a63972f9910d46d62818f97807a241062cd234e3203a7",
+      "path": "assets\\ruin_3d_demo.glb",
+      "bytes": 70791324,
+      "sha256": "701f77483bd073acd41fe9ceddd76ca694f1a09fb7bfe7662321e9883142e7df",
       "images": [
         {
           "name": "Threadborne_Normal",
@@ -69,28 +56,42 @@
         }
       ],
       "animations": [
-        "water_idle_1",
-        "walk_1",
-        "swimming_1",
-        "stand_to_sit_1",
-        "slash_2",
-        "sit_to_stand_1",
-        "run_1",
-        "roll_1",
-        "power_up_1",
-        "jump_into_wall_hang_1",
-        "jump_1",
-        "impact_1",
-        "idle_4",
-        "hanging_idle_1",
-        "grapple_swinging_1",
-        "get_up_from_hang_1",
-        "death_1",
-        "crouch_block_idle_1",
-        "casting_1",
-        "block_idle_1",
+        "air_light_1",
         "attack_2",
-        "air_light_1"
+        "block_idle_1",
+        "casting_1",
+        "crouch_block_idle_1",
+        "death_1",
+        "get_up_from_hang_1",
+        "grapple_swinging_1",
+        "hanging_idle_1",
+        "idle_4",
+        "impact_1",
+        "jump_1",
+        "jump_into_wall_hang_1",
+        "power_up_1",
+        "roll_1",
+        "run_1",
+        "sit_to_stand_1",
+        "slash_2",
+        "stand_to_sit_1",
+        "swimming_1",
+        "walk_1",
+        "water_idle_1",
+        "demo_run"
+      ]
+    },
+    {
+      "path": "assets\\threadborne_authored_attacks.glb",
+      "bytes": 227172,
+      "sha256": "ea3a53191a58b3bc0f55801e4725d6f262810d76bf2c31657b4d84858863b456",
+      "images": [],
+      "animations": [
+        "air_attack_down",
+        "air_attack_forward",
+        "air_attack_up",
+        "water_attack_idle",
+        "water_attack_move"
       ]
     },
     {
@@ -410,8 +411,8 @@
     },
     {
       "path": "assets\\enemies\\woven_pikewarden.glb",
-      "bytes": 11535016,
-      "sha256": "5dc5d15ddffe0413b8959995475477b32a8cbe87d275c9fafe5201e111d2d9cb",
+      "bytes": 11593960,
+      "sha256": "b4c5d26d2a6fbb41aae15f21052a936d621aa75f8b7c5cc4e08e43ce63bdcfb1",
       "images": [
         {
           "name": "map_7",
@@ -485,17 +486,20 @@
         "Hit_Chest",
         "Death01",
         "Sword_Regular_A",
+        "Sword_Regular_A_Rec",
         "Sword_Regular_B",
+        "Sword_Regular_B_Rec",
         "Sword_Regular_C",
         "Sword_Heavy_Combo",
         "Sword_Dash",
-        "Sword_Block"
+        "Sword_Block",
+        "Jog_Armed"
       ]
     },
     {
       "path": "assets\\enemies\\woven_swordsman.glb",
-      "bytes": 11208604,
-      "sha256": "102eb350b163e0a03c2e98db3ecf85d26ad4b58f10561f96762324e80820a141",
+      "bytes": 11267368,
+      "sha256": "ec23cdb04e3eda8c93b72a7893b8ca187af7394c93d326b1575418f379a2f8ad",
       "images": [
         {
           "name": "map_7",
@@ -569,11 +573,14 @@
         "Hit_Chest",
         "Death01",
         "Sword_Regular_A",
+        "Sword_Regular_A_Rec",
         "Sword_Regular_B",
+        "Sword_Regular_B_Rec",
         "Sword_Regular_C",
         "Sword_Heavy_Combo",
         "Sword_Dash",
-        "Sword_Block"
+        "Sword_Block",
+        "Jog_Armed"
       ]
     },
     {
@@ -1345,6 +1352,98 @@
       "animations": []
     },
     {
+      "path": "assets\\village\\demo_tower.glb",
+      "bytes": 19548732,
+      "sha256": "6b78f5cfe1ef7a9ad4bc55e07081d47b2035e5835a9572561ff587a0fc2a8497",
+      "images": [
+        {
+          "name": "map_4",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_3",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_5",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_7",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_6",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_8",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_10",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_9",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_11",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_1",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_0",
+          "size": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "name": "map_2",
+          "size": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "animations": []
+    },
+    {
       "path": "assets\\village\\dummy.glb",
       "bytes": 7563148,
       "sha256": "4c1e9e53a01ef462aca34149bd52d2ee8c514b0ebe6c4975258ebdad06a9c98d",
@@ -1737,8 +1836,10 @@
     "Assets\\Audio\\SFX\\Threadborne Sounds\\threadborne_take_damage(cloth_rip).wav",
     "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_sword_attack.wav",
     "Assets\\Audio\\SFX\\Enemy Sounds\\enemy_stomp_attack.wav",
-    "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v4.glb"
+    "Assets\\BlueBiome\\Enemies\\EaveRunner\\Models\\EaveRunner_v4.glb",
+    "Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v5.glb",
+    "Assets/Audio/SFX/Enemy Sounds/enemy_hit.wav"
   ],
-  "resource_links_checked": 36,
-  "project_source_bytes": 456767132
+  "resource_links_checked": 42,
+  "project_source_bytes": 514498060
 }

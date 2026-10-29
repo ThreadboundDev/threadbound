@@ -1,8 +1,9 @@
 extends CharacterBody3D
 ## Independent movement study. Does not load the production player or its globals.
 
-const MODEL = preload("res://assets/threadborne_study.glb")
+const MODEL = preload("res://assets/ruin_3d_demo.glb")
 const COMBAT = preload("res://scripts/study_combat.gd")
+const MOTION = preload("res://scripts/study_motion.gd")
 const GRAPPLE = preload("res://scripts/study_grapple.gd")
 const MOMENTUM = preload("res://scripts/study_momentum.gd")
 const AUTHORED_ATTACKS = preload("res://assets/threadborne_authored_attacks.glb")
@@ -83,7 +84,7 @@ func _ready() -> void:
 	visual.rotation.y = PI
 	set_weapons(true)
 	for clip in animation.get_animation_list():
-		if clip in ["idle_4", "run_1", "walk_1", "block_idle_1", "grapple_swinging_1"]:
+		if clip in ["idle_4", "demo_run", "run_1", "walk_1", "block_idle_1", "grapple_swinging_1"]:
 			animation.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 	install_authored_attacks()
 	install_water_combo(animation, skeleton)
@@ -225,6 +226,9 @@ func _physics_process(delta: float) -> void:
 			else: grapple.fire()
 	combat.tick(delta)
 	grapple.tick(delta)
+	if combat.impact_time>0:
+		animation.speed_scale=0
+		return
 	var was_grounded := is_on_floor()
 	if is_on_floor() or swimming: air_jump_available = true
 	if not is_on_floor() and not swimming and not grapple.connected:
@@ -271,11 +275,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = combat.strike_direction.x*7
 		velocity.z = combat.strike_direction.z*7
 	else:
-		var speed := 5.2 if Input.is_action_pressed("sprint") else 3.1
+		var speed := 5.2
 		speed *= momentum_multiplier("move")
 		if combat.guarding: speed = 1.4
 		if combat.action in ["light", "air"]: speed *= 0.3
-		if combat.action in ["neutral", "hurt", "dead"]: speed = 0
+		if combat.action in ["neutral", "hurt", "dead", "recover"]: speed = 0
 		if combat.meditating: speed = 0
 		var acceleration := 22.0 if is_on_floor() else 5.0
 		velocity.x = move_toward(velocity.x, input_direction.x*speed, acceleration*delta)
@@ -289,14 +293,14 @@ func _physics_process(delta: float) -> void:
 			velocity.y = 0 if wall_hold < 0.32 else maxf(velocity.y, -3.2)
 			play_clip("hanging_idle_1")
 			if Input.is_action_pressed("jump"): try_mantle()
-	move_and_slide()
+	MOTION.move(self,delta)
 	wall_normal = get_wall_normal() if is_on_wall() and not is_on_floor() else Vector3.ZERO
 	if wall_normal.length() < 0.5: wall_hold = 0
 	if not was_grounded and is_on_floor(): get_parent().audio.play("land", global_position, -21)
 	if is_on_floor() and Vector2(velocity.x, velocity.z).length() > 1 and dash_time <= 0:
 		step_clock -= delta
 		if step_clock <= 0:
-			step_clock = 0.28 if Input.is_action_pressed("sprint") else 0.43
+			step_clock = 1.0/3.0/maxf(0.2,momentum_multiplier("move"))
 			var wood := global_position.x > 9 and global_position.x < 16 and absf(global_position.z-2.5) < 1.5
 			wood = wood or (absf(global_position.x)<2.5 and global_position.z < -5.4 and global_position.z > -12)
 			get_parent().audio.play(("step_wood_" if wood else "step_grass_") + str(1+step_index%2), global_position, -23)
@@ -309,8 +313,8 @@ func _physics_process(delta: float) -> void:
 		elif combat.guarding: play_clip("block_idle_1")
 		elif not is_on_floor(): play_clip("jump_1")
 		elif input.length() > 0.05:
-			play_clip("run_1" if Input.is_action_pressed("sprint") else "walk_1")
-			animation.speed_scale = momentum_multiplier("move")
+			play_clip("demo_run")
+			animation.speed_scale = maxf(0.5,Vector2(velocity.x,velocity.z).length()/5.2)
 		else: play_clip("idle_4")
 	if combat.action == "hurt": play_clip("impact_1")
 	if combat.dead: play_clip("death_1")
@@ -338,6 +342,7 @@ func grapple_origin() -> Vector3:
 
 func request_dash(direction: Vector3) -> bool:
 	if dash_cooldown > 0 or combat.dead: return false
+	if combat.action=="recover" and combat.recovery_time>0.20: return false
 	if combat.action in ["light", "air", "spin", "neutral"] and combat.elapsed >= 0.22 and combat.elapsed < combat.active_end: return false
 	if not combat.spend_ap(1): return false
 	combat.action = ""

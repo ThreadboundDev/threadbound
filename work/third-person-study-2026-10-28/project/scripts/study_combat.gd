@@ -28,6 +28,10 @@ var meditating := false
 var meditate_time := 0.0
 var heal_time := 0.0
 var clip_speed := 1.0
+var impact_time := 0.0
+var recovery_time := 0.0
+var buffer_deadline := 0.0
+var confirmed_strikes := 0
 
 func _ready() -> void:
 	actor = get_parent()
@@ -56,9 +60,12 @@ func face_attack() -> void:
 func attack() -> bool:
 	if dead: return false
 	if actor.grapple.active: actor.grapple.detach()
-	if action in ["light", "water"] and elapsed > 0.09:
-		buffered = true
-		return true
+	if action in ["light", "water"]:
+		if combo<2 and elapsed>=duration-0.18 and elapsed<duration-0.015:
+			buffered = true
+			buffer_deadline = duration+0.02
+			return true
+		return false
 	if action != "" or actor.dash_time > 0: return false
 	if not actor.is_on_floor() and not actor.swimming and air_used: return false
 	combo = 0
@@ -74,6 +81,7 @@ func start_light() -> void:
 	active_end = active_start + 0.13
 	hit_targets.clear()
 	buffered = false
+	buffer_deadline = 0
 	actor.play_clip("slash_2" if action != "air" else "air_attack_forward", true)
 	if action != "air":
 		if action == "water": actor.play_clip("water_combo_%d" % (combo+1), true)
@@ -129,7 +137,11 @@ func damage_targets(radius: float, damage: int, radial := false, push := 2.0) ->
 		var amount := roundi(damage*actor.momentum_multiplier("damage"))
 		if action == "neutral" and difference.length() > radius * 0.45:
 			amount = roundi(damage * 0.55)
-		enemy.receive_hit(amount, horizontal.normalized() * push, false)
+		enemy.receive_hit(amount, horizontal.normalized() * push, action in ["spin","neutral"] or combo==2)
+		confirmed_strikes += 1
+		impact_time = maxf(impact_time,0.075 if combo==2 or radial else 0.048)
+		enemy.freeze_impact(impact_time)
+		actor.camera_kick = maxf(actor.camera_kick,0.11 if combo<2 else 0.16)
 		total_hits += 1
 		actor.camera_kick = maxf(actor.camera_kick, 0.06)
 		if action == "air" and air_direction == "down": pogo_bounce()
@@ -191,6 +203,9 @@ func reset() -> void:
 	meditating = false
 	meditate_time = 0
 	heal_time = 0
+	impact_time = 0
+	recovery_time = 0
+	buffered = false
 	for i in range(6): ap_timers[i] = 0
 	actor.animation.speed_scale = 1
 
@@ -213,7 +228,17 @@ func tick(delta: float) -> void:
 	special_cooldown = maxf(0, special_cooldown-delta)
 	if dead:
 		respawn_time -= delta
-		if respawn_time <= 0: world.reset_playtest()
+		if respawn_time <= 0:
+			if world.has_method("respawn_player"): world.respawn_player()
+			else: world.reset_playtest()
+		return
+	if impact_time>0:
+		impact_time = maxf(0,impact_time-delta)
+		actor.animation.speed_scale = 0
+		return
+	if action=="recover":
+		recovery_time = maxf(0,recovery_time-delta)
+		if recovery_time<=0: action=""
 		return
 	var previous_guard := guarding
 	guarding = Input.is_action_pressed("block") and action == "" and not actor.grapple.active
@@ -238,9 +263,12 @@ func tick(delta: float) -> void:
 			var query := PhysicsRayQueryParameters3D.create(actor.global_position+Vector3.UP*0.4, actor.global_position-Vector3.UP*0.32, 1, [actor.get_rid()])
 			if not actor.get_world_3d().direct_space_state.intersect_ray(query).is_empty(): pogo_bounce()
 	if elapsed >= duration:
-		if action in ["light", "water"] and buffered and combo < 2:
+		if action in ["light", "water"] and buffered and elapsed<=buffer_deadline+0.04 and combo < 2:
 			combo += 1
 			start_light()
 		else:
-			action = ""
+			var ended := action
+			action = "recover" if ended in ["light","water","spin","neutral"] else ""
+			recovery_time = (0.30 if combo==2 else (0.14 if not hit_targets.is_empty() else 0.24)) if ended in ["light","water"] else 0.18
+			buffered = false
 			actor.animation.speed_scale = 1

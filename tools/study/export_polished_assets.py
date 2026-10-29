@@ -51,7 +51,7 @@ def export(path, clips=True):
     bpy.context.scene.frame_set(1)
     bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB',
                              export_animations=clips, export_animation_mode='NLA_TRACKS',
-                             export_force_sampling=True, export_apply=False)
+                             export_force_sampling=True, export_apply=False, export_extras=True)
     REPORT.append(dict(file=path.relative_to(OUT).as_posix(), bytes=path.stat().st_size,
                        rigs=[dict(name=o.name, bones=len(o.data.bones)) for o in bpy.context.scene.objects if o.type=='ARMATURE']))
     print('EXPORTED', path, flush=True)
@@ -184,7 +184,7 @@ def sentinel(gender, weapon, destination):
     scene = bpy.context.scene
     scene.render.fps = 30
     choices = [('ual1', ['Idle_Loop', 'Sword_Idle', 'Walk_Loop', 'Jog_Fwd_Loop', 'Hit_Chest', 'Death01']),
-               ('ual2', ['Sword_Regular_A', 'Sword_Regular_B', 'Sword_Regular_C', 'Sword_Heavy_Combo', 'Sword_Dash', 'Sword_Block'])]
+               ('ual2', ['Sword_Regular_A', 'Sword_Regular_A_Rec', 'Sword_Regular_B', 'Sword_Regular_B_Rec', 'Sword_Regular_C', 'Sword_Heavy_Combo', 'Sword_Dash', 'Sword_Block'])]
     for folder, names in choices:
         imported = load(next((TEMP / folder).rglob('*.glb')))
         donor = next(o for o in imported if o.type == 'ARMATURE')
@@ -208,9 +208,70 @@ def sentinel(gender, weapon, destination):
                     pb.matrix_basis = (axis @ poses[pb.name].to_quaternion() @ axis.inverted()).to_matrix().to_4x4()
                     if pb.name == 'pelvis': pb.location = axis @ poses[pb.name].translation
                     pb.rotation_mode = 'QUATERNION'
+                    if any(pb.name.startswith(finger+'_') for finger in ['index','middle','ring','pinky']) and pb.name.split('_')[1] in ['01','02','03']:
+                        side=pb.name[-1];joint=int(pb.name.split('_')[1])-1
+                        across=(rig.data.bones['index_01_'+side].head_local-rig.data.bones['pinky_01_'+side].head_local).normalized()
+                        axis=pb.bone.matrix_local.to_quaternion()
+                        from mathutils import Quaternion
+                        pb.rotation_quaternion=axis.inverted() @ Quaternion(-across,[.85,1.15,.85][joint]) @ axis
                     for prop in ['location', 'rotation_quaternion']: pb.keyframe_insert(prop, frame=frame-start+1, group=pb.name)
             nla(rig, action, name)
         for ob in imported: bpy.data.objects.remove(ob, do_unlink=True)
+    # Closed-hand armed locomotion retains a usable grip instead of an unarmed jog.
+    for track in rig.animation_data.nla_tracks: track.mute=True
+    idle_action=next(t.strips[0].action for t in rig.animation_data.nla_tracks if t.name=='Sword_Idle')
+    jog_action=next(t.strips[0].action for t in rig.animation_data.nla_tracks if t.name=='Jog_Fwd_Loop')
+    rig.animation_data.action=idle_action
+    if idle_action.slots:rig.animation_data.action_slot=idle_action.slots[0]
+    scene.frame_set(8);bpy.context.view_layer.update()
+    armed_pose={p.name:p.matrix_basis.copy() for p in rig.pose.bones}
+    rig.animation_data.action=jog_action
+    if jog_action.slots:rig.animation_data.action_slot=jog_action.slots[0]
+    sampled=[]
+    for frame in range(1,int(jog_action.frame_range[1])+1):
+        scene.frame_set(frame);bpy.context.view_layer.update()
+        values={p.name:p.matrix_basis.copy() for p in rig.pose.bones}
+        for name in values:
+            if any(term in name for term in ['clavicle','upperarm','lowerarm','hand','thumb','index','middle','ring','pinky']):
+                amount=1.0 if any(t in name for t in ['hand','thumb','index','middle','ring','pinky']) else .88
+                values[name]=values[name].to_quaternion().slerp(armed_pose[name].to_quaternion(),amount).to_matrix().to_4x4()
+        sampled.append(values)
+    carried=bpy.data.actions.new('Sentinel_Jog_Armed')
+    rig.animation_data.action=carried
+    for frame,values in enumerate(sampled,1):
+        scene.frame_set(frame)
+        for p in rig.pose.bones:
+            p.matrix_basis=values[p.name];p.rotation_mode='QUATERNION'
+            for prop in ['location','rotation_quaternion']:p.keyframe_insert(prop,frame=frame,group=p.name)
+    nla(rig,carried,'Jog_Armed')
+    # Fit the handle through the posed, curled fingers. The old world-up T-pose
+    # attachment had the right bone but the wrong grip orientation and position.
+    for track in rig.animation_data.nla_tracks: track.mute = True
+    idle = next(t.strips[0].action for t in rig.animation_data.nla_tracks if t.name == 'Sword_Idle')
+    rig.animation_data.action = idle
+    if idle.slots: rig.animation_data.action_slot = idle.slots[0]
+    scene.frame_set(8)
+    bpy.context.view_layer.update()
+    pb = rig.pose.bones
+    index = pb['index_01_r'].head.copy()
+    pinky = pb['pinky_01_r'].head.copy()
+    shaft = (index-pinky).normalized()
+    forward = (pb['middle_02_r'].head-pb['hand_r'].head).normalized()
+    width = (forward-shaft*forward.dot(shaft)).normalized()
+    normal = shaft.cross(width).normalized()
+    center = sum((pb[f'{finger}_{joint:02d}_r'].head for finger in ['index','middle','ring','pinky'] for joint in [1,2]),Vector())/8
+    grip_frame = Matrix((width,normal,shaft)).transposed().to_4x4()
+    grip_frame.translation = center
+    to_rest = hand.matrix_local @ pb['hand_r'].matrix.inverted() @ grip_frame
+    ob = next(o for o in meshes if o.name.startswith('Downloaded_'))
+    native = [v.co-hand.head_local for v in ob.data.vertices]
+    for vertex,co in zip(ob.data.vertices,native): vertex.co = to_rest @ co
+    length = max(v.z for v in native)
+    base = to_rest @ Vector((0,0,max(.12,length-.3) if weapon.startswith('spear') else .13))
+    tip = to_rest @ Vector((0,0,length))
+    ob['blade_base_gltf'] = [base.x,base.z,-base.y]
+    ob['blade_tip_gltf'] = [tip.x,tip.z,-tip.y]
+    rig.animation_data.action = None
     for track in rig.animation_data.nla_tracks: track.mute = False
     export(OUT / 'enemies' / destination)
 
@@ -246,6 +307,12 @@ def props():
         bpy.ops.wm.read_factory_settings(use_empty=True)
         load(next((TEMP / 'props').rglob(stem+'.gltf')))
         export(OUT / 'village' / (stem.lower()+'.glb'), False)
+
+
+def tower():
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    load(ROOT / 'Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v5.glb')
+    export(OUT / 'village/demo_tower.glb',False)
 
 
 def stylized():
@@ -314,6 +381,7 @@ elif '--sentinels' in sys.argv:
     sentinel('Female', 'spear_A', 'woven_pikewarden.glb')
 elif '--village' in sys.argv: village()
 elif '--props' in sys.argv: props()
+elif '--tower' in sys.argv: tower()
 elif '--stylized' in sys.argv: stylized()
 else: raise SystemExit('Choose --golem, --sentinels or --village')
 (TEMP / ('export_'+sys.argv[-1].lstrip('-')+'.json')).write_text(json.dumps(REPORT, indent=2)+'\n', encoding='utf-8')

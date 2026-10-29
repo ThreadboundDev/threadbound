@@ -24,7 +24,7 @@ def installed_path(name):
 def main():
     files = [p for p in SOURCE.rglob('*') if p.is_file() and '.godot' not in p.parts
              and p.suffix not in {'.log', '.import'}
-             and p.name not in {'test_results.json', 'combat_test_results.json', 'polish_test_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
+             and p.name not in {'test_results.json', 'combat_test_results.json', 'polish_test_results.json', 'demo_feel_test_results.json', 'demo_feel_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
              and not (p.parent in {SOURCE / 'assets', SOURCE / 'assets/enemies', SOURCE / 'assets/village', SOURCE / 'assets/local_licensed'} and p.suffix in {'.png', '.jpg'})]
     if DESTINATION.exists():
         if not MARKER.exists():
@@ -51,6 +51,13 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(file, destination)
         manifest[relative.as_posix()] = digest(destination)
+    # Remove only unchanged files owned by the previous installation. Manual edits
+    # were rejected in preflight, and installed_path confines deletion to this study.
+    if MARKER.exists():
+        for name, sha in previous['files'].items():
+            obsolete = installed_path(name)
+            if name not in manifest and obsolete.is_file() and digest(obsolete) == sha:
+                obsolete.unlink()
     MARKER.write_text(json.dumps({'source': str(SOURCE), 'files': manifest}, indent=2), encoding='utf-8')
     print(f'Installed {len(manifest)} source files in {DESTINATION}')
 

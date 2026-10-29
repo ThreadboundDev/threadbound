@@ -13,6 +13,15 @@ var anchors: Array[Node3D] = []
 var reset_serial := 0
 var shutting_down := false
 var navigation: NavigationRegion3D
+var feedback_hits := 0
+
+func hit_feedback(point: Vector3, direction: Vector3, heavy: bool) -> void:
+	feedback_hits+=1
+	fx.burst(point,Color("f3dfad"),heavy)
+	var mark: Node3D=fx.ring(point,0.16 if not heavy else 0.28,Color("e9d7ac"),0.14)
+	if direction.length()>0.1: mark.quaternion=Quaternion(Vector3.UP,direction.normalized())
+	audio.play("contact",point,-10 if heavy else -14,0.88 if heavy else 1.08)
+	for device in Input.get_connected_joypads(): Input.start_joy_vibration(device,0.15,0.35 if heavy else 0.2,0.08)
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -269,6 +278,9 @@ func is_swimming(point: Vector3) -> bool:
 
 func build_navigation() -> void:
 	add_to_group("study_nav_geometry")
+	if is_instance_valid(navigation):
+		remove_child(navigation)
+		navigation.queue_free()
 	navigation = NavigationRegion3D.new()
 	var nav := NavigationMesh.new()
 	nav.geometry_parsed_geometry_type = NavigationMesh.PARSED_GEOMETRY_STATIC_COLLIDERS
@@ -278,8 +290,8 @@ func build_navigation() -> void:
 	nav.cell_size = 0.25
 	nav.cell_height = 0.25
 	nav.agent_height = 2.0
-	nav.agent_radius = 0.5
-	nav.agent_max_climb = 0.5
+	nav.agent_radius = 1.0
+	nav.agent_max_climb = 0.25
 	nav.filter_baking_aabb = AABB(Vector3(-30,-4,-26),Vector3(64,13,54))
 	navigation.navigation_mesh = nav
 	add_child(navigation)

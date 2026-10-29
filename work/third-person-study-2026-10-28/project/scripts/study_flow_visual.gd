@@ -13,7 +13,7 @@ render_mode unshaded,cull_disabled,depth_draw_never;
 uniform float strength=0.0;
 void fragment(){
  float edge=max(0.0,sin(UV.x*3.14159));
- ALBEDO=mix(vec3(0.71,0.54,0.25),vec3(1.0,0.94,0.76),edge);
+ ALBEDO=mix(COLOR.rgb,vec3(1.0,0.94,0.76),edge);
  EMISSION=ALBEDO*0.45;
  ALPHA=edge*strength*0.5;
 }"""
@@ -34,12 +34,17 @@ func _process(delta: float) -> void:
 	material_override.set_shader_parameter("strength",strength)
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var colors: Array[Color]=[Color("b58b40")]
+	if actor.get_parent().has_method("flow_colors"):
+		var channels: Array[Color]=actor.get_parent().flow_colors()
+		if not channels.is_empty(): colors=channels
 	for strand in range(3):
 		for segment in range(32):
 			var a := segment/32.0
 			var b := (segment+1)/32.0
 			var phase := strand*TAU/3
 			for item in [[a,-1.0],[a,1.0],[b,1.0],[a,-1.0],[b,1.0],[b,-1.0]]:
+				tool.set_color(colors[strand%colors.size()])
 				tool.set_uv(Vector2((item[1]+1)/2,item[0]))
 				tool.add_vertex(point(item[0],phase,item[1]))
 	mesh = tool.commit()

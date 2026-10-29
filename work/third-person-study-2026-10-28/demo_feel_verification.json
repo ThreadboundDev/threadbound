@@ -1,0 +1,225 @@
+{
+	"checks": [
+		{
+			"check": "Demo opens with focused welcome",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Safe tutorial spawn",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Default athletic run without sprint",
+			"detail": [
+				"demo_run",
+				"(0.0, 0.0, -4.786546)",
+				"(0.0, 0.000391, 15.48676)",
+				false
+			],
+			"passed": true
+		},
+		{
+			"check": "Dedicated 3D model loaded",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Early spam rejected",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Confirmed contact freezes both participants locally",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Contact has impact feedback",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Single strike cannot hit repeatedly",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Late deliberate tap accepted 0",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Late deliberate tap accepted 1",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Finisher cannot buffer endlessly",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Three-hit chain has recovery",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Recovery rejects attack spam",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Recovery ends; basic attack costs no AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Whiffs have no false contact",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Capsule clears low debris without sticking",
+			"detail": [
+				"(0.0, 0.000936, 13.89017)",
+				"(0.0, 0.0, -4.790799)",
+				"demo_run",
+				false
+			],
+			"passed": true
+		},
+		{
+			"check": "Full wall remains solid",
+			"detail": [
+				"(0.0, 0.000936, 12.54012)",
+				"(0.0, 0.0, 0.0)",
+				"demo_run",
+				false
+			],
+			"passed": true
+		},
+		{
+			"check": "Enemy navigates around solid wall",
+			"detail": [
+				"(1.009197, 0.014133, 10.35467)",
+				"windup",
+				"(0.0, 0.0, 0.0)",
+				"(0.0, 0.0, 0.0)",
+				true,
+				false
+			],
+			"passed": true
+		},
+		{
+			"check": "Sword fingers wrap the grip",
+			"detail": [
+				1.92056655883789,
+				1.14999556541443,
+				0.849998712539673
+			],
+			"passed": true
+		},
+		{
+			"check": "Armed jog is a true loop",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Crowd agents both progress",
+			"detail": [
+				"(-4.860692, 0.01413, 19.07685)",
+				"(-4.606069, 0.014049, 17.62768)"
+			],
+			"passed": true
+		},
+		{
+			"check": "Crowd capsules remain separate",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Open wing pickup Essence",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Open wing pickup Power",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Open wing pickup Balance",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Collected channels color Flow independently",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Shrine restores health and AP",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Death returns to rested checkpoint",
+			"detail": [
+				"(2.8, 0.00012, -2.3)",
+				"(2.8, 0.2, -2.3)",
+				false,
+				false,
+				true
+			],
+			"passed": true
+		},
+		{
+			"check": "Death retains discovered threads",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Committed boss resists light stunlock",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Deliberate heavy hit can stagger boss",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Boss defeat grows ending blossom",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Ending blossom reachable on foot",
+			"detail": "(24.8, 0.091016, 12.0)",
+			"passed": true
+		},
+		{
+			"check": "End offer pauses and provides two choices",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Keep exploring resumes",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Thank-you ending available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Restart restores full demo loop",
+			"detail": null,
+			"passed": true
+		}
+	],
+	"failed": 0
+}

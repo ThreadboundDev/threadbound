@@ -1,0 +1,16 @@
+[
+  {
+    "source": "Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v5.glb",
+    "sha256": "4163fe35a187b5e387c9b9d230e5498905bae0134eb637537bbac49688200728",
+    "target": "assets/village/demo_tower.glb",
+    "target_sha256": "6b78f5cfe1ef7a9ad4bc55e07081d47b2035e5835a9572561ff587a0fc2a8497",
+    "license": "Existing production asset; original provenance applies; copied for separate 3D demo"
+  },
+  {
+    "source": "Assets/Audio/SFX/Enemy Sounds/enemy_hit.wav",
+    "sha256": "046a78dfed598ce96f61082eaf9e3c74c84788c4a61e3edfbb4365a93ec16aa8",
+    "target": "assets/audio/contact.wav",
+    "target_sha256": "046a78dfed598ce96f61082eaf9e3c74c84788c4a61e3edfbb4365a93ec16aa8",
+    "license": "Existing production asset; original provenance applies; copied for separate 3D demo"
+  }
+]

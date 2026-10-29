@@ -63,7 +63,7 @@ func _ready() -> void:
 	style_bar(health_bar, Color("8ab5a2"))
 	add_child(health_bar)
 	ap = label(self, "", Vector2(28, 102), 20)
-	label(self, "Village → rooftops → river → guardian\nGrapple solid surfaces · C + air attack: pogo", Vector2(28, 142), 14)
+	label(self, "Explore the three wings · rest at the workshop\nGrapple solid surfaces · C + air attack: pogo", Vector2(28, 142), 14)
 	flow_label = label(self, "", Vector2(28, 188), 14)
 	flow_bar = ProgressBar.new()
 	flow_bar.position = Vector2(28, 214)
@@ -78,7 +78,7 @@ func _ready() -> void:
 	marker = label(self, "+", Vector2(711, 434), 24)
 	message = label(self, "", Vector2(450, 740), 17)
 	label(self, "LMB attack   RMB guard/parry   Q special (+ movement: spin)   E grapple / release   Ctrl dash   Tab lock", Vector2(28, 813), 14)
-	label(self, "WASD / mouse   Space jump / grapple release   Shift run   R reset all   V weapons   H help   M mute   Esc pause", Vector2(28, 839), 14)
+	label(self, "WASD / mouse   Space jump / grapple release   R restart   G interact   H help   M mute   Esc pause", Vector2(28, 839), 14)
 	boss_label = label(self, "", Vector2(510, 28), 19)
 	boss_bar = ProgressBar.new()
 	boss_bar.position = Vector2(480, 58)
@@ -91,7 +91,7 @@ func _ready() -> void:
 	help.size = Vector2(720, 570)
 	add_child(help)
 	var instructions := Label.new()
-	instructions.text = "THREAD & STONE · PLAYTEST CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump / air jump; jump releases grapple\nShift / LB — run     Ctrl / B — dash with brief invulnerability\nLMB / RT — tap-to-buffer sword combo; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — neutral burst; hold movement for directional spin (2 AP)\nE / RB — fire/release grapple at any solid surface or enemy\nTab / right-stick click — lock/unlock nearest visible enemy\nV / Y — compare original and new sword/shield\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nAP recharges independently; Momentum and meditation affect speed.\nC / left-stick click — down air attack / swim down\nHold Space + air attack — upward attack\nHold F / D-pad down — meditate; trade Momentum for healing\nFalls return to the last thread-marked landing."
+	instructions.text = "RUIN · 3D DEMO CONTROLS\n\nWASD / left stick — move relative to camera\nMouse / right stick — look     Wheel — camera distance\nSpace / A — jump / air jump; jump releases grapple\nRun by default     Ctrl / B — dash with brief invulnerability\nLMB / RT — time taps near the end of each sword swing; air strike when jumping\nRMB / LT — hold shield; fresh press can parry frontal strikes\nQ / X — neutral burst; hold movement for directional spin (2 AP)\nE / RB — fire/release grapple at any solid surface or enemy\nTab / right-stick click — lock/unlock nearest visible enemy\nG / D-pad Up — interact / shrine / workshop\nR / Back — reset enemies, health, AP and traversal\nM — mute all sound     H / Esc — close help and resume\n\nAP recharges independently; Momentum and meditation affect speed.\nC / left-stick click — down air attack / swim down\nHold Space + air attack — upward attack\nHold F / D-pad down — meditate; trade Momentum for healing\nFalls return to the last thread-marked landing."
 	instructions.add_theme_font_size_override("font_size", 16)
 	help.add_child(instructions)
 	help.visible = false
