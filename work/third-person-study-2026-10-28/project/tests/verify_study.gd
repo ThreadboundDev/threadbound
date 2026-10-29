@@ -18,7 +18,7 @@ func run() -> void:
 	root.add_child(scene)
 	await frames(35)
 	var actor = scene.actor
-	check("Separate project name", ProjectSettings.get_setting("application/config/name") == "Threadbound — Third-person Study")
+	check("Separate project name", ProjectSettings.get_setting("application/config/name") == "Threadbound - 3D Demo")
 	check("Original named Threadborne skeleton", actor.skeleton != null and actor.skeleton.find_bone("hand.R") >= 0)
 	check("Floor contact at spawn", actor.is_on_floor(), str(actor.global_position))
 	check("Third-person camera current", actor.camera.current and actor.camera.projection == Camera3D.PROJECTION_PERSPECTIVE)

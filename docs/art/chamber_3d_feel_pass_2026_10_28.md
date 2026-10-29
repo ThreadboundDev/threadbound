@@ -53,12 +53,19 @@ retain provenance. No new remote asset was needed for this pass.
 
 ## Validation
 
-Source project: 61 asset/level checks, 60 combat checks, 20 movement checks and
+Source and independently installed projects: 61 asset/level checks, 60 combat checks, 20 movement checks and
 37 new demo/feel checks: **178 passing**. New checks exercise deliberate combo
 buffering, finisher recovery, local contact pauses, whiffs, default run, low-step
 collision, full walls, navigation around a wall, crowd progress/separation,
 closed sword fingers, boss light/heavy stagger rules, wing collection, shrine
 respawn, retained exploration progress and the actual ending/restart loop.
+Implementation checkpoint: `c088dbd78c6a402418f8bcc818af7abbad27ed5a`, pushed to
+`threadbound/feature-polished-3d-demo`. Standalone checks and both GPU capture
+scripts also pass. Asset audit: 44 self-contained GLBs, 42 resource links and
+15 unchanged production inputs. The launcher and verifier import new GLBs
+synchronously before starting gameplay. Existing Godot-resaved settings were
+preserved when updating the install entry scene.
+
 Five installer safety cases cover conflicts, atomic preflight, interrupted-copy
 recovery, path confinement and removal of unchanged obsolete managed files.
 

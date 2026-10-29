@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Threadbound — Third-person Study"
+config/name="Threadbound - 3D Demo"
 run/main_scene="res://scenes/chamber_demo.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 

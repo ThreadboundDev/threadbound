@@ -11,5 +11,11 @@ $studyEngine = Get-ChildItem -LiteralPath "${env:ProgramFiles(x86)}\Godot" -Recu
     Where-Object { $_.Name -notmatch 'console' } | Sort-Object FullName -Descending | Select-Object -First 1
 if (-not $studyEngine) { throw 'Godot executable not found.' }
 $studyArguments = @('--path', ('"' + (Resolve-Path -LiteralPath $studyProject).Path + '"'))
+if (-not $Editor) {
+    $studyConsole = Join-Path $studyEngine.DirectoryName ($studyEngine.BaseName+'_console.exe')
+    $studyImportLog = Join-Path $studyProject '.study-import.log'
+    & $studyConsole --headless --editor --path (Resolve-Path -LiteralPath $studyProject).Path --import --quit *> $studyImportLog
+    if ($LASTEXITCODE -ne 0) { throw "Study import failed. See $studyImportLog" }
+}
 if ($Editor) { $studyArguments += '--editor' }
 Start-Process -FilePath $studyEngine.FullName -ArgumentList $studyArguments -WindowStyle Normal

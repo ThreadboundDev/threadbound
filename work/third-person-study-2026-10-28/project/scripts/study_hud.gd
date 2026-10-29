@@ -53,7 +53,7 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override("panel",backdrop)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
-	label(self, "THREADBOUND  ·  3D STUDY", Vector2(28, 22), 19)
+	label(self, "THREADBOUND  ·  3D DEMO", Vector2(28, 22), 19)
 	status = label(self, "", Vector2(28, 56))
 	health_bar = ProgressBar.new()
 	health_bar.position = Vector2(28, 83)
