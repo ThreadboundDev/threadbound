@@ -2,8 +2,8 @@
   "models": [
     {
       "path": "assets\\ruin_3d_demo.glb",
-      "bytes": 70791324,
-      "sha256": "701f77483bd073acd41fe9ceddd76ca694f1a09fb7bfe7662321e9883142e7df",
+      "bytes": 70744844,
+      "sha256": "f339b8befd02069f3e02bbd995ef0a1b7ef8f475ad49af86a9910637b6856846",
       "images": [
         {
           "name": "Threadborne_Normal",
@@ -77,8 +77,7 @@
         "stand_to_sit_1",
         "swimming_1",
         "walk_1",
-        "water_idle_1",
-        "demo_run"
+        "water_idle_1"
       ]
     },
     {
@@ -1841,5 +1840,5 @@
     "Assets/Audio/SFX/Enemy Sounds/enemy_hit.wav"
   ],
   "resource_links_checked": 42,
-  "project_source_bytes": 514498060
+  "project_source_bytes": 550752052
 }

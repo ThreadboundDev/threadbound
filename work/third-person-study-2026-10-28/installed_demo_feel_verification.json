@@ -11,13 +11,23 @@
 			"passed": true
 		},
 		{
-			"check": "Default athletic run without sprint",
+			"check": "Existing library run by default",
 			"detail": [
-				"demo_run",
+				"run_1",
 				"(0.0, 0.0, -4.786546)",
 				"(0.0, 0.000391, 15.48676)",
 				false
 			],
+			"passed": true
+		},
+		{
+			"check": "Shift keeps the same library run",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Rejected procedural run removed",
+			"detail": null,
 			"passed": true
 		},
 		{
@@ -85,7 +95,7 @@
 			"detail": [
 				"(0.0, 0.000936, 13.89017)",
 				"(0.0, 0.0, -4.790799)",
-				"demo_run",
+				"run_1",
 				false
 			],
 			"passed": true
@@ -95,9 +105,44 @@
 			"detail": [
 				"(0.0, 0.000936, 12.54012)",
 				"(0.0, 0.0, 0.0)",
-				"demo_run",
+				"run_1",
 				false
 			],
+			"passed": true
+		},
+		{
+			"check": "Grapple tracks shield hand in idle_4",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Grapple tracks shield hand in run_1",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Grapple tracks shield hand in casting_1",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Grapple tracks shield hand in grapple_swinging_1",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Shield-hand hook can fire at solid wall",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Needle launches at shield hand",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Visible thread starts at shield hand",
+			"detail": null,
 			"passed": true
 		},
 		{
@@ -129,8 +174,8 @@
 		{
 			"check": "Crowd agents both progress",
 			"detail": [
-				"(-4.015168, 0.012934, 18.97795)",
-				"(-4.626967, 0.014049, 17.64178)"
+				"(-4.827807, 0.012934, 19.08094)",
+				"(-4.62866, 0.014049, 17.64231)"
 			],
 			"passed": true
 		},

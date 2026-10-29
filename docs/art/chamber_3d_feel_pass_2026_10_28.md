@@ -6,16 +6,16 @@ or approval to replace the 2D game.
 
 ## Delivered
 
-- Ruin runs by default using a dedicated 20-frame athletic cycle: narrow foot
-  tracking, alternating flight/stance, raised knees and bent counter-swinging
-  arms. Sword carry points down/back. Intentional shield guarding remains.
-- The editable 3D source is
+- **T30 correction:** Chase rejected the authored athletic cycle. Ruin now uses
+  the existing library `run_1` formerly played with Shift, with only lateral leg
+  spread narrowed. The original upper body, timing and forward/vertical foot
+  trajectories are preserved. [Correction and comparison](library_run_and_shield_grapple_2026_10_28.md).
+- The editable 3D source remains
   `work/third-person-study-2026-10-28/source/Threadborne_3D_Demo.blend`.
-  It includes keyed IK controls, the baked `demo_run` NLA track and existing
-  combat/water actions. `Threadborne_Pre3D_Reference.glb` is kept beside it,
-  outside the runnable assets. Rebuild with
-  `tools/study/build_3d_player_animation_source.py` through Blender.
-  Production player files and the production animation library are untouched.
+  It retains `Original_library_run_1_UNCHANGED` alongside the cleaned action.
+  `Threadborne_Pre3D_Reference.glb` remains the preserved library reference outside
+  the runnable assets. Rebuild with `tools/study/build_3d_player_animation_source.py`
+  through Blender. Production player and animation-library sources are untouched.
 - Confirmed sword hits pause the attacker and victim briefly, add restrained
   contact particles/rings, sound and controller feedback. Whiffs do not produce
   contact feedback. Attacks accept a late deliberate follow-up tap; a three-hit

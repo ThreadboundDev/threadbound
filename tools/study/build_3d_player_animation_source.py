@@ -1,194 +1,144 @@
-"""Author a separate, editable 3D Ruin locomotion source; production data is read only.
+"""Keep the existing library run; clean up only its sideways leg spread in 3D.
 
-The 20-frame run has alternating planted feet/flight phases, narrow tracking,
-forward knee poles and bent, close-to-body arm swing. IK is baked for runtime;
-muted constraints and keyed controls remain in the saved Blender source.
+The original run_1 action is preserved alongside the edited action in the blend.
+No new gait, arm motion, pelvis motion, cycle or animation controls are authored.
+Production inputs are read-only; only the separate study is exported.
 """
 import bpy
+import hashlib
 import json
 import math
 from pathlib import Path
-from mathutils import Matrix, Quaternion, Vector
 
-ROOT = Path(__file__).resolve().parents[2]
-WORK = ROOT / 'work/third-person-study-2026-10-28'
-OUT = WORK / 'project/assets/ruin_3d_demo.glb'
-SOURCE = WORK / 'source/Threadborne_3D_Demo.blend'
-SOURCE.parent.mkdir(parents=True, exist_ok=True)
+ROOT=Path(__file__).resolve().parents[2]
+WORK=ROOT/'work/third-person-study-2026-10-28'
+REFERENCE=WORK/'source/Threadborne_Pre3D_Reference.glb'
+SOURCE=WORK/'source/Threadborne_3D_Demo.blend'
+OUT=WORK/'project/assets/ruin_3d_demo.glb'
+LATERAL_FACTOR=.45
+LEGS={part+'.'+side for part in ['thigh','shin','foot'] for side in ['L','R']}
+
 bpy.ops.wm.read_factory_settings(use_empty=True)
-scene = bpy.context.scene
-scene.render.fps = 30
-bpy.context.preferences.filepaths.save_version = 0
-bpy.ops.import_scene.gltf(filepath=str(WORK / 'source/Threadborne_Pre3D_Reference.glb'))
-rig = next(o for o in scene.objects if o.type == 'ARMATURE')
-rig.animation_data_create()
-for track in rig.animation_data.nla_tracks: track.mute = True
-base = next(t.strips[0].action for t in rig.animation_data.nla_tracks if t.name == 'run_1')
-rig.animation_data.action = base
-if base.slots: rig.animation_data.action_slot = base.slots[0]
-scene.frame_set(1)
-bpy.context.view_layer.update()
-rest = {b.name:b.matrix_local.copy() for b in rig.data.bones}
-base_pose = {p.name:p.matrix_basis.copy() for p in rig.pose.bones}
-# Use the original unarmed wrist attitude; the IK controls own arm positions.
-hand_rotations = {side:(rig.matrix_world @ rig.data.bones['hand.'+side].matrix_local).to_quaternion() for side in ['L','R']}
-rig.animation_data.action = None
-for pb in rig.pose.bones: pb.matrix_basis = Matrix.Identity(4)
-bpy.context.view_layer.update()
-sword=bpy.data.objects['Study_Sword']
-axis=max(range(3),key=lambda i:max(v.co[i] for v in sword.data.vertices)-min(v.co[i] for v in sword.data.vertices))
-local_axis=Vector((0,0,0));local_axis[axis]=-1
-rest_blade=(sword.matrix_world.to_3x3() @ local_axis).normalized()
-hand_rotations['R']=rest_blade.rotation_difference(Vector((0,.40,-.9165)).normalized()) @ hand_rotations['R']
+bpy.context.preferences.filepaths.save_version=0
+scene=bpy.context.scene
+scene.render.fps=30
+bpy.ops.import_scene.gltf(filepath=str(REFERENCE))
+rig=next(o for o in scene.objects if o.type=='ARMATURE')
+for track in rig.animation_data.nla_tracks:track.mute=True
+track=next(t for t in rig.animation_data.nla_tracks if t.name=='run_1')
+original=track.strips[0].action
+rig.animation_data.action=original
+if original.slots:rig.animation_data.action_slot=original.slots[0]
+start,end=original.frame_range
 
-controls = bpy.data.collections.new('3D locomotion controls — unmute IK to edit')
-scene.collection.children.link(controls)
-helpers = []
-constraints = []
+def bags(action):
+    return [bag for layer in action.layers for strip in layer.strips for bag in strip.channelbags]
 
-def empty(name, position):
-    ob = bpy.data.objects.new(name,None)
-    controls.objects.link(ob)
-    ob.empty_display_type = 'SPHERE'
-    ob.empty_display_size = .06
-    ob.location = position
-    helpers.append(ob)
-    return ob
+def is_leg(path):
+    return any(path.startswith('pose.bones["'+name+'"]') for name in LEGS)
 
+def curve_signature(action):
+    return [(c.data_path,c.array_index,[(tuple(k.co),k.interpolation,tuple(k.handle_left),tuple(k.handle_right)) for k in c.keyframe_points])
+            for bag in bags(action) for c in bag.fcurves if not is_leg(c.data_path)]
 
-def ik_chain(name, bone, position, pole_position):
-    target = empty(name+' target',position)
-    pole = empty(name+' pole',pole_position)
-    constraint = rig.pose.bones[bone].constraints.new('IK')
-    constraint.name = name+' — editable 3D source'
-    constraint.target = target
-    constraint.pole_target = pole
-    constraint.chain_count = 2
-    constraint.use_stretch = False
-    constraints.append(constraint)
-    return target,pole,constraint
-
-
-legs, arms, rotations = {}, {}, {}
-for side,sign in [('L',1),('R',-1)]:
-    legs[side] = ik_chain(side+' athletic leg','shin.'+side,(sign*.115,-.25,.13),(sign*.14,-1.2,.55))
-    arms[side] = ik_chain(side+' running arm','forearm.'+side,(sign*.28,-.12,1.04),(sign*.62,.14,1.1))
-    for bone,rot in [('foot.'+side,rest['foot.'+side].to_quaternion()),('hand.'+side,hand_rotations[side])]:
-        target = empty(bone+' orientation',Vector((0,0,0)))
-        target.rotation_mode = 'QUATERNION'
-        target.rotation_quaternion = rot
-        constraint = rig.pose.bones[bone].constraints.new('COPY_ROTATION')
-        constraint.target = target
-        constraint.target_space = 'WORLD'
-        constraint.owner_space = 'WORLD'
-        constraints.append(constraint)
-        rotations[bone] = target
-
-# Choose pole angles by the evaluated knee/elbow direction, not by rig naming.
-for side,sign in [('L',1),('R',-1)]:
-    for chain, joint, preferred in [(legs[side],'shin.'+side,Vector((0,-1,0))),
-                                     (arms[side],'forearm.'+side,Vector((sign,0.4,0)))]:
-        best = (-1e9,0.0)
-        for angle in [0,math.pi/2,math.pi,-math.pi/2]:
-            chain[2].pole_angle = angle
-            bpy.context.view_layer.update()
-            score = rig.pose.bones[joint].head.dot(preferred)
-            if score>best[0]: best=(score,angle)
-        chain[2].pole_angle=best[1]
-
-
-def frame_pose(phase):
-    for pb in rig.pose.bones:
-        pb.matrix_basis = Matrix.Identity(4)
-        if any(pb.name.startswith(finger+'.') for finger in ['index','middle','ring','pinky']):
-            side=pb.name[-1]
-            across=(rig.data.bones['index.01.'+side].head_local-rig.data.bones['pinky.01.'+side].head_local).normalized()
-            joint=int(pb.name.split('.')[1])-1
-            q=Quaternion(-across,[.85,1.15,.85][joint])
-            axis=pb.bone.matrix_local.to_quaternion()
-            pb.rotation_mode='QUATERNION';pb.rotation_quaternion=axis.inverted() @ q @ axis
-        elif pb.name.startswith('thumb.'):
-            pb.matrix_basis=base_pose[pb.name]
-    pelvis = rig.pose.bones['pelvis']
-    # Lower hips at support, lift through flight, without a lateral sway.
-    bounce = .035*math.cos(phase*math.tau*2)
-    world = rest['pelvis'].copy()
-    world.translation += Vector((.005*math.sin(phase*math.tau),0,-.18+bounce))
-    world = world @ Quaternion((0,1,0),.025*math.sin(phase*math.tau)).to_matrix().to_4x4()
-    pelvis.matrix = world
-    for bone in ['spine','chest']:
-        pb=rig.pose.bones[bone]
-        # Global forward lean, distributed through the torso.
-        correction=Quaternion((1,0,0),.065)
-        pb.rotation_mode='QUATERNION'
-        axis=pb.bone.matrix_local.to_quaternion()
-        pb.rotation_quaternion=axis.inverted() @ correction @ axis
-    for side,sign,offset in [('L',1,0),('R',-1,.5)]:
-        t=(phase+offset)%1
-        contact=.35
-        if t<contact:
-            ratio=t/contact
-            forward=.52-1.08*ratio
-            lift=.13+.055*ratio**3
-            pitch=.20*ratio
-        else:
-            ratio=(t-contact)/(1-contact)
-            forward=-.56+1.08*(ratio*ratio*(3-2*ratio))
-            lift=.13+.39*math.sin(math.pi*ratio)**1.15
-            pitch=-.32*math.sin(math.pi*ratio)
-        legs[side][0].location=(sign*.115,-forward,lift)
-        rotations['foot.'+side].rotation_quaternion=Quaternion((1,0,0),pitch) @ rest['foot.'+side].to_quaternion()
-        swing=math.cos(t*math.tau)
-        arms[side][0].location=(sign*.285,.19*swing,1.045+.10*max(0,-swing))
-        rotations['hand.'+side].rotation_quaternion=hand_rotations[side]
-    bpy.context.view_layer.update()
-
-
-samples=[]
+# Include original sample times as well as integer frames, avoiding leftover
+# imported fractional keys between newly baked leg corrections.
+times=sorted({float(k.co.x) for bag in bags(original) for c in bag.fcurves for k in c.keyframe_points}
+             | {float(f) for f in range(math.ceil(start),math.floor(end)+1)})
 poses=[]
-for frame in range(1,22):
-    phase=(frame-1)/20.0
-    scene.frame_set(frame)
-    frame_pose(phase)
-    evaluated=rig.evaluated_get(bpy.context.evaluated_depsgraph_get())
-    poses.append({p.name:p.matrix.copy() for p in evaluated.pose.bones})
-    row={'frame':frame,'feet':{},'knees':{}}
-    for side in ['L','R']:
-        row['feet'][side]=list(evaluated.pose.bones['foot.'+side].head)
-        row['knees'][side]=list(evaluated.pose.bones['shin.'+side].head)
-    samples.append(row)
-    for ob in helpers:
-        ob.keyframe_insert('location',frame=frame)
-        if ob.rotation_mode=='QUATERNION':ob.keyframe_insert('rotation_quaternion',frame=frame)
+for frame in times:
+    scene.frame_set(math.floor(frame),subframe=frame%1)
+    bpy.context.view_layer.update()
+    poses.append({p.name:p.matrix.copy() for p in rig.pose.bones})
 
-for constraint in constraints: constraint.mute=True
-action=bpy.data.actions.new('Ruin_3D_Athletic_Run')
-rig.animation_data.action=action
-for frame,pose in enumerate(poses,1):
-    scene.frame_set(frame)
-    for pb in rig.pose.bones:
-        kwargs=dict(parent_matrix=pose[pb.parent.name],parent_matrix_local=pb.parent.bone.matrix_local) if pb.parent else {}
-        pb.matrix_basis=pb.bone.convert_local_to_pose(pose[pb.name],pb.bone.matrix_local,invert=True,**kwargs)
+edited=original.copy()
+edited.name='Ruin_run_1_narrow_leg_cleanup'
+edited.use_fake_user=True
+unchanged_curves=curve_signature(original)
+for bag in bags(edited):
+    for curve in list(bag.fcurves):
+        if is_leg(curve.data_path):bag.fcurves.remove(curve)
+rig.animation_data.action=edited
+if edited.slots:rig.animation_data.action_slot=edited.slots[0]
+previous={}
+samples=[]
+max_length_error=0.0
+for frame,pose in zip(times,poses):
+    cleaned={n:m.copy() for n,m in pose.items()}
+    record={'frame':round(frame,5),'feet':{}}
+    for side in ['L','R']:
+        thigh,shin,foot=[part+'.'+side for part in ['thigh','shin','foot']]
+        hip,knee,ankle=[pose[n].translation.copy() for n in [thigh,shin,foot]]
+        target=ankle.copy()
+        target.x=hip.x+(ankle.x-hip.x)*LATERAL_FACTOR
+        a=(knee-hip).length;b=(ankle-knee).length
+        delta=target-hip;distance=delta.length;direction=delta.normalized()
+        # Preserve the library's knee bend plane, tightening its lateral offset.
+        pole=knee-hip;pole.x*=LATERAL_FACTOR
+        pole=(pole-direction*pole.dot(direction)).normalized()
+        along=(a*a-b*b+distance*distance)/(2*distance)
+        assert a+b>distance and distance>abs(a-b), 'Original pose cannot reach narrow target'
+        new_knee=hip+direction*along+pole*math.sqrt(max(0,a*a-along*along))
+        for name,old_vector,new_vector,origin in [
+            (thigh,knee-hip,new_knee-hip,hip),
+            (shin,ankle-knee,target-new_knee,new_knee)]:
+            change=old_vector.rotation_difference(new_vector)
+            matrix=change.to_matrix().to_4x4() @ pose[name]
+            matrix.translation=origin
+            cleaned[name]=matrix
+        cleaned[foot].translation=target
+        max_length_error=max(max_length_error,abs((new_knee-hip).length-a),abs((target-new_knee).length-b))
+        record['feet'][side]={'original':list(ankle),'cleaned':list(target),'hip_x':hip.x}
+    scene.frame_set(math.floor(frame),subframe=frame%1)
+    for name in sorted(LEGS):
+        pb=rig.pose.bones[name]
+        kwargs=dict(parent_matrix=cleaned[pb.parent.name],parent_matrix_local=pb.parent.bone.matrix_local) if pb.parent else {}
+        pb.matrix_basis=pb.bone.convert_local_to_pose(cleaned[name],pb.bone.matrix_local,invert=True,**kwargs)
         pb.rotation_mode='QUATERNION'
-        for prop in ['location','rotation_quaternion','scale']:pb.keyframe_insert(prop,frame=frame,group=pb.name)
-action.use_fake_user=True
+        q=pb.rotation_quaternion.copy()
+        if name in previous and q.dot(previous[name])<0:q.negate()
+        pb.rotation_quaternion=q;previous[name]=q
+        for prop in ['location','rotation_quaternion','scale']:pb.keyframe_insert(prop,frame=frame,group=name)
+    samples.append(record)
+for bag in bags(edited):
+    for curve in bag.fcurves:
+        if is_leg(curve.data_path):
+            for key in curve.keyframe_points:key.interpolation='LINEAR'
+assert curve_signature(edited)==unchanged_curves,'Non-leg source curves changed'
+assert max_length_error<1e-5,'Leg lengths changed'
+
+# Check the evaluated result, including parenting and local-space conversion.
+max_forward_height_error=0.0
+for frame,pose in zip(times,poses):
+    scene.frame_set(math.floor(frame),subframe=frame%1);bpy.context.view_layer.update()
+    for side in ['L','R']:
+        actual=rig.pose.bones['foot.'+side].head;old=pose['foot.'+side].translation
+        max_forward_height_error=max(max_forward_height_error,abs(actual.y-old.y),abs(actual.z-old.z))
+assert max_forward_height_error<1e-5, max_forward_height_error
+original.name='Original_library_run_1_UNCHANGED'
+original.use_fake_user=True
+track.strips[0].action=edited
 rig.animation_data.action=None
-track=rig.animation_data.nla_tracks.new()
-track.name='demo_run'
-track.strips.new('demo_run',1,action)
-for track in rig.animation_data.nla_tracks:track.mute=False
-for ob in helpers: ob.hide_render=True
-scene.frame_start=1;scene.frame_end=21;scene.frame_set(1)
-text=bpy.data.texts.new('READ ME — 3D Ruin source')
-text.write('Dedicated 3D demo source. Production 2D assets are unchanged.\nThe demo_run NLA track is baked from the keyed IK controls.\nMute demo_run and unmute the named IK constraints to edit the controls, then rebake.\nGrounded sword, guard, aerial and water sources remain available on the same rig.\n')
+for t in rig.animation_data.nla_tracks:t.mute=False
+scene.frame_start=math.floor(start);scene.frame_end=math.ceil(end);scene.frame_set(scene.frame_start)
+text=bpy.data.texts.new('READ ME - library run cleanup')
+text.write('Existing run_1, with only thigh/shin/foot curves adjusted to reduce lateral spread.\nOriginal_library_run_1_UNCHANGED is retained for comparison.\nArms, torso, pelvis, timing and forward/vertical foot trajectories are unchanged.\nNo procedural replacement gait. All other library clips are preserved. Production sources are read-only.\n')
 bpy.ops.file.pack_all()
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE),compress=True)
 bpy.ops.object.select_all(action='DESELECT')
-for ob in scene.objects:
-    if ob not in helpers:ob.select_set(True)
+for ob in scene.objects:ob.select_set(True)
 bpy.ops.export_scene.gltf(filepath=str(OUT),export_format='GLB',use_selection=True,
                          export_animation_mode='NLA_TRACKS',export_animations=True,export_apply=False)
-report={'editable_source':str(SOURCE.relative_to(ROOT)),'runtime':str(OUT.relative_to(ROOT)),
-        'cycle_seconds':20/30,'fps':30,'samples':samples,'production_files_changed':False}
-(WORK/'athletic_run_authoring.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
-print('ATHLETIC_3D_SOURCE_EXPORTED',flush=True)
+width=lambda key:[s['feet']['L'][key][0]-s['feet']['R'][key][0] for s in samples]
+report={'source_clip':'run_1','source_reference':str(REFERENCE.relative_to(ROOT)),
+        'source_sha256':hashlib.sha256(REFERENCE.read_bytes()).hexdigest(),
+        'editable_source':str(SOURCE.relative_to(ROOT)),'runtime':str(OUT.relative_to(ROOT)),
+        'fps':scene.render.fps,'cycle_seconds':(end-start)/scene.render.fps,
+        'lateral_offset_factor':LATERAL_FACTOR,'changed_bones':sorted(LEGS),
+        'non_leg_curves_identical':curve_signature(edited)==unchanged_curves,
+        'max_leg_length_error_m':max_length_error,'max_forward_height_error_m':max_forward_height_error,
+        'mean_ankle_width_original_m':sum(width('original'))/len(samples),
+        'mean_ankle_width_cleaned_m':sum(width('cleaned'))/len(samples),
+        'samples':samples[::max(1,len(samples)//8)],'production_files_changed':False}
+(WORK/'run_cleanup_authoring.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+print('LIBRARY_RUN_CLEANUP_EXPORTED',json.dumps({k:v for k,v in report.items() if k!='samples'}),flush=True)

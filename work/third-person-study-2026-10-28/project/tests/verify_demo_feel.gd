@@ -36,7 +36,12 @@ func run() -> void:
 	await fixture()
 	Input.action_press("forward")
 	await frames(25)
-	check("Default athletic run without sprint",actor.current_clip=="demo_run" and absf(Vector2(actor.velocity.x,actor.velocity.z).length()-5.2*actor.momentum_multiplier("move"))<.1,[actor.current_clip,actor.velocity,actor.global_position,paused])
+	check("Existing library run by default",actor.current_clip=="run_1" and absf(Vector2(actor.velocity.x,actor.velocity.z).length()-5.2*actor.momentum_multiplier("move"))<.1,[actor.current_clip,actor.velocity,actor.global_position,paused])
+	Input.action_press("sprint")
+	await frames(5)
+	check("Shift keeps the same library run",actor.current_clip=="run_1")
+	Input.action_release("sprint")
+	check("Rejected procedural run removed",not actor.animation.has_animation("demo_run"))
 	Input.action_release("forward")
 	check("Dedicated 3D model loaded",actor.visual.find_child("Threadborne_Rig",true,false)!=null and actor.MODEL.resource_path.ends_with("ruin_3d_demo.glb"))
 	await fixture()
@@ -83,6 +88,32 @@ func run() -> void:
 	await frames(30)
 	Input.action_release("forward")
 	check("Full wall remains solid",actor.global_position.z>12.4,[actor.global_position,actor.velocity,actor.current_clip,paused])
+	actor.global_position=Vector3(0,.1,17)
+	actor.velocity=Vector3.ZERO
+	actor.yaw=0;actor.pitch=0
+	await frames(3)
+	actor.set_physics_process(false)
+	for clip in ["idle_4","run_1","casting_1","grapple_swinging_1"]:
+		actor.play_clip(clip,true)
+		actor.animation.pause()
+		actor.animation.seek(.15,true)
+		actor.animation.advance(0)
+		var left: Vector3=actor.skeleton.global_transform*actor.skeleton.get_bone_global_pose(actor.skeleton.find_bone("hand.L")).origin
+		var right: Vector3=actor.skeleton.global_transform*actor.skeleton.get_bone_global_pose(actor.skeleton.find_bone("hand.R")).origin
+		check("Grapple tracks shield hand in "+clip,actor.grapple_origin().distance_to(left)<.001 and actor.grapple_origin().distance_to(right)>.1)
+	actor.play_clip("idle_4",true)
+	actor.animation.advance(0)
+	var launch_hand: Vector3=actor.grapple_origin()
+	check("Shield-hand hook can fire at solid wall",actor.grapple.fire())
+	check("Needle launches at shield hand",actor.grapple.origin_position.distance_to(launch_hand)<.001)
+	actor.grapple.tick(.01)
+	var rope_start:=Vector3.ZERO
+	for strand in actor.grapple.rope:
+		rope_start+=strand.global_position-strand.global_basis.y*strand.mesh.height*.5
+	rope_start/=actor.grapple.rope.size()
+	check("Visible thread starts at shield hand",rope_start.distance_to(actor.grapple_origin())<.001)
+	actor.grapple.detach()
+	actor.set_physics_process(true)
 	await fixture(Vector3(0,.1,10))
 	actor.set_physics_process(false)
 	actor.combat.invulnerable=99

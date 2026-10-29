@@ -84,7 +84,7 @@ func _ready() -> void:
 	visual.rotation.y = PI
 	set_weapons(true)
 	for clip in animation.get_animation_list():
-		if clip in ["idle_4", "demo_run", "run_1", "walk_1", "block_idle_1", "grapple_swinging_1"]:
+		if clip in ["idle_4", "run_1", "walk_1", "block_idle_1", "grapple_swinging_1"]:
 			animation.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 	install_authored_attacks()
 	install_water_combo(animation, skeleton)
@@ -313,8 +313,8 @@ func _physics_process(delta: float) -> void:
 		elif combat.guarding: play_clip("block_idle_1")
 		elif not is_on_floor(): play_clip("jump_1")
 		elif input.length() > 0.05:
-			play_clip("demo_run")
-			animation.speed_scale = maxf(0.5,Vector2(velocity.x,velocity.z).length()/5.2)
+			play_clip("run_1")
+			animation.speed_scale = momentum_multiplier("move")
 		else: play_clip("idle_4")
 	if combat.action == "hurt": play_clip("impact_1")
 	if combat.dead: play_clip("death_1")
@@ -335,8 +335,9 @@ func facing() -> Vector3:
 	return Vector3(sin(visual.rotation.y), 0, cos(visual.rotation.y))
 
 func grapple_origin() -> Vector3:
+	# The shield is attached to the left forearm; launch thread from that hand.
 	if skeleton:
-		var hand := skeleton.find_bone("hand.R")
+		var hand := skeleton.find_bone("hand.L")
 		if hand >= 0: return skeleton.global_transform*skeleton.get_bone_global_pose(hand).origin
 	return global_position+Vector3.UP*1.05
 

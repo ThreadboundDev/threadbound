@@ -20,14 +20,14 @@ func run() -> void:
 	actor.camera.reparent(world,true)
 	actor.camera.top_level=true
 	DirAccess.make_dir_recursive_absolute("res://captures/feel")
-	actor.play_clip("demo_run",true)
+	actor.play_clip("run_1",true)
 	actor.animation.pause()
 	for view in ["front","side"]:
 		actor.camera.global_position=actor.global_position+Vector3(0,1.05,3.7) if view=="front" else actor.global_position+Vector3(3.7,1.05,0)
 		actor.camera.look_at(actor.global_position+Vector3.UP*.95)
 		actor.camera.fov=42
 		for i in range(6):
-			actor.animation.seek(i/6.0*(20.0/30),true)
+			actor.animation.seek(i/6.0*actor.animation.current_animation_length,true)
 			actor.animation.advance(0)
 			await process_frame
 			await save("run_"+view+"_"+str(i))

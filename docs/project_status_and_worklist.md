@@ -10,7 +10,16 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 28 3D demo feel corrections (T29): implementation verified; Chase's playtest pending.**
+**October 28 library run / shield-hand grapple correction (T30): implemented; Chase's retest pending.**
+Chase rejected the replacement gait. Restored the existing `run_1` used by Shift,
+made it the single default run and narrowed only its sideways leg spread. The
+original arm/torso curves and timing are preserved. Grapple launches from the
+left shield hand. Both copies pass 187 checks, including visible rope/needle
+origin tests. [Scope and comparison](art/library_run_and_shield_grapple_2026_10_28.md).
+Checkpoint: `fix: restore library run and shield-hand grapple` on
+`threadbound/feature-polished-3d-demo`. Original 2D sources are unchanged.
+
+**October 28 3D demo feel corrections (T29): review in progress; rejected run replaced by T30.**
 Chase requested an athletic default run, separate 3D animation sources, firmer
 combat, correct weapon grips, smoother enemies and a demo-shaped level.
 [Changes, validation and retest route](art/chamber_3d_feel_pass_2026_10_28.md).
