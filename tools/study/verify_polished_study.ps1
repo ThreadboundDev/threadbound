@@ -10,7 +10,7 @@ $prefix = if ($RepositoryCopy) { 'final_source' } else { 'final_installed' }
 $importLog = Join-Path $logFolder ($prefix+'_import.log')
 & $engineExe --headless --editor --path $projectFolder --import --quit *> $importLog
 if ($LASTEXITCODE -ne 0) { throw "Godot import failed. See $importLog" }
-foreach ($test in @('verify_polished_demo', 'verify_combat_playtest', 'verify_study', 'verify_demo_feel')) {
+foreach ($test in @('verify_polished_demo', 'verify_combat_playtest', 'verify_study', 'verify_demo_feel', 'verify_committed_combat')) {
     $logPath = Join-Path $logFolder ($prefix+'_'+$test+'.log')
     & $engineExe --headless --path $projectFolder --fixed-fps 60 --script ('tests/'+$test+'.gd') *> $logPath
     if ($LASTEXITCODE -ne 0) { throw "Godot check failed: $test. See $logPath" }

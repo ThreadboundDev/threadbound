@@ -63,7 +63,7 @@ func show_ending_offer() -> void:
 
 func show_ending() -> void:
 	ending=true
-	show_dialogue("Thank you for playing THREADBOUND\n\nChamber of the First Weave · 3D demo\n\nA separate experiment with Ruin's movement, the three wings, and combat. Your original 2D game is preserved.",[
+	show_dialogue("Thank you for playing THREADBOUND\n\nChamber of the First Weave · 3D demo\n\nA separate experiment with the player's movement, the three wings, and combat. Your original 2D game is preserved.",[
 		["Keep Exploring",close_dialogue],["Restart 3D Demo",restart_demo]])
 
 func restart_demo() -> void:
@@ -72,6 +72,9 @@ func restart_demo() -> void:
 	world.reset_playtest()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode==KEY_F2:
+		world.show_practice_menu()
+		get_viewport().set_input_as_handled();return
 	if dialogue.visible and (event.is_action_pressed("release_mouse") or event.is_action_pressed("interact")):
 		close_dialogue()
 		get_viewport().set_input_as_handled()
@@ -81,7 +84,10 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	if not is_instance_valid(world.actor): return
-	status.text="RUIN   %d / 100" % world.actor.combat.health
+	status.text="PLAYER   %d / 100" % world.actor.combat.health
+	if world.practice_mode:
+		objective.text="COMBAT PRACTICE\n\nF2 · select opponent\nTab · lock / unlock\nCtrl · timed dodge\n\nArmor resists light interruption.\nPunish recovery / break stance."
+		return
 	objective.text="CHAMBER OF THE FIRST WEAVE\n\n"
 	for key in ["Power","Balance","Essence"]:
 		objective.text+=("◆  " if world.collected.has(key) else "◇  ")+key+"\n"

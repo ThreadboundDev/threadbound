@@ -9,6 +9,11 @@ var blossom: Node3D
 var shrine_position := Vector3(2.8,0,-3.7)
 var workshop_position := Vector3(0.6,0,-5.8)
 var time := 0.0
+var practice_mode := false
+var practice_subject
+var exploration_homes: Dictionary={}
+var exploration_armor: Dictionary={}
+var exploration_spawn:=Vector3(0,.3,6)
 
 func hud() -> void:
 	hud_layer=DEMO_HUD.new()
@@ -37,9 +42,12 @@ func _ready() -> void:
 	thread_pickup("Power",Vector3(-21,0.8,-16),Color("b46e5e"))
 	thread_pickup("Balance",Vector3(8,0.8,-17),Color("719db2"))
 	thread_pickup("Essence",Vector3(-8,1.0,22),Color("cfb66b"))
+	for enemy in get_tree().get_nodes_in_group("study_enemies"):
+		exploration_homes[enemy]=enemy.home
+		exploration_armor[enemy]=enemy.armored
 	initializing=false
 	build_navigation()
-	hud_layer.show_dialogue("CHAMBER OF THE FIRST WEAVE\n\nExplore the Red, Blue and Yellow wings in any order. Ruin runs by default. Basic abilities reach every thread; the higher routes reward movement.\n\nReturn to the workshop shrine to rest, then test the guardian in the far clearing. H shows controls; G interacts.",[["Begin 3D Demo",hud_layer.close_dialogue]])
+	hud_layer.show_dialogue("THREADBOUND / COMBAT STUDY\n\nTest committed attacks, timed dodges and armored enemies in the existing clearing. F2 opens the opponent selector at any time.\n\nSpace jumps; air attacks go forward. Hold X for an upward air strike, C for a downward strike. H shows controls.",[["Combat practice",show_practice_menu],["Explore existing level",hud_layer.close_dialogue]])
 
 func compose_chamber() -> void:
 	# Downloaded stonework frames a sunlit grotto rather than an empty test field.
@@ -111,6 +119,7 @@ func collect_thread(key: String) -> void:
 	notice("Thread of "+key+" collected · every wing remains open")
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode==KEY_F2: show_practice_menu()
 	if event.is_action_pressed("interact") and nearby_kind!="": interact_nearby()
 
 func interact_nearby() -> void:
@@ -123,6 +132,7 @@ func interact_nearby() -> void:
 		"ending": hud_layer.show_ending_offer()
 
 func boss_defeated() -> void:
+	if practice_mode: notice("Practice opponent defeated · F2 selects another bout");return
 	if is_instance_valid(blossom): return
 	blossom=Node3D.new();blossom.position=Vector3(26,0,12);add_child(blossom)
 	var flowers=licensed_prop("flowers",blossom.position,.75,0,false)
@@ -131,6 +141,9 @@ func boss_defeated() -> void:
 	notice("Guardian unraveled · the ending blossom awaits at the clearing edge")
 
 func respawn_player() -> void:
+	if practice_mode and is_instance_valid(practice_subject):
+		enter_practice(practice_subject.kind,practice_subject.armored)
+		return
 	var point: Vector3=actor.checkpoint
 	actor.combat.reset();actor.grapple.detach();actor.momentum.reset()
 	actor.velocity=Vector3.ZERO;actor.global_position=point+Vector3.UP*.15
@@ -138,6 +151,9 @@ func respawn_player() -> void:
 	notice("Returned to the last resting point")
 
 func reset_playtest() -> void:
+	if practice_mode and is_instance_valid(practice_subject):
+		enter_practice(practice_subject.kind,practice_subject.armored)
+		return
 	super.reset_playtest()
 	collected.clear()
 	for marker in thread_markers: marker.visible=true
@@ -149,3 +165,37 @@ func flow_colors() -> Array[Color]:
 	for key in ["Power","Balance","Essence"]:
 		if collected.has(key): result.append({"Power":Color("c26b59"),"Balance":Color("719db2"),"Essence":Color("cfb66b")}[key])
 	return result
+
+func show_practice_menu() -> void:
+	hud_layer.show_dialogue("COMBAT PRACTICE\n\nRead the windup, dodge the committed swing, punish recovery. Armor resists light interruption; finishers and specials break stance. F2 returns here.",[
+		["Unarmored swordsman",func():enter_practice("reedhook",false)],
+		["Armored swordsman",func():enter_practice("reedhook",true)],
+		["Fast runner",func():enter_practice("eave",false)],
+		["Guardian",func():enter_practice("boss",true)],
+		["Return to exploration",leave_practice]])
+
+func enter_practice(kind: String, plate: bool) -> void:
+	practice_mode=true
+	hud_layer.close_dialogue()
+	actor.spawn=Vector3(22,.2,7.5);actor.reset_to_spawn();actor.checkpoint=actor.spawn
+	actor.yaw=PI;actor.pitch=-.12;actor.visual.rotation.y=0;actor.distance=4.6
+	actor.momentum.reset()
+	practice_subject=null
+	for enemy in get_tree().get_nodes_in_group("study_enemies"):
+		enemy.ai_enabled=false;enemy.visible=false;enemy.collision_layer=0;enemy.navigator.avoidance_enabled=false
+		if practice_subject==null and enemy.kind==kind: practice_subject=enemy
+	practice_subject.home=Vector3(22,.1,13)
+	practice_subject.configure_armor(plate)
+	practice_subject.reset_enemy();practice_subject.ai_enabled=true;practice_subject.navigator.avoidance_enabled=true
+	actor.lock_target=practice_subject
+	notice("Practice · Tab unlocks · Ctrl dodges · F2 selects another opponent")
+
+func leave_practice() -> void:
+	practice_mode=false;practice_subject=null
+	actor.spawn=exploration_spawn;actor.lock_target=null
+	for enemy in exploration_homes:
+		enemy.home=exploration_homes[enemy]
+		enemy.configure_armor(exploration_armor[enemy])
+		enemy.ai_enabled=true;enemy.navigator.avoidance_enabled=true
+	hud_layer.close_dialogue()
+	reset_playtest()

@@ -37,6 +37,12 @@ var safe_velocity := Vector3.ZERO
 var impact_time := 0.0
 var impact_animation_speed := 1.0
 var reaction_cooldown := 0.0
+var armored := false
+var poise := 100.0
+var armor_exposed := 0.0
+var quiet_time := 0.0
+var last_hit_armored := false
+var armor_surfaces: Array[Dictionary]=[]
 var impulse := Vector3.ZERO
 var desired_motion := Vector3.ZERO
 var path_target := Vector3.ZERO
@@ -115,12 +121,13 @@ func _ready() -> void:
 	add_child(tell)
 	health_label = Label3D.new()
 	health_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	health_label.font_size = 28
-	health_label.pixel_size = 0.007
+	health_label.font_size = 22
+	health_label.pixel_size = 0.005
 	health_label.position.y = height + 0.4
 	add_child(health_label)
 	update_label()
 	apply_woven_accents()
+	configure_armor(armored or kind=="boss")
 	for mesh_node in model.find_children("*", "MeshInstance3D", true, false):
 		if String(mesh_node.name).begins_with("Downloaded_"): world.fx.watch_blade(self, mesh_node)
 
@@ -145,7 +152,7 @@ func _process(_delta: float) -> void:
 	health_label.visible = not dead and (actor.lock_target == self or (health < max_health and global_position.distance_to(actor.global_position)<12))
 
 func attack_range() -> float:
-	return 2.45 if kind == "reedhook" else (1.65 if kind == "eave" else 3.3)
+	return 2.1 if kind == "reedhook" else (1.8 if kind == "eave" else 3.3)
 
 func apply_woven_accents() -> void:
 	var cloth := ShaderMaterial.new()
@@ -174,40 +181,78 @@ func apply_woven_accents() -> void:
 		wrap.position.y = cylinder.height*0.65
 		attachment.add_child(wrap)
 
+func configure_armor(enabled: bool) -> void:
+	armored=enabled
+	poise=140.0 if kind=="boss" else 100.0
+	armor_exposed=0;quiet_time=0
+	display_name=("Armored Swordsman" if armored else "Woven Swordsman") if kind=="reedhook" else ("Spindle Runner" if kind=="eave" else "Armored Guardian")
+	if kind=="reedhook" and armor_surfaces.is_empty():
+		for node in model.find_children("*","MeshInstance3D",true,false):
+			if String(node.name).ends_with("_Body") or "Pauldron" in String(node.name) or "Arms_Bracer" in String(node.name):
+				for i in range(node.mesh.get_surface_count()): armor_surfaces.append({"mesh":node,"surface":i,"original":node.get_surface_override_material(i)})
+	var plate:=StandardMaterial3D.new()
+	plate.albedo_color=Color("566c78");plate.metallic=.8;plate.roughness=.37
+	for item in armor_surfaces: item.mesh.set_surface_override_material(item.surface,plate if armored else item.original)
+	if health_label: update_label()
+
+func windup_length() -> float:
+	if kind=="boss": return [0.62,0.48,0.58][combo]*(.88 if health<max_health*.5 else 1.0)
+	return (.30 if combo==0 else .24) if kind=="eave" else (.42 if combo==0 else .30)
+
+func active_length() -> float:
+	return [0.25,0.24,0.35][combo] if kind=="boss" else (.25 if kind=="eave" else .24)
+
+func recovery_length() -> float:
+	if kind=="boss": return [.24,.28,.75][combo]
+	if combo==0 and (armored or kind=="eave"): return .18
+	return .32 if kind=="eave" else .42
+
 func update_label() -> void:
 	health_label.text = display_name + "\n" + str(health) + " / " + str(max_health)
+	if armored: health_label.text+="\n"+("STANCE BROKEN" if armor_exposed>0 else "ARMOR  %d" % ceil(poise))
 	health_label.modulate = Color("d3c6a3")
 
 func stagger(length: float) -> void:
 	if dead: return
 	state = "hurt"
+	if armored: armor_exposed=maxf(armor_exposed,length+.3)
 	timer = length
 	tell.visible = false
 	play("hurt")
 
 func receive_hit(amount: int, push: Vector3, heavy := false) -> void:
 	if dead: return
-	health = maxi(0, health-amount)
-	hits_received += 1
-	impulse += push * (0.35 if kind == "boss" else 1)
-	world.fx.number_at(global_position + Vector3.UP * target_height, amount, Color("e2d0a2"))
-	world.hit_feedback(global_position+Vector3.UP*target_height, push.normalized(),heavy)
+	quiet_time=0
+	var to_player: Vector3=(actor.global_position-global_position)*Vector3(1,0,1)
+	var forward:=Vector3(sin(visual.rotation.y),0,cos(visual.rotation.y))
+	var rear:=to_player.length()>.01 and forward.dot(to_player.normalized())<-.35
+	var protected:=armored and armor_exposed<=0
+	var broken:=false
+	if protected:
+		poise-= (70.0 if heavy else 16.0)*(1.5 if rear else 1.0)
+		if poise<=0:
+			armor_exposed=1.25;broken=true
+			world.notice("Stance broken · punish the opening")
+	last_hit_armored=protected and not broken and not rear
+	var applied: int=maxi(1,roundi(amount*(.88 if heavy else .72))) if last_hit_armored else amount
+	health=maxi(0,health-applied)
+	hits_received+=1
+	impulse+=push*(.06 if last_hit_armored else (.35 if kind=="boss" else 1.0))
+	world.fx.number_at(global_position+Vector3.UP*target_height,applied,Color("a9c5d1") if last_hit_armored else Color("e2d0a2"))
+	world.hit_feedback(global_position+Vector3.UP*target_height,push.normalized(),heavy,last_hit_armored)
 	update_label()
-	if health == 0:
-		dead = true
-		state = "dead"
-		death_time = 3.0
-		tell.visible = false
-		collision_layer = 0
-		collision_mask = 1
-		play("dead" if kind == "boss" else "death")
-		world.fx.burst(global_position + Vector3.UP * target_height, Color("c4b89b"), true)
-		if kind == "boss":
-			world.notice("Champion unraveled · R resets all encounters")
-			if world.has_method("boss_defeated"): world.boss_defeated()
-	elif heavy or (reaction_cooldown<=0 and not (kind=="boss" and state in ["windup","active"])):
-		stagger(0.18 if kind=="boss" else 0.32)
-		reaction_cooldown=1.4 if kind=="boss" else 0.75
+	if health==0:
+		dead=true;state="dead";death_time=3.0;tell.visible=false
+		collision_layer=0;collision_mask=1
+		play("dead" if kind=="boss" else "death")
+		world.fx.burst(global_position+Vector3.UP*target_height,Color("c4b89b"),true)
+		if kind=="boss" and world.has_method("boss_defeated"): world.boss_defeated()
+	elif broken:
+		stagger(.8 if kind=="boss" else .65)
+		reaction_cooldown=.8
+	elif not last_hit_armored and (heavy or reaction_cooldown<=0):
+		stagger(.38 if not heavy else .48)
+		reaction_cooldown=.75
 
 func reset_enemy() -> void:
 	dead = false
@@ -218,6 +263,8 @@ func reset_enemy() -> void:
 	locomotion_velocity=Vector3.ZERO
 	impact_time=0
 	reaction_cooldown=0
+	poise=140.0 if kind=="boss" else 100.0
+	armor_exposed=0;quiet_time=0;last_hit_armored=false
 	safe_velocity=Vector3.ZERO
 	navigation_clock=0
 	state = "idle"
@@ -237,18 +284,17 @@ func begin_attack() -> void:
 	attack_direction = difference.normalized()
 	visual.rotation.y = atan2(attack_direction.x, attack_direction.z)
 	state = "windup"
-	timer = (0.6 if kind == "reedhook" else 0.55) if kind != "boss" else [0.85, 0.7, 0.8][combo]
-	if kind == "boss" and health < max_health*0.5: timer *= 0.85
+	timer = windup_length()
 	tell.visible = true
 	play(("windup" if kind == "reedhook" else "throw_windup") if kind != "boss" else "charge_" + str(combo+1))
 	if downloaded:
-		var total: float = timer+(0.267 if kind == "reedhook" else (0.32 if kind == "eave" else [0.23,0.23,0.33][combo]))+(0.65 if kind != "boss" else (0.55 if combo < 2 else 1.0))
+		var total: float = timer+active_length()+recovery_length()
 		animation.speed_scale = animation.current_animation_length/total
 	world.audio.play("enemy_swing" if kind != "boss" else "grapple_connect", global_position, -22, 0.75)
 
 func release_attack() -> void:
 	state = "active"
-	timer = 0.267 if kind == "reedhook" else (0.32 if kind == "eave" else [0.23, 0.23, 0.33][combo])
+	timer = active_length()
 	hit_delivered = false
 	tell.visible = false
 	play(("sweep" if kind == "reedhook" else "jump_slash") if kind != "boss" else ["jab", "cross", "smash"][combo])
@@ -281,6 +327,14 @@ func _physics_process(delta: float) -> void:
 		return
 	navigation_clock-=delta
 	reaction_cooldown=maxf(0,reaction_cooldown-delta)
+	var old_poise: int=ceili(poise)
+	var was_exposed: bool=armor_exposed>0
+	quiet_time+=delta
+	if armor_exposed>0:
+		armor_exposed=maxf(0,armor_exposed-delta)
+		if armor_exposed<=0: poise=140.0 if kind=="boss" else 100.0
+	elif armored and quiet_time>1.5: poise=minf(140.0 if kind=="boss" else 100.0,poise+delta*35)
+	if armored and (ceili(poise)!=old_poise or (was_exposed and armor_exposed<=0)): update_label()
 	if not is_on_floor(): velocity.y-=delta*19
 	desired_motion=Vector3.ZERO
 	if dead:
@@ -293,32 +347,35 @@ func _physics_process(delta: float) -> void:
 		var distance := flat.length()
 		match state:
 			"idle":
-				if not actor.combat.dead and distance<(12 if kind=="boss" else 8.5) and absf(difference.y)<2.5 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP): state="chase"
+				if not actor.combat.dead and distance<(13 if kind=="boss" else 10.5) and absf(difference.y)<2.5 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP): state="chase"
 			"chase":
 				if actor.combat.dead or distance>20 or global_position.distance_to(home)>17: state="return"
 				elif distance<=attack_range() and absf(difference.y)<1.6 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP):
 					combo=0
 					begin_attack()
 				else:
-					desired_motion=path_direction(actor.global_position,delta)*(2.6 if kind=="reedhook" else (3.7 if kind=="eave" else 2.0))
+					desired_motion=path_direction(actor.global_position,delta)*(3.8 if kind=="reedhook" else (4.7 if kind=="eave" else 2.8))
 			"windup":
+				if timer>windup_length()*.55 and flat.length()>.01:
+					attack_direction=attack_direction.slerp(flat.normalized(),1-exp(-delta*9)).normalized()
+					visual.rotation.y=atan2(attack_direction.x,attack_direction.z)
 				tell_material.albedo_color.a=0.22
 				if timer<=0: release_attack()
 			"active":
 				var speed := 1.0 if kind=="reedhook" else (5.5 if kind=="eave" else 0.6)
 				var ahead := global_position+attack_direction*(body_radius+0.5)
 				if not get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ahead+Vector3.UP,ahead-Vector3.UP*2,1)).is_empty(): desired_motion=attack_direction*speed
-				if not hit_delivered and distance<=attack_range()+0.25 and absf(difference.y)<1.6 and flat.normalized().dot(attack_direction)>0.25 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP):
+				if not hit_delivered and distance<=attack_range()+0.25 and absf(difference.y)<1.6 and flat.normalized().dot(attack_direction)>0.55 and world.clear_sight(global_position+Vector3.UP,actor.global_position+Vector3.UP):
 					hit_delivered=true
-					var amount: int=18 if kind=="reedhook" else (13 if kind=="eave" else [16,21,32][combo])
+					var amount: int=28 if kind=="reedhook" else (20 if kind=="eave" else [26,32,42][combo])
 					if actor.combat.receive_hit(amount,global_position,kind=="boss" and combo==2): attacks_connected+=1
 				if timer<=0:
 					state="recover"
-					timer=0.65 if kind!="boss" else (0.55 if combo<2 else 1.0)
+					timer=recovery_length()
 					play(("recover" if kind=="reedhook" else "land_recover") if kind!="boss" else "box_recover")
 			"recover":
 				if timer<=0:
-					if kind=="boss" and combo<2 and distance<attack_range()+1.3:
+					if combo<(2 if kind=="boss" else (1 if armored or kind=="eave" else 0)) and distance<attack_range()+1.3:
 						combo+=1
 						begin_attack()
 					else: state="chase"
@@ -337,7 +394,7 @@ func _physics_process(delta: float) -> void:
 	var wanted := safe_velocity if desired_motion.length()>0.05 and ai_enabled and not dead else Vector3.ZERO
 	if state=="active": wanted=desired_motion
 	impulse=impulse.move_toward(Vector3.ZERO,delta*8)
-	locomotion_velocity=wanted if state=="active" else locomotion_velocity.move_toward(wanted,delta*9)
+	locomotion_velocity=wanted if state=="active" else locomotion_velocity.move_toward(wanted,delta*(30 if state in ["windup","recover","hurt"] else 12))
 	velocity.x=locomotion_velocity.x+impulse.x
 	velocity.z=locomotion_velocity.z+impulse.z
 	if desired_motion.length()>0.1 and state in ["chase","return"]:

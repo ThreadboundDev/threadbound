@@ -1,7 +1,7 @@
 extends CharacterBody3D
 ## Independent movement study. Does not load the production player or its globals.
 
-const MODEL = preload("res://assets/ruin_3d_demo.glb")
+const MODEL = preload("res://assets/player_3d_demo.glb")
 const COMBAT = preload("res://scripts/study_combat.gd")
 const MOTION = preload("res://scripts/study_motion.gd")
 const GRAPPLE = preload("res://scripts/study_grapple.gd")
@@ -84,7 +84,7 @@ func _ready() -> void:
 	visual.rotation.y = PI
 	set_weapons(true)
 	for clip in animation.get_animation_list():
-		if clip in ["idle_4", "run_1", "walk_1", "block_idle_1", "grapple_swinging_1"]:
+		if clip in ["idle_4", "run_1", "combat_strafe_left", "combat_strafe_right", "walk_1", "block_idle_1", "grapple_swinging_1"]:
 			animation.get_animation(clip).loop_mode = Animation.LOOP_LINEAR
 	install_authored_attacks()
 	install_water_combo(animation, skeleton)
@@ -268,8 +268,9 @@ func _physics_process(delta: float) -> void:
 			swimming = false
 		if input_direction.length() > 0.1: visual.rotation.y = lerp_angle(visual.rotation.y, atan2(input_direction.x, input_direction.z), delta*8)
 	elif dash_time > 0:
-		velocity.x = dash_direction.x*13*momentum_multiplier("dash")
-		velocity.z = dash_direction.z*13*momentum_multiplier("dash")
+		var dodge_speed := 8.5 if is_instance_valid(lock_target) else 13.0
+		velocity.x = dash_direction.x*dodge_speed*momentum_multiplier("dash")
+		velocity.z = dash_direction.z*dodge_speed*momentum_multiplier("dash")
 		velocity.y = maxf(velocity.y, -1.0)
 	elif combat.action == "spin" and combat.elapsed >= combat.active_start and combat.elapsed < combat.active_end:
 		velocity.x = combat.strike_direction.x*7
@@ -284,7 +285,7 @@ func _physics_process(delta: float) -> void:
 		var acceleration := 22.0 if is_on_floor() else 5.0
 		velocity.x = move_toward(velocity.x, input_direction.x*speed, acceleration*delta)
 		velocity.z = move_toward(velocity.z, input_direction.z*speed, acceleration*delta)
-		if combat.action == "" and input_direction.length() > 0.05:
+		if combat.action == "" and (input_direction.length() > 0.05 or is_instance_valid(lock_target)):
 			var direction := input_direction
 			if is_instance_valid(lock_target): direction = lock_target.global_position-global_position
 			visual.rotation.y = lerp_angle(visual.rotation.y, atan2(direction.x, direction.z), 1-exp(-delta*12))
@@ -310,13 +311,20 @@ func _physics_process(delta: float) -> void:
 		if combat.meditating: play_clip("stand_to_sit_1")
 		elif swimming: play_clip("swimming_1" if velocity.length() > 0.3 else "water_idle_1")
 		elif wall_hold > 0: play_clip("hanging_idle_1")
-		elif combat.guarding: play_clip("block_idle_1")
+		elif combat.guarding: play_clip("walk_1" if input.length()>.05 else "block_idle_1")
 		elif not is_on_floor(): play_clip("jump_1")
 		elif input.length() > 0.05:
-			play_clip("run_1")
-			animation.speed_scale = momentum_multiplier("move")
+			var clip: String="run_1"
+			var rate: float=momentum_multiplier("move")
+			if is_instance_valid(lock_target) and not lock_target.dead:
+				var side: float=input_direction.dot(facing().cross(Vector3.UP))
+				var forward: float=input_direction.dot(facing())
+				if absf(side)>.45: clip="combat_strafe_right" if side>0 else "combat_strafe_left"
+				elif forward<-.3: clip="walk_1";rate=-1.3*rate
+			play_clip(clip)
+			animation.speed_scale=rate
 		else: play_clip("idle_4")
-	if combat.action == "hurt": play_clip("impact_1")
+	if combat.action == "hurt": play_clip("heavy_hit" if combat.heavy_hurt else "impact_1")
 	if combat.dead: play_clip("death_1")
 	if not combat.dead:
 		for node in get_tree().get_nodes_in_group("study_checkpoints"):
@@ -341,10 +349,13 @@ func grapple_origin() -> Vector3:
 		if hand >= 0: return skeleton.global_transform*skeleton.get_bone_global_pose(hand).origin
 	return global_position+Vector3.UP*1.05
 
+func dodge_invulnerable() -> bool:
+	var elapsed: float=.30-dash_time
+	return dash_time>0 and elapsed>=.035 and elapsed<.035+.16*maxf(1,momentum_multiplier("iframe"))
+
 func request_dash(direction: Vector3) -> bool:
 	if dash_cooldown > 0 or combat.dead: return false
-	if combat.action=="recover" and combat.recovery_time>0.20: return false
-	if combat.action in ["light", "air", "spin", "neutral"] and combat.elapsed >= 0.22 and combat.elapsed < combat.active_end: return false
+	if combat.action!="" and not (combat.action=="recover" and combat.recovery_time<=.08): return false
 	if not combat.spend_ap(1): return false
 	combat.action = ""
 	combat.guarding = false
@@ -353,9 +364,10 @@ func request_dash(direction: Vector3) -> bool:
 	if swimming:
 		var vertical := Input.get_action_strength("jump")-Input.get_action_strength("descend")
 		if absf(vertical)>0.1: dash_direction = (direction+Vector3.UP*vertical).normalized()
+	visual.rotation.y=atan2(dash_direction.x,dash_direction.z)
 	dash_time = 0.30
 	dash_cooldown = 0.65
-	combat.invulnerable = maxf(combat.invulnerable, 0.36*maxf(1, momentum_multiplier("iframe")))
+
 	play_clip("roll_1", true)
 	animation.speed_scale = 4.2
 	get_parent().audio.play("dash", global_position, -13)

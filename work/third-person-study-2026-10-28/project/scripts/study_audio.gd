@@ -13,7 +13,7 @@ func _ready() -> void:
 	limiter = AudioEffectHardLimiter.new()
 	limiter.ceiling_db = -1.0
 	AudioServer.add_bus_effect(0, limiter)
-	for key in ["contact", "sword", "jump", "dash", "grapple_throw", "grapple_connect", "hurt", "enemy_swing", "stomp", "step_grass_1", "step_grass_2", "step_wood_1", "step_wood_2", "land"]:
+	for key in ["armor", "contact", "sword", "jump", "dash", "grapple_throw", "grapple_connect", "hurt", "enemy_swing", "stomp", "step_grass_1", "step_grass_2", "step_wood_1", "step_wood_2", "land"]:
 		streams[key] = load("res://assets/audio/" + key + ".wav")
 	for i in range(14):
 		var player := AudioStreamPlayer3D.new()

@@ -107,8 +107,9 @@ func run() -> void:
 	await fixture()
 	start = actor.global_position
 	actor.request_dash(Vector3.RIGHT)
+	await frames(4)
 	actor.combat.receive_hit(30, actor.global_position+Vector3.LEFT)
-	check("Dash has initial invulnerability", actor.combat.health == 100)
+	check("Dash timed invulnerability", actor.combat.health == 100)
 	await frames(10)
 	check("Dash traverses substantial distance", actor.global_position.x > start.x+1.5)
 	check("Dash cooldown prevents spam", not actor.request_dash(Vector3.RIGHT))
@@ -119,7 +120,7 @@ func run() -> void:
 	await frames(25)
 	check("Enemy windup deals no contact damage", actor.combat.health == 100)
 	await frames(35)
-	check("Reedhook sweep delivers one hit", actor.combat.health == 82 and reed.attacks_connected == 1, actor.combat.health)
+	check("Reedhook sweep delivers one hit", actor.combat.health == 72 and reed.attacks_connected == 1, actor.combat.health)
 	await fixture()
 	reed.global_position = actor.global_position+Vector3(0,0,-1.6)
 	reed.ai_enabled = true
@@ -200,7 +201,7 @@ func run() -> void:
 	await frames(75)
 	check("Eave Runner commits a forward lunge", eave.global_position.distance_to(start) > 0.8)
 	print("EAVE_END ",eave.global_position," ACTOR ",actor.global_position," STATE ",eave.state)
-	check("Eave lunge hits once", actor.combat.health == 87, actor.combat.health)
+	check("Eave lunge hits once", actor.combat.health == 80, actor.combat.health)
 	await fixture(Vector3(22,0.3,14.8))
 	actor.combat.invulnerable = 99
 	world.boss.ai_enabled = true

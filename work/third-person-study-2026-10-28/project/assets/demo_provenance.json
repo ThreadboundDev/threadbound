@@ -12,5 +12,12 @@
     "target": "assets/audio/contact.wav",
     "target_sha256": "046a78dfed598ce96f61082eaf9e3c74c84788c4a61e3edfbb4365a93ec16aa8",
     "license": "Existing production asset; original provenance applies; copied for separate 3D demo"
+  },
+  {
+    "archive": "Essentials_Series_NOX_SOUND.zip",
+    "member": "Essentials_Series_NOX_SOUND/Footsteps_Essentials_NOX_SOUND/Footsteps_Metal/Footsteps_Metal_Jump/Footsteps_MetalV1_Jump_Land_01.wav",
+    "license": "CC0; existing verified NOX Sound library",
+    "target": "assets/audio/armor.wav",
+    "target_sha256": "5bc8a944df56ad42416401719ab385c843c055a233331d03895f93f3c44614b2"
   }
 ]

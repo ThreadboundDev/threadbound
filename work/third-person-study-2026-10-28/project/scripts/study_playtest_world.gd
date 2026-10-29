@@ -15,12 +15,12 @@ var shutting_down := false
 var navigation: NavigationRegion3D
 var feedback_hits := 0
 
-func hit_feedback(point: Vector3, direction: Vector3, heavy: bool) -> void:
+func hit_feedback(point: Vector3, direction: Vector3, heavy: bool, armor := false) -> void:
 	feedback_hits+=1
-	fx.burst(point,Color("f3dfad"),heavy)
+	fx.burst(point,Color("aacbd3") if armor else Color("f3dfad"),heavy and not armor)
 	var mark: Node3D=fx.ring(point,0.16 if not heavy else 0.28,Color("e9d7ac"),0.14)
 	if direction.length()>0.1: mark.quaternion=Quaternion(Vector3.UP,direction.normalized())
-	audio.play("contact",point,-10 if heavy else -14,0.88 if heavy else 1.08)
+	audio.play("armor" if armor else "contact",point,-14 if armor else (-10 if heavy else -14),.9 if heavy else 1.08)
 	for device in Input.get_connected_joypads(): Input.start_joy_vibration(device,0.15,0.35 if heavy else 0.2,0.08)
 
 func _ready() -> void:
@@ -35,7 +35,7 @@ func _ready() -> void:
 	arena()
 	spawn_enemy("reedhook", Vector3(-6.5, 0.2, 10))
 	spawn_enemy("eave", Vector3(4, 0.2, 14))
-	spawn_enemy("reedhook", Vector3(-19,0.1,-11))
+	spawn_enemy("reedhook", Vector3(-19,0.1,-11),true)
 	spawn_enemy("eave", Vector3(23,0.1,-1))
 	boss = spawn_enemy("boss", Vector3(22, 0.3, 12))
 	# Low approach ramps remove accidental porch/bridge lips from the movement test.
@@ -50,11 +50,14 @@ func _ready() -> void:
 
 func configure_inputs() -> void:
 	super.configure_inputs()
-	for item in [["dash", KEY_CTRL], ["special", KEY_Q], ["grapple", KEY_E], ["lock", KEY_TAB], ["help", KEY_H], ["mute", KEY_M], ["descend", KEY_C], ["meditate", KEY_F]]:
+	for item in [["dash", KEY_CTRL], ["special", KEY_Q], ["grapple", KEY_E], ["lock", KEY_TAB], ["help", KEY_H], ["mute", KEY_M], ["descend", KEY_C], ["meditate", KEY_F], ["air_up", KEY_X]]:
 		if not InputMap.has_action(item[0]): InputMap.add_action(item[0])
 		var event := InputEventKey.new()
 		event.physical_keycode = item[1]
 		InputMap.action_add_event(item[0], event)
+	var up_event:=InputEventJoypadButton.new()
+	up_event.button_index=JOY_BUTTON_DPAD_LEFT
+	InputMap.action_add_event("air_up",up_event)
 	for item in [["attack", MOUSE_BUTTON_LEFT], ["block", MOUSE_BUTTON_RIGHT]]:
 		if not InputMap.has_action(item[0]): InputMap.add_action(item[0])
 		var event := InputEventMouseButton.new()
@@ -104,9 +107,10 @@ func clear_sight(a: Vector3, b: Vector3) -> bool:
 	var query := PhysicsRayQueryParameters3D.create(a, b, 1)
 	return get_world_3d().direct_space_state.intersect_ray(query).is_empty()
 
-func spawn_enemy(kind: String, point: Vector3):
+func spawn_enemy(kind: String, point: Vector3, armored := false):
 	var enemy = ENEMY.new()
 	enemy.kind = kind
+	enemy.armored=armored
 	enemy.position = point
 	enemy.name = kind.capitalize()
 	add_child(enemy)

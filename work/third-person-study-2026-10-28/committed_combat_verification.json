@@ -1,0 +1,134 @@
+{
+	"checks": [
+		{
+			"check": "No invented player name in welcome",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Practice isolates one opponent",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Mixamo combat clips available",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Held jump produces forward air attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Explicit up modifier retains upward strike",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Attack commitment cannot be dodged out of",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Hookshot cannot cancel a committed attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Recovery holds follow-through instead of entering next swing",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Armor absorbs but does not erase damage",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Light hit cannot interrupt armor",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Downloaded torso and bracers visibly plated",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Heavy pressure breaks stance",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Flanking bypasses frontal absorption",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dodge startup remains vulnerable",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Timed middle of dodge protects",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Dodge tail is punishable",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Fast enemy windup stays readable",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Enemy commits a damaging strike promptly",
+			"detail": 72,
+			"passed": true
+		},
+		{
+			"check": "Timed directional dodge beats actual attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Runner follows with a second attack",
+			"detail": null,
+			"passed": true
+		},
+		{
+			"check": "Blind light spam loses to armored opponent",
+			"detail": {
+				"dodges": 0,
+				"enemy_dead": false,
+				"enemy_health": 5,
+				"parries": 0,
+				"player_dead": true,
+				"player_health": 0
+			},
+			"passed": true
+		},
+		{
+			"check": "Reading attacks and using defenses can win",
+			"detail": {
+				"dodges": 2,
+				"enemy_dead": true,
+				"enemy_health": 0,
+				"parries": 2,
+				"player_dead": false,
+				"player_health": 100
+			},
+			"passed": true
+		},
+		{
+			"check": "Leaving practice restores exploration roster",
+			"detail": null,
+			"passed": true
+		}
+	],
+	"failed": 0
+}

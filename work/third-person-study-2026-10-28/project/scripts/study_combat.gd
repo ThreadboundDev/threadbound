@@ -32,6 +32,7 @@ var impact_time := 0.0
 var recovery_time := 0.0
 var buffer_deadline := 0.0
 var confirmed_strikes := 0
+var heavy_hurt := false
 
 func _ready() -> void:
 	actor = get_parent()
@@ -77,7 +78,7 @@ func start_light() -> void:
 	action = "water" if actor.swimming else ("light" if actor.is_on_floor() else "air")
 	elapsed = 0
 	duration = [0.46, 0.47, 0.50][combo] if action != "air" else 0.52
-	active_start = [0.19, 0.04, 0.13][combo] if action != "air" else 7.0/30.0
+	active_start = [0.19, 0.14, 0.18][combo] if action != "air" else 7.0/30.0
 	active_end = active_start + 0.13
 	hit_targets.clear()
 	buffered = false
@@ -89,7 +90,7 @@ func start_light() -> void:
 		actor.animation.speed_scale = 2.5
 	else:
 		air_used = true
-		air_direction = "down" if Input.is_action_pressed("descend") else ("up" if Input.is_action_pressed("jump") else "forward")
+		air_direction = "down" if Input.is_action_pressed("descend") else ("up" if Input.is_action_pressed("air_up") else "forward")
 		if air_direction != "forward":
 			actor.play_clip("air_attack_"+air_direction, true)
 			duration = 0.32
@@ -124,7 +125,7 @@ func special(directional: bool) -> bool:
 
 func damage_targets(radius: float, damage: int, radial := false, push := 2.0) -> void:
 	for enemy in get_tree().get_nodes_in_group("study_enemies"):
-		if enemy.dead or hit_targets.has(enemy.get_instance_id()): continue
+		if enemy.dead or not enemy.is_visible_in_tree() or hit_targets.has(enemy.get_instance_id()): continue
 		var difference: Vector3 = enemy.global_position - actor.global_position
 		if action == "air" and air_direction != "forward":
 			var vertical_center := 1.6 if air_direction == "up" else -0.5
@@ -137,10 +138,10 @@ func damage_targets(radius: float, damage: int, radial := false, push := 2.0) ->
 		var amount := roundi(damage*actor.momentum_multiplier("damage"))
 		if action == "neutral" and difference.length() > radius * 0.45:
 			amount = roundi(damage * 0.55)
-		enemy.receive_hit(amount, horizontal.normalized() * push, action in ["spin","neutral"] or combo==2)
+		enemy.receive_hit(amount, horizontal.normalized() * push, action in ["spin","neutral"] or combo==2 or (action=="air" and air_direction=="down"))
 		confirmed_strikes += 1
-		impact_time = maxf(impact_time,0.075 if combo==2 or radial else 0.048)
-		enemy.freeze_impact(impact_time)
+		impact_time = maxf(impact_time,0.11 if combo==2 or radial else 0.065)
+		if not enemy.last_hit_armored: enemy.freeze_impact(impact_time)
 		actor.camera_kick = maxf(actor.camera_kick,0.11 if combo<2 else 0.16)
 		total_hits += 1
 		actor.camera_kick = maxf(actor.camera_kick, 0.06)
@@ -155,7 +156,7 @@ func pogo_bounce() -> void:
 	world.audio.play("sword", actor.global_position, -17, 1.2)
 
 func receive_hit(amount: int, from: Vector3, heavy := false) -> bool:
-	if dead or invulnerable > 0: return false
+	if dead or invulnerable > 0 or actor.dodge_invulnerable(): return false
 	var to_source := from - actor.global_position
 	to_source.y = 0
 	var front := to_source.normalized().dot(actor.facing()) > 0.15
@@ -184,9 +185,10 @@ func receive_hit(amount: int, from: Vector3, heavy := false) -> bool:
 		world.notice("Thread loosened — returning to the clearing…")
 		world.fx.burst(actor.global_position + Vector3.UP, Color("c6b898"), true)
 	else:
+		heavy_hurt=heavy
 		action = "hurt"
 		elapsed = 0
-		duration = 0.22
+		duration = .44 if heavy else .32
 	return true
 
 func reset() -> void:
@@ -269,6 +271,7 @@ func tick(delta: float) -> void:
 		else:
 			var ended := action
 			action = "recover" if ended in ["light","water","spin","neutral"] else ""
-			recovery_time = (0.30 if combo==2 else (0.14 if not hit_targets.is_empty() else 0.24)) if ended in ["light","water"] else 0.18
+			recovery_time = (0.36 if combo==2 else (0.20 if not hit_targets.is_empty() else 0.30)) if ended in ["light","water"] else 0.18
 			buffered = false
 			actor.animation.speed_scale = 1
+			if action=="recover": actor.animation.pause()

@@ -148,8 +148,8 @@
 		{
 			"check": "Enemy navigates around solid wall",
 			"detail": [
-				"(1.009197, 0.014133, 10.35467)",
-				"windup",
+				"(0.663838, 0.014062, 10.2191)",
+				"recover",
 				"(0.0, 0.0, 0.0)",
 				"(0.0, 0.0, 0.0)",
 				true,
@@ -160,7 +160,7 @@
 		{
 			"check": "Sword fingers wrap the grip",
 			"detail": [
-				1.92056655883789,
+				1.9205664396286,
 				1.14999556541443,
 				0.849998712539673
 			],
@@ -174,8 +174,8 @@
 		{
 			"check": "Crowd agents both progress",
 			"detail": [
-				"(-4.856301, 0.014155, 19.08513)",
-				"(-4.610325, 0.014049, 17.63094)"
+				"(-4.488811, 0.014079, 18.34918)",
+				"(-4.001263, 0.014241, 19.1274)"
 			],
 			"passed": true
 		},
@@ -231,7 +231,7 @@
 			"passed": true
 		},
 		{
-			"check": "Deliberate heavy hit can stagger boss",
+			"check": "Heavy pressure breaks boss armor",
 			"detail": null,
 			"passed": true
 		},

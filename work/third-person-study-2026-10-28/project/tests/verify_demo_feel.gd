@@ -43,7 +43,7 @@ func run() -> void:
 	Input.action_release("sprint")
 	check("Rejected procedural run removed",not actor.animation.has_animation("demo_run"))
 	Input.action_release("forward")
-	check("Dedicated 3D model loaded",actor.visual.find_child("Threadborne_Rig",true,false)!=null and actor.MODEL.resource_path.ends_with("ruin_3d_demo.glb"))
+	check("Dedicated 3D model loaded",actor.visual.find_child("Threadborne_Rig",true,false)!=null and actor.MODEL.resource_path.ends_with("player_3d_demo.glb"))
 	await fixture()
 	actor.visual.rotation.y=PI
 	var enemy=enemies[0]
@@ -163,7 +163,8 @@ func run() -> void:
 	world.boss.receive_hit(1,Vector3.ZERO)
 	check("Committed boss resists light stunlock",world.boss.state=="windup")
 	world.boss.receive_hit(1,Vector3.ZERO,true)
-	check("Deliberate heavy hit can stagger boss",world.boss.state=="hurt")
+	world.boss.receive_hit(1,Vector3.ZERO,true)
+	check("Heavy pressure breaks boss armor",world.boss.state=="hurt")
 	world.boss.ai_enabled=false
 	world.boss.receive_hit(999,Vector3.ZERO,true)
 	check("Boss defeat grows ending blossom",is_instance_valid(world.blossom))

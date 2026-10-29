@@ -24,7 +24,7 @@ def installed_path(name):
 def main():
     files = [p for p in SOURCE.rglob('*') if p.is_file() and '.godot' not in p.parts
              and p.suffix not in {'.log', '.import'}
-             and p.name not in {'test_results.json', 'combat_test_results.json', 'polish_test_results.json', 'demo_feel_test_results.json', 'demo_feel_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
+             and p.name not in {'test_results.json', 'combat_test_results.json', 'polish_test_results.json', 'demo_feel_test_results.json', 'demo_feel_results.json', 'committed_combat_test_results.json'} and 'captures' not in p.relative_to(SOURCE).parts
              and not (p.parent in {SOURCE / 'assets', SOURCE / 'assets/enemies', SOURCE / 'assets/village', SOURCE / 'assets/local_licensed'} and p.suffix in {'.png', '.jpg'})]
     if DESTINATION.exists():
         if not MARKER.exists():

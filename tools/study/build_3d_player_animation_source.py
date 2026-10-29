@@ -9,12 +9,13 @@ import hashlib
 import json
 import math
 from pathlib import Path
+from mathutils import Matrix
 
 ROOT=Path(__file__).resolve().parents[2]
 WORK=ROOT/'work/third-person-study-2026-10-28'
 REFERENCE=WORK/'source/Threadborne_Pre3D_Reference.glb'
 SOURCE=WORK/'source/Threadborne_3D_Demo.blend'
-OUT=WORK/'project/assets/ruin_3d_demo.glb'
+OUT=WORK/'project/assets/player_3d_demo.glb'
 LATERAL_FACTOR=.45
 LEGS={part+'.'+side for part in ['thigh','shin','foot'] for side in ['L','R']}
 
@@ -52,7 +53,7 @@ for frame in times:
     poses.append({p.name:p.matrix.copy() for p in rig.pose.bones})
 
 edited=original.copy()
-edited.name='Ruin_run_1_narrow_leg_cleanup'
+edited.name='Player_run_1_narrow_leg_cleanup'
 edited.use_fake_user=True
 unchanged_curves=curve_signature(original)
 for bag in bags(edited):
@@ -119,6 +120,37 @@ original.name='Original_library_run_1_UNCHANGED'
 original.use_fake_user=True
 track.strips[0].action=edited
 rig.animation_data.action=None
+# Reuse the original character library's existing fast left/right strafes and
+# heavier hit reaction, mapping rest axes after the GLB round trip.
+library=ROOT/'ArtSource/Player/Blender/imported_character/mixamo_library/Threadborne_Animation_Library.blend'
+with bpy.data.libraries.load(str(library),link=False) as (available,chosen):
+    chosen.objects=['Threadborne_Rig']
+    chosen.actions=['strafe_3','strafe_4','impact_2']
+donor=chosen.objects[0];scene.collection.objects.link(donor)
+donor.animation_data_create()
+for t in donor.animation_data.nla_tracks:t.mute=True
+aliases={'strafe_3':'combat_strafe_left','strafe_4':'combat_strafe_right','impact_2':'heavy_hit'}
+for imported in chosen.actions:
+    donor.animation_data.action=imported
+    if imported.slots:donor.animation_data.action_slot=imported.slots[0]
+    first,last=map(int,imported.frame_range)
+    frames=[]
+    for frame in range(first,last+1):
+        scene.frame_set(frame);bpy.context.view_layer.update()
+        frames.append({b.name:rig.matrix_world.inverted() @ donor.matrix_world @ donor.pose.bones[b.name].matrix @ donor.data.bones[b.name].matrix_local.inverted() @ donor.matrix_world.inverted() @ rig.matrix_world @ b.matrix_local for b in rig.data.bones})
+    action=bpy.data.actions.new(aliases[imported.name.split('.')[0]])
+    rig.animation_data.action=action
+    for frame,pose in enumerate(frames,1):
+        scene.frame_set(frame)
+        for pb in rig.pose.bones:
+            kwargs=dict(parent_matrix=pose[pb.parent.name],parent_matrix_local=pb.parent.bone.matrix_local) if pb.parent else {}
+            pb.matrix_basis=pb.bone.convert_local_to_pose(pose[pb.name],pb.bone.matrix_local,invert=True,**kwargs)
+            pb.rotation_mode='QUATERNION'
+            for prop in ['location','rotation_quaternion','scale']:pb.keyframe_insert(prop,frame=frame,group=pb.name)
+    rig.animation_data.action=None
+    new_track=rig.animation_data.nla_tracks.new();new_track.name=action.name
+    new_track.strips.new(action.name,1,action);new_track.mute=True
+bpy.data.objects.remove(donor,do_unlink=True)
 for t in rig.animation_data.nla_tracks:t.mute=False
 scene.frame_start=math.floor(start);scene.frame_end=math.ceil(end);scene.frame_set(scene.frame_start)
 text=bpy.data.texts.new('READ ME - library run cleanup')
@@ -139,6 +171,6 @@ report={'source_clip':'run_1','source_reference':str(REFERENCE.relative_to(ROOT)
         'max_leg_length_error_m':max_length_error,'max_forward_height_error_m':max_forward_height_error,
         'mean_ankle_width_original_m':sum(width('original'))/len(samples),
         'mean_ankle_width_cleaned_m':sum(width('cleaned'))/len(samples),
-        'samples':samples[::max(1,len(samples)//8)],'production_files_changed':False}
+        'samples':samples[::max(1,len(samples)//8)],'production_files_changed':False,'additional_library_clips':list(aliases.values()),'library_sha256':hashlib.sha256(library.read_bytes()).hexdigest()}
 (WORK/'run_cleanup_authoring.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print('LIBRARY_RUN_CLEANUP_EXPORTED',json.dumps({k:v for k,v in report.items() if k!='samples'}),flush=True)

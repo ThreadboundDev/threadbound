@@ -80,7 +80,8 @@ func select_hit(node: Node3D, point: Vector3, normal: Vector3) -> void:
 	locked_enemy = node.is_in_group("study_enemies")
 
 func fire() -> bool:
-	if active or cooldown > 0 or actor.combat.dead or actor.combat.action in ["hurt", "dead"]: return false
+	if active or cooldown > 0 or actor.combat.dead: return false
+	if actor.combat.action!="" and not (actor.combat.action=="recover" and actor.combat.recovery_time<=.08): return false
 	update_candidate()
 	if not is_instance_valid(candidate):
 		world.notice("Aim at a solid surface or enemy within 25 metres")

@@ -10,6 +10,18 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
+**October 29 3D combat pressure / overnight slice (T31): combat checkpoint verified; expansion in progress.**
+Chase gave full approval to expand the separate 3D experiment overnight, using
+library animations, additional weapon roles, traversal, a puzzle and swimming.
+The combat checkpoint removes the invented player name, fixes held-jump air
+selection, adds Mixamo strafes/heavy reactions, committed recovery, a timed
+vulnerable/immune dodge and aggressive enemies with frontal armor/stance breaks.
+F2 selects repeatable duels in the existing clearing. Source checks: 210 passing;
+scripted light spam loses to armor, while dodges/parries and counters win.
+[Combat evidence and references](art/combat_pressure_2026_10_29.md).
+Checkpoint: `feature: add committed combat and armored enemy pressure`.
+The 2D project remains untouched. Expanded slice is the next coherent checkpoint.
+
 **October 28 library run / shield-hand grapple correction (T30): implemented; Chase's retest pending.**
 Chase rejected the replacement gait. Restored the existing `run_1` used by Shift,
 made it the single default run and narrowed only its sideways leg spread. The

@@ -90,7 +90,8 @@ func run() -> void:
 	check("Enemy grapple strike damages once",enemy.health==enemy.max_health-30,enemy.health)
 	await fixture()
 	check("Dash costs one AP",actor.request_dash(Vector3.RIGHT) and actor.combat.available_ap()==5)
-	check("Dash blocks immediate damage",not actor.combat.receive_hit(20,actor.global_position+Vector3.LEFT))
+	await frames(4)
+	check("Dash protects during timed window",not actor.combat.receive_hit(20,actor.global_position+Vector3.LEFT))
 	check("Dash cooldown prevents repeat spending",not actor.request_dash(Vector3.RIGHT) and actor.combat.available_ap()==5)
 	await fixture()
 	actor.momentum.amount = 30

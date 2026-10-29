@@ -3,7 +3,7 @@
   "source_reference": "work\\third-person-study-2026-10-28\\source\\Threadborne_Pre3D_Reference.glb",
   "source_sha256": "bad6719c43a788bec09a63972f9910d46d62818f97807a241062cd234e3203a7",
   "editable_source": "work\\third-person-study-2026-10-28\\source\\Threadborne_3D_Demo.blend",
-  "runtime": "work\\third-person-study-2026-10-28\\project\\assets\\ruin_3d_demo.glb",
+  "runtime": "work\\third-person-study-2026-10-28\\project\\assets\\player_3d_demo.glb",
   "fps": 30,
   "cycle_seconds": 0.6666666666666666,
   "lateral_offset_factor": 0.45,
@@ -301,5 +301,11 @@
       }
     }
   ],
-  "production_files_changed": false
+  "production_files_changed": false,
+  "additional_library_clips": [
+    "combat_strafe_left",
+    "combat_strafe_right",
+    "heavy_hit"
+  ],
+  "library_sha256": "97f661ca1c76cb5e66e2a1d762e784ecf93bd9a3678797cfffac3f982351af6a"
 }
