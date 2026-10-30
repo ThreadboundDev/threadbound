@@ -1,8 +1,17 @@
 # Loom Crossing 3D trial — October 29
 
+**Review decision, October 29:** Chase does not want to pursue the current full
+3D direction at this quality/development rate. The trial is parked and retained
+as reference. Threadbound continues in 2D; useful assets and animation techniques
+can be auditioned separately. See the [direction decision](../design/2d_asset_reuse_direction_2026_10_29.md).
+The delivery and checks below are historical implementation evidence, not visual
+or gameplay acceptance.
+
+## Delivery record
+
 Chase approved the complete separate 3D pass overnight. The production 2D game,
-its scenes, assets and project settings are untouched. No 3D conversion decision
-has been made. This is a playable experiment for Chase's morning verdict.
+its scenes, assets and project settings are untouched. These notes record the
+experiment delivered before Chase's review above.
 Chase reconfirmed approval for game-related work during the final verification.
 
 ## Play

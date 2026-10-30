@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 28, 2026. This is the single current priority list. The saved
+Updated October 29, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -10,7 +10,16 @@ Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
-**October 29 3D Loom Crossing trial (T31): implemented; Chase's playtest/3D decision pending.**
+**October 29 direction decision: keep Threadbound in 2D; park the current 3D conversion effort.**
+Chase reviewed the trial and does not consider its look/play quality or development
+rate a good fit. Preserve the independent study as reference; no production 2D
+rollback is needed. Retain the useful asset-library approach: verified materials,
+models, rigs, animation donors and audio can support the established 2D game.
+[Decision, lessons and bounded reuse workflow](design/2d_asset_reuse_direction_2026_10_29.md).
+This decision is documentation only. No asset replacement, gameplay change or new
+implementation task is started. T20 remains the current production priority.
+
+**October 29 3D Loom Crossing trial (T31): reviewed; current 3D effort parked after Chase's feedback.**
 Chase gave full approval for the separate overnight experiment. It now opens a
 compact village-to-guardian route with five running jumps, an optional three-spool
 bridge puzzle, swimming, zip/swing grapples and three immediately available weapon
@@ -24,8 +33,10 @@ inputs. All five decks are reached using real running/jump inputs in sequence.
 [Trial controls, evidence and retest card](art/loom_crossing_trial_2026_10_29.md).
 Earlier combat checkpoint: `0d3ed1a6`. Expanded checkpoint:
 `feature: build three-weapon Loom Crossing 3d trial` (see Git history).
-The production 2D project is unchanged; this is an experiment, not an accepted
-conversion or a published release. Current production priority remains T20.
+The production 2D project is unchanged. The 250 checks establish implemented
+behavior; Chase's review did not accept the appearance/feel. Preserve the study
+as reference and stop expanding it unless Chase explicitly reopens that work.
+Current production priority remains T20.
 
 **October 28 library run / shield-hand grapple correction (T30): implemented; Chase's retest pending.**
 Chase rejected the replacement gait. Restored the existing `run_1` used by Shift,
