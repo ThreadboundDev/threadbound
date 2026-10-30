@@ -718,7 +718,9 @@ func _update_idle_variation(delta: float) -> void:
 	if _idle_elapsed < idle_variation_delay:
 		return
 	_idle_elapsed = 0.0
-	var variants: Array[StringName] = [&"idle_2", &"idle_3"] if upright_idle_strength > 0.0 else [&"idle_1", &"idle_2", &"idle_3"]
+	var variants: Array[StringName] = [&"idle_1", &"idle_2", &"idle_3"]
+	if upright_idle_strength > 0.0:
+		variants.erase(&"idle_1")
 	var variant := variants[_idle_variant_index % variants.size()]
 	_idle_variant_index += 1
 	_play_action(variant, &"idle_4")

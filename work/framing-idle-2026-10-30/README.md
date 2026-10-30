@@ -18,10 +18,13 @@ Upright trial: about 185.5 units, 14.3%. Boot contact is within one world pixel
 of the floor in both samples. This is a procedural first pass; Chase's manual
 pose work can still improve weight, equipment presentation and transitions.
 
-Validation: `tools/player_animation/verify_upright_idle.gd` passes 17 GPU checks
+Validation: `tools/player_animation/verify_upright_idle.gd` passes 19 GPU checks
 covering ground contact, imported-source isolation, unchanged non-idle source
 keys, installed grapple sampling, real throw/return and both authored camera
-zooms. The existing demo jump/lighting regression passes 134 checks. Its
+zooms and the delayed idle variation after more than six seconds. An initial
+conditional-array typing error was caught during longer captures and corrected
+with a typed list before this extended verification. The existing demo
+jump/lighting regression passes 134 checks. Its
 temporary SceneTree copy redirects report output and assigns the current scene
 before tutorial ready; the check logic is unchanged. `render.json` and
 `demo-regression.json` record results.

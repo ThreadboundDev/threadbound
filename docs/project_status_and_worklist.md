@@ -12,8 +12,10 @@ straighter legs and reduced constant lean, preserving source rigs and non-idle
 actions. Grapple leg sampling uses the same copies. Current sampled idle is
 about 14.3% of screen height at the authorized zoom; the straighter pose is taller
 than the previous idle. [Comparison and validation](../work/framing-idle-2026-10-30/README.md).
-17 GPU checks pass, including rendered boot contact, source isolation, unchanged
-non-idle clips, grapple sampling/return and both saved camera zooms. Existing
+19 GPU checks pass, including rendered boot contact, source isolation, unchanged
+non-idle clips, grapple sampling/return, delayed idle variation and both saved
+camera zooms. A conditional-array typing issue found in a longer capture was
+corrected in `fix: preserve typed upright idle variations`. Existing
 demo jump/lighting regression and staged review are recorded with the checkpoint.
 **Implemented; Chase's pose/framing acceptance pending.** Checkpoint:
 `art: set gameplay zoom and straighten idle posture` on

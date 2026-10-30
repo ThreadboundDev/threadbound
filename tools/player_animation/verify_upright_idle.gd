@@ -83,6 +83,10 @@ func run() -> void:
 	await frames(35)
 	check(not upright._upper_body_overlay_active,"Grapple overlay finishes normally")
 	check(upright._current_action == &"idle_4","Grapple returns to the selected idle")
+	upright.play_gameplay_animation(&"Idle")
+	await frames(410)
+	check(upright._current_action == &"idle_2","Standing longer than six seconds starts the first upright variation")
+	check(upright._animation_player.current_animation == upright._clips[&"idle_2"],"Delayed variation uses its installed upright clip")
 	for path in ["res://Src/Environment/World/Chamber Of The First Weave.tscn","res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"]:
 		var state := (load(path) as PackedScene).get_state()
 		var found := false
