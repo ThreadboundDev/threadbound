@@ -321,6 +321,10 @@ func play_gameplay_animation(logical_name: StringName) -> void:
 	_logical_animation = logical_name
 	_idle_elapsed = 0.0
 	var selection := _select_action(logical_name)
+	if logical_name == &"Double_Jump":
+		# Reuse the takeoff, even when jump_1 is already playing mid-ascent.
+		_play_action(selection.action, &"", 0.0, true, selection.speed)
+		return
 	if logical_name == &"Water_Dash":
 		_play_action(&"swimming_1", &"", 0.0, true, water_dash_animation_speed)
 		return
@@ -608,7 +612,7 @@ func _select_action(logical_name: StringName) -> Dictionary:
 		&"Jump_Ascent", &"Jump_Apex", &"Jump_Descent", &"Jump_Land":
 			return {"action": &"jump_1"}
 		&"Double_Jump":
-			return {"action": &"jump_2"}
+			return {"action": &"jump_1", "speed": 1.2}
 		&"Crouch_Enter":
 			return {"action": &"crouch_1", "fallback": &"crouch_idle_1"}
 		&"Crouch_Idle":

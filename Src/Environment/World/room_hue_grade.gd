@@ -75,6 +75,9 @@ var _boss_intro_blend := 0.0
 var _boss_intro_tween: Tween
 
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		# Thread lights and other fixtures are built in sibling _ready calls.
+		_enable_character_lighting.call_deferred()
 	_sync_room_bounds_from_placeholders()
 	_cache_grass_materials()
 	_current_color = neutral_color
@@ -94,6 +97,22 @@ func _ready() -> void:
 	# materials while editing forces unnecessary redraw and inspector work.
 	if Engine.is_editor_hint():
 		set_process(false)
+
+func _enable_character_lighting() -> void:
+	if not is_instance_valid(_player):
+		return
+	# The live character receives layer 2. Retain layer 1 for the scenery,
+	# including on procedurally created thread lights. Its own glow remains
+	# layer 1 only, so it cannot flatten the model's surface shading.
+	for node in _player.get_parent().find_children("*", "Light2D", true, false):
+		# Actor glows belong to their own effects, including enemies spawned
+		# later. This compatibility pass concerns the level's light fixtures.
+		var source: Node = node.get_parent()
+		while source != null and not source is CharacterBody2D:
+			source = source.get_parent()
+		if source == null and (node.range_item_cull_mask & 1) != 0:
+			node.range_item_cull_mask |= 2
+
 
 func _process(delta: float) -> void:
 	if not _player:

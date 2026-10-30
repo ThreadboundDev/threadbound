@@ -1,4 +1,28 @@
-# Next hands-on test — return to the 2D demo
+# Next hands-on test — demo lighting and double jump
+
+October 30: use `threadbound/fix-demo-lighting-double-jump`. Chase likes the
+demo's overall feel and 2D enemies; this retest covers the two reported faults.
+Save manual editor/art edits before switching tasks; the assistant handles Git.
+
+Open `Src/Environment/World/Chamber Of The First Weave.tscn` and restart with F6
+so the current scripts load. About 3–5 minutes:
+
+1. **Character lighting.** Walk from dim ground toward the opening, central
+   threads, and red/blue/yellow fixtures. The character should receive their
+   color and brightness along with the scenery. Judge contrast, over-bright
+   areas and transitions. Its own soul glow should not wash out the model.
+2. **Second-jump motion.** Jump again early during ascent, then try a second
+   jump while falling. Both should replay the normal jump motion at 1.2× speed.
+   Land and jump again: ordinary jump speed should return. Give keep/change
+   for the faster second jump; movement strength and AP cost are unchanged.
+3. **Next environment target.** After these corrections feel right, choose one
+   small existing lake stretch to finish with model/texture-derived 2D stamps
+   and a manual paint pass. Compare its clarity and pacing with the demo before
+   proposing any layout or gameplay change.
+
+The underwater background and T20 appearance/feel reviews remain open below.
+
+## October 29 background review and original replay card
 
 October 29: use `threadbound/art-underwater-rock-background`, which includes the
 current accepted checkpoints. Save any manual Godot/Krita/Blender edits before

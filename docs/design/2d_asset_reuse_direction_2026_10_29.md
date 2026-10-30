@@ -13,6 +13,27 @@ including reskinning suitable models and learning from existing motion. This
 retains the established non-chibi character identity and woven art direction;
 it does not approve every downloaded model for production.
 
+### October 30 demo replay
+
+Chase replayed the original demo with the current character and likes the game
+feel and existing 2D enemy appearance. Keep that demo as the reference for the
+next 2D work. He prefers its 2D presentation to the current 3D trial and notes
+that a convincing 3D version would require substantial animation work; he also
+recognizes the extra manual work already invested in 2D.
+
+The intended environment workflow is to use suitable free 3D models and textures
+as sources for clean 2D art, then compose and draw levels with the established
+stamp workflow. Match camera angle, scale, lighting, palette and edge treatment
+before adding stamps; paint over joins and repeated details for a coherent level.
+Use the existing verified asset library first. This records the production
+direction, not approval to replace existing assets or every candidate's license.
+No new download, art replacement or level rebuild is part of this checkpoint.
+
+Immediate replay findings: demo lights do not reach the live character, and the
+double jump should replay the existing jump animation, slightly faster. These
+are tracked as T33 on the current priority list; appearance/timing retest remains
+separate from the positive review of the demo's overall feel and enemies.
+
 ## What the experiment taught us
 
 - Features and automated checks did not establish convincing game feel. The

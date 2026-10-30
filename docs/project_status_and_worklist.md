@@ -1,18 +1,30 @@
 # Threadbound current TODO list
 
-Updated October 29, 2026. This is the single current priority list. The saved
+Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current priority: T32 — underwater background review, then replay the original demo with the current character.**
+**Current priority: T33 — retest demo character lighting and double-jump animation.**
+Chase replayed the demo and likes its overall feel and existing 2D enemies.
+Keep those as the reference. Fixes now let the demo's environment lights reach
+the current character and replay `jump_1` at 1.2× speed on a successful air jump.
+[Scope, verification and remaining acceptance](verification/demo_jump_lighting_2026_10_30.md).
+Checkpoint: `fix: restore demo character lighting and double jump animation`
+on `threadbound/fix-demo-lighting-double-jump` (see Git history).
+**Delivered; Chase's lighting/timing retest pending.** The [test card](next_test_session.md)
+now starts with these two checks. Next environment work uses free model/texture
+sources through the established 2D stamp workflow; specific asset choices and
+layout changes still need scoped review.
+
+**T32 — background delivered; demo replay feedback received October 30.**
 Chase wants to refocus on what feels good about Threadbound after parking the
 3D trial. His named Krita layer is now integrated in the lakeside artwork;
-appearance acceptance remains pending. Next, replay Chamber of the First Weave
-and compare its feel with the lake before selecting one implementation task.
+appearance acceptance remains pending. Chase's replay found the demo feel and
+enemy look strong; the two concrete player findings are addressed under T33.
 [Delivery, validation and replay plan](verification/underwater_background_2026_10_29.md).
 Checkpoint: `art: add painted underwater rock background` on
 `threadbound/art-underwater-rock-background` (see Git history).
-The [current test card](next_test_session.md) starts with this short replay.
+The [current test card](next_test_session.md) retains the background review.
 
 **T20 — October 26 playtest corrections remain open.**
 Implementation is inherited from `threadbound/fix-lakeside-playtest-feedback`;
@@ -28,7 +40,7 @@ rollback is needed. Retain the useful asset-library approach: verified materials
 models, rigs, animation donors and audio can support the established 2D game.
 [Decision, lessons and bounded reuse workflow](design/2d_asset_reuse_direction_2026_10_29.md).
 That decision checkpoint was documentation only. The later requested T32
-background/replay task is now current; T20 acceptance remains open.
+background/replay led to current T33 corrections; T20 acceptance remains open.
 
 **October 29 3D Loom Crossing trial (T31): reviewed; current 3D effort parked after Chase's feedback.**
 Chase gave full approval for the separate overnight experiment. It now opens a

@@ -906,7 +906,12 @@ func _physics_process(delta: float) -> void:
 		elif current_gloves and current_gloves.has_method("jump_off_grapple") and current_gloves.jump_off_grapple():
 			pass
 		elif current_boots:
+			var air_jump_was_available := air_jump_available
 			current_boots.handle_primary(delta, BaseEquipment.ActionState.PRESSED)
+			# A successful air jump may happen during the same ascent pose, so
+			# waiting for a body-animation change never restarts the live clip.
+			if air_jump_was_available and not air_jump_available and not is_attacking and live_3d_visual:
+				live_3d_visual.play_gameplay_animation(&"Double_Jump")
 		if velocity.y < 0.0 and velocity.y < velocity_before_jump.y:
 			_play_flow_vfx_jump(velocity)
 
