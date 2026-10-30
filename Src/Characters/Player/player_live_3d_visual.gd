@@ -34,6 +34,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var camera_size := 2.8
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
+@export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
 @export var grapple_throw_duration := 0.30
 @export var roll_duration := 0.30
 @export_range(1.0, 4.0, 0.1) var water_dash_animation_speed := 2.0
@@ -717,7 +718,7 @@ func _update_idle_variation(delta: float) -> void:
 	if _idle_elapsed < idle_variation_delay:
 		return
 	_idle_elapsed = 0.0
-	var variants: Array[StringName] = [&"idle_1", &"idle_2", &"idle_3"]
+	var variants: Array[StringName] = [&"idle_2", &"idle_3"] if upright_idle_strength > 0.0 else [&"idle_1", &"idle_2", &"idle_3"]
 	var variant := variants[_idle_variant_index % variants.size()]
 	_idle_variant_index += 1
 	_play_action(variant, &"idle_4")
@@ -770,6 +771,7 @@ func _build_viewport() -> void:
 	_install_authored_attacks(_animation_player, _skeleton)
 	_install_water_combo(_animation_player, _skeleton)
 	_index_clips()
+	_clips.merge(_install_upright_idles(_animation_player, _skeleton), true)
 	if not Engine.is_editor_hint():
 		_build_lower_body_sampler()
 	if _animation_player:
@@ -1004,6 +1006,54 @@ func _build_lower_body_sampler() -> void:
 	_lower_sampler_player = _find_first_type(_lower_sampler_root, "AnimationPlayer") as AnimationPlayer
 	_lower_sampler_skeleton = _find_first_type(_lower_sampler_root, "Skeleton3D") as Skeleton3D
 	_install_authored_attacks(_lower_sampler_player, _lower_sampler_skeleton)
+	_install_upright_idles(_lower_sampler_player, _lower_sampler_skeleton)
+
+
+func _install_upright_idles(target: AnimationPlayer, skeleton: Skeleton3D) -> Dictionary:
+	# Per-instance animation copies retain breathing/guard motion and existing
+	# crossfades. The source rig, equipment and every non-idle clip stay intact.
+	var installed := {}
+	if upright_idle_strength <= 0.0 or not target or not skeleton:
+		return installed
+	var weights := {&"thigh.L":0.45, &"thigh.R":0.45, &"shin.L":0.55, &"shin.R":0.55,
+		&"foot.L":0.35, &"foot.R":0.35, &"toe.L":0.25, &"toe.R":0.25,
+		&"spine":0.30, &"chest":0.22, &"neck":0.25, &"head":0.18}
+	var library := AnimationLibrary.new()
+	for action: StringName in [&"idle_1", &"idle_2", &"idle_3", &"idle_4"]:
+		var source: Animation
+		for clip in target.get_animation_list():
+			if String(clip).get_file() == String(action):
+				source = target.get_animation(clip)
+				break
+		if not source:
+			continue
+		var animation := source.duplicate(true) as Animation
+		for track in animation.get_track_count():
+			if animation.track_get_type(track) != Animation.TYPE_ROTATION_3D:
+				continue
+			var path := animation.track_get_path(track)
+			if path.get_subname_count() != 1:
+				continue
+			var bone := path.get_subname(0)
+			var index := skeleton.find_bone(bone)
+			if index < 0 or not weights.has(bone) and bone != &"pelvis":
+				continue
+			var rest_rotation := skeleton.get_bone_rest(index).basis.get_rotation_quaternion()
+			for key in animation.track_get_key_count(track):
+				var original: Quaternion = animation.track_get_key_value(track,key)
+				var corrected: Quaternion
+				if bone == &"pelvis":
+					# Keep the authored facing; reduce only the constant lean/roll.
+					var euler := original.get_euler()
+					var upright := Quaternion.from_euler(Vector3(euler.x*0.55,euler.y,euler.z*0.55))
+					corrected = original.slerp(upright,upright_idle_strength)
+				else:
+					corrected = original.slerp(rest_rotation,float(weights[bone])*upright_idle_strength)
+				animation.track_set_key_value(track,key,corrected.normalized())
+		library.add_animation(action,animation)
+		installed[action] = StringName("upright_idle/"+String(action))
+	target.add_animation_library(&"upright_idle",library)
+	return installed
 
 
 func _start_action_sequence(sequence_name: StringName, actions: Array[StringName]) -> void:

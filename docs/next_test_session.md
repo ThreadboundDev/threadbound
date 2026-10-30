@@ -1,4 +1,15 @@
-# Next review — character scale, then attack VFX
+# Next review — saved zoom and upright idle, then Blue layers/bridges
+
+Chase authorized the live 0.83 camera zoom and an upright-idle attempt. Use
+`threadbound/art-framing-and-idle`, which inherits earlier corrections. Compare
+the demo and Blue at their saved zoom; stand, run, stop, jump, guard, attack,
+throw the grapple and wait through the idle variations. Judge narrower stance,
+head/torso posture, boot contact, equipment fit and the transition into action.
+[Grounded comparison and checks](../work/framing-idle-2026-10-30/README.md).
+The upright pose is taller, about 14.3% at 0.83; the previous-pose 13.3% figure
+below belongs to the earlier camera-only study. Pose/framing acceptance is open.
+
+## Earlier camera/VFX study and retained retests
 
 October 30 update: Chase moved these two questions to the front. Current branch
 `threadbound/vfx-scale-and-impact-study` inherits the earlier corrections. Save

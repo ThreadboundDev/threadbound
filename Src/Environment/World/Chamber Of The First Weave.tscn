@@ -2467,6 +2467,7 @@ update_scale = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1008286159]
 position = Vector2(3, -3612)
+zoom = Vector2(0.83, 0.83)
 limit_left = -9500
 limit_top = -5000
 limit_right = 8200

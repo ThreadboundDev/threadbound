@@ -1,0 +1,19 @@
+{
+	"checks": 17,
+	"display": "Windows",
+	"failures": [],
+	"measurements": [
+		{
+			"body_height_world": 173.0,
+			"foot_world_y": 180.228057861328,
+			"screen_percent": 13.2953703703704,
+			"variant": 0
+		},
+		{
+			"body_height_world": 185.5,
+			"foot_world_y": 179.728057861328,
+			"screen_percent": 14.2560185185185,
+			"variant": 1
+		}
+	]
+}

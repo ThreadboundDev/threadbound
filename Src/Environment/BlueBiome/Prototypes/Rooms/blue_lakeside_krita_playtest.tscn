@@ -993,7 +993,7 @@ debug_blue_water_power_unlocked = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=328312995]
 position = Vector2(0, -80)
-zoom = Vector2(0.9, 0.9)
+zoom = Vector2(0.83, 0.83)
 limit_left = -1408
 limit_top = -2560
 limit_right = 5504

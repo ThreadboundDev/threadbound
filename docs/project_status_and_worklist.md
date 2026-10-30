@@ -4,7 +4,24 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current priorities: T35 character scale, then T36 attack VFX — October 30.**
+**T35 follow-up — zoom 0.83 and upright idle implemented October 30.**
+Chase authorized saving the recommended zoom and trying a more upright pose.
+The demo and Blue Camera2D settings are now 0.83; the painted comparison inherits
+Blue. The shared live visual uses isolated upright idle copies with narrower,
+straighter legs and reduced constant lean, preserving source rigs and non-idle
+actions. Grapple leg sampling uses the same copies. Current sampled idle is
+about 14.3% of screen height at the authorized zoom; the straighter pose is taller
+than the previous idle. [Comparison and validation](../work/framing-idle-2026-10-30/README.md).
+17 GPU checks pass, including rendered boot contact, source isolation, unchanged
+non-idle clips, grapple sampling/return and both saved camera zooms. Existing
+demo jump/lighting regression and staged review are recorded with the checkpoint.
+**Implemented; Chase's pose/framing acceptance pending.** Checkpoint:
+`art: set gameplay zoom and straighten idle posture` on
+`threadbound/art-framing-and-idle`. T33/T20 acceptance remains open. Next requested
+work is Blue's independent slow underwater rock, world-aligned timber, and
+reusable pontoon/braced bridge assets; VFX preference remains recorded below.
+
+**T35/T36 reference diagnosis and first VFX prototype — October 30.**
 Chase explicitly moved these ahead of the remaining follow-ups. The
 [scale diagnosis and original VFX review](design/character_scale_and_vfx_study_2026_10_30.md)
 measure the actual player/cameras: demo idle 15.97% screen height, Blue 14.37%,
