@@ -1,0 +1,344 @@
+{
+  "study_date": "2026-10-30",
+  "baseline_commit": "dac26f02",
+  "walkthrough": {
+    "url": "https://www.youtube.com/watch?v=q3NuImErog8",
+    "creator": "BeardBear",
+    "title": "Castlevania: Belmont's Curse 100% Walkthrough - FULL GAME (No Commentary)",
+    "duration_seconds": 33734,
+    "upload_date": "2026-10-17",
+    "format_id": "136",
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "broad_windows": [
+      {
+        "label": "Paris opening",
+        "start": 365,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Paris boss/reward",
+        "start": 900,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Cemetery",
+        "start": 3339,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Catacombs",
+        "start": 5580,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Library",
+        "start": 11760,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Main Hall / Notre-Dame story handoff",
+        "start": 16800,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Hall of Mirrors approach and rooms",
+        "start": 24600,
+        "seconds": 300,
+        "review_sample_interval_seconds": 5
+      },
+      {
+        "label": "Notre-Dame action supplement",
+        "start": 17160,
+        "seconds": 180,
+        "review_sample_interval_seconds": 5
+      }
+    ],
+    "broad_sample_frames": 456,
+    "window_minutes": 38,
+    "coverage_note": "Sequential five-second frame samples; includes dialogue and menus. Not 38 minutes of continuous real-time watching or 100% game coverage.",
+    "sampling_time_uncertainty_seconds": 2.5
+  },
+  "official": {
+    "url": "https://www.youtube.com/watch?v=h82FdvzU5pI",
+    "creator": "KONAMI",
+    "title": "Gameplay & Commentary Trailer (CERO)",
+    "upload_date": "2026-04-09",
+    "seconds": 98,
+    "broad_sample_interval_seconds": 2,
+    "broad_sample_frames": 49,
+    "detail_windows": [
+      {
+        "start": 7,
+        "seconds": 2,
+        "source_fps": 60,
+        "review_fps": 30
+      },
+      {
+        "start": 29,
+        "seconds": 4,
+        "review_fps": 6
+      }
+    ]
+  },
+  "additional_review": [
+    {
+      "source": "walkthrough",
+      "start": 450,
+      "seconds": 12,
+      "review_fps": 6
+    },
+    {
+      "source": "walkthrough",
+      "start": 414,
+      "seconds": 8,
+      "review_fps": 2
+    },
+    {
+      "source": "walkthrough",
+      "start": 5596,
+      "seconds": 12,
+      "review_fps": 1
+    },
+    {
+      "source": "walkthrough",
+      "start": 3435,
+      "seconds": 30,
+      "review_fps": 1
+    },
+    {
+      "source": "walkthrough",
+      "start": 365,
+      "seconds": 300,
+      "review_fps": 5,
+      "purpose": "algorithmic dark-frame candidate scan, not all frames manually viewed"
+    }
+  ],
+  "camera_manual_measurements": [
+    {
+      "frame": "paris_early.mp4__combat/00013.jpg",
+      "time": 452,
+      "label": "Paris / gameplay",
+      "box": [
+        383,
+        329,
+        447,
+        395
+      ],
+      "uncertainty": 4,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 66,
+      "body_percent_frame_height": 12.22,
+      "screen_width_in_visible_body_spans": 14.55
+    },
+    {
+      "frame": "paris_b/00004.jpg",
+      "time": 915,
+      "label": "The Fallen / gameplay",
+      "box": [
+        294,
+        379,
+        330,
+        450
+      ],
+      "uncertainty": 4,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 71,
+      "body_percent_frame_height": 13.15,
+      "screen_width_in_visible_body_spans": 13.52
+    },
+    {
+      "frame": "cemetery/00011.jpg",
+      "time": 3389,
+      "label": "Cemetery / gameplay",
+      "box": [
+        458,
+        369,
+        507,
+        444
+      ],
+      "uncertainty": 5,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 75,
+      "body_percent_frame_height": 13.89,
+      "screen_width_in_visible_body_spans": 12.8
+    },
+    {
+      "frame": "library/00048.jpg",
+      "time": 11995,
+      "label": "Library / gameplay",
+      "box": [
+        375,
+        266,
+        420,
+        334
+      ],
+      "uncertainty": 4,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 68,
+      "body_percent_frame_height": 12.59,
+      "screen_width_in_visible_body_spans": 14.12
+    },
+    {
+      "frame": "paris_a/00005.jpg",
+      "time": 385,
+      "label": "Paris / dialogue",
+      "box": [
+        489,
+        266,
+        543,
+        388
+      ],
+      "uncertainty": 4,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 122,
+      "body_percent_frame_height": 22.59,
+      "screen_width_in_visible_body_spans": 7.87
+    },
+    {
+      "frame": "library/00035.jpg",
+      "time": 11930,
+      "label": "Library / dialogue",
+      "box": [
+        400,
+        296,
+        450,
+        399
+      ],
+      "uncertainty": 4,
+      "image_width": 960,
+      "image_height": 540,
+      "body_span_px": 103,
+      "body_percent_frame_height": 19.07,
+      "screen_width_in_visible_body_spans": 9.32
+    }
+  ],
+  "parallax_pair": {
+    "time_a": 420.5,
+    "time_b": 421.0,
+    "resolution": [
+      960,
+      540
+    ],
+    "method": "normalized grayscale template correlation; integer dx/dy search; visually checked boxes",
+    "features": [
+      {
+        "feature": "gameplay_plane_door",
+        "source_box": [
+          350,
+          248,
+          45,
+          55
+        ],
+        "normalized_correlation": 0.8362381869067897,
+        "dx": -120,
+        "dy": 6
+      },
+      {
+        "feature": "distant_gate",
+        "source_box": [
+          765,
+          255,
+          28,
+          40
+        ],
+        "normalized_correlation": 0.8557177288472726,
+        "dx": -73,
+        "dy": 4
+      },
+      {
+        "feature": "foreground_post",
+        "source_box": [
+          158,
+          190,
+          23,
+          75
+        ],
+        "normalized_correlation": 0.9775107179896251,
+        "dx": -149,
+        "dy": 6
+      }
+    ],
+    "distant_motion_ratio": 0.6083333333333333,
+    "foreground_motion_ratio": 1.2416666666666667,
+    "limitation": "Single short pan. Ratios are screen-motion estimates, not extracted engine settings. Frame-label timing uncertainty +/- 0.25 s."
+  },
+  "early_dark_frame_scan": {
+    "source": "q3NuImErog8",
+    "range": [
+      365,
+      665
+    ],
+    "sample_fps": 5,
+    "criterion": "central crop 98.5% pixels below grayscale 8/255",
+    "candidates": [
+      {
+        "start_source_seconds": 365.0,
+        "end_source_seconds": 365.2,
+        "seconds": 0.2
+      },
+      {
+        "start_source_seconds": 381.8,
+        "end_source_seconds": 383.0,
+        "seconds": 1.2
+      },
+      {
+        "start_source_seconds": 472.2,
+        "end_source_seconds": 473.8,
+        "seconds": 1.6
+      },
+      {
+        "start_source_seconds": 484.0,
+        "end_source_seconds": 485.4,
+        "seconds": 1.4
+      },
+      {
+        "start_source_seconds": 573.4,
+        "end_source_seconds": 573.6,
+        "seconds": 0.2
+      },
+      {
+        "start_source_seconds": 603.0,
+        "end_source_seconds": 604.4,
+        "seconds": 1.4
+      },
+      {
+        "start_source_seconds": 634.6,
+        "end_source_seconds": 636.8,
+        "seconds": 2.2
+      },
+      {
+        "start_source_seconds": 657.6,
+        "end_source_seconds": 658.8,
+        "seconds": 1.2
+      }
+    ]
+  },
+  "limits": [
+    "No hands-on play or input-to-action latency measurement",
+    "No sound-listening analysis",
+    "No private game source, extracted game assets, or combat frame data",
+    "Room transitions cannot establish asset streaming/loading internals",
+    "Gameplay camera estimates use full video frame height, not an inferred internal viewport"
+  ],
+  "rights": "Game imagery copyright KONAMI; walkthrough capture credited to BeardBear. Figures are attributed analysis references and are not Threadbound runtime assets.",
+  "figure_sha256": {
+    "camera-scale.jpg": "0358933be64ac1886c61c7e1c4ab4d64dd0ff85499e8a524ec4b5aea6fc3e895",
+    "impact-sequence.jpg": "b9fae26f8abbda2ae079220ad7587a10bcdd9440b56866df11119e0592726e30",
+    "parallax-motion.jpg": "3ce70b8bfba3ff89ff95d59cf78837456ae5228b0594d6b270b01a4e83b66c5c",
+    "regional-composition.jpg": "1171744815ce0d9bcf869d3216ffba5dde1c603f860ef27820081db00d8c8ca9",
+    "whip-traversal.jpg": "8d9b12d13b67e84dfc498771ba573b2e8ef935d93689aacb0bce354555b71db8"
+  }
+}

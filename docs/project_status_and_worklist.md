@@ -16,6 +16,21 @@ now starts with these two checks. Next environment work uses free model/texture
 sources through the established 2D stamp workflow; specific asset choices and
 layout changes still need scoped review.
 
+**T34 — Belmont's Curse / Dead Cells reference study delivered October 30.**
+Chase requested this research before further development. The
+[study](design/belmonts_curse_reference_study_2026_10_30.md) records frame-sampled
+review across 38 minutes of a full-game walkthrough, the official gameplay
+trailer, detailed action/transition sequences, six manual camera measurements,
+one measured parallax pair, five analytical figures and pinned public-code
+references. It distinguishes observations, estimates and proposed Threadbound
+tests; it does not claim continuous viewing, full-game coverage or original
+combat-source access. Research validation: source/code review, visual inspection,
+measurement arithmetic, relative links and staged whitespace review. No gameplay,
+equipment, asset or scene changes; T33/T20 acceptance remains open. Recommended
+follow-up is a scoped short combat-flow comparison before broader production.
+Checkpoint: `docs: study Belmonts Curse combat visuals and framing` on
+`threadbound/docs-belmont-combat-visual-study`.
+
 **October 30 gameplay/art review — direction recorded; follow-up proposals pending.**
 Chase likes the demo's snappy combat and outlined 2D enemies, wants to preserve
 the detailed 3D player in the 2D game, and favors movement freedom with precision

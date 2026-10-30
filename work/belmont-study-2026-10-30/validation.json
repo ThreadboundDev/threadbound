@@ -1,0 +1,10 @@
+{
+  "relative_links_checked": 60,
+  "missing_links": [],
+  "figures_verified": 5,
+  "manual_measurements_verified": 6,
+  "coverage_minutes": 38,
+  "broad_frames": 456,
+  "runtime_tests": "not run: research and analytical figures only",
+  "status": "pass"
+}
