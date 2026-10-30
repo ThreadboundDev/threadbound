@@ -15,7 +15,13 @@ mass; an upright rig reference is about 12.2% taller. Blue's fisher house is abo
 27.78% screen-height body sample; full 3D remains parked.
 
 **T35 diagnosis delivered; camera/pose selection pending. T36 first isolated
-prototype delivered; appearance/live integration pending.**
+prototype delivered; positive appearance feedback received, live integration pending.**
+Chase says the new VFX look great and much better than the current effects; carry
+the filled-sweep appearance forward as his preferred direction. The follow-up
+also clarifies that Belmont's 540-pixel figure describes resized analysis images,
+not a confirmed game viewport. Documentation checkpoint:
+`docs: record sweep preference and clarify reference resolution` on the same branch;
+validated against captured-media metadata and Threadbound's viewport settings.
 The original blade-led filled sweep, sparse thread accents and illustrative
 contact burst run alongside the unchanged three-strike combo. The
 [GIF](../work/scale-vfx-study-2026-10-30/combo-comparison.gif), camera/posture figures,

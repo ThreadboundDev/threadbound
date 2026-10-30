@@ -3,7 +3,9 @@
 Chase's new order is **character scale first, VFX second**. Combo flow/manual
 animation, environment cohesion, outlined enemies and Threadbound identity remain
 important follow-ups. Full 3D remains parked. This delivers measurements and an
-original, isolated VFX prototype; visual selection and live integration are pending.
+original, isolated VFX prototype. In the follow-up, Chase said the new VFX look
+great and substantially better than the current effects. Carry the filled-sweep
+appearance forward as his preferred direction; live integration remains pending.
 
 ## What the measurements say
 
@@ -31,6 +33,13 @@ including the [library at about 3:19:55](https://www.youtube.com/watch?v=q3NuImE
 They are four selected poses, not a full-game average or identical standing poses.
 See the [earlier source study](belmonts_curse_reference_study_2026_10_30.md) for
 timestamps, uncertainty, dialogue zooms and sampling limits.
+
+**Resolution clarification:** 540 is the height of the resized 960 x 540 analysis
+frames. The walkthrough stream used was 1280 x 720. Neither measurement establishes
+Castlevania's internal game viewport or rendering resolution. A 68-pixel character
+in a 540-pixel-high image and a 136-pixel character in a 1080-pixel-high image both
+occupy 12.59% of screen height. Matching that proportion does not require changing
+Threadbound's 1920 x 1080 base viewport to 540p.
 
 Method: render the actual shared player through its live transparent 3D viewport;
 temporarily hide equipment meshes on the runtime instance to measure just the
@@ -212,5 +221,9 @@ claim. Earlier capture-fixture startup/triangulation mistakes were corrected
 before the final captures. No game implementation fix is claimed for them.
 
 Checkpoint: `vfx: add character scale audit and isolated sweep study` on
-`threadbound/vfx-scale-and-impact-study`. T35 diagnosis and T36 first prototype
-are delivered for review, not accepted live changes. T33/T20 acceptance stays open.
+`threadbound/vfx-scale-and-impact-study`. T35 diagnosis is delivered; T36 first
+prototype has positive appearance feedback. Live changes and T33/T20 acceptance
+remain pending. Feedback/clarification checkpoint:
+`docs: record sweep preference and clarify reference resolution` on the same branch.
+Validation: measurement/source metadata, local viewport settings and staged diff
+review. This follow-up changes documentation only.
