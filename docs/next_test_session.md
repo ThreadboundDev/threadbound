@@ -1,6 +1,30 @@
-# Next hands-on test — demo lighting and double jump
+# Next review — character scale, then attack VFX
 
-October 30: use `threadbound/fix-demo-lighting-double-jump`. Chase likes the
+October 30 update: Chase moved these two questions to the front. Current branch
+`threadbound/vfx-scale-and-impact-study` inherits the earlier corrections. Save
+manual Godot/art edits before switching tasks; the assistant handles Git.
+
+1. Review the [camera A/B](../work/scale-vfx-study-2026-10-30/camera-comparison.jpg)
+   and [posture comparison](../work/scale-vfx-study-2026-10-30/posture-comparison.jpg).
+   Current idle occupies about 16% of demo height and 14.4% of Blue height;
+   the runtime-only 0.83 camera preview gives 13.3%. Judge room visibility and
+   character readability separately from the broad, bent-knee stance. Choosing
+   an upright pose will require measuring screen height again.
+2. Watch the [combo VFX comparison](../work/scale-vfx-study-2026-10-30/combo-comparison.gif),
+   then check the [gameplay-scale view](../work/scale-vfx-study-2026-10-30/vfx-gameplay-scale.jpg).
+   Judge the filled gesture, brightness, thread accents and clearance. Contacts
+   are illustrative, with no enemy hits, hit pause or sound in this stage.
+3. Review the [existing hitbox overlay](../work/scale-vfx-study-2026-10-30/existing-hitbox-overlay.jpg).
+   Current damage reach is already broader than the visible swing. Select the
+   visual direction before proposing a scoped live integration or combat change.
+
+[Measurements, limitations and next-pass file scopes](design/character_scale_and_vfx_study_2026_10_30.md).
+No production camera, collision, animation or VFX replacement is made by this
+review package. T33/T20 acceptance remains pending. The prior retests follow.
+
+## Demo lighting and double jump
+
+The current branch inherits `threadbound/fix-demo-lighting-double-jump`. Chase likes the
 demo's overall feel and 2D enemies; this retest covers the two reported faults.
 Save manual editor/art edits before switching tasks; the assistant handles Git.
 

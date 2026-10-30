@@ -1,0 +1,272 @@
+{
+  "fixture": {
+    "display_position": [
+      0.0,
+      69.2449951171875
+    ],
+    "display_scale": [
+      0.5,
+      0.5
+    ],
+    "meshes": [
+      "Base_Grapple_Braided_Strand_1",
+      "Base_Grapple_Braided_Strand_2",
+      "Base_Grapple_Braided_Strand_3",
+      "Threadborne_Shield_Combined_Test",
+      "Threadborne_Sword",
+      "Threadborne_Character"
+    ],
+    "mode": "fixture",
+    "poses": {
+      "Idle": {
+        "body_used_rect": [
+          274.0,
+          350.0,
+          273.0,
+          345.0
+        ],
+        "clip": "idle_4",
+        "screen_body_rect": [
+          897.0,
+          506.030700683594,
+          136.5,
+          172.5
+        ],
+        "screen_fraction": 0.159722222222222,
+        "screen_height": 172.5,
+        "time": 0.2,
+        "world_height": 172.5
+      },
+      "Run": {
+        "body_used_rect": [
+          229.0,
+          355.0,
+          311.0,
+          330.0
+        ],
+        "clip": "run_1",
+        "screen_body_rect": [
+          874.5,
+          508.530700683594,
+          155.5,
+          165.0
+        ],
+        "screen_fraction": 0.152777777777778,
+        "screen_height": 165.0,
+        "time": 0.2,
+        "world_height": 165.0
+      }
+    },
+    "rest_body_used_rect": [
+      349.0,
+      310.0,
+      102.0,
+      387.0
+    ],
+    "viewport": [
+      1920.0,
+      1080.0
+    ],
+    "zoom": [
+      1.0,
+      1.0
+    ]
+  },
+  "blue": {
+    "display_position": [
+      0.0,
+      69.2449951171875
+    ],
+    "display_scale": [
+      0.5,
+      0.5
+    ],
+    "house_door_meshes": [],
+    "meshes": [
+      "Base_Grapple_Braided_Strand_1",
+      "Base_Grapple_Braided_Strand_2",
+      "Base_Grapple_Braided_Strand_3",
+      "Threadborne_Shield_Combined_Test",
+      "Threadborne_Sword",
+      "Threadborne_Character"
+    ],
+    "mode": "blue",
+    "poses": {
+      "Idle": {
+        "body_used_rect": [
+          274.0,
+          350.0,
+          273.0,
+          345.0
+        ],
+        "clip": "idle_4",
+        "screen_body_rect": [
+          328.499938964844,
+          518.427612304688,
+          122.850006103516,
+          155.25
+        ],
+        "screen_fraction": 0.143749996191925,
+        "screen_height": 155.24999588728,
+        "time": 0.2,
+        "world_height": 172.5
+      },
+      "Run": {
+        "body_used_rect": [
+          229.0,
+          355.0,
+          311.0,
+          330.0
+        ],
+        "clip": "run_1",
+        "screen_body_rect": [
+          308.249938964844,
+          520.677612304688,
+          139.950012207031,
+          148.5
+        ],
+        "screen_fraction": 0.137499996357494,
+        "screen_height": 148.499996066093,
+        "time": 0.2,
+        "world_height": 165.0
+      }
+    },
+    "viewport": [
+      1920.0,
+      1080.0
+    ],
+    "zoom": [
+      0.899999976158142,
+      0.899999976158142
+    ]
+  },
+  "demo": {
+    "display_position": [
+      0.0,
+      69.2449951171875
+    ],
+    "display_scale": [
+      0.5,
+      0.5
+    ],
+    "meshes": [
+      "Base_Grapple_Braided_Strand_1",
+      "Base_Grapple_Braided_Strand_2",
+      "Base_Grapple_Braided_Strand_3",
+      "Threadborne_Shield_Combined_Test",
+      "Threadborne_Sword",
+      "Threadborne_Character"
+    ],
+    "mode": "demo",
+    "poses": {
+      "Idle": {
+        "body_used_rect": [
+          274.0,
+          350.0,
+          273.0,
+          345.0
+        ],
+        "clip": "idle_4",
+        "screen_body_rect": [
+          897.0,
+          436.030822753906,
+          136.5,
+          172.5
+        ],
+        "screen_fraction": 0.159722222222222,
+        "screen_height": 172.5,
+        "time": 0.2,
+        "world_height": 172.5
+      },
+      "Run": {
+        "body_used_rect": [
+          229.0,
+          355.0,
+          311.0,
+          330.0
+        ],
+        "clip": "run_1",
+        "screen_body_rect": [
+          874.5,
+          438.530822753906,
+          155.5,
+          165.0
+        ],
+        "screen_fraction": 0.152777777777778,
+        "screen_height": 165.0,
+        "time": 0.2,
+        "world_height": 165.0
+      }
+    },
+    "viewport": [
+      1920.0,
+      1080.0
+    ],
+    "zoom": [
+      1.0,
+      1.0
+    ]
+  },
+  "trial": {
+    "body_rest_aabb_height": 1.800048828125,
+    "body_screen_fraction": 0.277777777777778,
+    "camera_fov": 62.0,
+    "camera_spring_length": 5.40000009536743,
+    "capsule_height": 1.9,
+    "projected_body_rect": [
+      682,
+      421,
+      108,
+      250
+    ],
+    "props": [
+      {
+        "name": "WorkingVillageWorkshop",
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "world_height": 4.44714736938477
+      }
+    ],
+    "viewport": [
+      1440,
+      900
+    ]
+  },
+  "reference_frame": {
+    "file": "reference-library-03h19m55s.jpg",
+    "source_url": "https://www.youtube.com/watch?v=q3NuImErog8&t=11995s",
+    "creator": "BeardBear",
+    "sample_timestamp_seconds": 11995,
+    "sampling_uncertainty_seconds": 2.5,
+    "width": 960,
+    "height": 540,
+    "purpose": "Attributed gameplay-analysis reference only; not a Threadbound asset or licensed production art."
+  },
+  "camera_proposal": {
+    "zoom": 0.83,
+    "idle_height_world": 172.5,
+    "screen_height": 143.17499999999998,
+    "screen_fraction": 0.13256944444444443,
+    "visible_world_width": 2313.253012048193,
+    "visible_world_height": 1301.2048192771085,
+    "blue_width_increase_percent": 8.433734939759052,
+    "demo_width_increase_percent": 20.481927710843383
+  },
+  "house": {
+    "bounds_source": "work/painted-2d-comparison-2026-10-22/source_manifest.json: fisher_house",
+    "height_world": 835.320983886719,
+    "idle_body_heights": 4.84244048629982,
+    "outer_door_frame_manual_screen_box": [
+      869,
+      572,
+      1048,
+      826
+    ],
+    "outer_door_frame_height_uncertainty_px": 8,
+    "procedural_entry_overlay_height_world": 218,
+    "note": "The outer framed door assembly includes lintel/threshold; it is not the clear opening. The entry overlay is a separate presentation measurement. Neither measures collision clearance."
+  }
+}

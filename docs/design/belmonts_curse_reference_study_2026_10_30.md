@@ -3,6 +3,11 @@
 October 30, 2026. Threadbound baseline: `dac26f02`.
 **Research delivered; all implementation suggestions remain proposals.**
 
+Follow-up: Chase prioritized **character scale, then VFX**. The
+[actual-player measurement and isolated original-effect study](character_scale_and_vfx_study_2026_10_30.md)
+replaces the illustrative assumed player height below with measured samples;
+camera/pose selection and live integration remain pending.
+
 ## Findings to use first
 
 Threadbound's next combat target should be **a connected encounter**, with readable

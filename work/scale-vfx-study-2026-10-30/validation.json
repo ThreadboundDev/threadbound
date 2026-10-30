@@ -1,0 +1,31 @@
+{
+  "frame_count_each": 104,
+  "matched_baseline_candidate_animation_and_blade": true,
+  "matched_damage_polygon_and_activation": true,
+  "combo_steps": [
+    0,
+    1,
+    2
+  ],
+  "left_combo_steps": [
+    0,
+    1,
+    2
+  ],
+  "actual_left_facings": [
+    -1
+  ],
+  "actual_right_facings": [
+    1
+  ],
+  "source_delta_seconds": [
+    0.0166666666666667
+  ],
+  "candidate_trail_seconds": 0.075,
+  "candidate_reach_extension": 1.14,
+  "contact_lifetime_seconds": 0.13,
+  "gif_frames": 35,
+  "gif_duration_ms": 1750,
+  "contact_note": "Illustrative timer events; not actual hits. No enemy/reaction, sound or hit-stop evaluation.",
+  "raw_frames": "Ignored tmp/scale-vfx-study/vfx; 60fps source, packaged GIF 20fps."
+}

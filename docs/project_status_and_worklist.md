@@ -4,7 +4,32 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current priority: T33 — retest demo character lighting and double-jump animation.**
+**Current priorities: T35 character scale, then T36 attack VFX — October 30.**
+Chase explicitly moved these ahead of the remaining follow-ups. The
+[scale diagnosis and original VFX review](design/character_scale_and_vfx_study_2026_10_30.md)
+measure the actual player/cameras: demo idle 15.97% screen height, Blue 14.37%,
+versus four sampled Belmont gameplay poses around 12–14%. A runtime-only zoom
+0.83 preview gives 13.26% with today's idle. Posture is a separate cause of visual
+mass; an upright rig reference is about 12.2% taller. Blue's fisher house is about
+4.84 idle body-heights tall. The preserved 3D trial's close spawn camera gives a
+27.78% screen-height body sample; full 3D remains parked.
+
+**T35 diagnosis delivered; camera/pose selection pending. T36 first isolated
+prototype delivered; appearance/live integration pending.**
+The original blade-led filled sweep, sparse thread accents and illustrative
+contact burst run alongside the unchanged three-strike combo. The
+[GIF](../work/scale-vfx-study-2026-10-30/combo-comparison.gif), camera/posture figures,
+gameplay-scale view, both facings and existing-hitbox overlay are review evidence.
+Matched 104-frame GPU captures preserve animation times, blade points, damage
+polygons and activation; helper/data and visual review are recorded in the study.
+The existing 205-unit/130-degree damage sector still exceeds the communicated
+blade/VFX area. No live combat/camera/animation, assets or scenes were changed.
+Checkpoint: `vfx: add character scale audit and isolated sweep study` on
+`threadbound/vfx-scale-and-impact-study`. Broader combo flow, manual animation,
+enemy presentation and biome cohesion remain follow-ups; no new gameplay system
+or world resize is selected. T33/T20 acceptance is unchanged.
+
+**T33 — demo character lighting and double-jump animation retest remains open.**
 Chase replayed the demo and likes its overall feel and existing 2D enemies.
 Keep those as the reference. Fixes now let the demo's environment lights reach
 the current character and replay `jump_1` at 1.2× speed on a successful air jump.
@@ -27,7 +52,8 @@ tests; it does not claim continuous viewing, full-game coverage or original
 combat-source access. Research validation: source/code review, visual inspection,
 measurement arithmetic, relative links and staged whitespace review. No gameplay,
 equipment, asset or scene changes; T33/T20 acceptance remains open. Recommended
-follow-up is a scoped short combat-flow comparison before broader production.
+follow-up was a scoped short combat-flow comparison; Chase has now prioritized
+the measured scale diagnosis and VFX review above that work under T35/T36.
 Checkpoint: `docs: study Belmonts Curse combat visuals and framing` on
 `threadbound/docs-belmont-combat-visual-study`.
 
@@ -37,7 +63,9 @@ the detailed 3D player in the 2D game, and favors movement freedom with precisio
 platforming as optional flavor. Blue needs a coherent Threadbound identity beyond
 its village setting. The [review and bounded next-step ideas](design/gameplay_and_art_review_2026_10_30.md)
 separate this feedback from proposed combat, equipment and art work. Full 3D
-remains parked. T33/T20 acceptance is unchanged; no new implementation task starts.
+remains parked. T33/T20 acceptance is unchanged. Chase's subsequent scale/VFX
+request is tracked under T35/T36 above; this earlier review did not authorize
+other production changes.
 Checkpoint: `docs: record gameplay and visual direction review` on
 `threadbound/docs-gameplay-art-review`. Validation: local reference/relative-link
 review and staged diff/whitespace checks; no runtime or art acceptance claimed.
