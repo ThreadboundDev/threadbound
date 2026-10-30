@@ -1,6 +1,37 @@
-# Next hands-on test — October 26 corrections
+# Next hands-on test — return to the 2D demo
 
-About 8–10 minutes. Use branch `threadbound/fix-lakeside-playtest-feedback`.
+October 29: use `threadbound/art-underwater-rock-background`, which includes the
+current accepted checkpoints. Save any manual Godot/Krita/Blender edits before
+switching scenes or tasks; the assistant handles the Git checkpoint.
+
+1. **Review the new background (2 minutes).** F6
+   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+   Swim down beside the tower and across the underwater route. The new painted
+   rock wall should sit behind the player, bulbs, supports and solid terrain.
+   Judge player contrast, foreground/background separation and texture seams
+   while moving. Give keep/change/untested; appearance is not yet accepted.
+2. **Replay the demo (15–25 minutes).** Open
+   `Src/Environment/World/Chamber Of The First Weave.tscn` and press F6.
+   This uses the shared current player, including its live character visual.
+   Play the existing route at normal speed with the controls you normally use.
+   Direct F6 is the simple replay route; it does not request deleting a save.
+3. **Capture three keep moments and three friction points.** For each, note the
+   room/landmark, action, feeling and what you think caused it. Look at jump and
+   grapple spacing, landing/contact, attack rhythm, enemy tells, camera framing,
+   route clarity and the alternation of pressure, discovery and breathing room.
+   These are observations to make, not confirmed causes of the demo's feel.
+4. **Compare one short lakeside stretch.** Repeat a similar movement/fight there.
+   What feels different with the same character? Pick the single difference
+   that matters most, then propose one bounded change and its files for approval
+   where required. Preserve the demo as the reference while evaluating it.
+
+The replay is the next review task, not authorization for combat/equipment
+changes, level restructuring or a new system. T20 acceptance remains open below.
+
+## Existing October 26 corrections — retained follow-up
+
+About 8–10 minutes. Those fixes are inherited on the current branch; no branch
+switch is needed.
 Restart the comparison scene with F6:
 `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
 Do not resume an already-running instance with older scripts/resources.

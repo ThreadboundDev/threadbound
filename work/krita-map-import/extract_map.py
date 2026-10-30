@@ -17,7 +17,10 @@ OUT.mkdir(parents=True, exist_ok=True)
 NS = {'k': 'http://www.calligra.org/DTD/krita'}
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--rear-supports-only', action='store_true', help='Update only the approved rear wood/rock layer split')
-SUPPORTS_ONLY = parser.parse_args().rear_supports_only
+parser.add_argument('--underwater-only', action='store_true', help='Import only the named underwater background; preserve all existing artwork and physics')
+args = parser.parse_args()
+SUPPORTS_ONLY = args.rear_supports_only
+assert not (SUPPORTS_ONLY and args.underwater_only), 'Choose one scoped import'
 
 
 def chunk_images(canvas, label):
@@ -86,6 +89,45 @@ with zipfile.ZipFile(SOURCE) as z:
         return canvas
 
     groups = image.find('k:layers', NS)
+    if args.underwater_only:
+        nodes = [node for node in image.iter() if node.get('name', '').strip().casefold() == 'underwater background']
+        assert len(nodes) == 1, 'Expected exactly one Underwater background layer'
+        node = nodes[0]
+        assert node.get('nodetype') == 'paintlayer'
+        assert size == (6912, 5888), 'Map canvas changed; review alignment first'
+        canvas = decode(node)
+        chunks = list(chunk_images(canvas, 'underwater_background'))
+        assert chunks, 'Underwater background is empty'
+        reconstructed = Image.new('RGBA', size)
+        for entry, chunk in chunks:
+            x, y = entry['position']
+            reconstructed.paste(chunk, (x+1408, y+2560))
+        assert ImageChops.difference(canvas, reconstructed).getbbox(alpha_only=False) is None
+        scene_path = ROOT/'Src/Environment/BlueBiome/Prototypes/Rooms/lakeside_krita_artwork.tscn'
+        scene = scene_path.read_text()
+        # Replace only this import's resources/nodes on rerun. Existing node
+        # names, order, materials, positions and all gameplay remain intact.
+        import re
+        scene = re.sub(r'^\[ext_resource[^\n]* id="underwater_\d+"\]\n', '', scene, flags=re.M)
+        scene = re.sub(r'\n\[node (?:name="underwater_background" type="Node2D" parent="\."|name="Rock_\d+" type="Sprite2D" parent="underwater_background")\]\n.*?(?=\n\[|\Z)', '', scene, flags=re.S)
+        resources = '\n'.join(f'[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/{entry["path"]}" id="underwater_{i}"]' for i, (entry, _) in enumerate(chunks))
+        offset = scene.index('[node ')
+        scene = scene[:offset].rstrip() + '\n\n' + resources + '\n\n' + scene[offset:]
+        scene += '\n[node name="underwater_background" type="Node2D" parent="."]\nz_index = -8\neditor_description = "Chase\'s Underwater background layer, original 1:1 canvas placement; decorative rock behind supports, cave walls and swimmer."\n'
+        for i, (entry, _) in enumerate(chunks):
+            x, y = entry['position']
+            scene += f'\n[node name="Rock_{i:02}" type="Sprite2D" parent="underwater_background"]\nposition = Vector2({x}, {y})\ntexture = ExtResource("underwater_{i}")\ncentered = false\n'
+        for entry, chunk in chunks:
+            chunk.save(OUT/entry['path'])
+        scene_path.write_text(scene.rstrip()+'\n')
+        record = dict(source=manifest['source'], source_sha256=manifest['source_sha256'],
+                      layer=node.get('name'), layer_uuid=node.get('uuid'), canvas=list(size),
+                      world_origin=[-1408, -2560], pixels_per_unit=1, z_index=-8,
+                      bounds=list(canvas.getbbox()), reconstruction='pixel-exact RGBA',
+                      chunks=[entry for entry, _ in chunks])
+        (OUT/'underwater_background_manifest.json').write_text(json.dumps(record, indent=2)+'\n')
+        print('UNDERWATER_ONLY', len(chunks), 'chunks; pixel-exact reconstruction; existing artwork and physics preserved')
+        sys.exit(0)
     if SUPPORTS_ONLY:
         # Update only this approved layer split. Never regenerate physics, the
         # playable room, unrelated textures, or historical source/preview files.

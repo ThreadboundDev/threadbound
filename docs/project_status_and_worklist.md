@@ -4,9 +4,20 @@ Updated October 29, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current priority: T20 — accept the October 26 playtest corrections.**
-Implementation is delivered on `threadbound/fix-lakeside-playtest-feedback`;
-**awaiting Chase's appearance/feel review**.
+**Current priority: T32 — underwater background review, then replay the original demo with the current character.**
+Chase wants to refocus on what feels good about Threadbound after parking the
+3D trial. His named Krita layer is now integrated in the lakeside artwork;
+appearance acceptance remains pending. Next, replay Chamber of the First Weave
+and compare its feel with the lake before selecting one implementation task.
+[Delivery, validation and replay plan](verification/underwater_background_2026_10_29.md).
+Checkpoint: `art: add painted underwater rock background` on
+`threadbound/art-underwater-rock-background` (see Git history).
+The [current test card](next_test_session.md) starts with this short replay.
+
+**T20 — October 26 playtest corrections remain open.**
+Implementation is inherited from `threadbound/fix-lakeside-playtest-feedback`;
+**awaiting Chase's appearance/feel review**. The new replay does not accept or
+close those corrections.
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
 Use the [one current retest card](next_test_session.md), about 8–10 minutes.
 
@@ -16,8 +27,8 @@ rate a good fit. Preserve the independent study as reference; no production 2D
 rollback is needed. Retain the useful asset-library approach: verified materials,
 models, rigs, animation donors and audio can support the established 2D game.
 [Decision, lessons and bounded reuse workflow](design/2d_asset_reuse_direction_2026_10_29.md).
-This decision is documentation only. No asset replacement, gameplay change or new
-implementation task is started. T20 remains the current production priority.
+That decision checkpoint was documentation only. The later requested T32
+background/replay task is now current; T20 acceptance remains open.
 
 **October 29 3D Loom Crossing trial (T31): reviewed; current 3D effort parked after Chase's feedback.**
 Chase gave full approval for the separate overnight experiment. It now opens a
