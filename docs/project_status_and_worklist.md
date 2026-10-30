@@ -16,6 +16,17 @@ now starts with these two checks. Next environment work uses free model/texture
 sources through the established 2D stamp workflow; specific asset choices and
 layout changes still need scoped review.
 
+**October 30 gameplay/art review — direction recorded; follow-up proposals pending.**
+Chase likes the demo's snappy combat and outlined 2D enemies, wants to preserve
+the detailed 3D player in the 2D game, and favors movement freedom with precision
+platforming as optional flavor. Blue needs a coherent Threadbound identity beyond
+its village setting. The [review and bounded next-step ideas](design/gameplay_and_art_review_2026_10_30.md)
+separate this feedback from proposed combat, equipment and art work. Full 3D
+remains parked. T33/T20 acceptance is unchanged; no new implementation task starts.
+Checkpoint: `docs: record gameplay and visual direction review` on
+`threadbound/docs-gameplay-art-review`. Validation: local reference/relative-link
+review and staged diff/whitespace checks; no runtime or art acceptance claimed.
+
 **T32 — background delivered; demo replay feedback received October 30.**
 Chase wants to refocus on what feels good about Threadbound after parking the
 3D trial. His named Krita layer is now integrated in the lakeside artwork;

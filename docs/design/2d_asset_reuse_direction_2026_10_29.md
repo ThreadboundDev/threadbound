@@ -36,6 +36,12 @@ separate from the positive review of the demo's overall feel and enemies.
 
 ## What the experiment taught us
 
+October 30 follow-up: Chase clarified his combat, platforming, character,
+outlined-enemy and Blue identity preferences in the
+[gameplay and visual review](gameplay_and_art_review_2026_10_30.md). Preserve the
+3D character within the 2D game; the full-3D trial remains parked. Follow-up art
+and combat ideas in that review are proposals, not approved replacements.
+
 - Features and automated checks did not establish convincing game feel. The
   trial expanded before the core movement/combat passed Chase's visual review.
 - A full 3D switch adds camera, environment staging, motion/grip correction and
