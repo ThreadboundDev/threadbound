@@ -1,5 +1,6 @@
 extends SceneTree
-const OUT := "res://work/blue-depth-bridges-2026-10-30"
+const OUT := "res://work/gameplay-review-followup-2026-10-30"
+const PREVIOUS := "res://work/blue-depth-bridges-2026-10-30"
 var checks := 0
 var failures: Array[String]=[]
 func _initialize() -> void: call_deferred("run")
@@ -30,9 +31,9 @@ func run() -> void:
 		var sprite: Sprite2D=far.get_node("Rock_%02d"%i)
 		var chunk: Dictionary=manifest.chunks[i]
 		check(sprite.position.is_equal_approx(Vector2(chunk.position[0],chunk.position[1])) and sprite.use_parent_material,"Source coordinates and waterline material retained: "+str(i))
-	check(is_equal_approx(far.material.get_shader_parameter("water_surface_y"),411.0),"Parallax art clips to the fixed waterline")
-	var before: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(OUT+"/before.json"))
-	var anchors: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(OUT+"/anchors.json"))
+	check(is_equal_approx(far.material.get_shader_parameter("water_surface_y"),411.0),"Parallax art retains the waterline reference for its soft haze")
+	var before: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(PREVIOUS+"/before.json"))
+	var anchors: Dictionary=JSON.parse_string(FileAccess.get_file_as_string(PREVIOUS+"/anchors.json"))
 	var floats := 0
 	var braces := 0
 	for deck in room.get_node("Geometry/BridgeLandings").get_children():
@@ -77,16 +78,53 @@ func run() -> void:
 		await frames(4)
 		points.append({"rock":screen(far),"wood":screen(wood)})
 		if points.size()==1:
-			check(far.global_position.length()<0.01,"Authored rock coordinates agree at the camera-center anchor")
+			check(far.global_position.distance_to(Vector2(0,600))<0.01,"Backdrop is placed 600 units deeper at the camera-center anchor")
 	var rock_dx: float=points[1].rock.x-points[0].rock.x
 	var wood_dx: float=points[1].wood.x-points[0].wood.x
 	var rock_dy: float=points[2].rock.y-points[1].rock.y
 	var wood_dy: float=points[2].wood.y-points[1].wood.y
-	check(absf(rock_dx/wood_dx-0.65)<0.001,"Horizontal rock scrolling is 65 percent of the world")
-	check(absf(rock_dy/wood_dy-0.85)<0.001,"Vertical rock scrolling is 85 percent of the world")
+	check(absf(rock_dx/wood_dx-0.50)<0.001,"Horizontal rock scrolling is 50 percent of the world")
+	check(absf(rock_dy/wood_dy-0.75)<0.001,"Vertical rock scrolling is 75 percent of the world")
 	check(absf(wood_dx+400.0*0.83)<0.01 and absf(wood_dy+200.0*0.83)<0.01,"Timber remains aligned with normal collision scrolling")
+	var clouds: Node2D = room.get_node("LakePresentation/OpenAirClouds")
+	check(clouds.get_child_count() == 48,"Cloud coverage increases from twelve to forty-eight varied sprites")
+	var cloud: Node2D = clouds.get_child(12)
+	for child in clouds.get_children(): child.set_process(false)
+	var cloud_before := cloud.get_global_transform_with_canvas().origin
+	camera.position += Vector2(400,-200)
+	camera.force_update_scroll()
+	await frames(4)
+	check(cloud_before.distance_to(cloud.get_global_transform_with_canvas().origin)<0.01,"Wind-only clouds cancel both axes of camera movement")
+	var wind_start := cloud.position
+	cloud._process(1.0)
+	check(cloud.position.x > wind_start.x,"Clouds still drift right with the wind")
+	var faces = artwork.get_node("RockContactRims")
+	check(faces.triangle_count > 1000 and faces.z_index > 2,"Complete solid rock faces render above the immersion veil")
+	var lake = room.get_node("Volumes/Lake")
+	var feather: PackedFloat32Array = lake._fill.material.get_shader_parameter("air_feathers")
+	check(feather.has(100.0),"Open cave pockets have a soft visual boundary")
+	for label in ["AirPocket2","AirPocket3"]:
+		var pocket = room.get_node("Volumes/"+label)
+		var p: Vector2 = pocket.to_global(pocket.points[0].lerp(pocket.points[2],.5))
+		var contains: bool = pocket.contains_global_point(p)
+		pocket.pocket_edge_softness = 0.0
+		check(pocket.contains_global_point(p)==contains,"Visual feather does not change physical dry-state queries: "+label)
+		pocket.pocket_edge_softness = 100.0
+	var player = room.get_node("Player")
+	var house = room.get_node("Buildings/Workshop")
+	house._enter_house(player)
+	await frames(35)
+	var focus = house.interior_focus
+	var normalized: Vector4 = focus.effect.material.get_shader_parameter("room_screen_rect")
+	var logical: Vector2 = house.get_viewport_rect().size
+	var bounds: Rect2 = (house.global_transform*house.entry_rect).grow(24)
+	var canvas: Transform2D = house.get_viewport().get_canvas_transform()
+	var a := (canvas*bounds.position)/logical
+	var b := (canvas*bounds.end)/logical
+	check(Vector2(normalized.x,normalized.y).distance_to(a)<.0001 and Vector2(normalized.z,normalized.w).distance_to(b)<.0001,"Interior focus uses normalized viewport coordinates")
+	house.leave_house(false)
 	var report={"checks":checks,"failures":failures,"horizontal_ratio":rock_dx/wood_dx,"vertical_ratio":rock_dy/wood_dy,"floats":floats,"braces":braces}
-	FileAccess.open(OUT+"/validation.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
+	FileAccess.open(OUT+"/blue-validation.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
 	print("BLUE_DEPTH_BRIDGES ",JSON.stringify(report))
 	room.queue_free()
 	await process_frame

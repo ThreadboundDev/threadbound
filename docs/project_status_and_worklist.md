@@ -20,6 +20,13 @@ Preferred filled slashes are now live on the shared player, with confirmed-hit
 bursts and six passing matched-combo/physics integration checks. Checkpoint
 `vfx: integrate the preferred filled sword sweep`. Remaining work follows the
 delivery's environment fixes and isolated mask/Pattern comparison.
+Blue follow-up is implemented: slower/deeper hazy rear rock, solid cavern faces
+above the water veil, softened cave-pocket boundaries, normalized house focus,
+48 varied wind-only clouds, taller two-pass bridge rails and trimmed stone
+overlaps. 78 engine checks, 20 house-handoff checks and 148 unchanged world
+polygons; GPU review captured. Checkpoint
+`art: refine Blue depth clouds house focus and bridge scale`. Appearance and
+in-motion acceptance remain open; isolated mask/Pattern comparison is next.
 
 **Previous test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
 The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all

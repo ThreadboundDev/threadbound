@@ -414,9 +414,9 @@ z_index = -8
 editor_description = "Far underwater rock only; timber stays in its independent world-locked rear_supports group. Original coordinates agree at the lake-center camera anchor."
 material = ExtResource("underwater_material")
 script = ExtResource("underwater_scroll")
-scroll_scale = Vector2(0.65, 0.85)
+scroll_scale = Vector2(0.5, 0.75)
 placement_anchor_path = NodePath("..")
-placement_offset = Vector2(-380.800, -159.000)
+placement_offset = Vector2(-544.000, 335.000)
 
 [node name="Rock_00" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-1408, -512)

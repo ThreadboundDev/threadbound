@@ -900,28 +900,33 @@ one_way_collision_margin = 12.0
 z_index = -6
 
 [node name="Deck01" parent="Geometry/BridgeLandings" unique_id=2071785988 instance=ExtResource("walk_braced")]
+rock_inset_left = 200.0
 position = Vector2(4608, -1664)
 span_width = 640.0
 support_anchor = Vector2(632.6675, 137.3214)
 
 [node name="Deck02" parent="Geometry/BridgeLandings" unique_id=969137955 instance=ExtResource("walk_braced")]
+rock_inset_right = 112.0
 position = Vector2(3052, -1134)
 span_width = 384.0
 support_anchor = Vector2(304.2236, 114.4346)
 
 [node name="Deck03" parent="Geometry/BridgeLandings" unique_id=998491023 instance=ExtResource("walk_braced")]
+rock_inset_right = 88.0
 position = Vector2(4864, -768)
 span_width = 128.0
 stamp = 0
 support_anchor = Vector2(172.3042, 123.6971)
 
 [node name="Deck04" parent="Geometry/BridgeLandings" unique_id=1485223545 instance=ExtResource("walk_braced")]
+rock_inset_right = 24.0
 position = Vector2(-640, -128)
 span_width = 256.0
 stamp = 0
 support_anchor = Vector2(239.3435, 100.9811)
 
 [node name="Deck05" parent="Geometry/BridgeLandings" unique_id=897058146 instance=ExtResource("walk_pontoon")]
+rock_inset_left = 32.0
 position = Vector2(244, 397)
 span_width = 384.0
 waterline_offset = 14.0
@@ -933,6 +938,8 @@ stamp = 0
 support_anchor = Vector2(-157.9200, 137.8092)
 
 [node name="Deck07" parent="Geometry/BridgeLandings" unique_id=1569005893 instance=ExtResource("walk_pontoon")]
+rock_inset_left = 56.0
+rock_inset_right = 64.0
 position = Vector2(-896, 384)
 span_width = 256.0
 
@@ -940,6 +947,7 @@ span_width = 256.0
 position = Vector2(3200, 384)
 
 [node name="Deck09" parent="Geometry/BridgeLandings" unique_id=1104663311 instance=ExtResource("walk_pontoon")]
+rock_inset_right = 24.0
 position = Vector2(4096, 384)
 span_width = 768.0
 
@@ -966,6 +974,8 @@ self_modulate = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(1117, 676, 1140, 121, 1140, -21, 1117, -270, 1908, -268, 1888, -4, 1884, 307, 1888, 634, 1907, 797, 2013, 858, 1996, 1169, 1026, 1169, 1011, 801)
 
 [node name="AirPocket2" parent="Volumes" unique_id=1881122904 instance=ExtResource("3")]
+pocket_edge_softness = 100.0
+pocket_caustic_intensity = 0.025
 position = Vector2(3689, 2417)
 lake_presentation = true
 air_pocket = true
@@ -976,6 +986,8 @@ self_modulate = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-944, -361, -401, -623, 825, -600, 1812, -341, 1815, 180, -838, 163)
 
 [node name="AirPocket3" parent="Volumes" unique_id=1900584095 instance=ExtResource("3")]
+pocket_edge_softness = 100.0
+pocket_caustic_intensity = 0.025
 position = Vector2(2227, 2820)
 lake_presentation = true
 air_pocket = true

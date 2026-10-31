@@ -77,7 +77,10 @@ func _process(delta: float) -> void:
 	var canvas := house.get_viewport().get_canvas_transform()
 	var a := canvas * bounds.position
 	var b := canvas * bounds.end
-	effect.material.set_shader_parameter("room_screen_rect",Vector4(a.x,a.y,b.x,b.y))
+	# Canvas coordinates are logical viewport pixels; SCREEN_UV is normalized
+	# framebuffer space. Normalize here so window stretching cannot offset it.
+	effect.material.set_shader_parameter("room_screen_rect",Vector4(a.x/screen.x,a.y/screen.y,b.x/screen.x,b.y/screen.y))
+	effect.material.set_shader_parameter("logical_size",screen)
 	effect.material.set_shader_parameter("focus_strength",blend)
 	if not occupied and weight == 0.0:
 		_restore()

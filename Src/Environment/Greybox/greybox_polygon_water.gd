@@ -19,6 +19,8 @@ extends Area2D
 @export_range(0.0, 1.0) var immersion_opacity := 0.22
 @export var deep_water_color := Color(0.018, 0.10, 0.18, 1.0)
 @export_range(0.0, 1.0) var pocket_caustic_intensity := 0.06
+## Presentation only; physics keeps the exact air-pocket polygon.
+@export_range(0.0, 160.0) var pocket_edge_softness := 0.0
 var _fill: Polygon2D
 var _immersion_fill: Polygon2D
 var _ripple_visual: Node2D
@@ -261,6 +263,7 @@ func _update_water_preview(delta: float) -> void:
 		_fill.material.set_shader_parameter("deep_color", deep_water_color)
 	var vertices := PackedVector2Array()
 	var counts := PackedInt32Array()
+	var feathers := PackedFloat32Array()
 	var over_limit := false
 	for pocket in get_tree().get_nodes_in_group("lake_air_pockets"):
 		if lake_presentation and not pocket.is_presentation_active():
@@ -269,6 +272,7 @@ func _update_water_preview(delta: float) -> void:
 			over_limit = true
 			continue
 		counts.append(pocket.points.size())
+		feathers.append(pocket.pocket_edge_softness)
 		for point in pocket.points:
 			vertices.append(pocket.to_global(point))
 	var count := counts.size()
@@ -277,14 +281,16 @@ func _update_water_preview(delta: float) -> void:
 	_reported_pocket_limit = over_limit
 	vertices.resize(256)
 	counts.resize(16)
+	feathers.resize(16)
 	_fill.material.set_shader_parameter("air_points", vertices)
 	_fill.material.set_shader_parameter("air_counts", counts)
+	_fill.material.set_shader_parameter("air_feathers", feathers)
 	_fill.material.set_shader_parameter("pocket_count", count)
 	if is_instance_valid(_immersion_fill):
 		_immersion_fill.visible = _fill.visible
 		_immersion_fill.polygon = _fill.polygon
 		_immersion_fill.material.set_shader_parameter("immersion_opacity", immersion_opacity)
-		for parameter in ["surface_y", "shallow_color", "deep_color", "air_points", "air_counts", "pocket_count"]:
+		for parameter in ["surface_y", "shallow_color", "deep_color", "air_points", "air_counts", "air_feathers", "pocket_count"]:
 			_immersion_fill.material.set_shader_parameter(parameter, _fill.material.get_shader_parameter(parameter))
 	for i in range(_ripples.size()-1,-1,-1):
 		_ripples[i].age += delta

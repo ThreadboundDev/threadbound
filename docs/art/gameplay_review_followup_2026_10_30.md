@@ -60,6 +60,54 @@ repeat the same view). They show waterline truncation, weak rear/solid rock
 separation, rectangular highlights/dry boundaries, workshop focus offset, small
 rail/deck proportions, and timber overlapping painted rock bridge art.
 
+## Blue presentation corrections
+
+Implemented after the screenshot review:
+
+- Far rock: camera ratios 0.50 horizontal / 0.75 vertical, down from 0.65/0.85;
+  600 world units deeper at the same camera anchor. Desaturated distance grade
+  and a 180-unit soft shallow fade replace the 6-unit waterline cut. Source PNGs
+  remain unchanged; scoped reimport retains the settings and is idempotent.
+- Solid cavern faces: the existing contact-art renderer now draws the complete
+  collision faces above the water veil, using the same painted rock. Passages
+  and rear rock remain underwater. This also conceals dry-mask slivers on solid
+  rock. Two open cave pockets use a 100-unit visual feather and weaker caustics;
+  the tower's linked mask and every physical pocket polygon/query stay intact.
+- Workshop focus: normalized viewport coordinates replace mixed logical-pixel
+  and framebuffer-pixel comparisons. The mask now tracks the room when stretched.
+- Clouds: 48 sprites instead of twelve, seeded variation in placement, shape,
+  scale, opacity, phase and wind speed. Both camera axes are cancelled; drift
+  alone moves them. Existing billow and below-water clipping remain.
+- Bridges: trim seven overlaps with stone landings, retain the nine walking
+  surfaces, and replace tiny baked rails with 88-unit rear rails plus partial
+  68-unit foreground rails. The foreground center remains open for readability.
+  Two art passes live inside each reusable asset; no physics rails/buoyancy added.
+
+[Surface](../../work/gameplay-review-followup-2026-10-30/blue-surface-comparison.jpg) ·
+[Cavern depth](../../work/gameplay-review-followup-2026-10-30/blue-depth-comparison.jpg) ·
+[Pocket edges](../../work/gameplay-review-followup-2026-10-30/blue-pocket-comparison.jpg) ·
+[Clouds](../../work/gameplay-review-followup-2026-10-30/blue-sky-comparison.jpg) ·
+[High bridge](../../work/gameplay-review-followup-2026-10-30/blue-Deck01-comparison.jpg) ·
+[Tower bridge](../../work/gameplay-review-followup-2026-10-30/blue-Deck06-comparison.jpg) ·
+[Pontoon](../../work/gameplay-review-followup-2026-10-30/blue-Deck08-comparison.jpg) ·
+[Workshop focus](../../work/gameplay-review-followup-2026-10-30/workshop-focus.jpg).
+
+Validation: 78 engine checks pass (layer ratios, world-locked timber, all nine
+floors, five anchors, four waterlines, cloud camera independence and wind, solid
+faces, visual-only feathers, normalized house mask). All 148 captured world
+collision polygons match. Existing door handoff regression passes 20 checks in
+painted/current house modes. Forward+ captures compile the updated shaders.
+House entry also completes at the normal 2x building render scale in a separate
+fresh capture; the larger route uses 1x art supersampling to reduce capture VRAM.
+
+Limits: the initial long 2x capture hit a Vulkan allocation/swapchain failure at
+the house; fresh normal-quality house verification succeeded. Baseline inherited
+enemy ownership and shutdown resource diagnostics remain. High sky artwork still
+has a finite coverage boundary visible above the uppermost landing. Open cave
+air pockets remain visibly drier with softened edges; their geometry was not
+redesigned. Chase's in-motion/art acceptance remains pending. Checkpoint:
+`art: refine Blue depth clouds house focus and bridge scale`.
+
 ## Mask/Pattern study constraints
 
 Existing [Pattern design](../design/pattern_system.md) distinguishes Identity

@@ -1,6 +1,7 @@
 @tool
 extends Node2D
-## Textured front contact strips. Reads collision; never moves or adds physics.
+## Solid cavern faces and contact lips, in front of the water veil.
+## Reads collision; never moves or adds physics. Empty passages remain tinted.
 @export var collision_path := NodePath("../../RockCollision")
 @export_range(0.0, 12.0) var outside_width := 3.0
 @export_range(0.0, 64.0) var inside_width := 24.0
@@ -80,6 +81,9 @@ func rebuild() -> void:
 					continue
 				strips.append(PackedVector2Array([start+normal*outside_width,end+normal*outside_width,end-normal*inside_width,start-normal*inside_width]))
 				edge_count += 1
+	# Render complete solid faces as well as the small contact lips, so water
+	# and dry-pocket masks cannot draw rectangular boundaries over solid rock.
+	strips.append_array(polygons)
 	for source: Sprite2D in artwork.get_children():
 		if source.texture == null:
 			continue

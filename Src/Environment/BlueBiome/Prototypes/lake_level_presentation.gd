@@ -25,14 +25,19 @@ func _ready() -> void:
 	_clouds.z_index = -92
 	add_child(_clouds)
 	var kinds := ["broad", "wisp", "soft_bank", "small", "streak"]
-	for i in 12:
-		var cloud := load("res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_"+kinds[i % kinds.size()]+".tscn").instantiate() as Sprite2D
-		cloud.position = Vector2(-1800+i*650, -280-(i%3)*420)
-		cloud.scale = Vector2.ONE*(0.85+(i%3)*0.2)
-		cloud.modulate.a = 0.65
-		cloud.set("wrap_min_x", -2600.0)
-		cloud.set("wrap_max_x", 7000.0)
-		cloud.set("motion_phase", float(i)*0.51)
+	var random := RandomNumberGenerator.new()
+	random.seed = 30102026
+	# A screen-anchored wind field: enough coverage at every camera height,
+	# staggered within bands instead of the former sparse repeating diagonal.
+	for i in 48:
+		var cloud := load("res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_"+kinds[random.randi_range(0,kinds.size()-1)]+".tscn").instantiate() as Sprite2D
+		cloud.position = Vector2(-1800+(i%8)*490+random.randf_range(-130,130),-1050+(i/8)*360+random.randf_range(-130,130))
+		cloud.scale = Vector2.ONE*random.randf_range(0.55,1.25)
+		cloud.modulate.a = random.randf_range(0.38,0.78)
+		cloud.set("drift_speed", random.randf_range(8.0,19.0))
+		cloud.set("wrap_min_x", -2300.0)
+		cloud.set("wrap_max_x", 2300.0)
+		cloud.set("motion_phase", random.randf_range(0,TAU))
 		_clouds.add_child(cloud)
 		cloud.material = cloud.material.duplicate()
 		cloud.material.set_shader_parameter("clip_below_water", true)
@@ -97,7 +102,9 @@ func _process(delta: float) -> void:
 			var center := camera.get_screen_center_position()
 			_far.position.x = 1900 + (center.x-1900)*.12
 			_near.position.x = 1900 + (center.x-1900)*.04
-			_clouds.position.x = (center.x-1900)*.18
+			# Chase selected wind drift only. Cancelling both camera axes leaves
+			# each cloud's screen position driven solely by its own wind motion.
+			_clouds.global_position = center
 
 func _update_waterline() -> void:
 	var lake := get_parent().get_node_or_null("Volumes/Lake")

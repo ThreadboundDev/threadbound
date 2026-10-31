@@ -13,3 +13,10 @@ Live VFX: `--script res://tools/vfx/verify_live_thread_sweep.gd --fixed-fps 60`.
 `live-sweep-validation.json`: six checks, no failures; physics-confirmed contact.
 `live-sweep-comparison.jpg`: matching three-strike poses at the saved 0.83 zoom,
 previous strokes on the left and the production filled sweep on the right.
+
+Blue: `capture_blue.gd` loads the actual painted comparison; `--house-only
+--full-quality` verifies house focus at normal 2x building supersampling. The
+larger capture route uses 1x supersampling. `blue-validation.json` has 78 passing
+engine checks; `house-regression.json` has 20. `geometry-baseline.json` agrees
+with all 148 world polygons in `blue-after.json`. Run `build_blue_review.py` to
+package the locally retained raw captures into the delivered JPG comparisons.
