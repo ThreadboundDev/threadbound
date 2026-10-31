@@ -84,14 +84,14 @@ demo's overall feel and 2D enemies; this retest covers the two reported faults.
 Save manual editor/art edits before switching tasks; the assistant handles Git.
 
 Open `Src/Environment/World/Chamber Of The First Weave.tscn` and restart with F6
-so the current scripts load. About 3â€“5 minutes:
+so the current scripts load. About 3–5 minutes:
 
 1. **Character lighting.** Walk from dim ground toward the opening, central
    threads, and red/blue/yellow fixtures. The character should receive their
    color and brightness along with the scenery. Judge contrast, over-bright
    areas and transitions. Its own soul glow should not wash out the model.
 2. **Second-jump motion.** Jump again early during ascent, then try a second
-   jump while falling. Both should replay the normal jump motion at 1.2Ã— speed.
+   jump while falling. Both should replay the normal jump motion at 1.2× speed.
    Land and jump again: ordinary jump speed should return. Give keep/change
    for the faster second jump; movement strength and AP cost are unchanged.
 3. **Next environment target.** After these corrections feel right, choose one
@@ -113,7 +113,7 @@ switching scenes or tasks; the assistant handles the Git checkpoint.
    rock wall should sit behind the player, bulbs, supports and solid terrain.
    Judge player contrast, foreground/background separation and texture seams
    while moving. Give keep/change/untested; appearance is not yet accepted.
-2. **Replay the demo (15â€“25 minutes).** Open
+2. **Replay the demo (15–25 minutes).** Open
    `Src/Environment/World/Chamber Of The First Weave.tscn` and press F6.
    This uses the shared current player, including its live character visual.
    Play the existing route at normal speed with the controls you normally use.
@@ -131,9 +131,9 @@ switching scenes or tasks; the assistant handles the Git checkpoint.
 The replay is the next review task, not authorization for combat/equipment
 changes, level restructuring or a new system. T20 acceptance remains open below.
 
-## Existing October 26 corrections â€” retained follow-up
+## Existing October 26 corrections — retained follow-up
 
-About 8â€“10 minutes. Those fixes are inherited on the current branch; no branch
+About 8–10 minutes. Those fixes are inherited on the current branch; no branch
 switch is needed.
 Restart the comparison scene with F6:
 `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
