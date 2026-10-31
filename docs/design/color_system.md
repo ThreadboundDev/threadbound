@@ -1,5 +1,10 @@
 # Color System – Threadbound
 
+October 30: the [isolated appearance lab](../../work/appearance-lab-2026-10-30/README.md)
+compares the existing aura's weighted RGB mix with authored R/Y/B pair hues and
+this document's dark full-absorption extreme at gameplay scale. Its candidate
+formula is not a production change. Palette/contrast acceptance remains open.
+
 Color in Threadbound is not cosmetic.
 
 It is a direct reflection of:

@@ -19,7 +19,7 @@ unrelated action equality, both sampler clips and actual grapple start/finish.
 This is a presentation refinement; Chase's moving/transition review remains open.
 Existing texture/RID/ObjectDB shutdown diagnostics persist.
 
-## Remaining requested work, in order
+## Live VFX and requested scope
 
 **Live slash implemented.** The preferred original filled blade sweep now runs
 in the production `PlayerLive3DVisual` for ground/crouch/forward air/water slashes.
@@ -120,3 +120,33 @@ larger cuffs/hems. Those are hypotheses until rendered at the saved 0.83 zoom.
 No decision has been made to replace Patterns with masks or to tie mask choice
 to permanent classes/builds. Additional armor/weapon meshes require their own
 concrete asset scope after this first comparison.
+
+## Appearance lab delivered
+
+Open `tools/art/appearance_lab.tscn` and press F6. The current rig can run, jump
+and attack at zoom 0.83 while switching Plain / Pattern / Mask / Both. Three
+cloth motifs, three bold face markings, nine Identity presets, two mixing
+approaches and optional shoulder/long-weapon silhouette proxies are available.
+[Instructions and figures](../../work/appearance-lab-2026-10-30/README.md).
+
+The study copies the body mesh in memory and stores authored rest coordinates
+in UV2 so marks remain attached during animation. It changes no production
+equipment resources, GLB, lore, bonus logic or progression. Masks are markings
+on the current pale face surface; newly sculpted shells and complete armor sets
+are not delivered by this study. Fine embroidery reads as texture at distance;
+the broad split/diagonal masks are more distinct in these captures. That is a
+first visual finding, pending Chase's preference and review against real biomes.
+
+The color comparison distinguishes the current aura's weighted RGB averaging
+from explicitly authored R/Y/B pair hues and the documented black full-absorption
+extreme. The Spared / pale preset tests whitening separately from today's dark
+neutral outfit. Neither trial selects a new production color formula.
+
+The softer porcelain toggle reduces only the pale face material's albedo and
+specular response. It is a candidate for the bright-head report, not a claim
+that the demo's brightest overlapping 2D lights have been retuned.
+
+Ten engine checks pass, including actual running and attack inputs with the
+study mesh, unchanged collision/default gear, camera and palette endpoints.
+Twenty matching static GPU captures plus run/attack captures were reviewed.
+Checkpoint: `art: add playable Pattern mask and Identity comparison lab`.

@@ -1,40 +1,46 @@
-# Tonight's test — zoom, upright idle and Blue depth/bridges
+# Next test — October 30 feedback pass
 
-Use **`threadbound/art-blue-depth-and-bridge-supports`**. It includes the saved
-zoom, upright idle and the fix for delayed idle variations. Save manual editor/art
-files before switching tasks. Restart the scene with F6 so current code loads.
-About **5 minutes**; stop after the first two checks if tired.
+Use **`threadbound/art-gameplay-review-followup`**. It contains the accepted
+idle plus the run, live slash VFX, Blue corrections and separate appearance lab.
+Save any manual Godot/art edits and reload changed resources; stop the old run
+and press F6 fresh. About **5 minutes**, with the appearance lab optional.
 
-1. **Demo: posture and framing (1–2 minutes).** Open
-   `Src/Environment/World/Chamber Of The First Weave.tscn`. Stand for at least
-   7 seconds, then turn, run/stop, jump, attack and throw the grapple. Is 0.83
-   comfortably readable? Does the narrower idle feel natural? Look for floating
-   boots, sliding, pose pops or sword/shield clipping. The new pose is taller:
-   about 14.3% screen height at 0.83. Controls/attack timing were not retuned.
-2. **Blue: depth while moving (1–2 minutes).** F6
+1. **Demo: run and live attacks (1–2 minutes).** Open
+   `Src/Environment/World/Chamber Of The First Weave.tscn`. Run left/right,
+   stop into the accepted idle, jump and grapple. The chest/head should be
+   straighter while the original stride remains. Try all three grounded strikes
+   on an enemy and in empty space: the filled slash is now live; contact bursts
+   should appear on confirmed hits. Judge readability and whether the effect
+   sells the cut. Attack timing/reach were not retuned. Spin and directional
+   thrusts retain their distinct earlier effects.
+2. **Blue: depth/clouds/bridges (2 minutes).** F6
    `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
-   Use the existing **Loom Heron** shortcut, then swim below the surface and
-   move left/right and up/down. Far rock should drift more slowly; timber,
-   ledges and collision rock should stay aligned. Look for newly exposed holes,
-   distracting sliding or background rock showing above the waterline.
-3. **Bridges (1 minute).** From Loom Heron, move right toward the waterline
-   spans. Check float bodies at the waterline and feet on the decks. Use
-   **Workshop** and look toward the higher landings to review angled braces.
-   Their ends should disappear into supporting rock/tower rather than hang
-   in empty space. The new assets do not bob or move the existing collision.
+   Use **Loom Heron**, swim below the surface, then move horizontally/vertically.
+   Solid cavern faces should be easy to distinguish from the slower, darker rear
+   wall; check the former flat rock cut at the waterline. Above water, clouds
+   should drift right while staying independent of camera movement. Walk the
+   floating spans and inspect taller rear rails/short foreground sections.
+3. **Workshop (1 minute).** Use the shortcut, enter through its door and compare
+   the bright room area with the walls. Resize the game window once if convenient:
+   the focus rectangle should remain aligned. Inspect the high bridge for wood
+   covering painted rock. Sky coverage at the very top of the map remains a
+   known separate art edge; no layout/collision redesign was made.
+4. **Optional appearance study.** F6 `tools/art/appearance_lab.tscn`.
+   Use the menus to compare **Plain / Pattern / Mask / Both** while running and
+   attacking. Try **Split porcelain**, then Blue + Yellow and All three with
+   both Mix choices. Shoulder/long-weapon toggles are rough silhouette proxies;
+   they keep current sword attack reach. Softer porcelain is a highlight candidate
+   for review, not a production demo lighting change.
 
-**Best feedback:** a 30–60 second video with camera movement, plus one sentence
-about what feels better/worse. For a still art defect, a screenshot with the
-location is enough. For movement, posture transitions or parallax, video is more
-useful. If capturing is inconvenient, simply report keep/change and the landmark;
-your feel notes are enough to continue. No full playthrough is needed tonight.
+**Feedback:** a 30–60 second video plus how the run/attacks/water feel is best.
+For room/bridge defects or a preferred mask/Pattern combination, screenshots
+with the landmark or menu choices are enough. Feel notes alone are still useful.
+No full playthrough is needed. Save manual changes and checkpoint before moving
+on; routine Git backup is handled by the assistant.
 
-[Pose comparison](../work/framing-idle-2026-10-30/upright-comparison.jpg) ·
-[Bridges](../work/blue-depth-bridges-2026-10-30/floating-comparison.jpg) ·
-[High braces](../work/blue-depth-bridges-2026-10-30/high-comparison.jpg).
-The new slash-VFX look is still in its separate preview; tonight's live changes
-are framing, idle posture, Blue depth and structural art. Existing T33/T20
-acceptance checks remain below.
+[Delivery and validation](art/gameplay_review_followup_2026_10_30.md) ·
+[Mask/Pattern comparison](../work/appearance-lab-2026-10-30/looks-comparison.jpg) ·
+[Mask variants](../work/appearance-lab-2026-10-30/mask-comparison.jpg).
 
 ## Earlier framing review notes
 
@@ -78,14 +84,14 @@ demo's overall feel and 2D enemies; this retest covers the two reported faults.
 Save manual editor/art edits before switching tasks; the assistant handles Git.
 
 Open `Src/Environment/World/Chamber Of The First Weave.tscn` and restart with F6
-so the current scripts load. About 3–5 minutes:
+so the current scripts load. About 3â€“5 minutes:
 
 1. **Character lighting.** Walk from dim ground toward the opening, central
    threads, and red/blue/yellow fixtures. The character should receive their
    color and brightness along with the scenery. Judge contrast, over-bright
    areas and transitions. Its own soul glow should not wash out the model.
 2. **Second-jump motion.** Jump again early during ascent, then try a second
-   jump while falling. Both should replay the normal jump motion at 1.2× speed.
+   jump while falling. Both should replay the normal jump motion at 1.2Ã— speed.
    Land and jump again: ordinary jump speed should return. Give keep/change
    for the faster second jump; movement strength and AP cost are unchanged.
 3. **Next environment target.** After these corrections feel right, choose one
@@ -107,7 +113,7 @@ switching scenes or tasks; the assistant handles the Git checkpoint.
    rock wall should sit behind the player, bulbs, supports and solid terrain.
    Judge player contrast, foreground/background separation and texture seams
    while moving. Give keep/change/untested; appearance is not yet accepted.
-2. **Replay the demo (15–25 minutes).** Open
+2. **Replay the demo (15â€“25 minutes).** Open
    `Src/Environment/World/Chamber Of The First Weave.tscn` and press F6.
    This uses the shared current player, including its live character visual.
    Play the existing route at normal speed with the controls you normally use.
@@ -125,9 +131,9 @@ switching scenes or tasks; the assistant handles the Git checkpoint.
 The replay is the next review task, not authorization for combat/equipment
 changes, level restructuring or a new system. T20 acceptance remains open below.
 
-## Existing October 26 corrections — retained follow-up
+## Existing October 26 corrections â€” retained follow-up
 
-About 8–10 minutes. Those fixes are inherited on the current branch; no branch
+About 8â€“10 minutes. Those fixes are inherited on the current branch; no branch
 switch is needed.
 Restart the comparison scene with F6:
 `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.

@@ -4,13 +4,13 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T38 — October 30 hands-on art follow-up.**
+**Current test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater
-backdrop and improved demo lighting. Carry the posture into the run, integrate
-the preferred VFX in gameplay, then correct Blue depth/water cuts, house focus,
-cloud density/motion and duplicate bridge art. Clouds are wind-only with no
-camera response. Compare Patterns versus porcelain masks versus both in an
-isolated gameplay-scale study before expanding equipment assets.
+backdrop and improved demo lighting. The pass carries the posture into the run,
+integrates preferred VFX in gameplay, and corrects Blue depth/water cuts, house
+focus, cloud density/motion and duplicate bridge art. Clouds are wind-only with
+no camera response. Patterns versus porcelain masks versus both are compared
+in an isolated gameplay-scale study before expanding equipment assets.
 [Feedback, delivery and scope](art/gameplay_review_followup_2026_10_30.md).
 Run correction: 15 passing Forward+ checks and pose comparison; moving review
 pending. Checkpoint `art: carry upright posture into the existing run` on
@@ -18,15 +18,23 @@ pending. Checkpoint `art: carry upright posture into the existing run` on
 T35 idle is accepted, while zoom/overall scale remain under review.
 Preferred filled slashes are now live on the shared player, with confirmed-hit
 bursts and six passing matched-combo/physics integration checks. Checkpoint
-`vfx: integrate the preferred filled sword sweep`. Remaining work follows the
-delivery's environment fixes and isolated mask/Pattern comparison.
+`vfx: integrate the preferred filled sword sweep` (`d2c64476`).
 Blue follow-up is implemented: slower/deeper hazy rear rock, solid cavern faces
 above the water veil, softened cave-pocket boundaries, normalized house focus,
 48 varied wind-only clouds, taller two-pass bridge rails and trimmed stone
 overlaps. 78 engine checks, 20 house-handoff checks and 148 unchanged world
 polygons; GPU review captured. Checkpoint
-`art: refine Blue depth clouds house focus and bridge scale`. Appearance and
-in-motion acceptance remain open; isolated mask/Pattern comparison is next.
+`art: refine Blue depth clouds house focus and bridge scale` (`01acf68d`). Appearance and
+in-motion acceptance remain open. Separate playable mask/Pattern/Identity lab:
+`tools/art/appearance_lab.tscn` (F6), ten passing engine checks and twenty static
+captures plus real running/attack captures. Compare three motifs, three face
+markings, nine palettes, two mixing approaches and rough gear silhouettes.
+[Lab instructions and figures](../work/appearance-lab-2026-10-30/README.md).
+Checkpoint `art: add playable Pattern mask and Identity comparison lab`.
+This does not select mask lore, production color math or an equipment rewrite.
+Bright demo head highlights have a softer porcelain study candidate; production
+light tuning remains open. Current branch: `threadbound/art-gameplay-review-followup`.
+Implementation delivered; Chase's review is next, using the updated test card.
 
 **Previous test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
 The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all

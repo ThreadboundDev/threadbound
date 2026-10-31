@@ -1,0 +1,228 @@
+{
+	"camera_zoom": 0.83,
+	"cases": [
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "look_0",
+			"mask": 0,
+			"math": 1,
+			"mode": 0,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "look_1",
+			"mask": 0,
+			"math": 1,
+			"mode": 1,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "look_2",
+			"mask": 0,
+			"math": 1,
+			"mode": 2,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "look_3",
+			"mask": 0,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "mask_0",
+			"mask": 0,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "mask_1",
+			"mask": 1,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "mask_2",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 0,
+			"label": "palette_0",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 1,
+			"label": "palette_1",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 2,
+			"label": "palette_2",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 3,
+			"label": "palette_3",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 4,
+			"label": "palette_4",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 5,
+			"label": "palette_5",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 6,
+			"label": "palette_6",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 7,
+			"label": "palette_7",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 8,
+			"label": "palette_8",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 5,
+			"label": "math_0",
+			"mask": 2,
+			"math": 0,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": false,
+			"identity": 5,
+			"label": "math_1",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": false
+		},
+		{
+			"armor": true,
+			"identity": 5,
+			"label": "gear_proxy",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": false,
+			"weapon": true
+		},
+		{
+			"armor": true,
+			"identity": 5,
+			"label": "softer_porcelain",
+			"mask": 2,
+			"math": 1,
+			"mode": 3,
+			"motif": 0,
+			"softer_porcelain": true,
+			"weapon": true
+		}
+	],
+	"checks": 10,
+	"display": "Windows",
+	"failures": []
+}

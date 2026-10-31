@@ -1,5 +1,11 @@
 # Pattern System Design (Accessory Slot)
 
+October 30 visual study: Chase requested a gameplay-scale comparison of the
+embroidery overlay, porcelain mask variants, and both together. The
+[playable appearance lab](../../work/appearance-lab-2026-10-30/README.md) uses the
+current rig and camera. This is a presentation experiment; it does not replace
+the Pattern accessory/combination logic described here or establish mask lore.
+
 ## Status
 
 Patterns are a long-term core pillar of Threadbound alongside Equipment and Identity.
