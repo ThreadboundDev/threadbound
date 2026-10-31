@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/stamped_bridge_part_2d.gd" id="1"]
+[node name="BridgePontoons2D" type="Node2D"]
+editor_description = "Independent paired wooden float bodies and bindings. Waterline Offset is measured below the walking plane. Static art; no buoyancy/collision."
+z_index = -6
+z_as_relative = false
+texture_filter = 4
+script = ExtResource("1")
+part = 2

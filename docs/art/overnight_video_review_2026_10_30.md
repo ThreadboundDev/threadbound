@@ -74,6 +74,16 @@ The grapple figure directly illustrates its effect resources; the other figures
 use the production attack controller at manually sampled animation phases.
 Checkpoint: `vfx: unify vertical and special attack presentation`.
 
+## Modular bridge delivery
+
+The rejected rails are replaced by separately reusable deck, painted rail,
+float and brace scenes. The two existing bridge assemblies use these parts
+without changing the room's nine walking surfaces. Source stamp textures are
+sampled directly, preserving their painting. Thirty-two modular checks and the
+78 existing room checks pass; all 148 world polygons match the prior baseline.
+[Asset guide, provenance and room comparisons](modular_stamped_bridges_2026_10_30.md).
+Checkpoint: `art: build modular bridges from approved painted stamps`.
+
 ## Water-entry recommendation
 
 Ordinary running/jumping into water should remain immediate and controllable.

@@ -1,5 +1,9 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=6 format=3]
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/structural_walkway_2d.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/bridge_deck_2d.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/bridge_railing_2d.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/bridge_pontoons_2d.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/bridge_braces_2d.tscn" id="5"]
 [node name="BracedLanding2D" type="Node2D"]
 editor_description = "World-locked art; WalkPlane is the existing collision surface. Set Support Anchor to an actual point inside supporting rock/building."
 z_index = -6
@@ -9,3 +13,12 @@ script = ExtResource("1")
 structure = 1
 stamp = 1
 [node name="WalkPlane" type="Marker2D" parent="."]
+[node name="SupportBraces" parent="." instance=ExtResource("5")]
+[node name="PontoonFloats" parent="." instance=ExtResource("4")]
+visible = false
+[node name="Deck" parent="." instance=ExtResource("2")]
+[node name="RearRail" parent="." instance=ExtResource("3")]
+[node name="FrontRail" parent="." instance=ExtResource("3")]
+position = Vector2(0,12)
+z_index = 4
+open_center = 0.5

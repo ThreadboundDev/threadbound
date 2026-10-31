@@ -29,23 +29,26 @@ func source_texture() -> Texture2D:
 	return PROFILES[stamp].texture
 
 func get_draw_sections() -> Array[Dictionary]:
-	var profile: Dictionary = PROFILES[stamp]
-	var size := source_texture().get_size()
+	return get_draw_sections_for(span_width,stamp,detail_scale)
+
+func get_draw_sections_for(width: float, selected_stamp: int, sizing: float) -> Array[Dictionary]:
+	var profile: Dictionary = PROFILES[selected_stamp]
+	var size: Vector2 = profile.texture.get_size()
 	var sections: Array[Dictionary] = []
 	# A broken pair must keep its transparent gap and splintered ends. Fit it
 	# uniformly as one image; never repeat the middle or imply a continuous floor.
-	if stamp == Stamp.BROKEN_TIMBER:
-		var pair_scale := span_width / size.x
+	if selected_stamp == Stamp.BROKEN_TIMBER:
+		var pair_scale := width / size.x
 		sections.append({"source": Rect2(Vector2.ZERO, size), "target": Rect2(Vector2(0, -profile.walk_y * pair_scale), size * pair_scale)})
 		return sections
 	var left: float = profile.left
 	var right: float = size.x - profile.right
 	# Tiny spans shrink ALL details uniformly only when both end caps cannot fit.
-	var unit := minf(detail_scale, span_width / (left + right))
+	var unit := minf(sizing, width / (left + right))
 	var y: float = -profile.walk_y * unit
 	sections.append({"source": Rect2(0, 0, left, size.y), "target": Rect2(0, y, left * unit, size.y * unit)})
 	var cursor := left * unit
-	var end := span_width - right * unit
+	var end := width - right * unit
 	while cursor < end - 0.0001:
 		var pixels := minf(profile.right - left, (end - cursor) / unit)
 		sections.append({"source": Rect2(left, 0, pixels, size.y), "target": Rect2(cursor, y, pixels * unit, size.y * unit)})

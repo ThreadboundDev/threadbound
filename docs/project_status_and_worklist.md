@@ -19,7 +19,11 @@ source gait/arm curves and accepted idle stay intact. Checkpoint
 and special effects now share the filled palette/ribbons. 25 GPU family checks,
 six existing ground-combo/contact checks and the underwater-special regression
 pass. Checkpoint `vfx: unify vertical and special attack presentation`.
-Next unit: modular stamp bridges; water presentation follows.
+Modular stamp bridges are delivered: independent deck/painted rail/float/brace
+parts in the original two assemblies, with 32 modular checks, 78 room checks and
+148 unchanged world polygons. [Asset guide](art/modular_stamped_bridges_2026_10_30.md).
+Checkpoint `art: build modular bridges from approved painted stamps`.
+Next unit: water presentation and high-sky coverage.
 
 **Previous test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater

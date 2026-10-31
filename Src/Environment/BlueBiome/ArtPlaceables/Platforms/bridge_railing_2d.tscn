@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/stamped_bridge_part_2d.gd" id="1"]
+[node name="BridgeRailing2D" type="Node2D"]
+editor_description = "Independent rail/post pixels from approved J03 stamp. Use Z -6 behind actors or Z 4 in front; Open Center leaves a readable action window."
+z_index = -6
+z_as_relative = false
+texture_filter = 4
+script = ExtResource("1")
+stamp = 1
+part = 1
+detail_scale = 0.32

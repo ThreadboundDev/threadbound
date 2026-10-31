@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/stamped_bridge_part_2d.gd" id="1"]
+[node name="BridgeDeck2D" type="Node2D"]
+editor_description = "Independent approved stamp deck. Origin is the left walking anchor; room owns collision."
+z_index = -6
+z_as_relative = false
+texture_filter = 4
+script = ExtResource("1")
+part = 0
+[node name="WalkPlane" type="Marker2D" parent="."]
