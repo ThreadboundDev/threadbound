@@ -29,7 +29,9 @@ the water pass, and the far rock wall is screen-anchored. Twenty new GPU checks
 pass, along with legacy water (10), tower/exterior (31), house handoff (20),
 water-entry/grapple (122) and room/bridge (78) regressions. All 148 world polygons
 still match the baseline. No forced dive or movement/attack mechanics change.
-Checkpoint `art: reveal the underwater scene through a painted lake surface`.
+Checkpoint `3596f404` — `art: reveal the underwater scene through a painted lake surface`.
+The fresh above/below-water GPU smoke capture also passes at the normal 2x art
+render scale; the longer comparisons use 1x to limit capture memory.
 Implementation is delivered; Chase's moving acceptance of the run arm, extended
 VFX, modular bridge appearance and water experiment remains open. Use the updated
 [next test card](next_test_session.md). No new implementation topic is active.

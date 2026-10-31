@@ -1,0 +1,16 @@
+{
+	"passed": true,
+	"quality_above": {
+		"camera": "(1000.0, 400.0)",
+		"eye": "(679.1285, 246.788)",
+		"player": "(650.0, 350.0)",
+		"underwater_view": 0.0
+	},
+	"quality_below": {
+		"camera": "(1000.0, 400.0)",
+		"eye": "(692.6522, 501.0876)",
+		"player": "(650.0, 600.0)",
+		"underwater_view": 0.999581057876552
+	},
+	"render_scale": 2.0
+}

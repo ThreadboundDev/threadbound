@@ -21,7 +21,7 @@ func shot(label: String, center: Vector2, observer: Vector2) -> void:
 func run() -> void:
 	for action in InputMap.get_actions(): InputMap.action_erase_events(action)
 	room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
-	room.get_node("LakesideArtStage").render_scale = 1.0
+	room.get_node("LakesideArtStage").render_scale = 2.0 if "--full-quality" in OS.get_cmdline_user_args() else 1.0
 	room.tree_entered.connect(func(): current_scene=room,CONNECT_ONE_SHOT)
 	root.add_child(room)
 	player = room.get_node("Player")
@@ -36,6 +36,18 @@ func run() -> void:
 	camera.zoom = Vector2(0.83,0.83)
 	room.add_child(camera)
 	camera.make_current()
+	if "--quality-smoke" in OS.get_cmdline_user_args():
+		await shot("quality_above",Vector2(1000,400),Vector2(650,350))
+		await shot("quality_below",Vector2(1000,400),Vector2(650,600))
+		var passed: bool = room.get_node("LakesideArtStage").render_scale == 2.0 and report.quality_above.underwater_view < .01 and report.quality_below.underwater_view > .99
+		report["passed"] = passed
+		report["render_scale"] = room.get_node("LakesideArtStage").render_scale
+		FileAccess.open(OUT+"/water-full-quality-smoke.json",FileAccess.WRITE).store_string(JSON.stringify(report,"\t"))
+		print("WATER_FULL_QUALITY ",JSON.stringify(report))
+		room.queue_free()
+		await process_frame
+		quit(0 if passed else 1)
+		return
 	if "--diagnose-cave" in OS.get_cmdline_user_args():
 		await shot("cave_source",Vector2(2200,1600),Vector2(2100,1640))
 		room.get_node("Geometry/TerrainArtwork/rear_cave").hide()

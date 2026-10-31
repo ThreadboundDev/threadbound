@@ -52,7 +52,7 @@ grapple handoff and return to the accepted idle. GPU poses and an enlarged loop:
 [comparison](../../work/overnight-playtest-2026-10-30/run-arm-comparison.jpg) ·
 [loop](../../work/overnight-playtest-2026-10-30/run-arm-loop.gif).
 Existing shutdown resource diagnostics remain. Chase's moving review is pending.
-Checkpoint: `art: give the upright run readable sword-arm motion`.
+Checkpoint: `e96de00a` — `art: give the upright run readable sword-arm motion`.
 
 ## Filled attack-family delivery
 
@@ -72,7 +72,7 @@ animation, AP, steering, damage activation, medium changes and interruption.
 [Effect-family poses](../../work/overnight-playtest-2026-10-30/vfx-family-review.jpg).
 The grapple figure directly illustrates its effect resources; the other figures
 use the production attack controller at manually sampled animation phases.
-Checkpoint: `vfx: unify vertical and special attack presentation`.
+Checkpoint: `5786aac6` — `vfx: unify vertical and special attack presentation`.
 
 ## Modular bridge delivery
 
@@ -82,7 +82,7 @@ without changing the room's nine walking surfaces. Source stamp textures are
 sampled directly, preserving their painting. Thirty-two modular checks and the
 78 existing room checks pass; all 148 world polygons match the prior baseline.
 [Asset guide, provenance and room comparisons](modular_stamped_bridges_2026_10_30.md).
-Checkpoint: `art: build modular bridges from approved painted stamps`.
+Checkpoint: `8ec09d82` — `art: build modular bridges from approved painted stamps`.
 
 ## Water and sky delivery
 
@@ -125,8 +125,10 @@ has effectively zero screen displacement on both tested camera axes. A separate
 capture audit confirms the rendered head drives the reveal and all 148 world
 collision polygons exactly match the prior baseline. Test profiles are isolated
 from Chase's saves. Existing enemy-packing, camera interpolation and shutdown
-resource diagnostics remain; logs are not error-free. Captures use stage render
-scale 1.0 for GPU memory; the production setting stays 2.0.
+resource diagnostics remain; logs are not error-free. Long comparison captures
+use stage render scale 1.0 for GPU memory. A fresh two-view GPU smoke test at the
+normal 2.0 setting also passes: [full-quality comparison](../../work/overnight-playtest-2026-10-30/water-full-quality-review.jpg).
+This is a short render check, not a long-session performance test.
 
 Tune `Volumes/Lake.painted_surface` to compare the old/new water live;
 `surface_opacity` (0.96), `immersion_opacity` (0.22), and
@@ -134,7 +136,7 @@ Tune `Volumes/Lake.painted_surface` to compare the old/new water live;
 fallback for non-rigged observers. Outside opacity intentionally conceals most
 underwater enemies, and screen-space reflection can only use visible source art.
 The static wall and reflection/reveal style still need Chase's moving review.
-Checkpoint: `art: reveal the underwater scene through a painted lake surface`.
+Checkpoint: `3596f404` — `art: reveal the underwater scene through a painted lake surface`.
 
 ## Water-entry recommendation
 
