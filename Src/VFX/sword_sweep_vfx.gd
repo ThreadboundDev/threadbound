@@ -1,5 +1,6 @@
 class_name SwordSweepVFX
 extends Node2D
+const PALETTE := preload("res://Src/VFX/thread_vfx_palette.gd")
 
 ## Thin silver strokes sampled from the visible blade, timed to the attack clip.
 const SILVER := Color(0.82, 0.91, 0.97)
@@ -98,12 +99,9 @@ func _draw_spin() -> void:
 		return
 	var direction := -1.0 if reverse else 1.0
 	var fade := sin(phase * PI)
-	for band in 3:
-		var trail := PackedVector2Array()
-		for i in 25:
-			var angle := (phase*TAU - float(i)/24.0*PI*0.85)*direction
-			trail.append(Vector2(cos(angle),sin(angle)*0.38)*(radius*(0.72+band*0.05)))
-		draw_polyline(trail, Color(0.72,0.92,1.0,fade*(0.5-band*0.12)), 3.0-band*0.7, true)
+	var head := phase*TAU*direction
+	PALETTE.arc_ribbon(self,radius*.83,head-PI*.90*direction,head,radius*.15,Vector2(1,.38),fade)
+	PALETTE.arc_ribbon(self,radius*.70,head+PI-PI*.65*direction,head+PI,radius*.09,Vector2(1,.38),fade*.56)
 
 
 func _draw_stab(blade: Dictionary, fade: float) -> void:

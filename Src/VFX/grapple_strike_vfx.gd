@@ -1,8 +1,9 @@
 class_name GrappleStrikeVFX
 extends Node2D
 
-const IVORY := Color(1.0, 0.97, 0.84)
-const GOLD := Color(1.0, 0.72, 0.24)
+const PALETTE := preload("res://Src/VFX/thread_vfx_palette.gd")
+const IVORY := PALETTE.CORE
+const GOLD := PALETTE.THREAD
 
 @export_range(0.05, 0.5, 0.01) var lifetime := 0.20
 @export_range(0.4, 1.0, 0.01) var visual_scale := 0.72
@@ -13,6 +14,9 @@ var _playing := false
 
 func _ready() -> void:
 	z_index = 82
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	material = unlit
 	queue_redraw()
 
 func play(direction: Vector2) -> void:
@@ -46,6 +50,7 @@ func _draw() -> void:
 	core.a = fade * 0.92
 	var accent := GOLD
 	accent.a = fade * 0.78
+	draw_colored_polygon(PackedVector2Array([Vector2(-flare_length*.8,-9),Vector2(flare_length,0),Vector2(-flare_length*.8,9)]),Color(PALETTE.FILL,.45*fade))
 
 	# A compressed horizontal snap reads as the stored grapple velocity releasing
 	# into the target, rather than another circular weapon swing.

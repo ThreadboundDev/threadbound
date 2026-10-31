@@ -54,6 +54,26 @@ grapple handoff and return to the accepted idle. GPU poses and an enlarged loop:
 Existing shutdown resource diagnostics remain. Chase's moving review is pending.
 Checkpoint: `art: give the upright run readable sword-arm motion`.
 
+## Filled attack-family delivery
+
+Vertical air attacks now use the same cool filled body, pale edge and sparse
+flax accents as the accepted slashes. Their silhouette remains blade-directed:
+up/down thrusts get a filled tapered cleave rather than a detached horizontal
+arc. Spin uses filled sweeping ribbons; neutral uses a fast expanding filled
+shock front; grapple burst/trail use the same palette and tapered fill.
+`thread_vfx_palette.gd` centralizes the shared presentation. Original ground
+slash colors/curves stay intact. No attack-controller or damage-resource edits.
+
+Twenty-five GPU checks pass for both vertical directions/facings, blade alignment,
+unchanged damage state, actual land/water special activation/cleanup and grapple
+effect expiry. Existing six-check ground combo/confirmed-hit regression passes;
+the underwater neutral/left-spin/right-spin regression also passes, including
+animation, AP, steering, damage activation, medium changes and interruption.
+[Effect-family poses](../../work/overnight-playtest-2026-10-30/vfx-family-review.jpg).
+The grapple figure directly illustrates its effect resources; the other figures
+use the production attack controller at manually sampled animation phases.
+Checkpoint: `vfx: unify vertical and special attack presentation`.
+
 ## Water-entry recommendation
 
 Ordinary running/jumping into water should remain immediate and controllable.

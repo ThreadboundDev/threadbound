@@ -984,14 +984,14 @@ func _update_sword_smears(delta: float) -> void:
 	if not _sword_sweep:
 		return
 	var data: Dictionary = _player.get_sword_sweep_state()
-	var filled := sword_smear_enabled and filled_sweep_enabled and not data.is_empty() and int(data.style) not in [3,4]
+	var filled := sword_smear_enabled and filled_sweep_enabled and not data.is_empty() and int(data.style) != 3
 	var phase := float(data.get("phase",-1.0))
 	var facing := int(_player.last_direction)
 	if phase < _sweep_phase or facing != _sweep_facing or not sword_smear_enabled:
 		_thread_sweep.clear_trail()
 	_sweep_phase = phase
 	_sweep_facing = facing
-	_thread_sweep.advance(delta,filled and phase >= 0.0 and phase <= 1.0,_get_blade_world_points())
+	_thread_sweep.advance(delta,filled and phase >= 0.0 and phase <= 1.0,_get_blade_world_points(),int(data.get("style",0)),phase)
 	if not sword_smear_enabled or data.is_empty():
 		_sword_sweep.clear()
 		return

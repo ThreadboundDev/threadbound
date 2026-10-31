@@ -15,8 +15,11 @@ Work stays on `threadbound/art-gameplay-review-followup`; each verified unit is
 committed and pushed. Run sword-arm presentation is delivered: 17 passing GPU
 checks; projected hilt travel increases from 14.99 to 34.74 world units while
 source gait/arm curves and accepted idle stay intact. Checkpoint
-`art: give the upright run readable sword-arm motion`. Next unit: filled vertical
-air and special effects; water and modular stamp bridges follow.
+`art: give the upright run readable sword-arm motion` (`e96de00a`). Vertical air
+and special effects now share the filled palette/ribbons. 25 GPU family checks,
+six existing ground-combo/contact checks and the underwater-special regression
+pass. Checkpoint `vfx: unify vertical and special attack presentation`.
+Next unit: modular stamp bridges; water presentation follows.
 
 **Previous test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater

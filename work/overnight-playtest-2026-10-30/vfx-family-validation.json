@@ -1,0 +1,31 @@
+{
+	"cases": [
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": -1,
+			"vertical": "(0.0, -1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": -1,
+			"vertical": "(0.0, 1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": 1,
+			"vertical": "(0.0, -1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": 1,
+			"vertical": "(0.0, 1.0)"
+		}
+	],
+	"checks": 25,
+	"display": "Windows",
+	"failures": []
+}

@@ -1,9 +1,10 @@
 class_name NeutralSpecialVFX
 extends Node2D
 
-const IVORY := Color(1.0, 0.96, 0.80)
-const GOLD := Color(1.0, 0.69, 0.20)
-const HOT_GOLD := Color(1.0, 0.88, 0.48)
+const PALETTE := preload("res://Src/VFX/thread_vfx_palette.gd")
+const IVORY := PALETTE.CORE
+const GOLD := PALETTE.THREAD
+const HOT_GOLD := PALETTE.EDGE
 
 @export_range(0.1, 2.0, 0.01) var impact_duration := 0.48
 @export_range(0.1, 0.9, 0.01) var full_force_radius_ratio := 0.45
@@ -18,6 +19,9 @@ var _impact_started := false
 
 func _ready() -> void:
 	z_index = 40
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	material = unlit
 	queue_redraw()
 
 func play(
@@ -79,8 +83,8 @@ func _draw_gather() -> void:
 	var pulse := 0.78 + sin(gather * TAU * 3.0) * 0.16
 	var charge_radius := minf(86.0, _radius * 0.40)
 
-	for index in range(14):
-		var weight := float(index) / 14.0
+	for index in range(8):
+		var weight := float(index) / 8.0
 		var angle := weight * TAU + gather * 0.48 * _facing
 		var direction := Vector2.from_angle(angle)
 		var tangent := direction.orthogonal() * _facing
@@ -120,7 +124,9 @@ func _draw_impact() -> void:
 	var impact_age := _impact_elapsed
 	var impact := clampf(impact_age / impact_duration, 0.0, 1.0)
 	var fade := pow(1.0 - impact, 1.7)
-	var primary_radius := lerpf(_radius * 0.08, _radius * 1.04, ease(impact, -1.8))
+	# Reach the visible shock front quickly inside the existing active window;
+	# the visual's lifetime and the combat controller's timing are unchanged.
+	var primary_radius := lerpf(_radius * 0.08, _radius * 1.04, 1.0-pow(1.0-impact,2.4))
 	var full_force_radius := _radius * full_force_radius_ratio
 
 	var flash_color := IVORY
@@ -134,18 +140,7 @@ func _draw_impact() -> void:
 		true
 	)
 
-	var primary_color := HOT_GOLD
-	primary_color.a = fade * 0.95
-	draw_arc(
-		Vector2.ZERO,
-		primary_radius,
-		0.0,
-		TAU,
-		64,
-		primary_color,
-		lerpf(9.0, 2.0, impact),
-		true
-	)
+	PALETTE.arc_ribbon(self,primary_radius,0.0,TAU,lerpf(34.0,8.0,impact),Vector2.ONE,fade*.90)
 
 	var secondary_impact := clampf((impact_age - 0.045) / maxf(0.01, impact_duration - 0.045), 0.0, 1.0)
 	var secondary_color := IVORY
@@ -189,8 +184,8 @@ func _draw_impact() -> void:
 		true
 	)
 
-	for index in range(18):
-		var weight := float(index) / 18.0
+	for index in range(9):
+		var weight := float(index) / 9.0
 		var angle := weight * TAU + 0.12 * _facing
 		var direction := Vector2.from_angle(angle)
 		var distance := lerpf(_radius * 0.18, _radius * 1.12, ease(impact, -1.5))
