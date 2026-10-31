@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated October 30, 2026. This is the single current priority list. The saved
+Updated October 31, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -35,6 +35,13 @@ render scale; the longer comparisons use 1x to limit capture memory.
 Implementation is delivered; Chase's moving acceptance of the run arm, extended
 VFX, modular bridge appearance and water experiment remains open. Use the updated
 [next test card](next_test_session.md). No new implementation topic is active.
+
+October 31 discussion: Chase is away; T39 has not been playtested yet. He wants
+to explore a contextual descending jump-to-dive animation and more comic/anime
+flair through readable action, VFX and selective color. The
+[discussion note](design/contextual_dive_and_action_style_2026_10_31.md) records
+the preference, current bank-dive constraints and proposed experiments.
+No automatic-dive implementation, art replacement or gameplay change is made.
 
 **Previous test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater
