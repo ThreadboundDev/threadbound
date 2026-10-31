@@ -4,7 +4,20 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
+**Current task: T38 — October 30 hands-on art follow-up.**
+Chase accepted the upright idle and likes the pontoon direction, underwater
+backdrop and improved demo lighting. Carry the posture into the run, integrate
+the preferred VFX in gameplay, then correct Blue depth/water cuts, house focus,
+cloud density/motion and duplicate bridge art. Clouds are wind-only with no
+camera response. Compare Patterns versus porcelain masks versus both in an
+isolated gameplay-scale study before expanding equipment assets.
+[Feedback, delivery and scope](art/gameplay_review_followup_2026_10_30.md).
+Run correction: 15 passing Forward+ checks and pose comparison; moving review
+pending. Checkpoint `art: carry upright posture into the existing run` on
+`threadbound/art-gameplay-review-followup`. T37 needs the requested corrections;
+T35 idle is accepted, while zoom/overall scale remain under review.
+
+**Previous test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
 The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all
 three checkpoints: 0.83 gameplay zoom/upright idle (`bed83ed3`), delayed-variation
 fix (`017de695`), and the new Blue art pass. Far underwater rock now scrolls at

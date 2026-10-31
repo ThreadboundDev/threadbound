@@ -35,6 +35,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
 @export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
+@export_range(0.0, 1.0, 0.05) var upright_run_strength := 1.0
 @export var grapple_throw_duration := 0.30
 @export var roll_duration := 0.30
 @export_range(1.0, 4.0, 0.1) var water_dash_animation_speed := 2.0
@@ -774,6 +775,7 @@ func _build_viewport() -> void:
 	_install_water_combo(_animation_player, _skeleton)
 	_index_clips()
 	_clips.merge(_install_upright_idles(_animation_player, _skeleton), true)
+	_clips.merge(_install_upright_runs(_animation_player, _skeleton), true)
 	if not Engine.is_editor_hint():
 		_build_lower_body_sampler()
 	if _animation_player:
@@ -1009,6 +1011,42 @@ func _build_lower_body_sampler() -> void:
 	_lower_sampler_skeleton = _find_first_type(_lower_sampler_root, "Skeleton3D") as Skeleton3D
 	_install_authored_attacks(_lower_sampler_player, _lower_sampler_skeleton)
 	_install_upright_idles(_lower_sampler_player, _lower_sampler_skeleton)
+	_install_upright_runs(_lower_sampler_player, _lower_sampler_skeleton)
+
+
+func _install_upright_runs(target: AnimationPlayer, skeleton: Skeleton3D) -> Dictionary:
+	# Keep the original stride, foot contacts, guard and run timing. Reduce the
+	# folded torso/head rather than straightening the legs of an athletic run.
+	var installed := {}
+	if upright_run_strength <= 0.0 or not target or not skeleton:
+		return installed
+	var weights := {&"spine":0.38, &"chest":0.28, &"neck":0.30, &"head":0.18}
+	var library := AnimationLibrary.new()
+	for action: StringName in [&"run_1", &"run_2"]:
+		var source: Animation
+		for clip in target.get_animation_list():
+			if String(clip).get_file() == String(action):
+				source = target.get_animation(clip)
+				break
+		if not source:
+			continue
+		var animation := source.duplicate(true) as Animation
+		for track in animation.get_track_count():
+			var path := animation.track_get_path(track)
+			if animation.track_get_type(track) != Animation.TYPE_ROTATION_3D or path.get_subname_count() != 1:
+				continue
+			var bone := path.get_subname(0)
+			var index := skeleton.find_bone(bone)
+			if index < 0 or not weights.has(bone):
+				continue
+			var rest := skeleton.get_bone_rest(index).basis.get_rotation_quaternion()
+			for key in animation.track_get_key_count(track):
+				var original: Quaternion = animation.track_get_key_value(track,key)
+				animation.track_set_key_value(track,key,original.slerp(rest,float(weights[bone])*upright_run_strength).normalized())
+		library.add_animation(action,animation)
+		installed[action] = StringName("upright_run/"+String(action))
+	target.add_animation_library(&"upright_run",library)
+	return installed
 
 
 func _install_upright_idles(target: AnimationPlayer, skeleton: Skeleton3D) -> Dictionary:
