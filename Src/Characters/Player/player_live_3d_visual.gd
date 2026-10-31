@@ -37,6 +37,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var base_playback_speed := 1.25
 @export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
 @export_range(0.0, 1.0, 0.05) var upright_run_strength := 1.0
+@export_range(0.0, 1.0, 0.05) var run_sword_arm_motion := 1.0
 @export var grapple_throw_duration := 0.30
 @export var roll_duration := 0.30
 @export_range(1.0, 4.0, 0.1) var water_dash_animation_speed := 2.0
@@ -156,6 +157,7 @@ func _process(delta: float) -> void:
 		_apply_water_attack_blend(delta)
 	_apply_grapple_aim_override()
 	_apply_idle_sword_clearance()
+	_apply_run_sword_arm_motion()
 	if _skeleton and _pelvis_index >= 0:
 		var pelvis_displacement := (
 			_skeleton.get_bone_global_pose(_pelvis_index).origin.y - _pelvis_rest_y
@@ -689,6 +691,7 @@ func _play_action(
 	var clip := _clips.get(action_name, &"") as StringName
 	if clip == &"" or not force_restart and _current_action == action_name and _animation_player.is_playing() and signf(_animation_player.speed_scale) == signf(playback_speed):
 		return
+	_skeleton.clear_bones_global_pose_override()
 	_current_action = action_name
 	_queued_action = fallback
 	var animation := _animation_player.get_animation(clip)
@@ -1055,8 +1058,8 @@ func _build_lower_body_sampler() -> void:
 
 
 func _install_upright_runs(target: AnimationPlayer, skeleton: Skeleton3D) -> Dictionary:
-	# Keep the original stride, foot contacts, guard and run timing. Reduce the
-	# folded torso/head rather than straightening the legs of an athletic run.
+	# Keep the original stride, foot contacts and timing. Sword-arm presentation
+	# is applied in the camera plane after this clip's normal pose is sampled.
 	var installed := {}
 	if upright_run_strength <= 0.0 or not target or not skeleton:
 		return installed
@@ -1356,6 +1359,24 @@ func _install_water_combo(target: AnimationPlayer, skeleton: Skeleton3D) -> void
 				animation.track_insert_key(destination, time, value)
 		library.add_animation(definition.name, animation)
 	target.add_animation_library(&"water_combo", library)
+
+
+func _apply_run_sword_arm_motion() -> void:
+	if _current_action != &"run_1" or _upper_body_overlay_active or run_sword_arm_motion <= 0.0:
+		return
+	var cycle := TAU*get_current_action_position()/maxf(get_action_duration(&"run_1"),0.01)
+	# Skeleton-global X is the side camera's depth axis. Local arm axes mostly
+	# twist the held guard in depth and do not create readable screen motion.
+	for bone: StringName in [&"upper_arm.R",&"forearm.R",&"hand.R"]:
+		var index := _skeleton.find_bone(bone)
+		if index < 0: continue
+		var pose := _skeleton.get_bone_global_pose(index)
+		var angle := -0.30*sin(cycle)
+		if bone == &"forearm.R": angle = 0.06*sin(cycle+0.35)
+		if bone == &"hand.R": angle = deg_to_rad(8.0)+0.025*sin(cycle-0.3)
+		pose.basis = Basis(Vector3.RIGHT,angle*run_sword_arm_motion)*pose.basis
+		_skeleton.set_bone_global_pose_override(index,pose,1.0,true)
+		_skeleton.force_update_all_bone_transforms()
 
 
 func _apply_idle_sword_clearance() -> void:

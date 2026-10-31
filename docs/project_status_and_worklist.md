@@ -4,7 +4,21 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current test: T38 — October 30 hands-on art follow-up delivered.**
+**Current task: T39 — overnight follow-up to Chase's 22:34 video.**
+Posture and filled VFX are positively reviewed; house focus and clouds are good.
+Fix the run's unreadable sword arm, extend filled effects to vertical air and
+special attacks, replace rejected simple rails with modular approved stamp art,
+and improve water/surface separation and rear-rock motion. Review the proposed
+opaque reflective surface opening underwater without mandatory dive pauses.
+[Video observations, scope and delivery](art/overnight_video_review_2026_10_30.md).
+Work stays on `threadbound/art-gameplay-review-followup`; each verified unit is
+committed and pushed. Run sword-arm presentation is delivered: 17 passing GPU
+checks; projected hilt travel increases from 14.99 to 34.74 world units while
+source gait/arm curves and accepted idle stay intact. Checkpoint
+`art: give the upright run readable sword-arm motion`. Next unit: filled vertical
+air and special effects; water and modular stamp bridges follow.
+
+**Previous test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater
 backdrop and improved demo lighting. The pass carries the posture into the run,
 integrates preferred VFX in gameplay, and corrects Blue depth/water cuts, house
