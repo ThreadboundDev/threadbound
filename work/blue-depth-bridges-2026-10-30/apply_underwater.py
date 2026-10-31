@@ -8,9 +8,9 @@ nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='compos
 scope={}
 exec(compile(ast.Module(body=nodes,type_ignores=[]),str(source),'exec'),scope)
 manifest_path=root/'Assets/BlueBiome/Art/LakesideMap/underwater_background_manifest.json'
-manifest=json.loads(manifest_path.read_text())
+manifest=json.loads(manifest_path.read_text(encoding='utf-8'))
 scene_path=root/'Src/Environment/BlueBiome/Prototypes/Rooms/lakeside_krita_artwork.tscn'
-scene=scope['compose_underwater_scene'](scene_path.read_text(),manifest['chunks'])
+scene=scope['compose_underwater_scene'](scene_path.read_text(encoding='utf-8'),manifest['chunks'])
 assert scope['compose_underwater_scene'](scene,manifest['chunks'])==scene,'Scoped composition must be idempotent'
 scene_path.write_text(scene,encoding='utf-8',newline='\n')
 manifest['presentation']=scope['UNDERWATER_PRESENTATION']

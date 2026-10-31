@@ -544,6 +544,19 @@ func _sync_special_medium() -> void:
 	_play_action(action, &"", position, true, get_action_duration(action) / maxf(duration * base_playback_speed, 0.01))
 
 
+func get_water_eye_global_position() -> Vector2:
+	if not _skeleton or not _camera or not _display or not enabled:
+		return Vector2.INF
+	var index := _skeleton.find_bone("head")
+	if index < 0:
+		return Vector2.INF
+	var head := _skeleton.get_bone_global_pose(index) * Vector3(0, 0.08, 0)
+	var pixel := _camera.unproject_position(_skeleton.to_global(head)) - Vector2(_viewport.size)*0.5 + _display.offset
+	if _display.flip_h: pixel.x = -pixel.x
+	if _display.flip_v: pixel.y = -pixel.y
+	return _display.to_global(pixel)
+
+
 func get_grapple_origin_player_offset() -> Vector2:
 	if not _skeleton or _left_hand_index < 0 or not _camera or not _display:
 		return Vector2.ZERO

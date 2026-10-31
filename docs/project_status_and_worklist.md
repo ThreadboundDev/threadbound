@@ -18,12 +18,21 @@ source gait/arm curves and accepted idle stay intact. Checkpoint
 `art: give the upright run readable sword-arm motion` (`e96de00a`). Vertical air
 and special effects now share the filled palette/ribbons. 25 GPU family checks,
 six existing ground-combo/contact checks and the underwater-special regression
-pass. Checkpoint `vfx: unify vertical and special attack presentation`.
+pass. Checkpoint `vfx: unify vertical and special attack presentation` (`5786aac6`).
 Modular stamp bridges are delivered: independent deck/painted rail/float/brace
 parts in the original two assemblies, with 32 modular checks, 78 room checks and
 148 unchanged world polygons. [Asset guide](art/modular_stamped_bridges_2026_10_30.md).
-Checkpoint `art: build modular bridges from approved painted stamps`.
-Next unit: water presentation and high-sky coverage.
+Checkpoint `art: build modular bridges from approved painted stamps` (`8ec09d82`).
+Water presentation and high-sky coverage are delivered for review: opaque painted
+reflections open as the rendered head submerges, all world actors/solids receive
+the water pass, and the far rock wall is screen-anchored. Twenty new GPU checks
+pass, along with legacy water (10), tower/exterior (31), house handoff (20),
+water-entry/grapple (122) and room/bridge (78) regressions. All 148 world polygons
+still match the baseline. No forced dive or movement/attack mechanics change.
+Checkpoint `art: reveal the underwater scene through a painted lake surface`.
+Implementation is delivered; Chase's moving acceptance of the run arm, extended
+VFX, modular bridge appearance and water experiment remains open. Use the updated
+[next test card](next_test_session.md). No new implementation topic is active.
 
 **Previous test: T38 — October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater

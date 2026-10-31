@@ -15,8 +15,15 @@ extends Area2D
 		queue_redraw()
 ## Legacy greybox fill opacity when the player is wet. Painted lakes stay steady.
 @export_range(0.0, 1.0) var underwater_opacity := 0.16
-## Foreground veil over submerged actors; independent of scenery/reflections.
+## Foreground veil over submerged actors; also grades solids in painted mode.
 @export_range(0.0, 1.0) var immersion_opacity := 0.22
+## Blue art experiment: reflective from above, opening as the observer dives.
+## This changes presentation only; water/air-pocket queries remain spatial.
+@export var painted_surface := false
+@export_range(0.0, 1.0) var surface_opacity := 0.96
+@export_range(0.05, 1.0) var submerge_transition_seconds := 0.30
+@export var observer_eye_offset := Vector2(0.0, -64.0)
+var underwater_view := 0.0
 @export var deep_water_color := Color(0.018, 0.10, 0.18, 1.0)
 @export_range(0.0, 1.0) var pocket_caustic_intensity := 0.06
 ## Presentation only; physics keeps the exact air-pocket polygon.
@@ -51,9 +58,9 @@ func _ready() -> void:
 	_sync_pocket_group()
 	_ripple_visual = Node2D.new()
 	_ripple_visual.name = "WaterMovementRipples"
-	# Lake wakes/bubbles can cross the swimmer, below solid rock contact art.
+	# Painted mode keeps wakes above its front surface; legacy cues stay below rock.
 	_ripple_visual.z_as_relative = false
-	_ripple_visual.z_index = 2 if lake_presentation else -1
+	_ripple_visual.z_index = (101 if painted_surface else 2) if lake_presentation else -1
 	add_child(_ripple_visual)
 	_ripple_visual.draw.connect(_draw_movement_ripples)
 	_fill = Polygon2D.new()
@@ -76,14 +83,14 @@ func _ready() -> void:
 		add_child(reflection_copy)
 	add_child(_fill)
 	if lake_presentation and not air_pocket:
-		# Reflect scenery/building rear art before actors. A separate, light
-		# immersion grade covers actors but stays behind solid front contact art.
+		# Reflect scenery before actors. The opt-in front surface can then conceal
+		# or reveal all submerged world art without affecting movement/collision.
 		_fill.z_as_relative = false
 		_fill.z_index = -4
 		_immersion_fill = Polygon2D.new()
 		_immersion_fill.name = "WaterImmersionTint"
 		_immersion_fill.z_as_relative = false
-		_immersion_fill.z_index = 2
+		_immersion_fill.z_index = 100 if painted_surface else 2
 		var immersion := ShaderMaterial.new()
 		immersion.shader = load("res://Src/Environment/BlueBiome/Water/polygon_lake_immersion.gdshader")
 		_immersion_fill.material = immersion
@@ -228,6 +235,7 @@ func is_presentation_active() -> bool:
 func _update_water_preview(delta: float) -> void:
 	if not is_instance_valid(_fill):
 		return
+	_update_observer_view(delta)
 	_fill.visible = (not air_pocket or lake_presentation) and points.size() >= 3 and not Geometry2D.triangulate_polygon(points).is_empty()
 	if lake_presentation and air_pocket:
 		_fill.visible = _fill.visible and is_presentation_active()
@@ -288,8 +296,15 @@ func _update_water_preview(delta: float) -> void:
 	_fill.material.set_shader_parameter("pocket_count", count)
 	if is_instance_valid(_immersion_fill):
 		_immersion_fill.visible = _fill.visible
+		# Opt-in front surface covers enemies (whose sprites can reach z=90),
+		# foreground facades and rock equally. UI remains on its own CanvasLayer.
+		_immersion_fill.z_index = 100 if painted_surface else 2
+		_ripple_visual.z_index = 101 if painted_surface else 2
 		_immersion_fill.polygon = _fill.polygon
 		_immersion_fill.material.set_shader_parameter("immersion_opacity", immersion_opacity)
+		_immersion_fill.material.set_shader_parameter("painted_surface", painted_surface)
+		_immersion_fill.material.set_shader_parameter("surface_opacity", surface_opacity)
+		_immersion_fill.material.set_shader_parameter("underwater_view", underwater_view)
 		for parameter in ["surface_y", "shallow_color", "deep_color", "air_points", "air_counts", "air_feathers", "pocket_count"]:
 			_immersion_fill.material.set_shader_parameter(parameter, _fill.material.get_shader_parameter(parameter))
 	for i in range(_ripples.size()-1,-1,-1):
@@ -323,3 +338,23 @@ func _is_visible_water(point: Vector2) -> bool:
 func get_presentation_opacity() -> float:
 	# Exterior facades share the lake's spatial grade, not the observer's state.
 	return water_color.a
+
+func _update_observer_view(delta: float) -> void:
+	if not painted_surface or air_pocket or Engine.is_editor_hint():
+		underwater_view = 0.0
+		return
+	for observer in get_tree().get_nodes_in_group("player"):
+		if not observer is Node2D or observer.get_world_2d() != get_world_2d():
+			continue
+		var point: Vector2 = observer.get_water_sample_position() if observer.has_method("get_water_sample_position") else observer.global_position
+		var eye_y := point.y + observer_eye_offset.y
+		var visual := observer.get_node_or_null("Live3DVisual")
+		if visual and visual.has_method("get_water_eye_global_position"):
+			var eye: Vector2 = visual.get_water_eye_global_position()
+			if eye.is_finite(): eye_y = eye.y
+		# Use the rendered head for upright/swimming poses, with a soft spatial
+		# band and temporal blend to avoid bobbing flicker at the waterline.
+		# Dry chambers below the lake retain the underwater view.
+		var target := smoothstep(get_surface_global_y()-8.0, get_surface_global_y()+18.0, eye_y)
+		underwater_view = lerpf(underwater_view, target, 1.0-exp(-delta*4.0/submerge_transition_seconds))
+		return

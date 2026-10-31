@@ -956,6 +956,7 @@ span_width = 768.0
 [node name="Lake" parent="Volumes" unique_id=557312954 instance=ExtResource("3")]
 position = Vector2(-361, 942)
 lake_presentation = true
+painted_surface = true
 points = PackedVector2Array(369, -531, 5834, -531, 5838, 2334, -1041, 2334, -1036, -531)
 
 [node name="CollisionPolygon2D" parent="Volumes/Lake" index="0"]

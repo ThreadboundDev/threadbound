@@ -1,0 +1,74 @@
+{
+  "world_polygons": 148,
+  "identical": true,
+  "canonical_geometry_sha256": "62ab2ce2b8af5cc295cdb534cac0cc5280c42777c9179f76f324ca4b51d20908",
+  "baseline": "work/gameplay-review-followup-2026-10-30/geometry-baseline.json",
+  "states": {
+    "painted_above": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(692.6522, 267.3393)",
+      "player": "(650.0, 350.0)",
+      "underwater_view": 0.0
+    },
+    "painted_below": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(692.6522, 501.0876)",
+      "player": "(650.0, 600.0)",
+      "underwater_view": 0.999581057876552
+    },
+    "painted_depth": {
+      "camera": "(2200.0, 1600.0)",
+      "eye": "(2142.652, 1541.088)",
+      "player": "(2100.0, 1640.0)",
+      "underwater_view": 0.999999824487497
+    },
+    "painted_half": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(692.6522, 361.0876)",
+      "player": "(650.0, 460.0)",
+      "underwater_view": 0.0
+    },
+    "painted_pocket": {
+      "camera": "(4000.0, 2150.0)",
+      "eye": "(4042.652, 2067.339)",
+      "player": "(4000.0, 2150.0)",
+      "underwater_view": 0.99999999992647
+    },
+    "previous_above": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(679.1285, 246.788)",
+      "player": "(650.0, 350.0)",
+      "underwater_view": 0.0
+    },
+    "previous_below": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(692.6522, 501.0876)",
+      "player": "(650.0, 600.0)",
+      "underwater_view": 0.0
+    },
+    "previous_depth": {
+      "camera": "(2200.0, 1600.0)",
+      "eye": "(2142.652, 1541.088)",
+      "player": "(2100.0, 1640.0)",
+      "underwater_view": 0.0
+    },
+    "previous_half": {
+      "camera": "(1000.0, 400.0)",
+      "eye": "(692.6522, 361.0876)",
+      "player": "(650.0, 460.0)",
+      "underwater_view": 0.0
+    },
+    "previous_pocket": {
+      "camera": "(4000.0, 2150.0)",
+      "eye": "(4042.652, 2067.339)",
+      "player": "(4000.0, 2150.0)",
+      "underwater_view": 0.0
+    },
+    "sky": {
+      "camera": "(2500.0, -1500.0)",
+      "eye": "(2442.652, -1542.661)",
+      "player": "(2400.0, -1460.0)",
+      "underwater_view": 0.00041894212341758
+    }
+  }
+}

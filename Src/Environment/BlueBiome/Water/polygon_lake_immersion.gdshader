@@ -8,6 +8,7 @@ uniform float surface_y = 411.0;
 uniform float immersion_opacity : hint_range(0.0,1.0) = .22;
 uniform vec4 shallow_color : source_color = vec4(.12,.48,.59,1.0);
 uniform vec4 deep_color : source_color = vec4(.018,.10,.18,1.0);
+#include "res://Src/Environment/BlueBiome/Water/painted_water_surface.gdshaderinc"
 varying vec2 world_position;
 void vertex() { world_position = (MODEL_MATRIX*vec4(VERTEX,0.0,1.0)).xy; }
 void fragment() {
@@ -32,17 +33,24 @@ void fragment() {
 		if (air_feathers[pocket] > 0.0) {
 			float distance=sqrt(nearest)*(inside ? -1.0 : 1.0);
 			water_visibility=min(water_visibility,smoothstep(-air_feathers[pocket],air_feathers[pocket],distance));
-		} else if (inside) { discard; }
+		} else if (inside) { water_visibility=0.0; }
 		start+=count;
 	}
-	float depth=max(0.0,world_position.y-surface_y);
-	vec3 tint=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
-	// World-space movement and depth keep the swimmer inside the water without
-	// fading the entire environment whenever the observer crosses the surface.
-	float current=sin(world_position.x*.035+world_position.y*.022+TIME*.7)
-		*sin(world_position.x*.018-world_position.y*.031-TIME*.45);
-	float light=pow(max(0.0,current),8.0);
-	tint+=vec3(.10,.17,.16)*light;
-	float coverage=clamp(immersion_opacity*(1.0+smoothstep(0.0,900.0,depth)*.4),0.0,1.0);
-	COLOR=vec4(tint,coverage*water_visibility);
+	if (painted_surface) {
+		// Dry pockets become visible through the water after submerging. From
+		// above they cannot punch bright geometric holes in the lake surface.
+		COLOR=painted_water(world_position,SCREEN_UV,SCREEN_PIXEL_SIZE,TIME);
+		COLOR.a*=mix(1.0,water_visibility,underwater_view);
+	} else {
+		float depth=max(0.0,world_position.y-surface_y);
+		vec3 tint=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
+		// World-space movement and depth keep the swimmer inside the water without
+		// fading the entire environment whenever the observer crosses the surface.
+		float current=sin(world_position.x*.035+world_position.y*.022+TIME*.7)
+			*sin(world_position.x*.018-world_position.y*.031-TIME*.45);
+		float light=pow(max(0.0,current),8.0);
+		tint+=vec3(.10,.17,.16)*light;
+		float coverage=clamp(immersion_opacity*(1.0+smoothstep(0.0,900.0,depth)*.4),0.0,1.0);
+		COLOR=vec4(tint,coverage*water_visibility);
+	}
 }

@@ -1,46 +1,55 @@
-# Next test — October 30 feedback pass
+# Next test — October 30 overnight video follow-up
 
-Use **`threadbound/art-gameplay-review-followup`**. It contains the accepted
-idle plus the run, live slash VFX, Blue corrections and separate appearance lab.
-Save any manual Godot/art edits and reload changed resources; stop the old run
-and press F6 fresh. About **5 minutes**, with the appearance lab optional.
+Use **`threadbound/art-gameplay-review-followup`**. The accepted upright idle,
+house visibility and wind-only clouds are retained. Save manual editor/art edits,
+stop the previous run and F6 fresh so updated scripts/resources load. About
+**5 minutes**; no full level playthrough needed.
 
-1. **Demo: run and live attacks (1–2 minutes).** Open
-   `Src/Environment/World/Chamber Of The First Weave.tscn`. Run left/right,
-   stop into the accepted idle, jump and grapple. The chest/head should be
-   straighter while the original stride remains. Try all three grounded strikes
-   on an enemy and in empty space: the filled slash is now live; contact bursts
-   should appear on confirmed hits. Judge readability and whether the effect
-   sells the cut. Attack timing/reach were not retuned. Spin and directional
-   thrusts retain their distinct earlier effects.
-2. **Blue: depth/clouds/bridges (2 minutes).** F6
+1. **Run and attack flow (1–2 minutes).** In the demo
+   (`Src/Environment/World/Chamber Of The First Weave.tscn`), run both directions,
+   stop, jump and grapple. The sword arm should move visibly with the run rather
+   than remain held still. Try ground combos, **up/down air attacks**, neutral
+   special, spin and grapple strike. The extended attacks now share the pale
+   filled sweep / cool body / sparse flax-thread accents. Judge direction,
+   brightness and whether the effects connect to the weapon. Attack timing,
+   reach, damage and AP rules were not retuned.
+2. **Water crossing and movement (2 minutes).** F6
    `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
-   Use **Loom Heron**, swim below the surface, then move horizontally/vertically.
-   Solid cavern faces should be easy to distinguish from the slower, darker rear
-   wall; check the former flat rock cut at the waterline. Above water, clouds
-   should drift right while staying independent of camera movement. Walk the
-   floating spans and inspect taller rear rails/short foreground sections.
-3. **Workshop (1 minute).** Use the shortcut, enter through its door and compare
-   the bright room area with the walls. Resize the game window once if convenient:
-   the focus rectangle should remain aligned. Inspect the high bridge for wood
-   covering painted rock. Sky coverage at the very top of the map remains a
-   known separate art edge; no layout/collision redesign was made.
-4. **Optional appearance study.** F6 `tools/art/appearance_lab.tscn`.
-   Use the menus to compare **Plain / Pattern / Mask / Both** while running and
-   attacking. Try **Split porcelain**, then Blue + Yellow and All three with
-   both Mix choices. Shoulder/long-weapon toggles are rough silhouette proxies;
-   they keep current sword attack reach. Softer porcelain is a highlight candidate
-   for review, not a production demo lighting change.
+   Use **Loom Heron**. Look at the lake from a bridge, enter normally, hover half
+   submerged, dive deeper, swim sideways/up/down, then breach. The surface should
+   look reflective and mostly opaque from above, opening smoothly as the head
+   goes under. Above-water body pixels should stay dry. Decide whether this
+   reveal helps the underwater world feel distinct and whether it hides too much
+   during surface combat. The existing full bank dive remains optional; ordinary
+   jumping/running into water should never stop to play it.
+3. **Rock depth and dry spaces (1 minute).** Swim past the tower and into a cave
+   pocket. The far rock wall should stay still on screen while structural timber
+   and collision faces follow the world. Contact rock now has a submerged grade
+   rather than looking completely dry. Check that the passage/solid distinction
+   is clear, and that dry chambers still read as dry after entering them.
+4. **Painted bridges / high jump (1 minute).** Walk one floating span and one high
+   landing. The rails now sample the approved Krita stamp painting; deck, rails,
+   floats and braces are separate reusable parts. Judge scale, style and the
+   short front sections crossing the boots. Jump high near the workshop/tower:
+   the previous horizontal dark sky void should be gone. House focus and cloud
+   behavior should continue to look as they did in the video.
 
-**Feedback:** a 30–60 second video plus how the run/attacks/water feel is best.
-For room/bridge defects or a preferred mask/Pattern combination, screenshots
-with the landmark or menu choices are enough. Feel notes alone are still useful.
-No full playthrough is needed. Save manual changes and checkpoint before moving
-on; routine Git backup is handled by the assistant.
+**Best feedback:** a 30–60 second video crossing the waterline in both directions
+and swimming sideways, plus whether the reveal/static backdrop feels right.
+A short run/attack clip helps assess the arm and vertical/special VFX. Screenshots
+are enough for bridge seams or a water/rock patch you dislike; include its landmark.
+Your feel notes matter more than recording a full run. Save and checkpoint any
+manual Godot/art edits before switching tasks; routine Git backup is handled here.
 
-[Delivery and validation](art/gameplay_review_followup_2026_10_30.md) ·
-[Mask/Pattern comparison](../work/appearance-lab-2026-10-30/looks-comparison.jpg) ·
-[Mask variants](../work/appearance-lab-2026-10-30/mask-comparison.jpg).
+[Delivery and checks](art/overnight_video_review_2026_10_30.md) ·
+[Run loop](../work/overnight-playtest-2026-10-30/run-arm-loop.gif) ·
+[VFX family](../work/overnight-playtest-2026-10-30/vfx-family-review.jpg) ·
+[Water comparison](../work/overnight-playtest-2026-10-30/water-surface-comparison.jpg) ·
+[Modular bridge guide](art/modular_stamped_bridges_2026_10_30.md).
+
+The separate `tools/art/appearance_lab.tscn` Pattern / porcelain mask / both
+comparison remains available for a later review; no equipment expansion was added
+in this overnight pass.
 
 ## Earlier framing review notes
 

@@ -1,0 +1,14 @@
+{
+  "baseline": false,
+  "checks": 10,
+  "display": "Windows",
+  "failures": [],
+  "samples": {
+    "body_opacity_dry": 0.340000003576279,
+    "body_opacity_wet": 0.340000003576279,
+    "deep_actor": "(0.7922, 0.8745, 0.898, 1.0)",
+    "reflection_red_dry": 0.254901975393295,
+    "reflection_red_wet": 0.254901975393295,
+    "shallow_actor": "(0.8078, 0.8863, 0.9098, 1.0)"
+  }
+}

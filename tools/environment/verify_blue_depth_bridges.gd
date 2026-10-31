@@ -1,5 +1,5 @@
 extends SceneTree
-const OUT := "res://work/gameplay-review-followup-2026-10-30"
+const OUT := "res://work/overnight-playtest-2026-10-30"
 const PREVIOUS := "res://work/blue-depth-bridges-2026-10-30"
 var checks := 0
 var failures: Array[String]=[]
@@ -83,8 +83,8 @@ func run() -> void:
 	var wood_dx: float=points[1].wood.x-points[0].wood.x
 	var rock_dy: float=points[2].rock.y-points[1].rock.y
 	var wood_dy: float=points[2].wood.y-points[1].wood.y
-	check(absf(rock_dx/wood_dx-0.50)<0.001,"Horizontal rock scrolling is 50 percent of the world")
-	check(absf(rock_dy/wood_dy-0.75)<0.001,"Vertical rock scrolling is 75 percent of the world")
+	check(absf(rock_dx)<0.01,"Far rock stays fixed on screen during horizontal camera movement")
+	check(absf(rock_dy)<0.01,"Far rock stays fixed on screen during vertical camera movement")
 	check(absf(wood_dx+400.0*0.83)<0.01 and absf(wood_dy+200.0*0.83)<0.01,"Timber remains aligned with normal collision scrolling")
 	var clouds: Node2D = room.get_node("LakePresentation/OpenAirClouds")
 	check(clouds.get_child_count() == 48,"Cloud coverage increases from twelve to forty-eight varied sprites")
@@ -99,8 +99,8 @@ func run() -> void:
 	cloud._process(1.0)
 	check(cloud.position.x > wind_start.x,"Clouds still drift right with the wind")
 	var faces = artwork.get_node("RockContactRims")
-	check(faces.triangle_count > 1000 and faces.z_index > 2,"Complete solid rock faces render above the immersion veil")
 	var lake = room.get_node("Volumes/Lake")
+	check(faces.triangle_count > 1000 and faces.z_index > lake._fill.z_index and faces.z_index < lake._immersion_fill.z_index,"Complete solid rock faces stay in front of rear water, under the painted surface")
 	var feather: PackedFloat32Array = lake._fill.material.get_shader_parameter("air_feathers")
 	check(feather.has(100.0),"Open cave pockets have a soft visual boundary")
 	for label in ["AirPocket2","AirPocket3"]:

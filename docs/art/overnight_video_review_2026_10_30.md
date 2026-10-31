@@ -84,6 +84,58 @@ sampled directly, preserving their painting. Thirty-two modular checks and the
 [Asset guide, provenance and room comparisons](modular_stamped_bridges_2026_10_30.md).
 Checkpoint: `art: build modular bridges from approved painted stamps`.
 
+## Water and sky delivery
+
+The Blue lake now opts into a presentation experiment: a nearly opaque painted
+reflective surface when the character's head is above water, opening smoothly to
+a translucent view as it goes below. The rendered head is projected through the
+same 3D-to-2D transform as the character; a soft 26-unit crossing band and a short
+temporal blend prevent a binary pop. Above-water pixels stay dry. Normal entry
+still uses existing movement and animation behavior; no stop, launch, dive-input
+requirement, camera cut or forced animation lock was added.
+
+Broken horizontal strokes and a pale surface edge make the water plane visible.
+The front pass covers player, enemies, solid rocks and the near facade consistently;
+the legacy facade veil is omitted in this mode to avoid applying the grade twice.
+Dry chambers reveal through the surface after submerging, and physical air-pocket
+queries retain their original polygons. Solid submerged rock receives a light
+spatial water grade, preserving brighter collision faces against the darker wall.
+
+The 25-section far rock backdrop is now screen-anchored on both axes, rather than
+scrolling at 50% horizontally / 75% vertically. Its existing deeper placement and
+waterline haze remain. Timber and collision rock still move with the world. The
+importer records the same configuration so a later art import keeps this change.
+High jumps also get continuous sky beyond the finite far plate, using its sampled
+top-row color. Approved cloud motion/density, houses, camera zoom and source PNGs
+remain intact.
+
+[Surface comparison](../../work/overnight-playtest-2026-10-30/water-surface-comparison.jpg) ·
+[Reveal loop](../../work/overnight-playtest-2026-10-30/water-reveal-loop.gif) ·
+[Depth comparison](../../work/overnight-playtest-2026-10-30/water-depth-comparison.jpg) ·
+[Dry chamber](../../work/overnight-playtest-2026-10-30/water-pocket-comparison.jpg) ·
+[High sky](../../work/overnight-playtest-2026-10-30/high-sky-coverage.jpg).
+The water A/B uses the same current scene/backdrop, toggling the water treatment;
+it is not a full before/after of every overnight edit. The loop moves the observer
+through a fixed-camera fixture, not a recording of normal player input.
+
+Validation: 20 new GPU pixel/transition checks, 10 legacy-water pixel checks,
+31 tower/exterior checks (including real-room entrances), 20 house-handoff checks,
+122 water-entry/grapple checks and 78 room/depth/bridge checks pass. The rear wall
+has effectively zero screen displacement on both tested camera axes. A separate
+capture audit confirms the rendered head drives the reveal and all 148 world
+collision polygons exactly match the prior baseline. Test profiles are isolated
+from Chase's saves. Existing enemy-packing, camera interpolation and shutdown
+resource diagnostics remain; logs are not error-free. Captures use stage render
+scale 1.0 for GPU memory; the production setting stays 2.0.
+
+Tune `Volumes/Lake.painted_surface` to compare the old/new water live;
+`surface_opacity` (0.96), `immersion_opacity` (0.22), and
+`submerge_transition_seconds` (0.30) control the experiment. The eye offset is a
+fallback for non-rigged observers. Outside opacity intentionally conceals most
+underwater enemies, and screen-space reflection can only use visible source art.
+The static wall and reflection/reveal style still need Chase's moving review.
+Checkpoint: `art: reveal the underwater scene through a painted lake surface`.
+
 ## Water-entry recommendation
 
 Ordinary running/jumping into water should remain immediate and controllable.

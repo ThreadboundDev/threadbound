@@ -1,0 +1,7 @@
+{
+	"checks": 20,
+	"failures": [],
+	"outside_actor": "(0.1569, 0.3451, 0.3922, 1.0)",
+	"underwater_actor": "(0.8039, 0.8863, 0.9098, 1.0)",
+	"underwater_contact_rock": "(0.3294, 0.3373, 0.2863, 1.0)"
+}

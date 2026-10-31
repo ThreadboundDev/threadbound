@@ -7,6 +7,7 @@ uniform float water_opacity = .34;
 uniform float immersion_opacity : hint_range(0.0,1.0) = .22;
 uniform vec4 shallow_color : source_color = vec4(.12,.48,.59,1.0);
 uniform vec4 deep_color : source_color = vec4(.018,.10,.18,1.0);
+uniform bool painted_surface = false;
 varying vec2 world_position;
 void vertex() { world_position = (MODEL_MATRIX*vec4(VERTEX,0.0,1.0)).xy; }
 void fragment() {
@@ -33,6 +34,9 @@ void fragment() {
 		vec3 veil=tint+vec3(.10,.17,.16)*pow(max(0.0,current),8.0);
 		float coverage=clamp(immersion_opacity*(1.0+smoothstep(0.0,900.0,depth)*.4),0.0,1.0);
 		source.rgb=mix(source.rgb,veil,coverage);
+		// The painted surface draws after this facade, applying its own veil
+		// exactly once. Retain just the rear water-body grade in this mode.
+		if (painted_surface) { source.rgb=mix(texture(TEXTURE,UV).rgb,tint,water_opacity); }
 	}
 	COLOR=source;
 }

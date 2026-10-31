@@ -150,6 +150,10 @@ func _sync_camera() -> void:
 		wet_material.set_shader_parameter("immersion_opacity",lake.immersion_opacity)
 		wet_material.set_shader_parameter("shallow_color",Color(lake.water_color.r,lake.water_color.g,lake.water_color.b,1))
 		wet_material.set_shader_parameter("deep_color",lake.deep_water_color)
+		wet_material.set_shader_parameter("painted_surface",lake.painted_surface)
 		if is_instance_valid(lake._fill):
 			lake._fill.material.set_shader_parameter("facade_reflection_texture",near_view.get_texture())
 			lake._fill.material.set_shader_parameter("has_facade_reflection",true)
+		if is_instance_valid(lake._immersion_fill):
+			lake._immersion_fill.material.set_shader_parameter("facade_reflection_texture",near_view.get_texture())
+			lake._immersion_fill.material.set_shader_parameter("has_facade_reflection",true)

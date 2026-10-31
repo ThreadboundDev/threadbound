@@ -36,7 +36,7 @@ def layer_mapping():
     return {'rear_supports': ['STAMP REAR SUPPORTS'],
             'rear_cave': ['Under Cave Mouth', 'Cave Walls']}
 
-UNDERWATER_PRESENTATION = dict(scroll_scale=[0.50, 0.75], anchor_world=[2048, 1600], depth_offset=[0,600],
+UNDERWATER_PRESENTATION = dict(scroll_scale=[0.0, 0.0], anchor_world=[2048, 1600], depth_offset=[0,600],
                                reference_viewport=[1920, 1080], water_surface_y=411, z_index=-8)
 
 def compose_underwater_scene(scene, entries):

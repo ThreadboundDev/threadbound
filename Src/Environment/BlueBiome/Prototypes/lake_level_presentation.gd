@@ -15,6 +15,14 @@ var _depth_material: ShaderMaterial
 func _ready() -> void:
 	_build_lake_lighting()
 	_terrain = get_parent().get_node_or_null("Geometry/GreyboxTerrain")
+	# Continue the far plate's sampled top-row sky beyond its finite bounds.
+	# High jumps must never reveal the viewport's dark clear color.
+	var sky := Polygon2D.new()
+	sky.name = "SkyContinuity"
+	sky.polygon = PackedVector2Array([Vector2(-20000,-20000),Vector2(20000,-20000),Vector2(20000,20000),Vector2(-20000,20000)])
+	sky.color = Color8(107,200,244)
+	sky.z_index = -96
+	add_child(sky)
 	_far = _background("FarCliffs", "far_sky_cliffs", Vector2(1900,-450), 4.5, -95)
 	_near = _background("LakeVillage", "near_lake_village", Vector2(1900,212), 3.0, -90)
 	var distance := ShaderMaterial.new()
