@@ -5,6 +5,7 @@ extends Node2D
 const MODEL := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb")
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
+const THREAD_SWEEP := preload("res://Src/VFX/thread_sword_sweep.gd")
 const OUTLINE_SHADER := preload("res://Src/Characters/Player/player_live_3d_outline.gdshader")
 
 const LOOPING_ACTIONS := {
@@ -48,6 +49,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 
 @export_group("Sword Smear")
 @export var sword_smear_enabled := true
+@export var filled_sweep_enabled := true
 
 var _player: CharacterBody2D
 var _viewport: SubViewport
@@ -69,6 +71,9 @@ var _door_start_yaw := 0.0
 var _camera: Camera3D
 var _sword_mesh: MeshInstance3D
 var _sword_sweep: SwordSweepVFX
+var _thread_sweep: Node2D
+var _sweep_phase := -1.0
+var _sweep_facing := 0
 var _clips: Dictionary = {}
 var _logical_animation: StringName = &""
 var _current_action: StringName = &""
@@ -110,6 +115,11 @@ func _ready() -> void:
 	_sword_sweep.z_index = 15
 	add_child(_sword_sweep)
 	_sword_sweep.set_as_top_level(true)
+	_thread_sweep = THREAD_SWEEP.new()
+	_thread_sweep.name = "ThreadSwordSweep"
+	add_child(_thread_sweep)
+	_thread_sweep.set_as_top_level(true)
+	_player.ready.connect(_connect_attack_contact, CONNECT_ONE_SHOT)
 	_hide_legacy_visuals()
 	play_gameplay_animation(&"Idle")
 
@@ -947,10 +957,38 @@ func _apply_grapple_aim_override() -> void:
 	_skeleton.set_bone_global_pose_override(_left_upper_arm_index, pose, 0.82, true)
 
 
-func _update_sword_smears(_delta: float) -> void:
+func _connect_attack_contact() -> void:
+	_player.attack_hitbox.hit_landed.connect(_on_sword_contact)
+
+
+func _on_sword_contact(hurtbox: HurtboxComponent, _damage: DamageData) -> void:
+	if not sword_smear_enabled or not filled_sweep_enabled or not is_instance_valid(hurtbox):
+		return
+	# Hit confirmation comes from the existing hitbox. Place the burst on the
+	# target's nearest collision bounds, rather than on a staged swing frame.
+	var blade := _get_blade_world_points()
+	var point := hurtbox.global_position
+	if blade.size() == 2:
+		for shape: CollisionShape2D in hurtbox.find_children("*","CollisionShape2D",true,false):
+			if shape.disabled or not shape.shape: continue
+			var bounds := shape.global_transform * shape.shape.get_rect()
+			point = blade[1].clamp(bounds.position,bounds.end)
+			break
+	_thread_sweep.impact(point,Vector2(float(_player.last_direction),0))
+
+
+func _update_sword_smears(delta: float) -> void:
 	if not _sword_sweep:
 		return
 	var data: Dictionary = _player.get_sword_sweep_state()
+	var filled := sword_smear_enabled and filled_sweep_enabled and not data.is_empty() and int(data.style) not in [3,4]
+	var phase := float(data.get("phase",-1.0))
+	var facing := int(_player.last_direction)
+	if phase < _sweep_phase or facing != _sweep_facing or not sword_smear_enabled:
+		_thread_sweep.clear_trail()
+	_sweep_phase = phase
+	_sweep_facing = facing
+	_thread_sweep.advance(delta,filled and phase >= 0.0 and phase <= 1.0,_get_blade_world_points())
 	if not sword_smear_enabled or data.is_empty():
 		_sword_sweep.clear()
 		return
@@ -961,6 +999,8 @@ func _update_sword_smears(_delta: float) -> void:
 	_sword_sweep.set_sweep(data.phase, data.radius, data.arc,
 		data.pose, channels, data.reverse,
 		_get_blade_world_points(), data.style)
+	if filled:
+		_sword_sweep.hide()
 	if data.style == 2 and _player.is_on_floor():
 		var collider := _player.get_node("CollisionShape2D") as CollisionShape2D
 		var feet := collider.to_global(Vector2(0, collider.shape.get_rect().end.y))

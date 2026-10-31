@@ -16,6 +16,10 @@ Run correction: 15 passing Forward+ checks and pose comparison; moving review
 pending. Checkpoint `art: carry upright posture into the existing run` on
 `threadbound/art-gameplay-review-followup`. T37 needs the requested corrections;
 T35 idle is accepted, while zoom/overall scale remain under review.
+Preferred filled slashes are now live on the shared player, with confirmed-hit
+bursts and six passing matched-combo/physics integration checks. Checkpoint
+`vfx: integrate the preferred filled sword sweep`. Remaining work follows the
+delivery's environment fixes and isolated mask/Pattern comparison.
 
 **Previous test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
 The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all

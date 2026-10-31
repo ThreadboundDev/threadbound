@@ -21,6 +21,23 @@ Existing texture/RID/ObjectDB shutdown diagnostics persist.
 
 ## Remaining requested work, in order
 
+**Live slash implemented.** The preferred original filled blade sweep now runs
+in the production `PlayerLive3DVisual` for ground/crouch/forward air/water slashes.
+Directional thrusts and the spin retain their distinct existing silhouettes.
+`Src/VFX/thread_sword_sweep.gd` is promoted from the reviewed study; its short
+world-space trail and sparse flax accents follow the actual blade. The old thin
+sweep is suppressed only for the filled styles. No attack-controller edits.
+
+Hit bursts subscribe to the existing hitbox's confirmed-hit signal and are placed
+at the target collision bounds nearest the blade. No staged preview contacts run
+in gameplay. [Three-strike comparison](../../work/gameplay-review-followup-2026-10-30/live-sweep-comparison.jpg).
+Six integration checks pass: matched old/new combo source times, activation and
+damage polygons, all three swings emitting bounded samples, whiffs without
+bursts, trail expiry, and an actual physics overlap producing a confirmed burst.
+The slash remains smaller than parts of the existing broad damage sector; this
+pass does not silently expand art or alter reach to resolve that earlier finding.
+Checkpoint: `vfx: integrate the preferred filled sword sweep`.
+
 1. Integrate the preferred filled slash into actual gameplay; it was previously
    only in the isolated study. Keep attack timing, damage and collisions intact.
    Contact bursts must follow real confirmed hits, not the study's staged contacts.
