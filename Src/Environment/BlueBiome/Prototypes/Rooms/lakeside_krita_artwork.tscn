@@ -84,6 +84,8 @@
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/underwater_background_04_05.png" id="underwater_22"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/underwater_background_05_05.png" id="underwater_23"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/underwater_background_06_05.png" id="underwater_24"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/anchored_parallax_2d.gd" id="underwater_scroll"]
+[ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/underwater_rock_clip.tres" id="underwater_material"]
 
 [node name="TerrainArtwork" type="Node2D"]
 editor_description = "Saved Krita artwork, 6912 x 5888, world origin (-1408,-2560), scale 1:1. Reference guides excluded; independent layers retain alpha. Add foliage as separate scene instances."
@@ -407,131 +409,161 @@ texture = ExtResource("56")
 centered = false
 use_parent_material = true
 
-[node name="underwater_background" type="Node2D" parent="."]
+[node name="underwater_background" type="Parallax2D" parent="."]
 z_index = -8
-editor_description = "Chase's Underwater background layer, original 1:1 canvas placement; decorative rock behind supports, cave walls and swimmer."
+editor_description = "Far underwater rock only; timber stays in its independent world-locked rear_supports group. Original coordinates agree at the lake-center camera anchor."
+material = ExtResource("underwater_material")
+script = ExtResource("underwater_scroll")
+scroll_scale = Vector2(0.65, 0.85)
+placement_anchor_path = NodePath("..")
+placement_offset = Vector2(-380.800, -159.000)
 
 [node name="Rock_00" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-1408, -512)
 texture = ExtResource("underwater_0")
 centered = false
+use_parent_material = true
 
 [node name="Rock_01" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-384, -512)
 texture = ExtResource("underwater_1")
 centered = false
+use_parent_material = true
 
 [node name="Rock_02" type="Sprite2D" parent="underwater_background"]
 position = Vector2(640, -512)
 texture = ExtResource("underwater_2")
 centered = false
+use_parent_material = true
 
 [node name="Rock_03" type="Sprite2D" parent="underwater_background"]
 position = Vector2(1664, -512)
 texture = ExtResource("underwater_3")
 centered = false
+use_parent_material = true
 
 [node name="Rock_04" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-1408, 512)
 texture = ExtResource("underwater_4")
 centered = false
+use_parent_material = true
 
 [node name="Rock_05" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-384, 512)
 texture = ExtResource("underwater_5")
 centered = false
+use_parent_material = true
 
 [node name="Rock_06" type="Sprite2D" parent="underwater_background"]
 position = Vector2(640, 512)
 texture = ExtResource("underwater_6")
 centered = false
+use_parent_material = true
 
 [node name="Rock_07" type="Sprite2D" parent="underwater_background"]
 position = Vector2(1664, 512)
 texture = ExtResource("underwater_7")
 centered = false
+use_parent_material = true
 
 [node name="Rock_08" type="Sprite2D" parent="underwater_background"]
 position = Vector2(2688, 512)
 texture = ExtResource("underwater_8")
 centered = false
+use_parent_material = true
 
 [node name="Rock_09" type="Sprite2D" parent="underwater_background"]
 position = Vector2(3712, 512)
 texture = ExtResource("underwater_9")
 centered = false
+use_parent_material = true
 
 [node name="Rock_10" type="Sprite2D" parent="underwater_background"]
 position = Vector2(4736, 512)
 texture = ExtResource("underwater_10")
 centered = false
+use_parent_material = true
 
 [node name="Rock_11" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-1408, 1536)
 texture = ExtResource("underwater_11")
 centered = false
+use_parent_material = true
 
 [node name="Rock_12" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-384, 1536)
 texture = ExtResource("underwater_12")
 centered = false
+use_parent_material = true
 
 [node name="Rock_13" type="Sprite2D" parent="underwater_background"]
 position = Vector2(640, 1536)
 texture = ExtResource("underwater_13")
 centered = false
+use_parent_material = true
 
 [node name="Rock_14" type="Sprite2D" parent="underwater_background"]
 position = Vector2(1664, 1536)
 texture = ExtResource("underwater_14")
 centered = false
+use_parent_material = true
 
 [node name="Rock_15" type="Sprite2D" parent="underwater_background"]
 position = Vector2(2688, 1536)
 texture = ExtResource("underwater_15")
 centered = false
+use_parent_material = true
 
 [node name="Rock_16" type="Sprite2D" parent="underwater_background"]
 position = Vector2(3712, 1536)
 texture = ExtResource("underwater_16")
 centered = false
+use_parent_material = true
 
 [node name="Rock_17" type="Sprite2D" parent="underwater_background"]
 position = Vector2(4736, 1536)
 texture = ExtResource("underwater_17")
 centered = false
+use_parent_material = true
 
 [node name="Rock_18" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-1408, 2560)
 texture = ExtResource("underwater_18")
 centered = false
+use_parent_material = true
 
 [node name="Rock_19" type="Sprite2D" parent="underwater_background"]
 position = Vector2(-384, 2560)
 texture = ExtResource("underwater_19")
 centered = false
+use_parent_material = true
 
 [node name="Rock_20" type="Sprite2D" parent="underwater_background"]
 position = Vector2(640, 2560)
 texture = ExtResource("underwater_20")
 centered = false
+use_parent_material = true
 
 [node name="Rock_21" type="Sprite2D" parent="underwater_background"]
 position = Vector2(1664, 2560)
 texture = ExtResource("underwater_21")
 centered = false
+use_parent_material = true
 
 [node name="Rock_22" type="Sprite2D" parent="underwater_background"]
 position = Vector2(2688, 2560)
 texture = ExtResource("underwater_22")
 centered = false
+use_parent_material = true
 
 [node name="Rock_23" type="Sprite2D" parent="underwater_background"]
 position = Vector2(3712, 2560)
 texture = ExtResource("underwater_23")
 centered = false
+use_parent_material = true
 
 [node name="Rock_24" type="Sprite2D" parent="underwater_background"]
 position = Vector2(4736, 2560)
 texture = ExtResource("underwater_24")
 centered = false
+use_parent_material = true

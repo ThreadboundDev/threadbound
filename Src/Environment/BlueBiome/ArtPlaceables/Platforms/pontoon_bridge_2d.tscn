@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/structural_walkway_2d.gd" id="1"]
+[node name="PontoonBridge2D" type="Node2D"]
+editor_description = "World-locked art; WalkPlane is the existing collision surface. Waterline Offset locates the twin moored floats."
+z_index = -6
+z_as_relative = false
+texture_filter = 4
+script = ExtResource("1")
+structure = 0
+stamp = 0
+[node name="WalkPlane" type="Marker2D" parent="."]

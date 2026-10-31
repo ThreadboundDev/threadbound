@@ -1,0 +1,42 @@
+{
+	"Deck01": {
+		"anchor": [
+			632.66748046875,
+			137.321411132813
+		],
+		"collider": "Geometry/RockCollision",
+		"distance": 178.335052490234
+	},
+	"Deck02": {
+		"anchor": [
+			304.2236328125,
+			114.434631347656
+		],
+		"collider": "Geometry/RockCollision",
+		"distance": 87.7404403686523
+	},
+	"Deck03": {
+		"anchor": [
+			172.30419921875,
+			123.697082519531
+		],
+		"collider": "Geometry/RockCollision",
+		"distance": 136.47998046875
+	},
+	"Deck04": {
+		"anchor": [
+			239.343505859375,
+			100.981140136719
+		],
+		"collider": "Geometry/RockCollision",
+		"distance": 83.6332550048828
+	},
+	"Deck06": {
+		"anchor": [
+			-157.920043945313,
+			137.809188842773
+		],
+		"collider": "Geometry/BuildingCollision/TowerWallRight2",
+		"distance": 266.929229736328
+	}
+}

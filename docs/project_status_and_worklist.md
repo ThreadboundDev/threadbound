@@ -4,6 +4,21 @@ Updated October 30, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+**Current test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
+The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all
+three checkpoints: 0.83 gameplay zoom/upright idle (`bed83ed3`), delayed-variation
+fix (`017de695`), and the new Blue art pass. Far underwater rock now scrolls at
+65% horizontally/85% vertically behind world-locked timber, with fixed waterline
+clipping. Four waterline landings use pontoon assets; five higher landings use
+braces ending in real rock/tower geometry. Existing walking surfaces/collision
+are preserved. [Delivery and comparisons](art/blue_depth_and_bridges_2026_10_30.md).
+70 engine checks pass; GPU figures and scoped-import idempotence are verified.
+Checkpoint: `art: separate underwater depth and anchor bridge supports` on the
+current branch. **Implemented; Chase's appearance/feel review pending.** The
+[tonight test card](next_test_session.md) is the current review route. VFX
+prototype appearance remains preferred; live VFX integration is still separate.
+T33/T20 acceptance remains open.
+
 **T35 follow-up — zoom 0.83 and upright idle implemented October 30.**
 Chase authorized saving the recommended zoom and trying a more upright pose.
 The demo and Blue Camera2D settings are now 0.83; the painted comparison inherits

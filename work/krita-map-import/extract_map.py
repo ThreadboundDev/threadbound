@@ -36,6 +36,33 @@ def layer_mapping():
     return {'rear_supports': ['STAMP REAR SUPPORTS'],
             'rear_cave': ['Under Cave Mouth', 'Cave Walls']}
 
+UNDERWATER_PRESENTATION = dict(scroll_scale=[0.65, 0.85], anchor_world=[2048, 1600],
+                               reference_viewport=[1920, 1080], water_surface_y=411, z_index=-8)
+
+def compose_underwater_scene(scene, entries):
+    """Scoped reimport preserves independent far parallax and world-space clipping."""
+    import re
+    scene = re.sub(r'^\[ext_resource[^\n]* id="underwater_(?:\d+|scroll|material)"\]\n', '', scene, flags=re.M)
+    scene = re.sub(r'\n\[node (?:name="underwater_background" type="(?:Node2D|Parallax2D)" parent="\."|name="Rock_\d+" type="Sprite2D" parent="underwater_background")\]\n.*?(?=\n\[|\Z)', '', scene, flags=re.S)
+    resources = '\n'.join(f'[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/{entry["path"]}" id="underwater_{i}"]' for i,entry in enumerate(entries))
+    resources += '\n[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/anchored_parallax_2d.gd" id="underwater_scroll"]'
+    resources += '\n[ext_resource type="Material" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/underwater_rock_clip.tres" id="underwater_material"]'
+    offset = scene.index('[node ')
+    scene = scene[:offset].rstrip()+'\n\n'+resources+'\n\n'+scene[offset:]
+    sx,sy = UNDERWATER_PRESENTATION['scroll_scale']
+    ax,ay = UNDERWATER_PRESENTATION['anchor_world']
+    vw,vh = UNDERWATER_PRESENTATION['reference_viewport']
+    scene += '\n[node name="underwater_background" type="Parallax2D" parent="."]\nz_index = -8\n'
+    scene += 'editor_description = "Far underwater rock only; timber stays in its independent world-locked rear_supports group. Original coordinates agree at the lake-center camera anchor."\n'
+    scene += 'material = ExtResource("underwater_material")\nscript = ExtResource("underwater_scroll")\n'
+    # Native centered Camera2D scrolling includes half the logical viewport.
+    # Preserve authored coordinates at this camera-center reference (GPU checked).
+    scene += f'scroll_scale = Vector2({sx}, {sy})\nplacement_anchor_path = NodePath("..")\nplacement_offset = Vector2({-(ax-vw/2)*(1-sx):.3f}, {-(ay-vh/2)*(1-sy):.3f})\n'
+    for i,entry in enumerate(entries):
+        x,y = entry['position']
+        scene += f'\n[node name="Rock_{i:02}" type="Sprite2D" parent="underwater_background"]\nposition = Vector2({x}, {y})\ntexture = ExtResource("underwater_{i}")\ncentered = false\nuse_parent_material = true\n'
+    return scene.rstrip()+'\n'
+
 def lzf(data):
     out = bytearray()
     i = 0
@@ -107,16 +134,7 @@ with zipfile.ZipFile(SOURCE) as z:
         scene = scene_path.read_text()
         # Replace only this import's resources/nodes on rerun. Existing node
         # names, order, materials, positions and all gameplay remain intact.
-        import re
-        scene = re.sub(r'^\[ext_resource[^\n]* id="underwater_\d+"\]\n', '', scene, flags=re.M)
-        scene = re.sub(r'\n\[node (?:name="underwater_background" type="Node2D" parent="\."|name="Rock_\d+" type="Sprite2D" parent="underwater_background")\]\n.*?(?=\n\[|\Z)', '', scene, flags=re.S)
-        resources = '\n'.join(f'[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/LakesideMap/{entry["path"]}" id="underwater_{i}"]' for i, (entry, _) in enumerate(chunks))
-        offset = scene.index('[node ')
-        scene = scene[:offset].rstrip() + '\n\n' + resources + '\n\n' + scene[offset:]
-        scene += '\n[node name="underwater_background" type="Node2D" parent="."]\nz_index = -8\neditor_description = "Chase\'s Underwater background layer, original 1:1 canvas placement; decorative rock behind supports, cave walls and swimmer."\n'
-        for i, (entry, _) in enumerate(chunks):
-            x, y = entry['position']
-            scene += f'\n[node name="Rock_{i:02}" type="Sprite2D" parent="underwater_background"]\nposition = Vector2({x}, {y})\ntexture = ExtResource("underwater_{i}")\ncentered = false\n'
+        scene = compose_underwater_scene(scene,[entry for entry,_ in chunks])
         for entry, chunk in chunks:
             chunk.save(OUT/entry['path'])
         scene_path.write_text(scene.rstrip()+'\n')
@@ -125,6 +143,7 @@ with zipfile.ZipFile(SOURCE) as z:
                       world_origin=[-1408, -2560], pixels_per_unit=1, z_index=-8,
                       bounds=list(canvas.getbbox()), reconstruction='pixel-exact RGBA',
                       chunks=[entry for entry, _ in chunks])
+        record['presentation'] = UNDERWATER_PRESENTATION
         (OUT/'underwater_background_manifest.json').write_text(json.dumps(record, indent=2)+'\n')
         print('UNDERWATER_ONLY', len(chunks), 'chunks; pixel-exact reconstruction; existing artwork and physics preserved')
         sys.exit(0)

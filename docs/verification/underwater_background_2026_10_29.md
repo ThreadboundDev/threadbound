@@ -1,5 +1,11 @@
 # Underwater rock background and return to the demo — October 29
 
+October 30 follow-up: the source pixels below are retained, but runtime
+presentation now uses independent far-rock parallax and fixed waterline clipping.
+Timber remains world-locked. See the
+[depth/bridge delivery](../art/blue_depth_and_bridges_2026_10_30.md) for current
+behavior and validation; the original no-parallax integration below is historical.
+
 Chase requested integrating his single `Underwater background` Krita layer and
 returning attention to the established 2D game. He wants to replay the original
 demo with the new character to identify the feel that the lake has not captured.

@@ -1,0 +1,4 @@
+# Raw captures; curated JPG comparisons and measurement JSON are versioned.
+before_*.png
+after_*.png
+asset-review.png

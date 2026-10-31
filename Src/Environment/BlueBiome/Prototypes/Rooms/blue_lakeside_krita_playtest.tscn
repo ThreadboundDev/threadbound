@@ -24,9 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://bk6sithumcg8y" path="res://Src/UI/combat_hud.tscn" id="playtest_hud"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/boatwright_2d.tscn" id="villager_boatwright"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Villagers/net_mender_2d.tscn" id="villager_mender"]
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/engawa_balcony_2d.tscn" id="walk_balcony"]
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/plank_crossing_2d.tscn" id="walk_plank"]
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/railed_veranda_2d.tscn" id="walk_veranda"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/braced_landing_2d.tscn" id="walk_braced"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/pontoon_bridge_2d.tscn" id="walk_pontoon"]
 
 [node name="BlueLakesideKritaPlaytest" type="Node2D" unique_id=209142078]
 editor_description = "F6: saved Krita map at 1:1 scale plus approved 3D village buildings. Original terrain, water, air pockets, breakables and actors retained. Building guides replaced by matching 2D collision. Lights and foliage remain editable nodes."
@@ -900,38 +899,47 @@ one_way_collision_margin = 12.0
 [node name="BridgeLandings" type="Node2D" parent="Geometry" unique_id=1091014669]
 z_index = -6
 
-[node name="Deck01" parent="Geometry/BridgeLandings" unique_id=2071785988 instance=ExtResource("walk_veranda")]
+[node name="Deck01" parent="Geometry/BridgeLandings" unique_id=2071785988 instance=ExtResource("walk_braced")]
 position = Vector2(4608, -1664)
 span_width = 640.0
+support_anchor = Vector2(632.6675, 137.3214)
 
-[node name="Deck02" parent="Geometry/BridgeLandings" unique_id=969137955 instance=ExtResource("walk_balcony")]
+[node name="Deck02" parent="Geometry/BridgeLandings" unique_id=969137955 instance=ExtResource("walk_braced")]
 position = Vector2(3052, -1134)
 span_width = 384.0
+support_anchor = Vector2(304.2236, 114.4346)
 
-[node name="Deck03" parent="Geometry/BridgeLandings" unique_id=998491023 instance=ExtResource("walk_plank")]
+[node name="Deck03" parent="Geometry/BridgeLandings" unique_id=998491023 instance=ExtResource("walk_braced")]
 position = Vector2(4864, -768)
 span_width = 128.0
+stamp = 0
+support_anchor = Vector2(172.3042, 123.6971)
 
-[node name="Deck04" parent="Geometry/BridgeLandings" unique_id=1485223545 instance=ExtResource("walk_plank")]
+[node name="Deck04" parent="Geometry/BridgeLandings" unique_id=1485223545 instance=ExtResource("walk_braced")]
 position = Vector2(-640, -128)
 span_width = 256.0
+stamp = 0
+support_anchor = Vector2(239.3435, 100.9811)
 
-[node name="Deck05" parent="Geometry/BridgeLandings" unique_id=897058146 instance=ExtResource("walk_balcony")]
+[node name="Deck05" parent="Geometry/BridgeLandings" unique_id=897058146 instance=ExtResource("walk_pontoon")]
 position = Vector2(244, 397)
 span_width = 384.0
+waterline_offset = 14.0
 
-[node name="Deck06" parent="Geometry/BridgeLandings" unique_id=1144824625 instance=ExtResource("walk_plank")]
+[node name="Deck06" parent="Geometry/BridgeLandings" unique_id=1144824625 instance=ExtResource("walk_braced")]
 position = Vector2(2048, -128)
 span_width = 384.0
+stamp = 0
+support_anchor = Vector2(-157.9200, 137.8092)
 
-[node name="Deck07" parent="Geometry/BridgeLandings" unique_id=1569005893 instance=ExtResource("walk_plank")]
+[node name="Deck07" parent="Geometry/BridgeLandings" unique_id=1569005893 instance=ExtResource("walk_pontoon")]
 position = Vector2(-896, 384)
 span_width = 256.0
 
-[node name="Deck08" parent="Geometry/BridgeLandings" unique_id=1455332206 instance=ExtResource("walk_veranda")]
+[node name="Deck08" parent="Geometry/BridgeLandings" unique_id=1455332206 instance=ExtResource("walk_pontoon")]
 position = Vector2(3200, 384)
 
-[node name="Deck09" parent="Geometry/BridgeLandings" unique_id=1104663311 instance=ExtResource("walk_veranda")]
+[node name="Deck09" parent="Geometry/BridgeLandings" unique_id=1104663311 instance=ExtResource("walk_pontoon")]
 position = Vector2(4096, 384)
 span_width = 768.0
 

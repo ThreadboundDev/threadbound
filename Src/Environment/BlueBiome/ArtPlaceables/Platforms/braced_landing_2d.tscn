@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Platforms/structural_walkway_2d.gd" id="1"]
+[node name="BracedLanding2D" type="Node2D"]
+editor_description = "World-locked art; WalkPlane is the existing collision surface. Set Support Anchor to an actual point inside supporting rock/building."
+z_index = -6
+z_as_relative = false
+texture_filter = 4
+script = ExtResource("1")
+structure = 1
+stamp = 1
+[node name="WalkPlane" type="Marker2D" parent="."]

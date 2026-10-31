@@ -1,4 +1,42 @@
-# Next review — saved zoom and upright idle, then Blue layers/bridges
+# Tonight's test — zoom, upright idle and Blue depth/bridges
+
+Use **`threadbound/art-blue-depth-and-bridge-supports`**. It includes the saved
+zoom, upright idle and the fix for delayed idle variations. Save manual editor/art
+files before switching tasks. Restart the scene with F6 so current code loads.
+About **5 minutes**; stop after the first two checks if tired.
+
+1. **Demo: posture and framing (1–2 minutes).** Open
+   `Src/Environment/World/Chamber Of The First Weave.tscn`. Stand for at least
+   7 seconds, then turn, run/stop, jump, attack and throw the grapple. Is 0.83
+   comfortably readable? Does the narrower idle feel natural? Look for floating
+   boots, sliding, pose pops or sword/shield clipping. The new pose is taller:
+   about 14.3% screen height at 0.83. Controls/attack timing were not retuned.
+2. **Blue: depth while moving (1–2 minutes).** F6
+   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+   Use the existing **Loom Heron** shortcut, then swim below the surface and
+   move left/right and up/down. Far rock should drift more slowly; timber,
+   ledges and collision rock should stay aligned. Look for newly exposed holes,
+   distracting sliding or background rock showing above the waterline.
+3. **Bridges (1 minute).** From Loom Heron, move right toward the waterline
+   spans. Check float bodies at the waterline and feet on the decks. Use
+   **Workshop** and look toward the higher landings to review angled braces.
+   Their ends should disappear into supporting rock/tower rather than hang
+   in empty space. The new assets do not bob or move the existing collision.
+
+**Best feedback:** a 30–60 second video with camera movement, plus one sentence
+about what feels better/worse. For a still art defect, a screenshot with the
+location is enough. For movement, posture transitions or parallax, video is more
+useful. If capturing is inconvenient, simply report keep/change and the landmark;
+your feel notes are enough to continue. No full playthrough is needed tonight.
+
+[Pose comparison](../work/framing-idle-2026-10-30/upright-comparison.jpg) ·
+[Bridges](../work/blue-depth-bridges-2026-10-30/floating-comparison.jpg) ·
+[High braces](../work/blue-depth-bridges-2026-10-30/high-comparison.jpg).
+The new slash-VFX look is still in its separate preview; tonight's live changes
+are framing, idle posture, Blue depth and structural art. Existing T33/T20
+acceptance checks remain below.
+
+## Earlier framing review notes
 
 Chase authorized the live 0.83 camera zoom and an upright-idle attempt. Use
 `threadbound/art-framing-and-idle`, which inherits earlier corrections. Compare

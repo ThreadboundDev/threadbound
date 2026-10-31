@@ -321,5 +321,21 @@
         768
       ]
     }
-  ]
+  ],
+  "presentation": {
+    "scroll_scale": [
+      0.65,
+      0.85
+    ],
+    "anchor_world": [
+      2048,
+      1600
+    ],
+    "reference_viewport": [
+      1920,
+      1080
+    ],
+    "water_surface_y": 411,
+    "z_index": -8
+  }
 }
