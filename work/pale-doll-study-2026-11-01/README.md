@@ -5,22 +5,33 @@ wear and tear, and likes both the hooded and exposed-head base outfits. He
 authorized a consistent modeling reference and a simple separate 3D body test.
 This delivery does not install a new player or implement modular equipment.
 
+**Current revision: v2.** Chase corrected the first silhouette: the character
+is a boy doll, or at least subtly masculine. The revised body has a flat broader
+chest, straighter fuller waist, compact narrower pelvis and leaner upper thighs.
+The worn finish, head, hands, joint positions and animation rig are retained.
+
 ## Review
 
-- [Modeling concept sheet](modeling_reference.png): front, side, back and dressed
+- [Corrected modeling concept sheet](modeling_reference_masculine_v2.png): front, side, back and dressed
   front, plus head, hand and elbow details. Generated with the built-in ImageGen
   tool using the three selected references below. This is an illustration, not
   a dimensionally authoritative CAD turnaround. Use measured rig positions and
   the actual 3D views to resolve generated-view discrepancies.
-  The [exact generation prompt](modeling_reference_prompt.md) is retained.
+  The [correction prompt](modeling_reference_masculine_prompt.md) is retained.
+  The [v1 sheet](modeling_reference.png) and its [prompt](modeling_reference_prompt.md)
+  remain as superseded shape references.
 - [Selected pale doll](selected_pale_doll.png), [hooded outfit](base_gear_hooded.png)
-  and [exposed-head outfit](base_gear_exposed_head.png): retained source concepts.
+  and [exposed-head outfit](base_gear_exposed_head.png): retained material/outfit
+  references; their first body silhouette is superseded by v2.
 - [Actual 3D rest views](body_rest_review.jpg): one geometry set seen from three
   orthographic directions. These are Blender renders, not generated images.
 - [Actual source-animation poses](pose_review.jpg) and
   [run motion review](run_body_review.gif): body only, with no weapon or clothing.
-- [Editable Blender study](../../ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v1.blend)
-  and [separate GLB](../../ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v1.glb).
+- [Editable v2 Blender study](../../ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v2.blend)
+  and [v2 GLB](../../ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v2.glb).
+  Original v1 source/export files remain alongside them. Earlier
+  [rest](v1_body_rest_review.jpg) and [pose](v1_pose_review.jpg) figures are retained
+  for comparison; the unprefixed figures and reports describe v2.
 
 The Blender file opens with the source `idle_4` action. Select the existing
 actions in the Action Editor to inspect them; switch the armature to Rest
@@ -90,3 +101,6 @@ study and review figures. Raw render intermediates and logs remain in ignored
 Checkpoint: `art: add pale doll modeling reference and rig study` on
 `threadbound/art-pale-doll-model-study`. Body appearance and motion acceptance
 remain Chase's review, separate from the technical checks.
+
+Correction checkpoint: `art: correct doll study to subtly masculine proportions`
+on the same branch; 21 build and 18 independent export checks pass again.

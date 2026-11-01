@@ -8,7 +8,7 @@ import struct
 ROOT=Path(__file__).resolve().parents[2]
 WORK=ROOT/'work/pale-doll-study-2026-11-01'
 SOURCE=ROOT/'Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb'
-EXPORT=ROOT/'ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v1.glb'
+EXPORT=ROOT/'ArtSource/Player/Blender/PaleDollStudy/Threadborne_Pale_Doll_Study_v2.glb'
 
 
 def glb(path):

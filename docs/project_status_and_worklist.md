@@ -15,6 +15,12 @@ body blockout; proportion/joint-clearance review and clothing fit remain open.
 No production model, equipment code, game scene or canon text is replaced.
 Checkpoint: `art: add pale doll modeling reference and rig study` on
 `threadbound/art-pale-doll-model-study`. T41/T40 acceptance remains open.
+Chase corrects the first body shape to a boy doll/slightly masculine silhouette.
+V2 broadens/flattens the chest, straightens the waist and narrows hips/thighs,
+preserving the worn finish, 62-bone rig and 48 source clips. Corrected reference,
+native source/export and review renders are saved; v1 is retained. All 39 checks
+pass again. Checkpoint: `art: correct doll study to subtly masculine proportions`
+on the same branch; appearance acceptance remains open.
 
 **Previous task: T41 — modular building stamps for Krita.**
 Chase requests reusable plaster, beams, windows, doors and supporting details,

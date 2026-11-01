@@ -213,10 +213,12 @@ def tube(name, points, radius, bone, mat=wood):
     return finish(obj, name, bone, mat)
 
 
-body_rings('Doll | pelvis', [(.945,.08,.060),(.98,.135,.075),(1.045,.14,.080),(1.10,.10,.066)], 'pelvis')
+# Chase's correction: subtly masculine, straight-waisted, compact hips.
+# Keep joint centers and limb lengths fixed so existing animation still fits.
+body_rings('Doll | pelvis', [(.945,.10,.059),(.98,.117,.067),(1.045,.122,.069),(1.10,.119,.066)], 'pelvis')
 sphere('Doll | waist joint', (0,0,1.135), (.085,.050,.073), 'spine', wood)
-body_rings('Doll | abdomen', [(1.105,.095,.065),(1.17,.108,.072),(1.26,.12,.078),(1.30,.108,.072)], 'spine')
-body_rings('Doll | chest', [(1.255,.11,.074),(1.31,.135,.086),(1.41,.155,.087),(1.465,.145,.073),(1.49,.075,.054)], 'chest')
+body_rings('Doll | abdomen', [(1.105,.120,.066),(1.17,.123,.068),(1.26,.128,.072),(1.30,.130,.072)], 'spine')
+body_rings('Doll | chest', [(1.255,.127,.072),(1.31,.142,.074),(1.41,.164,.075),(1.465,.160,.072),(1.49,.105,.052)], 'chest')
 cylinder('Doll | neck pivot', (0,0,1.535), .033, .075, (0,0,1), 'neck')
 sphere('Doll | neck upper joint', (0,0,1.605), (.036,.034,.035), 'head', wood)
 
@@ -260,7 +262,7 @@ for side,sign in [('L',1),('R',-1)]:
     knee = bones['shin.'+side].head_local.copy()
     ankle = bones['foot.'+side].head_local.copy()
     sphere('Doll | shoulder '+side, shoulder, (.058,.052,.055), 'upper_arm.'+side, wood)
-    spindle('Doll | upper arm '+side, shoulder.lerp(elbow,.12), shoulder.lerp(elbow,.89), .048,.044,'upper_arm.'+side)
+    spindle('Doll | upper arm '+side, shoulder.lerp(elbow,.12), shoulder.lerp(elbow,.89), .051,.044,'upper_arm.'+side)
     sphere('Doll | elbow pivot '+side, elbow, (.040,.040,.040), 'forearm.'+side, dark)
     cylinder('Doll | elbow front cap '+side, elbow+Vector((0,-.040,0)), .033,.012,(0,1,0),'forearm.'+side)
     cylinder('Doll | elbow peg '+side, elbow+Vector((0,-.048,0)), .010,.005,(0,1,0),'forearm.'+side,ivory)
@@ -276,7 +278,7 @@ for side,sign in [('L',1),('R',-1)]:
             sphere('Doll | knuckle '+name, a, (radius,radius,radius), name, wood,16,8)
             spindle('Doll | finger '+name, a.lerp(b,.12), a.lerp(b,.96), radius*.95,radius*.80,name)
     sphere('Doll | hip pivot '+side, hip, (.066,.065,.065), 'thigh.'+side, wood)
-    spindle('Doll | thigh '+side, hip.lerp(knee,.09), hip.lerp(knee,.92), .074,.069,'thigh.'+side)
+    spindle('Doll | thigh '+side, hip.lerp(knee,.09), hip.lerp(knee,.92), .065,.062,'thigh.'+side)
     sphere('Doll | knee pivot '+side, knee, (.051,.050,.049), 'shin.'+side, dark)
     cylinder('Doll | knee outer cap '+side,knee+Vector((sign*.049,0,0)),.040,.014,(1,0,0),'shin.'+side)
     cylinder('Doll | knee peg '+side,knee+Vector((sign*.059,0,0)),.012,.005,(1,0,0),'shin.'+side,ivory)
@@ -388,7 +390,7 @@ scene.frame_end=80
 bpy.ops.object.select_all(action='DESELECT')
 rig.select_set(True)
 bpy.context.view_layer.objects.active=rig
-native=OUT/'Threadborne_Pale_Doll_Study_v1.blend'
+native=OUT/'Threadborne_Pale_Doll_Study_v2.blend'
 bpy.ops.wm.save_as_mainfile(filepath=str(native),compress=True)
 
 # The editable file keeps semantic parts; only the export joins compatible surfaces.
@@ -401,7 +403,7 @@ body=bpy.context.object
 body.name='Threadborne_Pale_Doll_Study'
 rig.select_set(True)
 bpy.context.view_layer.objects.active=rig
-export=OUT/'Threadborne_Pale_Doll_Study_v1.glb'
+export=OUT/'Threadborne_Pale_Doll_Study_v2.glb'
 bpy.ops.export_scene.gltf(filepath=str(export),export_format='GLB',use_selection=True,export_animations=True,export_animation_mode='ACTIONS',export_force_sampling=True,export_skins=True,export_cameras=False,export_lights=False,export_materials='EXPORT')
 check('source actions still unchanged after export',actions_before==action_digest())
 report={
@@ -410,6 +412,7 @@ report={
     'native':str(native.relative_to(ROOT)),
     'export':str(export.relative_to(ROOT)),
     'bones':len(rig.data.bones),'actions':list(actions_before),
+    'revision':'v2: subtly masculine boy doll, flat chest, straight waist, compact hips',
     'rigid_parts':len(bindings),'bindings':bindings,
     'export_vertices':len(body.data.vertices),
     'export_triangles':sum(len(p.vertices)-2 for p in body.data.polygons),

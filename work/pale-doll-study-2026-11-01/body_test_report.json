@@ -1,8 +1,8 @@
 {
   "source": "Assets\\Threadborne\\Player\\Equipped3DTest\\threadborne_equipped_combat_swings.glb",
   "source_sha256": "7716ab47250a28d87a762a82ddeed481e39de980e0cd9ca84ebeca0f047084f2",
-  "native": "ArtSource\\Player\\Blender\\PaleDollStudy\\Threadborne_Pale_Doll_Study_v1.blend",
-  "export": "ArtSource\\Player\\Blender\\PaleDollStudy\\Threadborne_Pale_Doll_Study_v1.glb",
+  "native": "ArtSource\\Player\\Blender\\PaleDollStudy\\Threadborne_Pale_Doll_Study_v2.blend",
+  "export": "ArtSource\\Player\\Blender\\PaleDollStudy\\Threadborne_Pale_Doll_Study_v2.glb",
   "bones": 62,
   "actions": [
     "air_light_1",
@@ -54,6 +54,7 @@
     "walk_2",
     "water_idle_1"
   ],
+  "revision": "v2: subtly masculine boy doll, flat chest, straight waist, compact hips",
   "rigid_parts": 118,
   "bindings": {
     "Doll | pelvis": "pelvis",

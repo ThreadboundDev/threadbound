@@ -8,6 +8,12 @@ jointed hands, substantial carved limb volumes and oval two-eye doll head.
 Both the raised hood and exposed head with fuller scarf collar are liked;
 neither is selected as a permanent restriction on the protagonist.
 
+Chase corrected the first sheet/body silhouette: this is a **boy doll, or at
+least subtly masculine**. Use a flatter broader chest, straighter substantial
+waist, compact narrower hips and less rounded upper thighs. Keep the agile
+build, worn lacquer and crafted joints. V2 reference/model supersede the first
+shape; this does not call for muscular anatomy or a change to the head design.
+
 The protagonist's recognizable body can persist beneath different equipment.
 Small worn clothing openings at elbows and knees may reveal doll construction;
 outfits need not expose every joint or share identical damage. Masks or entire
@@ -50,3 +56,7 @@ texture-authoring/baking pass is scoped.
 saved-export inspection, render review, relative links and staged whitespace.
 No source art is overwritten; no player, equipment, gameplay scene or canon
 implementation is changed. Appearance acceptance remains open.
+
+Correction checkpoint: `art: correct doll study to subtly masculine proportions`
+on the same branch. V1 remains available, and the package now points to v2.
+All 39 technical checks pass again; Chase's visual review remains open.
