@@ -1,10 +1,22 @@
 # Threadbound current TODO list
 
-Updated October 31, 2026. This is the single current priority list. The saved
+Updated November 1, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T41 — modular building stamps for Krita.**
+**Current task: T42 — pale doll modeling reference and isolated body study.**
+Chase selects the worn pale lacquered articulated doll, likes both hooded and
+exposed-head base gear, and authorizes a modeling sheet and separate 3D body
+test using the existing skeleton. [Direction and delivery](design/pale_doll_character_study_2026_11_01.md).
+The package includes chosen concepts, the new reference, an editable body and
+GLB, actual rest/pose/motion renders, 21 build checks and independent saved-export
+validation. Existing 62 bones and 48 source actions are retained. This is a
+body blockout; proportion/joint-clearance review and clothing fit remain open.
+No production model, equipment code, game scene or canon text is replaced.
+Checkpoint: `art: add pale doll modeling reference and rig study` on
+`threadbound/art-pale-doll-model-study`. T41/T40 acceptance remains open.
+
+**Previous task: T41 — modular building stamps for Krita.**
 Chase requests reusable plaster, beams, windows, doors and supporting details,
 with variations to compose buildings of different shapes/sizes. Deliver a separate
 transparent art kit, catalog and editable assembly example from the current art

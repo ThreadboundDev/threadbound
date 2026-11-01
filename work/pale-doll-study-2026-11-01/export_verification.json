@@ -1,0 +1,146 @@
+{
+  "checks": [
+    {
+      "name": "single exported skin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same 62 named joints",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "exported joint world rest transforms agree",
+      "passed": true,
+      "detail": 2.80266608156457e-06
+    },
+    {
+      "name": "same 48 animation names",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "animation duration drift below one 24fps frame",
+      "passed": true,
+      "detail": 0.03333333507180214
+    },
+    {
+      "name": "one joined body mesh",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "only four body materials",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no exported studio camera or lights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0 has finite positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0 keeps rigid normalized weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1 has finite positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1 keeps rigid normalized weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2 has finite positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2 keeps rigid normalized weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 3 has finite positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 3 keeps rigid normalized weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source costume geometry absent",
+      "passed": true,
+      "detail": 20855
+    },
+    {
+      "name": "production source hash unchanged since build",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "animation_duration_differences_seconds": {
+    "air_light_1": 2.60770320892334e-08,
+    "attack_1": 3.3527612686157227e-08,
+    "attack_2": 0.03333333507180214,
+    "attack_3": 0.016666684299707413,
+    "block_1": 0.00833335891366005,
+    "block_idle_1": 0.00833335891366005,
+    "casting_1": 0.03333333507180214,
+    "casting_2": 0.008333239704370499,
+    "crouch_1": 0.016666624695062637,
+    "crouch_block_1": 0.03333333507180214,
+    "crouch_block_2": 0.008333299309015274,
+    "crouch_block_idle_1": 0.02499997988343239,
+    "crouch_idle_1": 0.008333239704370499,
+    "crouching_1": 2.60770320892334e-08,
+    "crouching_2": 0.03333333507180214,
+    "crouching_3": 0.03333333507180214,
+    "death_1": 0.03333333507180214,
+    "death_2": 0.016666684299707413,
+    "get_up_from_hang_1": 0.03333333507180214,
+    "grab_ledge_from_water_1": 3.3527612686157227e-08,
+    "grapple_swinging_1": 0.03333333507180214,
+    "hanging_idle_1": 3.3527612686157227e-08,
+    "idle_1": 0.024999890476465225,
+    "idle_2": 0.008333239704370499,
+    "idle_3": 5.103647708892822e-07,
+    "idle_4": 0.0083334781229496,
+    "impact_1": 0.008333299309015274,
+    "impact_2": 0.03333333507180214,
+    "impact_3": 0.008333299309015274,
+    "jump_1": 2.60770320892334e-08,
+    "jump_2": 0.03333333507180214,
+    "jump_into_wall_hang_1": 0.03333333507180214,
+    "jumping_into_water_1": 0.00833335891366005,
+    "power_up_1": 0.008333239704370499,
+    "roll_1": 8.568167686462402e-08,
+    "run_1": 0.008333299309015274,
+    "run_2": 0.00833335891366005,
+    "sit_to_stand_1": 0.025000128895044327,
+    "slash_1": 3.3527612686157227e-08,
+    "slash_2": 0.0083334781229496,
+    "slash_5": 0.00833335891366005,
+    "stand_to_sit_1": 0.016666684299707413,
+    "swimming_1": 0.008333239704370499,
+    "turn_1": 0.025000009685754776,
+    "turn_2": 0.025000009685754776,
+    "walk_1": 0.025000009685754776,
+    "walk_2": 0.016666684299707413,
+    "water_idle_1": 3.3527612686157227e-08
+  },
+  "export_sha256": "d59e0194f2e35fa91e863b87d295dc65a149dfb1c1b9e32ee1d5877975630f3a",
+  "export_vertices": 20855
+}
