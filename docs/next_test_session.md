@@ -1,55 +1,39 @@
-# Next test — October 30 overnight video follow-up
+# Next test — October 31 playtest corrections
 
-Use **`threadbound/art-gameplay-review-followup`**. The accepted upright idle,
-house visibility and wind-only clouds are retained. Save manual editor/art edits,
-stop the previous run and F6 fresh so updated scripts/resources load. About
-**5 minutes**; no full level playthrough needed.
+Use **`threadbound/art-gameplay-review-followup`**. Save manual edits, stop the
+old run, and launch fresh with F6. The run is accepted; this test targets the
+reported defects. About **5 minutes** in
+`Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
 
-1. **Run and attack flow (1–2 minutes).** In the demo
-   (`Src/Environment/World/Chamber Of The First Weave.tscn`), run both directions,
-   stop, jump and grapple. The sword arm should move visibly with the run rather
-   than remain held still. Try ground combos, **up/down air attacks**, neutral
-   special, spin and grapple strike. The extended attacks now share the pale
-   filled sweep / cool body / sparse flax-thread accents. Judge direction,
-   brightness and whether the effects connect to the weapon. Attack timing,
-   reach, damage and AP rules were not retuned.
-2. **Water crossing and movement (2 minutes).** F6
-   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
-   Use **Loom Heron**. Look at the lake from a bridge, enter normally, hover half
-   submerged, dive deeper, swim sideways/up/down, then breach. The surface should
-   look reflective and mostly opaque from above, opening smoothly as the head
-   goes under. Above-water body pixels should stay dry. Decide whether this
-   reveal helps the underwater world feel distinct and whether it hides too much
-   during surface combat. The existing full bank dive remains optional; ordinary
-   jumping/running into water should never stop to play it.
-3. **Rock depth and dry spaces (1 minute).** Swim past the tower and into a cave
-   pocket. The far rock wall should stay still on screen while structural timber
-   and collision faces follow the world. Contact rock now has a submerged grade
-   rather than looking completely dry. Check that the passage/solid distinction
-   is clear, and that dry chambers still read as dry after entering them.
-4. **Painted bridges / high jump (1 minute).** Walk one floating span and one high
-   landing. The rails now sample the approved Krita stamp painting; deck, rails,
-   floats and braces are separate reusable parts. Judge scale, style and the
-   short front sections crossing the boots. Jump high near the workshop/tower:
-   the previous horizontal dark sky void should be gone. House focus and cloud
-   behavior should continue to look as they did in the video.
+1. **Solid rock / one-way drops.** Double-tap Down repeatedly on the rock beside
+   a bridge, then on an actual one-way span. Solid rock should never let you
+   descend into it; the one-way span should drop normally and solid terrain below
+   should catch you. If a deep overlap occurs, recovery should return you to a
+   recent clear position on your approach, not transport you across the level.
+2. **Tower interior.** Enter from below, climb above the lake surface and leave.
+   The camera should move closer, follow your height, and dim the outside.
+   Interior walls should cover the distant rocks and remain dry above and below
+   the outside waterline. Exiting should restore the camera and exterior water.
+3. **Still lake / backdrop.** Pause at a quiet stretch: water has no autonomous
+   shimmer/waves; movement can make local wakes. Enter/exit and swim sideways/up
+   and down. Judge the reflection-to-underwater reveal and slower distant rock
+   parallax. Rocks should no longer stick to the camera or overlap the tower.
+4. **House edge.** Inspect the fisher-house right roof tip; its rounded end should
+   be complete. Its floor/door contact and ordinary house entry should still fit.
+5. **Specials.** Spin both ways on land and underwater, then use neutral special
+   and grapple strike. Spin travels about one-third farther. Its effect should
+   wrap near the waist; all special effects are 25% bigger. Judge clearance,
+   control and whether the larger effect overpromises its unchanged damage radius.
 
-**Best feedback:** a 30–60 second video crossing the waterline in both directions
-and swimming sideways, plus whether the reveal/static backdrop feels right.
-A short run/attack clip helps assess the arm and vertical/special VFX. Screenshots
-are enough for bridge seams or a water/rock patch you dislike; include its landmark.
-Your feel notes matter more than recording a full run. Save and checkpoint any
-manual Godot/art edits before switching tasks; routine Git backup is handled here.
+A **30–60 second clip** of tower entry/exit and surface crossing is most useful.
+A short spin/drop clip helps if movement is off; screenshots with a landmark are
+fine for a remaining seam. The automatic falling-to-dive transition and Identity
+leading-edge colors are future work; they are not part of this retest.
 
-[Delivery and checks](art/overnight_video_review_2026_10_30.md) ·
-[Run loop](../work/overnight-playtest-2026-10-30/run-arm-loop.gif) ·
-[VFX family](../work/overnight-playtest-2026-10-30/vfx-family-review.jpg) ·
-[Water comparison](../work/overnight-playtest-2026-10-30/water-surface-comparison.jpg) ·
-[Modular bridge guide](art/modular_stamped_bridges_2026_10_30.md).
-
-The separate `tools/art/appearance_lab.tscn` Pattern / porcelain mask / both
-comparison remains available for a later review; no equipment expansion was added
-in this overnight pass.
+[Delivery and validation](art/playtest_followup_2026_10_31.md) ·
+[Tower below water](../work/oct31-feedback/tower_below.jpg) ·
+[Tower above water](../work/oct31-feedback/tower_above.jpg) ·
+[Special comparison](../work/oct31-feedback/specials-comparison.jpg).
 
 ## Earlier framing review notes
 

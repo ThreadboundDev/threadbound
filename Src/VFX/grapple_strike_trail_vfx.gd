@@ -7,6 +7,7 @@ const GOLD := PALETTE.THREAD
 
 @export_range(0.04, 0.3, 0.01) var fade_out_time := 0.12
 @export_range(40.0, 180.0, 1.0) var trail_length := 112.0
+@export_range(1.0, 2.0, 0.05) var visual_scale := 1.25
 
 var _target: Node2D = null
 var _direction := Vector2.RIGHT
@@ -16,6 +17,7 @@ var _stopping := false
 
 func _ready() -> void:
 	z_index = 70
+	scale = Vector2.ONE * visual_scale
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	material = unlit

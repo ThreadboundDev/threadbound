@@ -53,4 +53,23 @@ door and floor contacts. The approved PNG is unchanged.
 Existing packing/camera-interpolation/shutdown diagnostics remain. Captures use
 1x building rendering and isolated save profiles. Static samples and fixtures
 do not replace Chase's moving review of water crossing, rocks and tower traversal.
-Remaining unit: requested spin travel and special VFX tuning.
+## Spin and special delivery
+
+Spin dash speed increases from 420 to 560. A matched actual-physics land fixture
+travels 214.67 world units versus 161.00 at the old speed (33.3% farther).
+The visible spin sweep rises 28 world units toward the waist and grows 25%.
+Neutral special, grapple burst and grapple trail also grow 25%. Their damage
+radii, AP, animation/active windows and lifetime are retained. VFX extensions
+are presentation and do not expand damage reach. Identity-colored leading edges
+remain the recorded future direction; no new color-mixing rules are introduced.
+
+Thirty-two GPU attack-family checks pass, including both vertical attacks and
+facings, raised/enlarged spin, neutral scale, specials in both media, cleanup and
+the matched movement comparison. The existing underwater neutral/left/right
+special regression passes its source-motion, anchor, movement, AP, damage,
+medium-transition and cleanup assertions.
+[Special comparison](../../work/oct31-feedback/specials-comparison.jpg).
+
+Implementation is delivered for Chase's moving review. Collision checkpoints:
+`4ea92971` and `f6a8b30e`; water/tower/roof checkpoint: `129660c1`.
+Keep T40 acceptance open until the retest; the accepted run is preserved.

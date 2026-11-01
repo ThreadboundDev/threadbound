@@ -7,6 +7,7 @@ const GOLD := PALETTE.THREAD
 const HOT_GOLD := PALETTE.EDGE
 
 @export_range(0.1, 2.0, 0.01) var impact_duration := 0.48
+@export_range(1.0, 2.0, 0.05) var visual_scale := 1.25
 @export_range(0.1, 0.9, 0.01) var full_force_radius_ratio := 0.45
 
 var _radius := 220.0
@@ -19,6 +20,7 @@ var _impact_started := false
 
 func _ready() -> void:
 	z_index = 40
+	scale = Vector2.ONE * visual_scale
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	material = unlit

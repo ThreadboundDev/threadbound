@@ -17,7 +17,12 @@ Water/roof/tower corrections are delivered: slow world-relative rear rocks behin
 buildings, static undisturbed water, persistent occupied-room dry masking, closer
 tower focus and repaired roof crop with original contact scale. GPU/room checks
 pass (22 water, 8 tower-focus, 31 tower/exterior, 20 house-handoff, 78 depth/bridge),
-with 148 unchanged world polygons. Spin/special tuning is the remaining unit.
+with 148 unchanged world polygons. Collision checkpoints `4ea92971` / `f6a8b30e`;
+presentation checkpoint `129660c1`.
+Spin/special tuning is delivered: 33.3% farther actual land travel, waist sweep
+raised 28 units and special VFX enlarged 25%; damage radii/AP/timing retained.
+32 GPU family checks and the underwater-special regression pass. Implementation
+is ready for moving review; T40 acceptance remains open. No new topic is active.
 
 **Previous task: T39 — overnight follow-up to Chase's 22:34 video.**
 Posture and filled VFX are positively reviewed; house focus and clouds are good.

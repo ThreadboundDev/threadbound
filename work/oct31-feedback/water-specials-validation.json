@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "cases": [
+    "neutral",
+    "right_spin",
+    "left_spin"
+  ],
+  "checks": "source motion, anchor, movement, AP, damage, medium transitions, cleanup"
+}

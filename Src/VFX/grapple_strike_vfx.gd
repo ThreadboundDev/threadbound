@@ -6,7 +6,7 @@ const IVORY := PALETTE.CORE
 const GOLD := PALETTE.THREAD
 
 @export_range(0.05, 0.5, 0.01) var lifetime := 0.20
-@export_range(0.4, 1.0, 0.01) var visual_scale := 0.72
+@export_range(0.4, 1.5, 0.01) var visual_scale := 0.90
 
 var _elapsed := 0.0
 var _direction := Vector2.RIGHT

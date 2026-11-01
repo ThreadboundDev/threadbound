@@ -612,7 +612,7 @@ var current_attack_is_spin := false
 @export_group("Directional Spin Special")
 @export var spin_special_duration := 0.85
 @export var spin_special_active_frames := Vector2i(8, 25)
-@export var spin_special_dash_speed := 420.0
+@export var spin_special_dash_speed := 560.0
 @export var spin_special_radius := 175.0
 @export var spin_special_damage_multiplier := 1.8
 var current_attack_uses_ground_combo := false

@@ -1,0 +1,35 @@
+{
+	"cases": [
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": -1,
+			"vertical": "(0.0, -1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": -1,
+			"vertical": "(0.0, 1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": 1,
+			"vertical": "(0.0, -1.0)"
+		},
+		{
+			"damage_unchanged": true,
+			"emitted": true,
+			"facing": 1,
+			"vertical": "(0.0, 1.0)"
+		},
+		{
+			"spin_baseline_distance": 161.000015258789,
+			"spin_new_distance": 214.666748046875
+		}
+	],
+	"checks": 32,
+	"display": "Windows",
+	"failures": []
+}

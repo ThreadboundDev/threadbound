@@ -51,6 +51,8 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export_group("Sword Smear")
 @export var sword_smear_enabled := true
 @export var filled_sweep_enabled := true
+@export_range(1.0, 2.0, 0.05) var spin_vfx_scale := 1.25
+@export var spin_vfx_vertical_offset := -28.0
 
 var _player: CharacterBody2D
 var _viewport: SubViewport
@@ -1012,8 +1014,13 @@ func _update_sword_smears(delta: float) -> void:
 	var aura = _player.get("flow_state_aura")
 	if aura and aura.has_method("get_attack_identity_channels"):
 		channels = aura.get_attack_identity_channels()
-	_sword_sweep.set_sweep(data.phase, data.radius, data.arc,
-		data.pose, channels, data.reverse,
+	var sweep_pose: Transform2D = data.pose
+	var sweep_radius: float = data.radius
+	if data.style == 3:
+		sweep_pose.origin.y += spin_vfx_vertical_offset
+		sweep_radius *= spin_vfx_scale
+	_sword_sweep.set_sweep(data.phase, sweep_radius, data.arc,
+		sweep_pose, channels, data.reverse,
 		_get_blade_world_points(), data.style)
 	if filled:
 		_sword_sweep.hide()
