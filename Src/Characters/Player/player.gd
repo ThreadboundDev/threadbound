@@ -564,6 +564,9 @@ var _prototype_swim_exit_lock_timer := 0.0
 var _debug_blue_water_toggle_was_pressed := false
 var _one_way_down_tap_timer := 0.0
 var _one_way_drop_ignore_timer := 0.0
+var _one_way_drop_exceptions: Array[Dictionary] = []
+var _recent_clear_positions: Array[Vector2] = []
+var _collision_guard_position := Vector2.INF
 
 var current_body_anim := ""
 var current_equip_anim := ""
@@ -763,6 +766,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 	_process_debug_inputs()
+	_update_collision_recovery()
 	_process_one_way_drop_input(delta)
 	_process_audio_timers(delta)
 	_process_momentum(delta)
@@ -1893,8 +1897,8 @@ func _process_one_way_drop_input(delta: float) -> void:
 	_one_way_down_tap_timer = maxf(_one_way_down_tap_timer - delta, 0.0)
 	if _one_way_drop_ignore_timer > 0.0:
 		_one_way_drop_ignore_timer = maxf(_one_way_drop_ignore_timer - delta, 0.0)
-		if _one_way_drop_ignore_timer <= 0.0 and not _debug_no_clip_enabled:
-			set_collision_mask_value(GREYBOX_ONE_WAY_PHYSICS_LAYER, true)
+		if _one_way_drop_ignore_timer <= 0.0:
+			_clear_one_way_drop_exceptions()
 	if _debug_no_clip_enabled or is_in_prototype_water():
 		return
 	if not Input.is_action_just_pressed("move_down"):
@@ -1906,13 +1910,83 @@ func _process_one_way_drop_input(delta: float) -> void:
 		_one_way_down_tap_timer = one_way_drop_double_tap_window
 
 
-func _begin_one_way_drop() -> void:
-	set_collision_mask_value(GREYBOX_ONE_WAY_PHYSICS_LAYER, false)
+func _begin_one_way_drop() -> bool:
+	if not is_on_floor(): return false
+	var floors: Array[Dictionary] = []
+	for i in get_slide_collision_count():
+		var hit := get_slide_collision(i)
+		if hit.get_normal().dot(up_direction) < cos(floor_max_angle): continue
+		var body := hit.get_collider()
+		if not _is_one_way_contact(body, hit.get_collider_shape_index(), hit.get_collider_rid()):
+			return false
+		floors.append({"owner":weakref(body), "rid":hit.get_collider_rid()})
+	if floors.is_empty(): return false
+	for floor_contact in floors:
+		PhysicsServer2D.body_add_collision_exception(get_rid(), floor_contact.rid)
+		_one_way_drop_exceptions.append(floor_contact)
 	_one_way_drop_ignore_timer = one_way_drop_ignore_duration
-	global_position.y += one_way_drop_nudge
+	# Sweep the nudge against solid terrain; never disable the terrain layer.
+	move_and_collide(Vector2(0, one_way_drop_nudge))
 	velocity.y = maxf(velocity.y, 80.0)
 	is_wall_clinging = false
 	wall_cling_timer = 0.0
+	return true
+
+func _clear_one_way_drop_exceptions() -> void:
+	for contact in _one_way_drop_exceptions:
+		if is_instance_valid(contact.owner.get_ref()):
+			PhysicsServer2D.body_remove_collision_exception(get_rid(), contact.rid)
+	_one_way_drop_exceptions.clear()
+
+func _is_one_way_contact(body: Object, shape_index: int, body_rid: RID) -> bool:
+	if body is CollisionObject2D:
+		var owner_id: int = body.shape_find_owner(shape_index)
+		var shape_owner: Object = body.shape_owner_get_owner(owner_id)
+		return shape_owner != null and shape_owner.get("one_way_collision") == true
+	if body is TileMapLayer:
+		var data: TileData = body.get_cell_tile_data(body.get_coords_for_body_rid(body_rid))
+		if data == null: return false
+		var found := false
+		for layer in body.tile_set.get_physics_layers_count():
+			for polygon in data.get_collision_polygons_count(layer):
+				found = true
+				if not data.is_collision_polygon_one_way(layer, polygon): return false
+		return found
+	return false
+
+func _has_solid_overlap(at: Vector2) -> bool:
+	var shape := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if shape == null or shape.disabled: return false
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = shape.shape
+	query.transform = shape.global_transform.scaled_local(Vector2.ONE * 0.94)
+	query.transform.origin += at-global_position
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	for excepted in get_collision_exceptions(): query.exclude.append(excepted.get_rid())
+	for contact in _one_way_drop_exceptions: query.exclude.append(contact.rid)
+	for overlap in get_world_2d().direct_space_state.intersect_shape(query, 64):
+		if not _is_one_way_contact(overlap.collider, overlap.shape, overlap.rid): return true
+	return false
+
+func _update_collision_recovery() -> void:
+	if _debug_no_clip_enabled or is_dead: return
+	# External teleports/door handoffs establish a new local history. Recovery
+	# never searches a distant spawn or a point on the other side of a wall.
+	if _collision_guard_position.is_finite() and global_position.distance_to(_collision_guard_position) > 256.0:
+		_recent_clear_positions.clear()
+	if _has_solid_overlap(global_position):
+		for at in _recent_clear_positions:
+			if not _has_solid_overlap(at):
+				global_position = at
+				velocity = Vector2.ZERO
+				reset_physics_interpolation()
+				break
+	else:
+		if _recent_clear_positions.is_empty() or global_position.distance_squared_to(_recent_clear_positions[0]) > 1.0:
+			_recent_clear_positions.push_front(global_position)
+			if _recent_clear_positions.size() > 90: _recent_clear_positions.pop_back()
+	_collision_guard_position = global_position
 
 # ===============================
 # CROUCH / BLOCK

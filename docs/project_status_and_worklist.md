@@ -4,7 +4,17 @@ Updated October 31, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T39 — overnight follow-up to Chase's 22:34 video.**
+**Current task: T40 — October 31 playtest corrections.**
+Chase accepts the run. Fix solid-floor double-Down trapping, still-water motion,
+rear-wall camera attachment/draw order, tower interior focus/water masking and
+clipped facade art. Move spin farther and raise/enlarge its waist-level VFX;
+enlarge special effects. Identity-colored leading edges are future direction.
+[Findings and verified units](art/playtest_followup_2026_10_31.md). Reuse
+`threadbound/art-gameplay-review-followup`; checkpoint each verified unit.
+Collision fix: 29 engine checks pass; specific one-way bodies are excluded while
+solid terrain stays enabled, and recent-clear-position recovery handles overlap.
+
+**Previous task: T39 — overnight follow-up to Chase's 22:34 video.**
 Posture and filled VFX are positively reviewed; house focus and clouds are good.
 Fix the run's unreadable sword arm, extend filled effects to vertical air and
 special attacks, replace rejected simple rails with modular approved stamp art,
