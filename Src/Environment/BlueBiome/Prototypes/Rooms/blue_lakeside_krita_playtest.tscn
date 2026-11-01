@@ -1077,6 +1077,7 @@ preview_zoom = 0.17
 
 [node name="Tower" parent="Buildings" unique_id=489339460 instance=ExtResource("map_tower")]
 position = Vector2(1472, 1920)
+focus_interior = true
 
 [node name="BoatSlip" parent="Buildings" unique_id=753330207 instance=ExtResource("map_slip")]
 position = Vector2(2816, 477.44)

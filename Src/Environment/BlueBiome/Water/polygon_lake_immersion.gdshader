@@ -3,6 +3,7 @@ render_mode unshaded;
 uniform vec2 air_points[256];
 uniform int air_counts[16];
 uniform float air_feathers[16];
+uniform float air_rooms[16];
 uniform int pocket_count = 0;
 uniform float surface_y = 411.0;
 uniform float immersion_opacity : hint_range(0.0,1.0) = .22;
@@ -14,6 +15,7 @@ void vertex() { world_position = (MODEL_MATRIX*vec4(VERTEX,0.0,1.0)).xy; }
 void fragment() {
 	int start = 0;
 	float water_visibility = 1.0;
+	float room_visibility = 1.0;
 	for (int pocket=0; pocket<pocket_count; pocket++) {
 		int count=air_counts[pocket];
 		bool inside=false;
@@ -34,20 +36,21 @@ void fragment() {
 			float distance=sqrt(nearest)*(inside ? -1.0 : 1.0);
 			water_visibility=min(water_visibility,smoothstep(-air_feathers[pocket],air_feathers[pocket],distance));
 		} else if (inside) { water_visibility=0.0; }
+		if (air_rooms[pocket] > .5 && inside) { room_visibility=0.0; }
 		start+=count;
 	}
 	if (painted_surface) {
 		// Dry pockets become visible through the water after submerging. From
 		// above they cannot punch bright geometric holes in the lake surface.
-		COLOR=painted_water(world_position,SCREEN_UV,SCREEN_PIXEL_SIZE,TIME);
-		COLOR.a*=mix(1.0,water_visibility,underwater_view);
+		COLOR=painted_water(world_position,SCREEN_UV,SCREEN_PIXEL_SIZE,0.0);
+		COLOR.a*=mix(1.0,water_visibility,underwater_view)*room_visibility;
 	} else {
 		float depth=max(0.0,world_position.y-surface_y);
 		vec3 tint=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
 		// World-space movement and depth keep the swimmer inside the water without
 		// fading the entire environment whenever the observer crosses the surface.
-		float current=sin(world_position.x*.035+world_position.y*.022+TIME*.7)
-			*sin(world_position.x*.018-world_position.y*.031-TIME*.45);
+		float current=sin(world_position.x*.035+world_position.y*.022+0.0*.7)
+			*sin(world_position.x*.018-world_position.y*.031-0.0*.45);
 		float light=pow(max(0.0,current),8.0);
 		tint+=vec3(.10,.17,.16)*light;
 		float coverage=clamp(immersion_opacity*(1.0+smoothstep(0.0,900.0,depth)*.4),0.0,1.0);

@@ -47,8 +47,7 @@ void fragment() {
 		start+=count;
 	}
 	float depth=max(0.0,world_position.y-surface_y);
-	float wave=sin(world_position.y*.045+world_position.x*.004+TIME*.55)*.65
-		+sin(world_position.y*.11-world_position.x*.009-TIME*.38)*.25;
+	float wave=0.0;
 	vec2 pixel=SCREEN_PIXEL_SIZE;
 	float pixels_below=depth/max(abs(dFdy(world_position.y)),.001);
 	vec2 reflected=SCREEN_UV-vec2(0.0,2.0*pixels_below*pixel.y);
@@ -61,11 +60,11 @@ void fragment() {
 	reflection+=reflection_at(clamp(reflected+vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
 	reflection+=reflection_at(clamp(reflected-vec2(pixel.x*5.0,0),vec2(.001),vec2(.999)))*.3;
 	vec3 water=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
-	float bands=.85+.15*sin(depth*.085+wave+TIME*.3);
+	float bands=.85+.15*sin(depth*.085+wave+0.0*.3);
 	float strength=.48*valid*(1.0-smoothstep(0.0,650.0,depth))*bands;
-	float rim=(1.0-smoothstep(0.0,8.0,depth))*(.6+.4*sin(world_position.x*.025-TIME*.65));
+	float rim=(1.0-smoothstep(0.0,8.0,depth))*(.6+.4*sin(world_position.x*.025-0.0*.65));
 	water=mix(water,vec3(.65,.9,.91),rim*.6);
-	float caustic=pow(max(0.0,sin(world_position.x*.013+world_position.y*.02+TIME*.4)*sin(world_position.x*.018-world_position.y*.01-TIME*.3)),12.0);
+	float caustic=pow(max(0.0,sin(world_position.x*.013+world_position.y*.02+0.0*.4)*sin(world_position.x*.018-world_position.y*.01-0.0*.3)),12.0);
 	water+=vec3(.06,.12,.10)*caustic*.3;
 	// Reflection is its own surface coverage. Multiplying it by the already
 	// translucent body a second time reduced it to almost nothing underwater.

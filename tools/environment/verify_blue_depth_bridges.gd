@@ -1,5 +1,5 @@
 extends SceneTree
-const OUT := "res://work/overnight-playtest-2026-10-30"
+const OUT := "res://work/oct31-feedback"
 const PREVIOUS := "res://work/blue-depth-bridges-2026-10-30"
 var checks := 0
 var failures: Array[String]=[]
@@ -83,8 +83,8 @@ func run() -> void:
 	var wood_dx: float=points[1].wood.x-points[0].wood.x
 	var rock_dy: float=points[2].rock.y-points[1].rock.y
 	var wood_dy: float=points[2].wood.y-points[1].wood.y
-	check(absf(rock_dx)<0.01,"Far rock stays fixed on screen during horizontal camera movement")
-	check(absf(rock_dy)<0.01,"Far rock stays fixed on screen during vertical camera movement")
+	check(absf(rock_dx/wood_dx-.12)<.001,"Far rock scrolls at 12 percent horizontally")
+	check(absf(rock_dy/wood_dy-.12)<.001,"Far rock scrolls at 12 percent vertically")
 	check(absf(wood_dx+400.0*0.83)<0.01 and absf(wood_dy+200.0*0.83)<0.01,"Timber remains aligned with normal collision scrolling")
 	var clouds: Node2D = room.get_node("LakePresentation/OpenAirClouds")
 	check(clouds.get_child_count() == 48,"Cloud coverage increases from twelve to forty-eight varied sprites")

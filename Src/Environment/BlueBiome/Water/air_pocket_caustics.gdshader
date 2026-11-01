@@ -24,7 +24,7 @@ void fragment() {
 		edge_distance = min(edge_distance, length(local_position-a-segment*along));
 	}
 	vec2 p = world_position * vec2(0.023, 0.035);
-	float time = TIME * 0.32;
+	float time = 0.0 * 0.32;
 	p += vec2(sin(p.y*0.65+time), cos(p.x*0.48-time*0.7))*0.65;
 	float field = sin(p.x+time) * cos(p.y-time*0.6) + sin(p.x*0.7+p.y*0.9-time*0.8)*0.55;
 	float caustic = pow(1.0-smoothstep(0.025,0.25,abs(field)), 2.0);

@@ -2,6 +2,8 @@
 extends Node2D
 ## Place at the model's bottom-center in 2D; the shared art stage owns rendering.
 @export var model_scene: PackedScene
+@export var focus_interior := false
+var automatic_focus: Node
 @export var entry_rect := Rect2():
 	set(value):
 		entry_rect = value
@@ -20,6 +22,10 @@ var occupants: Array[Node2D] = []
 func _ready() -> void:
 	add_to_group("lakeside_model_2d")
 	_update_entry()
+	if focus_interior and not Engine.is_editor_hint():
+		automatic_focus = load("res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_focus.gd").new()
+		automatic_focus.follow_vertical = true
+		add_child(automatic_focus)
 	call_deferred("_register")
 
 func _register() -> void:
@@ -58,10 +64,12 @@ func _update_entry() -> void:
 func _entered(body: Node2D) -> void:
 	if body.is_in_group("player") and body not in occupants:
 		occupants.append(body)
+		if automatic_focus: automatic_focus.enter(body)
 		_update_cutaway()
 
 func _exited(body: Node2D) -> void:
 	occupants.erase(body)
+	if automatic_focus and occupants.is_empty(): automatic_focus.leave()
 	_update_cutaway()
 
 func _update_cutaway() -> void:

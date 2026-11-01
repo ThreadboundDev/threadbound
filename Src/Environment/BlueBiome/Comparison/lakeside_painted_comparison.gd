@@ -123,6 +123,14 @@ func _sprite(key: String, frame: int) -> Sprite2D:
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	return sprite
 
+func _frame_bounds(entry: Dictionary, frame: int) -> Rect2:
+	var bounds: Rect2 = entry.bounds
+	# The closed fisher roof extends past its old atlas rectangle. Preserve
+	# the original pixel scale/contacts while adding the missing right eave.
+	if entry.key == "fisher_house" and frame == 0:
+		bounds.size.x *= float(manifest.fisher_house.frames[0][2])/715.0
+	return bounds
+
 func _fit(sprite: Sprite2D, bounds: Rect2, transform: Transform2D) -> void:
 	sprite.transform = transform
 	sprite.position = transform * bounds.position
@@ -199,7 +207,7 @@ func _process(delta: float) -> void:
 		var frame := 1 if inside and manifest[entry.key].frames.size()>1 else 0
 		var target: Sprite2D = entry.near if front and not inside else entry.far
 		target.texture = _texture(entry.key,frame)
-		_fit(target,entry.bounds,node.global_transform)
+		_fit(target,_frame_bounds(entry,frame),node.global_transform)
 		_register_contacts(entry,target,frame)
 		target.visible = true
 		if is_actor and manifest[entry.key].frames.size()>1:
@@ -231,7 +239,7 @@ func _register_contacts(entry: Dictionary, sprite: Sprite2D, frame: int) -> void
 		return
 	var spec: Dictionary = contact_registration[entry.key][str(frame)]
 	var region := _rect(manifest[entry.key].frames[frame])
-	var bounds: Rect2 = entry.bounds
+	var bounds: Rect2 = _frame_bounds(entry,frame)
 	# Each row contains source/destination normalized coordinates. Keep frame
 	# edges fixed; interior contacts follow the physical surface and endpoints.
 	var grid: Array[Dictionary] = [{"y":Vector2.ZERO,"x":[Vector2.ZERO,Vector2.ONE]},

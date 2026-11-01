@@ -7,6 +7,7 @@ var camera: Camera2D
 var saved := {}
 var weight := 0.0
 var occupied := false
+var follow_vertical := false
 var overlay: CanvasLayer
 var effect: ColorRect
 var capture: BackBufferCopy
@@ -64,10 +65,15 @@ func _process(delta: float) -> void:
 	# the exterior outside their bounds is visually de-emphasized by the mask.
 	var zoom := minf(screen.x/(bounds.size.x+80),screen.y/(bounds.size.y+80))
 	zoom = clampf(zoom,saved.zoom.x,saved.zoom.x*1.65)
+	var center := bounds.get_center()
+	if follow_vertical:
+		zoom = clampf(screen.x/(bounds.size.x+160),saved.zoom.x*1.15,saved.zoom.x*1.65)
+		var half_height := screen.y/(zoom*2.0)
+		center.y = clampf(player.global_position.y+saved.position.y,bounds.position.y+half_height,bounds.end.y-half_height)
 	camera.zoom = saved.zoom.lerp(Vector2.ONE*zoom,blend)
-	camera.position = saved.position.lerp(bounds.get_center()-player.global_position,blend)
+	camera.position = saved.position.lerp(center-player.global_position,blend)
 	var half := screen/(zoom*2.0)
-	var limits := Rect2(bounds.get_center()-half,half*2.0).merge(bounds)
+	var limits := Rect2(center-half,half*2.0).merge(bounds)
 	camera.limit_left = roundi(lerpf(saved.left,limits.position.x,blend))
 	camera.limit_top = roundi(lerpf(saved.top,limits.position.y,blend))
 	camera.limit_right = roundi(lerpf(saved.right,limits.end.x,blend))
@@ -82,6 +88,7 @@ func _process(delta: float) -> void:
 	effect.material.set_shader_parameter("room_screen_rect",Vector4(a.x/screen.x,a.y/screen.y,b.x/screen.x,b.y/screen.y))
 	effect.material.set_shader_parameter("logical_size",screen)
 	effect.material.set_shader_parameter("focus_strength",blend)
+	effect.material.set_shader_parameter("outside_brightness",.08 if follow_vertical else .34)
 	if not occupied and weight == 0.0:
 		_restore()
 

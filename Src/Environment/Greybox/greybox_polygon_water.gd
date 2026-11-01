@@ -272,6 +272,7 @@ func _update_water_preview(delta: float) -> void:
 	var vertices := PackedVector2Array()
 	var counts := PackedInt32Array()
 	var feathers := PackedFloat32Array()
+	var rooms := PackedFloat32Array()
 	var over_limit := false
 	for pocket in get_tree().get_nodes_in_group("lake_air_pockets"):
 		if lake_presentation and not pocket.is_presentation_active():
@@ -281,6 +282,7 @@ func _update_water_preview(delta: float) -> void:
 			continue
 		counts.append(pocket.points.size())
 		feathers.append(pocket.pocket_edge_softness)
+		rooms.append(1.0 if not pocket.presentation_owner_path.is_empty() else 0.0)
 		for point in pocket.points:
 			vertices.append(pocket.to_global(point))
 	var count := counts.size()
@@ -290,6 +292,7 @@ func _update_water_preview(delta: float) -> void:
 	vertices.resize(256)
 	counts.resize(16)
 	feathers.resize(16)
+	rooms.resize(16)
 	_fill.material.set_shader_parameter("air_points", vertices)
 	_fill.material.set_shader_parameter("air_counts", counts)
 	_fill.material.set_shader_parameter("air_feathers", feathers)
@@ -305,6 +308,7 @@ func _update_water_preview(delta: float) -> void:
 		_immersion_fill.material.set_shader_parameter("painted_surface", painted_surface)
 		_immersion_fill.material.set_shader_parameter("surface_opacity", surface_opacity)
 		_immersion_fill.material.set_shader_parameter("underwater_view", underwater_view)
+		_immersion_fill.material.set_shader_parameter("air_rooms", rooms)
 		for parameter in ["surface_y", "shallow_color", "deep_color", "air_points", "air_counts", "air_feathers", "pocket_count"]:
 			_immersion_fill.material.set_shader_parameter(parameter, _fill.material.get_shader_parameter(parameter))
 	for i in range(_ripples.size()-1,-1,-1):

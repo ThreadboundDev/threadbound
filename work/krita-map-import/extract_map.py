@@ -36,8 +36,8 @@ def layer_mapping():
     return {'rear_supports': ['STAMP REAR SUPPORTS'],
             'rear_cave': ['Under Cave Mouth', 'Cave Walls']}
 
-UNDERWATER_PRESENTATION = dict(scroll_scale=[0.0, 0.0], anchor_world=[2048, 1600], depth_offset=[0,600],
-                               reference_viewport=[1920, 1080], water_surface_y=411, z_index=-8)
+UNDERWATER_PRESENTATION = dict(scroll_scale=[0.12, 0.12], anchor_world=[2048, 1600], depth_offset=[0,600],
+                               reference_viewport=[1920, 1080], water_surface_y=411, z_index=-12)
 
 def compose_underwater_scene(scene, entries):
     """Scoped reimport preserves independent far parallax and world-space clipping."""
@@ -53,7 +53,7 @@ def compose_underwater_scene(scene, entries):
     ax,ay = UNDERWATER_PRESENTATION['anchor_world']
     vw,vh = UNDERWATER_PRESENTATION['reference_viewport']
     dx,dy = UNDERWATER_PRESENTATION.get('depth_offset',[0,0])
-    scene += '\n[node name="underwater_background" type="Parallax2D" parent="."]\nz_index = -8\n'
+    scene += '\n[node name="underwater_background" type="Parallax2D" parent="."]\nz_index = -12\n'
     scene += 'editor_description = "Far underwater rock only; timber stays in its independent world-locked rear_supports group. Original coordinates agree at the lake-center camera anchor."\n'
     scene += 'material = ExtResource("underwater_material")\nscript = ExtResource("underwater_scroll")\n'
     # Native centered Camera2D scrolling includes half the logical viewport.

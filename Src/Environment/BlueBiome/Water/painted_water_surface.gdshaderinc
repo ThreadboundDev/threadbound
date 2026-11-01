@@ -19,8 +19,7 @@ vec3 painted_reflection_at(vec2 uv) {
 vec4 painted_water(vec2 world, vec2 screen_uv, vec2 pixel, float clock) {
 	float depth=max(0.0,world.y-surface_y);
 	vec3 tint=mix(shallow_color.rgb,deep_color.rgb,smoothstep(0.0,1800.0,depth));
-	float wave=sin(depth*.052+world.x*.003+clock*.55)*.7
-		+sin(depth*.13-world.x*.008-clock*.35)*.3;
+	float wave=0.0;
 	float pixels_below=depth/max(abs(dFdy(world.y)),.001);
 	vec2 reflected=screen_uv-vec2(0.0,2.0*pixels_below*pixel.y);
 	float valid=smoothstep(.001,.065,reflected.y)*(1.0-smoothstep(.935,.999,reflected.y));

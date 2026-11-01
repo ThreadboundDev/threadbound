@@ -11,8 +11,13 @@ clipped facade art. Move spin farther and raise/enlarge its waist-level VFX;
 enlarge special effects. Identity-colored leading edges are future direction.
 [Findings and verified units](art/playtest_followup_2026_10_31.md). Reuse
 `threadbound/art-gameplay-review-followup`; checkpoint each verified unit.
-Collision fix: 29 engine checks pass; specific one-way bodies are excluded while
+Collision fix: 31 engine checks pass; specific one-way bodies are excluded while
 solid terrain stays enabled, and recent-clear-position recovery handles overlap.
+Water/roof/tower corrections are delivered: slow world-relative rear rocks behind
+buildings, static undisturbed water, persistent occupied-room dry masking, closer
+tower focus and repaired roof crop with original contact scale. GPU/room checks
+pass (22 water, 8 tower-focus, 31 tower/exterior, 20 house-handoff, 78 depth/bridge),
+with 148 unchanged world polygons. Spin/special tuning is the remaining unit.
 
 **Previous task: T39 — overnight follow-up to Chase's 22:34 video.**
 Posture and filled VFX are positively reviewed; house focus and clouds are good.

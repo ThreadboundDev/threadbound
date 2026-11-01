@@ -324,8 +324,8 @@
   ],
   "presentation": {
     "scroll_scale": [
-      0.0,
-      0.0
+      0.12,
+      0.12
     ],
     "anchor_world": [
       2048,
@@ -340,6 +340,6 @@
       1080
     ],
     "water_surface_y": 411,
-    "z_index": -8
+    "z_index": -12
   }
 }
