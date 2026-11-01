@@ -1,0 +1,788 @@
+{
+  "new_components": 14,
+  "reused_components": 22,
+  "total": 36,
+  "assembly_layers": 34,
+  "assets": [
+    {
+      "id": "B01_Long_Timber_Beam",
+      "file": "generated/B01_Long_Timber_Beam.png",
+      "origin": "new image_gen component",
+      "family": "Timber",
+      "size": [
+        2172,
+        724
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "9008865317a5933dd04c905fb6ac696e460398799b1febc123deceb652f5be23",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_B01_Long_Timber_Beam.gbr",
+      "preset_file": "Village_MB_B01_Long_Timber_Beam.kpp"
+    },
+    {
+      "id": "B02_Tall_Lashed_Post",
+      "file": "generated/B02_Tall_Lashed_Post.png",
+      "origin": "new image_gen component",
+      "family": "Timber",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "83a39f14fe85bd58556402474a018aea9a3aceeb08217a870d84efa789730877",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_B02_Tall_Lashed_Post.gbr",
+      "preset_file": "Village_MB_B02_Tall_Lashed_Post.kpp"
+    },
+    {
+      "id": "D01_Plank_Door",
+      "file": "generated/D01_Plank_Door.png",
+      "origin": "new image_gen component",
+      "family": "Doors",
+      "size": [
+        1145,
+        1374
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "84ae1051bcf60bffe0adf23d740c6ec23583fe31391f36545a1562a0e31716f4",
+      "suggested_brush_size": 256,
+      "brush_file": "Village_MB_D01_Plank_Door.gbr",
+      "preset_file": "Village_MB_D01_Plank_Door.kpp"
+    },
+    {
+      "id": "D02_Sliding_Lattice_Door",
+      "file": "generated/D02_Sliding_Lattice_Door.png",
+      "origin": "new image_gen component",
+      "family": "Doors",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "dfb9c5be81fc5bb5466a52e55bf021bd096c4b22006c23dd54bd1ab231be9c78",
+      "suggested_brush_size": 256,
+      "brush_file": "Village_MB_D02_Sliding_Lattice_Door.gbr",
+      "preset_file": "Village_MB_D02_Sliding_Lattice_Door.kpp"
+    },
+    {
+      "id": "D03_Wide_Double_Door",
+      "file": "generated/D03_Wide_Double_Door.png",
+      "origin": "new image_gen component",
+      "family": "Doors",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "aaa17229ac6a6bacf017fe31efa9daaed05f1cdc6087934ead2a86fa8351ab2b",
+      "suggested_brush_size": 256,
+      "brush_file": "Village_MB_D03_Wide_Double_Door.gbr",
+      "preset_file": "Village_MB_D03_Wide_Double_Door.kpp"
+    },
+    {
+      "id": "N01_Square_Lattice_Window",
+      "file": "generated/N01_Square_Lattice_Window.png",
+      "origin": "new image_gen component",
+      "family": "Windows",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "cf04a527571cb88908db1a0ca4f9d7bab6214c90cb3a5c86cf2bbf8fd88e40c0",
+      "suggested_brush_size": 192,
+      "brush_file": "Village_MB_N01_Square_Lattice_Window.gbr",
+      "preset_file": "Village_MB_N01_Square_Lattice_Window.kpp"
+    },
+    {
+      "id": "N02_Tall_Shuttered_Window",
+      "file": "generated/N02_Tall_Shuttered_Window.png",
+      "origin": "new image_gen component",
+      "family": "Windows",
+      "size": [
+        1278,
+        1230
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "1f775525420cb49da8382bfcfc2e2fe50234054371a9aba4c195f95959e67569",
+      "suggested_brush_size": 192,
+      "brush_file": "Village_MB_N02_Tall_Shuttered_Window.gbr",
+      "preset_file": "Village_MB_N02_Tall_Shuttered_Window.kpp"
+    },
+    {
+      "id": "N03_Round_Spoke_Window",
+      "file": "generated/N03_Round_Spoke_Window.png",
+      "origin": "new image_gen component",
+      "family": "Windows",
+      "size": [
+        1275,
+        1234
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "2663f6a959b28f5a012f3f88be6437705c24b03aded82ee2606eb9dd340058ee",
+      "suggested_brush_size": 192,
+      "brush_file": "Village_MB_N03_Round_Spoke_Window.gbr",
+      "preset_file": "Village_MB_N03_Round_Spoke_Window.kpp"
+    },
+    {
+      "id": "R01_Slate_Eave_Strip",
+      "file": "generated/R01_Slate_Eave_Strip.png",
+      "origin": "new image_gen component",
+      "family": "Roofs",
+      "size": [
+        2172,
+        724
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "d23c46ed8e4416dfcc19a4ac3c94d55b4a5f906f3c22f36d22aaf31f82a9e099",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_R01_Slate_Eave_Strip.gbr",
+      "preset_file": "Village_MB_R01_Slate_Eave_Strip.kpp"
+    },
+    {
+      "id": "R02_Left_Curled_Eave",
+      "file": "generated/R02_Left_Curled_Eave.png",
+      "origin": "new image_gen component",
+      "family": "Roofs",
+      "size": [
+        1774,
+        887
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "0737bb1e3f7acb474185c826e3f04c2468022d45214c377e3a1f18fe6b893e4e",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_R02_Left_Curled_Eave.gbr",
+      "preset_file": "Village_MB_R02_Left_Curled_Eave.kpp"
+    },
+    {
+      "id": "R03_Right_Curled_Eave",
+      "file": "generated/R03_Right_Curled_Eave.png",
+      "origin": "new image_gen component",
+      "family": "Roofs",
+      "size": [
+        1774,
+        887
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "ca93e3da7b32acfee2bcf612e27e0cb0bbff2dafb80e5fabc585bd0baf5e23cd",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_R03_Right_Curled_Eave.gbr",
+      "preset_file": "Village_MB_R03_Right_Curled_Eave.kpp"
+    },
+    {
+      "id": "W01_Cream_Plaster_Intact",
+      "file": "generated/W01_Cream_Plaster_Intact.png",
+      "origin": "new image_gen component",
+      "family": "Walls",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_range": [
+        255,
+        255
+      ],
+      "sha256": "1a4a08cefe7634f8d949c7cfbd4a07452d84df938b0c8c2deaca152cc8a743dc",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_W01_Cream_Plaster_Intact.gbr",
+      "preset_file": "Village_MB_W01_Cream_Plaster_Intact.kpp"
+    },
+    {
+      "id": "W02_Wide_Weathered_Plaster",
+      "file": "generated/W02_Wide_Weathered_Plaster.png",
+      "origin": "new image_gen component",
+      "family": "Walls",
+      "size": [
+        1774,
+        887
+      ],
+      "alpha_range": [
+        255,
+        255
+      ],
+      "sha256": "f841dd9c573959c6f67db494411649f28b17d47b058d1c70096067a2b87057dc",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_W02_Wide_Weathered_Plaster.gbr",
+      "preset_file": "Village_MB_W02_Wide_Weathered_Plaster.kpp"
+    },
+    {
+      "id": "W03_Chipped_Plaster_Infill",
+      "file": "generated/W03_Chipped_Plaster_Infill.png",
+      "origin": "new image_gen component",
+      "family": "Walls",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "b88958c0f873006e9fc462496e51b8e086a05cfb2a3c8ca182e56e2ecdb8de88",
+      "suggested_brush_size": 512,
+      "brush_file": "Village_MB_W03_Chipped_Plaster_Infill.gbr",
+      "preset_file": "Village_MB_W03_Chipped_Plaster_Infill.kpp"
+    },
+    {
+      "id": "D01_Timber_Stilt_Frame",
+      "file": "reused/D01_Timber_Stilt_Frame.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D01_Timber_Stilt_Frame.png",
+      "png_sha256": "5a8f37f8b5ee72aa468c3e9e7a1f87c5b53a92df9ebf126ac1b803a0a7886c0d",
+      "preset": "Village_D01_Timber_Stilt_Frame.kpp",
+      "gbr_description": "Timber Stilt Frame",
+      "gbr_spacing": 140,
+      "gbr_md5": "b2aa2a3ad0c7014f6dad286a2c5d0a49",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        485,
+        1536
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "5a8f37f8b5ee72aa468c3e9e7a1f87c5b53a92df9ebf126ac1b803a0a7886c0d",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D01_Timber_Stilt_Frame.gbr",
+      "preset_file": "Village_D01_Timber_Stilt_Frame.kpp"
+    },
+    {
+      "id": "D02_Limestone_Pier",
+      "file": "reused/D02_Limestone_Pier.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D02_Limestone_Pier.png",
+      "png_sha256": "a59e03df0cbb4f9df063a42503d1c50a563272e42cd87633b45818f579b824ef",
+      "preset": "Village_D02_Limestone_Pier.kpp",
+      "gbr_description": "Limestone Pier",
+      "gbr_spacing": 140,
+      "gbr_md5": "23211e443ce0f3560e3ea4ed7d672089",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        486,
+        1536
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "a59e03df0cbb4f9df063a42503d1c50a563272e42cd87633b45818f579b824ef",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D02_Limestone_Pier.gbr",
+      "preset_file": "Village_D02_Limestone_Pier.kpp"
+    },
+    {
+      "id": "D03_Floating_Timber_Base",
+      "file": "reused/D03_Floating_Timber_Base.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D03_Floating_Timber_Base.png",
+      "png_sha256": "8a32314499d19d19d9429bf337b3c80f481ab3b4fce78114683f30abaf36dc7c",
+      "preset": "Village_D03_Floating_Timber_Base.kpp",
+      "gbr_description": "Floating Timber Base",
+      "gbr_spacing": 140,
+      "gbr_md5": "0601e9591eb0129d150ab9fceb6c66fc",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        1536,
+        280
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "8a32314499d19d19d9429bf337b3c80f481ab3b4fce78114683f30abaf36dc7c",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D03_Floating_Timber_Base.gbr",
+      "preset_file": "Village_D03_Floating_Timber_Base.kpp"
+    },
+    {
+      "id": "D06_Long_Rising_Beam",
+      "file": "reused/D06_Long_Rising_Beam.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D06_Long_Rising_Beam.png",
+      "png_sha256": "de5d8453346a3f28093d89bcd2181bde891916d4be8b0a71300c7a6ef3a35a3e",
+      "preset": "Village_D06_Long_Rising_Beam.kpp",
+      "gbr_description": "Long rising beam",
+      "gbr_spacing": 140,
+      "gbr_md5": "c3c3e20338ef94bc7f962cce4982b261",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        1332,
+        999
+      ],
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "de5d8453346a3f28093d89bcd2181bde891916d4be8b0a71300c7a6ef3a35a3e",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D06_Long_Rising_Beam.gbr",
+      "preset_file": "Village_D06_Long_Rising_Beam.kpp"
+    },
+    {
+      "id": "D07_Long_Falling_Beam",
+      "file": "reused/D07_Long_Falling_Beam.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D07_Long_Falling_Beam.png",
+      "png_sha256": "22404f56b863d1a7c596a30b6d33e39e376e9461697e302fbb25c55db7d8fa55",
+      "preset": "Village_D07_Long_Falling_Beam.kpp",
+      "gbr_description": "Long falling beam",
+      "gbr_spacing": 140,
+      "gbr_md5": "9e5106561ade2394fbf1386c9500d6f3",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        1324,
+        1015
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "22404f56b863d1a7c596a30b6d33e39e376e9461697e302fbb25c55db7d8fa55",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D07_Long_Falling_Beam.gbr",
+      "preset_file": "Village_D07_Long_Falling_Beam.kpp"
+    },
+    {
+      "id": "D08_Short_Knee_Brace",
+      "file": "reused/D08_Short_Knee_Brace.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D08_Short_Knee_Brace.png",
+      "png_sha256": "eb8f1d6567d0bf582d23eb1b9227149609ddad7579eef93df17ee80970290763",
+      "preset": "Village_D08_Short_Knee_Brace.kpp",
+      "gbr_description": "Short knee brace",
+      "gbr_spacing": 140,
+      "gbr_md5": "53da054b196053b2106e9ba1106f6c39",
+      "origin": "byte-identical library reuse",
+      "family": "Supports",
+      "size": [
+        1068,
+        884
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "eb8f1d6567d0bf582d23eb1b9227149609ddad7579eef93df17ee80970290763",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_D08_Short_Knee_Brace.gbr",
+      "preset_file": "Village_D08_Short_Knee_Brace.kpp"
+    },
+    {
+      "id": "R01_Blue_Slate_Roof",
+      "file": "reused/R01_Blue_Slate_Roof.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\R01_Blue_Slate_Roof.png",
+      "png_sha256": "38db6fbcf7f2d90f81a90e9fec15d10d7abfe452b56c92f31d0a8227ee23c073",
+      "preset": "Village_R01_Blue_Slate_Roof.kpp",
+      "gbr_description": "Blue Slate Roof",
+      "gbr_spacing": 140,
+      "gbr_md5": "785dc5b9cca95d1dc266e3b791234ca5",
+      "origin": "byte-identical library reuse",
+      "family": "Roofs",
+      "size": [
+        1536,
+        270
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "38db6fbcf7f2d90f81a90e9fec15d10d7abfe452b56c92f31d0a8227ee23c073",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_R01_Blue_Slate_Roof.gbr",
+      "preset_file": "Village_R01_Blue_Slate_Roof.kpp"
+    },
+    {
+      "id": "A04_Japanese_Engawa_Landing",
+      "file": "reused/A04_Japanese_Engawa_Landing.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\A04_Japanese_Engawa_Landing.png",
+      "png_sha256": "38a91276e42dfa29ec4c5cbd5ebcd68f8246c373fd8b98a4d4568fee0d8f4998",
+      "preset": "Village_A04_Japanese_Engawa_Landing.kpp",
+      "gbr_description": "Japanese Engawa Landing",
+      "gbr_spacing": 140,
+      "gbr_md5": "db2e6f2a3c4231cdff9d3d4f57498954",
+      "origin": "byte-identical library reuse",
+      "family": "Walkways",
+      "size": [
+        1661,
+        874
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "38a91276e42dfa29ec4c5cbd5ebcd68f8246c373fd8b98a4d4568fee0d8f4998",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_A04_Japanese_Engawa_Landing.gbr",
+      "preset_file": "Village_A04_Japanese_Engawa_Landing.kpp"
+    },
+    {
+      "id": "B04_Simple_Plank_Crossing",
+      "file": "reused/B04_Simple_Plank_Crossing.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\B04_Simple_Plank_Crossing.png",
+      "png_sha256": "4f81a83732602cdc260bbee98b7b9b6d609615f0fd8fcc0158335fdb2229271a",
+      "preset": "Village_B04_Simple_Plank_Crossing.kpp",
+      "gbr_description": "Simple Plank Crossing",
+      "gbr_spacing": 140,
+      "gbr_md5": "85cc135c068bd88a70a3594544ebe3c8",
+      "origin": "byte-identical library reuse",
+      "family": "Walkways",
+      "size": [
+        2167,
+        368
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "4f81a83732602cdc260bbee98b7b9b6d609615f0fd8fcc0158335fdb2229271a",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_B04_Simple_Plank_Crossing.gbr",
+      "preset_file": "Village_B04_Simple_Plank_Crossing.kpp"
+    },
+    {
+      "id": "J03_Japanese_Veranda",
+      "file": "reused/J03_Japanese_Veranda.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J03_Japanese_Veranda.png",
+      "png_sha256": "36cd36c16af7349a832cf69d8660f5788731c9a3a82d67a96fb3d57cbfb2e8de",
+      "preset": "Village_J03_Japanese_Veranda.kpp",
+      "gbr_description": "Japanese Veranda",
+      "gbr_spacing": 140,
+      "gbr_md5": "5e38aec23ab3b07e52a0f2de5d508006",
+      "origin": "byte-identical library reuse",
+      "family": "Walkways",
+      "size": [
+        2166,
+        549
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "36cd36c16af7349a832cf69d8660f5788731c9a3a82d67a96fb3d57cbfb2e8de",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_J03_Japanese_Veranda.gbr",
+      "preset_file": "Village_J03_Japanese_Veranda.kpp"
+    },
+    {
+      "id": "L01_Quarried_Wall",
+      "file": "reused/L01_Quarried_Wall.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L01_Quarried_Wall.png",
+      "png_sha256": "363a6ca301a779e795ad29cdc0b50a8b80e719002542cf559784eac5baf0c3b1",
+      "preset": "Village_L01_Quarried_Wall.kpp",
+      "gbr_description": "Quarried Wall",
+      "gbr_spacing": 140,
+      "gbr_md5": "ccd763b0a0015a8f99ed675f763ecc34",
+      "origin": "byte-identical library reuse",
+      "family": "Stone",
+      "size": [
+        1536,
+        567
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "363a6ca301a779e795ad29cdc0b50a8b80e719002542cf559784eac5baf0c3b1",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_L01_Quarried_Wall.gbr",
+      "preset_file": "Village_L01_Quarried_Wall.kpp"
+    },
+    {
+      "id": "L02_Limestone_Pillar",
+      "file": "reused/L02_Limestone_Pillar.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L02_Limestone_Pillar.png",
+      "png_sha256": "b03bbca73fd4193373c3e819f6275bf674230bc630a90caf62cabf875dba7546",
+      "preset": "Village_L02_Limestone_Pillar.kpp",
+      "gbr_description": "Limestone Pillar",
+      "gbr_spacing": 140,
+      "gbr_md5": "c6a0434618651489ba3741496c3548ed",
+      "origin": "byte-identical library reuse",
+      "family": "Stone",
+      "size": [
+        516,
+        1536
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "b03bbca73fd4193373c3e819f6275bf674230bc630a90caf62cabf875dba7546",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_L02_Limestone_Pillar.gbr",
+      "preset_file": "Village_L02_Limestone_Pillar.kpp"
+    },
+    {
+      "id": "L03_Limestone_Arch",
+      "file": "reused/L03_Limestone_Arch.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L03_Limestone_Arch.png",
+      "png_sha256": "8dd8ea55e4cdef95bbec8e4abce8d37a0d4307ee00adce531455f7e5ee03d6ac",
+      "preset": "Village_L03_Limestone_Arch.kpp",
+      "gbr_description": "Limestone Arch",
+      "gbr_spacing": 140,
+      "gbr_md5": "9f9fbf0ea162578e6e86728dd5eaa11b",
+      "origin": "byte-identical library reuse",
+      "family": "Stone",
+      "size": [
+        1489,
+        955
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "8dd8ea55e4cdef95bbec8e4abce8d37a0d4307ee00adce531455f7e5ee03d6ac",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_L03_Limestone_Arch.gbr",
+      "preset_file": "Village_L03_Limestone_Arch.kpp"
+    },
+    {
+      "id": "Q05_Long_Low_Wall",
+      "file": "reused/Q05_Long_Low_Wall.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\Q05_Long_Low_Wall.png",
+      "png_sha256": "598c73605b3c8ee835446c86a68212ce71598b32cfe12c821b052ce81424c7cd",
+      "preset": "Village_Q05_Long_Low_Wall.kpp",
+      "gbr_description": "Long Low Wall",
+      "gbr_spacing": 140,
+      "gbr_md5": "c0c1f101a87b543ee00e4c4dd49d768f",
+      "origin": "byte-identical library reuse",
+      "family": "Stone",
+      "size": [
+        2155,
+        549
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "598c73605b3c8ee835446c86a68212ce71598b32cfe12c821b052ce81424c7cd",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_Q05_Long_Low_Wall.gbr",
+      "preset_file": "Village_Q05_Long_Low_Wall.kpp"
+    },
+    {
+      "id": "Q06_Tall_Wall_Section",
+      "file": "reused/Q06_Tall_Wall_Section.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\Q06_Tall_Wall_Section.png",
+      "png_sha256": "8552af79d23f30858fa98353edc526ffb9d64f6693bdcf478156756e6efb3b0e",
+      "preset": "Village_Q06_Tall_Wall_Section.kpp",
+      "gbr_description": "Tall Wall Section",
+      "gbr_spacing": 140,
+      "gbr_md5": "d0f4f6d0d581507d0f046c5710c12e31",
+      "origin": "byte-identical library reuse",
+      "family": "Stone",
+      "size": [
+        1119,
+        1401
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "8552af79d23f30858fa98353edc526ffb9d64f6693bdcf478156756e6efb3b0e",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_Q06_Tall_Wall_Section.gbr",
+      "preset_file": "Village_Q06_Tall_Wall_Section.kpp"
+    },
+    {
+      "id": "LT01_Hanging_Paper_Lantern",
+      "file": "reused/LT01_Hanging_Paper_Lantern.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT01_Hanging_Paper_Lantern.png",
+      "png_sha256": "fc6735e2694aec36d970f4afd0d22cb468a148ed794038722bd5067144fa58f8",
+      "preset": "Village_LT01_Hanging_Paper_Lantern.kpp",
+      "gbr_description": "Hanging paper lantern",
+      "gbr_spacing": 140,
+      "gbr_md5": "0a41fe2f55c4aaa6bdc069de9a36cd95",
+      "origin": "byte-identical library reuse",
+      "family": "Lights",
+      "size": [
+        668,
+        1523
+      ],
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "fc6735e2694aec36d970f4afd0d22cb468a148ed794038722bd5067144fa58f8",
+      "suggested_brush_size": 112,
+      "brush_file": "Village_LT01_Hanging_Paper_Lantern.gbr",
+      "preset_file": "Village_LT01_Hanging_Paper_Lantern.kpp"
+    },
+    {
+      "id": "LT02_Wall_Box_Lantern",
+      "file": "reused/LT02_Wall_Box_Lantern.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT02_Wall_Box_Lantern.png",
+      "png_sha256": "1efe222585c741fd76eb882bc1e20e230fc0126acf7f6aa5b0fee178c9570b3e",
+      "preset": "Village_LT02_Wall_Box_Lantern.kpp",
+      "gbr_description": "Wall box lantern",
+      "gbr_spacing": 140,
+      "gbr_md5": "3a9c9ecde0e9dd7391ac4d9ad958da51",
+      "origin": "byte-identical library reuse",
+      "family": "Lights",
+      "size": [
+        1192,
+        1009
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "1efe222585c741fd76eb882bc1e20e230fc0126acf7f6aa5b0fee178c9570b3e",
+      "suggested_brush_size": 112,
+      "brush_file": "Village_LT02_Wall_Box_Lantern.gbr",
+      "preset_file": "Village_LT02_Wall_Box_Lantern.kpp"
+    },
+    {
+      "id": "LT03_Timber_Post_Lamp",
+      "file": "reused/LT03_Timber_Post_Lamp.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT03_Timber_Post_Lamp.png",
+      "png_sha256": "e81e26c2cdc0dfdc0390bef9a3bc0dc252e3c815529f8b459d7ce0a7234db438",
+      "preset": "Village_LT03_Timber_Post_Lamp.kpp",
+      "gbr_description": "Timber post lamp",
+      "gbr_spacing": 140,
+      "gbr_md5": "f54ea77fbb028b7e148518b03cb6644e",
+      "origin": "byte-identical library reuse",
+      "family": "Lights",
+      "size": [
+        668,
+        1723
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "e81e26c2cdc0dfdc0390bef9a3bc0dc252e3c815529f8b459d7ce0a7234db438",
+      "suggested_brush_size": 112,
+      "brush_file": "Village_LT03_Timber_Post_Lamp.gbr",
+      "preset_file": "Village_LT03_Timber_Post_Lamp.kpp"
+    },
+    {
+      "id": "LT04_Stone_Garden_Lantern",
+      "file": "reused/LT04_Stone_Garden_Lantern.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT04_Stone_Garden_Lantern.png",
+      "png_sha256": "01b56103e0980ee3ec2002dd08dd00a0d34aedfe33514854e8253a3dae45db16",
+      "preset": "Village_LT04_Stone_Garden_Lantern.kpp",
+      "gbr_description": "Stone garden lantern",
+      "gbr_spacing": 140,
+      "gbr_md5": "ef4c46a31845a7771ddcdffc2778f710",
+      "origin": "byte-identical library reuse",
+      "family": "Lights",
+      "size": [
+        1193,
+        1132
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "01b56103e0980ee3ec2002dd08dd00a0d34aedfe33514854e8253a3dae45db16",
+      "suggested_brush_size": 112,
+      "brush_file": "Village_LT04_Stone_Garden_Lantern.gbr",
+      "preset_file": "Village_LT04_Stone_Garden_Lantern.kpp"
+    },
+    {
+      "id": "LT05_Cave_Oil_Lamp",
+      "file": "reused/LT05_Cave_Oil_Lamp.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT05_Cave_Oil_Lamp.png",
+      "png_sha256": "7299a323a06ffd3748f19b6e19876b30c2b7bb506f3b103e7fc0d670445f0032",
+      "preset": "Village_LT05_Cave_Oil_Lamp.kpp",
+      "gbr_description": "Cave oil lamp",
+      "gbr_spacing": 140,
+      "gbr_md5": "2116e487991260e393ef2a977890342a",
+      "origin": "byte-identical library reuse",
+      "family": "Lights",
+      "size": [
+        991,
+        1054
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "7299a323a06ffd3748f19b6e19876b30c2b7bb506f3b103e7fc0d670445f0032",
+      "suggested_brush_size": 112,
+      "brush_file": "Village_LT05_Cave_Oil_Lamp.gbr",
+      "preset_file": "Village_LT05_Cave_Oil_Lamp.kpp"
+    },
+    {
+      "id": "J01_Japanese_Exterior_Bay",
+      "file": "reused/J01_Japanese_Exterior_Bay.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J01_Japanese_Exterior_Bay.png",
+      "png_sha256": "a431d65d11cc09d74eb9cb1b5b21ba1a22b66f6cc01b738969955c11150be6f3",
+      "preset": "Village_J01_Japanese_Exterior_Bay.kpp",
+      "gbr_description": "Japanese Exterior Bay",
+      "gbr_spacing": 140,
+      "gbr_md5": "d3511901de13d6bc67d90e9abbdf0cdb",
+      "origin": "byte-identical library reuse",
+      "family": "Building bays",
+      "size": [
+        1528,
+        931
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "a431d65d11cc09d74eb9cb1b5b21ba1a22b66f6cc01b738969955c11150be6f3",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_J01_Japanese_Exterior_Bay.gbr",
+      "preset_file": "Village_J01_Japanese_Exterior_Bay.kpp"
+    },
+    {
+      "id": "J02_Japanese_Interior_Bay",
+      "file": "reused/J02_Japanese_Interior_Bay.png",
+      "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J02_Japanese_Interior_Bay.png",
+      "png_sha256": "59bb3a77ad15e94335c0c2951887628fd74ff1ccc34063c9882e77dfac3c0865",
+      "preset": "Village_J02_Japanese_Interior_Bay.kpp",
+      "gbr_description": "Japanese Interior Bay",
+      "gbr_spacing": 140,
+      "gbr_md5": "09b3688f8a31f16027c3275e6d7d62ec",
+      "origin": "byte-identical library reuse",
+      "family": "Building bays",
+      "size": [
+        1725,
+        804
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "59bb3a77ad15e94335c0c2951887628fd74ff1ccc34063c9882e77dfac3c0865",
+      "suggested_brush_size": 640,
+      "brush_file": "Village_J02_Japanese_Interior_Bay.gbr",
+      "preset_file": "Village_J02_Japanese_Interior_Bay.kpp"
+    }
+  ]
+}

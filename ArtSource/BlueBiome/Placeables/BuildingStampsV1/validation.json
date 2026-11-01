@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "stamps": 36,
+  "new": 14,
+  "reused": 22,
+  "bundle_resources": 72,
+  "ora_layers": 34,
+  "rgba_brush_pixels_preserved": true,
+  "resource_links_and_checksums_valid": true,
+  "ora_recomposes_exactly": true,
+  "live_installation_performed": false
+}

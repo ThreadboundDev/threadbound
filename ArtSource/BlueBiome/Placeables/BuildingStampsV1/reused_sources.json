@@ -1,0 +1,222 @@
+[
+  {
+    "id": "D01_Timber_Stilt_Frame",
+    "file": "reused/D01_Timber_Stilt_Frame.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D01_Timber_Stilt_Frame.png",
+    "png_sha256": "5a8f37f8b5ee72aa468c3e9e7a1f87c5b53a92df9ebf126ac1b803a0a7886c0d",
+    "preset": "Village_D01_Timber_Stilt_Frame.kpp",
+    "gbr_description": "Timber Stilt Frame",
+    "gbr_spacing": 140,
+    "gbr_md5": "b2aa2a3ad0c7014f6dad286a2c5d0a49"
+  },
+  {
+    "id": "D02_Limestone_Pier",
+    "file": "reused/D02_Limestone_Pier.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D02_Limestone_Pier.png",
+    "png_sha256": "a59e03df0cbb4f9df063a42503d1c50a563272e42cd87633b45818f579b824ef",
+    "preset": "Village_D02_Limestone_Pier.kpp",
+    "gbr_description": "Limestone Pier",
+    "gbr_spacing": 140,
+    "gbr_md5": "23211e443ce0f3560e3ea4ed7d672089"
+  },
+  {
+    "id": "D03_Floating_Timber_Base",
+    "file": "reused/D03_Floating_Timber_Base.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D03_Floating_Timber_Base.png",
+    "png_sha256": "8a32314499d19d19d9429bf337b3c80f481ab3b4fce78114683f30abaf36dc7c",
+    "preset": "Village_D03_Floating_Timber_Base.kpp",
+    "gbr_description": "Floating Timber Base",
+    "gbr_spacing": 140,
+    "gbr_md5": "0601e9591eb0129d150ab9fceb6c66fc"
+  },
+  {
+    "id": "D06_Long_Rising_Beam",
+    "file": "reused/D06_Long_Rising_Beam.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D06_Long_Rising_Beam.png",
+    "png_sha256": "de5d8453346a3f28093d89bcd2181bde891916d4be8b0a71300c7a6ef3a35a3e",
+    "preset": "Village_D06_Long_Rising_Beam.kpp",
+    "gbr_description": "Long rising beam",
+    "gbr_spacing": 140,
+    "gbr_md5": "c3c3e20338ef94bc7f962cce4982b261"
+  },
+  {
+    "id": "D07_Long_Falling_Beam",
+    "file": "reused/D07_Long_Falling_Beam.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D07_Long_Falling_Beam.png",
+    "png_sha256": "22404f56b863d1a7c596a30b6d33e39e376e9461697e302fbb25c55db7d8fa55",
+    "preset": "Village_D07_Long_Falling_Beam.kpp",
+    "gbr_description": "Long falling beam",
+    "gbr_spacing": 140,
+    "gbr_md5": "9e5106561ade2394fbf1386c9500d6f3"
+  },
+  {
+    "id": "D08_Short_Knee_Brace",
+    "file": "reused/D08_Short_Knee_Brace.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\D08_Short_Knee_Brace.png",
+    "png_sha256": "eb8f1d6567d0bf582d23eb1b9227149609ddad7579eef93df17ee80970290763",
+    "preset": "Village_D08_Short_Knee_Brace.kpp",
+    "gbr_description": "Short knee brace",
+    "gbr_spacing": 140,
+    "gbr_md5": "53da054b196053b2106e9ba1106f6c39"
+  },
+  {
+    "id": "R01_Blue_Slate_Roof",
+    "file": "reused/R01_Blue_Slate_Roof.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\R01_Blue_Slate_Roof.png",
+    "png_sha256": "38db6fbcf7f2d90f81a90e9fec15d10d7abfe452b56c92f31d0a8227ee23c073",
+    "preset": "Village_R01_Blue_Slate_Roof.kpp",
+    "gbr_description": "Blue Slate Roof",
+    "gbr_spacing": 140,
+    "gbr_md5": "785dc5b9cca95d1dc266e3b791234ca5"
+  },
+  {
+    "id": "A04_Japanese_Engawa_Landing",
+    "file": "reused/A04_Japanese_Engawa_Landing.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\A04_Japanese_Engawa_Landing.png",
+    "png_sha256": "38a91276e42dfa29ec4c5cbd5ebcd68f8246c373fd8b98a4d4568fee0d8f4998",
+    "preset": "Village_A04_Japanese_Engawa_Landing.kpp",
+    "gbr_description": "Japanese Engawa Landing",
+    "gbr_spacing": 140,
+    "gbr_md5": "db2e6f2a3c4231cdff9d3d4f57498954"
+  },
+  {
+    "id": "B04_Simple_Plank_Crossing",
+    "file": "reused/B04_Simple_Plank_Crossing.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\B04_Simple_Plank_Crossing.png",
+    "png_sha256": "4f81a83732602cdc260bbee98b7b9b6d609615f0fd8fcc0158335fdb2229271a",
+    "preset": "Village_B04_Simple_Plank_Crossing.kpp",
+    "gbr_description": "Simple Plank Crossing",
+    "gbr_spacing": 140,
+    "gbr_md5": "85cc135c068bd88a70a3594544ebe3c8"
+  },
+  {
+    "id": "J03_Japanese_Veranda",
+    "file": "reused/J03_Japanese_Veranda.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J03_Japanese_Veranda.png",
+    "png_sha256": "36cd36c16af7349a832cf69d8660f5788731c9a3a82d67a96fb3d57cbfb2e8de",
+    "preset": "Village_J03_Japanese_Veranda.kpp",
+    "gbr_description": "Japanese Veranda",
+    "gbr_spacing": 140,
+    "gbr_md5": "5e38aec23ab3b07e52a0f2de5d508006"
+  },
+  {
+    "id": "L01_Quarried_Wall",
+    "file": "reused/L01_Quarried_Wall.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L01_Quarried_Wall.png",
+    "png_sha256": "363a6ca301a779e795ad29cdc0b50a8b80e719002542cf559784eac5baf0c3b1",
+    "preset": "Village_L01_Quarried_Wall.kpp",
+    "gbr_description": "Quarried Wall",
+    "gbr_spacing": 140,
+    "gbr_md5": "ccd763b0a0015a8f99ed675f763ecc34"
+  },
+  {
+    "id": "L02_Limestone_Pillar",
+    "file": "reused/L02_Limestone_Pillar.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L02_Limestone_Pillar.png",
+    "png_sha256": "b03bbca73fd4193373c3e819f6275bf674230bc630a90caf62cabf875dba7546",
+    "preset": "Village_L02_Limestone_Pillar.kpp",
+    "gbr_description": "Limestone Pillar",
+    "gbr_spacing": 140,
+    "gbr_md5": "c6a0434618651489ba3741496c3548ed"
+  },
+  {
+    "id": "L03_Limestone_Arch",
+    "file": "reused/L03_Limestone_Arch.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\L03_Limestone_Arch.png",
+    "png_sha256": "8dd8ea55e4cdef95bbec8e4abce8d37a0d4307ee00adce531455f7e5ee03d6ac",
+    "preset": "Village_L03_Limestone_Arch.kpp",
+    "gbr_description": "Limestone Arch",
+    "gbr_spacing": 140,
+    "gbr_md5": "9f9fbf0ea162578e6e86728dd5eaa11b"
+  },
+  {
+    "id": "Q05_Long_Low_Wall",
+    "file": "reused/Q05_Long_Low_Wall.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\Q05_Long_Low_Wall.png",
+    "png_sha256": "598c73605b3c8ee835446c86a68212ce71598b32cfe12c821b052ce81424c7cd",
+    "preset": "Village_Q05_Long_Low_Wall.kpp",
+    "gbr_description": "Long Low Wall",
+    "gbr_spacing": 140,
+    "gbr_md5": "c0c1f101a87b543ee00e4c4dd49d768f"
+  },
+  {
+    "id": "Q06_Tall_Wall_Section",
+    "file": "reused/Q06_Tall_Wall_Section.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\Q06_Tall_Wall_Section.png",
+    "png_sha256": "8552af79d23f30858fa98353edc526ffb9d64f6693bdcf478156756e6efb3b0e",
+    "preset": "Village_Q06_Tall_Wall_Section.kpp",
+    "gbr_description": "Tall Wall Section",
+    "gbr_spacing": 140,
+    "gbr_md5": "d0f4f6d0d581507d0f046c5710c12e31"
+  },
+  {
+    "id": "LT01_Hanging_Paper_Lantern",
+    "file": "reused/LT01_Hanging_Paper_Lantern.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT01_Hanging_Paper_Lantern.png",
+    "png_sha256": "fc6735e2694aec36d970f4afd0d22cb468a148ed794038722bd5067144fa58f8",
+    "preset": "Village_LT01_Hanging_Paper_Lantern.kpp",
+    "gbr_description": "Hanging paper lantern",
+    "gbr_spacing": 140,
+    "gbr_md5": "0a41fe2f55c4aaa6bdc069de9a36cd95"
+  },
+  {
+    "id": "LT02_Wall_Box_Lantern",
+    "file": "reused/LT02_Wall_Box_Lantern.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT02_Wall_Box_Lantern.png",
+    "png_sha256": "1efe222585c741fd76eb882bc1e20e230fc0126acf7f6aa5b0fee178c9570b3e",
+    "preset": "Village_LT02_Wall_Box_Lantern.kpp",
+    "gbr_description": "Wall box lantern",
+    "gbr_spacing": 140,
+    "gbr_md5": "3a9c9ecde0e9dd7391ac4d9ad958da51"
+  },
+  {
+    "id": "LT03_Timber_Post_Lamp",
+    "file": "reused/LT03_Timber_Post_Lamp.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT03_Timber_Post_Lamp.png",
+    "png_sha256": "e81e26c2cdc0dfdc0390bef9a3bc0dc252e3c815529f8b459d7ce0a7234db438",
+    "preset": "Village_LT03_Timber_Post_Lamp.kpp",
+    "gbr_description": "Timber post lamp",
+    "gbr_spacing": 140,
+    "gbr_md5": "f54ea77fbb028b7e148518b03cb6644e"
+  },
+  {
+    "id": "LT04_Stone_Garden_Lantern",
+    "file": "reused/LT04_Stone_Garden_Lantern.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT04_Stone_Garden_Lantern.png",
+    "png_sha256": "01b56103e0980ee3ec2002dd08dd00a0d34aedfe33514854e8253a3dae45db16",
+    "preset": "Village_LT04_Stone_Garden_Lantern.kpp",
+    "gbr_description": "Stone garden lantern",
+    "gbr_spacing": 140,
+    "gbr_md5": "ef4c46a31845a7771ddcdffc2778f710"
+  },
+  {
+    "id": "LT05_Cave_Oil_Lamp",
+    "file": "reused/LT05_Cave_Oil_Lamp.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\LT05_Cave_Oil_Lamp.png",
+    "png_sha256": "7299a323a06ffd3748f19b6e19876b30c2b7bb506f3b103e7fc0d670445f0032",
+    "preset": "Village_LT05_Cave_Oil_Lamp.kpp",
+    "gbr_description": "Cave oil lamp",
+    "gbr_spacing": 140,
+    "gbr_md5": "2116e487991260e393ef2a977890342a"
+  },
+  {
+    "id": "J01_Japanese_Exterior_Bay",
+    "file": "reused/J01_Japanese_Exterior_Bay.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J01_Japanese_Exterior_Bay.png",
+    "png_sha256": "a431d65d11cc09d74eb9cb1b5b21ba1a22b66f6cc01b738969955c11150be6f3",
+    "preset": "Village_J01_Japanese_Exterior_Bay.kpp",
+    "gbr_description": "Japanese Exterior Bay",
+    "gbr_spacing": 140,
+    "gbr_md5": "d3511901de13d6bc67d90e9abbdf0cdb"
+  },
+  {
+    "id": "J02_Japanese_Interior_Bay",
+    "file": "reused/J02_Japanese_Interior_Bay.png",
+    "source": "C:\\Users\\chase\\Documents\\Codex\\2026-10-07\\ri\\outputs\\blue_village_stamp_pack\\slate_village_library\\stamps\\J02_Japanese_Interior_Bay.png",
+    "png_sha256": "59bb3a77ad15e94335c0c2951887628fd74ff1ccc34063c9882e77dfac3c0865",
+    "preset": "Village_J02_Japanese_Interior_Bay.kpp",
+    "gbr_description": "Japanese Interior Bay",
+    "gbr_spacing": 140,
+    "gbr_md5": "09b3688f8a31f16027c3275e6d7d62ec"
+  }
+]

@@ -4,7 +4,23 @@ Updated October 31, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T40 — October 31 playtest corrections.**
+**Current task: T41 — modular building stamps for Krita.**
+Chase requests reusable plaster, beams, windows, doors and supporting details,
+with variations to compose buildings of different shapes/sizes. Deliver a separate
+transparent art kit, catalog and editable assembly example from the current art
+direction, on `threadbound/art-modular-building-stamps`. Reuse matching library
+parts and add missing granular pieces. Checkpoint the verified art delivery.
+No game replacement or new collision/interaction system is part of this task.
+T40 retest is deferred until Chase is ready; his accepted run stays accepted.
+Delivery is prepared: 14 new painted components and 22 byte-identical library
+parts, 36 full-color brush presets in an importable bundle, two catalogs and a
+34-layer editable OpenRaster example. [Kit and workflow](../ArtSource/BlueBiome/Placeables/BuildingStampsV1/README.md).
+All source/brush checksums, RGBA pixels, bundle links and ORA recomposition pass;
+catalogs/example were visually reviewed. The isolated headless Krita export
+failed with `0xC0000005`, so native import/opening and Chase's visual acceptance
+remain pending. No normal resource profile or game assets were modified.
+
+**Previous task: T40 — October 31 playtest corrections.**
 Chase accepts the run. Fix solid-floor double-Down trapping, still-water motion,
 rear-wall camera attachment/draw order, tower interior focus/water masking and
 clipped facade art. Move spin farther and raise/enlarge its waist-level VFX;
