@@ -5,6 +5,14 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+November 2: Chase asks for a Rigify test on the 25k doll, with rigid carved
+parts and clothing to be fitted later. An isolated Blender prototype and pose
+test action exist locally for review; the live player is unchanged. Sampled
+upper-arm, forearm, thigh and shin lengths remain unchanged in the test poses,
+but hand, shoulder and hip clearance, grips, retargeting and clothing fit are
+not yet accepted. The character and rig remain uncommitted/local-only because
+the remote is public. Documentation checkpoint:
+`docs: record doll rigify prototype`. It does not back up the model.
 November 2: Chase prefers a textured Tripo 25k candidate over the 10k
 candidate and requests darker finger joints. A localized color pass is ready
 for review on a separate copy; its geometry remains unchanged and it is still
