@@ -1,0 +1,138 @@
+{
+  "assets": [
+    {
+      "id": "S01_short_wedge",
+      "file": "generated/S01_short_wedge.png",
+      "size": [
+        1774,
+        887
+      ],
+      "content_box": [
+        96,
+        23,
+        1544,
+        865
+      ],
+      "solid_content_box": [
+        235,
+        211,
+        1539,
+        777
+      ],
+      "suggested_width": 384,
+      "sha256": "84e0f98ac8a4cba9ec2d92ecfe0677a2b8c4d4356c694e5e5cb2421a217c8e03"
+    },
+    {
+      "id": "S02_short_split",
+      "file": "generated/S02_short_split.png",
+      "size": [
+        1774,
+        887
+      ],
+      "content_box": [
+        0,
+        0,
+        1742,
+        887
+      ],
+      "solid_content_box": [
+        77,
+        163,
+        1694,
+        808
+      ],
+      "suggested_width": 512,
+      "sha256": "52ba43b6cc6f0b91fa244bc3e067c8edfcc2e53fc2416d9ac6c0951fd068a35f"
+    },
+    {
+      "id": "M01_medium_shallow",
+      "file": "generated/M01_medium_shallow.png",
+      "size": [
+        2172,
+        724
+      ],
+      "content_box": [
+        0,
+        9,
+        2146,
+        724
+      ],
+      "solid_content_box": [
+        38,
+        154,
+        2138,
+        636
+      ],
+      "suggested_width": 768,
+      "sha256": "1f72dd81d2194cf4ee6a4a3874fcb21190bee414220ac6ea580dd56a2cc63c42"
+    },
+    {
+      "id": "M02_medium_deep",
+      "file": "generated/M02_medium_deep.png",
+      "size": [
+        2172,
+        724
+      ],
+      "content_box": [
+        0,
+        29,
+        2169,
+        724
+      ],
+      "solid_content_box": [
+        99,
+        70,
+        2072,
+        692
+      ],
+      "suggested_width": 896,
+      "sha256": "da86f4e65006efd143bc015201d44369aedee893cae2a55b1f680722ea3e853d"
+    },
+    {
+      "id": "L01_long_shelf",
+      "file": "generated/L01_long_shelf.png",
+      "size": [
+        2172,
+        724
+      ],
+      "content_box": [
+        0,
+        0,
+        2144,
+        724
+      ],
+      "solid_content_box": [
+        29,
+        205,
+        2135,
+        601
+      ],
+      "suggested_width": 1280,
+      "sha256": "16029d9af67bcd5d2e0a23b0849d93b18d2539a3504b6fcd2d38d443f801182e"
+    },
+    {
+      "id": "L02_long_mass",
+      "file": "generated/L02_long_mass.png",
+      "size": [
+        2172,
+        724
+      ],
+      "content_box": [
+        0,
+        0,
+        2154,
+        724
+      ],
+      "solid_content_box": [
+        66,
+        80,
+        2105,
+        680
+      ],
+      "suggested_width": 1408,
+      "sha256": "62c3efd03166716b85bf50af4e423e9f6335592af3584a36536f9b116d05a022"
+    }
+  ],
+  "checks": "RGBA alpha, uncropped silhouette, exact brush pixels, ZIP integrity, resource hashes, preset links passed",
+  "native_krita_import": "pending user review"
+}
