@@ -32,8 +32,8 @@ const LOWER_BODY_BONES: Array[StringName] = [
 
 @export var enabled := true
 @export var model_scene: PackedScene = MODEL
-@export var viewport_size := Vector2i(800, 600)
-@export var display_scale := Vector2(0.5, 0.5)
+@export var viewport_size := Vector2i(1600, 1200)
+@export var display_scale := Vector2(0.25, 0.25)
 @export var camera_size := 2.8
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
@@ -151,7 +151,7 @@ func _process(delta: float) -> void:
 		if wet != (_logical_animation == &"Water_Dash"):
 			play_gameplay_animation(&"Dash")
 	_display.flip_h = facing < 0
-	_display.offset = Vector2(0, -255) if _player.is_in_prototype_water() else _land_display_offset
+	_display.offset = Vector2(0, -127.5 / display_scale.y) if _player.is_in_prototype_water() else _land_display_offset
 	_sync_special_medium()
 	if _air_slash_active and (not _player.is_attacking or not _player.current_attack_uses_air_double):
 		_air_slash_active = false
@@ -772,7 +772,8 @@ func _build_viewport() -> void:
 	_viewport.transparent_bg = true
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.msaa_3d = Viewport.MSAA_4X
-	_viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_FXAA
+	# MSAA handles geometry edges without FXAA softening fine texture details.
+	_viewport.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
 	add_child(_viewport)
 
 	var environment_node := WorldEnvironment.new()
@@ -867,6 +868,8 @@ func _build_viewport() -> void:
 	_display_rest_position = _display.position
 	var outline_material := ShaderMaterial.new()
 	outline_material.shader = OUTLINE_SHADER
+	# Keep the outline's world-space width when changing render resolution.
+	outline_material.set_shader_parameter("outline_source_pixels", 1.5 / display_scale.x)
 	if _model_root.find_child("Threadborne_Doll", true, false):
 		# Leave headroom for the level's additive 2D lights on pale lacquer.
 		outline_material.set_shader_parameter("exposure", 0.62)

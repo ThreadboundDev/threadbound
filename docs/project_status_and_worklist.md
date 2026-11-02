@@ -5,6 +5,17 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+November 2 clarity follow-up: Chase requests a sharper engine display. The
+character viewport increases from 800x600 to 1600x1200, with half sprite scale
+to retain gameplay size. FXAA is removed while 4x MSAA remains; outline width
+and water offset retain their world-space sizes. The 4K source texture was
+compared without GPU compression; compression is retained because the visible
+improvement is primarily the render resolution. The 875-pose/attachment checks
+pass, and the old/new sword projection matches within 0.01 world units.
+Checkpoint: `fix: sharpen live character rendering`. Four times the render
+pixels increases GPU cost; no frame-time budget is claimed. Visual acceptance
+remains open. Local comparison captures are in the GameReadyDoll folder.
+
 November 2 clothing preparation: Chase requests no hood, a short cowl/scarf
 with no tails, bare elbows/fingers, and closed boots. He rejects pants restarting
 below exposed knees and asks for more ragged cloth. Revised fit art and five
