@@ -17,6 +17,11 @@ Chase subsequently likes the corrected direction and requests a clean single
 front T-pose for 3D modeling. The [saved front reference](../../work/pale-doll-study-2026-11-01/Threadborne_Pale_Doll_TPose_Front_v2.png)
 shows the unclothed doll on white, without equipment or inset views. This
 records acceptance of the visual direction, not completed production-model fit.
+Chase then requests the same T-pose with no eye holes. The
+[blank-head reference](../../work/pale-doll-study-2026-11-01/Threadborne_Pale_Doll_TPose_Front_BlankHead_v3.png)
+is the current input for modeling/generation. Keep the oval head, center seam
+and worn lacquer; eye openings can be explored on masks separately. The existing
+v2 3D study predates this face decision and still has its earlier eye sockets.
 
 The protagonist's recognizable body can persist beneath different equipment.
 Small worn clothing openings at elbows and knees may reveal doll construction;

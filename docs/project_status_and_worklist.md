@@ -25,6 +25,10 @@ Chase likes the corrected boy-doll direction. A clean single front T-pose on
 white is delivered for modeling; see the study package. Checkpoint:
 `art: add clean boy doll front T-pose reference` on the same branch. PNG visual/
 integrity and documentation checks pass; 3D body fit and clothing remain open.
+Chase requests that same T-pose with the eye holes removed for 3D generation.
+The blank-head v3 PNG is delivered and visually verified, retaining the seam
+and worn finish. Checkpoint: `art: remove eye holes from doll T-pose reference`
+on the same branch. The earlier v2 3D source is unchanged and still has eyes.
 
 **Previous task: T41 — modular building stamps for Krita.**
 Chase requests reusable plaster, beams, windows, doors and supporting details,

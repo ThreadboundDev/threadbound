@@ -12,7 +12,13 @@ The worn finish, head, hands, joint positions and animation rig are retained.
 
 ## Review
 
-- [Clean front T-pose](Threadborne_Pale_Doll_TPose_Front_v2.png): single unclothed
+- [Current clean blank-head T-pose](Threadborne_Pale_Doll_TPose_Front_BlankHead_v3.png):
+  the same approved front figure, with both eye holes filled and the center seam
+  retained. Chase requested this version as the 3D generation input. The face
+  is a continuous worn lacquer surface. [Edit prompt](blank_head_tpose_prompt.md).
+  This is an image-only revision: the separate v2 3D study still has its earlier
+  eye sockets and has not been revised or installed in the game.
+- [Earlier eyed front T-pose](Threadborne_Pale_Doll_TPose_Front_v2.png): single unclothed
   front figure on white, with open hands and all joints visible, for 3D modeling.
   Chase likes the corrected v2 direction and requested this separate input image.
   [Generation prompt](clean_tpose_prompt.md). It is a generated visual reference,
@@ -113,3 +119,7 @@ on the same branch; 21 build and 18 independent export checks pass again.
 Clean reference checkpoint: `art: add clean boy doll front T-pose reference` on
 the same branch. Visual review, PNG integrity, links and staged whitespace were
 checked. This image delivery does not change the 3D source or its test results.
+
+Blank-head reference checkpoint: `art: remove eye holes from doll T-pose reference`
+on the same branch. Both holes are filled, the image is visually reviewed, and
+PNG integrity/links/staged whitespace are checked. No 3D source is changed.
