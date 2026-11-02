@@ -4,6 +4,20 @@ Updated November 2, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+**Development feedback capture — implemented November 2; user acceptance open.**
+Chase approves a debug screenshot/short-recording tool with an in-game feedback
+form and automatic state/diagnostics. Ctrl+F1 captures; Ctrl+F2 starts/stops a
+silent, bounded clip. Notes autosave; Save & copy creates a local review handoff.
+[Usage, inbox, capture contents and crash limits](development_feedback.md).
+Validation: 38 headless and 43 rendered integration checks pass, actual Forward+
+Lakeside screenshot/moving-clip capture passes, and FFmpeg independently decodes
+the AVI files. Existing scene-entry/shutdown diagnostics also reproduce with
+feedback disabled. No gameplay, equipment, lore or art replacement is included.
+Checkpoint: `feature: add in-game debug feedback capture` on
+`threadbound/feature-debug-feedback`. The separate checkpoint worktree preserves
+the shared checkout's ongoing organization/art changes. Try the workflow before
+marking this accepted; reports stay local and are not backed up by a source push.
+
 **Current task: T42 — pale doll modeling reference and isolated body study.**
 November 2 clothing preparation: Chase requests no hood, a short cowl/scarf
 with no tails, bare elbows/fingers, and closed boots. He rejects pants restarting

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/UI/DebugFeedback/debug_feedback_panel.gd" id="1"]
+
+[node name="DebugFeedbackPanel" type="Window"]
+title = "Threadbound · Development Feedback"
+initial_position = 1
+size = Vector2i(980, 860)
+min_size = Vector2i(560, 400)
+visible = false
+transient = true
+exclusive = true
+script = ExtResource("1")

@@ -22,6 +22,7 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `docs/design/pattern_system.md` - exploratory long-term Pattern accessory, embroidery, and build-combination design
 - `docs/art/environment_art_style.md` - environment visual direction
 - `docs/art/asset_standards.md` - runtime art naming, palette, sprite, and rigging standards
+- [In-game development feedback](development_feedback.md) - screenshot/clip shortcuts, local feedback inbox, automatic context and crash diagnostics
 
 ## Folders
 

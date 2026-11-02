@@ -4,6 +4,7 @@ extends Node
 ## Provides a single debug label accessible from anywhere
 
 const DEMO_ENDING_SCENE := preload("res://Src/UI/DemoEnding/demo_ending.tscn")
+const FEEDBACK_CAPTURE := preload("res://Src/DebugFeedback/feedback_capture.gd")
 
 var debug_label: Label
 var target_node: Node2D = null  # Usually the player
@@ -13,6 +14,11 @@ func _ready():
 	if not OS.is_debug_build():
 		process_mode = Node.PROCESS_MODE_DISABLED
 		return
+
+	if not OS.get_cmdline_user_args().has("--no-debug-feedback"):
+		var feedback := FEEDBACK_CAPTURE.new()
+		feedback.name = "FeedbackCapture"
+		add_child(feedback)
 
 	# Create canvas layer for debug UI (always on top)
 	canvas_layer = CanvasLayer.new()
