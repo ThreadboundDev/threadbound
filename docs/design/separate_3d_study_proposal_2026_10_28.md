@@ -38,7 +38,7 @@ specific asset copies still need to be finalized before starting the study.
 ## Small first scene
 
 Proposed independent Godot project folder:
-`C:\Users\chase\Documents\Threadbound 3D Study`.
+`C:\Users\chase\Documents\Threadbound - Potential Use\Prototypes\Third Person Study`.
 Keep its own source/history and copied selected assets. The production project's
 autoloads, scene tree and asset imports should not be dependencies of the study.
 

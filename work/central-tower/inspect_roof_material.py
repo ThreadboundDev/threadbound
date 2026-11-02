@@ -1,7 +1,7 @@
 import bpy,json
 from pathlib import Path
 from mathutils import Vector
-bpy.ops.wm.open_mainfile(filepath='C:/Users/chase/Documents/threadbound/outputs/central-tower-model-v2/CentralTower_Editable.blend')
+bpy.ops.wm.open_mainfile(filepath='C:/Users/chase/Documents/threadbound/ArtSource/Deliveries/central-tower-model-v2/CentralTower_Editable.blend')
 for name in ['Roof_Tier03_Front_Mitered','Roof_Tier03_Right_Side_With_Corners']:
     ob=bpy.data.objects[name];print('OBJECT',name,[(m.name if m else None) for m in ob.data.materials],flush=True)
     polygons=[p for p in ob.data.polygons if p.material_index==0]

@@ -9,8 +9,8 @@ from pathlib import Path
 from mathutils import Vector
 
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-SRC=ROOT/'outputs/central-tower-model-v2/CentralTower_Editable.blend'
-OUT=ROOT/'outputs/central-tower-model-v3'
+SRC=ROOT/'ArtSource/Deliveries/central-tower-model-v2/CentralTower_Editable.blend'
+OUT=ROOT/'ArtSource/Deliveries/central-tower-model-v3'
 for p in [OUT,OUT/'source',OUT/'source/build-temp',OUT/'previews']:p.mkdir(parents=True,exist_ok=True)
 tempfile.tempdir=str(OUT/'source/build-temp');os.environ['TEMP']=tempfile.tempdir;os.environ['TMP']=tempfile.tempdir
 bpy.ops.wm.open_mainfile(filepath=str(SRC))
@@ -89,7 +89,7 @@ def export(filename,full):
     bpy.ops.object.select_all(action='DESELECT')
 
 swaps=[];runtime=[]
-runtime_dir=ROOT/'outputs/central-tower-model-v1/textures/runtime'
+runtime_dir=ROOT/'ArtSource/Deliveries/central-tower-model-v1/textures/runtime'
 for mat in bpy.data.materials:
     if not mat.use_nodes:continue
     key=mat.name.split('.')[0]

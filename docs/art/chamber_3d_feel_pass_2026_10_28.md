@@ -92,5 +92,5 @@ resource links and original source hashes.
    Defeat the guardian, approach the blossom on its right, and try both ending
    choices and restart.
 
-The installed project is `C:/Users/chase/Documents/Threadbound 3D Study`.
+The installed project is `C:/Users/chase/Documents/Threadbound - Potential Use/Prototypes/Third Person Study`.
 Launcher: `tools/study/start_third_person_study.ps1`.

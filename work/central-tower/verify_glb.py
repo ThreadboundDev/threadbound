@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 HERE=Path(__file__).resolve()
 ROOT=HERE.parents[3] if HERE.parent.name=='source' else HERE.parents[2]
-OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'outputs/central-tower-model-v1'
+OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'ArtSource/Deliveries/central-tower-model-v1'
 reports={}
 for fn in ['CentralTower_Exterior.glb','CentralTower_Cutaway.glb']:
     raw=(OUT/fn).read_bytes()

@@ -13,7 +13,7 @@ unchanged. Appearance and feel acceptance remain Chase's decision.
 ## Open and play
 
 The standalone project is installed at
-`C:\Users\chase\Documents\Threadbound 3D Study\project.godot`.
+`C:\Users\chase\Documents\Threadbound - Potential Use\Prototypes\Third Person Study\project.godot`.
 Open it in Godot and press F5, or run
 [the launcher](../../tools/study/start_third_person_study.ps1).
 Use `-Editor` to open that separate project in the editor.

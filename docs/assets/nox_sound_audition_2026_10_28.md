@@ -8,7 +8,7 @@ Start/reopen with `tools/audio/start_nox_audition.ps1`. The tool starts a hidden
 Python server bound only to `127.0.0.1`; it opens the page in the default browser.
 The Codex browser tab is also retained for this review. Nothing is hosted online.
 Use `-NoBrowser` to start without opening a second tab. The original archive at
-`C:\Users\chase\Documents\Threadbound Asset Library\archives\Essentials_Series_NOX_SOUND.zip`
+`C:\Users\chase\Documents\Threadbound - Potential Use\Asset Packs\CC0 Library\archives\Essentials_Series_NOX_SOUND.zip`
 must remain available. The catalog/tools are backed up in Git; that archive is
 still a separate local-library backup responsibility.
 

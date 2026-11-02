@@ -3,7 +3,7 @@ import bpy, sys, os, tempfile
 from pathlib import Path
 from mathutils import Vector
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/lakeside-buildings-v1'
+OUT=ROOT/'ArtSource/Deliveries/lakeside-buildings-v1'
 tempfile.tempdir=str(OUT/'source/build-temp');os.environ['TEMP']=tempfile.tempdir;os.environ['TMP']=tempfile.tempdir
 bpy.ops.wm.open_mainfile(filepath=str(OUT/'LakesideBuildings_Editable.blend'))
 draft='draft' in sys.argv

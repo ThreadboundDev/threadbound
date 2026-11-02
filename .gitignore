@@ -80,3 +80,13 @@ __pycache__/
 /work/third-person-study-2026-10-28/project/committed_combat_test_results.json
 
 /work/third-person-study-2026-10-28/project/loom_trial_test_results.json
+
+# Files consolidated from outside Git stay local. Private publishing records,
+# unpublished source workspaces and original full-length recordings must not
+# be uploaded to the public repository by an organization checkpoint.
+/LocalOnly/
+/ArtSource/RecoveredLocal/
+/Media/RecoveredLocal/
+/Media/Captures/*
+!/Media/Captures/README.md
+/docs/organization/local/

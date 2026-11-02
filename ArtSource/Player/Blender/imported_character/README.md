@@ -12,4 +12,4 @@ The rig has 32 bones. IK guides exist but are disabled. Initial weights were pro
 
 The sprite camera has a 900 × 900 transparent canvas, approximately 720px standing body height and a target 0.25 scale for 180px gameplay height. Do not independently resize animation frames.
 
-Superseded revisions, diagnostic images, and scripts were moved to `C:/Users/chase/Documents/Threadborne_Art_Archive/2026-09-05-retired-blender`. Current renders and validation reports remain here. See `docs/art/player_blender_pipeline.md` for the active workflow.
+Superseded revisions, diagnostic images, and scripts were moved to `C:/Users/chase/Documents/Threadbound - Staged for Delete/03 Retired Art/September 5 Blender Experiments/2026-09-05-retired-blender`. Current renders and validation reports remain here. See `docs/art/player_blender_pipeline.md` for the active workflow.

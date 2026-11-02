@@ -3,7 +3,7 @@ from pathlib import Path
 import json, hashlib, shutil, zipfile
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
-OUT=ROOT/'outputs/woven-guardians-playable-2026-10-20';OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'ArtSource/Deliveries/woven-guardians-playable-2026-10-20';OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'.gdignore').write_text('')
 frames=ROOT/'work/woven-guardians/renders'
 for actor,crop in [('Eave',(740,280,1400,790)),('Heron',(820,260,1550,750))]:
@@ -17,7 +17,7 @@ shutil.copy2(frames/'Heron_019.png',OUT/'LoomHeron_In_Game.png')
 shutil.copy2(ROOT/'work/loom-heron/renders/LoomHeron_Model.png',OUT/'LoomHeron_Model.png')
 for name in ['EaveRunner','LoomHeron']:
     shutil.copy2(ROOT/f'ArtSource/BlueBiome/Enemies/{name}/{name}_Woven_v1.blend',OUT/f'{name}_Woven_v1.blend')
-concept=ROOT/'outputs/woven-blue-guardians-2026-10-20/Woven_Flying_Concepts.png'
+concept=ROOT/'ArtSource/Deliveries/woven-blue-guardians-2026-10-20/Woven_Flying_Concepts.png'
 source=ROOT/'ArtSource/BlueBiome/Enemies/LoomHeron'
 provenance={
     'model':'Original script-authored cloth/reed/cord bird based on approved Loom Heron concept A',

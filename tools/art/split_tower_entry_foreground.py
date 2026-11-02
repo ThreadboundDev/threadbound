@@ -13,17 +13,17 @@ import bmesh
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "outputs/central-tower-model-v5"
+OUT = ROOT / "ArtSource/Deliveries/central-tower-model-v5"
 WORK = ROOT / "work/lakeside-entry-focus-2026-10-26"
 OUT.mkdir(parents=True, exist_ok=True)
 WORK.mkdir(parents=True, exist_ok=True)
 (OUT / ".gdignore").touch()
-bpy.ops.wm.open_mainfile(filepath=str(ROOT / "outputs/central-tower-model-v4/CentralTower_Editable.blend"))
+bpy.ops.wm.open_mainfile(filepath=str(ROOT / "ArtSource/Deliveries/central-tower-model-v4/CentralTower_Editable.blend"))
 bpy.context.preferences.filepaths.save_version = 0
 root = bpy.data.objects["CentralTower_ROOT"]
 model = bpy.data.collections["CENTRAL_TOWER_MODEL"]
 base = bpy.data.objects["05_Open_Bottom_Basin__slate"]
-normalization = json.loads((ROOT / "outputs/central-tower-model-v2/roof_joint_verification.json").read_text())
+normalization = json.loads((ROOT / "ArtSource/Deliveries/central-tower-model-v2/roof_joint_verification.json").read_text())
 scales = Vector(normalization["normalization_scale"])
 offset = Vector(normalization["raw_offset"])
 inverse = root.matrix_world.inverted()

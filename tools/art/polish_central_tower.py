@@ -15,20 +15,20 @@ import bpy
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "outputs/central-tower-model-v4"
+OUT = ROOT / "ArtSource/Deliveries/central-tower-model-v4"
 WORK = ROOT / "work/central-tower-polish-2026-10-24"
 TEMP = ROOT / "tmp/tower_polish/blender-temp"
 for directory in (OUT, WORK, TEMP):
     directory.mkdir(parents=True, exist_ok=True)
 tempfile.tempdir = str(TEMP)
 os.environ["TEMP"] = os.environ["TMP"] = str(TEMP)
-bpy.ops.wm.open_mainfile(filepath=str(ROOT / "outputs/central-tower-model-v3/CentralTower_Editable.blend"))
+bpy.ops.wm.open_mainfile(filepath=str(ROOT / "ArtSource/Deliveries/central-tower-model-v3/CentralTower_Editable.blend"))
 bpy.context.preferences.filepaths.save_version = 0
 root = bpy.data.objects["CentralTower_ROOT"]
 model = bpy.data.collections["CENTRAL_TOWER_MODEL"]
 roof_collection = bpy.data.collections["04_Fixed_Blue_Roofs"]
 facade = bpy.data.collections["02_Facade_Removable"]
-normalization = json.loads((ROOT / "outputs/central-tower-model-v2/roof_joint_verification.json").read_text())
+normalization = json.loads((ROOT / "ArtSource/Deliveries/central-tower-model-v2/roof_joint_verification.json").read_text())
 scales = Vector(normalization["normalization_scale"])
 offset = Vector(normalization["raw_offset"])
 inverse = root.matrix_world.inverted()
@@ -221,6 +221,6 @@ encoded += b" "*((-len(encoded))%4)
 new_binary += b"\0"*((-len(new_binary))%4)
 runtime = ROOT / "Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v4.glb"
 runtime.write_bytes(struct.pack("<4sII",b"glTF",2,28+len(encoded)+len(new_binary))+struct.pack("<II",len(encoded),0x4E4F534A)+encoded+struct.pack("<II",len(new_binary),0x004E4942)+new_binary)
-report = {"source":"outputs/central-tower-model-v3/CentralTower_Editable.blend","roof_changes":changes,"protected_non_roof_hashes":protected,"non_roof_geometry_uvs_unchanged":True,"vertex_and_face_counts_unchanged":True,"texture_bytes_unchanged":True,"runtime":str(runtime.relative_to(ROOT)),"runtime_sha256":hashlib.sha256(runtime.read_bytes()).hexdigest()}
+report = {"source":"ArtSource/Deliveries/central-tower-model-v3/CentralTower_Editable.blend","roof_changes":changes,"protected_non_roof_hashes":protected,"non_roof_geometry_uvs_unchanged":True,"vertex_and_face_counts_unchanged":True,"texture_bytes_unchanged":True,"runtime":str(runtime.relative_to(ROOT)),"runtime_sha256":hashlib.sha256(runtime.read_bytes()).hexdigest()}
 (WORK / "source_verification.json").write_text(json.dumps(report,indent=2)+"\n")
 print("TOWER_V4_BUILD_PASS",json.dumps({"roof_parts":len(changes),"protected_meshes":len(protected),"runtime_bytes":runtime.stat().st_size}),flush=True)

@@ -9,8 +9,8 @@ from pathlib import Path
 from mathutils import Vector
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT = ROOT/'outputs/lakeside-buildings-v1'
-SOURCE = ROOT/'outputs/central-tower-model-v3/CentralTower_Editable.blend'
+OUT = ROOT/'ArtSource/Deliveries/lakeside-buildings-v1'
+SOURCE = ROOT/'ArtSource/Deliveries/central-tower-model-v3/CentralTower_Editable.blend'
 for p in [OUT, OUT/'models', OUT/'previews', OUT/'source', OUT/'references', OUT/'source/build-temp']:
     p.mkdir(parents=True, exist_ok=True)
 tempfile.tempdir = str(OUT/'source/build-temp')
@@ -458,7 +458,7 @@ for a in ASSETS.values():
 
 # GLBs embed the tower's same-color runtime maps; source file retains its 4K PNGs.
 swaps=[];runtime_images=[]
-runtime_dir=ROOT/'outputs/central-tower-model-v1/textures/runtime'
+runtime_dir=ROOT/'ArtSource/Deliveries/central-tower-model-v1/textures/runtime'
 for key,mat in M.items():
     for n in mat.node_tree.nodes if mat.use_nodes else []:
         if n.type!='TEX_IMAGE' or n.image is None:continue

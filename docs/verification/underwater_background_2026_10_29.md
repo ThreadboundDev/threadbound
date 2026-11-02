@@ -14,7 +14,7 @@ The 3D trial remains parked. No new gameplay direction is inferred from this.
 ## Background delivery
 
 - Source: `Blue_Village_Connections_Review.kra` in the external
-  `Documents/Codex/2026-10-07/ri/outputs/blue_village_stamp_pack/cave_connections_v1`
+  `Documents/threadbound/ArtSource/RecoveredLocal/BlueBiome Painting Workspace/outputs/blue_village_stamp_pack/cave_connections_v1`
   directory. The editable KRA remains there, unchanged; it is not included in
   this repository checkpoint. The exported painted pixels are backed up in Git LFS.
 - Exact source hash, layer UUID, bounds and section positions:

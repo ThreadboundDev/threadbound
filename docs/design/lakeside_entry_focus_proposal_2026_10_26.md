@@ -63,7 +63,7 @@ New files (and Godot import/UID sidecars where needed):
 - `Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_door_visual.gd`
 - `Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_door_visual.gdshader`
 - `Assets/BlueBiome/Art/Lakeside3D/Models/central_tower_v5.glb`
-- `outputs/central-tower-model-v5/CentralTower_Editable.blend` and README/.gdignore
+- `ArtSource/Deliveries/central-tower-model-v5/CentralTower_Editable.blend` and README/.gdignore
 - `tools/art/split_tower_entry_foreground.py`
 - `tools/environment/verify_lakeside_entry_focus.gd`
 - `work/lakeside-entry-focus-2026-10-26/` source checks, GPU captures and reports

@@ -1,0 +1,42 @@
+[
+  {
+    "removed_duplicate": "ArtSource/Deliveries/character-quality-v2-2026-10-20/EaveRunner_Woven_v2.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v2.blend",
+    "sha256": "30294e19ad3b6b38e8c1bbc237cde8b0264515777b99ca7225c63f5f03458e56"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/character-quality-v2-2026-10-20/LakesideVillagers_v2.blend",
+    "retained_source": "ArtSource/BlueBiome/Villagers/LakesideVillagers_v2.blend",
+    "sha256": "ac63fa495ba98c91ae5d16993e34aba95d3191a2d0b0dc98ebe814caf7c34a2e"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/character-quality-v2-2026-10-20/LoomHeron_Woven_v2.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/LoomHeron/LoomHeron_Woven_v2.blend",
+    "sha256": "746720c7e117ecde3dcbd172aac358d93163a1cd6f6b0788cf72ef3a4b7ea197"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/lakeside-villagers-v1/LakesideVillagers_v1.blend",
+    "retained_source": "ArtSource/BlueBiome/Villagers/LakesideVillagers_v1.blend",
+    "sha256": "889e18f869b29cfb6f458ce89467c873d27d4e4546623214f1fa81edec52aace"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/loom-heron-quality-v3-2026-10-21/LoomHeron_Woven_v3.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/LoomHeron/LoomHeron_Woven_v3.blend",
+    "sha256": "8cf12a2479744c887e95b84fe5f734409e7512451b9cb7df60268a3abd0cd98e"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/woven-blue-guardians-2026-10-20/EaveRunner_Woven_v1.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v1.blend",
+    "sha256": "c877d6b1dd7ebb01d460d615b2ee2ed772e643d1a0d5127e9f08232d13b934e7"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/woven-guardians-playable-2026-10-20/EaveRunner_Woven_v1.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v1.blend",
+    "sha256": "c877d6b1dd7ebb01d460d615b2ee2ed772e643d1a0d5127e9f08232d13b934e7"
+  },
+  {
+    "removed_duplicate": "ArtSource/Deliveries/woven-guardians-playable-2026-10-20/LoomHeron_Woven_v1.blend",
+    "retained_source": "ArtSource/BlueBiome/Enemies/LoomHeron/LoomHeron_Woven_v1.blend",
+    "sha256": "ea4f40fab116e9cee26409c259ad20dc048ace80763be9cf5c646298fec404b6"
+  }
+]

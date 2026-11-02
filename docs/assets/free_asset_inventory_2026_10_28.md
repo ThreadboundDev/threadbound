@@ -15,7 +15,7 @@ evidence was deleted locally; textual findings remain as historical records.
 reads. The catalog inspects 531 glTF/GLB files; alternate formats and root-motion
 copies are not additional models or additional unique actions.
 
-Local library: `C:\Users\chase\Documents\Threadbound Asset Library`.
+Local library: `C:\Users\chase\Documents\Threadbound - Potential Use\Asset Packs\CC0 Library`.
 Original ZIPs live in `archives/`; `catalog/` contains the audit, preview images,
 license documents and extracted PDF text. ZIPs stay intact for provenance and
 selective extraction. The 13 originals were removed from Downloads only after

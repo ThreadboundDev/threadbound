@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/lakeside-buildings-v1'
+OUT=ROOT/'ArtSource/Deliveries/lakeside-buildings-v1'
 manifest=json.loads((OUT/'asset_manifest.json').read_text())
 results={};image_provenance={}
 def rotation(q):

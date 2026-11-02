@@ -8,7 +8,7 @@ scope. **Delivered for hands-on review; not a production conversion.**
 ## Run and controls
 
 Use the installed independent project at
-`C:\Users\chase\Documents\Threadbound 3D Study\project.godot`, or the
+`C:\Users\chase\Documents\Threadbound - Potential Use\Prototypes\Third Person Study\project.godot`, or the
 [launcher](../../tools/study/start_third_person_study.ps1). The checkpointed
 [source project](../../work/third-person-study-2026-10-28/project/README.md)
 stays beneath a `.gdignore` in the main repository. No main-game scenes,

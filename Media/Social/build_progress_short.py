@@ -10,13 +10,11 @@ WORK = ROOT / "Media" / "Development" / "progress_short"
 FFMPEG = Path(r"C:\Program Files\Krita (x64)\bin\ffmpeg.exe")
 FONT = Path(r"C:\Windows\Fonts\arialbd.ttf")
 
-OLD = Path(r"C:\Users\chase\Videos\Screen Recordings\Threadbound Devlog 1.mp4")
-NEW = Path(r"C:\Users\chase\Videos\threadbound_develog_3.mp4")
-TEST = Path(r"C:\Users\chase\Videos\Threadbound Test\Threabound_Test_1.avi")
-ATTACK = Path(r"C:\Users\chase\Videos\Threadbound Test\Threabound_Test_movingattack.avi")
-ATTACK_SINGLE = Path(
-    r"C:\Users\chase\Videos\Threadbound Test\Threabound_Test_movingattack_single.avi"
-)
+OLD = ROOT / 'Media/RecoveredLocal/Devlog 1/Screen Recording.mp4'
+NEW = ROOT / 'Media/RecoveredLocal/Devlog 3/Original Export.mp4'
+TEST = ROOT / 'Media/RecoveredLocal/Source Captures/Threabound_Test_1.avi'
+ATTACK = ROOT / 'Media/RecoveredLocal/Source Captures/Threabound_Test_movingattack.avi'
+ATTACK_SINGLE = ROOT / 'Media/RecoveredLocal/Source Captures/Threabound_Test_movingattack_single.avi'
 MUSIC = ROOT / "Assets" / "Audio" / "Music" / "proto_weaver_fight_v2.wav"
 
 

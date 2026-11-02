@@ -13,7 +13,7 @@ ART=ROOT/'Assets/BlueBiome/Art/LakesideMap'
 SCENES=ROOT/'Src/Environment/BlueBiome/Prototypes/Rooms'
 BASE='res://Src/Environment/BlueBiome/Buildings/Lakeside3D/'
 manifest=json.loads((ART/'map_manifest.json').read_text())
-STAMP=Path('C:/Users/chase/Documents/Codex/2026-10-07/ri/outputs/blue_village_stamp_pack')
+STAMP=Path('C:/Users/chase/Documents/threadbound/ArtSource/RecoveredLocal/BlueBiome Painting Workspace/outputs/blue_village_stamp_pack')
 sources={'walking_deck.png':'japanese_construction_v3/stamps/D01_Deck_Edge.png','quarry_block.png':'slate_village_library/stamps/S03_Tall_Quarry_Block.png','small_stone.png':'slate_village_library/stamps/S02_Short_Chunk.png'}
 artwork_only = args.artwork_only
 if not artwork_only:

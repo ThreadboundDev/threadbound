@@ -10,7 +10,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/nox-sound-audition-2026-10-28'
-ARCHIVE = Path('C:/Users/chase/Documents/Threadbound Asset Library/archives/Essentials_Series_NOX_SOUND.zip')
+ARCHIVE = Path('C:/Users/chase/Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/archives/Essentials_Series_NOX_SOUND.zip')
 
 
 def read_audio(data):

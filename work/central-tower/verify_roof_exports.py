@@ -2,7 +2,7 @@ from pathlib import Path
 import json,struct,io
 from PIL import Image
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/central-tower-model-v2'
+OUT=ROOT/'ArtSource/Deliveries/central-tower-model-v2'
 result={}
 for file,full in [('CentralTower_Exterior.glb',True),('CentralTower_Cutaway.glb',False)]:
     raw=(OUT/file).read_bytes();magic,version,size=struct.unpack_from('<III',raw)

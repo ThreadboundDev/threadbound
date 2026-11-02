@@ -4,7 +4,7 @@ from pathlib import Path
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/lakeside-buildings-v1'
+OUT=ROOT/'ArtSource/Deliveries/lakeside-buildings-v1'
 keys=['walnut','plaster','blue_tiles','slate','rope','iron','recess']
 def value(v):
     if isinstance(v,(str,int,float,bool)):return v
@@ -23,7 +23,7 @@ def signature():
         links=sorted((l.from_node.name,l.from_socket.name,l.to_node.name,l.to_socket.name) for l in m.node_tree.links)
         result[key]={'nodes':ns,'links':links}
     return result
-bpy.ops.wm.open_mainfile(filepath=str(ROOT/'outputs/central-tower-model-v3/CentralTower_Editable.blend'))
+bpy.ops.wm.open_mainfile(filepath=str(ROOT/'ArtSource/Deliveries/central-tower-model-v3/CentralTower_Editable.blend'))
 source=signature()
 bpy.ops.wm.open_mainfile(filepath=str(OUT/'LakesideBuildings_Editable.blend'))
 assert signature()==source,'Materials differ from the tower shader graphs or packed image bytes'

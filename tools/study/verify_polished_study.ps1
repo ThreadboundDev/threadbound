@@ -1,7 +1,7 @@
 param([switch]$RepositoryCopy, [switch]$Capture)
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
-$projectFolder = if ($RepositoryCopy) { Join-Path $repositoryRoot 'work/third-person-study-2026-10-28/project' } else { Join-Path $env:USERPROFILE 'Documents/Threadbound 3D Study' }
+$projectFolder = if ($RepositoryCopy) { Join-Path $repositoryRoot 'work/third-person-study-2026-10-28/project' } else { Join-Path $env:USERPROFILE 'Documents/Threadbound - Potential Use/Prototypes/Third Person Study' }
 $logFolder = Join-Path $repositoryRoot 'work/third-person-study-2026-10-28/temp/polish'
 $engineExe = 'C:\Program Files (x86)\Godot\Godot_v4.7.2-stable_mono_win64\Godot_v4.7.2-stable_mono_win64\Godot_v4.7.2-stable_mono_win64_console.exe'
 $prefix = if ($RepositoryCopy) { 'final_source' } else { 'final_installed' }

@@ -15,7 +15,7 @@ DEST = ART / 'Bellstriker_Rigged_v1.blend'
 assert not DEST.exists() or '--replace-generated' in sys.argv, 'Preserve existing manual Bellstriker edits. Replacement is only for an untouched generated prototype.'
 source = ART / 'Bellstriker_HighRes_Source.glb'
 if not source.exists():
-    shutil.copy2('C:/Users/chase/Downloads/hitem3d.glb', source)
+    raise FileNotFoundError(f'Restore the original Bellstriker source before rebuilding: {source}')
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=str(source))
 mesh = next(o for o in bpy.context.scene.objects if o.type == 'MESH')

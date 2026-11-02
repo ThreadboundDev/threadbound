@@ -3,7 +3,7 @@ from PIL import Image,ImageDraw,ImageFont
 import json
 HERE=Path(__file__).resolve()
 ROOT=HERE.parents[3] if HERE.parent.name=='source' else HERE.parents[2]
-OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'outputs/central-tower-model-v1'
+OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'ArtSource/Deliveries/central-tower-model-v1'
 P=OUT/'previews'
 BG=(224,220,212)
 sheet=Image.new('RGB',(2280,1580),BG)

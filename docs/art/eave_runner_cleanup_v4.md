@@ -9,9 +9,9 @@ now use v4. Further art polish and hands-on acceptance remain open.
 ## References and diagnosis
 
 The original silhouette is **A, Eave Runner**, in
-[`Indoor_Enemies.png`](../../outputs/lakeside-character-concepts-2026-10-19/Indoor_Enemies.png).
+[`Indoor_Enemies.png`](../../ArtSource/Deliveries/lakeside-character-concepts-2026-10-19/Indoor_Enemies.png).
 The later
-[`EaveRunner_Woven_Concept.png`](../../outputs/woven-blue-guardians-2026-10-20/EaveRunner_Woven_Concept.png)
+[`EaveRunner_Woven_Concept.png`](../../ArtSource/Deliveries/woven-blue-guardians-2026-10-20/EaveRunner_Woven_Concept.png)
 develops that silhouette into the established woven guardian: cracked ivory
 mask, indigo hood/scarf, layered wrap, gathered trousers, bound woven limbs and
 fitted bamboo bracers. Both are existing project references, not new concepts.

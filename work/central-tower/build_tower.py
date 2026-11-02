@@ -5,7 +5,7 @@ from mathutils import Vector
 
 HERE=Path(__file__).resolve()
 ROOT=HERE.parents[3] if HERE.parent.name=='source' else HERE.parents[2]
-OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'outputs/central-tower-model-v1'
+OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'ArtSource/Deliveries/central-tower-model-v1'
 TEMP=OUT/'source/build-temp' if HERE.parent.name=='source' else ROOT/'work/central-tower/blender-temp'
 TEMP.mkdir(parents=True,exist_ok=True)
 tempfile.tempdir=str(TEMP)
@@ -328,7 +328,7 @@ root['reference_file']='central-tower-cutaway-and-exterior-v3.png'
 refs=bpy.data.collections.new('REFERENCES_not_exported');sc.collection.children.link(refs)
 for i,fn in enumerate(['central-tower-concept-v2.png','central-tower-cutaway-and-exterior-v3.png','gameplay-shape-reference.png']):
     p=OUT/'references'/fn
-    if not p.exists():p=ROOT/'outputs/central-tower-concept'/fn
+    if not p.exists():p=ROOT/'ArtSource/Deliveries/central-tower-concept'/fn
     im=bpy.data.images.load(str(p),check_existing=True);im.pack()
     ob=bpy.data.objects.new('Reference_'+fn,None);refs.objects.link(ob);ob.empty_display_type='IMAGE';ob.data=im;ob.empty_display_size=20;ob.location=(14+i*11,4,16);ob.rotation_euler=(math.pi/2,0,0);ob.hide_render=True
 refs.hide_viewport=True

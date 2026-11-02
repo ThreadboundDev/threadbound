@@ -16,7 +16,7 @@ Chase reconfirmed approval for game-related work during the final verification.
 
 ## Play
 
-The independent project is `C:/Users/chase/Documents/Threadbound 3D Study`.
+The independent project is `C:/Users/chase/Documents/Threadbound - Potential Use/Prototypes/Third Person Study`.
 Launch with `tools/study/start_third_person_study.ps1`; its import completes before
 the game opens. The default scene is `scenes/loom_crossing_trial.tscn`.
 

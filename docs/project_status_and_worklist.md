@@ -4,7 +4,42 @@ Updated November 2, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T42 — pale doll modeling reference and isolated body study.**
+**Development feedback capture â€” implemented November 2; user acceptance open.**
+Chase approves a debug screenshot/short-recording tool with an in-game feedback
+form and automatic state/diagnostics. Ctrl+F1 captures; Ctrl+F2 starts/stops a
+silent, bounded clip. Notes autosave; Save & copy creates a local review handoff.
+[Usage, inbox, capture contents and crash limits](development_feedback.md).
+Validation: 38 headless and 43 rendered integration checks pass, actual Forward+
+Lakeside screenshot/moving-clip capture passes, and FFmpeg independently decodes
+the AVI files. Existing scene-entry/shutdown diagnostics also reproduce with
+feedback disabled. No gameplay, equipment, lore or art replacement is included.
+Checkpoint: `feature: add in-game debug feedback capture` on
+`threadbound/feature-debug-feedback`. The separate checkpoint worktree preserves
+the shared checkout's ongoing organization/art changes. Try the workflow before
+marking this accepted; reports stay local and are not backed up by a source push.
+
+**Current task: T43 â€” consolidate game files and stage retired material.**
+Chase requests one actual game folder, one deletion staging folder and one
+potential-use folder. Keep runtime asset paths, current art sources, private
+publishing records and pending local doll work intact. Directory moves,
+duplicate proofs and recovery journal are local; only authorized project source,
+tool paths and documentation enter Git. See the
+[organization/deletion report](organization/organization_2026_11_02.md) and
+[file-finding guide](../START_HERE.md).
+
+The current player still depends on its hidden legacy sprite clock and old
+weapon tracks. [The file-specific migration proposal](organization/character_controller_cleanup_proposal.md)
+awaits approval under AGENTS.md; no player/equipment restructuring is included
+in organization. T43 | Awaiting hands-on review / deletion approval | rendering
+baseline `09e193e6` | 24,835 move records checked, 230 duplicate pairs verified,
+56 Python and 3 PowerShell files parsed, isolated Godot import and both Chamber
+startups pass, 875/875 doll checks pass | Chase deletion/controller decisions
+pending | `chore: organize project sources and stage retired local files` |
+review deletion batches (hold 04) and the controller proposal. T42's outstanding
+appearance/clothing review stays open. Organization is committed on its isolated
+branch; simultaneous debug/art edits in the shared checkout are excluded.
+
+**Previous task: T42 â€” pale doll modeling reference and isolated body study.**
 November 2 clarity follow-up: Chase requests a sharper engine display. The
 character viewport increases from 800x600 to 1600x1200, with half sprite scale
 to retain gameplay size. FXAA is removed while 4x MSAA remains; outline width
@@ -90,7 +125,7 @@ The blank-head v3 PNG is delivered and visually verified, retaining the seam
 and worn finish. Checkpoint: `art: remove eye holes from doll T-pose reference`
 on the same branch. The earlier v2 3D source is unchanged and still has eyes.
 
-**Previous task: T41 — modular building stamps for Krita.**
+**Previous task: T41 â€” modular building stamps for Krita.**
 Chase requests reusable plaster, beams, windows, doors and supporting details,
 with variations to compose buildings of different shapes/sizes. Deliver a separate
 transparent art kit, catalog and editable assembly example from the current art
@@ -106,7 +141,7 @@ catalogs/example were visually reviewed. The isolated headless Krita export
 failed with `0xC0000005`, so native import/opening and Chase's visual acceptance
 remain pending. No normal resource profile or game assets were modified.
 
-**Previous task: T40 — October 31 playtest corrections.**
+**Previous task: T40 â€” October 31 playtest corrections.**
 Chase accepts the run. Fix solid-floor double-Down trapping, still-water motion,
 rear-wall camera attachment/draw order, tower interior focus/water masking and
 clipped facade art. Move spin farther and raise/enlarge its waist-level VFX;
@@ -126,7 +161,7 @@ raised 28 units and special VFX enlarged 25%; damage radii/AP/timing retained.
 32 GPU family checks and the underwater-special regression pass. Implementation
 is ready for moving review; T40 acceptance remains open. No new topic is active.
 
-**Previous task: T39 — overnight follow-up to Chase's 22:34 video.**
+**Previous task: T39 â€” overnight follow-up to Chase's 22:34 video.**
 Posture and filled VFX are positively reviewed; house focus and clouds are good.
 Fix the run's unreadable sword arm, extend filled effects to vertical air and
 special attacks, replace rejected simple rails with modular approved stamp art,
@@ -151,7 +186,7 @@ the water pass, and the far rock wall is screen-anchored. Twenty new GPU checks
 pass, along with legacy water (10), tower/exterior (31), house handoff (20),
 water-entry/grapple (122) and room/bridge (78) regressions. All 148 world polygons
 still match the baseline. No forced dive or movement/attack mechanics change.
-Checkpoint `3596f404` — `art: reveal the underwater scene through a painted lake surface`.
+Checkpoint `3596f404` â€” `art: reveal the underwater scene through a painted lake surface`.
 The fresh above/below-water GPU smoke capture also passes at the normal 2x art
 render scale; the longer comparisons use 1x to limit capture memory.
 Implementation is delivered; Chase's moving acceptance of the run arm, extended
@@ -165,7 +200,7 @@ flair through readable action, VFX and selective color. The
 the preference, current bank-dive constraints and proposed experiments.
 No automatic-dive implementation, art replacement or gameplay change is made.
 
-**Previous test: T38 — October 30 hands-on art follow-up delivered.**
+**Previous test: T38 â€” October 30 hands-on art follow-up delivered.**
 Chase accepted the upright idle and likes the pontoon direction, underwater
 backdrop and improved demo lighting. The pass carries the posture into the run,
 integrates preferred VFX in gameplay, and corrects Blue depth/water cuts, house
@@ -197,7 +232,7 @@ Bright demo head highlights have a softer porcelain study candidate; production
 light tuning remains open. Current branch: `threadbound/art-gameplay-review-followup`.
 Implementation delivered; Chase's review is next, using the updated test card.
 
-**Previous test: T37 — Blue depth/bridges, with T35 saved zoom/upright idle.**
+**Previous test: T37 â€” Blue depth/bridges, with T35 saved zoom/upright idle.**
 The current branch `threadbound/art-blue-depth-and-bridge-supports` contains all
 three checkpoints: 0.83 gameplay zoom/upright idle (`bed83ed3`), delayed-variation
 fix (`017de695`), and the new Blue art pass. Far underwater rock now scrolls at
@@ -212,7 +247,7 @@ current branch. **Implemented; Chase's appearance/feel review pending.** The
 prototype appearance remains preferred; live VFX integration is still separate.
 T33/T20 acceptance remains open.
 
-**T35 follow-up — zoom 0.83 and upright idle implemented October 30.**
+**T35 follow-up â€” zoom 0.83 and upright idle implemented October 30.**
 Chase authorized saving the recommended zoom and trying a more upright pose.
 The demo and Blue Camera2D settings are now 0.83; the painted comparison inherits
 Blue. The shared live visual uses isolated upright idle copies with narrower,
@@ -231,11 +266,11 @@ demo jump/lighting regression and staged review are recorded with the checkpoint
 work is Blue's independent slow underwater rock, world-aligned timber, and
 reusable pontoon/braced bridge assets; VFX preference remains recorded below.
 
-**T35/T36 reference diagnosis and first VFX prototype — October 30.**
+**T35/T36 reference diagnosis and first VFX prototype â€” October 30.**
 Chase explicitly moved these ahead of the remaining follow-ups. The
 [scale diagnosis and original VFX review](design/character_scale_and_vfx_study_2026_10_30.md)
 measure the actual player/cameras: demo idle 15.97% screen height, Blue 14.37%,
-versus four sampled Belmont gameplay poses around 12–14%. A runtime-only zoom
+versus four sampled Belmont gameplay poses around 12â€“14%. A runtime-only zoom
 0.83 preview gives 13.26% with today's idle. Posture is a separate cause of visual
 mass; an upright rig reference is about 12.2% taller. Blue's fisher house is about
 4.84 idle body-heights tall. The preserved 3D trial's close spawn camera gives a
@@ -262,10 +297,10 @@ Checkpoint: `vfx: add character scale audit and isolated sweep study` on
 enemy presentation and biome cohesion remain follow-ups; no new gameplay system
 or world resize is selected. T33/T20 acceptance is unchanged.
 
-**T33 — demo character lighting and double-jump animation retest remains open.**
+**T33 â€” demo character lighting and double-jump animation retest remains open.**
 Chase replayed the demo and likes its overall feel and existing 2D enemies.
 Keep those as the reference. Fixes now let the demo's environment lights reach
-the current character and replay `jump_1` at 1.2× speed on a successful air jump.
+the current character and replay `jump_1` at 1.2Ã— speed on a successful air jump.
 [Scope, verification and remaining acceptance](verification/demo_jump_lighting_2026_10_30.md).
 Checkpoint: `fix: restore demo character lighting and double jump animation`
 on `threadbound/fix-demo-lighting-double-jump` (see Git history).
@@ -274,7 +309,7 @@ now starts with these two checks. Next environment work uses free model/texture
 sources through the established 2D stamp workflow; specific asset choices and
 layout changes still need scoped review.
 
-**T34 — Belmont's Curse / Dead Cells reference study delivered October 30.**
+**T34 â€” Belmont's Curse / Dead Cells reference study delivered October 30.**
 Chase requested this research before further development. The
 [study](design/belmonts_curse_reference_study_2026_10_30.md) records frame-sampled
 review across 38 minutes of a full-game walkthrough, the official gameplay
@@ -290,7 +325,7 @@ the measured scale diagnosis and VFX review above that work under T35/T36.
 Checkpoint: `docs: study Belmonts Curse combat visuals and framing` on
 `threadbound/docs-belmont-combat-visual-study`.
 
-**October 30 gameplay/art review — direction recorded; follow-up proposals pending.**
+**October 30 gameplay/art review â€” direction recorded; follow-up proposals pending.**
 Chase likes the demo's snappy combat and outlined 2D enemies, wants to preserve
 the detailed 3D player in the 2D game, and favors movement freedom with precision
 platforming as optional flavor. Blue needs a coherent Threadbound identity beyond
@@ -303,7 +338,7 @@ Checkpoint: `docs: record gameplay and visual direction review` on
 `threadbound/docs-gameplay-art-review`. Validation: local reference/relative-link
 review and staged diff/whitespace checks; no runtime or art acceptance claimed.
 
-**T32 — background delivered; demo replay feedback received October 30.**
+**T32 â€” background delivered; demo replay feedback received October 30.**
 Chase wants to refocus on what feels good about Threadbound after parking the
 3D trial. His named Krita layer is now integrated in the lakeside artwork;
 appearance acceptance remains pending. Chase's replay found the demo feel and
@@ -313,12 +348,12 @@ Checkpoint: `art: add painted underwater rock background` on
 `threadbound/art-underwater-rock-background` (see Git history).
 The [current test card](next_test_session.md) retains the background review.
 
-**T20 — October 26 playtest corrections remain open.**
+**T20 â€” October 26 playtest corrections remain open.**
 Implementation is inherited from `threadbound/fix-lakeside-playtest-feedback`;
 **awaiting Chase's appearance/feel review**. The new replay does not accept or
 close those corrections.
 [Feedback, screenshots, approval and validation](verification/lakeside_playtest_2026_10_26.md).
-Use the [one current retest card](next_test_session.md), about 8–10 minutes.
+Use the [one current retest card](next_test_session.md), about 8â€“10 minutes.
 
 **October 29 direction decision: keep Threadbound in 2D; park the current 3D conversion effort.**
 Chase reviewed the trial and does not consider its look/play quality or development
@@ -363,7 +398,7 @@ combat, correct weapon grips, smoother enemies and a demo-shaped level.
 [Changes, validation and retest route](art/chamber_3d_feel_pass_2026_10_28.md).
 Both source and installed copies pass 178 gameplay checks. The original 2D runtime and art
 sources remain unchanged. Water appearance remains deferred. Commit checkpoint:
-`c088dbd78c6a402418f8bcc818af7abbad27ed5a` —
+`c088dbd78c6a402418f8bcc818af7abbad27ed5a` â€”
 `feature: refine 3d run combat and chamber demo` on
 `threadbound/feature-polished-3d-demo`. Standalone checks, GPU review captures and asset/source-hash audit pass;
 appearance/feel acceptance remains pending.
@@ -472,11 +507,11 @@ packs removed; ten packs with included CC0 notices retained. Low-poly is a
 preferred look, but a full 3D conversion is undecided. Hybrid reuse and one later
 workshop comparison are recommendations, not an implementation authorization.
 Remaining original archives are staged outside the project in
-`C:\Users\chase\Documents\Threadbound Asset Library`; raw assets remain local,
+`C:\Users\chase\Documents\Threadbound - Potential Use\Asset Packs\CC0 Library`; raw assets remain local,
 not part of the Git backup. No imports, art replacements, combat/equipment
 changes or lore changes were made. T20 remains the implementation priority.
 
-- [x] **T21 — asset inventory delivery.** Complete as an audit, not art acceptance.
+- [x] **T21 â€” asset inventory delivery.** Complete as an audit, not art acceptance.
   Checkpoint: `docs: inventory downloaded asset library and reuse candidates`.
   Validation: 13 ZIP CRC passes; 4,760 file entries; 531 glTF/GLB inspections;
   archived SHA-256 verification; bundled license/PDF review and creator-page

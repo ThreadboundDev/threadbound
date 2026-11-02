@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import json,hashlib,struct,shutil,zipfile,re
 ROOT=Path(__file__).resolve().parents[2]
-WORK=ROOT/'work/eave-runner';OUT=ROOT/'outputs/woven-blue-guardians-2026-10-20'
+WORK=ROOT/'work/eave-runner';OUT=ROOT/'ArtSource/Deliveries/woven-blue-guardians-2026-10-20'
 SOURCE=ROOT/'ArtSource/BlueBiome/Enemies/EaveRunner';ASSET=ROOT/'Assets/BlueBiome/Enemies/EaveRunner'
 OUT.mkdir(parents=True,exist_ok=True)
 font=ImageFont.truetype('C:/Windows/Fonts/segoeui.ttf',24)

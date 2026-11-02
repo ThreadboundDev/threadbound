@@ -6,7 +6,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / 'work/third-person-study-2026-10-28/project'
-DESTINATION = Path.home() / 'Documents/Threadbound 3D Study'
+DESTINATION = Path.home() / 'Documents/Threadbound - Potential Use/Prototypes/Third Person Study'
 MARKER = DESTINATION / '.threadbound-study-install.json'
 
 

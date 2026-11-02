@@ -1,8 +1,8 @@
 param([switch]$Execute)
 $ErrorActionPreference='Stop'
 $workspace=[IO.Path]::GetFullPath('C:/Users/chase/Documents/threadbound')
-$archive=[IO.Path]::GetFullPath('C:/Users/chase/Documents/Threadborne_Art_Archive/2026-09-05-retired-blender')
-$archiveParent=[IO.Path]::GetFullPath('C:/Users/chase/Documents/Threadborne_Art_Archive')
+$archive=[IO.Path]::GetFullPath('C:/Users/chase/Documents/Threadbound - Staged for Delete/03 Retired Art/September 5 Blender Experiments/2026-09-05-retired-blender')
+$archiveParent=[IO.Path]::GetFullPath('C:/Users/chase/Documents/Threadbound - Staged for Delete/03 Retired Art/September 5 Blender Experiments')
 if (-not $archive.StartsWith($archiveParent+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)) {throw 'Archive outside approved target'}
 $relativePaths=@(
 'ArtSource/Player/Blender/threadborne_v3_style_proof.blend'

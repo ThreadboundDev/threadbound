@@ -4,10 +4,10 @@ import math
 import bpy
 from mathutils import Vector
 
-OUT = Path('C:/Users/chase/Documents/Codex/2026-09-27/i-wanna-write-down-a-few/bellstriker_inspect')
+OUT = Path(__file__).resolve().parents[2] / 'tmp/bellstriker_inspection'
 OUT.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.read_factory_settings(use_empty=True)
-bpy.ops.import_scene.gltf(filepath='C:/Users/chase/Downloads/hitem3d.glb')
+bpy.ops.import_scene.gltf(filepath='C:/Users/chase/Documents/threadbound/ArtSource/BlueBiome/Enemies/Bellstriker_HighRes_Source.glb')
 mesh = next(o for o in bpy.context.scene.objects if o.type == 'MESH')
 bpy.context.view_layer.objects.active = mesh
 mesh.select_set(True)

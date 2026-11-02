@@ -1,6 +1,6 @@
 param([switch]$Editor, [switch]$RepositoryCopy)
 $ErrorActionPreference = 'Stop'
-$studyProject = Join-Path $env:USERPROFILE 'Documents\Threadbound 3D Study'
+$studyProject = Join-Path $env:USERPROFILE 'Documents\Threadbound - Potential Use\Prototypes\Third Person Study'
 if ($RepositoryCopy) {
     $studyProject = Join-Path $PSScriptRoot '..\..\work\third-person-study-2026-10-28\project'
 }

@@ -4,6 +4,8 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 
 ## Start Here
 
+- [Find files by hand](../START_HERE.md) - the three game-file locations, current source art, packs and media
+- [November 2 organization and deletion review](organization/organization_2026_11_02.md) - what moved and what still requires approval
 - [October 21 development checkpoint](checkpoint_2026_10_21.md) - consolidated recap, active vs unfinished assets, fresh check failures and the recovery Git branch
 - [Project status and work list](project_status_and_worklist.md) - the current ordered TODO list, acceptance criteria and commit checkpoints (October 21, 2026)
 - [Required Git rhythm](development_git_workflow.md#required-rhythm-from-october-21-2026) - save, verify, commit and push before moving to another task
@@ -22,6 +24,7 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `docs/design/pattern_system.md` - exploratory long-term Pattern accessory, embroidery, and build-combination design
 - `docs/art/environment_art_style.md` - environment visual direction
 - `docs/art/asset_standards.md` - runtime art naming, palette, sprite, and rigging standards
+- [In-game development feedback](development_feedback.md) - screenshot/clip shortcuts, local feedback inbox, automatic context and crash diagnostics
 
 ## Folders
 

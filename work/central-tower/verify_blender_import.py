@@ -3,7 +3,7 @@ from pathlib import Path
 from mathutils import Vector
 HERE=Path(__file__).resolve()
 ROOT=HERE.parents[3] if HERE.parent.name=='source' else HERE.parents[2]
-OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'outputs/central-tower-model-v1'
+OUT=HERE.parents[1] if HERE.parent.name=='source' else ROOT/'ArtSource/Deliveries/central-tower-model-v1'
 temp=OUT/'source/import-temp';temp.mkdir(exist_ok=True)
 tempfile.tempdir=str(temp);os.environ['TEMP']=str(temp);os.environ['TMP']=str(temp)
 report={}

@@ -26,7 +26,7 @@ Move the ROOT empties to place each weapon. In the equipped test, the sword is f
 
 ## Cleanup and recovery
 
-On 2026-09-05, 130 obsolete files (976,059,218 bytes) were moved out of the project to `C:/Users/chase/Documents/Threadborne_Art_Archive/2026-09-05-retired-blender`. Relative project paths are preserved there for recovery. This includes the rejected V3–V8 models, old previews, redundant saves, superseded starter rig, and their one-off scripts. Nothing was permanently deleted. Original source backups, reference art, and current deliverables remain in the project.
+On 2026-09-05, 130 obsolete files (976,059,218 bytes) were moved out of the project to `C:/Users/chase/Documents/Threadbound - Staged for Delete/03 Retired Art/September 5 Blender Experiments/2026-09-05-retired-blender`. Relative project paths are preserved there for recovery. This includes the rejected V3–V8 models, old previews, redundant saves, superseded starter rig, and their one-off scripts. Nothing was permanently deleted. Original source backups, reference art, and current deliverables remain in the project.
 
 ## Working preference
 

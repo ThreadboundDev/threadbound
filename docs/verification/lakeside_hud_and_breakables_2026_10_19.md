@@ -58,4 +58,4 @@ Test runs use scratch APPDATA so user settings and saves are unaffected. The
 project still reports its pre-existing equipment/resource shutdown leak
 diagnostics; there are no runtime script errors in the passing verification.
 See the JSON reports and rendered captures in `work/lakeside-ui-rock` and the
-selected user-facing copies in `outputs/lakeside-krita-playtest`.
+selected user-facing copies in `ArtSource/Deliveries/lakeside-krita-playtest`.

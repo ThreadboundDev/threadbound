@@ -20,6 +20,6 @@ for source,name,length,grip in [('staff_A','ranged_staff',1.15,.28),('spear_A','
  bpy.ops.object.select_all(action='DESELECT')
  for o in meshes:o.select_set(True)
  bpy.ops.export_scene.gltf(filepath=str(OUT/(name+'.glb')),export_format='GLB',use_selection=True,export_animations=False)
- records.append({'archive':'KayKit_FantasyWeaponsBits_1.0_FREE.zip','archive_sha256':hashlib.sha256((Path.home()/'Documents/Threadbound Asset Library/archives/KayKit_FantasyWeaponsBits_1.0_FREE.zip').read_bytes()).hexdigest(),'member':str(next(BASE.rglob(source+'.gltf')).relative_to(BASE)).replace('\\','/'),'target':'assets/weapons/'+name+'.glb','target_sha256':hashlib.sha256((OUT/(name+'.glb')).read_bytes()).hexdigest(),'license':'CC0 1.0; retained KayKit pack license','derivative':'Grip origin, uniform gameplay scale, same geometry/materials'})
+ records.append({'archive':'KayKit_FantasyWeaponsBits_1.0_FREE.zip','archive_sha256':hashlib.sha256((Path.home()/'Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/archives/KayKit_FantasyWeaponsBits_1.0_FREE.zip').read_bytes()).hexdigest(),'member':str(next(BASE.rglob(source+'.gltf')).relative_to(BASE)).replace('\\','/'),'target':'assets/weapons/'+name+'.glb','target_sha256':hashlib.sha256((OUT/(name+'.glb')).read_bytes()).hexdigest(),'license':'CC0 1.0; retained KayKit pack license','derivative':'Grip origin, uniform gameplay scale, same geometry/materials'})
 (OUT/'provenance.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8')
 print('TRIAL_WEAPONS_EXPORTED')

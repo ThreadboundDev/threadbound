@@ -11,7 +11,7 @@ from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parents[2]
 WORK = Path(__file__).resolve().parent
-SOURCE = Path('C:/Users/chase/Documents/Codex/2026-10-07/ri/outputs/blue_village_stamp_pack/cave_connections_v1/Blue_Village_Connections_Review.kra')
+SOURCE = Path('C:/Users/chase/Documents/threadbound/ArtSource/RecoveredLocal/BlueBiome Painting Workspace/outputs/blue_village_stamp_pack/cave_connections_v1/Blue_Village_Connections_Review.kra')
 OUT = ROOT / 'Assets/BlueBiome/Art/LakesideMap'
 OUT.mkdir(parents=True, exist_ok=True)
 NS = {'k': 'http://www.calligra.org/DTD/krita'}

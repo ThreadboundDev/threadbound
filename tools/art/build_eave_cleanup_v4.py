@@ -264,8 +264,8 @@ actors=[o for o in scene.objects if o.type=='MESH' and o.parent==rig]
 report={'candidate':True,'version':4,'baseline':'current saved v3, not stale renders','bones':len(rig.data.bones),
         'triangles':sum(len(p.vertices)-2 for o in actors for p in o.data.polygons),'components':len(actors),
         'removed_components':removed,'clips':{a.name:round((a.frame_range[1]-a.frame_range[0])/30,4) for a in bpy.data.actions},
-        'reference':'outputs/woven-blue-guardians-2026-10-20/EaveRunner_Woven_Concept.png',
-        'original_silhouette_reference':'outputs/lakeside-character-concepts-2026-10-19/Indoor_Enemies.png',
+        'reference':'ArtSource/Deliveries/woven-blue-guardians-2026-10-20/EaveRunner_Woven_Concept.png',
+        'original_silhouette_reference':'ArtSource/Deliveries/lakeside-character-concepts-2026-10-19/Indoor_Enemies.png',
         'hood':hood_report,'active_replacement':False}
 (WORK/'build_report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
 scene.render.engine='CYCLES';scene.cycles.samples=24;scene.cycles.use_denoising=True

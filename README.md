@@ -1,5 +1,7 @@
 # Threadbound
 
+**Looking for a file?** Start with [Where to find Threadbound files](START_HERE.md).
+
 Threadbound is a 2D action metroidvania built in Godot. It is about momentum, identity, and choice: the player moves through the world by chaining traversal, combat, equipment, and real-time adaptation into one continuous flow.
 
 You are the Threadborne, a being born from the wound left when the primordial Threads were separated. The world of Eryndor is not asking you to become a class, follow a fixed build, or unlock a prescribed route. It is asking what kind of being you will become through action.
@@ -64,7 +66,12 @@ threadbound/
   Media/       Development captures and social-media production files
   Src/         Godot scenes, scripts, resources, shaders, and gameplay systems
   tools/       Verification, cleanup, and local development utilities
+  work/        Retained verification fixtures, authoring inputs, and review evidence
 ```
+
+Retained delivery packages formerly under `outputs/` now live in
+`ArtSource/Deliveries/`. Downloads and unused material are organized in the
+two named sibling folders described in `START_HERE.md`.
 
 The current naming direction is documented in [Project Structure and Naming](docs/design/project_structure_and_naming.md).
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,struct
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/central-tower-model-v3'
+OUT=ROOT/'ArtSource/Deliveries/central-tower-model-v3'
 measure=json.loads((OUT/'roof_clearance_verification.json').read_text())
 result={}
 for filename,full in [('CentralTower_Exterior.glb',True),('CentralTower_Cutaway.glb',False)]:

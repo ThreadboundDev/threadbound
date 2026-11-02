@@ -23,7 +23,7 @@ scene.render.fps=30
 
 # One skin only. Selectively copy its emission mask from the original archive.
 emission='Textures/T_StoneGolem_Body_Emission_Skin1.tga'
-with zipfile.ZipFile('C:/Users/chase/Downloads/textures.zip') as archive:
+with zipfile.ZipFile('C:/Users/chase/Documents/Threadbound - Potential Use/Asset Packs/Armored Stone Golem - Review Pending/textures.zip') as archive:
     (SOURCE/emission).write_bytes(archive.read(emission))
 for category in ('Body','Armor','Weapon'):
     mat=bpy.data.materials.new('Review / source '+category+' skin 1')

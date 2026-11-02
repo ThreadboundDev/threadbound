@@ -4,7 +4,7 @@ from PIL import Image,ImageDraw,ImageFont
 import json,hashlib,shutil
 ROOT=Path(__file__).resolve().parents[2]
 WORK=ROOT/'work/lakeside-villagers'
-OUT=ROOT/'outputs/lakeside-villagers-v1'
+OUT=ROOT/'ArtSource/Deliveries/lakeside-villagers-v1'
 SOURCE=ROOT/'ArtSource/BlueBiome/Villagers'
 OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'.gdignore').write_text('')

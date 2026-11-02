@@ -8,7 +8,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/cc0-house-villager-2026-10-28'
-LIBRARY = Path('C:/Users/chase/Documents/Threadbound Asset Library/archives')
+LIBRARY = Path('C:/Users/chase/Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/archives')
 SELECTION = {
     'P03': ['Workbench', 'Bucket_Wooden_1', 'Rope_1', 'Crate_Wooden', 'Lantern_Wall'],
     'P07': ['Textiles_Stack_Small', 'Wood_Planks_Stack_Small'],

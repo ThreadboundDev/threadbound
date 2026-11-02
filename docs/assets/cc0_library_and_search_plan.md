@@ -12,7 +12,7 @@ undecided. Do not treat the review as a general licensing-policy change.
 
 ## Current library
 
-Ten original ZIPs remain in `C:\Users\chase\Documents\Threadbound Asset Library\archives`:
+Ten original ZIPs remain in `C:\Users\chase\Documents\Threadbound - Potential Use\Asset Packs\CC0 Library\archives`:
 1,819,468,033 bytes (1.69 GiB), containing 4,593 file entries including alternate
 formats. [Current disposition manifest](library_disposition_2026_10_28.json).
 The [original audit](free_asset_inventory_2026_10_28.md) and its catalogs are

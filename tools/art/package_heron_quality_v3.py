@@ -3,7 +3,7 @@ from pathlib import Path
 import shutil,json,hashlib
 from PIL import Image,ImageDraw,ImageFont
 ROOT=Path(__file__).resolve().parents[2];WORK=ROOT/'work/loom-heron-v3'
-OUT=ROOT/'outputs/loom-heron-quality-v3-2026-10-21';OUT.mkdir(parents=True,exist_ok=True)
+OUT=ROOT/'ArtSource/Deliveries/loom-heron-quality-v3-2026-10-21';OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'.gdignore').write_text('')
 fontpath=Path('C:/Windows/Fonts/segoeui.ttf')
 font=ImageFont.truetype(str(fontpath),24);small=ImageFont.truetype(str(fontpath),18)

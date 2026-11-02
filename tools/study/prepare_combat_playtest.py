@@ -46,7 +46,7 @@ for target, relative in {
 spec = importlib.util.spec_from_file_location('nox_reader', ROOT / 'tools/audio/build_nox_audition_catalog.py')
 reader = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(reader)
-archive = Path.home() / 'Documents/Threadbound Asset Library/archives/Essentials_Series_NOX_SOUND.zip'
+archive = Path.home() / 'Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/archives/Essentials_Series_NOX_SOUND.zip'
 with zipfile.ZipFile(archive) as bundle:
     for target, suffix in {
         'wind': 'Nature_Essentials_NOX_SOUND/Ambiance_Wind_Forest_Loop_Stereo.wav',
@@ -69,7 +69,7 @@ with zipfile.ZipFile(archive) as bundle:
             output.writeframes(payload)
         manifest.append({'archive': archive.name, 'member': member, 'sha256': sha(source), 'target': 'assets/audio/' + target + '.wav', 'license': 'CC0; retained NOX notice'})
 shutil.copyfile(ROOT / 'work/nox-sound-audition-2026-10-28/LICENSE-NOX.txt', OUT / 'licenses/NOX.txt')
-music = Path.home() / 'Documents/Threadbound Asset Library/cathedral_in_the_forest_CC0.ogg'
+music = Path.home() / 'Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/cathedral_in_the_forest_CC0.ogg'
 shutil.copyfile(music, audio / 'forest_ambient.ogg')
 manifest.append({'target':'assets/audio/forest_ambient.ogg', 'source_page':'https://opengameart.org/content/cathedral-in-the-forest-ambient-loop', 'creator':'congusbongus', 'license':'CC0', 'sha256':sha(music.read_bytes())})
 for entry in manifest:

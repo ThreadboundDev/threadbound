@@ -85,7 +85,7 @@ come from the saved model in Blender. Concept sheets are separate references.
 ## Flying-enemy options — concepts only
 
 The concept board is
-`outputs/woven-blue-guardians-2026-10-20/Woven_Flying_Concepts.png`.
+`ArtSource/Deliveries/woven-blue-guardians-2026-10-20/Woven_Flying_Concepts.png`.
 
 **A — Loom Heron:** reed/wood spars, broad indigo fabric wing panels, pointed
 ceramic face and short cord feet. It perches near roofs or water, telegraphs a

@@ -2,7 +2,7 @@
 
 Independent Godot 4.7 project. Open `project.godot`, then F5, or use the main
 repository's `tools/study/start_third_person_study.ps1` launcher. The installed
-copy lives in `Documents/Threadbound 3D Study`; this source copy is backed up in
+copy lives in `Documents/Threadbound - Potential Use/Prototypes/Third Person Study`; this source copy is backed up in
 the main repository beneath a `.gdignore` so the production game skips it.
 
 The playtest keeps the current Threadborne body, clothes, rig and selected original

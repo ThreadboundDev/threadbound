@@ -8,7 +8,7 @@ story files are unchanged. Chase's final appearance/feel acceptance remains pend
 
 ## Installed project and controls
 
-The standalone project is `C:\Users\chase\Documents\Threadbound 3D Study`.
+The standalone project is `C:\Users\chase\Documents\Threadbound - Potential Use\Prototypes\Third Person Study`.
 Its versioned source is `work/third-person-study-2026-10-28/project` and is excluded
 from the main game's imports by the parent `.gdignore`. Launch with
 `tools/study/start_third_person_study.ps1`.

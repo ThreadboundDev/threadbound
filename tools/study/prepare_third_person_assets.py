@@ -8,7 +8,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / 'work/third-person-study-2026-10-28'
 PROJECT = WORK / 'project'
-LIBRARY = Path.home() / 'Documents/Threadbound Asset Library/archives'
+LIBRARY = Path.home() / 'Documents/Threadbound - Potential Use/Asset Packs/CC0 Library/archives'
 
 
 def digest(path):

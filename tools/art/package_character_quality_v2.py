@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,shutil,hashlib
 from PIL import Image,ImageDraw,ImageFont
-ROOT=Path(__file__).resolve().parents[2];WORK=ROOT/'work/character-quality-v2';OUT=ROOT/'outputs/character-quality-v2-2026-10-20';OUT.mkdir(parents=True,exist_ok=True);(OUT/'.gdignore').write_text('')
+ROOT=Path(__file__).resolve().parents[2];WORK=ROOT/'work/character-quality-v2';OUT=ROOT/'ArtSource/Deliveries/character-quality-v2-2026-10-20';OUT.mkdir(parents=True,exist_ok=True);(OUT/'.gdignore').write_text('')
 sources={
  'LakesideVillagers_v2.blend':'ArtSource/BlueBiome/Villagers/LakesideVillagers_v2.blend',
  'EaveRunner_Woven_v2.blend':'ArtSource/BlueBiome/Enemies/EaveRunner/EaveRunner_Woven_v2.blend',

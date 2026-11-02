@@ -26,7 +26,7 @@ with its Blender source and review captures in Git LFS.
   Buildings/Actors/Bulbs do not change that choice. A separate **Tower** checkbox
   allows the retained painted version to be compared explicitly.
 
-Editable source: `outputs/central-tower-model-v4/CentralTower_Editable.blend`.
+Editable source: `ArtSource/Deliveries/central-tower-model-v4/CentralTower_Editable.blend`.
 That source folder has `.gdignore`; Godot consumes the exported GLB and does not
 need to invoke Blender on the editable source. Builder:
 `tools/art/polish_central_tower.py`. No new raster art or texture repaint is used.

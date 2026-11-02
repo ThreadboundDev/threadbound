@@ -56,7 +56,7 @@ for mesh in new["meshes"]:
     for primitive in mesh["primitives"]:
         assert "TANGENT" in primitive["attributes"] and "TEXCOORD_0" in primitive["attributes"]
         assert all(math.isfinite(v) for p in values(new,new_data,primitive["attributes"]["POSITION"]) for v in p)
-clearance = json.loads((ROOT / "outputs/central-tower-model-v3/roof_clearance_verification.json").read_text())
+clearance = json.loads((ROOT / "ArtSource/Deliveries/central-tower-model-v3/roof_clearance_verification.json").read_text())
 nodes = {n.get("name",""):n for n in new["nodes"]}
 clearance_checks = []
 for c in clearance["checks"]:

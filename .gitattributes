@@ -34,3 +34,6 @@ work/lakeside-villagers/source/LICENSE.md conflict-marker-size=32
 Assets/BlueBiome/Art/PaintedComparison/*.png filter=lfs diff=lfs merge=lfs -text
 
 work/third-person-study-2026-10-28/project/assets/audio/swim.wav filter=lfs diff=lfs merge=lfs -text
+ArtSource/Deliveries/**/*.png filter=lfs diff=lfs merge=lfs -text
+ArtSource/Deliveries/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+ArtSource/Deliveries/**/*.gif filter=lfs diff=lfs merge=lfs -text

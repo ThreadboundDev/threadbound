@@ -3,7 +3,7 @@ import json, shutil
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 ROOT=next(p for p in Path(__file__).resolve().parents if (p/'project.godot').exists())
-OUT=ROOT/'outputs/lakeside-buildings-v1'
+OUT=ROOT/'ArtSource/Deliveries/lakeside-buildings-v1'
 manifest=json.loads((OUT/'asset_manifest.json').read_text())
 for filename in ['build_lakeside.py','render_lakeside.py','verify_blend.py','verify_glbs.py','mesh_helpers.py','package_review.py']:
     shutil.copy2(Path(__file__).parent/filename,OUT/'source'/filename)

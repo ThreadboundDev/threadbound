@@ -18,5 +18,5 @@ imported by this tool. The task folder has `.gdignore`; source audio stays in
 the external NOX ZIP and existing project locations.
 
 The NOX archive must remain at:
-`C:\Users\chase\Documents\Threadbound Asset Library\archives\Essentials_Series_NOX_SOUND.zip`.
+`C:\Users\chase\Documents\Threadbound - Potential Use\Asset Packs\CC0 Library\archives\Essentials_Series_NOX_SOUND.zip`.
 The raw archive remains local-only. Catalog, tools and verification are in Git.

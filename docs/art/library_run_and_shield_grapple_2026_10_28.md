@@ -34,4 +34,4 @@ character at matched phases, from front and side.
 
 Retest: run and turn without Shift, hold Shift and confirm the same animation,
 then E at a wall and check that thread launches from the shield hand. The
-installed demo remains `C:/Users/chase/Documents/Threadbound 3D Study`.
+installed demo remains `C:/Users/chase/Documents/Threadbound - Potential Use/Prototypes/Third Person Study`.

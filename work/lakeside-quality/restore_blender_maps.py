@@ -4,7 +4,7 @@ import hashlib,json,re,shutil,struct
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
 ASSET=ROOT/'Assets/BlueBiome/Art/Lakeside3D'
-SOURCE=ROOT/'outputs/central-tower-model-v1/textures'
+SOURCE=ROOT/'ArtSource/Deliveries/central-tower-model-v1/textures'
 provenance=json.loads((ASSET/'provenance.json').read_text())
 remap={}
 for material in ['walnut','plaster','blue_tiles','slate']:

@@ -2,17 +2,17 @@
 
 No geometry, UV, PBR values or texture pixels are changed. Run in the repository.
 """
-import json, struct, hashlib, zipfile
+import json, struct, hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'Assets/BlueBiome/Art/Lakeside3D'
 SCENES=ROOT/'Src/Environment/BlueBiome/Buildings/Lakeside3D'
 for p in [OUT/'Models',OUT/'Textures',OUT/'Materials',SCENES]:p.mkdir(parents=True,exist_ok=True)
 sources={
- 'covered_boat_slip':ROOT/'outputs/lakeside-buildings-v1/models/CoveredBoatSlip.glb',
- 'net_workshop':ROOT/'outputs/lakeside-buildings-v1/models/NetWorkshop_Exterior.glb',
- 'fishers_house':ROOT/'outputs/lakeside-buildings-v1/models/FishersHouse_Exterior.glb',
- 'central_tower':ROOT/'outputs/central-tower-model-v3/CentralTower_Exterior.glb',
+ 'covered_boat_slip':ROOT/'ArtSource/Deliveries/lakeside-buildings-v1/models/CoveredBoatSlip.glb',
+ 'net_workshop':ROOT/'ArtSource/Deliveries/lakeside-buildings-v1/models/NetWorkshop_Exterior.glb',
+ 'fishers_house':ROOT/'ArtSource/Deliveries/lakeside-buildings-v1/models/FishersHouse_Exterior.glb',
+ 'central_tower':ROOT/'ArtSource/Deliveries/central-tower-model-v3/CentralTower_Exterior.glb',
 }
 image_hashes={};report={'models':{},'textures':{}}
 canonical=None
@@ -89,9 +89,8 @@ report['checks_passed']=True
 (OUT/'provenance.json').write_text(json.dumps(report,indent=2))
 print('ASSETS_READY',json.dumps({k:v['runtime_bytes'] for k,v in report['models'].items()}),'SHARED_MAPS',len(image_hashes))
 
-# A matching official runtime in scratch; headless commands never open a window.
-runtime=ROOT/'work/lakeside-godot/runtime'
-if not (runtime/'Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64.exe').exists():
-    runtime.mkdir(parents=True,exist_ok=True)
-    with zipfile.ZipFile('C:/Users/chase/Downloads/Godot_v4.7.2-stable_mono_win64.zip') as z:z.extractall(runtime)
+# Reuse the installed editor; do not recreate copies from retired installers.
+installed=Path('C:/Program Files (x86)/Godot')
+if not any(installed.rglob('*4.7.2*console.exe')):
+    raise FileNotFoundError('Install Godot 4.7.2 before running the headless verification tools.')
 print('HEADLESS_RUNTIME_READY')
