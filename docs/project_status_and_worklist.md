@@ -5,6 +5,13 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+November 2: Chase prefers a textured Tripo 25k candidate over the 10k
+candidate and requests darker finger joints. A localized color pass is ready
+for review on a separate copy; its geometry remains unchanged and it is still
+unrigged. Source and exported model are local-only: the GitHub repository is
+public and the Tripo-derived character was not published there. Visual review,
+rigging, grip and equipment fit remain open. The documentation checkpoint is
+`docs: record local doll finger-joint study`; it does not back up the model.
 Chase supplied the blank-head T-pose and requested a 3D base for future
 equipment. A separate v3 model, baked-color GLB and review views are delivered
 for appearance review: [v3 package](../work/pale-doll-base-v3/README.md).
