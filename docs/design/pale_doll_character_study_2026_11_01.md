@@ -13,6 +13,10 @@ least subtly masculine**. Use a flatter broader chest, straighter substantial
 waist, compact narrower hips and less rounded upper thighs. Keep the agile
 build, worn lacquer and crafted joints. V2 reference/model supersede the first
 shape; this does not call for muscular anatomy or a change to the head design.
+Chase subsequently likes the corrected direction and requests a clean single
+front T-pose for 3D modeling. The [saved front reference](../../work/pale-doll-study-2026-11-01/Threadborne_Pale_Doll_TPose_Front_v2.png)
+shows the unclothed doll on white, without equipment or inset views. This
+records acceptance of the visual direction, not completed production-model fit.
 
 The protagonist's recognizable body can persist beneath different equipment.
 Small worn clothing openings at elbows and knees may reveal doll construction;

@@ -21,6 +21,10 @@ preserving the worn finish, 62-bone rig and 48 source clips. Corrected reference
 native source/export and review renders are saved; v1 is retained. All 39 checks
 pass again. Checkpoint: `art: correct doll study to subtly masculine proportions`
 on the same branch; appearance acceptance remains open.
+Chase likes the corrected boy-doll direction. A clean single front T-pose on
+white is delivered for modeling; see the study package. Checkpoint:
+`art: add clean boy doll front T-pose reference` on the same branch. PNG visual/
+integrity and documentation checks pass; 3D body fit and clothing remain open.
 
 **Previous task: T41 — modular building stamps for Krita.**
 Chase requests reusable plaster, beams, windows, doors and supporting details,

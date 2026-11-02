@@ -12,6 +12,11 @@ The worn finish, head, hands, joint positions and animation rig are retained.
 
 ## Review
 
+- [Clean front T-pose](Threadborne_Pale_Doll_TPose_Front_v2.png): single unclothed
+  front figure on white, with open hands and all joints visible, for 3D modeling.
+  Chase likes the corrected v2 direction and requested this separate input image.
+  [Generation prompt](clean_tpose_prompt.md). It is a generated visual reference,
+  not a dimensional replacement for the measured rig or the actual mesh views.
 - [Corrected modeling concept sheet](modeling_reference_masculine_v2.png): front, side, back and dressed
   front, plus head, hand and elbow details. Generated with the built-in ImageGen
   tool using the three selected references below. This is an illustration, not
@@ -104,3 +109,7 @@ remain Chase's review, separate from the technical checks.
 
 Correction checkpoint: `art: correct doll study to subtly masculine proportions`
 on the same branch; 21 build and 18 independent export checks pass again.
+
+Clean reference checkpoint: `art: add clean boy doll front T-pose reference` on
+the same branch. Visual review, PNG integrity, links and staged whitespace were
+checked. This image delivery does not change the 3D source or its test results.
