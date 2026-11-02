@@ -1,0 +1,67 @@
+{
+  "images": [
+    {
+      "file": "00_outfit_fit_reference_ragged_v2.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "review only; do not upload as a garment",
+      "sha256": "df51afd64c76dce9a23f08cb967faba54811b42bae938754e78f0ce13e0d7e87"
+    },
+    {
+      "file": "01_cowl.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "upload one image per job",
+      "sha256": "d885957f35d0d3e90b18163ffd1b66228ca07a104526a3a4e2ab8acbac24ec41"
+    },
+    {
+      "file": "02_tunic_sash.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "upload one image per job",
+      "sha256": "5ab58f17430feba3ba42e2029dda14cd305571ad6265af380791ff0ec94a33b8"
+    },
+    {
+      "file": "03_ragged_breeches.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "upload one image per job",
+      "sha256": "716ea9525911cfca12d6bffd50fd623d68cdbc3d919100c8a9e86515ab832da5"
+    },
+    {
+      "file": "04_forearm_wrap_single.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "upload one image per job",
+      "sha256": "b9c157b442ac1d3e752c18387e9f6ec67c1083b6dec6ecedc220be20e39cf543"
+    },
+    {
+      "file": "05_boot_single.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "role": "upload one image per job",
+      "sha256": "ec4fcc30f3a3c2590f2fad2b8b17806cb0f8686ab0578e9b5c0f3cfe3d5153c7"
+    }
+  ],
+  "zip_members": [
+    "01_cowl.png",
+    "02_tunic_sash.png",
+    "03_ragged_breeches.png",
+    "04_forearm_wrap_single.png",
+    "05_boot_single.png",
+    "START_HERE.txt"
+  ],
+  "checks": {
+    "image_integrity": true,
+    "minimum_512px": true,
+    "zip_exact_members": true,
+    "zip_source_bytes_match": true,
+    "readme_links": true
+  }
+}

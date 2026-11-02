@@ -1,0 +1,18 @@
+THREADBOUND: STARTER CLOTHING GENERATION INPUTS
+
+Use one PNG per separate Image-to-3D job. Batch mode may queue the five jobs.
+Do NOT upload different garments together as Multi-view images of one object.
+
+01_cowl.png: short folded cowl, no hood or scarf tails.
+02_tunic_sash.png: ragged upper sleeves, wrap tunic, sash and small pouch assembly.
+03_ragged_breeches.png: torn-off knee-length pants, no fabric below the knees.
+04_forearm_wrap_single.png: one forearm cuff; mirror for opposite arm in Blender.
+05_boot_single.png: one closed-toe calf-high boot; mirror for opposite foot.
+
+The full-outfit fit reference is supplied separately for visual review only.
+These are original 2D generation references, not generated or rigged 3D meshes.
+Fit all results to the SAME accepted doll and rest pose in Blender.
+Check hollow openings, thickness, tears, scale, mirror normals and joint clearance.
+Elbows, wrists/fingers and most kneecaps stay exposed. Boots cover feet/toes.
+Do not let breeches restart below the knee or hide the knees with tunic panels.
+No gameplay equipment slots or swapping code are changed by this authoring split.

@@ -5,6 +5,18 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+November 2 clothing preparation: Chase requests no hood, a short cowl/scarf
+with no tails, bare elbows/fingers, and closed boots. He rejects pants restarting
+below exposed knees and asks for more ragged cloth. Revised fit art and five
+separate generation inputs are delivered: cowl, tunic/sash, torn knee-length
+breeches, one forearm wrap and one boot. Mirror wrap/boot during fitting.
+[Inputs, ZIP and workflow](../work/pale-doll-clothing-prep-2026-11-02/README.md).
+PNG visual/integrity, manifest, ZIP byte equality, links and staged whitespace
+are checked. No external clothing 3D generation is submitted and no equipment
+architecture is changed. Checkpoint:
+`art: prepare ragged starter clothing generation inputs` on the current branch.
+The local character artwork remains outside this reference-only checkpoint.
+
 November 2 gameplay integration: Chase requests bones/weights, existing sword
 and shield, and animation attachment before future gear work. A fitted local
 game candidate is delivered and selected automatically when its export exists.

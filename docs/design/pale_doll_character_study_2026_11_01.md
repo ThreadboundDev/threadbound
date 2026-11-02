@@ -1,5 +1,28 @@
 # Pale doll character direction and first body study
 
+## November 2 starter clothing preparation
+
+Chase requests separate clothing generation references: no hood; compact
+cowl/scarf with no tails; exposed elbows and fingers; boots over the feet.
+He then asks for more ragged cloth and rejects full pants with fabric restarting
+below the exposed knees. Use torn-off knee-length breeches: short uneven hems
+can overlap the tops of the knees, with bare wooden knee/upper-shin gaps above
+calf-high boots. There are no separate calf trouser sleeves or oval knee windows.
+Ragged sleeve and tunic hems retain substantial cloth and clear silhouettes.
+
+The [clothing package](../../work/pale-doll-clothing-prep-2026-11-02/README.md)
+contains a revised full-outfit fit view and five single-asset images for separate
+3D jobs: cowl, tunic/sash, breeches, one forearm cuff and one boot. The latter
+two can be mirrored during Blender fitting. This is an authoring split, not
+new gameplay equipment slots or a swap-system implementation. No external 3D
+job is submitted by this delivery; generated meshes still need fitting and
+rig/deformation/clearance review against the accepted doll.
+
+All new images derive from the earlier original 2D references in this chat,
+not the local Tripo-derived character. Concurrent local model/integration work
+is untouched and is not included in this public reference checkpoint.
+Checkpoint: `art: prepare ragged starter clothing generation inputs`.
+
 ## Chase's selected direction
 
 November 1, 2026. Chase prefers the first pale lacquered articulated mannequin
