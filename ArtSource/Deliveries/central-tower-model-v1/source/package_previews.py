@@ -20,7 +20,7 @@ for j,(fn,label) in enumerate([('cutaway_front.png','FRONT / CUTAWAY'),('exterio
     draw.text((380+j*760,1480),label,font=small,fill=(35,43,48),anchor='mm')
 report=json.loads((OUT/'verification.json').read_text())
 tri=report['exterior']['triangles']
-draw.text((1140,1540),f'4100 Ã— 1200 gameplay px  |  {tri:,} triangles  |  Removable facade  |  Open-bottom basin',font=small,fill=(62,67,69),anchor='mm')
+draw.text((1140,1540),f'4100 × 1200 gameplay px  |  {tri:,} triangles  |  Removable facade  |  Open-bottom basin',font=small,fill=(62,67,69),anchor='mm')
 sheet.save(P/'CentralTower_3D_review.png')
 details=Image.new('RGB',(2400,1050),BG);d=ImageDraw.Draw(details)
 for j,(fn,label) in enumerate([('detail_roof_and_joinery.png','ROOF TILES, LATTICE & JOINERY'),('detail_open_basin.png','OPEN UNDERSIDE / BASIN RING')]):

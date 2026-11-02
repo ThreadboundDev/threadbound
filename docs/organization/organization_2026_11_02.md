@@ -25,7 +25,7 @@ at a snapshot in time. Godot/test caches can grow again.
 | --- | --- | --- | --- |
 | **01 Exact Duplicates** | 230 / **2.71** | SHA-256 matched a retained game file before moving. Includes repeated Blender sources, delivery copies and downloads. | Recommended for approval. Canonical sources are retained. |
 | **02 Generated Work Files** | 39,195 / **20.48** | Isolated import projects, generated sandboxes, extracted temporary inputs, test scratch data, redundant engine copies, unused source-side import metadata and **4.23 GiB of orphaned main-project import cache**. | Recommended for approval; retained sources/manifests rebuild the workspaces. |
-| **03 Retired Art** | 1,108 / **1.46** | Previously retired September Blender experiments, old Bellstriker/water review frames, early pavilion/ground references, superseded October 19 deliveries and the old Desktop asset collection. | Recommended if these historical studies are no longer wanted. Current user paintings and original design references are retained in the game. |
+| **03 Retired Art** | 1,109 / **1.46** | Previously retired September Blender experiments, old Bellstriker/water review frames, early pavilion/ground references, superseded October 19 deliveries and the old Desktop asset collection. | Recommended if these historical studies are no longer wanted. Current user paintings and original design references are retained in the game. |
 | **04 Retired Project Copies** | 18,152 / **4.23**, plus their `.git` storage | `threadbound - precodex`, `threadbound-(4.5)`, `threadbound-(4.6)`. All remain intact with Git history and working changes. | **HOLD for separate approval. Historical hand edits remain; see below.** |
 | **05 Installers** | 3 / **0.55** | Two downloaded Godot ZIPs and the Blender installer. Installed applications remain intact; tooling now reuses the installed editor. | Recommended for approval if offline reinstallation copies are not wanted. |
 | **06 Old Playtest Recordings** | 65 / **3.17** | Visually confirmed July-September gameplay/test captures of older presentations. | Recommended if raw historic footage is not wanted. Trailer, devlogs, current feedback and the three captures used by the progress-short builder are retained. |
@@ -97,8 +97,9 @@ app databases/plugins/image cache and the registered Codex worktree remain in
 their managed locations. Application internals are not loose game deliverables.
 
 Windows held some old Codex directories open. Their files were moved individually
-with the same relative layout rather than forcing a directory rename. Some
-locked empty task folders can remain; their file contents have been consolidated.
+with the same relative layout rather than forcing a directory rename. All
+171 verified-empty former task directories were subsequently removed with
+nonrecursive deletion; no original files were permanently deleted.
 
 Every successful move is journaled. The mover performs same-volume renames,
 checks path boundaries and file identity, refuses links/overwrites, and flushes
@@ -112,10 +113,10 @@ Do not overwrite newly regenerated caches or current files during recovery.
 
 ## Validation
 
-- 24,835 completed rename records checked: no missing final destinations.
+- 24,836 completed rename records checked: no missing final destinations.
 - 230 staged duplicate originals and retained counterparts checked; the one
   explicit README path edit is recorded separately. No binary mismatch.
-- Changed/relocated Python utilities parsed, new folder-guide/source-pointer
+- 57 changed/relocated Python utilities parsed, new folder-guide/source-pointer
   links checked and PowerShell utilities parsed before checkpointing.
 - Godot 4.7.2 isolated-profile import completed with exit 0 and no script/parse
   errors. The first non-isolated attempt could not save sandboxed editor settings;
@@ -144,6 +145,10 @@ the useful current 3D renderer/blends from the obsolete hidden sprite pipeline.
 [AGENTS.md](../../AGENTS.md) requires: **"Wait for approval before editing"**
 architectural changes. No migration work starts before that approval.
 
-Checkpoint: `chore: organize project sources and stage retired local files`.
+Organization source checkpoint: `2900ff9f` -
+`chore: organize project sources and stage retired local files`, pushed and
+remote-verified. The separate rendering checkpoint is `09e193e6`. The shared
+checkout was switched to `threadbound/art-carved-cavern-stamps` by another chat;
+its debug/art work is excluded from the isolated organization commit.
 Acceptance: folder organization delivered for review; permanent deletion and
 controller restructuring remain unapproved.
