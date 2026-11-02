@@ -60,6 +60,18 @@ texture-authoring/baking pass is scoped.
 
 ## Checkpoint
 
+### Blank-head 3D base, November 1
+
+Chase requested the blank-head T-pose as a 3D character base for future
+equipment. The separate [v3 package](../../work/pale-doll-base-v3/README.md)
+contains an editable model, a textured GLB and actual rest/animation views.
+The build has 21 passing checks; the saved GLB has 41 independent checks,
+including skeleton, animation names and durations, skinning and embedded
+color texture. It is a blockout with simplified forms. The hands are rigid
+units and require a finger-rig pass; weapon grips, clothing fit, joint
+clearance and Chase's visual review remain open. The live player and equipment
+system have not been changed. Checkpoint: `art: build blank-head pale doll base`.
+
 `art: add pale doll modeling reference and rig study` on
 `threadbound/art-pale-doll-model-study`. Validation: source/rig/action checks,
 saved-export inspection, render review, relative links and staged whitespace.

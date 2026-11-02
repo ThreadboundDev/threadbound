@@ -5,6 +5,15 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+Chase supplied the blank-head T-pose and requested a 3D base for future
+equipment. A separate v3 model, baked-color GLB and review views are delivered
+for appearance review: [v3 package](../work/pale-doll-base-v3/README.md).
+The build passes 21 checks and the saved GLB passes 41 independent checks;
+it retains 62 joint names/rest transforms and 48 animation names/durations.
+This is still a blockout: hands are rigid units, so independent finger posing,
+weapon grips, clothing fit, joint clearance and visual acceptance remain open.
+The live player and equipment systems are unchanged. Checkpoint:
+`art: build blank-head pale doll base` on this branch; not yet accepted.
 Chase selects the worn pale lacquered articulated doll, likes both hooded and
 exposed-head base gear, and authorizes a modeling sheet and separate 3D body
 test using the existing skeleton. [Direction and delivery](design/pale_doll_character_study_2026_11_01.md).

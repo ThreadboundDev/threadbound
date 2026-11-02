@@ -1,0 +1,266 @@
+{
+  "checks": [
+    {
+      "name": "one exported skin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same 62 unique joint names",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "joint world rest transforms preserved",
+      "passed": true,
+      "detail": 2.80266608156457e-06
+    },
+    {
+      "name": "same 48 animation names",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "clip durations within one 24 fps frame",
+      "passed": true,
+      "detail": 0.03333333507180214
+    },
+    {
+      "name": "one joined body mesh",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "body uses the exported skin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no exported studio camera or lights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no external images",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "one named ivory material",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ivory base color has a texture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ivory texture image is embedded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "embedded ivory image has valid header and content",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: required attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: matching nonempty vertex attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: finite positions and normals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: finite normalized nonnegative weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: joint indices in range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: triangle topology",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: valid triangle indices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: valid material",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: ivory texture UVs present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 0: ivory UVs finite and match positions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: required attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: matching nonempty vertex attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: finite positions and normals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: finite normalized nonnegative weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: joint indices in range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: triangle topology",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: valid triangle indices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 1: valid material",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: required attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: matching nonempty vertex attributes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: finite positions and normals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: finite normalized nonnegative weights",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: joint indices in range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: triangle topology",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: valid triangle indices",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "primitive 2: valid material",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ivory material is used by body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "nonempty body geometry",
+      "passed": true,
+      "detail": {
+        "vertices": 34540,
+        "triangles": 48140
+      }
+    }
+  ],
+  "source_sha256": "7716ab47250a28d87a762a82ddeed481e39de980e0cd9ca84ebeca0f047084f2",
+  "export_sha256": "25419b2244dc1cb1bdf3721d6f8201c395e1e1eec8c2a1e7d8411b4c7c711763",
+  "vertices": 34540,
+  "triangles": 48140,
+  "animation_duration_differences_seconds": {
+    "air_light_1": 2.60770320892334e-08,
+    "attack_1": 3.3527612686157227e-08,
+    "attack_2": 0.03333333507180214,
+    "attack_3": 0.016666684299707413,
+    "block_1": 0.00833335891366005,
+    "block_idle_1": 0.00833335891366005,
+    "casting_1": 0.03333333507180214,
+    "casting_2": 0.008333239704370499,
+    "crouch_1": 0.016666624695062637,
+    "crouch_block_1": 0.03333333507180214,
+    "crouch_block_2": 0.008333299309015274,
+    "crouch_block_idle_1": 0.02499997988343239,
+    "crouch_idle_1": 0.008333239704370499,
+    "crouching_1": 2.60770320892334e-08,
+    "crouching_2": 0.03333333507180214,
+    "crouching_3": 0.03333333507180214,
+    "death_1": 0.03333333507180214,
+    "death_2": 0.016666684299707413,
+    "get_up_from_hang_1": 0.03333333507180214,
+    "grab_ledge_from_water_1": 3.3527612686157227e-08,
+    "grapple_swinging_1": 0.03333333507180214,
+    "hanging_idle_1": 3.3527612686157227e-08,
+    "idle_1": 0.024999890476465225,
+    "idle_2": 0.008333239704370499,
+    "idle_3": 5.103647708892822e-07,
+    "idle_4": 0.0083334781229496,
+    "impact_1": 0.008333299309015274,
+    "impact_2": 0.03333333507180214,
+    "impact_3": 0.008333299309015274,
+    "jump_1": 2.60770320892334e-08,
+    "jump_2": 0.03333333507180214,
+    "jump_into_wall_hang_1": 0.03333333507180214,
+    "jumping_into_water_1": 0.00833335891366005,
+    "power_up_1": 0.008333239704370499,
+    "roll_1": 8.568167686462402e-08,
+    "run_1": 0.008333299309015274,
+    "run_2": 0.00833335891366005,
+    "sit_to_stand_1": 0.025000128895044327,
+    "slash_1": 3.3527612686157227e-08,
+    "slash_2": 0.0083334781229496,
+    "slash_5": 0.00833335891366005,
+    "stand_to_sit_1": 0.016666684299707413,
+    "swimming_1": 0.008333239704370499,
+    "turn_1": 0.025000009685754776,
+    "turn_2": 0.025000009685754776,
+    "walk_1": 0.025000009685754776,
+    "walk_2": 0.016666684299707413,
+    "water_idle_1": 3.3527612686157227e-08
+  }
+}
