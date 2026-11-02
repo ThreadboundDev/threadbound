@@ -1,10 +1,23 @@
 # Threadbound current TODO list
 
-Updated November 1, 2026. This is the single current priority list. The saved
+Updated November 2, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T42 — pale doll modeling reference and isolated body study.**
+November 2 gameplay integration: Chase requests bones/weights, existing sword
+and shield, and animation attachment before future gear work. A fitted local
+game candidate is delivered and selected automatically when its export exists.
+It retains 62 game bone names/bases and 48 main clips, with fitted finger curls,
+authored attack joint offsets and lacquer material response. Validation: 73
+saved-export checks, 875 Forward+ checks over 320 poses, actual Chamber movement/
+attack/jump/floor checks, and 17 unchanged-original run checks pass.
+[Delivery, launch instructions and limits](art/doll_game_integration_2026_11_02.md).
+Checkpoint: `art: integrate local doll with game rig and equipment`.
+Character artwork remains local/untracked; the code/docs checkpoint does not
+back it up remotely. Moving visual acceptance and clothing/gear fit remain open;
+T42 is not complete and no gear generation pass has started.
+
 November 2: Chase asks for a Rigify test on the 25k doll, with rigid carved
 parts and clothing to be fitted later. An isolated Blender prototype and pose
 test action exist locally for review; the live player is unchanged. Sampled

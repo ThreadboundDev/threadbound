@@ -3,6 +3,7 @@ class_name PlayerLive3DVisual
 extends Node2D
 
 const MODEL := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb")
+const DOLL_PREVIEW_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb"
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
 const THREAD_SWEEP := preload("res://Src/VFX/thread_sword_sweep.gd")
@@ -30,6 +31,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 ]
 
 @export var enabled := true
+@export var model_scene: PackedScene = MODEL
 @export var viewport_size := Vector2i(800, 600)
 @export var display_scale := Vector2(0.5, 0.5)
 @export var camera_size := 2.8
@@ -99,6 +101,13 @@ var _swim_turn_elapsed := 0.0
 
 func _ready() -> void:
 	process_priority = 100
+	# Use the local art candidate when present; public checkouts keep their bundled
+	# player. The comparison flag lets reviewers run the original without edits.
+	if model_scene == MODEL and not OS.get_cmdline_user_args().has("--original-player"):
+		if ResourceLoader.exists(DOLL_PREVIEW_PATH):
+			model_scene = load(DOLL_PREVIEW_PATH) as PackedScene
+		elif OS.get_cmdline_user_args().has("--doll-preview"):
+			push_error("Doll preview export is missing; run tools/art/prepare_doll_game_model.py")
 	_player = get_parent() as CharacterBody2D
 	if not enabled or not _player:
 		return
@@ -777,7 +786,7 @@ func _build_viewport() -> void:
 	environment_node.environment = environment
 	_viewport.add_child(environment_node)
 
-	_model_root = MODEL.instantiate() as Node3D
+	_model_root = model_scene.instantiate() as Node3D
 	_model_root.name = "ThreadborneLive3D"
 	_viewport.add_child(_model_root)
 	_apply_toon_materials(_model_root)
@@ -858,6 +867,9 @@ func _build_viewport() -> void:
 	_display_rest_position = _display.position
 	var outline_material := ShaderMaterial.new()
 	outline_material.shader = OUTLINE_SHADER
+	if _model_root.find_child("Threadborne_Doll", true, false):
+		# Leave headroom for the level's additive 2D lights on pale lacquer.
+		outline_material.set_shader_parameter("exposure", 0.62)
 	_display.material = outline_material
 	_player.add_child.call_deferred(_display)
 
@@ -943,6 +955,11 @@ func _apply_toon_materials(root: Node) -> void:
 				stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
 				stylized.specular_mode = BaseMaterial3D.SPECULAR_TOON
 				stylized.roughness = maxf(stylized.roughness, 0.62)
+				if mesh_instance.name == &"Threadborne_Doll":
+					# Pale lacquer needs less exposure than the donor's dark costume.
+					stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_BURLEY
+					stylized.albedo_color *= Color(0.65, 0.65, 0.65, 1.0)
+					stylized.metallic_specular = 0.2
 				if mesh_instance.name == &"Threadborne_Sword":
 					# The cloth toon pass flattened the sword's specular highlights.
 					stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_BURLEY
@@ -1063,7 +1080,7 @@ func _get_blade_model_points() -> PackedVector3Array:
 
 
 func _build_lower_body_sampler() -> void:
-	_lower_sampler_root = MODEL.instantiate() as Node3D
+	_lower_sampler_root = model_scene.instantiate() as Node3D
 	_lower_sampler_root.name = "LowerBodyAnimationSampler"
 	_lower_sampler_root.visible = false
 	_viewport.add_child(_lower_sampler_root)
@@ -1257,6 +1274,7 @@ func _find_first_type(root: Node, type_name: String) -> Node:
 func _install_authored_attacks(target: AnimationPlayer, skeleton: Skeleton3D) -> void:
 	var donor := AUTHORED_ATTACKS.instantiate()
 	var animations := _find_first_type(donor, "AnimationPlayer") as AnimationPlayer
+	var donor_skeleton := _find_first_type(donor, "Skeleton3D") as Skeleton3D
 	var library := AnimationLibrary.new()
 	var skeleton_path := target.get_node(target.root_node).get_path_to(skeleton)
 	for clip in animations.get_animation_list():
@@ -1269,6 +1287,26 @@ func _install_authored_attacks(target: AnimationPlayer, skeleton: Skeleton3D) ->
 				animation.remove_track(track)
 				continue
 			animation.track_set_path(track, NodePath(String(skeleton_path)+":"+String(path.get_subname(0))))
+			# Fitted character rigs retain bone bases but have different rest origins.
+			# glTF position tracks contain the rest offset as well as motion; rebase
+			# that offset so imported attack clips cannot pull joints back to the donor.
+			if model_scene != MODEL and animation.track_get_type(track) == Animation.TYPE_POSITION_3D:
+				var bone_name := path.get_subname(0)
+				var source_index := donor_skeleton.find_bone(bone_name)
+				var target_index := skeleton.find_bone(bone_name)
+				if source_index >= 0:
+					var offset := skeleton.get_bone_rest(target_index).origin - donor_skeleton.get_bone_rest(source_index).origin
+					for key in animation.track_get_key_count(track):
+						animation.track_set_key_value(track, key, animation.track_get_key_value(track, key) + offset)
+			if model_scene.resource_path == DOLL_PREVIEW_PATH and animation.track_get_type(track) == Animation.TYPE_ROTATION_3D:
+				var parts := String(path.get_subname(0)).split(".")
+				if parts.size() == 3 and parts[0] in ["index", "middle", "ring", "pinky"]:
+					# Match the grip fitted into the doll's exported source clips.
+					var curl := {"01": -8.0, "02": -22.0, "03": -28.0}
+					var correction := Quaternion(Vector3.RIGHT, deg_to_rad(curl.get(parts[1], 0.0)))
+					for key in animation.track_get_key_count(track):
+						var rotation: Quaternion = animation.track_get_key_value(track, key)
+						animation.track_set_key_value(track, key, (rotation * correction).normalized())
 		if String(clip) in ["air_attack_up", "air_attack_down"]:
 			# Map the baked poses to quick extension, held contact, quick withdrawal.
 			var old_times := [0.0, 4.0/30.0, 7.0/30.0, 9.0/30.0, 11.0/30.0, 17.0/30.0, 0.8]
