@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Src/Equipment/Visuals/equipment_visual_definition.gd" id="1"]
+
+[sub_resource type="Resource" id="Gloves"]
+script = ExtResource("1")
+item_id = &"base_bracers"
+grapple_origin = Vector3(0.128350645, 0.260055989, 0.020282641)
+slot = "gloves"
+hidden_body_meshes = PackedStringArray("Doll_Covered_Gloves")
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/base_bracers.glb")
+
+[sub_resource type="Resource" id="Boots"]
+script = ExtResource("1")
+item_id = &"base_boots"
+slot = "boots"
+hidden_body_meshes = PackedStringArray("Doll_Covered_Boots")
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/base_boots.glb")
+
+[sub_resource type="Resource" id="Outfit"]
+script = ExtResource("1")
+item_id = &"base_head_chest"
+slot = "head_chest"
+hidden_body_meshes = PackedStringArray("Doll_Covered_HeadChest")
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/base_cowl.glb", "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_tunic.glb", "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_pants.glb")
+
+[sub_resource type="Resource" id="Weapon"]
+script = ExtResource("1")
+item_id = &"base_sword_shield"
+blade_tip = Vector3(-0.731586814, 0.083770297, -0.070786029)
+blade_base = Vector3(-0.104337163, 0.083770320, -0.011981617)
+slot = "weapon"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/base_sword.glb", "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_shield.glb")
+
+[resource]
+metadata/gloves = SubResource("Gloves")
+metadata/boots = SubResource("Boots")
+metadata/head_chest = SubResource("Outfit")
+metadata/weapon = SubResource("Weapon")

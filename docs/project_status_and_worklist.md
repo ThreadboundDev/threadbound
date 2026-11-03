@@ -4,7 +4,29 @@ Updated November 2, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T42 — pale doll modeling reference and isolated body study.**
+**Current task: T44 — attach modular base gear to the doll.**
+Chase approves a reusable setup with gloves, boots, one combined head/chest
+outfit (cowl + tunic/sash + pants), and a separate sword/shield weapon item.
+The new local gear is fitted to the existing 62-bone/48-clip doll. One live
+skeleton drives every piece; complete outfits swap atomically. The shield-arm
+bracer carries a braided grapple coil and needle, and the existing active rope
+launches from that needle. Reversible body coverage prevents bare shell/toes
+showing through equipped clothing. Existing abilities and selection rules stay
+with EquipManager; authored visual variants can register against its signals.
+[Delivery, reusable definitions, rebuilding and limits](art/modular_player_equipment.md).
+Validation: 586 saved-export checks, 1,220 Forward+ attachment/swap/anchor checks,
+eight texture-policy checks, six actual Chamber gameplay checks in headless and
+rendered runs, 875 previous-doll checks and 17 original-player run checks pass.
+The broad legacy grapple suite's 20 assertion failures reproduce unchanged with
+the original player. GPU-compressed imports resolve the initial Chamber image
+allocation failure. Clothing/gear appearance and moving acceptance remain open;
+this is delivered for review, not marked complete. Checkpoint:
+`feature: attach modular base gear to player` on
+`threadbound/feature-modular-player-equipment`. Artwork stays local; the public
+code/docs push does not remotely back up the fitted models or source archives.
+The earlier controller cleanup remains a separate approval/proposal.
+
+**Previous task: T42 — pale doll modeling reference and isolated body study.**
 November 2 clarity follow-up: Chase requests a sharper engine display. The
 character viewport increases from 800x600 to 1600x1200, with half sprite scale
 to retain gameplay size. FXAA is removed while 4x MSAA remains; outline width

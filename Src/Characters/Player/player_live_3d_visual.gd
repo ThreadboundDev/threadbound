@@ -4,6 +4,8 @@ extends Node2D
 
 const MODEL := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb")
 const DOLL_PREVIEW_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb"
+const MODULAR_DOLL_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb"
+const EQUIPMENT_VISUALS := preload("res://Src/Equipment/Visuals/player_equipment_visuals.gd")
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
 const THREAD_SWEEP := preload("res://Src/VFX/thread_sword_sweep.gd")
@@ -75,6 +77,7 @@ var _door_progress := 0.0
 var _door_start_yaw := 0.0
 var _camera: Camera3D
 var _sword_mesh: MeshInstance3D
+var equipment_visuals: PlayerEquipmentVisuals
 var _sword_sweep: SwordSweepVFX
 var _thread_sweep: Node2D
 var _sweep_phase := -1.0
@@ -104,7 +107,9 @@ func _ready() -> void:
 	# Use the local art candidate when present; public checkouts keep their bundled
 	# player. The comparison flag lets reviewers run the original without edits.
 	if model_scene == MODEL and not OS.get_cmdline_user_args().has("--original-player"):
-		if ResourceLoader.exists(DOLL_PREVIEW_PATH):
+		if ResourceLoader.exists(MODULAR_DOLL_PATH) and EQUIPMENT_VISUALS.default_assets_available():
+			model_scene = load(MODULAR_DOLL_PATH) as PackedScene
+		elif ResourceLoader.exists(DOLL_PREVIEW_PATH):
 			model_scene = load(DOLL_PREVIEW_PATH) as PackedScene
 		elif OS.get_cmdline_user_args().has("--doll-preview"):
 			push_error("Doll preview export is missing; run tools/art/prepare_doll_game_model.py")
@@ -142,6 +147,9 @@ func _process(delta: float) -> void:
 	_hide_legacy_visuals()
 	if Engine.is_editor_hint():
 		return
+	if equipment_visuals:
+		var gloves = _player.get("current_gloves")
+		equipment_visuals.set_grapple_stowed(not gloves or gloves.grapple_state == BaseGloves.GrappleState.STOWED)
 	if _door_active:
 		_update_house_door_pose()
 		return
@@ -573,6 +581,10 @@ func get_grapple_origin_player_offset() -> Vector2:
 		return Vector2.ZERO
 	var hand_pose := _skeleton.get_bone_global_pose(_left_hand_index)
 	var hand_world := _skeleton.to_global(hand_pose.origin)
+	if equipment_visuals:
+		var equipment_origin := equipment_visuals.get_grapple_origin()
+		if equipment_origin.is_finite():
+			hand_world = equipment_origin
 	var viewport_point := _camera.unproject_position(hand_world)
 	var sprite_point := (
 		viewport_point
@@ -790,9 +802,16 @@ func _build_viewport() -> void:
 	_model_root = model_scene.instantiate() as Node3D
 	_model_root.name = "ThreadborneLive3D"
 	_viewport.add_child(_model_root)
-	_apply_toon_materials(_model_root)
 	_animation_player = _find_first_type(_model_root, "AnimationPlayer") as AnimationPlayer
 	_skeleton = _find_first_type(_model_root, "Skeleton3D") as Skeleton3D
+	if model_scene.resource_path == MODULAR_DOLL_PATH:
+		equipment_visuals = EQUIPMENT_VISUALS.new()
+		equipment_visuals.name = "EquipmentVisuals"
+		_model_root.add_child(equipment_visuals)
+		if not equipment_visuals.initialize(_skeleton):
+			push_error("Modular equipment could not bind to the player skeleton")
+		equipment_visuals.item_changed.connect(_on_visual_equipment_changed)
+	_apply_toon_materials(_model_root)
 	_sword_mesh = _model_root.find_child("Threadborne_Sword", true, false) as MeshInstance3D
 	if _skeleton:
 		_pelvis_index = _skeleton.find_bone("pelvis")
@@ -946,6 +965,17 @@ func _hide_legacy_visuals() -> void:
 		pattern.hide()
 
 
+func _on_visual_equipment_changed(slot: StringName, _item: EquipmentVisualDefinition) -> void:
+	if slot == &"weapon":
+		_sword_mesh = _model_root.find_child("Threadborne_Sword", true, false) as MeshInstance3D
+	if equipment_visuals._roots.has(slot):
+		_apply_toon_materials(equipment_visuals._roots[slot])
+	if _thread_sweep:
+		_thread_sweep.clear_trail()
+	if _sword_sweep:
+		_sword_sweep.clear()
+
+
 func _apply_toon_materials(root: Node) -> void:
 	for node in root.find_children("*", "MeshInstance3D", true, false):
 		var mesh_instance := node as MeshInstance3D
@@ -958,7 +988,7 @@ func _apply_toon_materials(root: Node) -> void:
 				stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
 				stylized.specular_mode = BaseMaterial3D.SPECULAR_TOON
 				stylized.roughness = maxf(stylized.roughness, 0.62)
-				if mesh_instance.name == &"Threadborne_Doll":
+				if mesh_instance.name == &"Threadborne_Doll" or String(mesh_instance.name).begins_with("Doll_Covered_"):
 					# Pale lacquer needs less exposure than the donor's dark costume.
 					stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_BURLEY
 					stylized.albedo_color *= Color(0.65, 0.65, 0.65, 1.0)
@@ -1063,6 +1093,8 @@ func _get_blade_world_points() -> PackedVector2Array:
 
 
 func _get_blade_model_points() -> PackedVector3Array:
+	if equipment_visuals:
+		return equipment_visuals.get_blade_points()
 	# BoneAttachment updates after animation. Reconstruct its transform from the
 	# current skeleton pose so aiming and smears never consume last frame's sword.
 	var node: Node = _sword_mesh
