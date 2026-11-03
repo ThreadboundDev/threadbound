@@ -1,5 +1,20 @@
 # Krita stamp workspace — November 2, 2026
 
+**Current: measured-color v3 installed.** Chase authorizes direct RGB correction.
+[Carved Cavern v3](../../ArtSource/Deliveries/CarvedCavernStampsV3/README.md) maps
+v2 pixels to C07's RGB channel distributions without redrawing/resampling or
+changing alpha. All six saved alpha channels are byte-identical. The sampled
+RGB quantile error is 0.06–0.39 on the 0–255 scale. 24 flip/XML checks, native
+Shift+X / Shift+Y / Reset, source/output checks and bundle integrity pass. V3 is
+active; v1/v2 remain disabled, retained copies. The 81-stamp atlas is saved as
+`All_Current_Stamps_v3.kra` in the local `all_current_stamps_2026_11_02_v3`
+folder. ZIP, 83 layers and exact merged-image agreement pass. Room drawing saved
+before setup, then unchanged at SHA256
+`e1a8f0ad50c95114cdf706215ef3ae13d5b60dd84ab6568898b70580fe016506`.
+The corrected brushes affect future marks; existing painted marks remain intact.
+Final visual acceptance at actual joins remains for Chase. Checkpoint:
+`365647c4` — `fix: color-match cavern stamps to existing cave walls`.
+
 Later color/flip follow-up: [Carved Cavern v2](../../ArtSource/Deliveries/CarvedCavernStampsV2/README.md)
 is now the active cavern bundle; v1 is disabled and retained. All six images use
 C07 directly as a color reference and measure closer in the saved chroma check.

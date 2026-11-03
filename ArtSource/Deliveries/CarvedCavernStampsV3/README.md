@@ -17,6 +17,14 @@ presets retain the Village prefix required by the existing Stamp Controls plugin
 Flip X / Flip Y, Shift+X / Shift+Y and Reset retain compatibility. No plugin code
 changes or new plugin installation is required. Earlier kits are retained.
 
+Installed in the normal Krita profile and active; v1/v2 are disabled and retained.
+Native Shift+X, Shift+Y and Reset checks pass on v3 S02; the previous working
+size of 662.78 px was restored and both flips reset to off. The updated
+`All_Current_Stamps_v3.kra` is saved in the local v3 atlas folder and open beside
+the room painting. Its ZIP integrity, 83-layer count and exact merged-image
+agreement with the source ORA pass. The room was saved before import; its file
+hash is unchanged after kit setup, preserving Chase's painted work.
+
 `build_kit.py` requires NumPy and Pillow, v2 source PNGs, the v1 shared packer,
 and the existing local C07 reference/plugin source. It computes an empirical
 histogram transfer for each RGB channel using opaque pixels (alpha > 240).
