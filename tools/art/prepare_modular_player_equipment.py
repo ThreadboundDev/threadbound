@@ -24,6 +24,7 @@ SOURCE = ROOT / 'Assets/Threadborne/Equipment/Base Gear'
 OUT = ROOT / 'ArtSource/Player/Blender/PaleDollStudy/GameReadyDoll/ModularEquipment'
 EXPORT = ROOT / 'Assets/Threadborne/Player/LocalDoll/Equipment'
 SCRATCH = ROOT / 'tmp/modular-equipment-inputs'
+BOOT_CUFF_HEIGHT = .415  # Midway between the .173 ankle and .665 knee joints.
 for path in [OUT, EXPORT, SCRATCH]:
     path.mkdir(parents=True, exist_ok=True)
 
@@ -177,6 +178,18 @@ skin(pants, 'Base_Pants', pants_weights, 'base_pants')
 
 boot = imported('Base Boots 3d.zip')
 boot_source = [v.co.copy() for v in boot.data.vertices]
+
+
+def boot_point(p, sign):
+    # Retain the ankle/sole proportions and shorten only the tall source shaft.
+    # Scaling the whole boot vertically would flatten the foot and heel.
+    height = p.z*.625
+    if height > .18:
+        height = .18+(height-.18)*(BOOT_CUFF_HEIGHT-.18)/(.625-.18)
+    return Vector((sign*(.1349-p.y*.62),
+        p.x*.55-.120+clamp((p.z-.3)/.55)*.04, height))
+
+
 for side, sign in [('L', 1), ('R', -1)]:
     obj = boot if side == 'L' else bpy.data.objects.new('Boot_R', boot.data.copy())
     if side == 'R':
@@ -184,12 +197,17 @@ for side, sign in [('L', 1), ('R', -1)]:
         # Copy source coordinates, not the already fitted left boot.
         for vertex, point in zip(obj.data.vertices, boot_source):
             vertex.co = point
-    transform(obj, lambda p: Vector((sign*(.1349-p.y*.72), p.x*.64-.147+clamp((p.z-.3)/.55)*.06, p.z*.625)))
+    transform(obj, lambda p: boot_point(p, sign))
     fit_surface(obj,.012)
+    for vertex in obj.data.vertices:
+        vertex.co.z = max(0, min(vertex.co.z, BOOT_CUFF_HEIGHT))
     if side == 'R':
         bm=bmesh.new();bm.from_mesh(obj.data);bmesh.ops.reverse_faces(bm,faces=list(bm.faces));bm.to_mesh(obj.data);bm.free()
 
     skin(obj, 'Base_Boot.'+side, transferred_weights({'shin.'+side,'foot.'+side,'toe.'+side}), 'base_boots')
+
+report['boot_fit'] = {'cuff_height': BOOT_CUFF_HEIGHT, 'ankle_height': .1729,
+    'knee_height': .665, 'previous_cuff_height': .625}
 
 bracer = imported('Base Gear Gloves 3d.zip')
 bracer_source = [v.co.copy() for v in bracer.data.vertices]
@@ -283,7 +301,7 @@ tube('Grapple_Needle_Tether',[Vector((.49,-.108,1.519)),Vector((.477,-.115,1.49)
 regions={name:[] for name in ['Threadborne_Doll','Doll_Covered_Gloves','Doll_Covered_Boots','Doll_Covered_HeadChest']}
 for polygon in body.data.polygons:
     p=body.matrix_world@polygon.center
-    if p.z<.625:
+    if p.z<BOOT_CUFF_HEIGHT:
         region='Doll_Covered_Boots'
     elif .467<abs(p.x)<.683 and 1.34<p.z<1.66:
         region='Doll_Covered_Gloves'

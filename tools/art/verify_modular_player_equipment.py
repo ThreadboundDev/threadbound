@@ -65,6 +65,14 @@ for name,piece in build['pieces'].items():
     meshes=[o for o in added if o.type=='MESH' and any(m.type=='ARMATURE' for m in o.modifiers)]
     check(name+' exported expected mesh count',len(meshes)==len(piece['meshes']),[o.name for o in meshes])
     for obj in meshes:
+        if name == 'base_boots':
+            points=[obj.matrix_world @ v.co for v in obj.data.vertices]
+            height=max(p.z for p in points)
+            ankle=reference['foot.'+obj.name[-1]].translation.z
+            knee=reference['shin.'+obj.name[-1]].translation.z
+            fraction=(height-ankle)/(knee-ankle)
+            check(obj.name+' cuff ends at mid-shin',.46<fraction<.53,{'height':height,'fraction_ankle_to_knee':fraction})
+            check(obj.name+' sole remains on the authored floor',abs(min(p.z for p in points))<.001)
         check(obj.name+' weights normalized',all(v.groups and len(v.groups)<=4 and abs(sum(g.weight for g in v.groups)-1)<1e-5 for v in obj.data.vertices))
         check(obj.name+' targets existing bones',all(g.name in reference for g in obj.vertex_groups))
         # Rebind the independently imported piece to the one live rig exactly

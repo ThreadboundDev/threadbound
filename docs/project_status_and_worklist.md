@@ -1,10 +1,20 @@
 # Threadbound current TODO list
 
-Updated November 2, 2026. This is the single current priority list. The saved
+Updated November 3, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 3 boot-fit correction: Chase requests mid-shin boots after rejecting
+their oversized, nearly knee-high appearance. The cuff drops from 0.625 m to
+0.415 m, halfway between ankle and knee; shaft compression preserves foot/heel
+height, the foot is narrower/shorter, and coverage exposes the upper shin.
+The rebuilt native source/export passes 590 saved-export checks (including both
+boots' midpoint/floor measurements) and 1,220 rendered equipment checks. Updated
+idle/run/attack captures are ready; visual acceptance remains open. Checkpoint:
+`fix: fit base boots to mid-shin` on the existing equipment branch. Artwork remains
+local-only under the existing public-repository treatment.
+
 Chase approves a reusable setup with gloves, boots, one combined head/chest
 outfit (cowl + tunic/sash + pants), and a separate sword/shield weapon item.
 The new local gear is fitted to the existing 62-bone/48-clip doll. One live

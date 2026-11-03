@@ -6,7 +6,7 @@ building reusable presentation attachments. His slot correction is authoritative
 | Slot | Components that equip together |
 | --- | --- |
 | Gloves | Both forearm bracers, plus the shield-arm grapple coil and needle |
-| Boots | Both boots, below the exposed knees |
+| Boots | Both boots, ending at mid-shin |
 | Head/chest | Cowl, tunic/sash and pants, as one outfit |
 | Weapon | The base sword and shield, separately attached but one weapon item |
 
@@ -14,6 +14,15 @@ The separately generated clothing inputs are authoring components, not additiona
 equipment selections. Head/chest reaches above the elbows and knees; joint gaps
 and fingers remain exposed. The existing ability manager still owns gloves,
 boots and chest. Weapon presentation is independent of those three selections.
+
+November 3 fit correction: Chase rejects the oversized, nearly knee-high boots.
+The cuffs now end at 0.415 m in the rest pose, halfway between the ankle and knee,
+instead of 0.625 m. The shaft shortens above the ankle to preserve foot/heel
+height, with a narrower, shorter foot fit. The coverage partition now exposes
+the upper shin. The saved source/export and idle/run/attack review captures are
+rebuilt. All 590 export checks and 1,220 rendered equipment checks pass, including
+independent midpoint-height and floor checks for both boots. Appearance acceptance
+remains open. Checkpoint: `fix: fit base boots to mid-shin` on the equipment branch.
 
 ## Files and rebuilding
 
@@ -92,9 +101,9 @@ gets its origin from the needle on the left bracer.
 
 ## Verification and acceptance
 
-- 586 independent saved-export checks pass over 32 skinned poses. The editable
+- 590 independent saved-export checks pass over 32 skinned poses. The editable
   source reopens with all 48 clips; 62 bones, normalized weights and all original
-  body triangles are retained. Maximum sampled rigid edge error is 0.00000204 m.
+  body triangles are retained. Maximum sampled rigid edge error is 0.00000162 m.
 - 1,220 Forward+ real-player checks pass over 40 poses: one shared skeleton,
   grouped outfit replacement, rollback for missing/unskinned components, isolated
   weapon swaps, existing selection signals, reversible body masks, blade anchors,
