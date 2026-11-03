@@ -80,7 +80,7 @@ Modify:
 
 - `Src/Environment/Greybox/greybox_water.gd` — honor configured transparency.
 - `Src/Environment/Greybox/greybox_polygon_water.gd` — tune submerged readability consistently.
-- `Src/Environment/BlueBiome/Prototypes/blue_water_playground.tscn` — basin material values and bank entry instances.
+- `tools/fixtures/blue_layouts/Prototypes/blue_water_playground.tscn` — basin material values and bank entry instances.
 - `Src/Characters/Player/player.gd` — deliberate bank entry, collision-aware motion, and transition handling.
 - `Src/Characters/Player/player_live_3d_visual.gd` — synchronize dive pose and swim transition.
 - `tools/environment/verify_blue_water.gd` — prompted and unprompted entry cases.

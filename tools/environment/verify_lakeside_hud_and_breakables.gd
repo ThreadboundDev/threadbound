@@ -38,7 +38,7 @@ func capture(label: String) -> void:
 	snapshots.append(file)
 
 func run() -> void:
-	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
+	room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await frames(12)

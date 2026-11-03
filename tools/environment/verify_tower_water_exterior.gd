@@ -119,7 +119,7 @@ func run() -> void:
 	quit(1 if failures.size() else 0)
 
 func inspect_room() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
+	var room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	room.get_node("LakesideArtStage").render_scale = 1.0

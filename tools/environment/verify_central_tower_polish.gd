@@ -79,7 +79,7 @@ func angle_captures(art: Node, tower: Node2D) -> void:
 
 func verify() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT)
-	room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await settle(25)

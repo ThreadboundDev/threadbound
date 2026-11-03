@@ -126,7 +126,7 @@ Paths are relative to the repository root. New script UID files are included.
 6. `Src/Environment/BlueBiome/Buildings/Lakeside3D/net_workshop_2d.tscn`
 7. `Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_building_3d.gd`
 8. `Src/Environment/BlueBiome/Buildings/Lakeside3D/README.md`
-9. `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+9. `Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 10. `Src/Environment/BlueBiome/Prototypes/lakeside_krita_playtest.gd`
 11. `Src/Environment/BlueBiome/Villagers/lakeside_worker_2d.gd`
 12. `tools/environment/verify_lakeside_house_entry.gd` (new)

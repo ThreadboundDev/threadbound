@@ -15,7 +15,7 @@ func run() -> void:
 	for action in InputMap.get_actions(): InputMap.action_erase_events(action)
 	var baseline := "--baseline" in OS.get_cmdline_user_args()
 	var label := "before" if baseline else "after"
-	room=load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	room=load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	room.tree_entered.connect(func(): current_scene=room,CONNECT_ONE_SHOT)
 	root.add_child(room)
 	for enemy in get_nodes_in_group("enemies"): enemy.set_physics_process(false)

@@ -26,7 +26,7 @@ func magenta_count(image: Image, bounds: Rect2i) -> int:
 			if pixel.r>.5 and pixel.b>.5 and pixel.g<.3: count += 1
 	return count
 func run() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	var room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await settle(25)

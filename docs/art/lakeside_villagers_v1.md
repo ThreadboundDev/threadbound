@@ -13,7 +13,7 @@ faces, garments and hair can still receive an art polish pass.
 
 ## Try them
 
-Run `res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+Run `res://Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 with F6. Click **Net mender** or **Boatwright** in the bottom landmark controls.
 Use the displayed interaction binding (E with the current keyboard defaults).
 The worker faces the player's side for six seconds; interact again or walk away

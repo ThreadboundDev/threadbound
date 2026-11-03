@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/fixtures/blue_layouts/macro_reference_fixture.gd" id="2"]
+
+[node name="MacroReference" type="Sprite2D"]
+centered = false
+z_index = -1000
+show_behind_parent = true
+script = ExtResource("2")

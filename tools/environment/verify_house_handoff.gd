@@ -30,7 +30,7 @@ func sole_y(visual: Node) -> float:
 
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT)
-	var room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
+	var room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	# Keep the extra verification renderer small beside an open game/editor.

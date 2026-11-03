@@ -14,7 +14,7 @@ the existing prototype.
 
 ## Test in the map
 
-Run `res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+Run `res://Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 with F6. The bottom **Eave Runner** and **Loom Heron** buttons teleport the player
 to each encounter. F2 restores all five authored enemies. The other three enemies,
 villagers, workstations, HUD, water, buildings and map geometry are retained.

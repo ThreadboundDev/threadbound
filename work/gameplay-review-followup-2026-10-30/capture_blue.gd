@@ -16,7 +16,7 @@ func shot(label: String, center: Vector2) -> void:
 func run() -> void:
 	for action in InputMap.get_actions(): InputMap.action_erase_events(action)
 	report.label = "before" if "--before" in OS.get_cmdline_user_args() else "after"
-	room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	room.get_node("LakesideArtStage").render_scale = 2.0 if "--full-quality" in OS.get_cmdline_user_args() else 1.0
 	room.tree_entered.connect(func(): current_scene=room,CONNECT_ONE_SHOT)
 	root.add_child(room)

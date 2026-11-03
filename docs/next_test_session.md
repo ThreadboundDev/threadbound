@@ -3,7 +3,7 @@
 Use **`threadbound/art-gameplay-review-followup`**. Save manual edits, stop the
 old run, and launch fresh with F6. The run is accepted; this test targets the
 reported defects. About **5 minutes** in
-`Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+`Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
 
 1. **Solid rock / one-way drops.** Double-tap Down repeatedly on the rock beside
    a bridge, then on an actual one-way span. Solid rock should never let you
@@ -101,7 +101,7 @@ current accepted checkpoints. Save any manual Godot/Krita/Blender edits before
 switching scenes or tasks; the assistant handles the Git checkpoint.
 
 1. **Review the new background (2 minutes).** F6
-   `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+   `Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
    Swim down beside the tower and across the underwater route. The new painted
    rock wall should sit behind the player, bulbs, supports and solid terrain.
    Judge player contrast, foreground/background separation and texture seams
@@ -129,7 +129,7 @@ changes, level restructuring or a new system. T20 acceptance remains open below.
 About 8–10 minutes. Those fixes are inherited on the current branch; no branch
 switch is needed.
 Restart the comparison scene with F6:
-`Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+`Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
 Do not resume an already-running instance with older scripts/resources.
 
 Default: painted houses, villagers and bulbs; **3D tower and enemies**; existing

@@ -1,0 +1,127 @@
+[
+  {
+    "old": "Src/Environment/BlueBiome/Production/blue_chamber_exit_production.tscn",
+    "new": "tools/fixtures/blue_layouts/Production/blue_chamber_exit_production.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_chamber_exit_rooftops.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_chamber_exit_rooftops.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_deck_2m.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_deck_2m.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_hermits_lake.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_hermits_lake.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_hidden_cistern.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_hidden_cistern.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_irrigation_channel.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_irrigation_channel.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_art_prep.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_art_prep.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_village.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_village.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_lower_shore.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lower_shore.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_old_shrine.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_old_shrine.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_peasant_fields.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_peasant_fields.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_shrine_approach.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_shrine_approach.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_preview.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_still_village_preview.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/Rooms/blue_waterfall_ascent.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/Rooms/blue_waterfall_ascent.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/blue_biome_greybox_overview.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/blue_biome_greybox_overview.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/blue_greybox_room_shell.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/blue_village_room_01.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/blue_village_room_01.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Prototypes/blue_water_playground.tscn",
+    "new": "tools/fixtures/blue_layouts/Prototypes/blue_water_playground.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/References/blue_macro_reference.tscn",
+    "new": "tools/fixtures/blue_layouts/References/blue_macro_reference.tscn",
+    "role": "regression_fixture"
+  },
+  {
+    "old": "Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn",
+    "new": "Src/Environment/BlueBiome/blue_lakeside_test.tscn",
+    "role": "current_level"
+  }
+]

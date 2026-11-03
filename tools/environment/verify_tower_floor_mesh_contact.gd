@@ -14,7 +14,7 @@ func _initialize() -> void:
 	call_deferred("run")
 
 func run() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	var room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	for i in 25: await physics_frame

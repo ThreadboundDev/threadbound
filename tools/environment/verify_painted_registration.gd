@@ -1,6 +1,6 @@
 extends SceneTree
 ## Exercise camera motion between physics ticks; static screenshots miss drift.
-const ROOM := "res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn"
+const ROOM := "res://Src/Environment/BlueBiome/blue_lakeside_test.tscn"
 var room: Node2D
 var camera: Camera2D
 var phase := 0.0

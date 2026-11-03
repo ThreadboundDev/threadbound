@@ -17,7 +17,7 @@ func frames(count: int) -> void:
 		await process_frame
 
 func verify() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	var room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await frames(20)

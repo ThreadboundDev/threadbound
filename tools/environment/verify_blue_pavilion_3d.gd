@@ -68,7 +68,7 @@ func screenshot(name_text: String) -> void:
 		check(image.save_png(capture_dir.path_join(name_text + ".png")) == OK, "Could not save screenshot: " + name_text)
 
 func verify() -> void:
-	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn").instantiate()
+	room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await frames(30)

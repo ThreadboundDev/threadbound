@@ -31,7 +31,7 @@ func run() -> void:
 		stage.add_child(cam)
 		cam.make_current()
 	else:
-		var path := "res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn" if mode == "blue" else "res://Src/Environment/World/Chamber Of The First Weave.tscn"
+		var path := "res://Src/Environment/BlueBiome/blue_lakeside_test.tscn" if mode == "blue" else "res://Src/Environment/World/Chamber Of The First Weave.tscn"
 		stage = load(path).instantiate()
 		stage.tree_entered.connect(func(): current_scene = stage, CONNECT_ONE_SHOT)
 		root.add_child(stage)

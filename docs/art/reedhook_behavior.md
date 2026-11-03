@@ -2,7 +2,7 @@
 
 Reedhook patrols dry platforms, approaches a nearby player on the same level, plants his feet for a raised hook windup, and makes one forward sweep with a short step. Recovery leaves an opening. Received damage interrupts the attack and plays a recoil animation. Existing EnemyBase handles health, damage feedback, death, and save-point resets; no shared combat architecture was changed.
 
-One instance is placed at `(1408, 370)` in `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn`, on the deck to the right of the first dive. It settles onto the floor at about Y=384. The reusable scene is `Src/Enemies/Reedhook/reedhook.tscn`; it displays the model in the editor.
+One instance is placed at `(1408, 370)` in `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn`, on the deck to the right of the first dive. It settles onto the floor at about Y=384. The reusable scene is `Src/Enemies/Reedhook/reedhook.tscn`; it displays the model in the editor.
 
 ## Behavior
 

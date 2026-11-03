@@ -1,6 +1,6 @@
 extends Node
 
-const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn")
+const ROOM := preload("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn")
 const BULB := preload("res://Src/Environment/Greybox/greybox_bumper.tscn")
 var failures := 0
 

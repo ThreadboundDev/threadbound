@@ -1,6 +1,6 @@
 # Blue bulb choice room
 
-Open `Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn`
+Open `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn`
 and press F6. This is an isolated greybox, not a replacement for the region.
 Use your existing movement, attack, dash, and grapple bindings.
 

@@ -2,7 +2,7 @@
 from pathlib import Path
 import math,re,json
 ROOT=Path(__file__).resolve().parents[2]
-SCENE=ROOT/'Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn'
+SCENE=ROOT/'Src/Environment/BlueBiome/blue_lakeside_test.tscn'
 text=SCENE.read_text()
 profiles={'Fisher':(320,-46.72,5.68,5.08,4.85,1.38),'Workshop':(2688,-960.64,7.68,5.18,3.46,1.22),'Slip':(2816,477.44,7.94,4.94,6.13,1.2)}
 def fixture(source):

@@ -87,7 +87,7 @@ func run() -> void:
 	await frames(410)
 	check(upright._current_action == &"idle_2","Standing longer than six seconds starts the first upright variation")
 	check(upright._animation_player.current_animation == upright._clips[&"idle_2"],"Delayed variation uses its installed upright clip")
-	for path in ["res://Src/Environment/World/Chamber Of The First Weave.tscn","res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"]:
+	for path in ["res://Src/Environment/World/Chamber Of The First Weave.tscn","res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"]:
 		var state := (load(path) as PackedScene).get_state()
 		var found := false
 		for node in state.get_node_count():

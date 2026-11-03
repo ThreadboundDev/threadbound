@@ -62,7 +62,7 @@ func capture(label: String, center: Vector2, zoom: float) -> void:
 func audit() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT)
 	root.content_scale_size = Vector2i(1280, 720)
-	room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
+	room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await frames(8)

@@ -1,18 +1,18 @@
 extends Node
 
 const ROOM_PATHS := [
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_chamber_exit_rooftops.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_village.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lower_shore.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_peasant_fields.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_irrigation_channel.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_hidden_cistern.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_shrine_approach.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_old_shrine.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_hermits_lake.tscn",
-	"res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_waterfall_ascent.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_chamber_exit_rooftops.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_village.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lower_shore.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_peasant_fields.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_irrigation_channel.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_hidden_cistern.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_shrine_approach.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_old_shrine.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_hermits_lake.tscn",
+	"res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_waterfall_ascent.tscn",
 ]
-const OVERVIEW := preload("res://Src/Environment/BlueBiome/Prototypes/blue_biome_greybox_overview.tscn")
+const OVERVIEW := preload("res://tools/fixtures/blue_layouts/Prototypes/blue_biome_greybox_overview.tscn")
 
 
 func _ready() -> void:

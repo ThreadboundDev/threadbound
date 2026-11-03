@@ -83,7 +83,7 @@ func run() -> void:
 	await frames(5)
 	check(not is_instance_valid(fish.target),"Longer aggro cannot acquire across a six-pixel dry seam")
 	check(is_equal_approx(fish.dash_speed,1050.0) and fish.stats.attack_damage==18 and is_equal_approx(fish.stats.attack_windup,.733333),"Damage, speed and windup are unchanged")
-	for scene_path: String in ["res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn","res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn"]:
+	for scene_path: String in ["res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn","res://Src/Environment/BlueBiome/blue_lakeside_test.tscn"]:
 		var authored = load(scene_path).instantiate()
 		for node: Node in authored.find_children("*","CharacterBody2D",true,false):
 			if node.get_script()==fish.get_script():

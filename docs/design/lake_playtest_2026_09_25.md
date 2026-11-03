@@ -4,7 +4,7 @@ Updated October 5, 2026 against runtime commit `5f42ee0b`. The original feedback
 
 For priorities use [the Away and At-computer queues](../project_status_and_worklist.md). For a short ready-to-play list use [Next hands-on test session](../next_test_session.md). Independent discussion, investigation and approved implementation can proceed while hands-on review waits.
 
-Open `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn` and press F6. Three enemies are saved in this scene:
+Open `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn` and press F6. Three enemies are saved in this scene:
 
 - Tide Duelist: `(640, 760)`, underwater below the first dive.
 - Reedhook: `(1408, 370)`, on the deck to the right; settles onto Y=384.

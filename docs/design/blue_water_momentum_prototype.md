@@ -30,7 +30,7 @@ water-mechanics test room and should remain unchanged while this prototype is tu
   for retries and backtracking. Authored multi-hit bulbs count weapon hits;
   dash and grapple consume the bulb immediately.
 - The isolated choice room is
-  `Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn`.
+  `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn`.
   Its default one-hit bulbs demonstrate dash carry, downward-strike recoil,
   an optional upper chain, and remote clearing over a safe recovery floor.
 

@@ -834,7 +834,7 @@ not authorize merging, publishing a build or protected implementation changes.
   Chase's visual/motion decisions.** October 22 request explicitly authorizes this
   reversible comparison while Chase is away. Implementation `6d23110c` is pushed
   on `threadbound/art-painted-2d-comparison`. F6
-  `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`; F7 and
+  `Src/Environment/BlueBiome/blue_lakeside_test.tscn`; F7 and
   separate Buildings/Tower/Villagers/Enemies/Bulbs controls compare mixed choices.
   First playtest corrections: camera drift `8f2c7f6d`, house contacts and tower
   cutaway registration `ed0b4dd9`, followed by the 12-frame swordfish swim loop.
@@ -898,14 +898,14 @@ Open the named scene in Godot and press F6 for focused room tests. Use F5/the ma
 
 | Test card | Scene | What to exercise |
 | --- | --- | --- |
-| Lake movement | `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn` | Rest-to-swim, reversal, release input, up/down/diagonal travel, wall contact, slow/fast breach, immediate re-entry, dry pockets from each side; no stuck wet/dry state or underwater wall cling |
+| Lake movement | `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn` | Rest-to-swim, reversal, release input, up/down/diagonal travel, wall contact, slow/fast breach, immediate re-entry, dry pockets from each side; no stuck wet/dry state or underwater wall cling |
 | Water combat | Same lake | Single tap, tap-buffered full chain, hold input, both facings, turning between strikes, swimming during attacks, floor contact, dash cancellation and surface exit; no unwanted pogo, repeated hits or body jumps |
 | Water specials | Same lake | Neutral, left/right spin, low AP, movement during windup/recovery, wall stopping and water/land transitions; no extra AP spend or restarted damage windows on transition |
 | Enemy encounters | Same lake | Fish tell/locked dash/recovery, hurt interruption, shoreline/pocket/wall containment; Reedhook dodge-behind, reach and ledges; Bellstriker combo spacing, escape and interruption; no idle-contact damage |
 | Bellstriker focus | `Src/Enemies/Bellstriker/bellstriker_test.tscn` | Water-to-land leaps, land-to-water return, upright guard, jab/cross/smash, both facings, wrists/feet, harmless gaps, walls and reset |
 | Air/ground regression | Lake or an appropriate dry test space | Ground combo 1/2/3, neutral/spin special, air forward/up/down and pogo; blade, VFX and actual hits agree; normal movement resumes cleanly |
-| Bulb routes | `Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn` | Four-direction melee recoil, dash lift both ways, remote pop without velocity change, ordinary contact, regeneration, upper chain, missed launch and return route |
-| Environment experiment | `Src/Environment/BlueBiome/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn`, plus `blue_deck_2m.tscn` in the same folder | Stairs, roof/deck contact, module seams, foreground occlusion, scale and frame time |
+| Bulb routes | `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn` | Four-direction melee recoil, dash lift both ways, remote pop without velocity change, ordinary contact, regeneration, upper chain, missed launch and return route |
+| Environment experiment | `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_pavilion_3d_playtest.tscn`, plus `blue_deck_2m.tscn` in the same folder | Stairs, roof/deck contact, module seams, foreground occlusion, scale and frame time |
 | Demo regression | Main menu -> Chamber of the First Weave | New/continue, tutorial, all three objectives/doors, boss/ending, Keep Exploring, pause/options/merchant/save camera recovery, repeated death, Knot recovery and reload |
 | Input regression | Appropriate lake/chamber scenes | Keyboard and controller jump/dash/grapple/block/interact; switching input glyphs; menu cancel without triggering dash; AP recovery and Flow presentation |
 

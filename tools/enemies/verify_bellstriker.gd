@@ -179,7 +179,7 @@ func run() -> void:
 	await frames(2)
 	check(not enemy.is_dead and enemy.visible and enemy.health_component.current_health == 320, "Dead enemy restores at save point")
 	# Verify the lake placement is not embedded inside the existing painted terrain.
-	var lake := load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn").instantiate() as Node2D
+	var lake := load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn").instantiate() as Node2D
 	add_child(lake)
 	await frames(3)
 	var placed := lake.get_node("Bellstriker") as EnemyBase

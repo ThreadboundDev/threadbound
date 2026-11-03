@@ -12,7 +12,7 @@ func check(ok: bool, message: String) -> void:
 		push_error("WATER_SURFACE_FAIL " + message)
 
 func verify() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
+	var room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	for frame in 5:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/References/blue_macro_reference.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://tools/fixtures/blue_layouts/References/blue_macro_reference.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_marker.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="6"]

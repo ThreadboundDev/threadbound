@@ -7,7 +7,7 @@ const BUMPER := preload("res://Src/Environment/Greybox/greybox_bumper.tscn")
 const TILE_LAYER := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
 const ANNOTATION := preload("res://Src/Environment/Greybox/greybox_annotation_area.tscn")
 const ART_REGION := preload("res://Src/Environment/Greybox/art_generation_region.tscn")
-const ROOM := preload("res://Src/Environment/BlueBiome/Prototypes/blue_village_room_01.tscn")
+const ROOM := preload("res://tools/fixtures/blue_layouts/Prototypes/blue_village_room_01.tscn")
 
 
 func _ready() -> void:

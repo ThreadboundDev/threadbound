@@ -30,7 +30,7 @@ fade before the effect frees itself. Gravity remains downward for rotated walls.
 ## Scope
 
 - `Src/Environment/BlueBiome/Prototypes/lakeside_krita_playtest.gd`
-- `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+- `Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 - `Src/Environment/Greybox/greybox_breakable_wall.gd`
 - `Src/Enemies/TideDuelist/tide_duelist.gd` (dash ID only in this task)
 - New `blue_breakable_rock.gd`, `.tscn` and `blue_rock_shatter.gd` in the prototype folder

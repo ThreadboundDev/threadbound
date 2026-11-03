@@ -1,6 +1,6 @@
 # Hybrid village comparison
 
-Open `Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn` and run F6.
+Open `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn` and run F6.
 
 This optional room combines the earlier painted wooden platforms, wide house, tower house and roofed frames with the new two-layer background and rendered 3D water globes. Original house assets remain unchanged. Only their Artwork sprites are copied: the inherited room owns all platform collisions and bulb activation areas. Painted platform top edges align with the existing landing surfaces. This is a composition test, not a finished environment layout.
 

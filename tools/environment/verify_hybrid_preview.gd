@@ -4,7 +4,7 @@ func _initialize() -> void:
 	call_deferred("verify")
 
 func verify() -> void:
-	var room = load("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn").instantiate()
+	var room = load("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_still_village_hybrid_preview.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await process_frame

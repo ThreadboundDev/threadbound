@@ -183,7 +183,7 @@ AGENTS approval requirements before production replacements or combat changes.
 
 1. **Camera A/B with the current pose.** Candidate files: the existing Camera2D
    settings in `Src/Environment/World/Chamber Of The First Weave.tscn` and
-   `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`,
+   `Src/Environment/BlueBiome/blue_lakeside_test.tscn`,
    plus the work list/test card. Try the pullback in a few representative rooms;
    do not restructure scenes or change movement/collisions. Keep it provisional
    until the manual idle pose is selected.

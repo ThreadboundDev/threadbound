@@ -81,7 +81,7 @@ on `threadbound/art-painted-2d-comparison`. All new PNGs are retained unchanged 
 built-in imagegen output; alpha/pose measurements create atlas metadata only.
 
 Open and F6:
-`res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`.
+`res://Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
 It starts in painted mode. **F7** switches all categories; the bottom controls
 switch **Buildings / Actors / Bulbs** separately. Unchecked means current models
 (or the existing rendered bulb frames). Existing landmarks, Day/dusk, Interact

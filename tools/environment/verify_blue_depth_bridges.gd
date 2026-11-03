@@ -14,7 +14,7 @@ func check(ok: bool, text: String) -> void:
 func screen(node: Node2D) -> Vector2:
 	return node.get_global_transform_with_canvas()*Vector2(2000,1600)
 func run() -> void:
-	var room=load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	var room=load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	room.tree_entered.connect(func(): current_scene=room,CONNECT_ONE_SHOT)
 	root.add_child(room)
 	room.get_node("Player").set_physics_process(false)

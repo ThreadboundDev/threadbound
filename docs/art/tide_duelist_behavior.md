@@ -2,7 +2,7 @@
 
 The swordfish samurai holds its ground while gently hovering and flexing its body/tail, curls into a draw stance, flashes its eye, and dashes along a fixed direction. Taking damage interrupts the attack and plays a recoil clip. It uses the existing EnemyBase states, health/hurtbox/hitbox components, death feedback, and save-point reset behavior.
 
-One instance is in `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn` at `(640, 760)`, in the water below the first dive. The reusable scene is `Src/Enemies/TideDuelist/tide_duelist.tscn`. It has a live, static 3D editor preview, so it can be moved and duplicated in the 2D editor.
+One instance is in `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn` at `(640, 760)`, in the water below the first dive. The reusable scene is `Src/Enemies/TideDuelist/tide_duelist.tscn`. It has a live, static 3D editor preview, so it can be moved and duplicated in the 2D editor.
 
 ## Behavior and timing
 

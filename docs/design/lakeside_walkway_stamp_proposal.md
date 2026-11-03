@@ -78,7 +78,7 @@ and the Krita playtest; no player, combat, equipment or house-door code changes.
 15. `Src/Environment/BlueBiome/ArtPlaceables/Platforms/engawa_balcony_2d.tscn` (new)
 16. `Src/Environment/BlueBiome/ArtPlaceables/Platforms/broken_timber_bridge_2d.tscn` (new)
 17. `Src/Environment/BlueBiome/ArtPlaceables/Platforms/README.md` (new)
-18. `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`
+18. `Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 19. `tools/environment/verify_lakeside_walkways.gd` (new)
 20. `tools/environment/verify_lakeside_walkways.gd.uid` (new)
 21. `docs/design/lakeside_walkway_stamp_proposal.md` (approval/delivery record)

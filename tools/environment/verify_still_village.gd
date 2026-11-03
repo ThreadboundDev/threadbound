@@ -1,6 +1,6 @@
 extends Node
-const BASE := preload("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_bulb_choice_room.tscn")
-const ART := preload("res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_still_village_preview.tscn")
+const BASE := preload("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_bulb_choice_room.tscn")
+const ART := preload("res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_still_village_preview.tscn")
 var failures := 0
 
 func check(value: bool, message: String) -> void:

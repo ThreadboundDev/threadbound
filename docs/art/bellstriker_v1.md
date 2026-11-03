@@ -19,7 +19,7 @@ Windups are 0.32 / 0.27 / 0.62 seconds; active windows are 0.12 / 0.14 / 0.22 se
 The live v4 test locations are:
 
 - `Src/Enemies/Bellstriker/bellstriker_test.tscn`: F6, begin on the dock, bait the water-to-land leap, then swim into the pool to review boxing.
-- `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn`: instance at `(2500, 820)` beyond the initial fish/Reedhook encounters.
+- `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn`: instance at `(2500, 820)` beyond the initial fish/Reedhook encounters.
 - Reusable scene: `Src/Enemies/Bellstriker/bellstriker.tscn`.
 
 Use `tools/enemies/verify_bellstriker.tscn` for combat/environment integration and `tools/enemies/verify_bellstriker_animation.gd` for current imported poses. Review tells, combo escape/recovery, wrist/body contact, swimming feet and amphibious transitions by playing; verification scripts are not a feel decision.
@@ -53,7 +53,7 @@ Implements the amphibious elite in `docs/design/blue_swordfish_ecosystem_and_env
 ## Original v1 test setup (historical)
 
 - Open `Src/Enemies/Bellstriker/bellstriker_test.tscn` in Godot and press F6. Start on the dock, bait the water-to-land leap, then swim into the pool to test underwater combat. Swimming is unlocked in this scene.
-- Also placed in `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn` at `(2500, 820)`, beyond the initial fish/reedhook encounters.
+- Also placed in `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn` at `(2500, 820)`, beyond the initial fish/reedhook encounters.
 - Reusable enemy scene: `Src/Enemies/Bellstriker/bellstriker.tscn`.
 
 ## Original v1 single-strike behavior (historical)

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Repeat two real placeables and walk the project's player across their seam.
-const DECK_PATH := "res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_deck_2m.tscn"
+const DECK_PATH := "res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_deck_2m.tscn"
 const PLAYER_PATH := "res://Src/Characters/Player/player.tscn"
 const FOOT_OFFSET := 69.245
 

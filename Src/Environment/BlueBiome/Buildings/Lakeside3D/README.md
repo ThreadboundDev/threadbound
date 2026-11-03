@@ -1,7 +1,7 @@
 # Lakeside model and lighting test
 
 The assembled map is now available in
-`res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`.
+`res://Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
 Use F6 there for the painted terrain, water, building placement and smoothed
 polygon collision. The original flat art-review room below remains available.
 
@@ -37,7 +37,7 @@ layering, floor contact and controller feel still need Chase's review.
 
 ## Original art-prep room
 
-Open `res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_art_prep.tscn`
+Open `res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_art_prep.tscn`
 and run **F6** when ready. The existing lake greybox and main scene are unchanged.
 
 The room has the covered boat slip, net workshop, fisher house and approved

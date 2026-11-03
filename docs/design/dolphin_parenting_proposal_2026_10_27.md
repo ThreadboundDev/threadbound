@@ -27,7 +27,7 @@ the additional room child. Preserve all other existing user/editor scene edits.
 
 Files to modify:
 
-- `Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn`
+- `Src/Environment/BlueBiome/blue_lakeside_test.tscn`
 - New `tools/enemies/verify_duplicate_dolphins.gd` and optional Godot UID
 - New `work/duplicate-dolphins-2026-10-27/` before/after motion, collision, death
   and reset reports with `.gdignore`

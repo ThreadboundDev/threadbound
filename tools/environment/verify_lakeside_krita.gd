@@ -1,6 +1,6 @@
 extends SceneTree
 ## Integration check of the authored map, physics, water, shared 3D art and cutaway.
-const ROOM := "res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"
+const ROOM := "res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"
 var failures: Array[String] = []
 var room: Node2D
 var captured: Array[String] = []

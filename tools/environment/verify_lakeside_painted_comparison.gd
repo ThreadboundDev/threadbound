@@ -1,5 +1,5 @@
 extends SceneTree
-const ROOM := "res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn"
+const ROOM := "res://Src/Environment/BlueBiome/blue_lakeside_test.tscn"
 const OUT := "res://work/painted-2d-comparison-2026-10-22"
 var room
 var art

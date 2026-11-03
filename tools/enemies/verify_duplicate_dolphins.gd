@@ -1,5 +1,5 @@
 extends SceneTree
-const SOURCE := "res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn"
+const SOURCE := "res://Src/Environment/BlueBiome/blue_lakeside_test.tscn"
 const OUT := "res://work/duplicate-dolphins-2026-10-27"
 var failures: Array[String] = []
 var checks := 0

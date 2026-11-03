@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Prototypes/blue_greybox_room_shell.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://tools/fixtures/blue_layouts/Prototypes/blue_greybox_room_shell.tscn" id="1"]
 
 [node name="BlueIrrigationChannel" instance=ExtResource("1")]
 room_id = "blue_irrigation_channel"

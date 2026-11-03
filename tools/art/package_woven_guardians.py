@@ -33,7 +33,7 @@ readme='''WOVEN GUARDIANS — PLAYABLE REVIEW / October 20, 2026
 
 Both enemies are installed in the existing Threadbound project.
 Run this scene with F6:
-C:/Users/chase/Documents/threadbound/Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn
+C:/Users/chase/Documents/threadbound/tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn
 
 Use the bottom Eave Runner / Loom Heron buttons to visit each encounter.
 F2 respawns all five enemies. Normal attack, dodge and shield controls apply.

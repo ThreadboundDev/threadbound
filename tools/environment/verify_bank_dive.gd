@@ -1,6 +1,6 @@
 extends Node2D
 
-const PLAYGROUND = preload("res://Src/Environment/BlueBiome/Prototypes/blue_water_playground.tscn")
+const PLAYGROUND = preload("res://tools/fixtures/blue_layouts/Prototypes/blue_water_playground.tscn")
 
 func _ready() -> void:
 	var room = PLAYGROUND.instantiate()

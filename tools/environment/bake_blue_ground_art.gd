@@ -1,6 +1,6 @@
 extends SceneTree
 
-const DEFAULT_SCENE := "res://Src/Environment/BlueBiome/Production/blue_chamber_exit_production.tscn"
+const DEFAULT_SCENE := "res://tools/fixtures/blue_layouts/Production/blue_chamber_exit_production.tscn"
 const GROUND_ART_SOURCE_ID := 1
 
 

@@ -8,5 +8,5 @@ $model = Join-Path $repositoryRoot 'Assets/Threadborne/Player/LocalDoll/threadbo
 if (-not (Test-Path -LiteralPath $model)) {
     throw 'Build the local doll first with Blender and tools/art/prepare_doll_game_model.py.'
 }
-$scene = if ($Blue) { 'res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn' } else { 'res://Src/Environment/World/Chamber Of The First Weave.tscn' }
+$scene = if ($Blue) { 'res://Src/Environment/BlueBiome/blue_lakeside_test.tscn' } else { 'res://Src/Environment/World/Chamber Of The First Weave.tscn' }
 & $engine --path $repositoryRoot $scene -- --doll-preview

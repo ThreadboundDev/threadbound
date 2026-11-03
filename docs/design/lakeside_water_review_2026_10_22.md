@@ -177,7 +177,7 @@ The depth background itself can be prepared independently now.
    truth for volume, mirror, backdrop/cloud cutoff and float surface; wire real
    shader alpha/color controls. Candidate commit:
    `fix: align lakeside water surface and presentation controls`.
-   Expected files: `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`,
+   Expected files: `Src/Environment/BlueBiome/blue_lakeside_test.tscn`,
    `Src/Environment/Greybox/greybox_polygon_water.gd`,
    `Src/Environment/BlueBiome/Water/polygon_lake.gdshader`,
    a focused `tools/environment/verify_lakeside_water_surface.gd` (and `.gd.uid`),

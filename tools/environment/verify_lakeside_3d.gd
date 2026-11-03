@@ -1,6 +1,6 @@
 extends SceneTree
 ## Run headless with dummy audio. Checks actual imported assets and 2D gameplay.
-const ROOM := "res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_art_prep.tscn"
+const ROOM := "res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_art_prep.tscn"
 var failures: Array[String] = []
 var room: Node2D
 

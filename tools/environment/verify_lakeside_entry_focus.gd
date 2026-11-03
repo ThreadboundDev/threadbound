@@ -27,7 +27,7 @@ func press() -> void:
 	Input.action_release("interact")
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT)
-	room = load("res://Src/Environment/BlueBiome/Comparison/lakeside_painted_comparison.tscn").instantiate()
+	room = load("res://Src/Environment/BlueBiome/blue_lakeside_test.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await frames(30)

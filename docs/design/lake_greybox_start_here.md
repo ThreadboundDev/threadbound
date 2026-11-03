@@ -1,6 +1,6 @@
 # Build your lake test level
 
-Open `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lake_greybox.tscn`. Save a copy under your own room name before laying out the level. F6 runs it. The player has water traversal unlocked in this starter only; the game's progression is unchanged.
+Open `tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lake_greybox.tscn`. Save a copy under your own room name before laying out the level. F6 runs it. The player has water traversal unlocked in this starter only; the game's progression is unchanged.
 
 ## Draw the level
 

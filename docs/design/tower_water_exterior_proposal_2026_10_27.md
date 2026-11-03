@@ -28,7 +28,7 @@ Files to modify:
   while physical dry-state queries remain independent.
 - `Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_model_2d.gd`: expose
   the existing cutaway state as a read-only query.
-- `Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn`:
+- `Src/Environment/BlueBiome/blue_lakeside_test.tscn`:
   link only the tower air pocket to `Buildings/Tower`.
 - `Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_art_stage_2d.gd` and
   `Src/Environment/BlueBiome/Water/submerged_facade.gdshader`: align the foreground

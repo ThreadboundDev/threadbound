@@ -1,7 +1,7 @@
 @tool
 extends SceneTree
 
-const SOURCE_SCENE := "res://Src/Environment/BlueBiome/Production/blue_chamber_exit_production.tscn"
+const SOURCE_SCENE := "res://tools/fixtures/blue_layouts/Production/blue_chamber_exit_production.tscn"
 const OUTPUT_DIR := "res://ArtSource/BlueBiome/ChamberExitRooftops/LineArtGuide"
 const TILE_SIZE := 128
 const PADDING := 128

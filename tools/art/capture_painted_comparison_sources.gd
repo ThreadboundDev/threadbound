@@ -1,6 +1,6 @@
 extends SceneTree
 const OUT := "res://work/painted-2d-comparison-2026-10-22"
-const ROOM := "res://Src/Environment/BlueBiome/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"
+const ROOM := "res://tools/fixtures/blue_layouts/Prototypes/Rooms/blue_lakeside_krita_playtest.tscn"
 var manifest := {}
 var room: Node2D
 var camera: Camera2D
