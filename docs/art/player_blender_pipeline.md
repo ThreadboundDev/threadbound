@@ -2,6 +2,10 @@
 
 Active assets live under `ArtSource/Player/Blender/`.
 
+**November 2 disposition:** Chase approved deletion of the previously retired
+September archive, excluding videos. Those staged source copies are now gone;
+current editable sources remain. [Cleanup record](../organization/deletion_2026_11_02.md).
+
 ## Character
 
 - `imported_character/mixamo_test/Threadborne_Equipped_Animation_Test.blend`: latest separate animation test, with three transferred Mixamo clips, animated fingers, fitted weapons, and a true side-on orthographic camera. See its adjacent README. It is the source for the isolated Godot test and remains separate from the production player.

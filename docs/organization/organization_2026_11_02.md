@@ -1,37 +1,39 @@
 # November 2 file organization and deletion review
 
-**Organization delivered; permanent deletion and controller migration await approval.**
-Start with [the file-finding guide](../../START_HERE.md). Nothing has been
-permanently deleted. Moving files to staging has not freed disk space yet.
+**Approved non-video cleanup completed November 2; controller migration awaits approval.**
+Start with [the file-finding guide](../../START_HERE.md). Chase approved the
+recommended deletions except videos. Batches 01, 02, 03, 05 and 07 are now
+deleted: **34,084 files / 21.18 GiB**. All videos/animated GIFs and the held old
+checkouts remain. [Deletion record and verification](deletion_2026_11_02.md).
 
 ## The three locations
 
 | Location in `C:\Users\chase\Documents` | Purpose |
 | --- | --- |
 | `threadbound` | Actual game, editable sources, documentation, retained checks and development media. Open this folder's `project.godot`. |
-| `Threadbound - Staged for Delete` | Retired material grouped into the seven review batches below. |
+| `Threadbound - Staged for Delete` | Remaining held project copies and preserved media. Approved non-video batches were deleted. |
 | `Threadbound - Potential Use` | Download library, character/clothing candidates, recovery files and independent prototype. |
 
 The actual game's indexed files now occupy approximately **21.3 GiB**, including
 the consolidated painting workspace and retained media. That inventory excludes
-Git storage and tool dependency/cache directories. The complete deletion batches
-include discarded tool dependencies and contain **34.46 GiB**, excluding their
-Git storage; potential use contains **4.52 GiB**. These are logical file bytes
-at a snapshot in time. Godot/test caches can grow again.
+Git storage and tool dependency/cache directories. Potential use contained **4.52 GiB** at that snapshot. The earlier **34.46 GiB**
+staging estimate followed three old test-folder junctions and counted live game
+data twice. The approved deletion used an inventory that never followed links;
+**21.18 GiB** of non-video files were actually removed. Godot/test caches can grow again.
 
-## Deletion batches
+## Batch disposition after approval
 
 | Batch | Files / approximate GiB | Why staged | Review decision |
 | --- | --- | --- | --- |
-| **01 Exact Duplicates** | 230 / **2.71** | SHA-256 matched a retained game file before moving. Includes repeated Blender sources, delivery copies and downloads. | Recommended for approval. Canonical sources are retained. |
-| **02 Generated Work Files** | 39,195 / **20.48** | Isolated import projects, generated sandboxes, extracted temporary inputs, test scratch data, redundant engine copies, unused source-side import metadata and **4.23 GiB of orphaned main-project import cache**. | Recommended for approval; retained sources/manifests rebuild the workspaces. |
-| **03 Retired Art** | 1,109 / **1.46** | Previously retired September Blender experiments, old Bellstriker/water review frames, early pavilion/ground references, superseded October 19 deliveries and the old Desktop asset collection. | Recommended if these historical studies are no longer wanted. Current user paintings and original design references are retained in the game. |
+| **01 Exact Duplicates** | 230 / **2.71** | SHA-256 matched a retained game file before moving. Includes repeated Blender sources, delivery copies and downloads. | Deleted after preserving seven GIFs. Canonical sources retained. |
+| **02 Generated Work Files** | 32,728 / **14.69** | Isolated import projects, generated sandboxes, extracted temporary inputs, test scratch data, redundant engine copies, unused source-side import metadata and **4.23 GiB of orphaned main-project import cache**. | Deleted after preserving one MP4 and unlinking three junction entries; live targets retained. |
+| **03 Retired Art** | 1,109 / **1.46** | Previously retired September Blender experiments, old Bellstriker/water review frames, early pavilion/ground references, superseded October 19 deliveries and the old Desktop asset collection. | Deleted after preserving two GIFs. Current paintings and original design references remain in the game. |
 | **04 Retired Project Copies** | 18,152 / **4.23**, plus their `.git` storage | `threadbound - precodex`, `threadbound-(4.5)`, `threadbound-(4.6)`. All remain intact with Git history and working changes. | **HOLD for separate approval. Historical hand edits remain; see below.** |
-| **05 Installers** | 3 / **0.55** | Two downloaded Godot ZIPs and the Blender installer. Installed applications remain intact; tooling now reuses the installed editor. | Recommended for approval if offline reinstallation copies are not wanted. |
-| **06 Old Playtest Recordings** | 65 / **3.17** | Visually confirmed July-September gameplay/test captures of older presentations. | Recommended if raw historic footage is not wanted. Trailer, devlogs, current feedback and the three captures used by the progress-short builder are retained. |
-| **07 Automatic Art Backups** | 24 / **1.87** | Blender/Krita automatic backups with a named primary source at least as recent. These are not deliberately named source versions. | Recommended if these older automatic saves are not wanted. Newer/orphaned backups are retained in Potential Use/Recovery. |
+| **05 Installers** | 3 / **0.55** | Two downloaded Godot ZIPs and the Blender installer. Installed applications remain intact; tooling now reuses the installed editor. | Deleted with Chase's approval; installed tools retained. |
+| **06 Old Playtest Recordings** | 75 / **3.26** | Visually confirmed July-September gameplay/test captures of older presentations. | Retained at Chase's request, including ten media files separated from the deleted batches. |
+| **07 Automatic Art Backups** | 24 / **1.87** | Blender/Krita automatic backups with a named primary source at least as recent. These are not deliberately named source versions. | Deleted with Chase's approval. Primary sources and recovery backups retained. |
 
-The duplicate copy in staging retains its original SHA-256. Of the retained
+Before deletion, staged duplicates were verified by SHA-256. Of the retained
 counterparts, one README subsequently received the required `outputs/` to
 `ArtSource/Deliveries/` path update; its otherwise unchanged text was checked.
 All retained binary counterparts remain byte-identical.
@@ -99,7 +101,8 @@ their managed locations. Application internals are not loose game deliverables.
 Windows held some old Codex directories open. Their files were moved individually
 with the same relative layout rather than forcing a directory rename. All
 171 verified-empty former task directories were subsequently removed with
-nonrecursive deletion; no original files were permanently deleted.
+nonrecursive deletion during organization. Original-file deletion occurred
+later only for the explicitly approved non-video batches.
 
 Every successful move is journaled. The mover performs same-volume renames,
 checks path boundaries and file identity, refuses links/overwrites, and flushes
@@ -109,7 +112,9 @@ journals, integrity results and engine logs. These records are intentionally
 excluded from the public repository. A move's original location and current
 location are recorded; restore selected source files using that mapping, in
 reverse order, after checking that their original paths have not been reused.
-Do not overwrite newly regenerated caches or current files during recovery.
+The approved deleted batches no longer exist at those move destinations.
+Use `approved-deletion/deletion-results.json` for the final disposition. Do not
+overwrite newer files when restoring anything that remains.
 
 ## Validation
 
@@ -135,9 +140,10 @@ tree, combat/equipment mechanics or active artwork is replaced by organization.
 
 ## Next approval
 
-Approve deletion by batch number; keep **04 on hold** unless its historical
-working changes and Git history have been explicitly considered. Until then,
-all staged originals remain recoverable locally.
+The user approved the recommended non-video deletions; those are complete.
+Keep **04 on hold** unless its historical working changes and Git history have
+been explicitly considered. Videos remain excluded from deletion. Accordingly,
+batch 04 and all retained media remain available locally. The approved deleted batches can no longer be recovered from their staging paths.
 
 The [controller migration proposal](character_controller_cleanup_proposal.md)
 lists the exact runtime, equipment, fixture and new timing files. It separates
@@ -150,5 +156,6 @@ Organization source checkpoint: `2900ff9f` -
 remote-verified. The separate rendering checkpoint is `09e193e6`. The shared
 checkout was switched to `threadbound/art-carved-cavern-stamps` by another chat;
 its debug/art work is excluded from the isolated organization commit.
-Acceptance: folder organization delivered for review; permanent deletion and
-controller restructuring remain unapproved.
+Acceptance: folder organization delivered; Chase approved and received the
+non-video cleanup. Videos and batch 04 retained. Controller restructuring remains
+unapproved. Cleanup checkpoint: `chore: complete approved cleanup while preserving videos`.

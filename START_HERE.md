@@ -5,7 +5,7 @@ These are the three game-file locations in `C:\Users\chase\Documents`:
 | Folder | What belongs here |
 | --- | --- |
 | **threadbound** | The actual Godot game, current editable art, project documents, checks and retained development media. Open `project.godot`. |
-| **Threadbound - Staged for Delete** | Retired copies, proven duplicates and generated work. Nothing here has been permanently deleted. Read its `START_HERE.md` before approving removal. |
+| **Threadbound - Staged for Delete** | Approved non-video cleanup is complete. Remaining: old checkouts on hold and all preserved recordings/animations. Read its `START_HERE.md`. |
 | **Threadbound - Potential Use** | Downloaded packs, future character/clothing candidates, recovery files and the independent third-person prototype. Nothing here is installed merely by being retained. |
 
 Inside the actual game:

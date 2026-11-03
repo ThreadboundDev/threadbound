@@ -4,6 +4,8 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 
 ## Start Here
 
+- [November 2 approved non-video cleanup](organization/deletion_2026_11_02.md) - deleted batches, retained videos and verification
+
 - [Find files by hand](../START_HERE.md) - the three game-file locations, current source art, packs and media
 - [November 2 organization and deletion review](organization/organization_2026_11_02.md) - what moved and what still requires approval
 - [October 21 development checkpoint](checkpoint_2026_10_21.md) - consolidated recap, active vs unfinished assets, fresh check failures and the recovery Git branch

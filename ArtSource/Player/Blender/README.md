@@ -10,7 +10,8 @@
 - **Sword and shield:** `shield_revision/Threadborne_Sword_Shield_Rear_Fix.blend`
 - **References:** `references/`
 
-Deliberate source versions remain. Older automatic saves are now in deletion
-staging, while newer/orphaned backups are under Potential Use/Recovery.
-Previously retired September modeling experiments and superseded rigs are
-recoverable at `C:/Users/chase/Documents/Threadbound - Staged for Delete/03 Retired Art/September 5 Blender Experiments/2026-09-05-retired-blender`.
+Deliberate source versions remain. The older automatic saves and previously
+retired September modeling experiments were permanently deleted on November 2
+after Chase approved the non-video cleanup. Primary sources remain; newer or
+orphaned recovery backups were excluded from deletion. See
+[the cleanup record](../../../docs/organization/deletion_2026_11_02.md).

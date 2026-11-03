@@ -16,15 +16,15 @@ tool paths and documentation enter Git. See the
 The current player still depends on its hidden legacy sprite clock and old
 weapon tracks. [The file-specific migration proposal](organization/character_controller_cleanup_proposal.md)
 awaits approval under AGENTS.md; no player/equipment restructuring is included
-in organization. T43 | Awaiting hands-on review / deletion approval | rendering
-baseline `09e193e6` | 24,836 move records checked, 230 duplicate pairs verified,
-57 Python and 3 PowerShell files parsed, isolated Godot import and both Chamber
-startups pass, 875/875 doll checks pass | Chase deletion/controller decisions
-pending | `2900ff9f` (`chore: organize project sources and stage retired local files`,
-pushed and remote-verified) |
-review deletion batches (hold 04) and the controller proposal. T42's outstanding
-appearance/clothing review stays open. Organization is committed on its isolated
-branch; simultaneous debug/art edits in the shared checkout are excluded.
+in organization. T43 | Waiting on approval (controller only) | organization
+baseline `f2054a53` | Original 875/875 doll checks pass; approved cleanup removes
+34,084 files / 21.18 GiB, preserves all 75 media files with matching content
+hashes, and retains batch 04 plus all three live junction targets with matching
+metadata fingerprints | Chase approved recommended deletions except videos;
+cleanup delivered | `chore: complete approved cleanup while preserving videos` |
+review the controller proposal. T42 appearance/clothing acceptance remains open.
+Organization/cleanup checkpoints use an isolated branch; simultaneous debug/art
+work in the shared checkout is preserved.
 
 **Previous task: T42 — pale doll modeling reference and isolated body study.**
 November 2 clarity follow-up: Chase requests a sharper engine display. The
