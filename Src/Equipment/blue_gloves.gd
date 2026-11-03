@@ -454,12 +454,8 @@ func _get_axis_sign(value: float) -> int:
 	return 0
 
 func _get_player_facing_sign() -> float:
-	if player and player.has_node("Player Animation"):
-		var body_anim := player.get_node("Player Animation") as AnimatedSprite2D
-		if body_anim:
-			return -1.0 if body_anim.flip_h else 1.0
-	if player and absf(player.velocity.x) > 0.05:
-		return signf(player.velocity.x)
+	if player:
+		return float(player.get_presentation_facing())
 	return 1.0
 
 func _report_blue_momentum_reward() -> void:

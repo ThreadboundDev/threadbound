@@ -244,22 +244,14 @@ func _ready() -> void:
 	player.set("pogo_rebound_animation_timer", 0.0)
 	player.set("current_attack_uses_grapple_strike", false)
 	player.velocity = Vector2(150, 0)
-	(player.get_node("Player Animation") as AnimatedSprite2D).flip_h = false
+	player.set_presentation_facing(1)
 	player.call("update_animations", 1.0)
 	assert(player.current_body_anim == "Swim", "Moving in water should use the swim animation.")
-	var player_sprite := player.get_node("Player Animation") as AnimatedSprite2D
-	assert(
-		player_sprite.scale.is_equal_approx(Vector2(0.546, 0.546)),
-		"Swimming should use the corrected smaller presentation scale."
-	)
-	assert(
-		is_equal_approx(player_sprite.rotation_degrees, 6.0),
-		"Right-facing swimming should pitch forward by six degrees."
-	)
+	assert(player.current_gloves.scale.is_equal_approx(Vector2(0.78,0.78)), "Swimming must preserve active glove pose tuning.")
 	player.velocity = Vector2.ZERO
 	player.call("update_animations", 0.0)
 	assert(player.current_body_anim == "Swim_Idle", "Floating in water should use Swim_Idle.")
-	assert(is_zero_approx(player_sprite.rotation), "Floating should clear the swim pitch.")
+	assert(player.current_gloves.scale.is_equal_approx(Vector2.ONE), "Floating must restore active glove pose tuning.")
 	player.call("exit_prototype_water", water)
 	assert(not player.call("is_in_prototype_water"))
 	print("ROOM_GREYBOX_VERIFY_OK")

@@ -37,13 +37,8 @@ func _ready() -> void:
 	add_child(player)
 	var full_player := PLAYER_SCENE.instantiate()
 	_verify_frame_aligned_pose_libraries(full_player)
-	if not is_equal_approx(
-		float(full_player.grapple_strike_visual_scale_multiplier),
-		0.82
-	):
-		failures.append(
-			"Grapple strike body animation is not normalized to the approved 0.82 scale."
-		)
+	if not full_player.has_node("AnimationClock") or full_player.has_node("Player Animation"):
+		failures.append("Grapple action timing must use the texture-free player clock.")
 	full_player.free()
 
 	for equipment in GRAPPLE_EQUIPMENT_SCENES:
@@ -187,8 +182,8 @@ func _ready() -> void:
 	get_tree().quit(1)
 
 func _verify_frame_aligned_pose_libraries(player: Node) -> void:
-	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
-	var player_animations := sprite.sprite_frames.get_animation_names()
+	var sprite := player.get_node("AnimationClock") as PlayerAnimationClock
+	var player_animations := sprite.get_animation_names()
 	for library_data in [{"label": "shared", "library": BASE_POSE_LIBRARY}]:
 		var label := String(library_data.label)
 		var library := library_data.library as AnimationLibrary
@@ -205,13 +200,13 @@ func _verify_frame_aligned_pose_libraries(player: Node) -> void:
 				failures.append("%s glove library is missing %s." % [label, animation_name])
 				continue
 			var animation := library.get_animation(animation_name)
-			var frame_count := sprite.sprite_frames.get_frame_count(animation_name)
-			var fps := sprite.sprite_frames.get_animation_speed(animation_name)
+			var frame_count := sprite.get_frame_count(animation_name)
+			var fps := sprite.get_animation_speed(animation_name)
 			if not is_equal_approx(animation.length, float(frame_count) / fps):
 				failures.append("%s/%s length does not match the player frames." % [label, animation_name])
 			if not is_equal_approx(animation.step, 1.0 / fps):
 				failures.append("%s/%s step does not match the player FPS." % [label, animation_name])
-			var should_loop := sprite.sprite_frames.get_animation_loop(animation_name)
+			var should_loop := sprite.get_animation_loop(animation_name)
 			if (animation.loop_mode != Animation.LOOP_NONE) != should_loop:
 				failures.append("%s/%s loop mode does not match the player." % [label, animation_name])
 			if animation.get_track_count() != POSE_TRACK_PATHS.size():
@@ -447,7 +442,7 @@ func _verify_player_grapple_strike_integration() -> void:
 		"Player grapple dispatch did not arm the glove strike state."
 	)
 	_expect_integration(
-		player.last_direction == -1 and player.player_animation.flip_h,
+		player.last_direction == -1 and player.is_facing_left(),
 		"Grapple strike did not face an enemy behind the player."
 	)
 	_expect_integration(
@@ -469,10 +464,10 @@ func _verify_player_grapple_strike_integration() -> void:
 		player.update_animations(0.0)
 		if bool(player.current_grapple_strike_animation_started):
 			_expect_integration(
-				player.player_animation.animation == &"Grapple_Strike",
+				player.animation_clock.animation == &"Grapple_Strike",
 				"Arrival did not switch from dash travel to Grapple_Strike."
 			)
-			player.player_animation.frame = 0
+			player.animation_clock.frame = 0
 		if health.current_health < health_before:
 			break
 

@@ -4,7 +4,28 @@ Updated November 2, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-**Current task: T42 — pale doll modeling reference and isolated body study.**
+
+**Current task: T45 — approved player and Blue scene cleanup.**
+Implementation delivered November 3, 2026; normal gameplay review remains open.
+The single active Blue level is `Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
+The 24 historical layouts are hidden regression fixtures. The player now uses a
+texture-free action clock, controller-owned facing and its existing live 3D avatar;
+hidden body/glow/pattern nodes and obsolete weapon-art tracks are removed.
+Active attack anchors, grapple simulation, equipment poses and 3D blends remain.
+86 newly unused files (14.28 MiB) are hash-verified in deletion staging batch 08;
+none were permanently deleted and no videos were moved.
+[Scope, validation and known baseline failures](organization/runtime_cleanup_2026_11_02.md).
+Validation: 29,775 Blue scene property comparisons, 25,920 engine-clock comparisons,
+39 real-player presentation checks for both models, 875 fitted-doll checks,
+1,220 modular-equipment checks, 61 downhill checks, 31 platform-drop checks,
+122 water-grapple checks, water combo/special and recovery suites pass.
+Existing animation/grapple suites retain exactly 19/20 original failures;
+the legacy pogo/greybox assertions also reproduce before cleanup.
+Blue checkpoint: `2560e610`; player checkpoint: PLAYER_COMMIT_PENDING on
+`threadbound/refactor-player-and-blue-scene-cleanup`. The shared checkout's
+separate organization, feedback and equipment edits remain preserved.
+
+**Previous task: T42 — pale doll modeling reference and isolated body study.**
 November 2 clarity follow-up: Chase requests a sharper engine display. The
 character viewport increases from 800x600 to 1600x1200, with half sprite scale
 to retain gameplay size. FXAA is removed while 4x MSAA remains; outline width

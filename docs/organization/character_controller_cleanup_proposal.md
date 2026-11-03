@@ -1,6 +1,6 @@
 # Character controller cleanup proposal
 
-November 2, 2026. **Approved by Chase; implementation in progress.**
+November 2, 2026. **Approved by Chase; implementation delivered November 3.**
 Chase approved the player migration and requested that only the current Blue
 playtest level remain. The prior filesystem cleanup is complete.
 
@@ -76,7 +76,7 @@ Existing runtime files:
 New runtime files:
 
 - `Src/Characters/Player/player_animation_clock.gd` and Godot-generated `.uid`
-- `Src/Characters/Player/player_animation_timing.json`
+- `Src/Characters/Player/player_animation_timing.gd`
 
 Existing verification files:
 
@@ -118,3 +118,14 @@ tests. Use isolated save data.
 Chase's normal-speed movement, attacks, water, grapple, meditation/save point,
 damage and equipment review remains the acceptance step. Commit/push the
 verified migration separately from file organization.
+
+## Implementation record
+
+See [delivery and validation](runtime_cleanup_2026_11_02.md). Timing data is a small
+preloaded GDScript resource so normal exports include it automatically. The focused
+presentation regression has a `.tscn` runner; the clock parity check adds
+`tools/player_animation/verify_animation_clock.gd`. Unused normalized sheets and
+the glow/meditation shaders are staged, with a per-file manifest and matching hashes.
+Obsolete atlas-pixel and hidden-body transform assertions retired with that renderer;
+active glove art/pose, gameplay and metadata assertions remain. Original gameplay
+fixture failures were reproduced and recorded without changing their expectations.

@@ -1,5 +1,12 @@
 # Current Blender assets
 
+November 3 runtime cleanup: `PlayerLive3DVisual` owns visible poses and its existing
+upper/lower-body blends. `PlayerAnimationClock` preserves 24 logical timelines
+from `Src/Characters/Player/player_animation_timing.gd`, independently of sprite
+textures. The player scene retains only active attack-anchor tracks. Retired
+normalized sprite sheets are staged outside the project; historical atlas/export
+notes below describe the prior 2D pipeline. Current 3D models and sources remain.
+
 Active assets live under `ArtSource/Player/Blender/`.
 
 ## Character

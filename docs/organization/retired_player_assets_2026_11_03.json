@@ -1,0 +1,432 @@
+[
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/normalization_manifest.json",
+    "bytes": 7967,
+    "sha256": "0C622A167CB598969F8EEA787D00A49DD1F31F6D6890A2CDCE6E0F624D7B3916"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png",
+    "bytes": 1949830,
+    "sha256": "0006E1FE03D0199EE2E8A6DDABCDCF202707C55C9D5D130A1B9127A9CA4AE3E6"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/air_double_attack.png.import",
+    "bytes": 1002,
+    "sha256": "898217652AF53AD8FFF3771764BF4084082DEB32BA998A11BEA2951950BF99F2"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png",
+    "bytes": 661640,
+    "sha256": "356D50B239A7D6296FBC59118AF31AFE8AF7A026C2B03B4A4C61AC4ECE47E623"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_01.png.import",
+    "bytes": 1006,
+    "sha256": "A52A4A459AB62E389360E47BB08F660A6E4B215ADCEBCB84BBB42CE2E3BE53CE"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png",
+    "bytes": 909776,
+    "sha256": "20497CD31C7BB756D28BA3E83A92D07F96F37E8BB2543275391102580DDCBC9D"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/backpedal_combo_02.png.import",
+    "bytes": 1006,
+    "sha256": "9B12FE93DE225F7F9F00340B84CF3A0AA9BA2CD56EFFEC75DB686F45069FB45E"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png",
+    "bytes": 684445,
+    "sha256": "256E258C384B9A00B4DB177956186AE3DD680E778E992B2638F51A327EC19F8E"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_01.png.import",
+    "bytes": 997,
+    "sha256": "FC9E2F21268F153DC66FA31BEA83D4EF02FF94C679529B766BA99F6E8DA3CE34"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png",
+    "bytes": 1268172,
+    "sha256": "D9BEE7914F4321AD7BFCECC2C0CB6D04C3EF41ACFC01949CA4C9DE22DD2E1696"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/ground_combo_02.png.import",
+    "bytes": 997,
+    "sha256": "2893478D38D2737C1136DF47AA7C9A037B88B93A639FA3E0BE23E557E09E7485"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png",
+    "bytes": 1880698,
+    "sha256": "91BEBB9F2B83E4F54543C9A877D99401B19F0B3DFC778283A20C292B661030D6"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/neutral_special.png.import",
+    "bytes": 997,
+    "sha256": "298A67BEF378427671E01F4C435008D75CB94938B1732467A5760A6807FDF437"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1.png",
+    "bytes": 367062,
+    "sha256": "3679CD175FB0B0CC457F132727CC214B4DBA9B2D5D524ADD81A97B9E5AE968CA"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1.png.import",
+    "bytes": 994,
+    "sha256": "83F70C3F41EC4A3718A993650973CBB444D69F2711873B5442A361EB52C31660"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1_source.png",
+    "bytes": 552656,
+    "sha256": "F540B439B212739484883084CCB0743CAC22C4A4FF47E5F0C28BE3B862580CA6"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v1_source.png.import",
+    "bytes": 1015,
+    "sha256": "7F7E74E031C838F0992ED5A73E553AA527B176CE2109AF1D32E0A59872AF0222"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png",
+    "bytes": 438386,
+    "sha256": "14F9BE28152D2F2BF951F82938031080CCCAD5C0DA9AB1FD30E352425E3FE8D5"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/pogo_attack_v2.png.import",
+    "bytes": 994,
+    "sha256": "0E605B22764115920A0D7BF15A2A296BBF2CB0F0891FDC2935CF302BC502C2A3"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_01.png.import",
+    "bytes": 1009,
+    "sha256": "44D3425F7CC87A2FFEF36ED372C541261761A990B44FA00658C3FF38B1BB9F54"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png",
+    "bytes": 676524,
+    "sha256": "F08BCD20CA7520F07CF932FC4EE327091965FFF75DA018CBA63C02A73968C859"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/attacks/stationary_combo_02.png.import",
+    "bytes": 1009,
+    "sha256": "04E618886171BCD25115801FD2AF8679E05064F3BEC22B2F095E8980B8DA1DE7"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal.png",
+    "bytes": 41633,
+    "sha256": "57E4921E6A79C77ABE787532AA1F20B26A0E0A1FF6671B74BC1F023AA8A9F422"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal.png.import",
+    "bytes": 991,
+    "sha256": "2C6C10CA1E80FC0826F73854A808CA601FBF57F0E592C9F4E1413AAB8A55F21B"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png",
+    "bytes": 183210,
+    "sha256": "185A28B7B6F71346EE674E2CAA5E0315B855702B128D24CD431E6647F3E7C59F"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_diagonal_cycle.png.import",
+    "bytes": 1009,
+    "sha256": "C6B95A93C9B00EA85478EFA82047FBD011E39F7CC79B7B4B61F6BA5BF0AB895C"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal.png",
+    "bytes": 43865,
+    "sha256": "F4381941819D00FEBB36224E337E2FD07E045D460915F158815419CEC33C059A"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal.png.import",
+    "bytes": 997,
+    "sha256": "9A6AFBFD8EE4A9323AC839224195F055B4C12752682F1EC03DE001D3B66E0323"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal_cycle.png",
+    "bytes": 190746,
+    "sha256": "DC1B8BF493095CF94ADDF9F47F2112FBF58051BCB0C0B1BC3905125D96D8098C"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/grapple/toss_horizontal_cycle.png.import",
+    "bytes": 1015,
+    "sha256": "57B13044252CDCEB92CBEE41298844C54306B86FD6D8451A5A06BC485CD985B9"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png",
+    "bytes": 1094930,
+    "sha256": "6AFD6AE7F82332D5AB63863A9EB35B7E1BC975F114CE130F7DD33D584D988A79"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/idle/idle_right.png.import",
+    "bytes": 979,
+    "sha256": "E96C763D74D4D3CC6A49A8ACA2EC64E313C3513FDF573C60E1BDAEA8C31728B2"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/apex.png",
+    "bytes": 45884,
+    "sha256": "448127D443F29A83C92CE3A4AB632BB6CAFCB4D2ECE61C955E39EC218E2A65B2"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/apex.png.import",
+    "bytes": 961,
+    "sha256": "6692C62D8A2509D5507DD4762E38A058B5E0E0D6A5AAAE9C36016706B10F4DF6"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png",
+    "bytes": 179850,
+    "sha256": "2346A33F683C8EA8EC3E0FD8A66480A064760DAE13DF0BEDB870B5B45EA7CD8A"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/apex_cycle.png.import",
+    "bytes": 978,
+    "sha256": "BCD45A27C184800BDD7C1158E99CDC03DD73E540569CE4AF7B8D8F434754B131"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/ascent.png",
+    "bytes": 37883,
+    "sha256": "20CEE163EED52B7E69AE1EF4C740C2537AB238F050EAC3CE4B5ABE2C3EE6CE53"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/ascent.png.import",
+    "bytes": 967,
+    "sha256": "9815004D4D93E290CC245D2ADC9957AE67FDE3BCF7A8D2B99E465B71F3EE49EA"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/ascent_cycle.png",
+    "bytes": 141504,
+    "sha256": "5E9B27D85B38BD3C707C38ABA7B87991C479BB3A3D541CAAA5A2EEA1FB7E8BF5"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/ascent_cycle.png.import",
+    "bytes": 984,
+    "sha256": "640EF72C048156D867880769E98A77D867DC7B4B61EEE59C15EB5C33670105AD"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/descent.png",
+    "bytes": 37762,
+    "sha256": "E2AF0FB38BF2ACB7033D93DB0D8A59CD045D9868337A35F42A594752E905433A"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/descent.png.import",
+    "bytes": 970,
+    "sha256": "240766B74019FD026943AC484882D9CDB887C9C81F334F85CD2328049FA1A79F"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/descent_cycle.png",
+    "bytes": 153916,
+    "sha256": "68D78772E796626659A3781549107EA529C15AA327DB76356267E43C8F1AF18C"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/descent_cycle.png.import",
+    "bytes": 988,
+    "sha256": "F130C90C8202A9BAF05A593E0FB58958AEF8957B706165393F8BE86E0E56B750"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/land.png",
+    "bytes": 59911,
+    "sha256": "274B43B4CE5D517B0D7E1ACE849592BFD2B81DBABBEABC7A478AEFD95CB0ACA7"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/land.png.import",
+    "bytes": 961,
+    "sha256": "132ED9801BCACB14921E4976616776EF7431F50FB9818C8F40A1B1F9BD4D00A7"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/land_cycle.png",
+    "bytes": 188756,
+    "sha256": "BDA6A2BBD42F95D4A00E8D2676398FEB84E0CA739F5015F238F508C8CADBAA4F"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/jump/land_cycle.png.import",
+    "bytes": 979,
+    "sha256": "919EB274AFF0AF2993C669043A7B4FCFF0F03AB26C3DF27CD9C19F8E54529EBA"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/dash.png",
+    "bytes": 63267,
+    "sha256": "93D832A8F651C48CD80049FF9318E167F0C2BE6BC0A24A82C96D52917F6D8A57"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/dash.png.import",
+    "bytes": 965,
+    "sha256": "2AB655A7E0D3DF126C2A5B5BA64D6E6B05D3A538FAEAFC386C2BFC34504085ED"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png",
+    "bytes": 149502,
+    "sha256": "43C845A4508BC4DF98E54DC1EC63CAEA0E23F4786946A959321EA74544E21B93"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/ledge_climb.png.import",
+    "bytes": 986,
+    "sha256": "E25D7F9FE516391D1AC0C30D9C81928B9F5B017EA7D5F634597BC7C4E88F71CF"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/swim_surface_video_v1.png",
+    "bytes": 2111567,
+    "sha256": "716B5215365DE9CA5CF3EBA13FFD36DF2E4BA19335EB296783C0EE92E7839570"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/swim_surface_video_v1.png.import",
+    "bytes": 1016,
+    "sha256": "3257AEFEDBF9D186F962CEFBEBEFBD4A082CDC6E46D4FE3FF2AE1C942C7A34E6"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/wall_cling.png",
+    "bytes": 24913,
+    "sha256": "DBE9022022ED5B4A5CBFA148712C30D9A71D216A95098092F9421708964E24A4"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/wall_cling.png.import",
+    "bytes": 983,
+    "sha256": "7A120786704B3206EC9834980C2123152086F0D54BFDE7E68315C08CFE4EA3C3"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png",
+    "bytes": 102159,
+    "sha256": "AFD4AFE75ABE0955AA75B285EAF3A73FEA0B7AB75435771815C5BCA9A04844A2"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/movement/wall_cling_cycle.png.import",
+    "bytes": 999,
+    "sha256": "10CA1C7FD4D5AAA9D519E42C832F032BDB37C5E8A6375E1690C7DF2CD88738BC"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_001.png",
+    "bytes": 41120,
+    "sha256": "D25B2AAD92B1DEFDB058BE5ED69F97507A957F59A3E0FDD9005F4E57B938CE6C"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_001.png.import",
+    "bytes": 969,
+    "sha256": "3B5F2A890D8D28AC65F2D3807B855DC9417EE1F807922D7FB3894B5FE25D8147"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_002.png",
+    "bytes": 43755,
+    "sha256": "AD51F24AF27DC3BAAE973CD11FE9EFE92E3B0D3F54755DFD427D9938199BED63"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_002.png.import",
+    "bytes": 968,
+    "sha256": "AF3482246D3D1D9F46D2F4BE92D97308381591B10F4034131B0B58DA047E87EE"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_003.png",
+    "bytes": 44590,
+    "sha256": "B16444E77E502353142DDD4040231A46F3F08835628FAE9941BECF9FDFCAA417"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_003.png.import",
+    "bytes": 968,
+    "sha256": "E006B932B0DD3CA154C68F77710379D7DDFD71FC459C8F2283F24A16073C7352"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_004.png",
+    "bytes": 42575,
+    "sha256": "6A140E3A92E65C7D5D1179C904963C197ADB654AD38AF1DDAD3B2AF05DDC8577"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_004.png.import",
+    "bytes": 969,
+    "sha256": "715E71A1668454BAB526B0101CB312F4DB9DC6E7FF91AE880619D62075A7D8CE"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_005.png",
+    "bytes": 32575,
+    "sha256": "6EE6DC71F4B2C0833932DC386301C4A0ACBE20BECC7B188EF0B0A4DF3A681017"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_005.png.import",
+    "bytes": 969,
+    "sha256": "226007B6C7D687B054B03A0AEE6E6F3440368096E741F56E3304AA84C1EA80D1"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_006.png",
+    "bytes": 42245,
+    "sha256": "CCD98F28D564FC72B142FC648ACD22A87B931BD8F1A22774D48D60D005C63ECE"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_006.png.import",
+    "bytes": 968,
+    "sha256": "30104411C4108A49C52A7BF65A99F96E4188254E685855B0F0185E7B0F7F8FAE"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_007.png",
+    "bytes": 41576,
+    "sha256": "45C3D13549973299C71817774FF37F2A868BBAE15990688E31110CD7CE078916"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_007.png.import",
+    "bytes": 969,
+    "sha256": "7CFA8B48C1DA35E7D701081CA7C40384449154149839763B559C3998ECD3101D"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_008.png",
+    "bytes": 37352,
+    "sha256": "9FF83A12875EE3BDB663DABF7B8D76E206FFC451A42DE159949FF2A08ABC0AFD"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_008.png.import",
+    "bytes": 969,
+    "sha256": "D12EC1B6580BCB9B3F4D85B2248ED013D1EC5774CC5D5AC0B5BA1DC3909C3E85"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_012.png",
+    "bytes": 44417,
+    "sha256": "B7436EFA9CFF20E1AEE5B10E90519C2BC56342CC30077D2F5042B39D6C20B457"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_012.png.import",
+    "bytes": 969,
+    "sha256": "802651A96329F10CB6C37299B8802360B042D0375D3C7E06A825D27A490F62C4"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_018.png",
+    "bytes": 37335,
+    "sha256": "170275800A7E1CB3E23EDC4CAD6987955A9C5D7ABFE30B41AFDABA878160E66F"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_018.png.import",
+    "bytes": 969,
+    "sha256": "4275EE678D39666341498E06A5CD9CD48F566A54FC89199A28F4171B3E3B9FB7"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_020.png",
+    "bytes": 43854,
+    "sha256": "727F9C6FC83CE677BC3EA63D98E797BE4098BEFEB1C598C7EE88AC74D8878638"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/run/run_020.png.import",
+    "bytes": 969,
+    "sha256": "16589BCAA7E5C30462B96518DEBCE905831831DA931676864FDFE7350320189D"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/weapon/weavers_shuttle_v3.png",
+    "bytes": 231993,
+    "sha256": "C62022FC12A28AA77E7E804E3D7832E33B2A68017E2B8E363CF15554A327FD50"
+  },
+  {
+    "path": "Assets/Threadborne/Player/Normalized_V2/weapon/weavers_shuttle_v3.png.import",
+    "bytes": 1005,
+    "sha256": "619A2720A5BBCB2B444842854A74928B859B8E5BDA100A09596C906A21AD22A5"
+  },
+  {
+    "path": "Src/Characters/Player/player_glow.gdshader",
+    "bytes": 975,
+    "sha256": "1BCDD87E672D663F76792F12DECB0BD86B0C643E8E7EFB008E64955F3004E625"
+  },
+  {
+    "path": "Src/Characters/Player/player_glow.gdshader.uid",
+    "bytes": 20,
+    "sha256": "B6AF2188CE0F97C9D3DA3AF39EC463A1F01F4986A46C958DA09435666ACE4F25"
+  },
+  {
+    "path": "Src/Characters/Player/save_point_meditation.gdshader",
+    "bytes": 571,
+    "sha256": "4A37B5803FF2740E328B34BF712315732E076F24214CB39F31662076B80E41E3"
+  },
+  {
+    "path": "Src/Characters/Player/save_point_meditation.gdshader.uid",
+    "bytes": 19,
+    "sha256": "D332E8CC252D70FB5224ED19AB33120A1F743AEA929249D47E22F5D85E0EB0A6"
+  }
+]

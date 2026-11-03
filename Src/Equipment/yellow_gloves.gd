@@ -518,7 +518,7 @@ func _flash_player_snap() -> void:
 	if not player:
 		return
 
-	var target := player.get_node_or_null("Player Animation") as CanvasItem
+	var target := player.get_character_visual() as CanvasItem
 	if not target:
 		return
 

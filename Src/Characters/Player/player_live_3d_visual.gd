@@ -115,7 +115,7 @@ func _ready() -> void:
 		_swim_visual_facing = int(_player.get("last_direction"))
 	_build_viewport()
 	if Engine.is_editor_hint():
-		_hide_legacy_visuals()
+		_sync_equipment_visibility()
 		if _animation_player and _clips.has(&"idle_4"):
 			_animation_player.play(_clips[&"idle_4"], 0.0)
 			_animation_player.seek(0.0, true)
@@ -132,14 +132,14 @@ func _ready() -> void:
 	add_child(_thread_sweep)
 	_thread_sweep.set_as_top_level(true)
 	_player.ready.connect(_connect_attack_contact, CONNECT_ONE_SHOT)
-	_hide_legacy_visuals()
+	_sync_equipment_visibility()
 	play_gameplay_animation(&"Idle")
 
 
 func _process(delta: float) -> void:
 	if not enabled or not _display:
 		return
-	_hide_legacy_visuals()
+	_sync_equipment_visibility()
 	if Engine.is_editor_hint():
 		return
 	if _door_active:
@@ -901,29 +901,10 @@ func _index_clips() -> void:
 				_clips[StringName(desired)] = animation_name
 
 
-func _hide_legacy_visuals() -> void:
+func _sync_equipment_visibility() -> void:
 	if Engine.is_editor_hint():
-		# Hide only their canvas RIDs: do not serialize editor-only visibility
-		# changes into the player or the user's level instances.
-		for path in ["Player Animation", "GlowSprite", "EquipmentMount/BackSheathedWeaverShuttle"]:
-			var legacy := _player.get_node_or_null(path) as CanvasItem
-			if legacy:
-				RenderingServer.canvas_item_set_visible(legacy.get_canvas_item(), false)
 		return
-	for path in ["Player Animation", "GlowSprite"]:
-		var item := _player.get_node_or_null(path) as CanvasItem
-		if item:
-			item.hide()
-	var equipment_mount := _player.get_node_or_null("EquipmentMount") as CanvasItem
-	if equipment_mount:
-		# Gameplay hitboxes and the active grapple live below this mount, so the
-		# parent must stay visible even though its retired weapon art is hidden.
-		equipment_mount.show()
-	var sheathed_weapon := _player.get_node_or_null(
-		"EquipmentMount/BackSheathedWeaverShuttle"
-	) as CanvasItem
-	if sheathed_weapon:
-		sheathed_weapon.hide()
+	# The mount retains gameplay anchors and the world-space active rope.
 	var gloves = _player.get("current_gloves")
 	if gloves is CanvasItem:
 		# Keep the established top-level rope simulation and needle visible. Only
@@ -941,9 +922,6 @@ func _hide_legacy_visuals() -> void:
 			# foreground Z keeps the launched rope and needle readable above it.
 			active_grapple.z_as_relative = false
 			active_grapple.z_index = 20
-	var pattern = _player.get("_pattern_visual")
-	if pattern is CanvasItem:
-		pattern.hide()
 
 
 func _apply_toon_materials(root: Node) -> void:

@@ -56,7 +56,7 @@ func slope_case(ratio: float, direction: int, travel_speed: float) -> void:
 	for i in 40:
 		await tick(player, 1)
 		if not player.is_on_floor(): airborne += 1
-		if player.player_animation.animation in [&"Jump_Descent", &"Jump_Apex"]: falling_poses += 1
+		if player.animation_clock.animation in [&"Jump_Descent", &"Jump_Apex"]: falling_poses += 1
 	Input.action_release(action)
 	check(airborne == 0, "Continuous downhill ground contact %s/%s/%s (%s airborne frames)" % [ratio, direction, travel_speed, airborne])
 	check(falling_poses == 0, "No falling pose during downhill travel %s/%s/%s" % [ratio, direction, travel_speed])

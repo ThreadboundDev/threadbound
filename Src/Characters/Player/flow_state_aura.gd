@@ -222,19 +222,10 @@ func _configure_static_materials() -> void:
 
 func _resolve_player_visual() -> void:
 	var player := get_parent()
-	if not player:
-		_player_visual = null
-		return
-	var live_composite := player.get_node_or_null("Live3DComposite") as Sprite2D
-	if live_composite:
-		_player_visual = live_composite
-		return
-	if not is_instance_valid(_player_visual):
-		_player_visual = player.get_node_or_null("Player Animation") as AnimatedSprite2D
+	_player_visual = player.get_character_visual() if player and player.has_method("get_character_visual") else null
 
 func _sync_silhouette_source() -> void:
-	# The live 3D composite is added deferred, so keep looking for it even when
-	# the hidden legacy sprite was available during this node's _ready().
+	# The live composite is created during player setup.
 	_resolve_player_visual()
 	if not is_instance_valid(_player_visual):
 		silhouette_shell.visible = false

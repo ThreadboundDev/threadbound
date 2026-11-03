@@ -55,20 +55,11 @@ func _verify_player_feedback() -> void:
 		if player.is_ledge_hanging or player.velocity.y >= 0.0:
 			failures.append("Ledge jump did not release the hang with upward velocity.")
 
-	var sprite := player.get_node("Player Animation") as AnimatedSprite2D
+	# The live avatar owns its size; the active equipment pose retains tuning.
 	player.set("current_attack_body_anim", "Ground_Attack_Combo_2")
 	player.call("_apply_attack_visual_tuning")
-	if _has_property(player, &"ground_combo_forward_finisher_visual_scale_multiplier"):
-		var expected_finisher_scale: Vector2 = (
-			Vector2(0.7, 0.7)
-			* float(player.get("ground_combo_forward_finisher_visual_scale_multiplier"))
-		)
-		if not sprite.scale.is_equal_approx(expected_finisher_scale):
-			failures.append("Forward combo finisher did not receive its larger visual scale.")
-	else:
-		failures.append(
-			"Playtest feedback verifier still expects the retired 2D combo-finisher scale setting."
-		)
+	if not player.current_gloves.scale.is_equal_approx(Vector2.ONE):
+		failures.append("Forward combo finisher changed the active equipment pose scale.")
 	if not is_equal_approx(player.ground_combo_forward_hitbox_radius, 156.0):
 		failures.append("Ground-forward attack reach is not tuned to 156 pixels.")
 	if _has_property(player, &"ground_combo_up_hitbox_radius"):
@@ -87,12 +78,12 @@ func _verify_player_feedback() -> void:
 	else:
 		gloves.grapple_direction = Vector2.LEFT
 		gloves.call("_play_grapple_fire_animation")
-		if player.last_direction != -1 or not sprite.flip_h:
+		if player.last_direction != -1 or not player.is_facing_left():
 			failures.append("Leftward grapple toss did not face the player left.")
 
 		gloves.grapple_direction = Vector2.RIGHT
 		gloves.call("_play_grapple_fire_animation")
-		if player.last_direction != 1 or sprite.flip_h:
+		if player.last_direction != 1 or player.is_facing_left():
 			failures.append("Rightward grapple toss did not face the player right.")
 
 	if not _action_has_physical_key(&"Meditate", KEY_V):
@@ -116,13 +107,8 @@ func _verify_player_feedback() -> void:
 			await get_tree().physics_frame
 		if not player.is_meditating:
 			failures.append("Holding Meditate on the floor did not enter meditation.")
-		elif sprite.animation != &"Sit":
+		elif player.animation_clock.animation != &"Sit":
 			failures.append("Meditation did not select the Sit animation.")
-		elif not sprite.scale.is_equal_approx(Vector2(0.5, 0.5)):
-			failures.append(
-				"Meditation visual scale is %s; expected the atlas-matched (0.5, 0.5)." %
-				sprite.scale
-			)
 		Input.action_release(&"Meditate")
 
 	player.queue_free()

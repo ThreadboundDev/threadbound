@@ -210,26 +210,20 @@ func _play_grapple_fire_animation() -> void:
 	var use_diagonal: bool = abs(grapple_direction.y) > 0.35
 	if player and absf(grapple_direction.x) > 0.05:
 		player.last_direction = -1 if grapple_direction.x < 0.0 else 1
-		if player.has_node("Player Animation"):
-			var facing_animation := player.get_node("Player Animation") as AnimatedSprite2D
-			facing_animation.flip_h = grapple_direction.x < 0.0
+		player.set_presentation_facing(player.last_direction)
 		if player.has_method("update_equipment_facing"):
 			player.update_equipment_facing()
 
 	if use_diagonal:
 		play_equipment_anim("Grapple_Diagonal")
 
-		if player and player.has_node("Player Animation"):
-			var body_anim: AnimatedSprite2D = player.get_node("Player Animation")
-			if body_anim.sprite_frames.has_animation("Grapple_Diagonal"):
-				body_anim.play("Grapple_Diagonal")
+		if player and player.animation_clock.has_animation("Grapple_Diagonal"):
+			player.animation_clock.play("Grapple_Diagonal")
 	else:
 		play_equipment_anim("Grapple_Horizontal")
 
-		if player and player.has_node("Player Animation"):
-			var body_anim: AnimatedSprite2D = player.get_node("Player Animation")
-			if body_anim.sprite_frames.has_animation("Grapple_Horizontal"):
-				body_anim.play("Grapple_Horizontal")
+		if player and player.animation_clock.has_animation("Grapple_Horizontal"):
+			player.animation_clock.play("Grapple_Horizontal")
 
 func play_attack_follow_pose(_direction: Vector2, body_anim: String = "") -> void:
 	action_anim_lock_timer = attack_follow_anim_lock_time
