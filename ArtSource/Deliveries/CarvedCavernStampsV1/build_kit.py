@@ -17,7 +17,7 @@ def png(im, info=None):
     im.save(stream, 'PNG', pnginfo=info)
     return stream.getvalue()
 
-def build():
+def build(prefix='Cavern_', display_prefix='Cavern ', bundle_name='Threadbound_Carved_Cavern_v1', tag='Cavern - Carved Walkways'):
     specs = json.loads((KIT/'generation_prompts.json').read_text())['assets']
     resources, entries = {}, []
     sizes = [384, 512, 768, 896, 1280, 1408]
@@ -34,12 +34,12 @@ def build():
         solid_box = original.getchannel('A').point(lambda a: 255 if a > 128 else 0).getbbox()
         assert solid_box and solid_box[0] > 0 and solid_box[1] > 0 and solid_box[2] < original.width and solid_box[3] < original.height, name
         im = original.crop(box)  # Trim empty margins only; preserve all painted pixels.
-        stem = 'Cavern_'+name
+        stem = prefix+name
         label = name.encode()+b'\0'
         gbr = struct.pack('>7I', 28+len(label), 2, *im.size, 4, 0x47494D50, 150)+label+im.tobytes()
         resources['brushes/'+stem+'.gbr'] = gbr
         root = ET.fromstring((KIT/'preset_template.xml').read_text())
-        root.set('name', 'Cavern '+name.replace('_', ' '))
+        root.set('name', display_prefix+name.replace('_', ' '))
         params = {e.get('name'):e for e in root.findall('param')}
         brush = ET.fromstring(params['brush_definition'].text)
         for key, value in {'filename':stem+'.gbr', 'md5sum':hashlib.md5(gbr).hexdigest(), 'scale':str(sizes[i]/max(im.size)), 'brushApplication':'1', 'ColorAsMask':'0'}.items():
@@ -72,13 +72,13 @@ def build():
         entry = ET.SubElement(manifest,'{'+NS+'}file-entry',{'{'+NS+'}media-type':path.split('/')[0],'{'+NS+'}full-path':path,'{'+NS+'}md5sum':hashlib.md5(data).hexdigest()})
         if path.startswith('paintoppresets/'):
             tags = ET.SubElement(entry,'{'+NS+'}tags')
-            ET.SubElement(tags,'{'+NS+'}tag').text = 'Cavern - Carved Walkways'
-    with zipfile.ZipFile(KIT/'Threadbound_Carved_Cavern_v1.bundle','w',zipfile.ZIP_DEFLATED) as z:
+            ET.SubElement(tags,'{'+NS+'}tag').text = tag
+    with zipfile.ZipFile(KIT/(bundle_name+'.bundle'),'w',zipfile.ZIP_DEFLATED) as z:
         for path, data in resources.items(): z.writestr(path,data)
         z.writestr('META-INF/manifest.xml', ET.tostring(manifest,encoding='utf-8',xml_declaration=True))
-        z.writestr('meta.xml','<?xml version="1.0"?><meta:meta xmlns:meta="http://www.calligra.org/DTD/krita-resourcebundle-meta" xmlns:dc="http://purl.org/dc/elements/1.1/"><meta:bundle-version>1</meta:bundle-version><dc:title>Threadbound Carved Cavern v1</dc:title></meta:meta>')
+        z.writestr('meta.xml','<?xml version="1.0"?><meta:meta xmlns:meta="http://www.calligra.org/DTD/krita-resourcebundle-meta" xmlns:dc="http://purl.org/dc/elements/1.1/"><meta:bundle-version>1</meta:bundle-version><dc:title>'+bundle_name.replace('_',' ')+'</dc:title></meta:meta>')
         preview = catalog.copy(); preview.thumbnail((256,256)); z.writestr('preview.png',png(preview))
-    with zipfile.ZipFile(KIT/'Threadbound_Carved_Cavern_v1.bundle') as z:
+    with zipfile.ZipFile(KIT/(bundle_name+'.bundle')) as z:
         assert z.testzip() is None
         for node in ET.fromstring(z.read('META-INF/manifest.xml')):
             path = node.get('{'+NS+'}full-path')

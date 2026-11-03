@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: precise-object-edit. COLOR CORRECTION ONLY.\nInput image 1 is the edit target: an existing transparent painted rock platform stamp. Input image 2 is the EXACT color/material reference: C07 cave-wall stamp already painted throughout the user's level.\nRetain target's composition, precise flat-top silhouette, every rock fracture, texture, edge shape, dimensions and transparent surroundings. Do not design a new rock. Only adjust the stone colors to match image 2. Remove the target's excess blue in middle/light values, bring in the reference's warm gray faces and warm cream highlights, retain cool deep crevices. Target representative reference RGB colors by brightness: deepest crevices (35,44,53), shadows (62,73,82), middle shadow facets (93,102,108), main gray facets (125,128,129), lit facets (162,158,149), bright edges (209,197,178). These are shading anchors, preserve detailed tonal variation. Match the reference's perceived contrast and saturation. No new elements, no geometry changes, no annotations. Keep actual transparent alpha background.",
+  "assets": [
+    {
+      "id": "S01_short_wedge",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-d48cec83-7fcb-4e20-92e9-5b01a67cafe1.png"
+    },
+    {
+      "id": "S02_short_split",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-9e01d784-002f-4f4d-95c9-b39e5c996a18.png"
+    },
+    {
+      "id": "M01_medium_shallow",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-8bffdd8d-fe1e-46b8-a612-6c39c5c2c6d8.png"
+    },
+    {
+      "id": "M02_medium_deep",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-ac5fe4ba-89de-4f9a-8eb2-55fea250b000.png"
+    },
+    {
+      "id": "L01_long_shelf",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-0bb1d553-f266-47bf-9492-e9fc52755844.png"
+    },
+    {
+      "id": "L02_long_mass",
+      "source": "C:\\Users\\chase\\.codex\\generated_images\\01a19e3e-8fc8-78a2-9a30-b403ce9ec674\\exec-8fc8fb7e-2af2-4ae5-876d-4252381b3cf3.png"
+    }
+  ]
+}

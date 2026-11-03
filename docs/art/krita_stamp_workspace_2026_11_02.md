@@ -1,5 +1,17 @@
 # Krita stamp workspace — November 2, 2026
 
+Later color/flip follow-up: [Carved Cavern v2](../../ArtSource/Deliveries/CarvedCavernStampsV2/README.md)
+is now the active cavern bundle; v1 is disabled and retained. All six images use
+C07 directly as a color reference and measure closer in the saved chroma check.
+Chase still finds the color imperfect in the actual painting, so color acceptance
+remains open. Preset names now satisfy the existing flip plugin's Village prefix;
+24 XML checks plus live horizontal, combined/vertical shortcut and Reset checks
+pass. The updated 81-stamp reference is saved as `All_Current_Stamps_v2.kra` in
+the local workspace's `all_current_stamps_2026_11_02_v2` folder. Native KRA ZIP,
+83-layer count and exact merged-image agreement with the ORA pass again. The
+room drawing was saved before kit changes, preserving Chase's newly painted work.
+The original atlas remains available. The earlier setup record below is historical.
+
 Chase requests importing the recent cavern and modular village stamps, putting
 the current stamps in one editable file, and leaving the room painting open.
 
