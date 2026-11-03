@@ -85,3 +85,7 @@ movement/combat/water/grapple/save-point review remains the acceptance step.
 Actual canonical Blue level also launches and renders in Forward+ with the cleaned
 player; the live avatar, level and HUD are present. A local screenshot is retained
 with the verification logs. Existing scene-entry/shutdown diagnostics remain.
+
+Git checkpoints: Blue scene consolidation `2560e610`; player migration `d2eac7e2`.
+Task branch: `threadbound/refactor-player-and-blue-scene-cleanup`. Separate ongoing
+equipment/feedback/organization work in the shared checkout is preserved.

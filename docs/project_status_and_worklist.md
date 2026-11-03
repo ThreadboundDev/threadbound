@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated November 2, 2026. This is the single current priority list. The saved
+Updated November 3, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -21,7 +21,7 @@ Validation: 29,775 Blue scene property comparisons, 25,920 engine-clock comparis
 122 water-grapple checks, water combo/special and recovery suites pass.
 Existing animation/grapple suites retain exactly 19/20 original failures;
 the legacy pogo/greybox assertions also reproduce before cleanup.
-Blue checkpoint: `2560e610`; player checkpoint: PLAYER_COMMIT_PENDING on
+Blue checkpoint: `2560e610`; player checkpoint: `d2eac7e2` on
 `threadbound/refactor-player-and-blue-scene-cleanup`. The shared checkout's
 separate organization, feedback and equipment edits remain preserved.
 
