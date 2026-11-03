@@ -11,11 +11,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[2]
 LOCAL = ROOT/'ArtSource/RecoveredLocal/BlueBiome Painting Workspace/outputs/blue_village_stamp_pack'
-OUT = LOCAL/'all_current_stamps_2026_11_02_v2'
+OUT = LOCAL/'all_current_stamps_2026_11_02_v3'
 BUNDLES = [
     ('Village library', LOCAL/'slate_village_library/Blue_Village_Slate_Library.bundle'),
     ('Modular buildings', ROOT/'ArtSource/BlueBiome/Placeables/BuildingStampsV1/Threadbound_Modular_Buildings_v1.bundle'),
-    ('Carved cavern v2', ROOT/'ArtSource/Deliveries/CarvedCavernStampsV2/Threadbound_Carved_Cavern_v2.bundle'),
+    ('Carved cavern v3', ROOT/'ArtSource/Deliveries/CarvedCavernStampsV3/Threadbound_Carved_Cavern_v3.bundle'),
 ]
 
 def png(im):

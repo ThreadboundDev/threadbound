@@ -1,0 +1,23 @@
+{
+  "tool": "User-authorized deterministic color correction; no new generation",
+  "assets": [
+    {
+      "id": "S01_short_wedge"
+    },
+    {
+      "id": "S02_short_split"
+    },
+    {
+      "id": "M01_medium_shallow"
+    },
+    {
+      "id": "M02_medium_deep"
+    },
+    {
+      "id": "L01_long_shelf"
+    },
+    {
+      "id": "L02_long_mass"
+    }
+  ]
+}
