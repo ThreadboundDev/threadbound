@@ -113,13 +113,23 @@ func rebind_controller_action_group(action_events: Dictionary, overwrite_conflic
 	bindings_changed.emit()
 	return true
 
-func load_bindings() -> void:
+func load_bindings(path := SAVE_PATH) -> void:
+	# Older controls.cfg files serialized engine text shortcuts as bare keys:
+	# Ctrl+A became A, Ctrl+Backspace became Backspace, etc. Restore the complete
+	# engine/project defaults and reserve these shortcuts for GUI text editing.
+	for action in _keyboard_defaults:
+		if String(action).begins_with("ui_"):
+			_remove_keyboard_mouse_events(action)
+			for event in _keyboard_defaults[action]:
+				InputMap.action_add_event(action, event.duplicate())
 	var config := ConfigFile.new()
-	if config.load(SAVE_PATH) != OK:
+	if config.load(path) != OK:
 		return
 
 	if config.has_section(KEYBOARD_SECTION):
 		for action in config.get_section_keys(KEYBOARD_SECTION):
+			if String(action).begins_with("ui_"):
+				continue
 			if not InputMap.has_action(action):
 				continue
 			var encoded := String(config.get_value(KEYBOARD_SECTION, action, ""))
@@ -147,7 +157,7 @@ func load_bindings() -> void:
 
 	bindings_changed.emit()
 	if not controller_schema_is_current:
-		save_bindings()
+		save_bindings(path)
 
 func _sync_controller_action_binding(source_action: StringName, target_action: StringName) -> void:
 	var source_event := get_primary_controller_event(source_action)
@@ -156,17 +166,17 @@ func _sync_controller_action_binding(source_action: StringName, target_action: S
 	_remove_controller_events(target_action)
 	InputMap.action_add_event(target_action, source_event.duplicate())
 
-func save_bindings() -> void:
+func save_bindings(path := SAVE_PATH) -> void:
 	var config := ConfigFile.new()
 	config.set_value(META_SECTION, "controller_schema_version", CONTROLLER_SCHEMA_VERSION)
 	for action in InputMap.get_actions():
 		var event := get_primary_keyboard_event(StringName(action))
-		if event:
+		if event and not String(action).begins_with("ui_"):
 			config.set_value(KEYBOARD_SECTION, String(action), _encode_event(event))
 		var controller_event := get_primary_controller_event(StringName(action))
 		if controller_event:
 			config.set_value(CONTROLLER_SECTION, String(action), _encode_event(controller_event))
-	var error := config.save(SAVE_PATH)
+	var error := config.save(path)
 	if error != OK:
 		push_warning("InputBindingManager could not save controls: %s." % error_string(error))
 

@@ -30,12 +30,57 @@ func check(condition: bool, message: String) -> void:
 	if not condition:
 		failures.append(message)
 
+func type_keys(window: Window, text: String) -> void:
+	for character in text:
+		var event := InputEventKey.new()
+		event.unicode = character.unicode_at(0)
+		event.keycode = event.unicode
+		event.physical_keycode = event.keycode
+		event.pressed = true
+		window.push_input(event)
+		event = event.duplicate()
+		event.pressed = false
+		window.push_input(event)
+
+func press_key(window: Window, key: Key, ctrl := false) -> void:
+	var event := InputEventKey.new()
+	event.keycode = key
+	event.physical_keycode = key
+	event.ctrl_pressed = ctrl
+	event.pressed = true
+	window.push_input(event)
+	event = event.duplicate()
+	event.pressed = false
+	window.push_input(event)
+
 func _run() -> void:
 	var capture := root.get_node("DebugUI/FeedbackCapture")
 	check(capture.inbox.contains("tmp"), "Tests must use an isolated tmp inbox.")
 	if not capture.inbox.contains("tmp"):
 		quit(1)
 		return
+	# Existing saves with bare UI keys must recover without losing gameplay remaps.
+	var manager := root.get_node("InputBindingManager")
+	var binding_path: String = capture.inbox.path_join("controls-regression.cfg")
+	var controls := ConfigFile.new()
+	controls.set_value("binding_metadata", "controller_schema_version", 4)
+	controls.set_value("keyboard_mouse", "ui_text_select_all", "key:65")
+	controls.set_value("keyboard_mouse", "Jump", "key:74")
+	controls.save(binding_path)
+	manager.load_bindings(binding_path)
+	var select_all := InputEventKey.new()
+	select_all.keycode = KEY_A
+	select_all.physical_keycode = KEY_A
+	select_all.pressed = true
+	check(not select_all.is_action("ui_text_select_all"), "Old bare-A shortcut data cannot hijack ordinary typing.")
+	select_all.ctrl_pressed = true
+	check(select_all.is_action("ui_text_select_all"), "Engine Ctrl+A editing shortcut is restored.")
+	check(manager.get_primary_keyboard_event(&"Jump").physical_keycode == KEY_J, "Gameplay remaps survive UI shortcut repair.")
+	manager.save_bindings(binding_path)
+	controls = ConfigFile.new()
+	controls.load(binding_path)
+	check(not controls.has_section_key("keyboard_mouse", "ui_text_select_all"), "Saving controls excludes engine editing shortcuts.")
+	manager.load_bindings()
 	var world := TestWorld.new()
 	world.name = "FeedbackTestLevel"
 	root.add_child(world)
@@ -97,9 +142,29 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		capture.panel.get_texture().get_image().save_png(capture.inbox.path_join("form-preview.png"))
 	var directory: String = capture.report_directory
-	capture.panel.description.text = "First line\nSecond line — gameplay/art feedback."
-	capture.panel.expected.text = "Expected result"
-	capture.panel.reproduction.text = "Run, then jump"
+	var panel: Window = capture.panel
+	if DisplayServer.get_name() != "headless":
+		check(panel.gui_get_focus_owner() == panel.description, "Feedback opens with the description focused.")
+	panel.title_field.grab_focus()
+	type_keys(panel, "WASD and QWERG title")
+	check(panel.title_field.text == "WASD and QWERG title", "LineEdit receives real key events.")
+	panel.description.grab_focus()
+	type_keys(panel, "First line")
+	press_key(panel, KEY_ENTER)
+	type_keys(panel, "Second line — gameplay/art feedback.")
+	check(panel.description.text == "First line\nSecond line — gameplay/art feedback.",
+		"TextEdit receives letters, spaces, punctuation and newlines while paused.")
+	press_key(panel, KEY_BACKSPACE)
+	type_keys(panel, ".")
+	check(panel.description.text.ends_with("feedback."), "Keyboard editing preserves text.")
+	await create_timer(0.6).timeout
+	check(panel.gui_get_focus_owner() == panel.description, "Autosave preserves the editing focus.")
+	panel.expected.grab_focus()
+	type_keys(panel, "Expected result")
+	panel.reproduction.grab_focus()
+	type_keys(panel, "Run, then jump")
+	check(panel.expected.text == "Expected result" and panel.reproduction.text == "Run, then jump",
+		"All multiline boxes accept key input.")
 	capture.panel._autosave()
 	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(directory.path_join("report.json")))
 	check(data.status == "draft", "Typing saves a draft.")
@@ -138,6 +203,9 @@ func _run() -> void:
 		check(capture.panel.visible, "Stopping a recording opens feedback.")
 		check(capture.report.attachments.recording.captured_frames > 1, "Live viewport frames are recorded.")
 		check(FileAccess.file_exists(capture.report_directory.path_join("recording.avi")), "Live recording produces an AVI.")
+		if RenderingServer.get_rendering_device():
+			check(capture.report.attachments.recording.readback == "async_gpu", "Forward+ recording uses asynchronous GPU readback.")
+		check(capture.report.attachments.recording.encoding == "bounded_background_worker", "Recording compresses/writes on its worker.")
 		capture.panel._close()
 	# Deterministic synthetic frames verify AVI structure independently of GPU timing.
 	var recorder := Recorder.new()

@@ -3,6 +3,14 @@
 Approved by Chase November 2, 2026. Available in debug/editor runs through the
 existing DebugUI singleton. Start/restart the game after installing this change.
 
+November 3 repair: Chase reports broken typing and shaking while recording.
+The controls manager had serialized built-in editing shortcuts without modifiers
+(for example Ctrl+A became bare A). The loader now restores engine/project UI
+keyboard defaults, skips old UI keyboard entries, and saves gameplay keyboard
+bindings without resaving engine shortcuts. Gameplay remaps remain intact. This
+also restores paste/newline/backspace behavior; no control reset is required.
+The form stays embedded and defers its initial description focus until shown.
+
 ## Capture while playing
 
 - **Ctrl+F1** or the bottom-right **Feedback** button takes a screenshot and
@@ -88,7 +96,14 @@ An autosaved report draft can retain feedback written before such an exit.
 
 Recording is opt-in, approximately **10 fps**, at most **960 pixels wide**, with
 no audio, microphone or desktop capture. GPU readback/JPEG compression and disk
-writes add overhead; recording can affect the performance being reported. Gaps
+writes add overhead; recording can affect the performance being reported.
+Forward+/Mobile recording now requests asynchronous GPU readback instead of
+waiting for each frame on the game thread. Compatibility rendering uses synchronous
+readback. JPEG scaling/compression and frame writes run on a worker with at most
+two queued images; overloaded captures skip frames rather than building an
+unbounded backlog. Clip metadata identifies the readback path, encoding worker
+and skipped frames. Stopping drains the pending readback/worker before packaging
+the clip, with a two-second readback timeout that preserves earlier frames. Gaps
 repeat the preceding frame in the AVI to preserve elapsed time. Original JPEGs
 and timestamps remain available. Screenshot quality retains the viewport's
 resolution. There is no always-on retrospective video buffer.
@@ -139,3 +154,16 @@ also emit existing unsupported-AA warnings. The Lakeside harness reports existin
 warnings. These also reproduce with `--no-debug-feedback`; they are retained in
 diagnostics, not claimed fixed by this task.
 User acceptance of the workflow remains open.
+
+November 3 repair verification: 47 headless, 55 Forward+ and 54 Compatibility
+checks pass, now
+including actual key events in every text field, newline/backspace, focus across
+autosave, recovery from corrupted UI shortcuts, preserved gameplay remaps and
+the asynchronous recording path. Windows Computer Use verifies real paste plus
+plain-A insertion. A two-second Chamber capture retains 18 frames; a stationary
+platform registers at (0, 0) shift across the JPEGs. In that short local run,
+95th-percentile frame interval is 4.89 ms during recording versus 4.49 ms before
+recording; this is not a general performance budget. FFmpeg independently decodes
+the resulting AVI. Evidence is local under `tmp/feedback-fix-*`,
+`tmp/feedback-input-probe.json` and `tmp/feedback-stability-results.json`.
+Chase's retest of normal feedback/recording remains open.

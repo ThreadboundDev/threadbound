@@ -28,6 +28,10 @@ var _last_sample := 0
 var _last_flush := 0
 var _serial := 0
 var _registered_logger := false
+var _readback_pending := false
+var _recording_generation := 0
+var _readback_deadline := 0
+var _readback_mode := ""
 
 func _ready() -> void:
 	if not OS.is_debug_build():
@@ -205,6 +209,8 @@ func toggle_recording() -> void:
 	report["recording_start_state"] = Snapshot.collect(get_tree())
 	recorder = Recorder.new()
 	recorder.start(report_directory)
+	_recording_generation += 1
+	_readback_mode = "async_gpu" if RenderingServer.get_rendering_device() else "synchronous_compatibility"
 	write_json(report_directory.path_join("report.json"), report)
 
 func request_feedback() -> void:
@@ -226,10 +232,8 @@ func request_feedback() -> void:
 	get_tree().paused = true
 	_release_actions()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if recorder:
-		report.attachments["recording"] = recorder.finish()
-		recorder = null
 	_pending_screenshot = true
+	_readback_deadline = Time.get_ticks_msec() + 2000
 	_layer.hide()
 	# Headless runs still produce a useful report and explicitly mark missing media.
 	if DisplayServer.get_name() == "headless":
@@ -237,12 +241,69 @@ func request_feedback() -> void:
 
 func _after_draw() -> void:
 	if _pending_screenshot:
+		if _readback_pending and Time.get_ticks_msec() < _readback_deadline:
+			return
 		_complete_capture(get_viewport().get_texture().get_image())
-	elif recorder and recorder.due() and not recorder.full():
-		recorder.capture(get_viewport().get_texture().get_image())
+	elif recorder and not _readback_pending and recorder.due() and not recorder.full():
+		recorder.mark_requested()
+		var seconds: float = recorder.elapsed()
+		if _readback_mode == "async_gpu":
+			_readback_pending = true
+			RenderingServer.call_on_render_thread(_request_readback.bind(
+				get_viewport().get_texture().get_rid(), seconds, _recording_generation))
+		else:
+			recorder.capture(get_viewport().get_texture().get_image(), seconds)
+
+func _request_readback(texture: RID, seconds: float, generation: int) -> void:
+	var rd := RenderingServer.get_rendering_device()
+	var rid := RenderingServer.texture_get_rd_texture(texture)
+	if not rid.is_valid():
+		call_deferred("_readback_failed", "The viewport texture is no longer available.", generation)
+		return
+	var format := rd.texture_get_format(rid)
+	var image_format := Image.FORMAT_RGBA8
+	match format.format:
+		RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM, RenderingDevice.DATA_FORMAT_R8G8B8A8_SRGB:
+			pass
+		RenderingDevice.DATA_FORMAT_R16G16B16A16_SFLOAT:
+			image_format = Image.FORMAT_RGBAH
+		_:
+			call_deferred("_readback_failed", "Unsupported viewport texture format: %d" % format.format, generation)
+			return
+	var error := rd.texture_get_data_async(rid, 0, _readback_received.bind(
+		format.width, format.height, image_format, seconds, generation))
+	if error != OK:
+		call_deferred("_readback_failed", "GPU capture failed: " + error_string(error), generation)
+
+func _readback_received(data: PackedByteArray, width: int, height: int,
+		image_format: Image.Format, seconds: float, generation: int) -> void:
+	var image := Image.create_from_data(width, height, false, image_format, data)
+	call_deferred("_queue_recorded_frame", image, seconds, generation)
+
+func _queue_recorded_frame(image: Image, seconds: float, generation: int) -> void:
+	if generation != _recording_generation:
+		return
+	_readback_pending = false
+	if recorder:
+		recorder.capture(image, seconds)
+
+func _readback_failed(message: String, generation: int) -> void:
+	if generation != _recording_generation:
+		return
+	_readback_pending = false
+	if recorder:
+		recorder.fail(message)
 
 func _complete_capture(image: Image) -> void:
 	_pending_screenshot = false
+	if recorder:
+		if _readback_pending:
+			recorder.fail("Timed out waiting for the last GPU frame; earlier frames are retained.")
+		_recording_generation += 1
+		_readback_pending = false
+		report.attachments["recording"] = recorder.finish()
+		report.attachments.recording["readback"] = _readback_mode
+		recorder = null
 	if image and not image.is_empty():
 		var error := image.save_png(report_directory.path_join("screenshot.png"))
 		if error == OK:
@@ -359,6 +420,10 @@ func _flush_session(clean: bool) -> void:
 		badge.text = "Session backup failed: " + error_string(error)
 
 func _exit_tree() -> void:
+	_recording_generation += 1
+	if recorder:
+		recorder.finish()
+		recorder = null
 	if _registered_logger:
 		_flush_session(true)
 		OS.remove_logger(logger)

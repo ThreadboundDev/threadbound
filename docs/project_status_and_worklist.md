@@ -5,6 +5,17 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Development feedback capture — implemented November 2; user acceptance open.**
+November 3 repair: Chase rejects typing and recording shake. The controls manager
+now restores built-in GUI keyboard defaults and excludes engine UI shortcuts from
+gameplay keyboard save/load, repairing old modifier-stripped entries while
+preserving gameplay remaps. Recording uses asynchronous Forward+ GPU readback
+and a bounded JPEG/file worker. 47 headless and 55 rendered checks pass, including
+real key-event editing; Windows paste/plain-A entry is checked. The Chamber's
+stationary platform remains aligned over 18 clip frames; FFmpeg decode passes.
+[Repair details and limits](development_feedback.md). Checkpoint:
+`fix: repair feedback typing and recording stalls` on
+`threadbound/feature-debug-feedback`. Normal workflow acceptance remains open.
+
 Chase approves a debug screenshot/short-recording tool with an in-game feedback
 form and automatic state/diagnostics. Ctrl+F1 captures; Ctrl+F2 starts/stops a
 silent, bounded clip. Notes autosave; Save & copy creates a local review handoff.

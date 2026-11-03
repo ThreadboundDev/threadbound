@@ -61,7 +61,7 @@ func _build() -> void:
 	title_field = LineEdit.new()
 	title_field.placeholder_text = "e.g. Sword arm disappears during the run"
 	form.add_child(title_field)
-	title_field.text_changed.connect(func(_text): _changed())
+	title_field.text_changed.connect(func(_value): _changed())
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 12)
 	form.add_child(row)
@@ -148,7 +148,7 @@ func show_report(data: Dictionary, directory: String, image: Image) -> void:
 	var available := get_tree().root.size - Vector2i(40, 40)
 	size = Vector2i(mini(980, available.x), mini(860, available.y))
 	popup_centered()
-	description.grab_focus()
+	description.call_deferred("grab_focus")
 	_loading = false
 
 func fields() -> Dictionary:
