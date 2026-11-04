@@ -67,6 +67,20 @@ func run() -> void:
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true
 	var weapon = equipment._roots[&"weapon"]
+	for strap_name in ["Shield_elbow_strap", "Shield_wrist_strap"]:
+		var strap := weapon.find_child(strap_name, true, false) as MeshInstance3D
+		check(strap != null, "Shield has " + strap_name)
+		if strap:
+			check(strap.get_node_or_null(strap.skeleton) == visual._skeleton, "Strap uses the live rig")
+			var weighted_bones: Dictionary = {}
+			for surface in strap.mesh.get_surface_count():
+				var arrays := strap.mesh.surface_get_arrays(surface)
+				var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+				var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+				for index in weights.size():
+					if weights[index] > 0.0:
+						weighted_bones[strap.skin.get_bind_name(bones[index])] = true
+			check(weighted_bones.size() == 1 and weighted_bones.has(&"forearm.L"), "Strap follows the forearm through hand motion")
 	var previous := [0, 1, 2]
 	for combination in 8:
 		for slot_type in 3:

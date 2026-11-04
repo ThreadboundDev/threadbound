@@ -69,3 +69,16 @@ Chest. Base retains the imported trouser hem, exposed shin, and boot rim
 shape, with the knee pivot covered by the trousers. Open the rebuilt
 `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
 meshes and the adjacent rest and posed captures.
+
+## Forearm shield
+
+The equipped shield uses the imported face and rebuilt backing, with two
+leather straps and pads fitted to the left bracer. The complete shield
+follows `forearm.L`, leaving the hand free. Base and Blue use the same
+shield and keep their own stowed grapple hardware.
+
+To rebuild the local shield export from the fitted Blender files, run
+Blender with `--background --factory-startup --python-exit-code 1 --python tools/art/fit_threadborne_shield_straps.py`
+after the gear is fitted. The tool updates `base_shield.glb` and saves a
+Blender review file and renders in `LocalOnly/Equipment/Shield/`. Restart the
+art-test session after import to review it with both gloves.
