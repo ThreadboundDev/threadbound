@@ -5,6 +5,13 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 preferred Blue grapple: Chase selects the more ornate crescent and
+spool from the attached concept, with dark slate-indigo ribbon matching the
+outfit. The [updated generation set](../work/blue-hermit-monk-2026-11-04/README.md)
+provides isolated front, reverse, and side studies. Fit the generated accessory
+to the keyed bracer socket and strap.
+Checkpoint: `art: restore ornate blue grapple design`.
+
 November 4 Blue grapple generation: [three isolated views](../work/blue-hermit-monk-2026-11-04/README.md)
 show the reel, ribbon, and crescent hook from the front, reverse, and side.
 The reverse shows the keyed mounting lug and the side shows reel thickness.

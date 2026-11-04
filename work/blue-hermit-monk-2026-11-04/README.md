@@ -12,18 +12,22 @@ authority for any generated mesh.
 - `blue_hermit_front.png` and `blue_hermit_back.png` are the original concept views.
 - `blue_hermit_turn.png` shows the two ribbons trailing during a balanced turn.
 - `blue_grapple_dock_v2.png` compares the empty and stowed grapple on the bracer.
+- `blue_grapple_ornate_front.png`, `blue_grapple_ornate_back.png`, and
+  `blue_grapple_ornate_side.png` are the preferred grapple generation images.
+  Use the front as the main reference. The reverse shows the leather mount
+  and key, and the side illustrates the spool depth. The ornate hook has
+  two crescent blades, a short center point, and a blue stone. The spool and
+  short lead use muted slate-indigo ribbon with fine bronze-gold thread.
+  `grapple_ornate_prompts.json` records the prompts.
 - `blue_grapple_generation_front.png`, `blue_grapple_generation_back.png`, and
-  `blue_grapple_generation_side.png` isolate the reel, ribbon, and crescent hook
-  as one accessory. Use the front as the main image, with the reverse and edge
-  profile for the rear mounting lug and spool thickness. The front and back
-  character turnaround shows the empty dock as part of the bracer.
+  `blue_grapple_generation_side.png` are the earlier simplified design studies.
 - `generation_prompts.json` records the exact built-in ImageGen prompts.
   `grapple_dock_v2_prompts.json` records the dock and turnaround revision.
   `grapple_generation_prompts.json` records the isolated grapple views.
 
-The grapple uses a broad brass spool wound with flat indigo ribbon and a single
-compact crescent hook. The keyed socket holds the reel on the elbow half of the
-bracer. One wide strap holds the hook shank toward the wrist. Fit the reel,
+The character turnaround shows the empty keyed socket and retaining strap.
+The socket holds the reel on the elbow half of the bracer. The strap holds the
+hook shank toward the wrist. Fit the preferred ornate reel,
 socket, strap, and hook together in 3D before testing readability at the gameplay
 camera distance. Keep the launchable hook and extending line separable.
 

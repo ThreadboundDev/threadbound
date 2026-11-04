@@ -1,0 +1,27 @@
+{
+  "tool": "Built-in ImageGen",
+  "date": "2026-11-04",
+  "prompts": [
+    {
+      "asset": "blue_grapple_ornate_front.png",
+      "prompt": "Use case: precise-object-edit. Produce one isolated Blue Hermit grapple reference for image-to-3D. The input is the user's preferred design. Recreate ONLY the isolated accessory shown in the middle row of that exact board, as a single object centered on a clean white square. Enlarge the middle row's prop to fill roughly 86 percent of the width with generous margins. Keep its geometry and restrained ornament: aged dark warm bronze two-flange spool, concentric engraved rings and a small raised blue cabochon at its center, coiled flat woven ribbon between the flanges, slim stitched dark-brown leather mount backing with a small underside key. Short single flat ribbon goes straight right from the spool to a bronze swivel eye. One compact ornate anchor to the right with two sweeping crescent blades, one short central pointed nose, shaped stepped bronze shank, and a small rich blue cabochon in the center. Keep actual silhouette, sizes, darkened bevels, elegant shallow edge detailing and relative spacing of the reference. Show the broad face of crescent clearly. Keep spool's thickness and winding visible from a shallow elevated orthographic front angle.\nMatch ribbon to the outfit's DARK muted slate-indigo cloth shown in the board sleeves, about #2b344d in midtones; no bright royal blue. The ribbon is darkest indigo woven flat tape, with restrained fine antique-gold thread on a few subtle diagonals like the source. Deep blue inset stones can catch soft highlights. Natural aged warm bronze, dark grooves. Soft neutral studio light, plain uniform white background, horizontal composition spool left and hook right. No redesign, no simplification into a plain C, no large blue enamel disk, no hand, no bracer, no mount strap, no text, caption, borders, dividers, shadow, watermark or extra parts. Exactly one standalone accessory.",
+      "references": [
+        "Chase's attached preferred Blue grapple design sheet"
+      ]
+    },
+    {
+      "asset": "blue_grapple_ornate_back.png",
+      "prompt": "Use case: identity-preserve. One additional isolated angle of the exact ornate Blue Hermit grapple in the input, for multiview image-to-3D. Same dark slate-indigo ribbon, fine gold thread, aged warm bronze spool and shaped crescent anchor, leather backing, proportions and horizontal length. Spool stays on left and hook stays on right. One ribbon connects to one bronze eye. Keep the two shaped crescent blades and the short central point, small blue cabochons on front faces. Square white image, same scale, clean neutral lighting, full object inside frame. No captions, hands, bracer, extra hardware, backdrop detail, hard shadows or new parts.\nTurn the accessory over around its left-right long axis to show its reverse at a shallow angle. Show the underside of the same dark brown stitched leather base around the small centered bronze mounting key. Spool winding still visible along far rim, decorative top stone hidden. Reverse face of the same curved twin-blade bronze hook has shallow bevel lines and a plain central boss, with the front cabochon hidden. Preserve the hook silhouette and center spike. Keep dark ribbon and eye visible and centered exactly as in input.",
+      "references": [
+        "blue_grapple_ornate_front.png"
+      ]
+    },
+    {
+      "asset": "blue_grapple_ornate_side.png",
+      "prompt": "Use case: identity-preserve. One additional isolated angle of the exact ornate Blue Hermit grapple in the input, for multiview image-to-3D. Same dark slate-indigo ribbon, fine gold thread, aged warm bronze spool and shaped crescent anchor, leather backing, proportions and horizontal length. Spool stays on left and hook stays on right. One ribbon connects to one bronze eye. Keep the two shaped crescent blades and the short central point, small blue cabochons on front faces. Square white image, same scale, clean neutral lighting, full object inside frame. No captions, hands, bracer, extra hardware, backdrop detail, hard shadows or new parts.\nRotate the accessory about its left-right long axis to a near edge-on profile (about 80 degrees from its broad decorative face). Show both slim bronze flanges, thick layered dark ribbon winding, thin brown leather backing beneath the lower flange, compact mounting key and just a sliver of the small top blue stone. The ribbon lead is short, straight and flat into the same eye. The two blades of the same ornate hook foreshorten, revealing the thickness, with one partially behind the other. Keep the short central pointed nose and dark beveled recesses. Keep full original length rather than aiming the camera down the long axis.",
+      "references": [
+        "blue_grapple_ornate_front.png"
+      ]
+    }
+  ]
+}
