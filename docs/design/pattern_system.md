@@ -146,6 +146,63 @@ Pattern artwork should read as physical embroidery rather than a magical effect.
 
 Patterning should not cover the entire outfit. Embroidery should enhance the clothing while preserving the silhouette, Thread-color readability, and clarity of gameplay actions.
 
+## November 4 proposal for repaired porcelain and embroidery
+
+Chase's concept sheet uses painted porcelain, visible metal repairs, and a
+common set of motifs on masks and textiles. Use the plain oval on the current
+doll as the starting point. Keep its proportions and eye placement, with a
+close-fitting shell that clears both the Base cowl and the Hermit brim. The
+first studies can share that shell and vary the glaze, paint, and repair lines.
+
+Give the repair a visible shape. Start with one offset seam that joins two
+large pieces, one short branch, and a slight glaze difference between the
+pieces. Use warm gold for the first sample, with a broad enough edge to catch
+light in profile. Fine cracks can add detail in the inventory close-up. The
+October 30 [gameplay comparison](../../work/appearance-lab-2026-10-30/mask-comparison.jpg)
+showed that the broad split and diagonal read better than fine seams at 0.83
+zoom. Check the new shape in side view and under the Hermit brim before adding
+detail. The concept's Loomed, Balance, and Frayed faces provide art references.
+Faction assignments and stories are outside this proposal.
+
+| Layer | Proposed use in the first comparison |
+| --- | --- |
+| Mask finish | Painted motif, porcelain shade, and repaired seams. A cosmetic choice shared across gear sets. Keep the pale porcelain, dark eyes, and repair metal readable under Identity recolors. |
+| Identity palette | A common dye on designated fabric across mixed gear. Start with the Base waist wrap and the Hermit scarf and ribbons. Preserve leather, wicker, wood, and hardware as material anchors. |
+| Equipped Pattern | One repeatable stitch motif on authored cloth bands. Start with the Base waist wrap and forearm cloth, and the Hermit sash end and lower sleeve band. Keep the metal grapple and busy wicker weave clear. |
+
+Translate the same motif between materials. A Flow wave can be a single broad
+brushstroke across one cheek and a two-wave repeat at the sash end. The painted
+mask motif can be chosen independently of the equipped stitch motif. Give each
+garment a region for dye and a band for the stitch repeat so future motifs can
+reuse those areas across equipment swaps. Keep fine stitches and fine repair
+branches for close views.
+
+For the first comparison, put plain ivory, gold-repaired ivory, and a painted
+wave over repaired ivory on the shared shell. Use the existing Follower's Knot
+and a Flowing Weave stitch study. Compare full Base, full Hermit, and a mixed
+loadout at 0.83 zoom. A useful mixed example is Base Head / Chest with Hermit
+gloves and boots. Carry one cloth dye across the gear and compare mask only,
+embroidery only, and both while the doll turns, runs, and grapples. Also inspect
+the masks at inventory scale.
+
+### Pattern catalog and first effect test
+
+The examples above describe four conditional designs. The existing demo
+resource, **Follower's Knot**, grants +10% AP recharge and +10% momentum
+generation while equipped. Those demo bonuses currently apply with any gear.
+Together these are five named Patterns in the checked-in material.
+
+For a future effect test, use **Flowing Weave** because Base and Hermit can
+exercise both states now. As a proposal, count Gloves, Boots, and Head / Chest
+and leave the weapon and cosmetic mask outside that count. Equip Flowing Weave
+with two Hermit pieces, then swap either piece for Base and show the condition
+change in the existing Pattern slot. Prototype one of the documented effects
+first, shorter grapple cooldown, and compare complete swings with the same
+gloves. Treat the second effect and all tuning values as open. A future catalog
+can give separate entries to full Neutral, each two-Thread pairing, and a
+Neutral-heavy mixed set. The first art comparison can use both motifs without
+implementing any of those effects.
+
 ## Technical Direction
 
 The character should eventually be composed from independent visual layers:
