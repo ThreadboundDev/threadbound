@@ -5,6 +5,12 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 Blue grapple generation: [three isolated views](../work/blue-hermit-monk-2026-11-04/README.md)
+show the reel, ribbon, and crescent hook from the front, reverse, and side.
+The reverse shows the keyed mounting lug and the side shows reel thickness.
+The character turnaround supplies the matching empty bracer dock.
+Checkpoint: `art: prepare blue grapple generation views`.
+
 November 4 Blue grapple revision: the [current Blue turnaround and dock study](../work/blue-hermit-monk-2026-11-04/README.md)
 use a larger ribbon spool, compact crescent, keyed socket, and a single hook
 strap. The front and back show the same empty dock. Confirm fit and readability

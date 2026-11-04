@@ -12,8 +12,14 @@ authority for any generated mesh.
 - `blue_hermit_front.png` and `blue_hermit_back.png` are the original concept views.
 - `blue_hermit_turn.png` shows the two ribbons trailing during a balanced turn.
 - `blue_grapple_dock_v2.png` compares the empty and stowed grapple on the bracer.
+- `blue_grapple_generation_front.png`, `blue_grapple_generation_back.png`, and
+  `blue_grapple_generation_side.png` isolate the reel, ribbon, and crescent hook
+  as one accessory. Use the front as the main image, with the reverse and edge
+  profile for the rear mounting lug and spool thickness. The front and back
+  character turnaround shows the empty dock as part of the bracer.
 - `generation_prompts.json` records the exact built-in ImageGen prompts.
   `grapple_dock_v2_prompts.json` records the dock and turnaround revision.
+  `grapple_generation_prompts.json` records the isolated grapple views.
 
 The grapple uses a broad brass spool wound with flat indigo ribbon and a single
 compact crescent hook. The keyed socket holds the reel on the elbow half of the
