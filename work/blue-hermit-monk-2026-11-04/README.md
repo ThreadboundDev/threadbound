@@ -12,9 +12,13 @@ authority for any generated mesh.
 - `blue_hermit_front.png` and `blue_hermit_back.png` are the original concept views.
 - `blue_hermit_turn.png` shows the two ribbons trailing during a balanced turn.
 - `blue_grapple_dock_v2.png` compares the empty and stowed grapple on the bracer.
+- `blue_grapple_single_upload.png` is the preferred single image for Tripo.
+  It isolates the ornate grapple on white and shows the spool depth, dark
+  indigo ribbon, crescent hook, and pin directly below the lower flange.
+  `grapple_single_upload_prompt.json` records the exact ImageGen prompt.
 - `blue_grapple_ortho_top.png`, `blue_grapple_ortho_bottom.png`,
   `blue_grapple_ortho_side_a.png`, and `blue_grapple_ortho_side_b.png` are the
-  current generation views. These use axial orthographic cameras at one scale
+  earlier multiview trial. They use axial orthographic cameras at one scale
   on the same Blender reference model. The two side views look from opposite
   edges. The spool has a short centered metal pin directly under its lower
   flange to seat in the glove socket. The bottom and side views show this pin.

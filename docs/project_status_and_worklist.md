@@ -5,6 +5,12 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 Blue grapple upload: Chase reports poor results with the multiview
+input and requests [one clean reference](../work/blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png).
+The ornate reel and hook use a dark indigo ribbon and a short metal spool pin
+that seats directly in the glove socket.
+Checkpoint: `art: prepare single blue grapple upload image`.
+
 November 4 Blue grapple orthographics: the [current reference set](../work/blue-hermit-monk-2026-11-04/README.md)
 uses one Blender model for the top, bottom, and opposing side views. A short
 metal pin beneath the spool fits directly into the glove socket. These images
