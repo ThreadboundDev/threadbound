@@ -5,6 +5,12 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 Blue grapple orthographics: the [current reference set](../work/blue-hermit-monk-2026-11-04/README.md)
+uses one Blender model for the top, bottom, and opposing side views. A short
+metal pin beneath the spool fits directly into the glove socket. These images
+supersede the angled generation studies.
+Checkpoint: `art: render blue grapple orthographic views`.
+
 November 4 preferred Blue grapple: Chase selects the more ornate crescent and
 spool from the attached concept, with dark slate-indigo ribbon matching the
 outfit. The [updated generation set](../work/blue-hermit-monk-2026-11-04/README.md)

@@ -12,12 +12,16 @@ authority for any generated mesh.
 - `blue_hermit_front.png` and `blue_hermit_back.png` are the original concept views.
 - `blue_hermit_turn.png` shows the two ribbons trailing during a balanced turn.
 - `blue_grapple_dock_v2.png` compares the empty and stowed grapple on the bracer.
+- `blue_grapple_ortho_top.png`, `blue_grapple_ortho_bottom.png`,
+  `blue_grapple_ortho_side_a.png`, and `blue_grapple_ortho_side_b.png` are the
+  current generation views. These use axial orthographic cameras at one scale
+  on the same Blender reference model. The two side views look from opposite
+  edges. The spool has a short centered metal pin directly under its lower
+  flange to seat in the glove socket. The bottom and side views show this pin.
 - `blue_grapple_ornate_front.png`, `blue_grapple_ornate_back.png`, and
-  `blue_grapple_ornate_side.png` are the preferred grapple generation images.
-  Use the front as the main reference. The reverse shows the leather mount
-  and key, and the side illustrates the spool depth. The ornate hook has
-  two crescent blades, a short center point, and a blue stone. The spool and
-  short lead use muted slate-indigo ribbon with fine bronze-gold thread.
+  `blue_grapple_ornate_side.png` are the earlier ornate design studies. The
+  crescent blades, short center point, blue stones, and dark slate-indigo
+  ribbon with gold thread inform the orthographic set.
   `grapple_ornate_prompts.json` records the prompts.
 - `blue_grapple_generation_front.png`, `blue_grapple_generation_back.png`, and
   `blue_grapple_generation_side.png` are the earlier simplified design studies.
@@ -26,10 +30,10 @@ authority for any generated mesh.
   `grapple_generation_prompts.json` records the isolated grapple views.
 
 The character turnaround shows the empty keyed socket and retaining strap.
-The socket holds the reel on the elbow half of the bracer. The strap holds the
-hook shank toward the wrist. Fit the preferred ornate reel,
-socket, strap, and hook together in 3D before testing readability at the gameplay
-camera distance. Keep the launchable hook and extending line separable.
+The spool pin seats directly in the socket on the elbow half of the bracer.
+The strap holds the hook shank toward the wrist. Fit the pin, socket, strap,
+and hook together in 3D before testing readability at the gameplay camera
+distance. Keep the launchable hook and extending line separable.
 
 The wide, shallow brim, fitted leather vest with flax toggles, clean bell
 sleeves, and full tapered trousers establish the silhouette. Slim mid-shin
