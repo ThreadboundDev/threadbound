@@ -94,9 +94,10 @@ permanent ownership, and the exact route checks belong in a later design pass.
 
 Fit one close-fitting oval shell to the doll's eyes and head bone. Check it with
 the Base cowl and Hermit brim. Start with the Loomed knot and Hermit wave as
-finishes on the same mesh, plus plain ivory as a comparison swatch. One
-off-center gold repair should join two visibly different ivory pieces. Use a
-short branch, restrained glaze variation, and enough contrast for side view.
+finishes on the same mesh, plus plain ivory as a comparison swatch. Give each
+mask its own gold repair layout. Loomed has a long diagonal across the face.
+Hermit's shorter seam rejoins a shard along the lower cheek and chin. Use
+restrained glaze variation and enough contrast for side view.
 Frayed can push that repair further, and Reclaimer can explore a distinct shape
 after the common shell is proven. These are art directions for the player's
 mask catalog.
