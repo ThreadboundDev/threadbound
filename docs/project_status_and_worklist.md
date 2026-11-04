@@ -21,6 +21,13 @@ pair two finishes on a shared mask shape with knotwork and wave embroidery.
 Gloves own their grapple hardware and behavior. Separate 3D generation is an
 authoring step for the same equipped item. Mask fitting and in-game review remain open.
 
+November 4 fitted mask master: [Blender source and review handoff](art/loomed_hermit_master_shell.md)
+delivers one head-bound shell, Loomed/Hermit finishes, separate black eye paint
+and gold repairs, and fitted knot/wave embroidery. All 63 saved-file checks pass,
+including seven head poses against the doll, Base cowl and Hermit brim. Generated
+art stays in `LocalOnly/Equipment/Masks/`; visual acceptance and in-game review
+remain open. Checkpoint: `asset: build fitted loomed and hermit mask master`.
+
 November 4 Blue grapple upload: Chase reports poor results with the multiview
 input and requests [one clean reference](../work/blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png).
 The ornate reel and hook use a dark indigo ribbon and a short metal spool pin
