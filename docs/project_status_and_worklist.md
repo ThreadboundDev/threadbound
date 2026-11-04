@@ -5,6 +5,18 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 3 generation-reference preparation: Chase requests the same actual doll
+in a T-pose, front and back, both bare and wearing the current base outfit.
+Four matched 2048x2048 orthographic renders and a ZIP are delivered locally,
+with one camera scale/center, unchanged body geometry, 62 rest-joint coordinates,
+an editable reference scene and an identity-preserving outfit prompt.
+[Package, exact files and usage](art/doll_generation_references_2026_11_03.md).
+Body/garment/source hashes, saved-scene integrity and ZIP byte equality are
+checked; all four images are visually reviewed. These are generation references;
+the equipment/clipping migration remains a separate approval and fit task.
+Checkpoint: `art: render consistent doll T-pose references` on the equipment
+branch. The character reference artwork stays local under the existing policy.
+
 November 3 boot-fit correction: Chase requests mid-shin boots after rejecting
 their oversized, nearly knee-high appearance. The cuff drops from 0.625 m to
 0.415 m, halfway between ankle and knee; shaft compression preserves foot/heel
