@@ -38,11 +38,18 @@ func _ready():
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
+	if event is InputEventMouseButton and event.pressed:
+		if _art_test_zoom and not get_tree().paused and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
+			var step := 1.25 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 0.8
+			var ticks: float = event.factor if event.factor > 0.0 else 1.0
+			if _adjust_art_test_zoom(pow(step, ticks)):
+				get_viewport().set_input_as_handled()
+		return
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 	match event.keycode:
-		KEY_BRACKETLEFT, KEY_BRACKETRIGHT, KEY_BACKSLASH:
-			if _art_test_zoom and _adjust_art_test_zoom(event.keycode):
+		KEY_BACKSLASH:
+			if _art_test_zoom and _adjust_art_test_zoom(0.0):
 				get_viewport().set_input_as_handled()
 		KEY_F3:
 			if _kill_proto_weaver():
@@ -55,18 +62,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			ending.set("record_completion", false)
 			get_tree().root.add_child(ending)
 
-func _adjust_art_test_zoom(key: Key) -> bool:
+func _adjust_art_test_zoom(step: float) -> bool:
 	var camera := get_viewport().get_camera_2d()
 	if not camera:
 		return false
 	var original: Vector2 = camera.get_meta(ZOOM_BASE_META, camera.zoom)
-	if key == KEY_BACKSLASH:
+	if step == 0.0:
 		camera.zoom = original
 		camera.remove_meta(ZOOM_BASE_META)
 	else:
 		camera.set_meta(ZOOM_BASE_META, original)
-		var step := 1.25 if key == KEY_BRACKETRIGHT else 0.8
-		camera.zoom = original * clampf(camera.zoom.x / original.x * step, 1.0, 4.0)
+		camera.zoom = original * clampf(camera.zoom.x / original.x * step, 1.0, 16.0)
 	return true
 
 func _kill_proto_weaver() -> bool:

@@ -39,8 +39,8 @@ Gameplay art review is open.
 
 ### Close-up feedback
 
-During an equipment art-test session, press `]` to zoom in, `[` to zoom
-back out, or `\` to reset to the scene's normal zoom. Use **Ctrl+F1**
+During gameplay in an equipment art-test session, scroll up to zoom in (up
+to 16×), scroll down to zoom out, or press `\` to reset. Use **Ctrl+F1**
 for screenshot feedback or **Ctrl+F2** for a movement clip. The feedback
 report captures the current camera zoom.
 
