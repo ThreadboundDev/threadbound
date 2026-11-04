@@ -5,6 +5,11 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 fitted Base and Blue: both generated outfits and stowed grapples
+are fitted to the existing doll rig. Six inventory icons support eight mixed
+loadouts. Shared elbow and mid-shin cuts are ready for Chase's in-game review.
+[Test launch and asset handoff](art/base_blue_equipment_test.md).
+
 November 4 Blue grapple upload: Chase reports poor results with the multiview
 input and requests [one clean reference](../work/blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png).
 The ornate reel and hook use a dark indigo ribbon and a short metal spool pin

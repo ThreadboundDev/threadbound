@@ -6,6 +6,7 @@ extends Node3D
 
 const SLOTS: Array[StringName] = [&"gloves", &"boots", &"head_chest", &"weapon"]
 const DEFAULT_LOADOUT := preload("res://Src/Equipment/Visuals/base_gear_loadout.tres")
+const FITTED_LOADOUT := preload("res://Src/Equipment/Visuals/base_blue_gear_loadout.tres")
 
 signal item_changed(slot: StringName, item: EquipmentVisualDefinition)
 
@@ -18,9 +19,20 @@ var _grapple_stowed := true
 
 
 static func default_assets_available() -> bool:
+	if fitted_outfits_available():
+		var weapon := DEFAULT_LOADOUT.get_meta("weapon") as EquipmentVisualDefinition
+		return weapon.is_available()
 	for slot in SLOTS:
 		var item := DEFAULT_LOADOUT.get_meta(String(slot), null) as EquipmentVisualDefinition
 		if not item or item.slot != String(slot) or not item.is_available():
+			return false
+	return true
+
+
+static func fitted_outfits_available() -> bool:
+	for index in 6:
+		var item := FITTED_LOADOUT.get_meta("item_%d" % index) as EquipmentVisualDefinition
+		if not item or not item.is_available():
 			return false
 	return true
 
@@ -29,13 +41,20 @@ func initialize(target: Skeleton3D) -> bool:
 	skeleton = target
 	if not skeleton or not default_assets_available():
 		return false
-	for slot in SLOTS:
-		if not equip(DEFAULT_LOADOUT.get_meta(String(slot)) as EquipmentVisualDefinition):
+	if fitted_outfits_available():
+		for index in 6:
+			register_variant(SLOTS[index % 3], index, FITTED_LOADOUT.get_meta("item_%d" % index) as EquipmentVisualDefinition)
+	var manager := get_node_or_null("/root/EquipManager") if not Engine.is_editor_hint() else null
+	for slot_type in SLOTS.size():
+		var slot := SLOTS[slot_type]
+		var item := DEFAULT_LOADOUT.get_meta(String(slot)) as EquipmentVisualDefinition
+		if slot_type < 3:
+			var index := int(manager.current_equip[slot_type]) if manager else slot_type
+			item = _variants.get(Vector2i(slot_type, index), _variants.get(Vector2i(slot_type, slot_type), item))
+		if not equip(item):
 			return false
-	if not Engine.is_editor_hint():
-		var manager := get_node_or_null("/root/EquipManager")
-		if manager:
-			manager.equip_changed.connect(_on_gameplay_equipment_changed)
+	if manager:
+		manager.equip_changed.connect(_on_gameplay_equipment_changed)
 	return true
 
 
@@ -146,6 +165,8 @@ func _update_body_coverage() -> void:
 			hidden[mesh_name] = true
 	for node in get_parent().find_children("Doll_Covered_*", "MeshInstance3D", true, false):
 		(node as MeshInstance3D).visible = not hidden.has(String(node.name))
+	for node in get_parent().find_children("Threadborne_Doll", "MeshInstance3D", true, false):
+		(node as MeshInstance3D).visible = not hidden.has("Threadborne_Doll")
 
 
 func get_blade_points() -> PackedVector3Array:
@@ -195,7 +216,6 @@ func _on_gameplay_equipment_changed(slot_type: int, gameplay_index: int) -> void
 	var slot := SLOTS[slot_type]
 	var item := _variants.get(Vector2i(slot_type, gameplay_index)) as EquipmentVisualDefinition
 	if not item:
-		# Colored gear has no new authored models yet. Keep the fitted base art.
-		item = DEFAULT_LOADOUT.get_meta(String(slot)) as EquipmentVisualDefinition
+		item = _variants.get(Vector2i(slot_type, slot_type), DEFAULT_LOADOUT.get_meta(String(slot))) as EquipmentVisualDefinition
 	if equipped.get(slot) != item:
 		equip(item)

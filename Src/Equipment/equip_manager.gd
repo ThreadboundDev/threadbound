@@ -9,9 +9,9 @@ const MERCHANT_KNOT_PATTERN: EquipmentPattern = preload("res://Src/Equipment/Pat
 const BLUE_GLOVES_SLOT := 3
 const RED_GLOVES_SLOT := 6
 const YELLOW_GLOVES_SLOT := 9
-const ALLOWED_GLOVE_SLOTS := [0, BLUE_GLOVES_SLOT, RED_GLOVES_SLOT, YELLOW_GLOVES_SLOT]
+const FITTED_ART_TEST_FLAG := "--equipment-art-test"
 
-var current_equip: Array[int] = [0, 0, 0] # [gloves, boots, chest]
+var current_equip: Array[int] = [0, 1, 2] # [gloves, boots, chest]
 
 var current_gloves: Node = null
 var current_boots: BaseEquipment = null
@@ -29,8 +29,6 @@ func _ready() -> void:
 func equip_item(slot_idx: int) -> void:
 	if slot_idx < 0 or slot_idx > YELLOW_GLOVES_SLOT:
 		return
-	if not ALLOWED_GLOVE_SLOTS.has(slot_idx):
-		return
 	if not is_slot_unlocked(slot_idx):
 		push_warning("EquipManager: %s is still locked." % get_equip_name(slot_idx))
 		return
@@ -38,7 +36,6 @@ func equip_item(slot_idx: int) -> void:
 	var slot_type := slot_idx % 3
 	if current_equip[slot_type] == slot_idx and slot_idx != slot_type:
 		unequip_slot(slot_type)
-		equip_changed.emit(slot_type, current_equip[slot_type])
 		return
 
 	current_equip[slot_type] = slot_idx
@@ -48,10 +45,13 @@ func equip_item(slot_idx: int) -> void:
 
 func is_slot_unlocked(slot_idx: int) -> bool:
 	match slot_idx:
-		0:
+		0, 1, 2:
 			return true
-		BLUE_GLOVES_SLOT:
-			return DemoProgress.has_thread(&"balance")
+		BLUE_GLOVES_SLOT, 4, 5:
+			var fitted := PlayerEquipmentVisuals.fitted_outfits_available()
+			if slot_idx != BLUE_GLOVES_SLOT and not fitted:
+				return false
+			return DemoProgress.has_thread(&"balance") or (fitted and OS.get_cmdline_user_args().has(FITTED_ART_TEST_FLAG))
 		RED_GLOVES_SLOT:
 			return DemoProgress.has_thread(&"power")
 		YELLOW_GLOVES_SLOT:
@@ -77,48 +77,25 @@ func _create_and_attach_equipment(slot_idx: int) -> void:
 				push_warning("EquipManager: Player cannot equip glove scenes.")
 
 		1:
-			if current_boots:
-				current_boots.on_unequipped()
-
-			current_boots = BaseBoots.new(player)
-			player.current_boots = current_boots
-			current_boots.on_equipped()
-			print("Equipped base boots")
+			current_boots = player.current_boots
+			if not current_boots:
+				current_boots = BaseBoots.new(player)
+				player.current_boots = current_boots
+				current_boots.on_equipped()
 
 		2:
-			if current_chest:
-				current_chest.on_unequipped()
-
-			current_chest = BaseChest.new(player)
-			player.current_chest = current_chest
-			current_chest.on_equipped()
-			print("Equipped base chest")
+			current_chest = player.current_chest
+			if not current_chest:
+				current_chest = BaseChest.new(player)
+				player.current_chest = current_chest
+				current_chest.on_equipped()
 
 func unequip_slot(slot_type: int) -> void:
-	var player = get_tree().get_first_node_in_group("player") as CharacterBody2D
-	if not player:
+	if slot_type < 0 or slot_type >= current_equip.size():
 		return
-
-	match slot_type:
-		0:
-			if player.has_method("equip_gloves"):
-				player.equip_gloves(_get_glove_scene(0, player))
-				current_gloves = player.current_gloves
-
-		1:
-			if current_boots:
-				current_boots.on_unequipped()
-			current_boots = BaseBoots.new(player)
-			player.current_boots = current_boots
-
-		2:
-			if current_chest:
-				current_chest.on_unequipped()
-			current_chest = BaseChest.new(player)
-			player.current_chest = current_chest
-
 	current_equip[slot_type] = slot_type
-	print("Unequipped slot ", slot_type, " -> Base")
+	_create_and_attach_equipment(slot_type)
+	equip_changed.emit(slot_type, slot_type)
 
 func unequip_all() -> void:
 	unequip_slot(0)
@@ -187,10 +164,10 @@ func get_equip_name(slot_idx: int) -> String:
 	match slot_idx:
 		0: return "Base Gloves"
 		1: return "Base Boots"
-		2: return "Base Chest"
+		2: return "Base Head/Chest"
 		3: return "Hermit Gloves"
 		4: return "Hermit Boots"
-		5: return "Hermit Chest"
+		5: return "Hermit Head/Chest"
 		6: return "Monarch Gloves"
 		7: return "Monarch Boots"
 		8: return "Monarch Chest"

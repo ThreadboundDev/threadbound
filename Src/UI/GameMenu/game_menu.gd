@@ -114,7 +114,22 @@ const INVENTORY_ITEMS := [
 		"description": "A long pendulum grapple built for swing timing and momentum.",
 		"icon_texture": "31_icon_blue_gloves",
 		"equip_slot_idx": 3,
-		"unlock_thread": &"balance",
+	},
+	{
+		"id": &"hermit_boots",
+		"category": &"equipment",
+		"name": "HERMIT BOOTS",
+		"description": "Indigo wraps and split-toe leather boots.",
+		"icon_texture": "34_icon_blue_boots",
+		"equip_slot_idx": 4,
+	},
+	{
+		"id": &"hermit_chest",
+		"category": &"equipment",
+		"name": "HERMIT HEAD / CHEST",
+		"description": "Wicker hat, leather vest, bell sleeves and tapered trousers.",
+		"icon_texture": "35_icon_blue_chest",
+		"equip_slot_idx": 5,
 	},
 	{
 		"id": &"monarch_gloves",
@@ -144,9 +159,10 @@ const INVENTORY_ITEMS := [
 	{
 		"id": &"base_chest",
 		"category": &"equipment",
-		"name": "BASE CHEST",
+		"name": "BASE HEAD / CHEST",
 		"description": "The current Threadborne chest wrapping and cloth kit.",
 		"icon_texture": "29_icon_chest",
+		"equip_slot_idx": 2,
 	},
 	{
 		"id": &"base_boots",
@@ -154,6 +170,7 @@ const INVENTORY_ITEMS := [
 		"name": "BASE BOOTS",
 		"description": "Standard Threadborne footwork. Current demo equipment.",
 		"icon_texture": "27_icon_boots",
+		"equip_slot_idx": 1,
 	},
 	{
 		"id": &"merchant_knot_pattern",
@@ -165,6 +182,14 @@ const INVENTORY_ITEMS := [
 		"owned_pattern": &"merchant_knot",
 	},
 ]
+const FITTED_ICON_FILES := {
+	"26_icon_grapple": "base_gloves_icon.png",
+	"27_icon_boots": "base_boots_icon.png",
+	"29_icon_chest": "base_head_chest_icon.png",
+	"31_icon_blue_gloves": "blue_gloves_icon.png",
+	"34_icon_blue_boots": "blue_boots_icon.png",
+	"35_icon_blue_chest": "blue_head_chest_icon.png",
+}
 const EQUIPPED_SLOT_ITEMS := {
 	"WeaponSlot": {
 		"name": "WEAVER'S SHUTTLE",
@@ -433,7 +458,7 @@ func _setup_inventory_ui() -> void:
 		inventory_tooltip.visible = false
 	if inventory_slots_root:
 		for slot in inventory_slots_root.get_children():
-			if slot is Control:
+			if slot is Control and slot != _inventory_selection_pointer:
 				(slot as Control).mouse_filter = Control.MOUSE_FILTER_STOP
 				_set_children_mouse_filter(slot, Control.MOUSE_FILTER_IGNORE)
 				(slot as Control).mouse_entered.connect(_on_inventory_slot_mouse_entered.bind(slot))
@@ -1756,7 +1781,7 @@ func _update_inventory_threads() -> void:
 
 	var slot_nodes := inventory_slots_root.get_children()
 	for slot in slot_nodes:
-		if not slot is Control:
+		if not slot is Control or slot == _inventory_selection_pointer:
 			continue
 		slot.remove_meta("inventory_item")
 		var frame := slot.get_node_or_null("InventoryFrame") as TextureRect
@@ -1777,7 +1802,7 @@ func _update_inventory_threads() -> void:
 	for slot in slot_nodes:
 		if item_index >= visible_items.size():
 			break
-		if not slot is Control:
+		if not slot is Control or slot == _inventory_selection_pointer:
 			continue
 		_set_inventory_slot_item(slot as Control, visible_items[item_index])
 		item_index += 1
@@ -1794,7 +1819,7 @@ func _get_visible_inventory_items() -> Array[Dictionary]:
 			continue
 		if item.has("thread_id") and not DemoProgress.has_thread(item["thread_id"]):
 			continue
-		if item.has("unlock_thread") and not DemoProgress.has_thread(item["unlock_thread"]):
+		if item.has("equip_slot_idx") and not EquipManager.is_slot_unlocked(int(item["equip_slot_idx"])):
 			continue
 		if item.has("owned_pattern") and (not EquipManager or not EquipManager.owns_pattern(item["owned_pattern"])):
 			continue
@@ -1829,6 +1854,10 @@ func _set_inventory_slot_item(slot: Control, item: Dictionary) -> void:
 	icon.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func _get_inventory_icon_texture(texture_id: String) -> Texture2D:
+	if FITTED_ICON_FILES.has(texture_id):
+		var path := "res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/" + String(FITTED_ICON_FILES[texture_id])
+		if ResourceLoader.exists(path):
+			return load(path) as Texture2D
 	match texture_id:
 		"7_thread_power":
 			return preload("res://Assets/chamber_of_first_weave/Threads/thread_of_power.png")
@@ -1861,25 +1890,22 @@ func _try_equip_inventory_item(item: Dictionary) -> void:
 			AudioManager.play_ui(&"menu_select")
 			_update_equipped_slot_items()
 		return
-	if not item.has("equip_slot_idx"):
+	if not EquipManager or not item.has("equip_slot_idx"):
 		return
 	var slot_idx := int(item["equip_slot_idx"])
-	if not [0, 3, 6, 9].has(slot_idx):
-		return
 	if not EquipManager.is_slot_unlocked(slot_idx):
 		return
-	if EquipManager:
-		AudioManager.play_ui(&"menu_select")
-		EquipManager.equip_item(slot_idx)
-		_update_equipped_slot_items()
+	AudioManager.play_ui(&"menu_select")
+	EquipManager.equip_item(slot_idx)
+	_update_equipped_slot_items()
 
 func _update_equipped_slot_items() -> void:
 	if not equipment_slots_root or not EquipManager:
 		return
 
-	_apply_equipped_slot_item("GlovesSlot", _get_equipped_gloves_item())
-	_apply_equipped_slot_item("BootsSlot", _get_equipped_static_item("BASE BOOTS", "Standard Threadborne footwork. Current demo equipment.", "27_icon_boots", -1))
-	_apply_equipped_slot_item("ChestSlot", _get_equipped_static_item("BASE CHEST", "The current Threadborne chest wrapping and cloth kit.", "29_icon_chest", -1))
+	_apply_equipped_slot_item("GlovesSlot", _get_equipped_clothing_item(0))
+	_apply_equipped_slot_item("BootsSlot", _get_equipped_clothing_item(1))
+	_apply_equipped_slot_item("ChestSlot", _get_equipped_clothing_item(2))
 	_apply_equipped_slot_item("WeaponSlot", _get_equipped_static_item("WEAVER'S SHUTTLE", "A simple shuttle weapon for close-range attacks.", "28_icon_shuttle", -1))
 	_apply_equipped_slot_item("PatternSlot", _get_equipped_pattern_item())
 
@@ -1892,39 +1918,25 @@ func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
 	var icon := slot.get_node_or_null("Icon") as TextureRect
 	if icon:
 		icon.texture = _get_inventory_icon_texture(String(item.get("icon_texture", "")))
+		if slot_name == "GlovesSlot" and PlayerEquipmentVisuals.fitted_outfits_available():
+			icon.offset_left = 8
+			icon.offset_top = 25
+			icon.offset_right = -8
+			icon.offset_bottom = -3
 	var value_label := slot.get_node_or_null("Value") as Label
 	if value_label:
 		value_label.text = String(item.get("name", ""))
 
-func _get_equipped_gloves_item() -> Dictionary:
-	var glove_idx := int(EquipManager.current_equip[0])
-	if glove_idx == 3:
-		return {
-			"name": "HERMIT GLOVES",
-			"description": "A long pendulum grapple built for swing timing and momentum.",
-			"icon_texture": "31_icon_blue_gloves",
-			"equip_slot_idx": 3,
-		}
-	if glove_idx == 6:
-		return {
-			"name": "MONARCH GLOVES",
-			"description": "A charged chain grapple built for aggressive movement.",
-			"icon_texture": "30_icon_red_gloves",
-			"equip_slot_idx": 6,
-		}
-	if glove_idx == 9:
-		return {
-			"name": "SAGE GLOVES",
-			"description": "A short snap grapple built for fast repositioning.",
-			"icon_texture": "32_icon_yellow_gloves",
-			"equip_slot_idx": 9,
-		}
-	return {
-		"name": "BASE GLOVES",
-		"description": "Thread wraps and grapple needle. Current demo equipment.",
-		"icon_texture": "26_icon_grapple",
-		"equip_slot_idx": 0,
-	}
+func _get_equipped_clothing_item(slot_type: int) -> Dictionary:
+	var equipped_index := int(EquipManager.current_equip[slot_type])
+	var base_item: Dictionary = {}
+	for item in INVENTORY_ITEMS:
+		var item_index := int(item.get("equip_slot_idx", -1))
+		if item_index == equipped_index and item_index % 3 == slot_type:
+			return item
+		if item_index == slot_type:
+			base_item = item
+	return base_item
 
 func _get_equipped_pattern_item() -> Dictionary:
 	var pattern: EquipmentPattern = EquipManager.get_current_pattern()

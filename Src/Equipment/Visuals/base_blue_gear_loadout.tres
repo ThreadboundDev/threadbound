@@ -1,0 +1,55 @@
+[gd_resource type="Resource" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://Src/Equipment/Visuals/equipment_visual_definition.gd" id="1"]
+
+[sub_resource type="Resource" id="Item0"]
+script = ExtResource("1")
+item_id = &"base_fitted_gloves"
+slot = "gloves"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_gloves.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_Gloves")
+grapple_origin = Vector3(0.077968843, 0.043414738, -0.031668864)
+
+[sub_resource type="Resource" id="Item1"]
+script = ExtResource("1")
+item_id = &"base_fitted_boots"
+slot = "boots"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_boots.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_Boots")
+
+[sub_resource type="Resource" id="Item2"]
+script = ExtResource("1")
+item_id = &"base_fitted_head_chest"
+slot = "head_chest"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_head_chest.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_HeadChest", "Threadborne_Doll")
+
+[sub_resource type="Resource" id="Item3"]
+script = ExtResource("1")
+item_id = &"blue_fitted_gloves"
+slot = "gloves"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/blue_gloves.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_Gloves")
+grapple_origin = Vector3(0.115470536, 0.130672753, 0.000910885)
+
+[sub_resource type="Resource" id="Item4"]
+script = ExtResource("1")
+item_id = &"blue_fitted_boots"
+slot = "boots"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/blue_boots.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_Boots")
+
+[sub_resource type="Resource" id="Item5"]
+script = ExtResource("1")
+item_id = &"blue_fitted_head_chest"
+slot = "head_chest"
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/blue_head_chest.glb")
+hidden_body_meshes = PackedStringArray("Doll_Covered_HeadChest", "Threadborne_Doll")
+
+[resource]
+metadata/item_0 = SubResource("Item0")
+metadata/item_1 = SubResource("Item1")
+metadata/item_2 = SubResource("Item2")
+metadata/item_3 = SubResource("Item3")
+metadata/item_4 = SubResource("Item4")
+metadata/item_5 = SubResource("Item5")
