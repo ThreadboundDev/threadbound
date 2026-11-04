@@ -444,7 +444,9 @@ hands = master_section("Shared_Wooden_Hands",lambda p: abs(p.x)>HAND_JOIN-.013,
                        [(0,-HAND_JOIN+.013),(0,HAND_JOIN-.013)])
 head = master_section("Shared_Wooden_Head",lambda p: p.z>1.595 and abs(p.x)<.15,[(2,1.595)])
 for side in (-1,1):
-    low, high = reference_seam(hands,0,side*(HAND_JOIN-.013),lambda p: p.z>1.4)
+    # The proximal cut includes forearm wood below the rounded wrist. Size
+    # the cuff around the actual wrist profile to seat the palm on its axis.
+    low, high = bounds(v.co for v in hands.data.vertices if abs(side*v.co.x-WRIST)<.005)
     center = (low+high)/2
     half = (high-low)/2 * 1.12
     wrist_seams.append((0,side*HAND_JOIN,lambda p: p.z>1.4,center,half,.055))
@@ -462,8 +464,7 @@ for key, outfit_archive, grapple_archive in (
     # rim and exposed shin into an artificial shared ellipse.
     align_seams(outfit,blue_boot_seams+wrist_seams if key == "blue" else wrist_seams)
     weights = blue_outfit_weights if key == "blue" else outfit_weights
-    gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN,
-                              [(0,-HAND_JOIN),(0,HAND_JOIN)]),weights)
+    gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN),weights)
     boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF),weights)
     head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=CUFF)
     if key == "blue":

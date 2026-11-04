@@ -62,8 +62,8 @@ session to load the new meshes for hands-on review.
 ## Shared doll fit follow-up
 
 Base and Blue use the same faceless wooden head and hands from the fitted
-master doll. The bracer opening is sized from the master wrist and overlaps
-it slightly. Both retain their imported elbows. The shared bracer cut is
+master doll. The open bracer cuff is centered on the rounded wrist profile
+and overlaps it slightly. Both retain their imported elbows. The shared bracer cut is
 on the forearm side of those joints to keep the elbow geometry with Head /
 Chest. Base retains the imported trouser hem, exposed shin, and boot rim
 shape, with the knee pivot covered by the trousers. Open the rebuilt
