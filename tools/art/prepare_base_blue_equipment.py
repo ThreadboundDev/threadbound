@@ -103,10 +103,7 @@ def smooth(value):
     return value*value*(3-2*value)
 
 
-def tag_hanging_cloth(obj, set_name):
-    """Preserve the attachment of detached leather and ribbon islands."""
-    if set_name != "blue":
-        return
+def mesh_components(obj):
     parents = list(range(len(obj.data.vertices)))
 
     def root(index):
@@ -121,15 +118,38 @@ def tag_hanging_cloth(obj, set_name):
     components = defaultdict(list)
     for vertex in obj.data.vertices:
         components[root(vertex.index)].append(vertex)
+    return components.values()
+
+
+def tag_hanging_cloth(obj, set_name):
+    """Preserve the attachment of detached leather and ribbon islands."""
+    if set_name != "blue":
+        return
     waist = obj.vertex_groups.new(name="Fit_Waist")
     shoulder = obj.vertex_groups.new(name="Fit_ShoulderRibbon")
-    for vertices in components.values():
+    for vertices in mesh_components(obj):
         low, high = bounds(v.co for v in vertices)
         if low.y > .022 and .41 < low.z < .48 and .78 < high.z < .84:
             shoulder.add([v.index for v in vertices], 1, "REPLACE")
         elif .34 < low.z < .54 and .57 < high.z < .65 and max(abs(low.x),abs(high.x)) < .18:
             # The front sash, hip panels and waist ribbon have no knee joint.
             waist.add([v.index for v in vertices], 1, "REPLACE")
+
+
+def lift_blue_trouser_bridge(obj):
+    # Tripo joined the inner legs at knee height. Raise that center web
+    # toward the crotch while preserving the outside leg and cut surfaces.
+    for vertices in mesh_components(obj):
+        low, high = bounds(v.co for v in vertices)
+        if low.x > -.24 or high.x < .24 or low.z > .50 or not 1.10 < high.z < 1.22:
+            continue
+        for vertex in vertices:
+            x, _, z = vertex.co
+            inward = 1-smooth(abs(x)/.145)
+            lower = smooth((z-.55)/.10)
+            upper = 1-smooth((z-.65)/.30)
+            vertex.co.z += .22*inward*lower*upper
+    obj.data.update()
 
 
 def align(obj, set_name):
@@ -251,6 +271,31 @@ def outfit_weights(point, hints):
             f"foot.{side}": foot*(1-toe), f"toe.{side}": foot*toe, "pelvis": pelvis,
         }
     return inherited(point)
+
+
+def blue_outfit_weights(point, hints):
+    x, _, z = point
+    width = abs(x)
+    side = "L" if x >= 0 else "R"
+    if z >= 1.65 or hints:
+        return outfit_weights(point, hints)
+    if z >= 1.21 and width >= .17:
+        # Keep the common elbow profile. Broad sleeves need a gradual
+        # transfer from the chest through the shoulder into the upper arm.
+        arm = smooth((width-.17)/.17)
+        elbow = smooth((width-ELBOW+.055)/.11)
+        return {"chest": 1-arm, f"upper_arm.{side}": arm*(1-elbow), f"forearm.{side}": arm*elbow}
+    if .60 < z < 1.16:
+        # Keep the trouser bridge on the pelvis as the legs separate.
+        # Blend into each thigh across the width of the cloth, rather
+        # than selecting opposite thighs on either side of x == 0.
+        knee = 1-smooth((z-.585)/.16)
+        rise = smooth((z-.69)/.17)
+        hips = smooth((z-.90)/.20)
+        inner = 1-smooth(width/.145)
+        pelvis = max(hips, rise*inner)
+        return {"pelvis": pelvis, f"thigh.{side}": (1-pelvis)*(1-knee), f"shin.{side}": (1-pelvis)*knee}
+    return outfit_weights(point, hints)
 
 
 def bind(obj, weights):
@@ -387,11 +432,15 @@ for key, outfit_archive, grapple_archive in (
         direction = Vector([float(i == axis) for i in range(3)])
         bisect(outfit.data,value*direction,direction)
     align_seams(outfit,seams)
+    weights = blue_outfit_weights if key == "blue" else outfit_weights
     gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: ELBOW<abs(p.x)<HAND_JOIN,
-                              [(0,-ELBOW),(0,ELBOW),(0,-HAND_JOIN),(0,HAND_JOIN)]),outfit_weights)
-    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF,[(2,CUFF)]),outfit_weights)
-    head_chest = bind(region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<ELBOW and p.z>=CUFF,
-                                   [(0,-ELBOW),(0,ELBOW),(2,CUFF)]),outfit_weights)
+                              [(0,-ELBOW),(0,ELBOW),(0,-HAND_JOIN),(0,HAND_JOIN)]),weights)
+    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF,[(2,CUFF)]),weights)
+    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<ELBOW and p.z>=CUFF,
+                             [(0,-ELBOW),(0,ELBOW),(2,CUFF)])
+    if key == "blue":
+        lift_blue_trouser_bridge(head_chest)
+    bind(head_chest,weights)
     grapple = imported(key+"_grapple",grapple_archive)
     groups[key] = {"gloves":[gloves,hands]+grapple_assets(key,grapple), "boots":[boots], "head_chest":[head_chest]}
     bpy.data.objects.remove(outfit,do_unlink=True)

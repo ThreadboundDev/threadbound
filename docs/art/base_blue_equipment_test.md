@@ -36,3 +36,18 @@ It exercises all eight combinations through the inventory, checks rig and
 weapon bindings, and casts both grapples from the fitted anchors. A rendered
 run also captures idle, running, and casting poses and the populated inventory.
 Gameplay art review is open.
+
+## Blue deformation follow-up
+
+The November 4 Chamber report showed full Hermit gear in idle and flagged
+deformation at the arms and between the legs. The Blue fitting pass now blends
+the broad sleeves from chest to upper arm, maintains the shared elbow weights
+at the cut, and raises the generated trouser bridge from near knee height
+toward the crotch. The inner cloth blends back into the pelvis and thighs.
+The shared rig, cut planes, and animation clips are reused.
+
+The revised local assets passed 238 Godot checks across all eight combinations.
+Rendered idle, run, and cast poses are in `LocalOnly/Equipment/BaseBlue/`.
+The prominent dark wedge is gone in the sampled run. Some texture stretch
+remains on the inner thigh in the wide casting stance. Restart the art-test
+session to load the new meshes for hands-on review.
