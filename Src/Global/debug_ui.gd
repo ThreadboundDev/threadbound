@@ -4,15 +4,24 @@ extends Node
 ## Provides a single debug label accessible from anywhere
 
 const DEMO_ENDING_SCENE := preload("res://Src/UI/DemoEnding/demo_ending.tscn")
+const FEEDBACK_CAPTURE := preload("res://Src/DebugFeedback/feedback_capture.gd")
+const ZOOM_BASE_META := &"_art_test_original_zoom"
 
 var debug_label: Label
 var target_node: Node2D = null  # Usually the player
 var canvas_layer: CanvasLayer = null
+var _art_test_zoom := false
 
 func _ready():
 	if not OS.is_debug_build():
 		process_mode = Node.PROCESS_MODE_DISABLED
 		return
+
+	_art_test_zoom = OS.get_cmdline_user_args().has("--equipment-art-test")
+	if not OS.get_cmdline_user_args().has("--no-debug-feedback"):
+		var feedback := FEEDBACK_CAPTURE.new()
+		feedback.name = "FeedbackCapture"
+		add_child(feedback)
 
 	# Create canvas layer for debug UI (always on top)
 	canvas_layer = CanvasLayer.new()
@@ -32,6 +41,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 	match event.keycode:
+		KEY_BRACKETLEFT, KEY_BRACKETRIGHT, KEY_BACKSLASH:
+			if _art_test_zoom and _adjust_art_test_zoom(event.keycode):
+				get_viewport().set_input_as_handled()
 		KEY_F3:
 			if _kill_proto_weaver():
 				get_viewport().set_input_as_handled()
@@ -42,6 +54,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			var ending := DEMO_ENDING_SCENE.instantiate()
 			ending.set("record_completion", false)
 			get_tree().root.add_child(ending)
+
+func _adjust_art_test_zoom(key: Key) -> bool:
+	var camera := get_viewport().get_camera_2d()
+	if not camera:
+		return false
+	var original: Vector2 = camera.get_meta(ZOOM_BASE_META, camera.zoom)
+	if key == KEY_BACKSLASH:
+		camera.zoom = original
+		camera.remove_meta(ZOOM_BASE_META)
+	else:
+		camera.set_meta(ZOOM_BASE_META, original)
+		var step := 1.25 if key == KEY_BRACKETRIGHT else 0.8
+		camera.zoom = original * clampf(camera.zoom.x / original.x * step, 1.0, 4.0)
+	return true
 
 func _kill_proto_weaver() -> bool:
 	var boss := get_tree().get_first_node_in_group("proto_weaver") as Node2D

@@ -37,6 +37,13 @@ weapon bindings, and casts both grapples from the fitted anchors. A rendered
 run also captures idle, running, and casting poses and the populated inventory.
 Gameplay art review is open.
 
+### Close-up feedback
+
+During an equipment art-test session, press `]` to zoom in, `[` to zoom
+back out, or `\` to reset to the scene's normal zoom. Use **Ctrl+F1**
+for screenshot feedback or **Ctrl+F2** for a movement clip. The feedback
+report captures the current camera zoom.
+
 ## Blue deformation follow-up
 
 The November 4 Chamber report showed full Hermit gear in idle and flagged
