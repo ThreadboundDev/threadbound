@@ -5,6 +5,21 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 3 base-reference follow-up: Chase accepts the Identity palette preview
+and requests a glove-mounted attachment point with each set's grapple authored
+separately. The [base mount/grapple package](../work/base-gear-grapple-reference-2026-11-03/README.md)
+contains new full-body front/back views, separate rope-coil and needle concepts,
+an empty/assembled bracer review, the accepted palette preview and exact prompts.
+The left inner-forearm mount leaves the shield-facing side clear. Each glove set
+owns its own grapple assembly and behavior; a common mounting convention does
+not make all grapples identical. The base references await Chase's visual review.
+After the base is liked, make one other established set and its grapple, then
+porcelain mask and embroidery Pattern studies for full/mixed-loadout comparisons.
+Identity recoloring requires authored material regions; pale, blended and
+blackened states also need testing. These are generation references and recorded
+decisions, with no Tripo submission, new 3D model or runtime replacement.
+Checkpoint: `art: prepare base grapple attachment references` on this branch.
+
 November 3 clarification: Chase wants newly generated artwork from the original
 2D doll/outfit concept, not T-pose renders of the current game models. The
 [generated concept package](../work/generated-doll-concept-2026-11-03/README.md)

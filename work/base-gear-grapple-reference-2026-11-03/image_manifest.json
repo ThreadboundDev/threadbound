@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-03",
+  "tool": "Built-in ImageGen",
+  "status": "Base mount and grapple references awaiting Chase visual review; palette concept accepted",
+  "images": [
+    {
+      "file": "accepted_identity_palette_preview.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1483982,
+      "sha256": "d9426ebb42340daaaea7931be3bcb3645359e3aab6d9e861ec68c22cdbad7dec",
+      "png_crc_valid": true
+    },
+    {
+      "file": "base_grapple_mount_review.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2084548,
+      "sha256": "0bd3c07d43edf2794314e336b3a74a8a32df303ed1510cc082c9869b6a38d0bd",
+      "png_crc_valid": true
+    },
+    {
+      "file": "base_grapple_needle.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1142211,
+      "sha256": "50edb39cba0e1424e4e87b93ba5567354930aaf4df5e28e2d31a01a4181a39b2",
+      "png_crc_valid": true
+    },
+    {
+      "file": "base_grapple_rope_coil.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1365225,
+      "sha256": "9bef91239fbd9df05dc56278314252fb5085e7261344c3f635ede849cc95ad54",
+      "png_crc_valid": true
+    },
+    {
+      "file": "base_outfit_back_mount.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1434639,
+      "sha256": "b968a38b15fb3cc66fd2377371d38f150e960f0be17c4aa0ada12571279c0d69",
+      "png_crc_valid": true
+    },
+    {
+      "file": "base_outfit_front_mount.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1799811,
+      "sha256": "1cebb784fa549ae6125c5fc36b36aa718e4818ebadafeab4c02716d33e33c150",
+      "png_crc_valid": true
+    }
+  ],
+  "checks": {
+    "png_chunk_crcs": true,
+    "front_back_matching_dimensions": true,
+    "visual_review": true,
+    "runtime_assets_modified": false,
+    "tripo_job_submitted": false
+  },
+  "limitations": [
+    "Conceptual fit only; no 3D seam, rig, collision or physical attachment validation",
+    "Other set and porcelain mask/Pattern studies follow base review"
+  ]
+}
