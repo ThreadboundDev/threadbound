@@ -5,6 +5,18 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 3 clarification: Chase wants newly generated artwork from the original
+2D doll/outfit concept, not T-pose renders of the current game models. The
+[generated concept package](../work/generated-doll-concept-2026-11-03/README.md)
+supersedes the native-render package for new character generation. It includes
+generated clothed front/back views, the unchanged original bare front and a new
+bare back, exact ImageGen prompts and a ZIP. Longer continuous ragged trouser
+legs cover the knees and approach the mid-shin boots, greatly reducing exposed
+calf without floating calf panels. Joint/hand direction corrections are included.
+PNG dimensions/hashes, ZIP equality and visual front/back checks pass. No runtime
+model replacement or Tripo submission is included; visual acceptance remains open.
+Checkpoint: `art: generate corrected doll outfit references` on this branch.
+
 November 3 generation-reference preparation: Chase requests the same actual doll
 in a T-pose, front and back, both bare and wearing the current base outfit.
 Four matched 2048x2048 orthographic renders and a ZIP are delivered locally,

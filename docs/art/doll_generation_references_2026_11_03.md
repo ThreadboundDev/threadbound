@@ -1,5 +1,11 @@
 # Consistent doll T-pose references — November 3, 2026
 
+**Superseded for character generation.** Chase clarifies that the requested input
+is generated concept artwork, not the in-game model rendered in a T-pose. Use the
+[corrected generated concept package](../../work/generated-doll-concept-2026-11-03/README.md)
+for new full-clothed generations. The native-render package below remains only a
+technical fit/reference record; it is not the selected visual direction.
+
 Chase requests front and back references of the actual doll, both bare and in
 the current base outfit, to keep the character and its parts consistent across
 future clothing generations. These four images are direct Blender renders of

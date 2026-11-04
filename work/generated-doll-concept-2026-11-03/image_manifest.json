@@ -1,0 +1,37 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "basis": "original 2D concepts only; no in-game renders",
+  "images": [
+    {
+      "file": "base_outfit_front.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "0a60bbaf8aac17b270608732fd8527fd10f86cbd24d6a683d5361083fd79c61a"
+    },
+    {
+      "file": "base_outfit_back.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "fe9af9f118aefe7b63ba5d1004186766bfbfbd341a02c5a688003a2a62a07033"
+    },
+    {
+      "file": "master_bare_front.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "463d508f2c605b8a50a7321316668ec069af32923184c0fca0c66087b1353b6e"
+    },
+    {
+      "file": "master_bare_back.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "13e8171e7f0b3e46618b08997ae04341791eba5c5f5f92c3c6408ddacb3ab605"
+    }
+  ],
+  "checks": {
+    "png_chunk_crc": true,
+    "matching_dimensions": true,
+    "original_bare_front_unchanged": true,
+    "visual_front_back_review": true
+  },
+  "runtime_models_changed": false
+}
