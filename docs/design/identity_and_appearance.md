@@ -2,11 +2,9 @@
 
 
 
-In Threadbound, the player’s appearance is not customized.
-
-
-
-It is \*\*earned\*\*.
+Threadbound's Identity palette is earned through choices. Equipped gear and the
+chosen [Mask + Pattern](pattern_system.md) give the player other ways to shape
+their appearance.
 
 
 
@@ -266,6 +264,8 @@ The player’s final appearance is a combination of:
 
 \- choices made (tone and saturation)  
 
+\- equipped Mask + Pattern (porcelain finish and embroidery motif)
+
 
 
 \---
@@ -374,7 +374,5 @@ Threadbound’s visual identity system ensures:
 
 
 
-> You do not choose how you look.  
-
-> You become it.
+> Your choices shape your palette. Your loadout shapes how you wear it.
 

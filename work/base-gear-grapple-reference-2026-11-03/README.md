@@ -50,9 +50,9 @@ shield clearance before cutting/rigging or replacing any runtime equipment.
 No fixed physical dimensions or seam coordinates are established by these PNGs.
 
 The approved color direction follows [Identity and appearance](../../docs/design/identity_and_appearance.md)
-and the [Pattern design](../../docs/design/pattern_system.md): equipment supplies
+and the [Mask + Pattern design](../../docs/design/pattern_system.md): equipment supplies
 shape and behavior; choice-driven Identity supplies the coordinated palette;
-Patterns supply separate embroidery. Main cloth, secondary cloth and trim use
+the equipped mask supplies the embroidery motif. Main cloth, secondary cloth and trim use
 consistent color roles across sets. Wood, leather and metal retain their natural
 appearance. Material slots or painted masks must be authored after 3D generation;
 ImageGen/Tripo output is not assumed to contain reliable recoloring controls.
@@ -64,15 +64,13 @@ and blackened/absorbed-all states from the existing Identity design.
 1. Chase reviews the base full-body mount and separate grapple references.
 2. Once the base is liked, generate one other established gear set and its own
    matching grapple. The second set has not been selected in this chat.
-3. Develop a few porcelain mask studies and embroidery Pattern studies. Start
-   with three of each for comparison; mask shell/marking designs remain studies,
-   not established lore, new gameplay slots or approved production architecture.
-   Existing Pattern motifs include knotwork, flowing lines and geometric stitches.
-4. Compare full and mixed equipment with plain, mask-only, Pattern-only and
-   mask-plus-Pattern looks under representative Identity palettes. Check that
-   embroidery reads as sewn cloth and does not obscure the shared color identity.
+3. Develop the Loomed and Hermit mask and embroidery pairs on a shared shell.
+   Check the common fit with the Base cowl and the Hermit brim.
+4. Compare barefaced and equipped Mask + Pattern looks with full and mixed
+   equipment under representative Identity palettes. Keep the cloth dye legible
+   alongside the sewn embroidery.
 
 This delivery adds artwork and documents the agreed direction. It does not
 submit a Tripo job, create a new 3D model, alter equipment mechanics, introduce
-mask gameplay, or replace runtime assets. The later set/mask/Pattern generation
+mask gameplay, or replace runtime assets. The later Mask + Pattern work
 is intentionally after the base review requested by Chase.

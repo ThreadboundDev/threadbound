@@ -19,7 +19,7 @@ This folder contains design, gameplay, narrative, art direction, and archived de
 - `docs/design/project_structure_and_naming.md` - project naming and folder conventions
 - `docs/design/color_system.md` - color identity, acquisition, and gameplay framing
 - `docs/design/progression_and_choices.md` - absorb/spare progression framing
-- `docs/design/pattern_system.md` - exploratory long-term Pattern accessory, embroidery, and build-combination design
+- [Mask + Pattern](design/pattern_system.md) - combined porcelain masks, embroidery, and gear-dependent effects
 - `docs/art/environment_art_style.md` - environment visual direction
 - `docs/art/asset_standards.md` - runtime art naming, palette, sprite, and rigging standards
 

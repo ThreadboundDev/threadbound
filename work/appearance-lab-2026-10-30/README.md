@@ -1,5 +1,9 @@
 # Gameplay-scale appearance lab
 
+This October 30 lab compares the two visual layers separately. The later
+[Mask + Pattern design](../../docs/design/pattern_system.md) pairs them on one
+equipped mask. The labels below describe the lab controls.
+
 Open `tools/art/appearance_lab.tscn` in Godot and press F6. Normal movement,
 jump and attack controls work. The camera starts at 0.83, matching production.
 Use the on-screen choices for Plain / Pattern / Mask / Both, three motifs,

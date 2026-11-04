@@ -50,7 +50,8 @@ The protagonist's recognizable body can persist beneath different equipment.
 Small worn clothing openings at elbows and knees may reveal doll construction;
 outfits need not expose every joint or share identical damage. Masks or entire
 head variants and Pattern embroidery remain explorations, not selected slots
-or new mechanics. Preserve the existing Identity/Equipment/Pattern separation.
+or new mechanics. The later [Mask + Pattern direction](pattern_system.md)
+combines mask and embroidery while keeping Identity and Equipment separate.
 
 Chase describes the opening as the cut thread falling onto a crafted doll and
 fusing with it to become the Threadborne. Clothing weaves onto the awakening

@@ -1,260 +1,120 @@
-# Pattern System Design (Accessory Slot)
+# Mask + Pattern
 
-October 30 visual study: Chase requested a gameplay-scale comparison of the
-embroidery overlay, porcelain mask variants, and both together. The
-[playable appearance lab](../../work/appearance-lab-2026-10-30/README.md) uses the
-current rig and camera. This is a presentation experiment; it does not replace
-the Pattern accessory/combination logic described here or establish mask lore.
+## Current design
 
-## Status
+One equipped porcelain mask supplies its own embroidery Pattern and one passive
+effect. Selecting the mask selects both. A mask's effect can respond to the
+equipped gear, while its motif stays visible on the cloth even when its effect
+is inactive. A player can wear one mask at a time and can go barefaced.
 
-Patterns are a long-term core pillar of Threadbound alongside Equipment and Identity.
-
-Patterns are the equipment-combination bonus framework for single-Thread sets, hybrid sets, Neutral/Base equipment, balanced sets, and other mixed arrangements. The system is not currently confirmed for the demo, and the examples below do not establish final balance.
-
-## Overview
-
-A Pattern occupies one dedicated accessory slot. The player may equip only one Pattern at a time.
-
-Patterns are not traditional RPG accessories that provide unconditional, flat stat bonuses. A Pattern evaluates the Thread alignments of the player's currently equipped armor and grants conditional benefits based on that combination.
-
-In the world, a Pattern represents the specific method a Weaver uses to interlace the primordial Threads into their equipment. The system is simultaneously:
-
-- a build-shaping gameplay mechanic;
-- a visual customization layer; and
-- an expression of Threadbound's worldbuilding.
-
-## Three Independent Customization Systems
-
-Player customization is divided into three independent systems. Keeping these systems separate allows them to combine without requiring unique content for every possible configuration.
-
-### Identity
-
-Identity controls the player's overall color palette. It represents the player's philosophical alignment with the primordial Threads.
-
-Identity does not determine equipment or statistics.
-
-### Equipment
-
-Equipment determines what the player is physically wearing. Helmets, robes, gloves, boots, and other pieces change the character's silhouette, visible armor pieces, and gameplay behavior or statistics.
-
-Each relevant equipment piece has one Thread alignment:
-
-- Red
-- Blue
-- Yellow
-- Neutral/Base
-
-Patterns use these alignments when evaluating the current loadout.
-
-### Pattern
-
-A Pattern determines how the equipped Threads are woven together. It evaluates the equipped gear and grants conditional bonuses based on its combination of Thread alignments.
-
-Potential conditions include:
-
-- wearing multiple Red items;
-- wearing multiple Blue items;
-- wearing multiple Yellow items;
-- combining Red and Blue items;
-- combining any other selection of Thread alignments;
-- using Neutral/Base equipment;
-- using only Neutral/Base equipment;
-- including every Thread color;
-- maintaining a balanced set of alignments;
-- using intentionally uneven or unconventional arrangements; and
-- using future equipment-set combinations.
-
-A Pattern does not change equipment pieces, silhouettes, or Identity colors. It changes build logic and supplies a decorative embroidery overlay.
-
-## Example Patterns
-
-These examples demonstrate the intended logic only. Their names, thresholds, values, and effects are placeholders for later balance work.
-
-### Crimson Weave
-
-If the player wears at least three Red equipment pieces:
-
-- increased Power;
-- increased skill damage.
-
-### Flowing Weave
-
-If the player wears at least two Blue equipment pieces:
-
-- reduced grapple cooldown;
-- increased movement speed.
-
-### Scholar's Weave
-
-If the player wears at least two Yellow equipment pieces:
-
-- reduced cooldowns;
-- improved resource efficiency.
-
-### Trinity Weave
-
-If the player wears at least one Red, one Blue, and one Yellow equipment piece:
-
-- a small bonus to all statistics.
-
-The important principle is that Patterns reward equipment combinations rather than individual pieces.
-
-## Pattern Breadth and Rarity
-
-The Pattern catalog should support the full range of intentional equipment arrangements rather than favoring only complete single-color sets. There may be a Pattern for a focused set, a hybrid, an all-color arrangement, a Neutral/Base build, or another meaningful combination.
-
-Patterns may range from common to rare. Rarity can help distinguish straightforward, broadly useful Patterns from unusual or highly specialized ones, but rarity does not automatically mean greater numerical power. A rarer Pattern may instead require a more specific combination or enable a more distinctive style of play.
-
-Final rarity tiers, acquisition methods, distribution, and availability are undecided. Patterns must not become progression gates.
-
-## Gameplay Specialization
-
-Equipping a Pattern should help the player shape a loadout into something special and distinct. Pattern effects may emphasize a particular rhythm, mechanic, tactical preference, or interaction among equipped pieces.
-
-Patterns should:
-
-- give purposeful identities to single-color, hybrid, balanced, Neutral/Base, and unconventional loadouts;
-- reward deliberate equipment choices without prescribing one correct build;
-- alter how a player approaches play rather than only increasing general power; and
-- preserve execution, experimentation, and real-time equipment expression as central sources of mastery.
-
-## Visual System
-
-Patterns are visible on the player. Each Pattern contains an embroidered motif applied to designated cloth regions of the currently equipped armor.
-
-Possible motifs include:
-
-- crimson knotwork;
-- blue flowing embroidery;
-- golden geometric stitching; and
-- trinity interwoven threadwork.
-
-Patterns do not change armor shapes or Identity colors. Their visual contribution is limited to decorative embroidery that appears sewn directly into the player's clothing.
-
-## Art Direction
-
-Pattern artwork should read as physical embroidery rather than a magical effect. It should primarily appear on:
-
-- cloak borders;
-- hood trim;
-- tunic hems;
-- sleeve cuffs;
-- sashes;
-- scarves; and
-- other restrained cloth accents.
-
-Patterning should not cover the entire outfit. Embroidery should enhance the clothing while preserving the silhouette, Thread-color readability, and clarity of gameplay actions.
-
-## November 4 proposal for repaired porcelain and embroidery
-
-Chase's concept sheet uses painted porcelain, visible metal repairs, and a
-common set of motifs on masks and textiles. Use the plain oval on the current
-doll as the starting point. Keep its proportions and eye placement, with a
-close-fitting shell that clears both the Base cowl and the Hermit brim. The
-first studies can share that shell and vary the glaze, paint, and repair lines.
-
-Give the repair a visible shape. Start with one offset seam that joins two
-large pieces, one short branch, and a slight glaze difference between the
-pieces. Use warm gold for the first sample, with a broad enough edge to catch
-light in profile. Fine cracks can add detail in the inventory close-up. The
-October 30 [gameplay comparison](../../work/appearance-lab-2026-10-30/mask-comparison.jpg)
-showed that the broad split and diagonal read better than fine seams at 0.83
-zoom. Check the new shape in side view and under the Hermit brim before adding
-detail. The concept's Loomed, Balance, and Frayed faces provide art references.
-Faction assignments and stories are outside this proposal.
-
-| Layer | Proposed use in the first comparison |
+| Layer | What it controls |
 | --- | --- |
-| Mask finish | Painted motif, porcelain shade, and repaired seams. A cosmetic choice shared across gear sets. Keep the pale porcelain, dark eyes, and repair metal readable under Identity recolors. |
-| Identity palette | A common dye on designated fabric across mixed gear. Start with the Base waist wrap and the Hermit scarf and ribbons. Preserve leather, wicker, wood, and hardware as material anchors. |
-| Equipped Pattern | One repeatable stitch motif on authored cloth bands. Start with the Base waist wrap and forearm cloth, and the Hermit sash end and lower sleeve band. Keep the metal grapple and busy wicker weave clear. |
+| Equipment | Tools, abilities, and silhouette |
+| Identity | The palette earned through Absorb and Spare |
+| Mask + Pattern | Porcelain face, matching embroidery motif, and one passive |
 
-Translate the same motif between materials. A Flow wave can be a single broad
-brushstroke across one cheek and a two-wave repeat at the sash end. The painted
-mask motif can be chosen independently of the equipped stitch motif. Give each
-garment a region for dye and a band for the stitch repeat so future motifs can
-reuse those areas across equipment swaps. Keep fine stitches and fine repair
-branches for close views.
+Identity dye can unify pieces from different sets. Gear alignment follows the
+equipped item's family through recolors and stays independent of the mask's
+paint. The mask is a separate cosmetic attachment on the shared head rig,
+paired with its own motif and effect. Head / Chest still swaps as one gear item.
 
-For the first comparison, put plain ivory, gold-repaired ivory, and a painted
-wave over repaired ivory on the shared shell. Use the existing Follower's Knot
-and a Flowing Weave stitch study. Compare full Base, full Hermit, and a mixed
-loadout at 0.83 zoom. A useful mixed example is Base Head / Chest with Hermit
-gloves and boots. Carry one cloth dye across the gear and compare mask only,
-embroidery only, and both while the doll turns, runs, and grapples. Also inspect
-the masks at inventory scale.
+## Counting gear
 
-### Pattern catalog and first effect test
+Count **Gloves**, **Boots**, and **Head / Chest** once each. The weapon, mask,
+grapple attachment, and separate meshes within Head / Chest add no extra counts.
+Each piece counts as Base/Neutral, Red/Power, Blue/Balance, or Yellow/Essence.
 
-The examples above describe four conditional designs. The existing demo
-resource, **Follower's Knot**, grants +10% AP recharge and +10% momentum
-generation while equipped. Those demo bonuses currently apply with any gear.
-Together these are five named Patterns in the checked-in material.
+Monarch, Hermit, and Sage get a stronger version of their own effect for **each**
+matching piece. Loomed follows the same rule for Base. The first balance pass
+should use four visible tiers. Zero matches gives zero bonus, then one, two, and
+three matches each increase it. A recolored Base piece remains Base. An active
+mask counts only its own condition, so a full colored set can use either its
+matching mask or Purist with different effects.
 
-For a future effect test, use **Flowing Weave** because Base and Hermit can
-exercise both states now. As a proposal, count Gloves, Boots, and Head / Chest
-and leave the weapon and cosmetic mask outside that count. Equip Flowing Weave
-with two Hermit pieces, then swap either piece for Base and show the condition
-change in the existing Pattern slot. Prototype one of the documented effects
-first, shorter grapple cooldown, and compare complete swings with the same
-gloves. Treat the second effect and all tuning values as open. A future catalog
-can give separate entries to full Neutral, each two-Thread pairing, and a
-Neutral-heavy mixed set. The first art comparison can use both motifs without
-implementing any of those effects.
+When the player swaps gear, show the new count and the active effect in the
+Mask + Pattern slot. Apply the new tier to subsequent effect calculations.
+Swapping supplies no instant AP, health, or Momentum and leaves a grapple
+already in flight alone. The proposed passives need to support real-time swaps
+and keep the base kit sufficient for progression.
 
-## Technical Direction
+## Ten concepts adapted to Threadbound
 
-The character should eventually be composed from independent visual layers:
+Effect directions are proposals. Exact values, thresholds, and acquisition are
+open. Each concept starts with one effect so its role can be tested separately.
 
-| Layer | Responsibility |
-| --- | --- |
-| Identity | Palette and color |
-| Equipment | Sprite pieces and silhouette |
-| Pattern | Embroidery overlay |
+| Mask | Proposed effect | Matching embroidery |
+| --- | --- | --- |
+| **The Loomed** | Faster AP recharge per Base piece. Works with a mixed loadout and peaks with full Base. | Interlocking knots |
+| **Monarch** | More direct weapon-hit damage per Red piece. Red armor supplies the bonus even when the player carries a weapon from another family. | Upright spires and branching red thread |
+| **Hermit** | More Momentum earned from successful grapple actions per Blue piece. Use the existing Momentum rewards and leave swing physics alone for the first test. | Flowing wave repeat |
+| **Sage** | Faster AP recharge per Yellow piece. This is the Essence counterpart to Loomed's Base recovery. Start with recharge before testing skill-cost changes. | Rings and radial stitches |
+| **Reclaimer** | Lose less Momentum when hit. Use the existing damage-related loss as the first candidate for the sheet's idea of stability. | Broken pointed arches |
+| **Weaver** | Gain more Momentum when chaining different action types. The bonus starts at two distinct armor families and grows at three. Base counts as a family, so Base + Blue is a valid hybrid. | Interwoven strands |
+| **Frayed** | More direct weapon-hit damage while at low health. Test against the existing wounded state before setting a threshold. | Branching repair stitches |
+| **Pale Ascendant** | Improve existing meditation healing within its current recovery ceiling. Candidate for a Spare-aligned mask. | Pale petals and fine gold borders |
+| **Blackened Heir** | More direct weapon-hit damage while Flow is active. Candidate for an Absorb-aligned mask. Flow supplies a concrete combat condition for the sheet's empowered state. | Dark arcs and gold seams |
+| **Purist** | Slow natural Momentum drain during Flow with all three armor pieces from the same colored family. Full Base has Loomed as its dedicated option. | Repeated narrow arches |
 
-New equipment, Identities, and Patterns should combine without requiring unique artwork for each permutation. This separation is intended to keep content production scalable while increasing visual variety.
+Crimson Weave, Flowing Weave, Scholar's Weave, and Trinity Weave were draft
+Pattern examples. Their focused and mixed-loadout ideas carry into Monarch,
+Hermit, Sage, and Weaver respectively. The current demo's **Follower's Knot**
+is still a standalone Pattern in the runtime. It grants +10% AP recharge and
++10% Momentum generation with any gear. Its knotwork is a candidate for Loomed.
+Whether existing ownership and saves eventually map to Loomed is a migration
+decision, separate from testing its new Base-piece effect.
 
-This is technical direction, not an approved implementation architecture. The rendering approach, authoring workflow, compatibility rules, and asset requirements require validation before production work begins.
+## Absorb and Spare
 
-## Design Goals
+The [progression design](progression_and_choices.md) has Absorb grant the
+Master's gear and color influence. Spare grants no gear from that Master and
+moves Identity toward pale. Full absorption tends toward black. The demo
+records claimed Threads and uses them for existing unlocks. An unclaimed
+Thread can mean the player has yet to reach a choice, so it cannot establish a
+Spare decision.
 
-Patterns should:
+- **Absorb one or two Masters.** Matching masks can reward the pieces the
+  player earns. Loomed still scales with any Base pieces they keep, and Weaver
+  supports a mix of Base and an earned set.
+- **Spare all Masters.** Full Base can reach Loomed's highest tier. Pale
+  Ascendant is a candidate for a distinct recovery playstyle on this path.
+- **Absorb all Masters.** Blackened Heir is a candidate for an alternate
+  playstyle focused on sustaining Flow. The colored masks still work on their
+  own equipment counts.
+- **Reclaimer choice.** Leave Reclaimer mask acquisition, and any dependency
+  of Pale Ascendant or Blackened Heir on the final choice, open. The existing
+  [ending rules](../narrative/story/endings.md) evaluate the Master and Reclaimer
+  decisions together. An equipped mask does not count as a route choice.
 
-- encourage interesting equipment combinations;
-- create meaningful build diversity;
-- support single-color, hybrid, balanced, Neutral/Base, and unconventional loadouts;
-- help players create specialized and distinctive playstyles;
-- provide long-term collectible progression;
-- reinforce Threadbound's weaving theme;
-- visually communicate the player's build; and
-- expand customization without multiplying the art workload.
+The first test can expose the masks through a development control. Acquisition,
+permanent ownership, and the exact route checks belong in a later design pass.
 
-## Terminology
+## Visual direction and first test
 
-The word **Pattern** intentionally carries three connected meanings:
+Fit one close-fitting oval shell to the doll's eyes and head bone. Check it with
+the Base cowl and Hermit brim. Start with the Loomed knot and Hermit wave as
+finishes on the same mesh, plus plain ivory as a comparison swatch. One
+off-center gold repair should join two visibly different ivory pieces. Use a
+short branch, restrained glaze variation, and enough contrast for side view.
+Frayed can push that repair further, and Reclaimer can explore a distinct shape
+after the common shell is proven. These are art directions for the player's
+mask catalog.
 
-1. A gameplay accessory that modifies a build.
-2. A visible embroidery pattern on the player's clothing.
-3. The Weaver's chosen method of weaving the primordial Threads together.
+The equipped mask supplies a single motif on cloth. Start with Base waist wrap
+and forearm cloth, and Hermit sash end and lower sleeve. Translate each motif
+across materials, for example a broad painted wave on the face and a short
+stitched wave repeat on the sash. Author separate areas for Identity dye and
+embroidery, and keep leather, wood, wicker, grapple hardware, and repair metal
+readable. The earlier [appearance lab](../../work/appearance-lab-2026-10-30/README.md)
+used separate toggles to compare the two visuals at 0.83 zoom. Its broader
+face markings were easier to read than fine lines at gameplay size.
 
-This shared terminology is intentional and should remain consistent if the system moves forward.
+Start with Loomed and Hermit and use the fitted Base/Blue equipment to exercise
+every tier. Keep Blue gloves equipped for the Hermit action test and swap boots
+and Head / Chest to compare tiers one through three on the same grapple. For
+tier zero, use full Base and verify the inactive state. Also check full Base
+Loomed, mixed gear with an Identity dye, and barefaced baseline. Inspect idle,
+run, and grapple at gameplay zoom and the mask in the inventory close-up.
 
-## Open Design Questions
-
-Before Patterns become an active system, the team must decide:
-
-- whether Patterns belong in the demo or only in the long-term game;
-- how conditional bonuses coexist with real-time equipment swapping;
-- whether Pattern progression can remain expressive without becoming progression gating;
-- which equipment slots contribute Thread alignments;
-- whether Neutral/Base pieces contribute to any conditions;
-- how Pattern rarity and acquisition should work;
-- how players inspect active and inactive Pattern effects; and
-- what visual-production method can support embroidery across all compatible equipment.
-
-## Relationship to Equipment Philosophy
-
-Patterns supersede the previous prohibition against hybrid bonuses. All bonuses based on equipment sets, hybrid combinations, Neutral/Base equipment, balanced arrangements, and other alignment combinations belong to the Pattern system.
-
-Patterns complement rather than replace execution-based mastery. Equipment still determines the player's available tools, and player skill still determines how effectively those tools are used. A Pattern gives the chosen combination a distinct gameplay emphasis without making that combination mandatory for progression.
+This design supersedes independent mask and embroidery selection. The current
+inventory, demo Pattern resource, and gameplay stay as implemented until a
+runtime scope is approved and tested.

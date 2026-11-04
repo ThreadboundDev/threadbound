@@ -10,6 +10,12 @@ are fitted to the existing doll rig. Six inventory icons support eight mixed
 loadouts. Shared elbow and mid-shin cuts are ready for Chase's in-game review.
 [Test launch and asset handoff](art/base_blue_equipment_test.md).
 
+November 4 Mask + Pattern direction: one mask supplies its embroidery and
+gear-dependent passive. Loomed, Monarch, Hermit, and Sage scale with each
+matching armor piece. Start with Loomed and Hermit using fitted Base/Blue gear.
+Route-dependent effects and mask acquisition remain open.
+[Ten concepts and test scope](design/pattern_system.md).
+
 November 4 Blue grapple upload: Chase reports poor results with the multiview
 input and requests [one clean reference](../work/blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png).
 The ornate reel and hook use a dark indigo ribbon and a short metal spool pin

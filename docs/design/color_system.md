@@ -5,6 +5,11 @@ compares the existing aura's weighted RGB mix with authored R/Y/B pair hues and
 this document's dark full-absorption extreme at gameplay scale. Its candidate
 formula is not a production change. Palette/contrast acceptance remains open.
 
+[Mask + Pattern](pattern_system.md) supplies a porcelain finish and a matching
+embroidery motif. Choice-driven Identity still provides the palette for shared
+cloth regions. Paint and repair metal can retain their own colors, and a dye
+change leaves an equipped piece's alignment the same.
+
 Color in Threadbound is not cosmetic.
 
 It is a direct reflection of:

@@ -49,7 +49,7 @@ a porcelain mask over the wood head.
 | Collar, sash, and both ribbons | Primary Identity color |
 | Sleeve cloth and lining, trouser panels, boot and bracer wraps | Secondary cloth color and trim |
 | Wicker, leather, wood, and metal | Natural material finishes, with the shared original doll wood on exposed areas |
-| Sleeve borders and front sash end | Reserved areas for optional Pattern embroidery |
+| Sleeve borders and front sash end | Reserved embroidery bands for the equipped [Mask + Pattern](../../docs/design/pattern_system.md) |
 
 The illustrations include ordinary construction stitches. Keep optional
 embroidery separate when preparing the textures. Fit the game mesh to the

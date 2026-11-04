@@ -882,7 +882,13 @@ It is about:
 
 ##### \- Players are encouraged to \*\*swap gear dynamically\*\* using the radial system
 
-##### \- There are \*\*no hybrid bonuses\*\* — power comes from execution, not combinations
+##### \- Equipment-combination bonuses come from the equipped [Mask + Pattern](../design/pattern_system.md)
+
+##### \- The mask supplies its embroidery and one passive. Mask effects can reward single-Thread sets, hybrid sets, or Neutral/Base pieces
+
+##### \- Count Gloves, Boots, and Head / Chest once each for armor alignment. Weapons and grapple attachments are separate
+#####
+##### \- Mask bonuses should create distinct playstyles without making any loadout mandatory for progression
 
 ##### 
 

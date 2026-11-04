@@ -55,6 +55,12 @@ After defeating a Thread Master, the player must choose:
 | **Absorb** | Unlock that Master's equipment set (Gloves/Boots/Chest + Weapon) | Color shifts toward that thread, world reacts with fear or tension |
 | **Spare**  | No equipment gained                                    | Character desaturates toward white, world becomes calmer / hopeful |
 
+The [Mask + Pattern design](pattern_system.md) uses equipped armor to evaluate
+each gear-based passive. Keeping Base equipment can strengthen the Loomed
+mask, including on a full Spare route. Pale Ascendant and Blackened Heir are
+route-aligned proposals. Their acquisition rules and relationship to the final
+Reclaimer choice are open. Mask selection has no effect on route decisions.
+
 ---
 
 ## 🎨 Identity Through Color

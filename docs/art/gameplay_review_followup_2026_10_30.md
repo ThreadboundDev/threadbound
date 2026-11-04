@@ -108,10 +108,11 @@ air pockets remain visibly drier with softened edges; their geometry was not
 redesigned. Chase's in-motion/art acceptance remains pending. Checkpoint:
 `art: refine Blue depth clouds house focus and bridge scale`.
 
-## Mask/Pattern study constraints
+## Mask and embroidery study constraints
 
-Existing [Pattern design](../design/pattern_system.md) distinguishes Identity
-palette, equipment silhouette and embroidered Pattern motifs. The current live
+The November 4 [Mask + Pattern design](../design/pattern_system.md) pairs each
+mask with its embroidery and passive. The October 30 study used separate
+controls to compare the visual layers. The current live
 3D visual hides the old 2D Pattern overlay. Test decorative motifs and mask
 variants on the current rig before production equipment work. A mask could be
 readable through silhouette/value at distance, while fine embroidery may need
