@@ -4,6 +4,18 @@ Chase requested one Blender shell fitted to the actual doll and checked against
 both the Base cowl and Hermit brim, with Loomed and Hermit finishes carrying
 their own black eye markings, gold repairs and matching embroidery.
 
+## In-game preview
+
+Copy the two local `*_mask.glb` files to
+`Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/`. Copy the
+`*_front.png` renders there as `loomed_mask_icon.png` and
+`hermit_mask_icon.png`. Let Godot import the four files. Launch the Chamber
+with `--equipment-art-test` after Godot's `--` separator. Press **I**, select
+**Equipment**, then click **The Loomed** or **Hermit Mask**. Click the equipped
+mask's inventory icon again to go barefaced. The preview stays equipped across
+Head / Chest swaps for the current player. This test displays the mask shell
+and finish. Embroidery and passive effects are outside the preview.
+
 The local delivery is `LocalOnly/Equipment/Masks/Threadborne_Master_Mask.blend`.
 The three shell objects (`MASTER_Shell`, `Loomed_Shell`, `Hermit_Shell`) share
 one mesh datablock and UV layout. The 2.4 mm porcelain shell has real almond

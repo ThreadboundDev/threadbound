@@ -119,6 +119,27 @@ func run() -> void:
 		await process_frame
 	menu._hide_inventory_tooltip()
 	await capture(root, "inventory_blue")
+	if PlayerEquipmentVisuals.mask_preview_available(&"loomed") and PlayerEquipmentVisuals.mask_preview_available(&"hermit"):
+		var mask_cells := {}
+		for cell in menu.inventory_slots_root.get_children():
+			var entry: Dictionary = cell.get_meta("inventory_item", {})
+			if entry.has("mask_id"):
+				mask_cells[entry["mask_id"]] = cell
+				var icon := cell.get_node_or_null("Icon") as TextureRect
+				check(icon != null and icon.is_visible_in_tree() and icon.texture != null, "Mask inventory icon is visible")
+		check(mask_cells.size() == 2, "Both masks are selectable")
+		if mask_cells.size() == 2:
+			for id in PlayerEquipmentVisuals.MASK_TEST_IDS:
+				mask_cells[id].gui_input.emit(click)
+				var mask := equipment.equipped.get(&"mask_preview") as EquipmentVisualDefinition
+				check(mask != null and mask.item_id == id, "Equips mask " + String(id))
+				if mask:
+					for mesh in equipment._roots[&"mask_preview"].find_children("*", "MeshInstance3D", true, false):
+						check(mesh.get_node_or_null(mesh.skeleton) == visual._skeleton, "Mask mesh follows live rig")
+			item_cells[2].gui_input.emit(click)
+			check(equipment.equipped.has(&"mask_preview"), "Head / Chest swap keeps the mask")
+			mask_cells[&"hermit"].gui_input.emit(click)
+			check(not equipment.equipped.has(&"mask_preview"), "Click again removes the mask")
 	var report := {"checks": checks, "failures": failures, "combinations": 8}
 	print("BASE_BLUE_EQUIPMENT ", JSON.stringify(report))
 	var file := FileAccess.open(OUTPUT + "godot_swap_report.json", FileAccess.WRITE)

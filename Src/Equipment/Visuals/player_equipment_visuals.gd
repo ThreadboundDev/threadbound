@@ -7,6 +7,8 @@ extends Node3D
 const SLOTS: Array[StringName] = [&"gloves", &"boots", &"head_chest", &"weapon"]
 const DEFAULT_LOADOUT := preload("res://Src/Equipment/Visuals/base_gear_loadout.tres")
 const FITTED_LOADOUT := preload("res://Src/Equipment/Visuals/base_blue_gear_loadout.tres")
+const MASK_TEST_DIR := "res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/"
+const MASK_TEST_IDS := [&"loomed", &"hermit"]
 
 signal item_changed(slot: StringName, item: EquipmentVisualDefinition)
 
@@ -59,7 +61,7 @@ func initialize(target: Skeleton3D) -> bool:
 
 
 func equip(item: EquipmentVisualDefinition) -> bool:
-	if not skeleton or not item or not SLOTS.has(StringName(item.slot)) or not item.is_available():
+	if not skeleton or not item or (not SLOTS.has(StringName(item.slot)) and item.slot != "mask_preview") or not item.is_available():
 		return false
 	# Prepare the whole outfit first. A missing/invalid component leaves the old
 	# item installed; cowl, tunic and pants never switch partially.
@@ -124,6 +126,25 @@ func equip(item: EquipmentVisualDefinition) -> bool:
 	prepared.show()
 	item_changed.emit(slot, item)
 	return true
+
+
+static func mask_preview_available(id: StringName) -> bool:
+	return OS.get_cmdline_user_args().has("--equipment-art-test") and MASK_TEST_IDS.has(id) \
+		and ResourceLoader.exists(MASK_TEST_DIR + String(id) + "_mask.glb")
+
+
+func toggle_mask_preview(id: StringName) -> bool:
+	if not mask_preview_available(id):
+		return false
+	var current := equipped.get(&"mask_preview") as EquipmentVisualDefinition
+	if current and current.item_id == id:
+		clear_slot(&"mask_preview")
+		return true
+	var item := EquipmentVisualDefinition.new()
+	item.item_id = id
+	item.slot = "mask_preview"
+	item.model_paths = PackedStringArray([MASK_TEST_DIR + String(id) + "_mask.glb"])
+	return equip(item)
 
 
 func clear_slot(slot: StringName) -> void:

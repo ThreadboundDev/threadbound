@@ -183,6 +183,8 @@ const INVENTORY_ITEMS := [
 	},
 ]
 const FITTED_ICON_FILES := {
+	"loomed_mask": "loomed_mask_icon.png",
+	"hermit_mask": "hermit_mask_icon.png",
 	"26_icon_grapple": "base_gloves_icon.png",
 	"27_icon_boots": "base_boots_icon.png",
 	"29_icon_chest": "base_head_chest_icon.png",
@@ -190,6 +192,10 @@ const FITTED_ICON_FILES := {
 	"34_icon_blue_boots": "blue_boots_icon.png",
 	"35_icon_blue_chest": "blue_head_chest_icon.png",
 }
+const MASK_TEST_ITEMS := [
+	{"id": &"loomed_mask", "name": "THE LOOMED", "description": "Porcelain mask preview. Select again to remove.", "icon_texture": "loomed_mask", "mask_id": &"loomed"},
+	{"id": &"hermit_mask", "name": "HERMIT MASK", "description": "Porcelain mask preview. Select again to remove.", "icon_texture": "hermit_mask", "mask_id": &"hermit"},
+]
 const EQUIPPED_SLOT_ITEMS := {
 	"WeaponSlot": {
 		"name": "WEAVER'S SHUTTLE",
@@ -1824,6 +1830,10 @@ func _get_visible_inventory_items() -> Array[Dictionary]:
 		if item.has("owned_pattern") and (not EquipManager or not EquipManager.owns_pattern(item["owned_pattern"])):
 			continue
 		visible_items.append(item)
+	if _inventory_category in [&"all", &"equipment"]:
+		for item in MASK_TEST_ITEMS:
+			if PlayerEquipmentVisuals.mask_preview_available(item["mask_id"]):
+				visible_items.append(item)
 	return visible_items
 
 func _set_inventory_slot_item(slot: Control, item: Dictionary) -> void:
@@ -1885,6 +1895,12 @@ func _get_inventory_icon_texture(texture_id: String) -> Texture2D:
 			return null
 
 func _try_equip_inventory_item(item: Dictionary) -> void:
+	if item.has("mask_id"):
+		var visuals := _get_mask_test_visuals()
+		if visuals and visuals.toggle_mask_preview(item["mask_id"]):
+			AudioManager.play_ui(&"menu_select")
+			_update_equipped_slot_items()
+		return
 	if item.has("pattern_id"):
 		if EquipManager and EquipManager.equip_pattern(item["pattern_id"]):
 			AudioManager.play_ui(&"menu_select")
@@ -1907,7 +1923,20 @@ func _update_equipped_slot_items() -> void:
 	_apply_equipped_slot_item("BootsSlot", _get_equipped_clothing_item(1))
 	_apply_equipped_slot_item("ChestSlot", _get_equipped_clothing_item(2))
 	_apply_equipped_slot_item("WeaponSlot", _get_equipped_static_item("WEAVER'S SHUTTLE", "A simple shuttle weapon for close-range attacks.", "28_icon_shuttle", -1))
-	_apply_equipped_slot_item("PatternSlot", _get_equipped_pattern_item())
+	var visuals := _get_mask_test_visuals()
+	var preview := visuals.equipped.get(&"mask_preview") as EquipmentVisualDefinition if visuals else null
+	var pattern_item := _get_equipped_pattern_item()
+	if preview:
+		for item in MASK_TEST_ITEMS:
+			if item["mask_id"] == preview.item_id:
+				pattern_item = item
+				break
+	_apply_equipped_slot_item("PatternSlot", pattern_item)
+
+func _get_mask_test_visuals() -> PlayerEquipmentVisuals:
+	var player := get_tree().get_first_node_in_group("player")
+	var live_visual := player.get_node_or_null("Live3DVisual") if player else null
+	return live_visual.equipment_visuals if live_visual else null
 
 func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
 	var slot := equipment_slots_root.get_node_or_null(slot_name) as Control
