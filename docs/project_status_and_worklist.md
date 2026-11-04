@@ -12,8 +12,9 @@ The 24 historical layouts are hidden regression fixtures. The player now uses a
 texture-free action clock, controller-owned facing and its existing live 3D avatar;
 hidden body/glow/pattern nodes and obsolete weapon-art tracks are removed.
 Active attack anchors, grapple simulation, equipment poses and 3D blends remain.
-86 newly unused files (14.28 MiB) are hash-verified in deletion staging batch 08;
-none were permanently deleted and no videos were moved.
+November 3 follow-up: remaining non-media staging batches 04 and 08 are deleted
+(22,886 files / 7.02 GiB); all 76 videos/animations have matching content hashes.
+[Deletion receipt](organization/deletion_2026_11_03.md).
 [Scope, validation and known baseline failures](organization/runtime_cleanup_2026_11_02.md).
 Validation: 29,775 Blue scene property comparisons, 25,920 engine-clock comparisons,
 39 real-player presentation checks for both models, 875 fitted-doll checks,

@@ -52,7 +52,8 @@ match Godot's native sprite clock. Visible character poses, useful layered blend
 equipment adapters, model sources, active grapple rope and attack windows remain.
 
 86 unused files (14,973,801 bytes / 14.28 MiB) moved to sibling deletion staging
-folder `08 Retired Player Sprite Runtime`. This is staging, not permanent deletion.
+folder `08 Retired Player Sprite Runtime`, then were permanently deleted with
+Chase's November 3 approval. [Final deletion receipt](deletion_2026_11_03.md).
 The [per-file manifest](retired_player_assets_2026_11_03.json) records original paths
 and hashes. The pattern shader remains because GameMenu uses it. No videos moved.
 
