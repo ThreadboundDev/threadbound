@@ -5,6 +5,13 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 3 grapple generation follow-up: a [standalone assembled grapple image](../work/base-gear-grapple-reference-2026-11-03/base_grapple_generation.png)
+shows the leather-bound coil and sewing needle connected by one short rope lead,
+isolated on white without the arm/bracer or labels. The exact built-in ImageGen
+prompt and integrity metadata are saved alongside it. This is a 2D reference;
+3D generation, separable-part cleanup and rigging remain to be done.
+Checkpoint: `art: add standalone base grapple generation image`.
+
 November 3 base-reference follow-up: Chase accepts the Identity palette preview
 and requests a glove-mounted attachment point with each set's grapple authored
 separately. The [base mount/grapple package](../work/base-gear-grapple-reference-2026-11-03/README.md)

@@ -1,0 +1,20 @@
+{
+  "tool": "Built-in ImageGen",
+  "date": "2026-11-03",
+  "asset": "base_grapple_generation.png",
+  "prompt": "Use case: compositing.\nAsset type: clean SINGLE-OBJECT reference image for generating the Threadbound BASE grapple accessory as a 3D model, isolated from the character and glove.\nInput 1 is the approved component design for the compact flattened oval golden-flax rope coil, brown stitched leather binding and small underside mounting tongue. Input 2 is the approved worn steel sewing needle with elongated open oval eye and long straight tapered point.\nCreate ONE assembled stowed grapple accessory, combining these exact two component designs. A compact flattened horizontal oval rope coil with about five gathered loops held by its central brown leather binding. Alongside and just below the coil is ONE silver sewing needle, parallel to the oval coil's long axis, eye at LEFT and point at RIGHT. The needle's entire length is slightly shorter than the coil's length. Leave a narrow visible gap between the needle's straight metal shaft and the rope bundle, so both silhouettes and materials are clear. A SINGLE short continuous rope lead exits the coil near its left end, curves downward and passes visibly through the needle's open eye with one simple secure knot. There must be an unbroken visually traceable connection from the rope bundle to the needle eye. No disconnected extra rope ends, second needle or duplicate components.\nThe leather binding has the same small flat mounting tongue underneath as input 1. Keep the point, eye, coil contours, rope connection and mounting tongue clearly visible. No bracer or full mounting plate; those belong to the separately generated glove.\nComposition: centered single complete assembly fills about 75 percent of a square canvas with generous blank margins, slightly elevated three-quarter near-front view with minimal perspective, long axis horizontal, all components fully in frame. Plain white background, soft neutral studio lighting, no dramatic cast shadow. Match the reference's tactile illustrated 3D-game concept finish: simple readable golden-tan twisted rope, dark brown worn leather with flax stitching, natural dull silver steel. Crisp edges and readable material boundaries.\nNo character, arm, hand, glove, bracer, shield, weapon, mechanical launcher, spool, stand, platform, diagram, exploded view, extra angles, labels, writing, border or watermark. One standalone accessory only. Preserve the handmade sewing-tool identity, not a gun, harpoon or fishing hook.",
+  "references": [
+    "base_grapple_rope_coil.png",
+    "base_grapple_needle.png"
+  ],
+  "purpose": "Standalone assembled base grapple image for 3D generation",
+  "runtime_models_changed": false,
+  "image": {
+    "width": 1254,
+    "height": 1254,
+    "bytes": 1517018,
+    "sha256": "f9fa0628d39a65cea5bc7dcf4f63ce6249e9e3385f72a8aceb80d296ca9ff1ea",
+    "png_chunk_crcs_valid": true,
+    "visually_reviewed": true
+  }
+}

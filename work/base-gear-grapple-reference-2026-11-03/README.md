@@ -9,6 +9,10 @@ renders of the current game character. Original references remain unchanged.
 
 ## Files
 
+- `base_grapple_generation.png`: follow-up single assembled coil/needle image on
+  white, with no character, bracer or labels, for standalone 3D generation.
+  `base_grapple_generation.json` records its exact ImageGen prompt and checks.
+  These two follow-up files are separate from the original six-image ZIP snapshot.
 - `base_outfit_front_mount.png`: full-body front T-pose with an empty mount on
   the left shield-arm bracer, on the viewer's right.
 - `base_outfit_back_mount.png`: corresponding full-body back. The mount is on
