@@ -84,6 +84,11 @@ func run() -> void:
 			for mesh in equipment._roots[slot].find_children("*", "MeshInstance3D", true, false):
 				check(mesh.get_node_or_null(mesh.skeleton) == visual._skeleton, "Mesh bound to the live rig")
 		check(equipment._roots[&"weapon"] == weapon, "Clothing swaps preserve sword and shield")
+		check(equipment._roots[&"head_chest"].find_child("Shared_Wooden_Head", true, false) != null,
+			"Head / Chest includes the master wooden head")
+		for joint_mesh in ["Shared_Wooden_Hands", "Shared_Wooden_Elbows"]:
+			check(equipment._roots[&"gloves"].find_child(joint_mesh, true, false) != null,
+				"Glove pair includes " + joint_mesh)
 		for mesh in visual._model_root.find_children("Doll_Covered_*", "MeshInstance3D", true, false):
 			check(not mesh.visible, "Legacy body section hidden under fitted outfits")
 		var legacy := visual._model_root.find_child("Threadborne_Doll", true, false) as MeshInstance3D
@@ -136,8 +141,10 @@ func run() -> void:
 				if mask:
 					for mesh in equipment._roots[&"mask_preview"].find_children("*", "MeshInstance3D", true, false):
 						check(mesh.get_node_or_null(mesh.skeleton) == visual._skeleton, "Mask mesh follows live rig")
+					await capture(visual._viewport, "shared_head_blue_%s" % id)
 			item_cells[2].gui_input.emit(click)
 			check(equipment.equipped.has(&"mask_preview"), "Head / Chest swap keeps the mask")
+			await capture(visual._viewport, "shared_head_base_hermit")
 			mask_cells[&"hermit"].gui_input.emit(click)
 			check(not equipment.equipped.has(&"mask_preview"), "Click again removes the mask")
 	var report := {"checks": checks, "failures": failures, "combinations": 8}

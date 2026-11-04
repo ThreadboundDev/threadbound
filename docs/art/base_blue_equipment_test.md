@@ -58,3 +58,13 @@ Rendered idle, run, and cast poses are in `LocalOnly/Equipment/BaseBlue/`.
 The prominent dark wedge is gone in the sampled run. Some texture stretch
 remains on the inner thigh in the wide casting stance. Restart the art-test
 session to load the new meshes for hands-on review.
+
+## Shared doll fit follow-up
+
+Base and Blue now use the same faceless wooden head, hands, and inner elbow
+geometry from the fitted master doll. The bracer opening is sized from the
+master wrist and overlaps it slightly. Base uses the master shin at the boot
+join, with the knee pivot covered by the trousers. The existing mid-shin boot
+and elbow swap locations are preserved. Open the rebuilt
+`LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
+meshes and the adjacent rest and posed captures.
