@@ -86,9 +86,8 @@ func run() -> void:
 		check(equipment._roots[&"weapon"] == weapon, "Clothing swaps preserve sword and shield")
 		check(equipment._roots[&"head_chest"].find_child("Shared_Wooden_Head", true, false) != null,
 			"Head / Chest includes the master wooden head")
-		for joint_mesh in ["Shared_Wooden_Hands", "Shared_Wooden_Elbows"]:
-			check(equipment._roots[&"gloves"].find_child(joint_mesh, true, false) != null,
-				"Glove pair includes " + joint_mesh)
+		check(equipment._roots[&"gloves"].find_child("Shared_Wooden_Hands", true, false) != null,
+			"Glove pair includes the master wooden hands")
 		for mesh in visual._model_root.find_children("Doll_Covered_*", "MeshInstance3D", true, false):
 			check(not mesh.visible, "Legacy body section hidden under fitted outfits")
 		var legacy := visual._model_root.find_child("Threadborne_Doll", true, false) as MeshInstance3D

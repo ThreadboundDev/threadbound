@@ -9,7 +9,7 @@ of the three slots updates the doll in gameplay. The test argument makes both
 sets available immediately. Without the argument, Blue uses the existing
 Balance unlock.
 
-The two suits share cuts at the rig elbows (X ±0.4427) and mid-shin boot cuffs
+The two suits share bracer joins just beyond the elbows (X ±0.5177) and mid-shin boot cuffs
 (Z 0.415). Each fitted glove pair uses the existing wooden hands. Its stowed
 hardware includes a separate needle or hook on the shield-arm bracer, and the
 live grapple origin follows the fitted glove. Casting hides the stowed hook
@@ -61,10 +61,11 @@ session to load the new meshes for hands-on review.
 
 ## Shared doll fit follow-up
 
-Base and Blue now use the same faceless wooden head, hands, and inner elbow
-geometry from the fitted master doll. The bracer opening is sized from the
-master wrist and overlaps it slightly. Base uses the master shin at the boot
-join, with the knee pivot covered by the trousers. The existing mid-shin boot
-and elbow swap locations are preserved. Open the rebuilt
+Base and Blue use the same faceless wooden head and hands from the fitted
+master doll. The bracer opening is sized from the master wrist and overlaps
+it slightly. Both retain their imported elbows. The shared bracer cut is
+on the forearm side of those joints to keep the elbow geometry with Head /
+Chest. Base retains the imported trouser hem, exposed shin, and boot rim
+shape, with the knee pivot covered by the trousers. Open the rebuilt
 `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
 meshes and the adjacent rest and posed captures.

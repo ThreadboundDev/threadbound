@@ -40,11 +40,12 @@ for obj in list(bpy.context.scene.objects):
 bpy.context.view_layer.update()
 rest = {bone.name: rig.matrix_world @ bone.matrix_local for bone in rig.data.bones}
 ELBOW = abs(rest["forearm.L"].translation.x)
+GLOVE_CUT = ELBOW + .075
 WRIST = abs(rest["hand.L"].translation.x)
 ARM_HEIGHT = rest["forearm.L"].translation.z
 CUFF = .415
 HAND_JOIN = WRIST - .012
-report = {"sources": {}, "slots": {}, "anchors": {}, "cut_planes": {"elbows": [-ELBOW, ELBOW], "boot_cuffs": CUFF}}
+report = {"sources": {}, "slots": {}, "anchors": {}, "cut_planes": {"glove_joins": [-GLOVE_CUT, GLOVE_CUT], "boot_cuffs": CUFF}}
 
 body_points = [body.matrix_world @ v.co for v in body.data.vertices]
 body_weights = [
@@ -176,9 +177,8 @@ def align(obj, set_name):
             new_x = side*((1-blend)*low_x + blend*segment(abs(x),x_anchors))
         else:
             new_x = math.copysign(segment(abs(x),x_anchors),x)
-        y_center = .008
-        if abs(x) > elbow and z > .69:
-            y_center = .015 if blue else .013
+        arm = smooth((abs(x)-elbow)/.045)*smooth((z-.69)/.04)
+        y_center = .008 + arm*(.007 if blue else .005)
         v.co = (new_x, (y-y_center)*1.76, segment(z,z_anchors))
     obj.data.update()
 
@@ -339,7 +339,7 @@ def master_section(name, include, planes):
     return section
 
 
-def clean_generated_head_and_base_legs(obj, key):
+def remove_generated_head(obj, key):
     remove = set()
     for vertices in mesh_components(obj):
         low, high = bounds(v.co for v in vertices)
@@ -350,13 +350,6 @@ def clean_generated_head_and_base_legs(obj, key):
             remove.update(v.index for v in vertices if v.co.z > 1.645)
         if key == "blue" and width < .01 and low.y < -.075 and low.z > 1.64 and high.z < 1.89:
             remove.update(v.index for v in vertices)
-        if key == "base" and low.z < .44 and .48 < high.z < .60:
-            remove.update(v.index for v in vertices)
-        if key == "base" and low.z < .45 and 1.10 < high.z < 1.23:
-            for vertex in vertices:
-                # Leave a short shin above the mid-shin boot, with the
-                # actual knee pivot covered by the loose trouser leg.
-                vertex.co.z += .062*(1-smooth((vertex.co.z-.42)/.23))
     bm = bmesh.new()
     bm.from_mesh(obj.data)
     bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index in remove], context="VERTS")
@@ -441,23 +434,20 @@ def export(key, slot, objects):
                                        "triangles":sum(len(obj.data.loop_triangles) for obj in objects)}
 
 
-seams = [(0,side*ELBOW,lambda p: p.z>1.30,Vector((0,-.008,ARM_HEIGHT)),Vector((0,.052,.053)),.052)
-         for side in (-1,1)]
-seams += [(2,CUFF,lambda p, side=side: side*p.x>0,Vector((side*.132,.001,0)),Vector((.066,.062,0)),.062)
-          for side in (-1,1)]
+blue_boot_seams = [
+    (2,CUFF,lambda p, side=side: side*p.x>0,Vector((side*.132,.001,0)),Vector((.066,.062,0)),.062)
+    for side in (-1,1)
+]
+wrist_seams = []
 groups = {}
 hands = master_section("Shared_Wooden_Hands",lambda p: abs(p.x)>HAND_JOIN-.013,
                        [(0,-HAND_JOIN+.013),(0,HAND_JOIN-.013)])
 head = master_section("Shared_Wooden_Head",lambda p: p.z>1.595 and abs(p.x)<.15,[(2,1.595)])
-elbows = master_section("Shared_Wooden_Elbows",lambda p: abs(abs(p.x)-ELBOW)<.04,
-                        [(0,side*(ELBOW+offset)) for side in (-1,1) for offset in (-.04,.04)])
-shins = master_section("Base_Wooden_Shins",lambda p: CUFF-.025<p.z<.55,
-                       [(2,CUFF-.025),(2,.55)])
 for side in (-1,1):
     low, high = reference_seam(hands,0,side*(HAND_JOIN-.013),lambda p: p.z>1.4)
     center = (low+high)/2
     half = (high-low)/2 * 1.12
-    seams.append((0,side*HAND_JOIN,lambda p: p.z>1.4,center,half,.055))
+    wrist_seams.append((0,side*HAND_JOIN,lambda p: p.z>1.4,center,half,.055))
 for key, outfit_archive, grapple_archive in (
     ("base","base gear model.zip","lasso rope 3d model.zip"),
     ("blue","Blue gear.zip","fantasy weapon 3d model.zip"),
@@ -465,25 +455,26 @@ for key, outfit_archive, grapple_archive in (
     outfit = imported(key, outfit_archive)
     tag_hanging_cloth(outfit,key)
     align(outfit,key)
-    for axis,value in [(0,-HAND_JOIN),(0,-ELBOW),(0,ELBOW),(0,HAND_JOIN),(2,CUFF)]:
+    for axis,value in [(0,-HAND_JOIN),(0,-GLOVE_CUT),(0,GLOVE_CUT),(0,HAND_JOIN),(2,CUFF)]:
         direction = Vector([float(i == axis) for i in range(3)])
         bisect(outfit.data,value*direction,direction)
-    align_seams(outfit,seams)
+    # Keep the imported elbow surfaces intact and avoid pulling the Base boot
+    # rim and exposed shin into an artificial shared ellipse.
+    align_seams(outfit,blue_boot_seams+wrist_seams if key == "blue" else wrist_seams)
     weights = blue_outfit_weights if key == "blue" else outfit_weights
-    gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: ELBOW<abs(p.x)<HAND_JOIN,
-                              [(0,-ELBOW),(0,ELBOW),(0,-HAND_JOIN),(0,HAND_JOIN)]),weights)
-    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF,[(2,CUFF)]),weights)
-    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<ELBOW and p.z>=CUFF,
-                             [(0,-ELBOW),(0,ELBOW),(2,CUFF)])
+    gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN,
+                              [(0,-HAND_JOIN),(0,HAND_JOIN)]),weights)
+    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF),weights)
+    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=CUFF)
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
-    clean_generated_head_and_base_legs(head_chest,key)
+    remove_generated_head(head_chest,key)
     bind(head_chest,weights)
     grapple = imported(key+"_grapple",grapple_archive)
     groups[key] = {
-        "gloves":[gloves,hands]+grapple_assets(key,grapple)+[elbows],
+        "gloves":[gloves,hands]+grapple_assets(key,grapple),
         "boots":[boots],
-        "head_chest":[head_chest,head]+([shins] if key == "base" else []),
+        "head_chest":[head_chest,head],
     }
     bpy.data.objects.remove(outfit,do_unlink=True)
     bpy.data.objects.remove(grapple,do_unlink=True)
