@@ -38,7 +38,7 @@
 
 ##### \- The mask supplies its embroidery and one passive. Mask effects can reward single-Thread sets, hybrid sets, or Neutral/Base pieces
 
-##### \- Count Gloves, Boots, and Head / Chest once each for armor alignment. Weapons and grapple attachments are separate
+##### \- Count Gloves, Boots, and Head / Chest once each for armor alignment. The weapon is separate. The grapple belongs to Gloves, with its 3D model authored separately
 #####
 ##### \- Mask bonuses should create distinct playstyles without making any loadout mandatory for progression
 

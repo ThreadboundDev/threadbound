@@ -21,7 +21,9 @@ paired with its own motif and effect. Head / Chest still swaps as one gear item.
 ## Counting gear
 
 Count **Gloves**, **Boots**, and **Head / Chest** once each. The weapon, mask,
-grapple attachment, and separate meshes within Head / Chest add no extra counts.
+and separate meshes within Head / Chest add no extra counts. The grapple is
+part of Gloves, including its hardware and behavior. The 3D grapple model is
+authored separately from the bracer and ships as part of the same glove item.
 Each piece counts as Base/Neutral, Red/Power, Blue/Balance, or Yellow/Essence.
 
 Monarch, Hermit, and Sage get a stronger version of their own effect for **each**

@@ -17,6 +17,10 @@ and uses the existing active rope and projectile art. Blue's ribbons are
 weighted to the rig. Secondary cloth simulation and an updating inventory
 portrait are outside this fitting pass.
 
+The grapple is part of the Gloves item. Separate 3D authoring lets the reel
+and hook fit the bracer and animate independently. Swapping Gloves swaps the
+bracers, grapple visuals, and grapple behavior together.
+
 The original archives are `base gear model.zip`, `lasso rope 3d model.zip`,
 `Blue gear.zip` and `fantasy weapon 3d model.zip`. The builder expects all four
 in the same directory and uses the existing local fitted doll as its rig and

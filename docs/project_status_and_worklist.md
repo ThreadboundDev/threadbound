@@ -16,6 +16,11 @@ matching armor piece. Start with Loomed and Hermit using fitted Base/Blue gear.
 Route-dependent effects and mask acquisition remain open.
 [Ten concepts and test scope](design/pattern_system.md).
 
+November 4 first Mask + Pattern art: [Loomed and Hermit references](../work/loomed-hermit-mask-studies/README.md)
+pair two finishes on a shared mask shape with knotwork and wave embroidery.
+Gloves own their grapple hardware and behavior. Separate 3D generation is an
+authoring step for the same equipped item. Mask fitting and in-game review remain open.
+
 November 4 Blue grapple upload: Chase reports poor results with the multiview
 input and requests [one clean reference](../work/blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png).
 The ornate reel and hook use a dark indigo ribbon and a short metal spool pin
