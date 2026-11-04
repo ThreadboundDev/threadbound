@@ -5,6 +5,12 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 Blue grapple revision: the [current Blue turnaround and dock study](../work/blue-hermit-monk-2026-11-04/README.md)
+use a larger ribbon spool, compact crescent, keyed socket, and a single hook
+strap. The front and back show the same empty dock. Confirm fit and readability
+in 3D at the gameplay camera distance.
+Checkpoint: `art: refine blue grapple dock references`.
+
 November 4 Blue Hermit concept: [front, back, and turn studies](../work/blue-hermit-monk-2026-11-04/README.md)
 use the bare doll master and Chase's fantasy monk references. The wicker brim,
 fitted brown leather vest, bell sleeves, and full tapered trousers distinguish
