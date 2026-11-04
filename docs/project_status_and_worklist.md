@@ -5,6 +5,13 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 4 Blue Hermit concept: [front, back, and turn studies](../work/blue-hermit-monk-2026-11-04/README.md)
+use the bare doll master and Chase's fantasy monk references. The wicker brim,
+fitted brown leather vest, bell sleeves, and full tapered trousers distinguish
+Blue from Base. The notes mark recolorable cloth, Pattern embroidery zones,
+and the two ribbon attachment points. Visual review and 3D fitting follow.
+Checkpoint: `art: draw blue hermit monk concept`.
+
 November 3 grapple generation follow-up: a [standalone assembled grapple image](../work/base-gear-grapple-reference-2026-11-03/base_grapple_generation.png)
 shows the leather-bound coil and sewing needle connected by one short rope lead,
 isolated on white without the arm/bracer or labels. The exact built-in ImageGen
