@@ -15,6 +15,14 @@ equipment selections. Head/chest reaches above the elbows and knees; joint gaps
 and fingers remain exposed. The existing ability manager still owns gloves,
 boots and chest. Weapon presentation is independent of those three selections.
 
+## Player and enemy presentation
+
+November 4 decision. Keep the player live 3D on the shared rig so gear can
+swap during animation and the renderer resolves overlaps between equipment
+pieces. Keep the demo enemies as outlined 2D sprites. Use their clear
+silhouettes and painted shading as a reference when judging the player's
+materials and edges at normal gameplay zoom.
+
 November 3 fit correction: Chase rejects the oversized, nearly knee-high boots.
 The cuffs now end at 0.415 m in the rest pose, halfway between the ankle and knee,
 instead of 0.625 m. The shaft shortens above the ankle to preserve foot/heel
