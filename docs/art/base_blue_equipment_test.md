@@ -70,6 +70,11 @@ shape, with the knee pivot covered by the trousers. Open the rebuilt
 `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
 meshes and the adjacent rest and posed captures.
 
+The Base cowl sits lower and closer to the neck. Its weights follow the
+chest and blend across the shoulder into the upper arm. This keeps the folds
+from climbing with the head during turns. The fit can be compared in the
+Base idle, run, and casting captures in the same review directory.
+
 ## Forearm shield
 
 The equipped shield uses the imported face and rebuilt backing, with two

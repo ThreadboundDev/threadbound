@@ -298,6 +298,26 @@ def blue_outfit_weights(point, hints):
     return outfit_weights(point, hints)
 
 
+def base_outfit_weights(point, hints):
+    width = abs(point.x)
+    if point.z < 1.23 or width >= ELBOW-.055:
+        return outfit_weights(point, hints)
+    # The cowl is cloth around the chest. Following the head or grabbing
+    # the nearest arm bone makes it bunch up as the doll looks and turns.
+    side = "L" if point.x >= 0 else "R"
+    arm = smooth((width-.145)/.22)
+    torso = smooth((point.z-1.23)/.13)
+    return {"spine": (1-torso)*(1-arm), "chest": torso*(1-arm), f"upper_arm.{side}": arm}
+
+
+def slim_base_cowl(obj):
+    for vertex in obj.data.vertices:
+        x, y, z = vertex.co
+        collar = smooth((z-1.45)/.17)*(1-smooth((abs(x)-.11)/.16))
+        vertex.co = (x*(1-.15*collar), y*(1-.10*collar), z-.048*collar)
+    obj.data.update()
+
+
 def bind(obj, weights):
     hints = [{obj.vertex_groups[group.group].name for group in vertex.groups}
              for vertex in obj.data.vertices]
@@ -341,6 +361,7 @@ def master_section(name, include, planes):
 
 def remove_generated_head(obj, key):
     remove = set()
+    stitch_width, stitch_start = (.018, 1.60) if key == "base" else (.01, 1.64)
     for vertices in mesh_components(obj):
         low, high = bounds(v.co for v in vertices)
         width = max(abs(low.x),abs(high.x))
@@ -348,7 +369,8 @@ def remove_generated_head(obj, key):
             remove.update(v.index for v in vertices)
         if key == "blue" and low.z < 1.40 and high.z > 1.85:
             remove.update(v.index for v in vertices if v.co.z > 1.645)
-        if key == "blue" and width < .01 and low.y < -.075 and low.z > 1.64 and high.z < 1.89:
+        on_face = low.y < -.075 or (key == "base" and low.z > 1.67)
+        if width < stitch_width and on_face and low.z > stitch_start and high.z < 1.89:
             remove.update(v.index for v in vertices)
     bm = bmesh.new()
     bm.from_mesh(obj.data)
@@ -463,13 +485,15 @@ for key, outfit_archive, grapple_archive in (
     # Keep the imported elbow surfaces intact and avoid pulling the Base boot
     # rim and exposed shin into an artificial shared ellipse.
     align_seams(outfit,blue_boot_seams+wrist_seams if key == "blue" else wrist_seams)
-    weights = blue_outfit_weights if key == "blue" else outfit_weights
+    weights = blue_outfit_weights if key == "blue" else base_outfit_weights
     gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN),weights)
     boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF),weights)
     head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=CUFF)
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
     remove_generated_head(head_chest,key)
+    if key == "base":
+        slim_base_cowl(head_chest)
     bind(head_chest,weights)
     grapple = imported(key+"_grapple",grapple_archive)
     groups[key] = {
