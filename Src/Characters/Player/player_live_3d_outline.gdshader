@@ -1,8 +1,8 @@
 shader_type canvas_item;
 // Receive the level's 2D lighting on top of the viewport's 3D surface shading.
 
-uniform vec4 outline_color : source_color = vec4(0.055, 0.042, 0.042, 1.0);
-uniform float outline_source_pixels : hint_range(0.0, 8.0, 0.25) = 3.0;
+uniform vec4 outline_color : source_color = vec4(0.015, 0.012, 0.012, 1.0);
+uniform float outline_source_pixels : hint_range(0.0, 24.0, 0.25) = 3.0;
 uniform float exposure = 1.05;
 uniform float contrast = 1.0;
 uniform float saturation = 1.06;
@@ -26,7 +26,7 @@ void fragment() {
 			coverage += texture(TEXTURE, UV + vec2(float(x), float(y))*step_size).a / 9.0;
 		}
 	}
-	float outline_alpha = surrounding_alpha * (1.0 - base.a) * smoothstep(0.08, 0.38, coverage);
+	float outline_alpha = surrounding_alpha * (1.0 - base.a) * smoothstep(0.08, 0.20, coverage);
 	vec3 graded = pow(max(base.rgb, vec3(0.0)), vec3(contrast)) * exposure;
 	float luminance = dot(graded, vec3(0.2126, 0.7152, 0.0722));
 	graded = mix(vec3(luminance), graded, saturation);

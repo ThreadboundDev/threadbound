@@ -53,6 +53,15 @@ Use `tools/player_animation/verify_base_blue_equipment.gd` for a scoped
 verification update if necessary. Existing shared-checkout edits in the
 visual script require a selective checkpoint.
 
-The report is feedback, and AGENTS.md requires approval before architectural
-changes. The separate sword material pass is proposed here for approval.
-The report remains open, with runtime rendering edits pending.
+Chase approved this scope on November 5. The character uses the stronger
+three-world-pixel outline and the sword has its own dark shell with depth
+testing. The sword pass is installed on initial load and weapon changes.
+The blade and hilt can be outlined where they cross the body.
+
+The equipment verification passed 268 checks across eight gear combinations.
+Matching before/after idle, run, and grapple poses are stored locally in
+`LocalOnly/Equipment/OutlineReview/`. The captures compare silhouette and
+sword-edge treatment at the same pose. A separate Compatibility-renderer
+comparison is in `LocalOnly/Equipment/OutlineReviewCompatibility/`.
+Hands-on appearance acceptance remains open. Existing render-resource
+cleanup diagnostics still appear at test shutdown.

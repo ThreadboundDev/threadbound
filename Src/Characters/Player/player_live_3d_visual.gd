@@ -10,6 +10,7 @@ const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTes
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
 const THREAD_SWEEP := preload("res://Src/VFX/thread_sword_sweep.gd")
 const OUTLINE_SHADER := preload("res://Src/Characters/Player/player_live_3d_outline.gdshader")
+const SWORD_OUTLINE_SHADER := preload("res://Src/Characters/Player/player_sword_outline.gdshader")
 
 const LOOPING_ACTIONS := {
 	&"idle_4": true,
@@ -888,7 +889,7 @@ func _build_viewport() -> void:
 	var outline_material := ShaderMaterial.new()
 	outline_material.shader = OUTLINE_SHADER
 	# Keep the outline's world-space width when changing render resolution.
-	outline_material.set_shader_parameter("outline_source_pixels", 1.5 / display_scale.x)
+	outline_material.set_shader_parameter("outline_source_pixels", 3.0 / display_scale.x)
 	if _model_root.find_child("Threadborne_Doll", true, false):
 		# Leave headroom for the level's additive 2D lights on pale lacquer.
 		outline_material.set_shader_parameter("exposure", 0.62)
@@ -1001,6 +1002,10 @@ func _apply_toon_materials(root: Node) -> void:
 					stylized.metallic = 0.35
 					stylized.metallic_specular = 0.9
 					stylized.albedo_color = Color(1.65, 1.72, 1.8, 1.0)
+					var sword_outline := ShaderMaterial.new()
+					sword_outline.shader = SWORD_OUTLINE_SHADER
+					sword_outline.set_shader_parameter("outline_source_pixels", 1.25 / display_scale.x)
+					stylized.next_pass = sword_outline
 				mesh_instance.set_surface_override_material(surface, stylized)
 
 
