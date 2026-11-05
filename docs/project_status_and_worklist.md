@@ -1,8 +1,25 @@
 # Threadbound current TODO list
 
-Updated November 3, 2026. This is the single current priority list. The saved
+Updated November 5, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
+
+## November 5 hands-on acceptance
+
+- [x] **Development feedback tool — Accepted.** Chase confirms the tool is
+  working and requests marking it complete. Repair checkpoint: `214660a9`
+  (`fix: repair feedback typing and recording stalls`). This acceptance
+  supersedes earlier pending feedback-workflow notes below.
+- [x] **Gameplay zoom — Accepted.** Chase confirms the added zoom function
+  works and requests marking it complete. Implementation checkpoint: `585ea82b`
+  (`fix: enable gameplay zoom in normal development runs`).
+
+Validation: Chase's November 5 report; most testing has been inside the demo
+level (Chamber of the First Weave). The report does not establish full demo
+regression coverage or accept Blue-specific behavior, equipment appearance,
+combat feel, or other outstanding reviews. No new automated checks were run
+for this documentation update. Checkpoint:
+`docs: record feedback tool and gameplay zoom acceptance`.
 
 **Current task: T44 — attach modular base gear to the doll.**
 November 4 fitted Base and Blue: both generated outfits and stowed grapples
