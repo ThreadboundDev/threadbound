@@ -39,10 +39,18 @@ Gameplay art review is open.
 
 ### Close-up feedback
 
-During gameplay in an equipment art-test session, scroll up to zoom in (up
-to 16×), scroll down to zoom out, or press `\` to reset. Use **Ctrl+F1**
+During gameplay in any development/editor run, scroll up to zoom in (up
+to 16×), scroll down to return toward the saved gameplay zoom, or press `\`
+to reset. Zoom does not require `--equipment-art-test`; that argument only
+unlocks the equipment for review. Restart a running game to load code changes.
+Zoom input is inactive while paused. Use **Ctrl+F1**
 for screenshot feedback or **Ctrl+F2** for a movement clip. The feedback
 report captures the current camera zoom.
+
+November 4 zoom fix: removed the art-test launch requirement. The headless
+`tools/player_animation/verify_gameplay_zoom.gd` regression exercises wheel
+input, multi-tick scrolling, both bounds, reset, pause and missing-camera
+handling. It passes nine checks with and without the art-test argument.
 
 ## Blue deformation follow-up
 

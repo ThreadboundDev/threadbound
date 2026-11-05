@@ -10,14 +10,12 @@ const ZOOM_BASE_META := &"_art_test_original_zoom"
 var debug_label: Label
 var target_node: Node2D = null  # Usually the player
 var canvas_layer: CanvasLayer = null
-var _art_test_zoom := false
 
 func _ready():
 	if not OS.is_debug_build():
 		process_mode = Node.PROCESS_MODE_DISABLED
 		return
 
-	_art_test_zoom = OS.get_cmdline_user_args().has("--equipment-art-test")
 	if not OS.get_cmdline_user_args().has("--no-debug-feedback"):
 		var feedback := FEEDBACK_CAPTURE.new()
 		feedback.name = "FeedbackCapture"
@@ -39,7 +37,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
 	if event is InputEventMouseButton and event.pressed:
-		if _art_test_zoom and not get_tree().paused and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
+		# Close-up review also works in normal editor runs without art-test unlocks.
+		if not get_tree().paused and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
 			var step := 1.25 if event.button_index == MOUSE_BUTTON_WHEEL_UP else 0.8
 			var ticks: float = event.factor if event.factor > 0.0 else 1.0
 			if _adjust_art_test_zoom(pow(step, ticks)):
@@ -49,7 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	match event.keycode:
 		KEY_BACKSLASH:
-			if _art_test_zoom and _adjust_art_test_zoom(0.0):
+			if not get_tree().paused and _adjust_art_test_zoom(0.0):
 				get_viewport().set_input_as_handled()
 		KEY_F3:
 			if _kill_proto_weaver():
