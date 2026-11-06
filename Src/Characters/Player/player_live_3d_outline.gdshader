@@ -11,22 +11,16 @@ void fragment() {
 	vec4 base = texture(TEXTURE, UV);
 	vec2 step_size = TEXTURE_PIXEL_SIZE * outline_source_pixels;
 	float surrounding_alpha = 0.0;
-	float coverage = 0.0;
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + vec2(step_size.x, 0.0)).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV - vec2(step_size.x, 0.0)).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + vec2(0.0, step_size.y)).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV - vec2(0.0, step_size.y)).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + step_size).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV - step_size).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + vec2(step_size.x, -step_size.y)).a);
-	surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + vec2(-step_size.x, step_size.y)).a);
-	// Require local coverage: isolated alpha wisps should not become black spikes.
-	for (int x = -1; x <= 1; x++) {
-		for (int y = -1; y <= 1; y++) {
-			coverage += texture(TEXTURE, UV + vec2(float(x), float(y))*step_size).a / 9.0;
+	// Expand the opaque silhouette with a circular brush. Thresholding the
+	// source alpha prevents faint MSAA texels becoming a second shadow edge.
+	for (int radius = 1; radius <= 2; radius++) {
+		for (int i = 0; i < 16; i++) {
+			float angle = float(i) * 6.28318530718 / 16.0;
+			vec2 offset = vec2(cos(angle), sin(angle)) * step_size * float(radius) * 0.5;
+			surrounding_alpha = max(surrounding_alpha, texture(TEXTURE, UV + offset).a);
 		}
 	}
-	float outline_alpha = surrounding_alpha * (1.0 - base.a) * smoothstep(0.08, 0.20, coverage);
+	float outline_alpha = step(0.5, surrounding_alpha) * (1.0 - base.a);
 	vec3 graded = pow(max(base.rgb, vec3(0.0)), vec3(contrast)) * exposure;
 	float luminance = dot(graded, vec3(0.2126, 0.7152, 0.0722));
 	graded = mix(vec3(luminance), graded, saturation);

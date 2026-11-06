@@ -8,8 +8,8 @@ void vertex() {
 	vec4 position = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
 	vec3 view_normal = MODELVIEW_NORMAL_MATRIX * NORMAL;
 	vec2 direction = view_normal.xy;
-	float length_squared = dot(direction, direction);
-	direction /= sqrt(max(length_squared, 0.0001));
+	// Preserve the projected normal's length. Normalizing almost face-on
+	// surfaces pushed their tip vertices sideways into separate spikes.
 	position.xy += direction * (2.0 * outline_source_pixels / VIEWPORT_SIZE) * position.w;
 	// Keep the expanded back faces behind the sword's own visible surface.
 	if (CURRENT_RENDERER == RENDERER_COMPATIBILITY) {
