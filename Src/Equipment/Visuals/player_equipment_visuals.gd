@@ -9,6 +9,7 @@ const DEFAULT_LOADOUT := preload("res://Src/Equipment/Visuals/base_gear_loadout.
 const FITTED_LOADOUT := preload("res://Src/Equipment/Visuals/base_blue_gear_loadout.tres")
 const MASK_TEST_DIR := "res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/"
 const MASK_TEST_IDS := [&"loomed", &"hermit"]
+const CLOTH_MOTION := preload("res://Src/Equipment/Visuals/equipment_cloth_motion.gd")
 
 signal item_changed(slot: StringName, item: EquipmentVisualDefinition)
 
@@ -18,6 +19,7 @@ var _roots: Dictionary = {}
 var _variants: Dictionary = {}
 var _needle_meshes: Array[MeshInstance3D] = []
 var _grapple_stowed := true
+var cloth_motion: EquipmentClothMotion
 
 
 static func default_assets_available() -> bool:
@@ -89,6 +91,11 @@ func equip(item: EquipmentVisualDefinition) -> bool:
 			if not mesh.skin or not donor:
 				prepared.free()
 				return false
+			if not CLOTH_MOTION.register_bones(skeleton,donor):
+				prepared.free()
+				return false
+			if donor.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0:
+				prepared.set_meta("sleeve_bones",true)
 			var skin := Skin.new()
 			for index in mesh.skin.get_bind_count():
 				var bone_name := mesh.skin.get_bind_name(index)
@@ -117,6 +124,7 @@ func equip(item: EquipmentVisualDefinition) -> bool:
 		_retire(_roots[slot])
 	_roots[slot] = prepared
 	equipped[slot] = item
+	_update_cloth_motion()
 	if slot == &"gloves":
 		_needle_meshes.clear()
 		for node in prepared.find_children("Grapple_Needle_*", "MeshInstance3D", true, false):
@@ -153,10 +161,22 @@ func clear_slot(slot: StringName) -> void:
 	_retire(_roots[slot])
 	_roots.erase(slot)
 	equipped.erase(slot)
+	_update_cloth_motion()
 	if slot == &"gloves":
 		_needle_meshes.clear()
 	_update_body_coverage()
 	item_changed.emit(slot, null)
+
+
+func _update_cloth_motion() -> void:
+	if not cloth_motion and skeleton.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0:
+		cloth_motion = CLOTH_MOTION.new()
+		cloth_motion.initialize(skeleton)
+	if cloth_motion:
+		var outfit := _roots.get(&"head_chest") as Node3D
+		var item := equipped.get(&"head_chest") as EquipmentVisualDefinition
+		cloth_motion.set_equipped(outfit != null and outfit.get_meta("sleeve_bones",false)
+			and item != null and item.item_id == &"blue_fitted_head_chest")
 
 
 func _retire(old: Node3D) -> void:

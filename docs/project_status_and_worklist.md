@@ -22,6 +22,15 @@ for this documentation update. Checkpoint:
 `docs: record feedback tool and gameplay zoom acceptance`.
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 5 approved sleeve follow-up: [Blue sleeve secondary motion](art/blue_cloth_motion_proposal_2026_11_05.md)
+adds four short spring chains with torso collision to the hanging fabric. The
+inventory suite passes 287 checks across all eight loadouts, including moving
+poses in both directions, swap reuse, and teleport/long-frame resets. Rendered
+samples show about 82% less sleeve penetration into the torso proxy; cloth can
+still intersect between chain points. The rebuilt Blender source, Blue GLB, and
+comparison captures stay local. Hands-on appearance and motion review remain open.
+Checkpoint: `feature: add secondary motion to blue sleeves`.
+
 November 4 fitted Base and Blue: both generated outfits and stowed grapples
 are fitted to the existing doll rig. Six inventory icons support eight mixed
 loadouts. Shared elbow and mid-shin cuts are ready for Chase's in-game review.

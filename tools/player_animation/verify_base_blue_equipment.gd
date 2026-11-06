@@ -98,6 +98,8 @@ func run() -> void:
 			for mesh in equipment._roots[slot].find_children("*", "MeshInstance3D", true, false):
 				check(mesh.get_node_or_null(mesh.skeleton) == visual._skeleton, "Mesh bound to the live rig")
 		check(equipment._roots[&"weapon"] == weapon, "Clothing swaps preserve sword and shield")
+		if equipment.cloth_motion:
+			check(equipment.cloth_motion.simulator.active == bool(combination & 4), "Sleeve motion follows Head / Chest selection")
 		check(equipment._roots[&"head_chest"].find_child("Shared_Wooden_Head", true, false) != null,
 			"Head / Chest includes the master wooden head")
 		check(equipment._roots[&"gloves"].find_child("Shared_Wooden_Hands", true, false) != null,
@@ -160,12 +162,147 @@ func run() -> void:
 			await capture(visual._viewport, "shared_head_base_hermit")
 			mask_cells[&"hermit"].gui_input.emit(click)
 			check(not equipment.equipped.has(&"mask_preview"), "Click again removes the mask")
+	await verify_sleeve_motion(player,visual,manager)
 	var report := {"checks": checks, "failures": failures, "combinations": 8}
 	print("BASE_BLUE_EQUIPMENT ", JSON.stringify(report))
 	var file := FileAccess.open(OUTPUT + "godot_swap_report.json", FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(report, "\t"))
+	# These legacy ability objects are created outside the tree by the player.
+	# Release the fixture's instances before exiting the standalone test.
+	for property: StringName in [&"current_boots",&"current_chest"]:
+		var ability: Node = player.get(property)
+		if is_instance_valid(ability) and ability.get_parent() == null:
+			ability.free()
+		player.set(property,null)
 	stage.queue_free()
 	await process_frame
 	await process_frame
-	quit(0 if failures.is_empty() else 1)
+	call_deferred("quit",0 if failures.is_empty() else 1)
+
+
+func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
+	paused = false
+	for slot in 3:
+		if manager.current_equip[slot] != slot+3:
+			manager.equip_item(slot+3)
+	var cloth: EquipmentClothMotion = visual.equipment_visuals.cloth_motion
+	check(cloth != null, "Blue equips the cloth motion prototype")
+	if not cloth:
+		return
+	var bone_count: int = visual._skeleton.get_bone_count()
+	check(cloth.simulator.setting_count == 4, "Four sleeve chains are installed")
+	var probes: Array[Dictionary] = []
+	for mesh: MeshInstance3D in visual.equipment_visuals._roots[&"head_chest"].find_children("*","MeshInstance3D",true,false):
+		for surface in mesh.mesh.get_surface_count():
+			var arrays := mesh.mesh.surface_get_arrays(surface)
+			var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+			var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+			var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+			for vertex in range(0,vertices.size(),8):
+				var influences: Array[Dictionary] = []
+				var cloth_weight := 0.0
+				for influence in 4:
+					var weight := weights[vertex*4+influence]
+					if weight <= 0.0:
+						continue
+					var bind := bones[vertex*4+influence]
+					var bone := cloth.skeleton.find_bone(mesh.skin.get_bind_name(bind))
+					if String(cloth.skeleton.get_bone_name(bone)).begins_with(EquipmentClothMotion.PREFIX):
+						cloth_weight += weight
+					influences.append({"bone":bone,"bind":mesh.skin.get_bind_pose(bind),"weight":weight})
+				if cloth_weight > .5:
+					probes.append({"point":vertices[vertex],"influences":influences})
+	check(probes.size()>0,"Sleeve fabric has spring bone weights")
+	var samples := {"frames":0, "max_offset":0.0, "max_link_error":0.0, "finite":true, "min_clearance":INF,
+		"fabric_penetration":0.0,"rigid_penetration":0.0}
+	var callback := func() -> void:
+		if not cloth.simulator.active:
+			return
+		samples.frames += 1
+		var capsule := cloth.simulator.get_node("SleeveTorsoCollider") as SpringBoneCollisionCapsule3D
+		var rigid_poses := {}
+		for bone: int in cloth._bones:
+			var pose := cloth.skeleton.get_bone_global_pose(bone)
+			samples.finite = samples.finite and pose.origin.is_finite() and pose.basis.is_finite()
+			var rest := cloth.skeleton.get_bone_rest(bone)
+			var parent := cloth.skeleton.get_bone_parent(bone)
+			while String(cloth.skeleton.get_bone_name(parent)).begins_with(EquipmentClothMotion.PREFIX):
+				rest = cloth.skeleton.get_bone_rest(parent)*rest
+				parent = cloth.skeleton.get_bone_parent(parent)
+			rest = cloth.skeleton.get_bone_global_pose(parent)*rest
+			rigid_poses[bone] = rest
+			samples.max_offset = maxf(samples.max_offset,pose.origin.distance_to(rest.origin))
+			if String(cloth.skeleton.get_bone_name(bone)).ends_with("_0"):
+				continue
+			var link := pose.origin.distance_to(cloth.skeleton.get_bone_global_pose(cloth.skeleton.get_bone_parent(bone)).origin)
+			samples.max_link_error = maxf(samples.max_link_error,absf(link-cloth.skeleton.get_bone_rest(bone).origin.length()))
+			var local := capsule.to_local(cloth.skeleton.to_global(pose.origin))
+			var half_segment := capsule.mid_height*.5
+			var nearest := Vector3(0,clampf(local.y,-half_segment,half_segment),0)
+			var clearance := local.distance_to(nearest)-capsule.radius
+			if clearance < samples.min_clearance:
+				samples.min_clearance = clearance
+				samples.worst_bone = cloth.skeleton.get_bone_name(bone)
+				samples.worst_action = visual._current_action
+		for probe in probes:
+			var point := Vector3.ZERO
+			var rigid := Vector3.ZERO
+			for influence in probe.influences:
+				var pose := cloth.skeleton.get_bone_global_pose(influence.bone)
+				point += (pose*influence.bind*probe.point)*influence.weight
+				rigid += (rigid_poses.get(influence.bone,pose)*influence.bind*probe.point)*influence.weight
+			samples.fabric_penetration += capsule_penetration(capsule,cloth.skeleton.to_global(point))
+			samples.rigid_penetration += capsule_penetration(capsule,cloth.skeleton.to_global(rigid))
+	cloth.simulator.modification_processed.connect(callback)
+	visual.set_process(true)
+	for facing in [1,-1]:
+		player.last_direction = facing
+		for action: StringName in [&"idle_4",&"run_1",&"casting_2",&"grapple_swinging_1"]:
+			visual._logical_animation = &"Run" if action == &"run_1" else &"Idle"
+			visual._play_action(action,&"",0,true,1,0)
+			for frame in 60:
+				player.velocity.x = facing*300.0*sin(frame*.1)
+				await physics_frame
+			await capture(visual._viewport,"blue_sleeve_%s_%d" % [action,facing])
+			if facing == 1:
+				# Freeze one pose for a direct comparison of sleeve deformation.
+				visual.set_process(false)
+				visual._animation_player.pause()
+				cloth.set_equipped(false)
+				await capture(visual._viewport,"blue_sleeve_rigid_"+String(action))
+				cloth.set_equipped(true)
+				for frame in 30:
+					await physics_frame
+				await capture(visual._viewport,"blue_sleeve_settled_"+String(action))
+				visual.set_process(true)
+	check(samples.frames > 0, "Sleeve simulator runs on the live rig")
+	# Three 8 cm links can displace a tip by at most twice their total length.
+	check(samples.finite and samples.max_offset > .0001 and samples.max_offset < .481
+		and samples.max_link_error < .001, "Sleeve motion is finite and preserves chain lengths")
+	check(samples.min_clearance > -.015, "Sleeve tips stay within the 1.5 cm collision tolerance")
+	check(samples.fabric_penetration < samples.rigid_penetration, "Moving sleeve fabric penetrates torso less than rigid sleeves")
+	var resets := cloth.reset_count
+	player.position += Vector2(600,0)
+	visual._process(1.0/60.0)
+	check(cloth.reset_count > resets, "Teleport resets sleeve inertia")
+	resets = cloth.reset_count
+	visual._process(.25)
+	check(cloth.reset_count > resets, "Long frame resets sleeve inertia")
+	manager.equip_item(2)
+	check(not cloth.simulator.active, "Base Head / Chest disables sleeves")
+	manager.equip_item(5)
+	check(cloth.simulator.active, "Blue Head / Chest restores sleeves")
+	check(visual._skeleton.get_bone_count() == bone_count, "Repeated swaps reuse cloth bones")
+	print("BLUE_SLEEVE_MOTION ", JSON.stringify(samples))
+	var report := FileAccess.open(OUTPUT+"godot_sleeve_motion_report.json",FileAccess.WRITE)
+	if report:
+		report.store_string(JSON.stringify(samples,"\t"))
+	cloth.simulator.modification_processed.disconnect(callback)
+	visual.set_process(false)
+
+
+func capsule_penetration(capsule: SpringBoneCollisionCapsule3D, point: Vector3) -> float:
+	var local := capsule.to_local(point)
+	var nearest := Vector3(0,clampf(local.y,-capsule.mid_height*.5,capsule.mid_height*.5),0)
+	return maxf(0.0,capsule.radius-local.distance_to(nearest))

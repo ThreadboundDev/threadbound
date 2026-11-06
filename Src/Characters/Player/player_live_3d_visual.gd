@@ -153,6 +153,8 @@ func _process(delta: float) -> void:
 		var gloves = _player.get("current_gloves")
 		equipment_visuals.set_grapple_stowed(not gloves or gloves.grapple_state == BaseGloves.GrappleState.STOWED)
 	if _door_active:
+		if equipment_visuals and equipment_visuals.cloth_motion:
+			equipment_visuals.cloth_motion.reset()
 		_update_house_door_pose()
 		return
 	var facing := _get_visual_facing(delta)
@@ -206,6 +208,8 @@ func _process(delta: float) -> void:
 				# with the floor. Preserve authored flight phases in runs/rolls/jumps.
 				_model_root.position.y = -_sole_height()
 	_update_sword_smears(delta)
+	if equipment_visuals and equipment_visuals.cloth_motion:
+		equipment_visuals.cloth_motion.advance(delta,_player.global_position,_player.velocity,float(facing))
 
 
 func _sole_height() -> float:

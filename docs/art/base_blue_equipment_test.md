@@ -14,8 +14,8 @@ The two suits share bracer joins just beyond the elbows (X ±0.5177) and mid-shi
 hardware includes a separate needle or hook on the shield-arm bracer, and the
 live grapple origin follows the fitted glove. Casting hides the stowed hook
 and uses the existing active rope and projectile art. Blue's ribbons are
-weighted to the rig. Secondary cloth simulation and an updating inventory
-portrait are outside this fitting pass.
+weighted to the rig. The sleeves have the approved secondary motion prototype
+described below. An updating inventory portrait remains outside this fitting pass.
 
 The grapple is part of the Gloves item. Separate 3D authoring lets the reel
 and hook fit the bracer and animate independently. Swapping Gloves swaps the
@@ -36,6 +36,23 @@ It exercises all eight combinations through the inventory, checks rig and
 weapon bindings, and casts both grapples from the fitted anchors. A rendered
 run also captures idle, running, and casting poses and the populated inventory.
 Gameplay art review is open.
+
+## Blue sleeve motion
+
+The November 5 approved prototype adds spring chains to the hanging portions
+of both Blue sleeves, with a chest-bound torso collider. The upper fabric stays
+attached to the arms. Equip Blue Head / Chest to enable it; Base Head / Chest
+disables it. Swaps, teleports, long frames, and door transitions reset inertia.
+Restart the game after Godot imports the rebuilt `blue_head_chest.glb`.
+
+The inventory verification now passes 287 checks, including moving sleeves in
+idle, run, casting, and grapple swinging with both facing directions. Review
+`blue_sleeve_*` captures and `godot_sleeve_motion_report.json` beside the Blender
+source. The `rigid` and `settled` captures freeze the same pose for comparison.
+Sampled fabric penetration into the torso proxy fell about 82% in the rendered
+comparison. Broad cloth can still intersect between spring points; this is a
+bone approximation and needs Chase's moving review. Ribbons and the sash retain
+their existing rig weights. See the [approved scope and validation](blue_cloth_motion_proposal_2026_11_05.md).
 
 ### Close-up feedback
 

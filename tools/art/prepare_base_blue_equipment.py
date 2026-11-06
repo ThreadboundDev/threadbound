@@ -277,6 +277,17 @@ def blue_outfit_weights(point, hints):
     x, _, z = point
     width = abs(x)
     side = "L" if x >= 0 else "R"
+    if "Fit_Sleeve" in hints:
+        amount = smooth((1.51-z)/.11) * smooth((width-.19)/.06) * (1-smooth((width-.40)/.045))
+        level = min(2.0,max(0.0,(1.48-z)/.08))
+        first = min(1,int(level))
+        mix = level-first
+        back = smooth((point.y+.065)/.13)
+        result = {f"upper_arm.{side}": 1-amount}
+        for rail, rail_weight in (("front",1-back),("back",back)):
+            for joint, joint_weight in ((first,1-mix),(first+1,mix)):
+                result[f"cloth_sleeve_{side}_{rail}_{joint}"] = amount*rail_weight*joint_weight
+        return dict(sorted(result.items(),key=lambda entry:entry[1],reverse=True)[:4])
     if z >= 1.65 or hints:
         return outfit_weights(point, hints)
     if z >= 1.21 and width >= .17:
@@ -335,6 +346,26 @@ def bind(obj, weights):
     modifier = obj.modifiers.new("Game skeleton", "ARMATURE")
     modifier.object = rig
     return obj
+
+
+def add_blue_sleeve_bones(obj):
+    bpy.context.view_layer.objects.active = rig
+    rig.select_set(True)
+    bpy.ops.object.mode_set(mode="EDIT")
+    for side, sign in (("L",1),("R",-1)):
+        for rail, y in (("front",-.065),("back",.065)):
+            parent = rig.data.edit_bones[f"upper_arm.{side}"]
+            for joint in range(4):
+                bone = rig.data.edit_bones.new(f"cloth_sleeve_{side}_{rail}_{joint}")
+                bone.head = (sign*.31,y,1.48-.08*joint)
+                bone.tail = (sign*.31,y,1.40-.08*joint)
+                bone.parent = parent
+                parent = bone
+    bpy.ops.object.mode_set(mode="OBJECT")
+    group = obj.vertex_groups.new(name="Fit_Sleeve")
+    group.add([v.index for v in obj.data.vertices
+               if .19<abs(v.co.x)<.445 and 1.24<v.co.z<1.515],1,"REPLACE")
+    report["cloth_sleeves"] = {"chains":4,"bones_per_chain":4,"simulated_links_per_chain":3}
 
 
 def master_section(name, include, planes):
@@ -491,6 +522,7 @@ for key, outfit_archive, grapple_archive in (
     head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=CUFF)
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
+        add_blue_sleeve_bones(head_chest)
     remove_generated_head(head_chest,key)
     if key == "base":
         slim_base_cowl(head_chest)
