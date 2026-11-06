@@ -22,6 +22,13 @@ for this documentation update. Checkpoint:
 `docs: record feedback tool and gameplay zoom acceptance`.
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 5 inventory follow-up: [live equipped character portrait](art/inventory_character_preview_2026_11_05.md)
+loops idle during pause and mirrors gear/mask changes. The Base/Blue glove icons
+now show the actual bracer, hand, and attached grapple together. All 290 preview
+checks pass in headless and Forward+; the equipment/sleeve regression passes
+287 checks. Captures and replacement icons stay local. Morning hands-on review
+is pending. Checkpoint: `feature: show live equipped character in inventory`.
+
 November 5 approved sleeve follow-up: [Blue sleeve secondary motion](art/blue_cloth_motion_proposal_2026_11_05.md)
 adds four short spring chains with torso collision to the hanging fabric. The
 inventory suite passes 287 checks across all eight loadouts, including moving

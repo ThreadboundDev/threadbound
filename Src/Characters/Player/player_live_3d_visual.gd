@@ -1490,11 +1490,15 @@ func _apply_idle_sword_clearance(delta: float) -> void:
 	_idle_sword_clearance_weight = move_toward(_idle_sword_clearance_weight, target, delta / 0.15)
 	if _idle_sword_clearance_weight <= 0.0:
 		return
-	var hand := _skeleton.find_bone("hand.R")
+	apply_idle_sword_clearance_pose(_skeleton, _idle_sword_clearance_weight)
+
+
+static func apply_idle_sword_clearance_pose(skeleton: Skeleton3D, weight: float) -> void:
+	var hand := skeleton.find_bone("hand.R")
 	if hand < 0:
 		return
 	# Separate the blade tip from the face in the gameplay camera projection.
 	# The composite outline cannot distinguish two opaque overlapping surfaces.
-	var pose := _skeleton.get_bone_global_pose(hand)
-	pose.basis = Basis(Vector3.RIGHT, deg_to_rad(14.0) * _idle_sword_clearance_weight) * pose.basis
-	_skeleton.set_bone_global_pose_override(hand, pose, 1.0, true)
+	var pose := skeleton.get_bone_global_pose(hand)
+	pose.basis = Basis(Vector3.RIGHT, deg_to_rad(14.0) * weight) * pose.basis
+	skeleton.set_bone_global_pose_override(hand, pose, 1.0, true)

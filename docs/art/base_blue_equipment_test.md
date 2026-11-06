@@ -15,7 +15,10 @@ hardware includes a separate needle or hook on the shield-arm bracer, and the
 live grapple origin follows the fitted glove. Casting hides the stowed hook
 and uses the existing active rope and projectile art. Blue's ribbons are
 weighted to the rig. The sleeves have the approved secondary motion prototype
-described below. An updating inventory portrait remains outside this fitting pass.
+described below. The inventory now shows an independent idle preview of the
+current character, updating as gear and masks change. Glove icons show the
+bracer, wooden hand and attached grapple together. See the
+[inventory preview delivery and checks](inventory_character_preview_2026_11_05.md).
 
 The grapple is part of the Gloves item. Separate 3D authoring lets the reel
 and hook fit the bracer and animate independently. Swapping Gloves swaps the

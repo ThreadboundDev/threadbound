@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import re
+import runpy
 import struct
 import sys
 import zipfile
@@ -573,9 +574,10 @@ def render(name, visible, target, scale, direction, directory):
     bpy.ops.render.render(write_still=True)
 
 
+render_glove_icon = runpy.run_path(str(Path(__file__).with_name("render_fitted_glove_icons.py")))["render_glove_icon"]
 for key, slots in groups.items():
     gloves = slots["gloves"]
-    render(key+"_gloves_icon",gloves[2:4],Vector((.57,-.047,ARM_HEIGHT)),.25,(.19,-1,.29),OUT)
+    render_glove_icon(key, gloves, scene, camera, OUT)
     render(key+"_boots_icon",slots["boots"],Vector((0,-.055,.206)),.55,(.40,-1,.24),OUT)
     render(key+"_head_chest_icon",slots["head_chest"],Vector((0,-.025,1.35)),1.30,(.22,-1,.075),OUT)
     scene.render.resolution_x = scene.render.resolution_y = 850

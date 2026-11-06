@@ -4,6 +4,7 @@ class_name GameMenu
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
 const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
+const CHARACTER_PREVIEW := preload("res://Src/UI/GameMenu/inventory_character_preview.gd")
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -317,6 +318,7 @@ var _inventory_category_focus := false
 var _inventory_focused_slot: Control = null
 var _controls_only := false
 var _inventory_pattern_portrait: AnimatedSprite2D = null
+var _inventory_character_preview: InventoryCharacterPreview
 var _lore_list_label: Label
 var _lore_title_label: Label
 var _lore_category_label: Label
@@ -361,6 +363,7 @@ func _ready() -> void:
 	_setup_keyboard_binding_rows()
 	_setup_inventory_ui()
 	_setup_lore_ui()
+	_ensure_inventory_character_preview()
 	_ensure_inventory_pattern_portrait()
 	_hide_rebind_prompt()
 	_update_equipped_slot_items()
@@ -749,6 +752,9 @@ func _select_tab(index: int, instant := false) -> void:
 
 	for i in pages.size():
 		pages[i].visible = i == _selected_index
+	_ensure_inventory_character_preview()
+	if _inventory_character_preview:
+		_inventory_character_preview.set_active(TAB_ORDER[_selected_index] == &"Inventory")
 
 	_update_tab_visuals()
 
@@ -1982,7 +1988,30 @@ func _get_equipped_pattern_item() -> Dictionary:
 		"pattern_id": pattern.id,
 	}
 
+func _ensure_inventory_character_preview() -> void:
+	if _inventory_character_preview or not inventory_player_portrait:
+		return
+	var player := get_tree().get_first_node_in_group("player")
+	var source := player.get_node_or_null("Live3DVisual") as PlayerLive3DVisual if player else null
+	if not source:
+		return
+	var preview := CHARACTER_PREVIEW.new()
+	preview.name = "LiveCharacterPreview"
+	preview.position = Vector2(155, 150)
+	preview.size = Vector2(250, 350)
+	inventory_player_portrait.get_parent().add_child(preview)
+	if not preview.initialize(source):
+		preview.queue_free()
+		return
+	_inventory_character_preview = preview
+	inventory_player_portrait.hide()
+	if _inventory_pattern_portrait:
+		_inventory_pattern_portrait.hide()
+
+
 func _ensure_inventory_pattern_portrait() -> void:
+	if _inventory_character_preview:
+		return
 	if _inventory_pattern_portrait or not inventory_player_portrait:
 		return
 	_inventory_pattern_portrait = AnimatedSprite2D.new()
@@ -1998,6 +2027,9 @@ func _ensure_inventory_pattern_portrait() -> void:
 
 func _refresh_inventory_pattern_portrait() -> void:
 	if not _inventory_pattern_portrait:
+		return
+	if _inventory_character_preview:
+		_inventory_pattern_portrait.hide()
 		return
 	var pattern: EquipmentPattern = EquipManager.get_current_pattern() if EquipManager else null
 	_inventory_pattern_portrait.visible = pattern != null
