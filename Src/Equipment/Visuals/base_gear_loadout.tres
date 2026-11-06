@@ -27,8 +27,8 @@ model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equip
 [sub_resource type="Resource" id="Weapon"]
 script = ExtResource("1")
 item_id = &"base_sword_shield"
-blade_tip = Vector3(-0.731586814, 0.083770297, -0.070786029)
-blade_base = Vector3(-0.104337163, 0.083770320, -0.011981617)
+blade_tip = Vector3(-0.752274275, 0.084274940, -0.082208984)
+blade_base = Vector3(-0.169053391, 0.083770312, -0.018048739)
 slot = "weapon"
 model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/base_sword.glb", "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_shield.glb")
 

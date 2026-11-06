@@ -1,6 +1,7 @@
 """Fit the rebuilt shield to the current bracers and export only the shield."""
 
 import math
+import sys
 from pathlib import Path
 
 import bpy
@@ -34,6 +35,21 @@ for obj in imported.objects:
         x, y, z = source_matrix @ vertex.co
         vertex.co = (.606 + .92*(y-.14), .024 + .92*(z+.030), BACK_PLANE + .60*x)
     shield.append(obj)
+
+if "--front" in sys.argv:
+    front_source = Path(sys.argv[sys.argv.index("--front")+1])
+    for old_part in list(shield):
+        if old_part.name.startswith(("Shield_Original_Front", "Shield_Back_Brass_Rim", "Shield_Ornament_Rear_Cap")):
+            shield.remove(old_part)
+            bpy.data.objects.remove(old_part, do_unlink=True)
+    with bpy.data.libraries.load(str(front_source)) as (library, revised):
+        revised.objects = ["Shield_Revised_Front"]
+    front = revised.objects[0]
+    scene.collection.objects.link(front)
+    front.parent = None
+    front.matrix_world = Matrix.Identity(4)
+    front.name = "Shield_Original_Front"
+    shield.append(front)
 
 
 def material(name, color, roughness, metallic=0):
