@@ -132,9 +132,11 @@ func _smooth_samples() -> Array[Dictionary]:
 func _draw_strip_quad(points: PackedVector2Array, color: Color) -> void:
 	# A projected 3D sword can reverse across itself. Explicit triangles avoid
 	# invalid bow-tie polygons; zero-area samples contribute no surface.
+	# Submit triangles directly so thin surfaces at large world coordinates
+	# do not pass through the polygon triangulator again.
 	for ids in [[0,1,2],[0,2,3]]:
 		var a := points[ids[0]]
 		var b := points[ids[1]]
 		var c := points[ids[2]]
 		if absf((b-a).cross(c-a)) > 0.05:
-			draw_colored_polygon(PackedVector2Array([a,b,c]),color)
+			draw_primitive(PackedVector2Array([a,b,c]),PackedColorArray([color]),PackedVector2Array())
