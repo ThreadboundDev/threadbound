@@ -88,6 +88,7 @@ var _logical_animation: StringName = &""
 var _current_action: StringName = &""
 var _queued_action: StringName = &""
 var _idle_elapsed := 0.0
+var _idle_sword_clearance_weight := 0.0
 var _idle_variant_index := 0
 var _lower_sampler_root: Node3D
 var _lower_sampler_player: AnimationPlayer
@@ -176,7 +177,7 @@ func _process(delta: float) -> void:
 	if _air_slash_active and _player.is_in_prototype_water() and _player.water_combo_step < 0:
 		_apply_water_attack_blend(delta)
 	_apply_grapple_aim_override()
-	_apply_idle_sword_clearance()
+	_apply_idle_sword_clearance(delta)
 	_apply_run_sword_arm_motion()
 	if _skeleton and _pelvis_index >= 0:
 		var pelvis_displacement := (
@@ -1477,8 +1478,13 @@ func _apply_run_sword_arm_motion() -> void:
 		_skeleton.force_update_all_bone_transforms()
 
 
-func _apply_idle_sword_clearance() -> void:
-	if _current_action != &"idle_4" or _air_slash_active or not _skeleton:
+func _apply_idle_sword_clearance(delta: float) -> void:
+	if _logical_animation != &"Idle" or _air_slash_active or not _skeleton:
+		_idle_sword_clearance_weight = 0.0
+		return
+	var target := 1.0 if _current_action == &"idle_4" else 0.0
+	_idle_sword_clearance_weight = move_toward(_idle_sword_clearance_weight, target, delta / 0.15)
+	if _idle_sword_clearance_weight <= 0.0:
 		return
 	var hand := _skeleton.find_bone("hand.R")
 	if hand < 0:
@@ -1486,5 +1492,5 @@ func _apply_idle_sword_clearance() -> void:
 	# Separate the blade tip from the face in the gameplay camera projection.
 	# The composite outline cannot distinguish two opaque overlapping surfaces.
 	var pose := _skeleton.get_bone_global_pose(hand)
-	pose.basis = Basis(Vector3.RIGHT, deg_to_rad(14.0)) * pose.basis
+	pose.basis = Basis(Vector3.RIGHT, deg_to_rad(14.0) * _idle_sword_clearance_weight) * pose.basis
 	_skeleton.set_bone_global_pose_override(hand, pose, 1.0, true)
