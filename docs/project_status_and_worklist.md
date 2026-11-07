@@ -1,6 +1,6 @@
 # Threadbound current TODO list
 
-Updated November 5, 2026. This is the single current priority list. The saved
+Updated November 7, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
@@ -22,6 +22,15 @@ for this documentation update. Checkpoint:
 `docs: record feedback tool and gameplay zoom acceptance`.
 
 **Current task: T44 — attach modular base gear to the doll.**
+November 7 [three-report equipment review](art/equipment_feedback_2026_11_07.md):
+all captures/recordings and diagnostics reviewed; no runtime errors were captured.
+The mixed shin rings differ by up to 64.4 mm despite sharing a cut height, and
+both sets share the same blended hands. The requested modest sleeve damping
+adjustment passes 287 checks before/after. Per-object outlines, articulated
+hinge/wrist repair, shared shin joins and Blue/Base loose-cloth extensions have
+a concrete file scope **pending approval under AGENTS.md**. Reports remain open.
+Checkpoint: `fix: soften blue sleeves and document equipment repair scope`.
+
 November 5 inventory follow-up: [live equipped character portrait](art/inventory_character_preview_2026_11_05.md)
 loops idle during pause and mirrors gear/mask changes. The Base/Blue glove icons
 now show the actual bracer, hand, and attached grapple together. All 290 preview

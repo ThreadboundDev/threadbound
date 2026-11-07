@@ -46,7 +46,7 @@ cuts, and weapon bindings remain compatible. Upper sleeve weights blend into the
 existing upper arms; the lower fabric follows the spring chains.
 
 The simulator uses a chest-bound torso capsule, 5 cm joint collision radii,
-stiffness 3.5, drag 0.8, and gravity 0.05. It runs in skeleton space, with a small
+stiffness 4.0, drag 0.86, and gravity 0.05. It runs in skeleton space, with a small
 bounded force derived from player acceleration. Swaps reuse the added bones,
 disable simulation for Base Head / Chest, and reset poses/inertia when reequipped.
 Teleports, long frames, and door transitions also reset inertia. The editor keeps
@@ -75,3 +75,9 @@ art stays local under the existing art policy. Ribbons and the sash keep their
 existing animation weights; this prototype is limited to sleeves.
 
 Checkpoint: `feature: add secondary motion to blue sleeves`.
+
+November 7 follow-up: Chase likes the sleeve method and requests slightly less
+motion. Increased stiffness from 3.5, drag from 0.8, and reduced acceleration force
+by 20%; collision strength is retained. Before and after each pass 287 checks.
+The proposed ribbon/Base cloth extension and shared seam/hand repairs await
+approval in the [November 7 feedback review](equipment_feedback_2026_11_07.md).

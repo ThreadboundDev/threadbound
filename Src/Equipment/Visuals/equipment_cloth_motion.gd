@@ -52,8 +52,8 @@ func initialize(target: Skeleton3D) -> void:
 			simulator.set_extend_end_bone(chain,false)
 			# Keep inertia in skeleton space; the collision capsule follows the chest.
 			simulator.set_center_from(chain,SpringBoneSimulator3D.CENTER_FROM_NODE)
-			simulator.set_stiffness(chain,3.5)
-			simulator.set_drag(chain,.8)
+			simulator.set_stiffness(chain,4.0)
+			simulator.set_drag(chain,.86)
 			simulator.set_gravity(chain,.05)
 			simulator.set_gravity_direction(chain,Vector3.DOWN)
 			simulator.set_radius(chain,.05)
@@ -98,6 +98,6 @@ func advance(delta: float, position: Vector2, velocity: Vector2, facing: float) 
 	else:
 		# Gameplay translation happens outside the 3D viewport. Supply its inertia.
 		var acceleration := (velocity-_previous_velocity)/maxf(delta,.001)
-		simulator.external_force = Vector3(0,-acceleration.y,-acceleration.x*facing).limit_length(4000)*.00005
+		simulator.external_force = Vector3(0,-acceleration.y,-acceleration.x*facing).limit_length(4000)*.00004
 	_previous_position = position
 	_previous_velocity = velocity
