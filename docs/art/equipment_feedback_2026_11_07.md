@@ -1,8 +1,31 @@
 # November 7 equipment review and proposed repair scope
 
-Status: review complete; existing sleeve tuning delivered for another look.
-The protected outline, mesh, seam and additional cloth work below is **pending
-Chase's approval**. The three source reports remain open.
+Status: Chase approved the scoped repair with “Do it.” Joint and outline repairs
+are implemented for testing; the additional cloth pass is in progress. The three
+source reports remain open for Chase's appearance review.
+
+## Approved repair checkpoint
+
+The shared hands now use rigid palm/phalange pieces with rounded brown hinges,
+centered on the unchanged wrist and finger pivots. Both glove variants reuse the
+same repair. Native Blender checks cover 32 samples across eight authored clips:
+all hand vertices have one rigid influence, no edge crosses between owners, and
+the maximum measured edge-length change is below 0.001 mm. The original 62 rest
+bones and 48 clips are retained. This verifies rigidity, not final grip appearance.
+
+Both shin joins use the Blue ellipse through a 22 mm overlap band (0.401–0.423 m).
+The trousers sit 0.5% inside the boot wall; the band follows the same shin bone.
+The native validator passes 98 checks covering both hands and all four exported
+join profiles. The boot top stays below the knee and the remap fades away from
+the hidden band. Original assets are backed up in the local review folder.
+
+Independent, depth-tested mesh outlines replace the combined alpha expansion.
+An outline-only mesh uses welded normals; the original shading mesh is preserved.
+Opaque source fronts and a depth recession prevent black hulls showing through
+folds. Small fingers, grapple hardware and the wicker crown use finer ink. The
+object verifier passes 274 binding/material/profile checks and captures four
+poses per outfit. Rendered comparisons show the blade retaining its own edge
+across the torso. Additional occlusion/zoom checks accompany the final cloth pass.
 
 ## Evidence reviewed
 

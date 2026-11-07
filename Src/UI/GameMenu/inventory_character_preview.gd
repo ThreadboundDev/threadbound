@@ -56,7 +56,7 @@ func initialize(source: PlayerLive3DVisual) -> bool:
 		for slot in source.equipment_visuals.equipped:
 			_mirror_item(slot, source.equipment_visuals.equipped[slot])
 		source.equipment_visuals.item_changed.connect(_mirror_item)
-	source._apply_toon_materials(model)
+	source._apply_toon_materials(model, 3.0)
 	var camera := Camera3D.new()
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 	camera.keep_aspect = Camera3D.KEEP_HEIGHT
@@ -66,7 +66,6 @@ func initialize(source: PlayerLive3DVisual) -> bool:
 	camera.current = true
 	texture = viewport.get_texture()
 	var outline := source._display.material.duplicate() as ShaderMaterial
-	outline.set_shader_parameter("outline_source_pixels", 2.0)
 	outline.set_shader_parameter("exposure", .9)
 	material = outline
 	set_active(true)
@@ -101,4 +100,4 @@ func _mirror_item(slot: StringName, item: EquipmentVisualDefinition) -> void:
 
 func _on_preview_item_changed(slot: StringName, _item: EquipmentVisualDefinition) -> void:
 	# New gear meshes get the same material treatment as the gameplay character.
-	_source._apply_toon_materials(equipment._roots[slot] if equipment._roots.has(slot) else model)
+	_source._apply_toon_materials(equipment._roots[slot] if equipment._roots.has(slot) else model, 3.0)

@@ -10,7 +10,8 @@ const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTes
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
 const THREAD_SWEEP := preload("res://Src/VFX/thread_sword_sweep.gd")
 const OUTLINE_SHADER := preload("res://Src/Characters/Player/player_live_3d_outline.gdshader")
-const SWORD_OUTLINE_SHADER := preload("res://Src/Characters/Player/player_sword_outline.gdshader")
+const MESH_OUTLINE_SHADER := preload("res://Src/Characters/Player/player_mesh_outline.gdshader")
+static var _outline_mesh_cache: Dictionary = {}
 
 const LOOPING_ACTIONS := {
 	&"idle_4": true,
@@ -38,6 +39,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var viewport_size := Vector2i(1600, 1200)
 @export var display_scale := Vector2(0.25, 0.25)
 @export var camera_size := 2.8
+@export var object_outline_width := 2.0
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
 @export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
@@ -893,8 +895,7 @@ func _build_viewport() -> void:
 	_display_rest_position = _display.position
 	var outline_material := ShaderMaterial.new()
 	outline_material.shader = OUTLINE_SHADER
-	# Keep the outline's world-space width when changing render resolution.
-	outline_material.set_shader_parameter("outline_source_pixels", 3.0 / display_scale.x)
+	# Color grading only; each object has its own depth-tested outline mesh.
 	if _model_root.find_child("Threadborne_Doll", true, false):
 		# Leave headroom for the level's additive 2D lights on pale lacquer.
 		outline_material.set_shader_parameter("exposure", 0.62)
@@ -982,15 +983,18 @@ func _on_visual_equipment_changed(slot: StringName, _item: EquipmentVisualDefini
 		_sword_sweep.clear()
 
 
-func _apply_toon_materials(root: Node) -> void:
+func _apply_toon_materials(root: Node, outline_pixels := -1.0) -> void:
 	for node in root.find_children("*", "MeshInstance3D", true, false):
 		var mesh_instance := node as MeshInstance3D
-		if not mesh_instance.mesh:
+		if not mesh_instance.mesh or mesh_instance.get_meta("outline_only", false):
 			continue
 		for surface in mesh_instance.mesh.get_surface_count():
 			var source := mesh_instance.get_active_material(surface)
 			if source is StandardMaterial3D:
 				var stylized := source.duplicate() as StandardMaterial3D
+				# Imported character textures are opaque. A blended material does not
+				# write the front depth needed to occlude its own outline shell.
+				stylized.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
 				stylized.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
 				stylized.specular_mode = BaseMaterial3D.SPECULAR_TOON
 				stylized.roughness = maxf(stylized.roughness, 0.62)
@@ -1007,11 +1011,64 @@ func _apply_toon_materials(root: Node) -> void:
 					stylized.metallic = 0.35
 					stylized.metallic_specular = 0.9
 					stylized.albedo_color = Color(1.65, 1.72, 1.8, 1.0)
-					var sword_outline := ShaderMaterial.new()
-					sword_outline.shader = SWORD_OUTLINE_SHADER
-					sword_outline.set_shader_parameter("outline_source_pixels", 1.25 / display_scale.x)
-					stylized.next_pass = sword_outline
+				stylized.next_pass = null
 				mesh_instance.set_surface_override_material(surface, stylized)
+		_install_object_outline(mesh_instance, outline_pixels if outline_pixels >= 0 else object_outline_width / display_scale.x)
+
+
+func _install_object_outline(source: MeshInstance3D, pixels: float) -> void:
+	var outline := source.get_node_or_null("ObjectOutline") as MeshInstance3D
+	if not outline:
+		outline = MeshInstance3D.new()
+		outline.name = "ObjectOutline"
+		outline.set_meta("outline_only", true)
+		outline.mesh = _outline_mesh(source.mesh)
+		outline.skin = source.skin
+		outline.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		source.add_child(outline)
+		var skeleton_node := source.get_node_or_null(source.skeleton)
+		if skeleton_node and source.skin:
+			outline.skeleton = outline.get_path_to(skeleton_node)
+	var shell := ShaderMaterial.new()
+	shell.shader = MESH_OUTLINE_SHADER
+	# Small fingers and thread hardware need ink finer than the main silhouette.
+	if String(source.name).begins_with("Shared_Wooden_Hands"):
+		pixels *= .22
+	elif "Grapple" in String(source.name):
+		pixels *= .35
+	shell.set_shader_parameter("outline_source_pixels", pixels)
+	shell.set_shader_parameter("fine_hat_detail", String(source.name).begins_with("blue_HeadChest"))
+	outline.material_override = shell
+
+
+static func _outline_mesh(source: Mesh) -> ArrayMesh:
+	var id := source.get_instance_id()
+	if _outline_mesh_cache.has(id):
+		return _outline_mesh_cache[id]
+	var result := ArrayMesh.new()
+	for surface in source.get_surface_count():
+		var arrays := source.surface_get_arrays(surface)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+		var sums := {}
+		var keys: Array[String] = []
+		var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES] if arrays[Mesh.ARRAY_BONES] != null else PackedInt32Array()
+		for i in vertices.size():
+			var p := vertices[i].snapped(Vector3.ONE * .00001)
+			var key := str(p)
+			# Adjacent articulated pieces can share positions but have different skins.
+			if not bones.is_empty():
+				key += ":" + str(bones.slice(i*4, i*4+4))
+			keys.append(key)
+			sums[key] = sums.get(key, Vector3.ZERO) + normals[i]
+		for i in normals.size():
+			var sum: Vector3 = sums[keys[i]]
+			if sum.length_squared() > .00001:
+				normals[i] = sum.normalized()
+		arrays[Mesh.ARRAY_NORMAL] = normals
+		result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	_outline_mesh_cache[id] = result
+	return result
 
 
 func _apply_grapple_aim_override() -> void:

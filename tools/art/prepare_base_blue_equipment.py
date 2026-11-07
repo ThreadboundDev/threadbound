@@ -45,6 +45,8 @@ GLOVE_CUT = ELBOW + .075
 WRIST = abs(rest["hand.L"].translation.x)
 ARM_HEIGHT = rest["forearm.L"].translation.z
 CUFF = .415
+BOOT_TOP = CUFF + .008
+TROUSER_BOTTOM = CUFF - .014
 HAND_JOIN = WRIST - .012
 report = {"sources": {}, "slots": {}, "anchors": {}, "cut_planes": {"glove_joins": [-GLOVE_CUT, GLOVE_CUT], "boot_cuffs": CUFF}}
 
@@ -237,6 +239,27 @@ def align_seams(obj, seams):
                     coordinate = 2*(point[i]-low[i])/(high[i]-low[i])-1
                     desired = center[i]+half[i]*coordinate
                     point[i] += influence*(desired-point[i])
+    obj.data.update()
+
+
+def align_shin_connections(obj):
+    # Both outfits use the same cylindrical join through a hidden overlap band.
+    # The garment and boot silhouette outside that band keeps its original shape.
+    for side in (-1, 1):
+        low, high = reference_seam(obj, 2, CUFF, lambda p: side*p.x > 0)
+        center = (low+high)*.5
+        half = (high-low)*.5
+        for vertex in obj.data.vertices:
+            point = vertex.co
+            if side*point.x <= 0:
+                continue
+            distance = max(0, abs(point.z-CUFF)-.015)
+            influence = 1-smooth(distance/.052)
+            if influence <= 0:
+                continue
+            angle = math.atan2((point.y-center.y)/half.y, (point.x-center.x)/half.x)
+            desired = Vector((side*.132+.066*math.cos(angle), .001+.062*math.sin(angle), point.z))
+            point += (desired-point)*influence
     obj.data.update()
 
 
@@ -511,16 +534,23 @@ for key, outfit_archive, grapple_archive in (
     outfit = imported(key, outfit_archive)
     tag_hanging_cloth(outfit,key)
     align(outfit,key)
-    for axis,value in [(0,-HAND_JOIN),(0,-GLOVE_CUT),(0,GLOVE_CUT),(0,HAND_JOIN),(2,CUFF)]:
+    for axis,value in [(0,-HAND_JOIN),(0,-GLOVE_CUT),(0,GLOVE_CUT),(0,HAND_JOIN),
+                       (2,CUFF),(2,BOOT_TOP),(2,TROUSER_BOTTOM)]:
         direction = Vector([float(i == axis) for i in range(3)])
         bisect(outfit.data,value*direction,direction)
-    # Keep the imported elbow surfaces intact and avoid pulling the Base boot
-    # rim and exposed shin into an artificial shared ellipse.
-    align_seams(outfit,blue_boot_seams+wrist_seams if key == "blue" else wrist_seams)
+    align_seams(outfit,wrist_seams)
+    align_shin_connections(outfit)
     weights = blue_outfit_weights if key == "blue" else base_outfit_weights
     gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN),weights)
-    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<CUFF),weights)
-    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=CUFF)
+    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<BOOT_TOP,[(2,BOOT_TOP)]),weights)
+    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=TROUSER_BOTTOM,
+                             [(2,TROUSER_BOTTOM)])
+    # The trousers sit just inside the boot wall throughout their common band.
+    for vertex in head_chest.data.vertices:
+        if vertex.co.z < BOOT_TOP:
+            side = 1 if vertex.co.x >= 0 else -1
+            vertex.co.x = side*.132+(vertex.co.x-side*.132)*.995
+            vertex.co.y = .001+(vertex.co.y-.001)*.995
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
         add_blue_sleeve_bones(head_chest)
