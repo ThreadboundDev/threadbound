@@ -93,8 +93,12 @@ Base and Blue use the same faceless wooden head and hands from the fitted
 master doll. The open bracer cuff is centered on the rounded wrist profile
 and overlaps it slightly. Both retain their imported elbows. The shared bracer cut is
 on the forearm side of those joints to keep the elbow geometry with Head /
-Chest. Base retains the imported trouser hem, exposed shin, and boot rim
-shape, with the knee pivot covered by the trousers. Open the rebuilt
+Chest. Base retains its trouser hem, exposed shin, and boot shape outside the
+hidden connector, with the knee pivot covered by the trousers. The November 7
+pass aligns both outfits to one elliptical shin band with 22 mm overlap
+(0.401–0.423 m); trousers sit 0.5% inside the boot wall. Both gloves reuse rigid
+palm/finger pieces and rounded darker wooden hinges at the shared pivots.
+Open the rebuilt
 `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
 meshes and the adjacent rest and posed captures.
 
@@ -119,3 +123,16 @@ The tools update `base_sword.glb`, `base_shield.glb`, and the measured sword
 trail anchors. The shield fitting step saves a
 Blender review file and renders in `LocalOnly/Equipment/Shield/`. Restart the
 art-test session after import to review it with both gloves.
+
+## November 7 approved repair validation
+
+The shared joint validator passes 170 Blender checks. The expanded Godot equipment
+test passes 747 checks over eight mixed loadouts, eight poses and both facings.
+The original 62 animated rest bones and 48 clips remain; up to 48 named cloth
+bones append for Base tunic edges and Blue sleeves/ribbons/sash. Base motion is
+firmer. The outline verifier passes 281 depth/profile/cache checks, and the idle
+inventory verifier passes 786 checks in rendered and headless runs.
+See [the repair review](equipment_feedback_2026_11_07.md) for local captures,
+measured limits and the known standalone renderer shutdown warning. Chase's
+appearance review remains open. Joint checkpoint: `c61527b3`; cloth checkpoint:
+`fix: extend restrained cloth motion across base and blue outfits`.

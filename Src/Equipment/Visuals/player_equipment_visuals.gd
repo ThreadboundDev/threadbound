@@ -94,8 +94,8 @@ func equip(item: EquipmentVisualDefinition) -> bool:
 			if not CLOTH_MOTION.register_bones(skeleton,donor):
 				prepared.free()
 				return false
-			if donor.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0:
-				prepared.set_meta("sleeve_bones",true)
+			if donor.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0 or donor.find_bone(CLOTH_MOTION.BASE_ROOT) >= 0:
+				prepared.set_meta("cloth_bones",true)
 			var skin := Skin.new()
 			for index in mesh.skin.get_bind_count():
 				var bone_name := mesh.skin.get_bind_name(index)
@@ -169,14 +169,19 @@ func clear_slot(slot: StringName) -> void:
 
 
 func _update_cloth_motion() -> void:
-	if not cloth_motion and skeleton.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0:
+	if not cloth_motion and (skeleton.find_bone(CLOTH_MOTION.ROOT_BONE) >= 0 or skeleton.find_bone(CLOTH_MOTION.BASE_ROOT) >= 0):
 		cloth_motion = CLOTH_MOTION.new()
 		cloth_motion.initialize(skeleton)
 	if cloth_motion:
 		var outfit := _roots.get(&"head_chest") as Node3D
 		var item := equipped.get(&"head_chest") as EquipmentVisualDefinition
-		cloth_motion.set_equipped(outfit != null and outfit.get_meta("sleeve_bones",false)
-			and item != null and item.item_id == &"blue_fitted_head_chest")
+		var profile: StringName = &""
+		if outfit != null and outfit.get_meta("cloth_bones",false) and item != null:
+			if item.item_id == &"blue_fitted_head_chest":
+				profile = &"blue"
+			elif item.item_id == &"base_fitted_head_chest":
+				profile = &"base"
+		cloth_motion.configure(profile)
 
 
 func _retire(old: Node3D) -> void:

@@ -87,6 +87,13 @@ func run() -> void:
 		for mesh: MeshInstance3D in preview.equipment.find_children("*", "MeshInstance3D", true, false):
 			check(mesh.get_node_or_null(mesh.skeleton) == preview.skeleton, "Preview gear binds to the preview skeleton")
 		check(preview.equipment.equipped[&"weapon"] == source.equipment_visuals.equipped[&"weapon"], "Portrait preserves equipped weapons")
+		var cloth: EquipmentClothMotion = preview.equipment.cloth_motion
+		check(cloth != null and cloth != source.equipment_visuals.cloth_motion, "Portrait has an independent cloth simulation")
+		if cloth:
+			check(cloth.profile == (&"blue" if combination & 4 else &"base") and cloth.simulator.active, "Portrait selects the equipped cloth profile while paused")
+		for mesh: MeshInstance3D in preview.equipment.find_children("*", "MeshInstance3D", true, false):
+			if mesh.get_meta("outline_only",false):
+				check((mesh.material_override as ShaderMaterial).shader == source.MESH_OUTLINE_SHADER,"Portrait uses the same object outline shader")
 		if combination == 7:
 			for frame in 20:
 				await process_frame

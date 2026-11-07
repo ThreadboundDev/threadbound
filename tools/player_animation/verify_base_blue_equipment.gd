@@ -99,7 +99,7 @@ func run() -> void:
 				check(mesh.get_node_or_null(mesh.skeleton) == visual._skeleton, "Mesh bound to the live rig")
 		check(equipment._roots[&"weapon"] == weapon, "Clothing swaps preserve sword and shield")
 		if equipment.cloth_motion:
-			check(equipment.cloth_motion.simulator.active == bool(combination & 4), "Sleeve motion follows Head / Chest selection")
+			check(equipment.cloth_motion.simulator.active and equipment.cloth_motion.profile == (&"blue" if combination & 4 else &"base"), "Cloth profile follows Head / Chest selection")
 		check(equipment._roots[&"head_chest"].find_child("Shared_Wooden_Head", true, false) != null,
 			"Head / Chest includes the master wooden head")
 		check(equipment._roots[&"gloves"].find_child("Shared_Wooden_Hands", true, false) != null,
@@ -114,8 +114,10 @@ func run() -> void:
 		check(hook != null and not hook.visible, "Only the stowed hook retracts during launch")
 		equipment.set_grapple_stowed(true)
 		check(hook != null and hook.visible, "Hook returns to the bracer")
-		if combination in [0, 5, 7]:
-			for action in [&"idle_4", &"run_1", &"casting_2"]:
+		for facing in [1,-1]:
+			player.last_direction = facing
+			visual._display.flip_h = facing < 0
+			for action in [&"idle_4", &"idle_2", &"run_1", &"casting_2", &"crouch_idle_1", &"jump_1", &"slash_2", &"grapple_swinging_1"]:
 				visual._play_action(action, &"", 0, true, 1, 0)
 				var animation: AnimationPlayer = visual._animation_player
 				var clip := animation.current_animation
@@ -125,7 +127,9 @@ func run() -> void:
 					animation.advance(0)
 					animation.pause()
 				check(visual.get_grapple_origin_player_offset().is_finite(), "Fitted launch anchor during %s" % action)
-				await capture(visual._viewport, "swap_%d_%s" % [combination, action])
+				check(visual._skeleton.get_bone_global_pose(visual._skeleton.find_bone("hand.L")).is_finite(), "Finite mixed-loadout pose")
+				if facing == 1 and combination in [0,5,7] and action in [&"idle_4",&"run_1",&"casting_2"]:
+					await capture(visual._viewport, "swap_%d_%s" % [combination, action])
 		if combination in [0, 7]:
 			var gloves = player.current_gloves
 			var launch: Vector2 = player.to_global(visual.get_grapple_origin_player_offset())
@@ -191,9 +195,11 @@ func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
 	if not cloth:
 		return
 	var bone_count: int = visual._skeleton.get_bone_count()
-	check(cloth.simulator.setting_count == 4, "Four sleeve chains are installed")
+	check(cloth.simulator.setting_count == 8, "Four sleeve and four hanging cloth chains are installed")
 	var probes: Array[Dictionary] = []
 	for mesh: MeshInstance3D in visual.equipment_visuals._roots[&"head_chest"].find_children("*","MeshInstance3D",true,false):
+		if mesh.get_meta("outline_only",false):
+			continue
 		for surface in mesh.mesh.get_surface_count():
 			var arrays := mesh.mesh.surface_get_arrays(surface)
 			var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
@@ -208,7 +214,7 @@ func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
 						continue
 					var bind := bones[vertex*4+influence]
 					var bone := cloth.skeleton.find_bone(mesh.skin.get_bind_name(bind))
-					if String(cloth.skeleton.get_bone_name(bone)).begins_with(EquipmentClothMotion.PREFIX):
+					if String(cloth.skeleton.get_bone_name(bone)).begins_with("cloth_sleeve_"):
 						cloth_weight += weight
 					influences.append({"bone":bone,"bind":mesh.skin.get_bind_pose(bind),"weight":weight})
 				if cloth_weight > .5:
@@ -217,17 +223,19 @@ func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
 	var samples := {"frames":0, "max_offset":0.0, "max_link_error":0.0, "finite":true, "min_clearance":INF,
 		"fabric_penetration":0.0,"rigid_penetration":0.0}
 	var callback := func() -> void:
-		if not cloth.simulator.active:
+		if not cloth.simulator.active or cloth.warming_up:
 			return
 		samples.frames += 1
 		var capsule := cloth.simulator.get_node("SleeveTorsoCollider") as SpringBoneCollisionCapsule3D
 		var rigid_poses := {}
 		for bone: int in cloth._bones:
+			if not String(cloth.skeleton.get_bone_name(bone)).begins_with("cloth_sleeve_"):
+				continue
 			var pose := cloth.skeleton.get_bone_global_pose(bone)
 			samples.finite = samples.finite and pose.origin.is_finite() and pose.basis.is_finite()
 			var rest := cloth.skeleton.get_bone_rest(bone)
 			var parent := cloth.skeleton.get_bone_parent(bone)
-			while String(cloth.skeleton.get_bone_name(parent)).begins_with(EquipmentClothMotion.PREFIX):
+			while String(cloth.skeleton.get_bone_name(parent)).begins_with("cloth_sleeve_"):
 				rest = cloth.skeleton.get_bone_rest(parent)*rest
 				parent = cloth.skeleton.get_bone_parent(parent)
 			rest = cloth.skeleton.get_bone_global_pose(parent)*rest
@@ -290,16 +298,97 @@ func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
 	visual._process(.25)
 	check(cloth.reset_count > resets, "Long frame resets sleeve inertia")
 	manager.equip_item(2)
-	check(not cloth.simulator.active, "Base Head / Chest disables sleeves")
+	check(cloth.simulator.active and cloth.profile == &"base" and cloth.simulator.setting_count == 4, "Base Head / Chest selects firmer hem motion")
 	manager.equip_item(5)
-	check(cloth.simulator.active, "Blue Head / Chest restores sleeves")
+	check(cloth.simulator.active and cloth.profile == &"blue" and cloth.simulator.setting_count == 8, "Blue Head / Chest restores all flowing cloth")
 	check(visual._skeleton.get_bone_count() == bone_count, "Repeated swaps reuse cloth bones")
 	print("BLUE_SLEEVE_MOTION ", JSON.stringify(samples))
 	var report := FileAccess.open(OUTPUT+"godot_sleeve_motion_report.json",FileAccess.WRITE)
 	if report:
 		report.store_string(JSON.stringify(samples,"\t"))
 	cloth.simulator.modification_processed.disconnect(callback)
+	await verify_hanging_motion(player,visual,manager)
 	visual.set_process(false)
+
+
+func verify_hanging_motion(player: Node2D, visual: Node, manager: Node) -> void:
+	var cloth: EquipmentClothMotion = visual.equipment_visuals.cloth_motion
+	var results := {}
+	for item in [2,5]:
+		manager.equip_item(item)
+		var profile := String(cloth.profile)
+		var expected := 4 if item == 2 else 8
+		check(cloth.simulator.setting_count == expected, profile+" has the intended chain count")
+		var weighted := {}
+		for mesh: MeshInstance3D in visual.equipment_visuals._roots[&"head_chest"].find_children("*","MeshInstance3D",true,false):
+			if mesh.get_meta("outline_only",false):
+				continue
+			for surface in mesh.mesh.get_surface_count():
+				var arrays := mesh.mesh.surface_get_arrays(surface)
+				var bones: PackedInt32Array = arrays[Mesh.ARRAY_BONES]
+				var weights: PackedFloat32Array = arrays[Mesh.ARRAY_WEIGHTS]
+				for index in weights.size():
+					var name := mesh.skin.get_bind_name(bones[index])
+					if weights[index] > .01 and String(name).begins_with("cloth_"):
+						weighted[name] = true
+		for setting in expected:
+			var name := String(cloth.simulator.get_root_bone_name(setting))
+			check(weighted.has(StringName(name)) or weighted.has(StringName(name.left(-1)+"1")), profile+" chain actually weights fabric: "+name)
+		var samples := {"frames":0,"finite":true,"link_error":0.0,"max_offset":0.0,"max_tip_ratio":0.0,"root_error":0.0}
+		var callback := func() -> void:
+			if cloth.warming_up:
+				return
+			samples.frames += 1
+			for bone in cloth._bones:
+				var name := String(cloth.skeleton.get_bone_name(bone))
+				if name.begins_with("cloth_sleeve_"):
+					continue
+				var pose := cloth.skeleton.get_bone_global_pose(bone)
+				samples.finite = samples.finite and pose.origin.is_finite() and pose.basis.is_finite()
+				var rest := cloth.skeleton.get_bone_rest(bone)
+				var parent := cloth.skeleton.get_bone_parent(bone)
+				var cursor := bone
+				var length := 0.0
+				if not name.ends_with("_0"):
+					var link := pose.origin.distance_to(cloth.skeleton.get_bone_global_pose(parent).origin)
+					samples.link_error = maxf(samples.link_error,absf(link-rest.origin.length()))
+				while String(cloth.skeleton.get_bone_name(parent)).begins_with("cloth_"):
+					length += cloth.skeleton.get_bone_rest(cursor).origin.length()
+					rest = cloth.skeleton.get_bone_rest(parent)*rest
+					cursor = parent
+					parent = cloth.skeleton.get_bone_parent(parent)
+				rest = cloth.skeleton.get_bone_global_pose(parent)*rest
+				var offset := pose.origin.distance_to(rest.origin)
+				if name.ends_with("_0"):
+					samples.root_error = maxf(samples.root_error,offset)
+				if offset > samples.max_offset:
+					samples.worst_action = visual._current_action
+					samples.worst_bone = name
+				samples.max_offset = maxf(samples.max_offset,offset)
+				if length > .001:
+					samples.max_tip_ratio = maxf(samples.max_tip_ratio,offset/(2*length))
+		cloth.simulator.modification_processed.connect(callback)
+		for facing in [1,-1]:
+			player.last_direction = facing
+			for action: StringName in [&"idle_4",&"idle_2",&"run_1",&"crouch_idle_1",&"jump_1",&"casting_2",&"slash_2",&"grapple_swinging_1"]:
+				visual._logical_animation = &"Run" if action == &"run_1" else &"Idle"
+				visual._play_action(action,&"",0,true,1,0)
+				for frame in 24:
+					player.velocity.x = facing*280.0*sin(frame*.15)
+					await physics_frame
+				if action in [&"run_1",&"casting_2",&"grapple_swinging_1"]:
+					await capture(visual._viewport,"%s_cloth_%s_%d" % [profile,action,facing])
+		cloth.simulator.modification_processed.disconnect(callback)
+		check(samples.frames > 0 and samples.finite and samples.max_offset > .0001,profile+" hanging cloth simulates finite motion")
+		check(samples.link_error < .001 and samples.max_tip_ratio <= 1.001,profile+" hanging cloth preserves link lengths")
+		check(samples.root_error < .0001,profile+" hanging cloth keeps its attachment fixed")
+		results[profile] = samples
+		cloth.reset()
+		check(cloth.simulator.external_force == Vector3.ZERO,profile+" reset clears inherited acceleration")
+	var report := FileAccess.open(OUTPUT+"godot_hanging_cloth_report.json",FileAccess.WRITE)
+	if report:
+		report.store_string(JSON.stringify(results,"\t"))
+	print("HANGING_CLOTH ",JSON.stringify(results))
 
 
 func capsule_penetration(capsule: SpringBoneCollisionCapsule3D, point: Vector3) -> float:

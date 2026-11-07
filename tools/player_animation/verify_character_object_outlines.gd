@@ -47,6 +47,16 @@ func run() -> void:
 				await process_frame
 				await RenderingServer.frame_post_draw
 				visual._viewport.get_texture().get_image().save_png("res://LocalOnly/Equipment/FeedbackReview2026_11_07/outline_%d_%s.png" % [outfit, action])
+	var cached: int = visual._outline_mesh_cache.size()
+	for repeat in 3:
+		for outfit in [0,3]:
+			for slot in 3:
+				if manager.current_equip[slot] != outfit+slot:
+					manager.equip_item(outfit+slot)
+			await process_frame
+	check(visual._outline_mesh_cache.size()==cached,"Repeated swaps reuse cached outline geometry")
+	if DisplayServer.get_name() != "headless":
+		await verify_depth_and_width(visual)
 	for property: StringName in [&"current_boots", &"current_chest"]:
 		var ability: Node = player.get(property)
 		if is_instance_valid(ability) and ability.get_parent() == null:
@@ -57,3 +67,72 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	call_deferred("quit", 0 if failures.is_empty() else 1)
+
+
+func verify_depth_and_width(visual: Node) -> void:
+	# A controlled blade/body crossing makes depth and pixel widths measurable.
+	var viewport := SubViewport.new()
+	viewport.size = Vector2i(256,256)
+	viewport.own_world_3d = true
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	root.add_child(viewport)
+	var camera := Camera3D.new()
+	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
+	camera.size = 2.0
+	camera.position.z = 5
+	viewport.add_child(camera)
+	var environment := WorldEnvironment.new()
+	environment.environment = Environment.new()
+	environment.environment.background_mode = Environment.BG_COLOR
+	environment.environment.background_color = Color.WHITE
+	viewport.add_child(environment)
+	var body := MeshInstance3D.new()
+	var box := BoxMesh.new()
+	box.size = Vector3(1.6,.8,.05)
+	body.mesh = box
+	viewport.add_child(body)
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = Color(.2,.5,.8)
+	body.material_override = material
+	var blade := MeshInstance3D.new()
+	box = BoxMesh.new()
+	box.size = Vector3(.4,1.5,.05)
+	blade.mesh = box
+	blade.position.z = .2
+	viewport.add_child(blade)
+	material = material.duplicate()
+	material.albedo_color = Color(.9,.8,.5)
+	blade.material_override = material
+	visual._install_object_outline(body,3.0)
+	visual._install_object_outline(blade,3.0)
+	for size in [2.0,1.6]:
+		camera.size = size
+		blade.position.z = .2
+		await process_frame
+		await RenderingServer.frame_post_draw
+		var front := viewport.get_texture().get_image()
+		var edge := roundi(128+.2*256/size)
+		var inside := roundi(128-.2*256/size)
+		var outside := roundi(128-.6*256/size)
+		var a := count_ink(front,edge,inside)
+		var b := count_ink(front,edge,outside)
+		check(a>0 and absi(a-b)<=1,"Blade ink keeps its width across/away from body at camera size %.1f: %d/%d" % [size,a,b])
+		blade.position.z = -.2
+		await process_frame
+		await RenderingServer.frame_post_draw
+		var behind := viewport.get_texture().get_image()
+		check(count_ink(behind,edge,inside)==0,"Body depth hides the blade outline behind it")
+		check(count_ink(behind,edge,outside)>0,"Exposed portion of a behind-body blade retains its outline")
+		behind.save_png("res://LocalOnly/Equipment/FeedbackReview2026_11_07/outline_depth_%.1f.png" % size)
+	viewport.queue_free()
+	await process_frame
+
+
+func count_ink(frame: Image, edge: int, row: int) -> int:
+	var count := 0
+	for x in range(edge-4,edge+7):
+		var color := frame.get_pixel(x,row)
+		if maxf(color.r,maxf(color.g,color.b)) < .08:
+			count += 1
+	return count

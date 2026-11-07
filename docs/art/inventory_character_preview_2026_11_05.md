@@ -49,3 +49,13 @@ two updated icons, then open Inventory and swap gear normally. Hands-on visual
 acceptance remains open.
 
 Checkpoint: `feature: show live equipped character in inventory`.
+
+November 7 repair follow-up: the portrait now uses the shared independent object
+outline shader and an isolated Base/Blue cloth profile that follows Head / Chest
+swaps. Its grading pass no longer expands the combined alpha silhouette. Updated
+tests pass **786 checks** in headless and Forward+ over all eight combinations,
+including cloth-profile isolation, object outlines, pause, masks and unchanged
+gameplay animation/pose. Captures are refreshed in the same local folder. The
+known Forward+ shutdown release warning and open hands-on appearance review
+remain as described above. Joint/outline checkpoint: `c61527b3`; final cloth
+checkpoint: `fix: extend restrained cloth motion across base and blue outfits`.

@@ -79,5 +79,38 @@ Checkpoint: `feature: add secondary motion to blue sleeves`.
 November 7 follow-up: Chase likes the sleeve method and requests slightly less
 motion. Increased stiffness from 3.5, drag from 0.8, and reduced acceleration force
 by 20%; collision strength is retained. Before and after each pass 287 checks.
-The proposed ribbon/Base cloth extension and shared seam/hand repairs await
-approval in the [November 7 feedback review](equipment_feedback_2026_11_07.md).
+Chase subsequently approved the ribbon/Base cloth extension and shared seam/hand
+repairs with “Do it”; the implementation below supersedes the prototype limits.
+
+## November 7 outfit cloth extension
+
+The live simulator selects a profile with Head / Chest. Base uses four short
+hem rails, with 30% maximum spring contribution blended over the original skin
+weights. Its stiffness 30 / drag 0.96 / gravity 0.04 profile and smaller bounded
+acceleration force keep the tunic firm. Blue retains four sleeve rails and adds
+one shoulder ribbon plus three hanging sash rails. Hanging Blue fabric uses
+18 / 0.92 / 0.08; the sleeves retain the toned-down 4 / 0.86 / 0.05 settings.
+The belt, cowl, leather hip plates, joints, boots and stowed hardware stay fixed
+to their existing animation bones. Original authored clips/rest bases are kept.
+
+Base adds 16 bones and Blue adds 32; named registration reuses them across swaps.
+There is one profile-aware simulator on each character/portrait skeleton. Sleeves
+collide with the torso only; hanging fabric also uses hip/thigh capsule proxies.
+Clearing old setting pairs before changing profiles avoids invalid root/end pairs.
+Swaps and the established teleport/door/long-frame resets clear all cloth bones;
+instant animation cuts also reset. Three short synchronous skeleton updates warm
+up collisions before the first visible frame, without advancing the animation.
+
+Final Forward+ verification passes 747 equipment checks. Both outfit profiles
+are sampled over eight actions and both facings, retain finite transforms, fixed
+roots and link lengths, and reuse the same skeleton after repeated swaps. Sleeve
+fabric has about 82% less summed penetration into the torso proxy than rigid
+sleeves; sampled tips retain the existing 1.5 cm clearance tolerance. This remains
+bone-based cloth with proxy contact, so broad panels can still intersect between
+rails. The paused portrait independently passes 786 checks in Forward+ and
+headless runs. The existing Forward+ texture-release warning remains at shutdown.
+
+The rebuilt Blender file and dynamic `base_cloth_*` / `blue_cloth_*` captures are
+in `LocalOnly/Equipment/BaseBlue/`. The complete scope and appearance-review
+status are in [the November 7 review](equipment_feedback_2026_11_07.md).
+Checkpoint: `fix: extend restrained cloth motion across base and blue outfits`.

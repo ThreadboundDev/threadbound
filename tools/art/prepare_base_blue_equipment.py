@@ -301,6 +301,13 @@ def blue_outfit_weights(point, hints):
     x, _, z = point
     width = abs(x)
     side = "L" if x >= 0 else "R"
+    if "Fit_ShoulderRibbon" in hints:
+        return hanging_weights(point, "cloth_blue_ribbon_", "chest", 1.52, .22,
+                               smooth((1.56-z)/.20))
+    for name in ("front", "left", "back"):
+        if "Fit_BlueSash_"+name in hints:
+            return hanging_weights(point, "cloth_blue_sash_"+name+"_", "pelvis", 1.15, .14,
+                                   smooth((1.15-z)/.18))
     if "Fit_Sleeve" in hints:
         amount = smooth((1.51-z)/.11) * smooth((width-.19)/.06) * (1-smooth((width-.40)/.045))
         level = min(2.0,max(0.0,(1.48-z)/.08))
@@ -335,6 +342,22 @@ def blue_outfit_weights(point, hints):
 
 def base_outfit_weights(point, hints):
     width = abs(point.x)
+    # Only the outer lower tunic is free. Fade the attachment into the pelvis
+    # and blend both rails across the center instead of choosing a hard side.
+    amount = (.30*smooth((1.10-point.z)/.19)*smooth((abs(point.y)-.075)/.045)
+              *smooth((point.z-.77)/.08)*(1-smooth((width-.24)/.06)))
+    if .77 < point.z < 1.10 and amount > 1e-6:
+        result = {bone:weight*(1-amount) for bone,weight in outfit_weights(point,hints).items()}
+        right = smooth((point.x+.14)/.28)
+        back = smooth((point.y+.08)/.16)
+        for side, side_weight in (("L",right),("R",1-right)):
+            for rail, rail_weight in (("front",1-back),("back",back)):
+                weights = hanging_weights(point, f"cloth_base_hem_{side}_{rail}_", "pelvis",
+                                          1.12, .11, amount*side_weight*rail_weight)
+                for name, weight in weights.items():
+                    if name != "pelvis":
+                        result[name] = result.get(name,0)+weight
+        return dict(sorted(result.items(),key=lambda entry:entry[1],reverse=True)[:4])
     if point.z < 1.23 or width >= ELBOW-.055:
         return outfit_weights(point, hints)
     # The cowl is cloth around the chest. Following the head or grabbing
@@ -390,6 +413,48 @@ def add_blue_sleeve_bones(obj):
     group.add([v.index for v in obj.data.vertices
                if .19<abs(v.co.x)<.445 and 1.24<v.co.z<1.515],1,"REPLACE")
     report["cloth_sleeves"] = {"chains":4,"bones_per_chain":4,"simulated_links_per_chain":3}
+
+
+def hanging_weights(point, prefix, anchor, height, step, amount):
+    level = min(2.0,max(0.0,(height-point.z)/step))
+    first = min(1,int(level))
+    mix = level-first
+    return {anchor:1-amount, prefix+str(first):amount*(1-mix),
+            prefix+str(first+1):amount*mix}
+
+
+def add_hanging_cloth_bones(obj, key):
+    if key == "base":
+        chains = [(f"cloth_base_hem_{side}_{rail}_", "pelvis", (sign*.14,y,1.12), .11)
+                  for side,sign in (("L",1),("R",-1))
+                  for rail,y in (("front",-.14),("back",.135))]
+    else:
+        chains = [("cloth_blue_ribbon_", "chest", (.14,.12,1.52), .22),
+                  ("cloth_blue_sash_front_", "pelvis", (.025,-.16,1.15), .14),
+                  ("cloth_blue_sash_left_", "pelvis", (-.20,-.055,1.15), .14),
+                  ("cloth_blue_sash_back_", "pelvis", (-.19,.13,1.15), .14)]
+        # Tag whole detached cloth islands; the short leather hip plates stay rigid.
+        for vertices in mesh_components(obj):
+            low, high = bounds(v.co for v in vertices)
+            hints = {obj.vertex_groups[g.group].name for v in vertices for g in v.groups}
+            if "Fit_Waist" not in hints or high.z-low.z < .32:
+                continue
+            name = "front" if low.y < -.16 else ("back" if high.y > .16 else "left")
+            obj.vertex_groups.new(name="Fit_BlueSash_"+name).add([v.index for v in vertices],1,"REPLACE")
+    bpy.context.view_layer.objects.active = rig
+    rig.select_set(True)
+    bpy.ops.object.mode_set(mode="EDIT")
+    for prefix, anchor, origin, step in chains:
+        parent = rig.data.edit_bones[anchor]
+        for joint in range(4):
+            bone = rig.data.edit_bones.new(prefix+str(joint))
+            bone.head = (origin[0],origin[1],origin[2]-step*joint)
+            bone.tail = (origin[0],origin[1],origin[2]-step*(joint+1))
+            bone.parent = parent
+            parent = bone
+    bpy.ops.object.mode_set(mode="OBJECT")
+    report["cloth_"+key] = {"hanging_chains":len(chains),"bones_per_chain":4,
+                            "anchors":[entry[0] for entry in chains]}
 
 
 def master_section(name, include, planes):
@@ -511,10 +576,6 @@ def export(key, slot, objects):
                                        "triangles":sum(len(obj.data.loop_triangles) for obj in objects)}
 
 
-blue_boot_seams = [
-    (2,CUFF,lambda p, side=side: side*p.x>0,Vector((side*.132,.001,0)),Vector((.066,.062,0)),.062)
-    for side in (-1,1)
-]
 wrist_seams = []
 groups = {}
 hands = master_section("Shared_Wooden_Hands",lambda p: abs(p.x)>HAND_JOIN-.013,
@@ -554,6 +615,7 @@ for key, outfit_archive, grapple_archive in (
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
         add_blue_sleeve_bones(head_chest)
+    add_hanging_cloth_bones(head_chest,key)
     remove_generated_head(head_chest,key)
     if key == "base":
         slim_base_cowl(head_chest)

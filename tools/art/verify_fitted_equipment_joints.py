@@ -64,6 +64,8 @@ for name in ("base_gloves","blue_gloves","base_head_chest","blue_head_chest","ba
             error=max(abs((((p.x-side*.132)/.066)**2+((p.y-.001)/.062)**2)**.5-target) for v,p in band)
             check(name+" common ellipse on side "+str(side),error<.001,error)
             check(name+" join follows only its shin on side "+str(side),all(len(v.groups)==1 and obj.vertex_groups[v.groups[0].group].name==("shin.L" if side==1 else "shin.R") for v,p in band))
+            overlap=[v for v,p in points if .40099<=p.z<=.42301 and side*p.x>0]
+            check(name+" entire overlap follows the same shin on side "+str(side),all(len(v.groups)==1 and obj.vertex_groups[v.groups[0].group].name==("shin.L" if side==1 else "shin.R") for v in overlap))
         z=[p.z for v,p in points]
         if name.endswith("boots"):
             check(name+" boot ends at overlapping mid-shin cuff",abs(max(z)-.423)<.0001,max(z))
@@ -72,6 +74,23 @@ for name in ("base_gloves","blue_gloves","base_head_chest","blue_head_chest","ba
         details[name]={"minimum_z":min(z),"maximum_z":max(z),"join_radius_scale":target}
     for obj in imported:
         bpy.data.objects.remove(obj,do_unlink=True)
+# Both skins carry identical rest transforms throughout the measured overlap.
+# Verify that the shared connector retains its axial coverage in every clip.
+from mathutils import Vector
+master.data.pose_position="POSE"
+for action_name,action in actions.items():
+    master.animation_data.action=action
+    master.animation_data.action_slot=action.slots[0]
+    for fraction in (0,.35,.7,.95):
+        start,end=action.frame_range
+        frame=start+(end-start)*fraction
+        bpy.context.scene.frame_set(int(frame),subframe=frame-int(frame))
+        for side in (-1,1):
+            name="shin.L" if side==1 else "shin.R"
+            deform=master.matrix_world@master.pose.bones[name].matrix@master.data.bones[name].matrix_local.inverted()@master.matrix_world.inverted()
+            a=deform@Vector((side*.132,.001,.401))
+            b=deform@Vector((side*.132,.001,.423))
+            check("All four mixed joins retain overlap "+action_name+" "+str(fraction)+" "+str(side),abs((b-a).length-.022)<.00001,(b-a).length)
 report={"checks":checks,"count":len(checks),"details":details,"overlap_m":.022,
         "note":"Both garments use the same elliptical contour and rigid shin transform; trousers sit 0.5% inside boot wall."}
 (OUT/"joint_validation.json").write_text(json.dumps(report,indent=2),encoding="utf-8")

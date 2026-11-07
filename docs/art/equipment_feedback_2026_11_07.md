@@ -1,8 +1,8 @@
-# November 7 equipment review and proposed repair scope
+# November 7 equipment review and approved repairs
 
-Status: Chase approved the scoped repair with “Do it.” Joint and outline repairs
-are implemented for testing; the additional cloth pass is in progress. The three
-source reports remain open for Chase's appearance review.
+Status: Chase approved the scoped repair with “Do it.” Implementation and
+verification are complete. The three source reports remain open for Chase's
+appearance review after restarting the art-test session.
 
 ## Approved repair checkpoint
 
@@ -15,17 +15,67 @@ bones and 48 clips are retained. This verifies rigidity, not final grip appearan
 
 Both shin joins use the Blue ellipse through a 22 mm overlap band (0.401–0.423 m).
 The trousers sit 0.5% inside the boot wall; the band follows the same shin bone.
-The native validator passes 98 checks covering both hands and all four exported
-join profiles. The boot top stays below the knee and the remap fades away from
+The native validator passes 170 checks covering both hands, all four exported
+join profiles and animated coverage. The boot top stays below the knee and the remap fades away from
 the hidden band. Original assets are backed up in the local review folder.
 
 Independent, depth-tested mesh outlines replace the combined alpha expansion.
 An outline-only mesh uses welded normals; the original shading mesh is preserved.
 Opaque source fronts and a depth recession prevent black hulls showing through
 folds. Small fingers, grapple hardware and the wicker crown use finer ink. The
-object verifier passes 274 binding/material/profile checks and captures four
-poses per outfit. Rendered comparisons show the blade retaining its own edge
-across the torso. Additional occlusion/zoom checks accompany the final cloth pass.
+object verifier passes 281 checks and captures four poses per outfit. Controlled
+blade/body crossings measure equal ink width (within one pixel) across and outside
+the body at two camera scales, and verify that body depth hides a blade behind it.
+Repeated swaps reuse cached outline geometry. The paused inventory uses the same
+shader, with its own fixed portrait width.
+
+## Completed cloth extension and final verification
+
+Base has four short hem chains (16 appended bones). Their skin contribution fades
+to at most 30% on the outer loose tunic, retaining the original animated weights
+underneath and keeping the belt/cowl fixed. Its profile uses stiffness 30, drag
+0.96, gravity 0.04 and a smaller acceleration force. Blue keeps the four toned-down
+sleeve chains and adds one shoulder ribbon and three hanging sash chains (32
+cloth bones total). Short leather hip panels remain rigid. Blue's hanging cloth
+uses stiffness 18, drag 0.92 and gravity 0.08; sleeves retain 4 / 0.86 / 0.05.
+
+Torso collision affects sleeves; torso, hip and thigh proxies affect hanging
+cloth. Profiles reset on swaps, teleports, long frames, doors and instant pose
+cuts. Three synchronous warm-up steps resolve the initial collision chain before
+the first displayed frame without advancing authored animation. The original
+62 animated bones/rest bases and 48 clips are preserved; the reusable live rig
+appends up to 48 cloth bones and does not grow during repeated swaps.
+
+Final results on the local assets:
+
+- Native Blender joint validator: **170 checks pass**. Both gloves have the same
+  rigid hands; all four shin combinations retain 22 mm axial overlap through 32
+  samples across eight clips, with the whole band on the shared shin.
+- Forward+ equipment regression: **747 checks pass** across eight loadouts,
+  eight poses and both facing directions. Dynamic cloth checks cover both outfits
+  in the same actions; roots remain fixed and link error stays below 0.001 mm.
+  Sampled sleeve penetration into the torso proxy is about 82% lower than the
+  same rigid sleeves, within the existing 1.5 cm tip-clearance tolerance.
+- Forward+ outline verifier: **281 checks pass**, including depth, overlap,
+  two camera scales, opaque source materials and geometry-cache reuse.
+- Inventory verifier: **786 checks pass** in Forward+ and headless runs. The
+  paused portrait mirrors all mixed loadouts/masks, uses independent cloth and
+  skeleton clocks, and leaves the gameplay pose/animation unchanged.
+
+Forward+ standalone runs retain the previously reproduced texture RID /
+CompressedTexture2D release warning at shutdown, after successful checks. The
+headless inventory verifier exits cleanly. There are no running script errors
+in the final verification logs. Collision is a bone/proxy approximation; broad
+fabric and final hand-grip appearance still need Chase's in-game review.
+
+Editable sources and captures: `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend`,
+`LocalOnly/Equipment/FeedbackReview2026_11_07/Shared_Hands_Repair.blend`, and the
+adjacent joint/outline reports. Inventory captures remain in
+`LocalOnly/Equipment/InventoryPreview/`. Generated art stays local; rebuilding
+requires the preserved downloads and immutable `BeforeAssets` master.
+
+Joint/outline checkpoint: `c61527b3` (pushed). Cloth and final validation checkpoint:
+`fix: extend restrained cloth motion across base and blue outfits`.
 
 ## Evidence reviewed
 
@@ -99,7 +149,7 @@ a proxy test, not exact cloth-to-mesh collision or a visual acceptance claim.
 The existing standalone texture-release warning reproduces at shutdown in both
 runs. Before/after captures and logs are retained in the local review folder.
 
-## Proposed protected work
+## Approved protected scope (reference)
 
 1. Give the character, sword, shield and equipped pieces consistent independent
    mesh-based outlines with depth occlusion. Keep the approved outlined art
@@ -125,7 +175,7 @@ No combat timing, ability behavior, unlock rules, equipment slots or lore change
 are part of this scope. The head/chest item still includes the whole outfit, and
 the grapple still belongs to Gloves.
 
-### Files for approval
+### Files in the approved pass
 
 Runtime and verification sources:
 
@@ -145,7 +195,7 @@ Runtime and verification sources:
 | `tools/player_animation/verify_inventory_character_preview.gd` | Verify the revised appearance path during swaps and pause. |
 
 Generated Godot UID metadata accompanies new shaders/scripts. Local art outputs
-to replace only after approval:
+replaced under that approval:
 
 - `Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb`
 - `Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_gloves.glb`

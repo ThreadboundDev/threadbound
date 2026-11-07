@@ -748,6 +748,10 @@ func _play_action(
 		_animation_player.seek(maxf(0.0, animation.length - 0.001), true)
 	if start > 0.0 or force_restart:
 		_animation_player.seek(minf(start, animation.length), true)
+	# A zero-blend pose jump has no physical travel to follow. Start cloth at
+	# that new pose instead of carrying a tail from the previous animation.
+	if (force_restart or is_zero_approx(blend_time)) and equipment_visuals and equipment_visuals.cloth_motion:
+		equipment_visuals.cloth_motion.reset()
 
 
 func _on_animation_finished(animation_name: StringName) -> void:
@@ -1042,9 +1046,10 @@ func _install_object_outline(source: MeshInstance3D, pixels: float) -> void:
 
 
 static func _outline_mesh(source: Mesh) -> ArrayMesh:
-	var id := source.get_instance_id()
-	if _outline_mesh_cache.has(id):
-		return _outline_mesh_cache[id]
+	# Retain the immutable source with its outline. ResourceLoader can then reuse
+	# it on a later swap instead of leaving a new cached hull for every reload.
+	if _outline_mesh_cache.has(source):
+		return _outline_mesh_cache[source]
 	var result := ArrayMesh.new()
 	for surface in source.get_surface_count():
 		var arrays := source.surface_get_arrays(surface)
@@ -1067,7 +1072,7 @@ static func _outline_mesh(source: Mesh) -> ArrayMesh:
 				normals[i] = sum.normalized()
 		arrays[Mesh.ARRAY_NORMAL] = normals
 		result.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	_outline_mesh_cache[id] = result
+	_outline_mesh_cache[source] = result
 	return result
 
 

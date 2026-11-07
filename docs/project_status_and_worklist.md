@@ -26,10 +26,15 @@ November 7 [three-report equipment review](art/equipment_feedback_2026_11_07.md)
 all captures/recordings and diagnostics reviewed; no runtime errors were captured.
 The mixed shin rings differ by up to 64.4 mm despite sharing a cut height, and
 both sets share the same blended hands. The requested modest sleeve damping
-adjustment passes 287 checks before/after. Per-object outlines, articulated
-hinge/wrist repair, shared shin joins and Blue/Base loose-cloth extensions have
-a concrete file scope **pending approval under AGENTS.md**. Reports remain open.
-Checkpoint: `fix: soften blue sleeves and document equipment repair scope`.
+adjustment passes 287 checks before/after. Chase approved the concrete protected
+scope with “Do it.” Independent object outlines, rigid shared hands/darker hinges,
+compatible overlapping shin joins, and Blue/Base loose-cloth profiles are now
+implemented for testing. Final validation passes 170 native joint checks, 747
+equipment checks, 281 rendered outline checks and 786 paused-inventory checks
+(rendered and headless). Reports remain open for Chase's appearance acceptance;
+the known standalone Forward+ texture-release warning persists at shutdown.
+Joint/outline checkpoint: `c61527b3` (pushed). Final cloth checkpoint:
+`fix: extend restrained cloth motion across base and blue outfits`.
 
 November 5 inventory follow-up: [live equipped character portrait](art/inventory_character_preview_2026_11_05.md)
 loops idle during pause and mirrors gear/mask changes. The Base/Blue glove icons
