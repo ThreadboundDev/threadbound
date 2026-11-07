@@ -22,6 +22,16 @@ for this documentation update. Checkpoint:
 `docs: record feedback tool and gameplay zoom acceptance`.
 
 **Current task: T44 — attach modular base gear to the doll.**
+Late November 7 [surface-quality review](art/equipment_surface_review_2026_11_07_2325.md):
+Chase rejects the current hand/cuff/shin appearance on `617581fc`. Read-only
+close-ups confirm jagged open hand partitions, hinge UVs sampling unrelated atlas
+regions, and visible contour distortion from the shared shin projection. The
+existing 170 joint checks still pass, exposing a gap in surface/appearance
+validation. No new runtime assets changed. Clean closed hand pieces, correct wood
+UVs, fitted wrist seats and a hidden shin connector are proposed with an exact
+file scope; asset replacements await approval. Checkpoint:
+`docs: diagnose remaining equipment surface defects`.
+
 November 7 [three-report equipment review](art/equipment_feedback_2026_11_07.md):
 all captures/recordings and diagnostics reviewed; no runtime errors were captured.
 The mixed shin rings differ by up to 64.4 mm despite sharing a cut height, and

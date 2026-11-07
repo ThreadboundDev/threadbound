@@ -4,6 +4,14 @@ Status: Chase approved the scoped repair with “Do it.” Implementation and
 verification are complete. The three source reports remain open for Chase's
 appearance review after restarting the art-test session.
 
+**Later appearance review rejected the hand/cuff/shin surface quality.** The
+23:25 report runs `617581fc` and shows jagged rigid pieces and lumpy visible
+transitions despite passing the structural checks. See the
+[surface diagnosis and replacement scope](equipment_surface_review_2026_11_07_2325.md).
+No further runtime assets were changed during that review; a focused replacement
+pass requires approval. The earlier passing counts below are structural evidence,
+not acceptance of the current appearance.
+
 ## Approved repair checkpoint
 
 The shared hands now use rigid palm/phalange pieces with rounded brown hinges,
