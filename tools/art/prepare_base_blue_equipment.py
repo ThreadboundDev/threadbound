@@ -17,14 +17,20 @@ import runpy
 import struct
 import sys
 import zipfile
+import argparse
 from mathutils import Matrix, Vector
 from mathutils.kdtree import KDTree
 
 ROOT = Path(__file__).resolve().parents[2]
-ARCHIVES = Path(sys.argv[sys.argv.index("--") + 1])
+parser = argparse.ArgumentParser()
+parser.add_argument('archives',type=Path)
+parser.add_argument('--candidate',action='store_true')
+args = parser.parse_args(sys.argv[sys.argv.index('--')+1:])
+ARCHIVES = args.archives
 SCRATCH = ROOT / "tmp/base_blue_fit"
-OUT = ROOT / "Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets"
-REPORT = ROOT / "LocalOnly/Equipment/BaseBlue"
+OUT = (ROOT/'LocalOnly/Equipment/SurfaceCleanup2026_11_07/Candidate/Equipment/FittedSets'
+       if args.candidate else ROOT / "Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets")
+REPORT = (OUT.parents[1]/'BaseBlue' if args.candidate else ROOT/'LocalOnly/Equipment/BaseBlue')
 for folder in (SCRATCH, OUT, REPORT):
     folder.mkdir(parents=True, exist_ok=True)
 (REPORT / ".gdignore").touch()
@@ -45,8 +51,8 @@ GLOVE_CUT = ELBOW + .075
 WRIST = abs(rest["hand.L"].translation.x)
 ARM_HEIGHT = rest["forearm.L"].translation.z
 CUFF = .415
-BOOT_TOP = CUFF + .008
-TROUSER_BOTTOM = CUFF - .014
+BOOT_TOP = CUFF
+TROUSER_BOTTOM = CUFF
 HAND_JOIN = WRIST - .012
 report = {"sources": {}, "slots": {}, "anchors": {}, "cut_planes": {"glove_joins": [-GLOVE_CUT, GLOVE_CUT], "boot_cuffs": CUFF}}
 
@@ -196,7 +202,7 @@ def bisect(mesh, point, normal):
     mesh.update()
 
 
-def region_copy(source, name, include, cap_planes=()):
+def region_copy(source, name, include, cap_planes=(), boot_part=None):
     result = source.copy()
     result.data = source.data.copy()
     bpy.context.collection.objects.link(result)
@@ -204,7 +210,10 @@ def region_copy(source, name, include, cap_planes=()):
     result.data.name = name
     bm = bmesh.new()
     bm.from_mesh(result.data)
-    remove = [face for face in bm.faces if not include(face.calc_center_median())]
+    deform=bm.verts.layers.deform.active
+    boot_group=source.vertex_groups.get('Fit_BootPart')
+    remove = [face for face in bm.faces if not include(face.calc_center_median()) or
+        (boot_part is not None and any(v[deform].get(boot_group.index,0)>.5 for v in face.verts)!=boot_part)]
     bmesh.ops.delete(bm, geom=remove, context="FACES")
     bmesh.ops.delete(bm, geom=[vert for vert in bm.verts if not vert.link_faces], context="VERTS")
     for axis, value in cap_planes:
@@ -239,27 +248,6 @@ def align_seams(obj, seams):
                     coordinate = 2*(point[i]-low[i])/(high[i]-low[i])-1
                     desired = center[i]+half[i]*coordinate
                     point[i] += influence*(desired-point[i])
-    obj.data.update()
-
-
-def align_shin_connections(obj):
-    # Both outfits use the same cylindrical join through a hidden overlap band.
-    # The garment and boot silhouette outside that band keeps its original shape.
-    for side in (-1, 1):
-        low, high = reference_seam(obj, 2, CUFF, lambda p: side*p.x > 0)
-        center = (low+high)*.5
-        half = (high-low)*.5
-        for vertex in obj.data.vertices:
-            point = vertex.co
-            if side*point.x <= 0:
-                continue
-            distance = max(0, abs(point.z-CUFF)-.015)
-            influence = 1-smooth(distance/.052)
-            if influence <= 0:
-                continue
-            angle = math.atan2((point.y-center.y)/half.y, (point.x-center.x)/half.x)
-            desired = Vector((side*.132+.066*math.cos(angle), .001+.062*math.sin(angle), point.z))
-            point += (desired-point)*influence
     obj.data.update()
 
 
@@ -576,18 +564,155 @@ def export(key, slot, objects):
                                        "triangles":sum(len(obj.data.loop_triangles) for obj in objects)}
 
 
+def closed_hands():
+    mesh = body.copy(); mesh.data = body.data.copy()
+    bpy.context.collection.objects.link(mesh)
+    mesh.name = 'Shared_Wooden_Hands'
+    bm = bmesh.new(); bm.from_mesh(mesh.data)
+    remove = [face for face in bm.faces if mesh.data.materials[face.material_index].name
+              not in ('Doll_Carved_Wood','Doll_Dark_Wood_Hinges')]
+    bmesh.ops.delete(bm,geom=remove,context='FACES')
+    bmesh.ops.delete(bm,geom=[v for v in bm.verts if not v.link_faces],context='VERTS')
+    bm.to_mesh(mesh.data); bm.free()
+    return mesh
+
+
+def joint_lining(boot,key,axis):
+    """Inward rim and sleeve: shared inside seat, unchanged outside contour."""
+    bm = bmesh.new(); bm.from_mesh(boot.data)
+    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000001)
+    edges = {edge for edge in bm.edges if edge.is_boundary and all(
+        abs(v.co.z-CUFF)<.00001 if axis==2 else abs(abs(v.co.x)-HAND_JOIN)<.00001
+        for v in edge.verts)}
+    loops = []
+    while edges:
+        edge = edges.pop(); vertices = [edge.verts[0],edge.verts[1]]
+        while vertices[-1]!=vertices[0]:
+            next_edge = next((e for e in vertices[-1].link_edges if e in edges),None)
+            if next_edge is None: break
+            edges.remove(next_edge); vertices.append(next_edge.other_vert(vertices[-1]))
+        if vertices[-1]==vertices[0] and len(vertices)>6:
+            loops.append(vertices[:-1])
+    result = []
+    uv_layer = bm.loops.layers.uv.active
+    for side in (-1,1):
+        candidates = [loop for loop in loops if side*sum(v.co.x for v in loop)>0]
+        assert candidates,(key,side,'missing boot rim')
+        loop = max(candidates,key=lambda items:sum((items[i].co-items[i-1].co).length for i in range(len(items))))
+        outer = [v.co.copy() for v in loop]
+        u,v = (0,1) if axis==2 else (1,2)
+        center = (side*.115,.020) if axis==2 else (0,ARM_HEIGHT)
+        radius = .0245 if axis==2 else .0242
+        plane = CUFF if axis==2 else side*HAND_JOIN
+        bottom = .355 if axis==2 else side*(HAND_JOIN-.020)
+        # Consistent counterclockwise winding viewed from above.
+        if sum(a[u]*b[v]-b[u]*a[v] for a,b in zip(outer,outer[1:]+outer[:1]))<0:
+            loop = list(reversed(loop)); outer = list(reversed(outer))
+        count = len(outer)
+        inner = []
+        lengths = [(outer[(i+1)%count]-outer[i]).length for i in range(count)]
+        total = sum(lengths); distance = 0
+        start_angle = math.atan2(outer[0][v]-center[1],outer[0][u]-center[0])
+        for index,p in enumerate(outer):
+            angle = start_angle+2*math.pi*distance/total
+            point = Vector((0,0,0)); point[axis]=plane
+            point[u]=center[0]+radius*math.cos(angle); point[v]=center[1]+radius*math.sin(angle)
+            inner.append(point)
+            distance += lengths[index]
+        lower = [p.copy() for p in inner]
+        for point in lower: point[axis]=bottom
+        positions = outer+inner+lower
+        faces = [(i,(i+1)%count,(i+1)%count+count,i+count) for i in range(count)]
+        faces += [(i+count,(i+1)%count+count,(i+1)%count+2*count,i+2*count) for i in range(count)]
+        faces.append(tuple(reversed(range(2*count,3*count))))
+        data = bpy.data.meshes.new('Hidden cuff lining'); data.from_pydata(positions,[],faces)
+        obj = bpy.data.objects.new(key+('_BootCuffLining_' if axis==2 else '_WristCuffLining_')+('L' if side==1 else 'R'),data)
+        bpy.context.collection.objects.link(obj)
+        material = bpy.data.materials.get(key+'_HiddenCuffLeather')
+        if not material:
+            material = bpy.data.materials.new(key+'_HiddenCuffLeather')
+            material.use_nodes=True
+            shader=material.node_tree.nodes.get('Principled BSDF')
+            shader.inputs['Base Color'].default_value = ((.065,.035,.018,1) if key=='base' else (.025,.035,.05,1))
+            shader.inputs['Roughness'].default_value=.85
+        data.materials.append(material)
+        uv = data.uv_layers.new(name='CuffUV').data
+        values = [next(iter(v.link_loops))[uv_layer].uv.copy() for v in loop]
+        for face in data.polygons:
+            for index in face.loop_indices:
+                uv[index].uv = values[data.loops[index].vertex_index%count]
+        normal = bmesh.new(); normal.from_mesh(data)
+        bmesh.ops.recalc_face_normals(normal,faces=list(normal.faces))
+        normal.to_mesh(data); normal.free()
+        bone = ('shin.' if axis==2 else 'forearm.')+('L' if side==1 else 'R')
+        bind(obj,lambda _p,_h,bone=bone:{bone:1})
+        result.append(obj)
+    bm.free()
+    return result
+
+
+def shin_cores():
+    material = bpy.data.materials['Doll_Carved_Wood']
+    # Reuse a verified local wood UV neighborhood, not default 0..1 atlas UVs.
+    face = next(face for face in body.data.polygons
+                if body.data.materials[face.material_index]==material)
+    sample = sum((body.data.uv_layers.active.data[i].uv for i in face.loop_indices),Vector((0,0)))/len(face.loop_indices)
+    objects = []
+    for side in (-1,1):
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.ops.mesh.primitive_cylinder_add(vertices=32,radius=.0248,depth=.110,
+                                           location=(side*.115,.020,.410))
+        obj = bpy.context.object; obj.name = 'Shared_Shin_Core_'+('L' if side==1 else 'R')
+        bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+        obj.data.materials.append(material)
+        for value in obj.data.uv_layers.active.data:
+            value.uv = sample+(value.uv-Vector((.5,.5)))*.002
+        for polygon in obj.data.polygons: polygon.use_smooth=True
+        bind(obj,lambda _p,_h,side=side:{'shin.L' if side==1 else 'shin.R':1})
+        objects.append(obj)
+    return objects
+
+
+def boot_socket(key):
+    """A concealed round lining, independent of the generated garment rim."""
+    result=[]
+    material=bpy.data.materials[key+'_HiddenCuffLeather']
+    count=32
+    for side,sign in [('L',1),('R',-1)]:
+        vertices=[]
+        for z in (.355,.415,.425):
+            for radius in (.0263,.0245):
+                vertices += [(sign*.115+radius*math.cos(i*2*math.pi/count),
+                              .020+radius*math.sin(i*2*math.pi/count),z) for i in range(count)]
+        faces=[]
+        for level in range(2):
+            for ring in range(2):
+                first=level*2*count+ring*count
+                for i in range(count):
+                    j=(i+1)%count
+                    faces.append((first+i,first+j,first+j+2*count,first+i+2*count))
+        for level in (0,2):
+            first=level*2*count
+            faces += [(first+i,first+(i+1)%count,first+(i+1)%count+count,first+i+count) for i in range(count)]
+        mesh=bpy.data.meshes.new('Concealed boot lining'); mesh.from_pydata(vertices,[],faces)
+        obj=bpy.data.objects.new(key+'_BootCuffLining_'+side,mesh); bpy.context.collection.objects.link(obj)
+        mesh.materials.append(material)
+        bm=bmesh.new(); bm.from_mesh(mesh); bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces)); bm.to_mesh(mesh); bm.free()
+        bind(obj,lambda _p,_h,side=side:{'shin.'+side:1})
+        result.append(obj)
+    return result
+
+
 wrist_seams = []
 groups = {}
-hands = master_section("Shared_Wooden_Hands",lambda p: abs(p.x)>HAND_JOIN-.013,
-                       [(0,-HAND_JOIN+.013),(0,HAND_JOIN-.013)])
+hands = closed_hands()
 head = master_section("Shared_Wooden_Head",lambda p: p.z>1.595 and abs(p.x)<.15,[(2,1.595)])
 for side in (-1,1):
     # The proximal cut includes forearm wood below the rounded wrist. Size
     # the cuff around the actual wrist profile to seat the palm on its axis.
-    low, high = bounds(v.co for v in hands.data.vertices if abs(side*v.co.x-WRIST)<.005)
-    center = (low+high)/2
-    half = (high-low)/2 * 1.12
-    wrist_seams.append((0,side*HAND_JOIN,lambda p: p.z>1.4,center,half,.055))
+    center = Vector((side*HAND_JOIN,0,ARM_HEIGHT))
+    half = Vector((0,.025,.025))
+    wrist_seams.append((0,side*HAND_JOIN,lambda p: p.z>1.4,center,half,.025))
 for key, outfit_archive, grapple_archive in (
     ("base","base gear model.zip","lasso rope 3d model.zip"),
     ("blue","Blue gear.zip","fantasy weapon 3d model.zip"),
@@ -595,23 +720,37 @@ for key, outfit_archive, grapple_archive in (
     outfit = imported(key, outfit_archive)
     tag_hanging_cloth(outfit,key)
     align(outfit,key)
+    boot_group=outfit.vertex_groups.new(name='Fit_BootPart')
+    for vertices in mesh_components(outfit):
+        low,high=bounds(v.co for v in vertices)
+        if high.z<.43:
+            boot_group.add([v.index for v in vertices],1,'REPLACE')
+    outfit.data.calc_loop_triangles()
+    (REPORT/(key+'_shin_source.json')).write_text(json.dumps({
+        'vertices':[list(v.co) for v in outfit.data.vertices],
+        'triangles':[list(tri.vertices) for tri in outfit.data.loop_triangles]}),encoding='utf-8')
     for axis,value in [(0,-HAND_JOIN),(0,-GLOVE_CUT),(0,GLOVE_CUT),(0,HAND_JOIN),
                        (2,CUFF),(2,BOOT_TOP),(2,TROUSER_BOTTOM)]:
         direction = Vector([float(i == axis) for i in range(3)])
         bisect(outfit.data,value*direction,direction)
     align_seams(outfit,wrist_seams)
-    align_shin_connections(outfit)
     weights = blue_outfit_weights if key == "blue" else base_outfit_weights
-    gloves = bind(region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN),weights)
-    boots = bind(region_copy(outfit,f"{key}_Boots",lambda p: p.z<BOOT_TOP,[(2,BOOT_TOP)]),weights)
-    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p: abs(p.x)<GLOVE_CUT and p.z>=TROUSER_BOTTOM,
-                             [(2,TROUSER_BOTTOM)])
-    # The trousers sit just inside the boot wall throughout their common band.
-    for vertex in head_chest.data.vertices:
-        if vertex.co.z < BOOT_TOP:
-            side = 1 if vertex.co.x >= 0 else -1
-            vertex.co.x = side*.132+(vertex.co.x-side*.132)*.995
-            vertex.co.y = .001+(vertex.co.y-.001)*.995
+    gloves = region_copy(outfit,f"{key}_Bracers",lambda p: GLOVE_CUT<abs(p.x)<HAND_JOIN)
+    # Dress only the final 8 mm of the leather mouth around a round wrist seat.
+    # The bracer and its mounted hardware retain their authored outer shape.
+    for vertex in gloves.data.vertices:
+        p=vertex.co; amount=1-smooth((HAND_JOIN-abs(p.x))/.008)
+        radial=Vector((p.y,p.z-ARM_HEIGHT))
+        if amount>0 and radial.length>.00001:
+            target=radial.normalized()*.0265
+            p.y+=(target.x-p.y)*amount; p.z+=(target.y+ARM_HEIGHT-p.z)*amount
+    bind(gloves,weights)
+    wrist_lining = joint_lining(gloves,key,0)
+    boots = region_copy(outfit,f"{key}_Boots",lambda p:True,boot_part=True)
+    lining = boot_socket(key)
+    bind(boots,weights)
+    head_chest = region_copy(outfit,f"{key}_HeadChest",lambda p:abs(p.x)<GLOVE_CUT and p.z>=(.30 if key=='blue' else CUFF),
+                             [(2,CUFF)] if key=='base' else (),boot_part=False)
     if key == "blue":
         lift_blue_trouser_bridge(head_chest)
         add_blue_sleeve_bones(head_chest)
@@ -622,9 +761,9 @@ for key, outfit_archive, grapple_archive in (
     bind(head_chest,weights)
     grapple = imported(key+"_grapple",grapple_archive)
     groups[key] = {
-        "gloves":[gloves,hands]+grapple_assets(key,grapple),
-        "boots":[boots],
-        "head_chest":[head_chest,head],
+        "gloves":[gloves,hands]+wrist_lining+grapple_assets(key,grapple),
+        "boots":[boots]+lining,
+        "head_chest":[head_chest,head]+shin_cores(),
     }
     bpy.data.objects.remove(outfit,do_unlink=True)
     bpy.data.objects.remove(grapple,do_unlink=True)

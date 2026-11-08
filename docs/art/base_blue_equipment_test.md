@@ -94,9 +94,10 @@ master doll. The open bracer cuff is centered on the rounded wrist profile
 and overlaps it slightly. Both retain their imported elbows. The shared bracer cut is
 on the forearm side of those joints to keep the elbow geometry with Head /
 Chest. Base retains its trouser hem, exposed shin, and boot shape outside the
-hidden connector, with the knee pivot covered by the trousers. The November 7
-pass aligns both outfits to one elliptical shin band with 22 mm overlap
-(0.401–0.423 m); trousers sit 0.5% inside the boot wall. Both gloves reuse rigid
+hidden connector, with the knee pivot covered by the trousers. The final November 7
+cleanup uses a shared internal shin core/lining with at least 60 mm overlap below
+the nominal 0.415 m interface. Visible contours and natural garment rims are kept;
+the earlier forced elliptical band has been removed. Both gloves reuse closed
 palm/finger pieces and rounded darker wooden hinges at the shared pivots.
 Open the rebuilt
 `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` for the updated rigged
@@ -126,13 +127,15 @@ art-test session after import to review it with both gloves.
 
 ## November 7 approved repair validation
 
-The shared joint validator passes 170 Blender checks. The expanded Godot equipment
-test passes 747 checks over eight mixed loadouts, eight poses and both facings.
+The final surface/joint validator passes 258 Blender checks. The Godot equipment
+test passes 843 checks over eight mixed loadouts, eight poses and both facings.
 The original 62 animated rest bones and 48 clips remain; up to 48 named cloth
 bones append for Base tunic edges and Blue sleeves/ribbons/sash. Base motion is
-firmer. The outline verifier passes 281 depth/profile/cache checks, and the idle
-inventory verifier passes 786 checks in rendered and headless runs.
-See [the repair review](equipment_feedback_2026_11_07.md) for local captures,
+firmer. The outline verifier passes 329 depth/profile/cache checks, and the idle
+inventory verifier passes 930 checks in rendered and headless runs. Hand closure,
+wood UV coverage and cap-to-hinge enclosure now accompany the original rigidity
+checks. Visible shin surfaces match the established fitted source within 0.001 mm.
+See [the surface cleanup](equipment_surface_review_2026_11_07_2325.md) for captures,
 measured limits and the known standalone renderer shutdown warning. Chase's
-appearance review remains open. Joint checkpoint: `c61527b3`; cloth checkpoint:
-`fix: extend restrained cloth motion across base and blue outfits`.
+appearance review remains open. Current checkpoint:
+`asset: clean articulated hands and preserve equipment contours`.

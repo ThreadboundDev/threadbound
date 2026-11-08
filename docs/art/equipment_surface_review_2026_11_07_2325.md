@@ -1,8 +1,65 @@
 # Late November 7 equipment surface review
 
-Status: reviewed; the current appearance is **not accepted**. This report is
-feedback, not authorization for another protected asset replacement. No runtime
-mesh, material, scene or animation was changed during this review.
+Status: Chase approved the scoped cleanup with **“Yes approve.”** It is installed
+and verified for another in-game appearance review. The original feedback alone
+was not approval; the read-only review below preceded the explicit authorization.
+
+## Delivered cleanup
+
+Both gloves now reuse 66 closed rigid pieces: carved palms/phalanges, brown hinge
+balls and concealed wrist seats. The original 62 animated rest bones and all 48
+clips remain. Ends of the wooden pieces overlap inside their parent hinges through
+the sampled poses, so the articulation does not require stretched finger skins.
+The final 8 mm of each bracer mouth is dressed around the common wrist seat;
+separate inner leather sleeves conceal the join. Grapples and shield straps retain
+their existing forearm bindings.
+
+Wood UVs use a continuous warm region of the original doll atlas, checked for
+over 99% warm wood pixels. The hand finish is consequently more uniform than the
+generated texture with painted joint seams. This retains the original palette
+without sampling garment colors or drawing triangular seam patches onto the palm.
+
+The visible shin projection has been removed. Source boot islands stay with Boots,
+including their natural rims; the Blue trouser hem stays with Head / Chest rather
+than leaving a clipped strip in the Boots item. A shared concealed wooden core and
+inner leather sleeve overlap below the nominal 0.415 m interface. The 24.8 mm wood
+core slightly overlaps the 24.5 mm inner sleeve, both on the same shin bone. The
+minimum shared axial overlap is 60 mm. Original visible shin/boot surfaces match
+the source after the established skeletal fit to within 0.001 mm; no broad radial
+remap is used to force their outside contours to match.
+
+Final validation:
+
+- **258 native Blender checks pass:** closed/nondegenerate hand surfaces, all 66
+  pieces, bounded wood UVs, rigid motion and enclosed wrist/finger ends through
+  32 samples across eight clips, rest compatibility, unchanged visible surfaces
+  and the shared internal join through bending.
+- **843 Godot equipment checks pass** over eight mixed loadouts, eight actions and
+  both facing directions. Added actual-engine wrist, forearm and shin close-ups
+  cover each loadout, with an unoutlined hand comparison.
+- **930 inventory checks pass** in Forward+ and headless, covering isolated paused
+  idle/cloth, mixed swaps and masks. **329 object-outline checks pass** in Forward+.
+- Final runs have no running script errors. The known standalone Forward+
+  texture RID / CompressedTexture2D release warning persists at engine shutdown;
+  the headless inventory run exits cleanly.
+
+Candidates were rendered and passed native checks before installation. Before
+copies are in `LocalOnly/Equipment/SurfaceCleanup2026_11_07/Before/`; candidate
+GLBs, editable source and reports remain in the adjacent `Candidate/` directory.
+Final native close-ups are in `InstalledSurfaceReview/`. Actual Godot close-ups
+are `LocalOnly/Equipment/BaseBlue/joint_<loadout>_<joint>.png`; loadout 3 is the
+reported Blue Gloves/Boots with Base outfit. Updated inventory icons and the two
+editable Blender sources were saved. Generated artwork remains local.
+
+Rebuild in Blender background mode by running `repair_fitted_doll_hands.py` first,
+then `prepare_base_blue_equipment.py -- <download-directory>`. Add `--candidate`
+after the script's `--` separator for local-only preview outputs. The joint
+validator accepts the same `--candidate` switch. Existing source downloads and
+the immutable pre-repair master are required; the source push does not back up
+those local art inputs.
+
+Checkpoint: `asset: clean articulated hands and preserve equipment contours`.
+Chase's visual acceptance remains open; passing geometry checks is not acceptance.
 
 Source: `LocalOnly/Feedback/reports/2026-11-07T23-25-10_25380_149270_2` (the user
 submitted the same path twice). Both `report.md` and the complete `report.json`
@@ -75,7 +132,7 @@ of the visible transition away from a cut. The passing count did not establish
 visual quality. Chase's new report supersedes the earlier “ready for review”
 appearance status; it does not invalidate the functioning equipment swap path.
 
-## Proposed protected repair — approval required
+## Approved protected repair scope (reference)
 
 Keep the same doll proportions, original 62 animated rest bones, 48 clips, slots,
 glove-owned grapples, forearm shield and current restrained cloth profiles.
@@ -111,7 +168,7 @@ glove-owned grapples, forearm shield and current restrained cloth profiles.
 - `docs/art/base_blue_equipment_test.md`
 - `docs/project_status_and_worklist.md`
 
-Runtime assets to replace only after approval (all stay local):
+Runtime assets replaced under the explicit approval (all stay local):
 
 - `Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb`
 - `Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_gloves.glb`
@@ -129,8 +186,7 @@ Runtime assets to replace only after approval (all stay local):
 - `LocalOnly/Equipment/BaseBlue/BaseBlue_Fitted.blend` and adjacent fit reports /
   captures, plus `LocalOnly/Equipment/FeedbackReview2026_11_07/Shared_Hands_Repair.blend`.
 
-Candidate previews/backups will be saved before installation. Source downloads,
+Candidate previews/backups were saved before installation. Source downloads,
 weapon/shield models, masks, gameplay code and outline rendering remain outside
-this repair scope. Approval is needed because AGENTS.md lists **asset replacements**
-as protected changes. This review checkpoint contains documentation and a
-read-only inspection tool only.
+this repair scope. AGENTS.md lists **asset replacements** as protected changes;
+Chase explicitly approved this file scope before its implementation.

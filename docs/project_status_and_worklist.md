@@ -23,14 +23,15 @@ for this documentation update. Checkpoint:
 
 **Current task: T44 — attach modular base gear to the doll.**
 Late November 7 [surface-quality review](art/equipment_surface_review_2026_11_07_2325.md):
-Chase rejects the current hand/cuff/shin appearance on `617581fc`. Read-only
-close-ups confirm jagged open hand partitions, hinge UVs sampling unrelated atlas
-regions, and visible contour distortion from the shared shin projection. The
-existing 170 joint checks still pass, exposing a gap in surface/appearance
-validation. No new runtime assets changed. Clean closed hand pieces, correct wood
-UVs, fitted wrist seats and a hidden shin connector are proposed with an exact
-file scope; asset replacements await approval. Checkpoint:
-`docs: diagnose remaining equipment surface defects`.
+Chase rejected the hand/cuff/shin appearance on `617581fc`, then approved the
+file-scoped cleanup with “Yes approve.” Closed articulated palms/fingers, verified
+wood UVs, concealed wrist seats and shared internal shin connectors are installed.
+The visible contour projection is removed, and Blue's trouser hem remains with
+Head / Chest. Final validation passes 258 native surface/joint checks, 843 Godot
+equipment checks, 930 inventory checks (rendered/headless), and 329 outline checks.
+Native and actual-engine close-ups are saved; appearance acceptance remains open.
+The known standalone Forward+ shutdown warning remains. Checkpoint:
+`asset: clean articulated hands and preserve equipment contours`.
 
 November 7 [three-report equipment review](art/equipment_feedback_2026_11_07.md):
 all captures/recordings and diagnostics reviewed; no runtime errors were captured.

@@ -8,9 +8,11 @@ appearance review after restarting the art-test session.
 23:25 report runs `617581fc` and shows jagged rigid pieces and lumpy visible
 transitions despite passing the structural checks. See the
 [surface diagnosis and replacement scope](equipment_surface_review_2026_11_07_2325.md).
-No further runtime assets were changed during that review; a focused replacement
-pass requires approval. The earlier passing counts below are structural evidence,
-not acceptance of the current appearance.
+No further runtime assets were changed during that review. Chase then explicitly
+approved the focused replacement pass. It now delivers closed articulated hands,
+corrected wood UVs, wrist seats and internal shin connectors; current validation
+is 258 native / 843 equipment / 930 inventory / 329 outline checks. The earlier
+counts below describe the superseded pass, not acceptance of the current look.
 
 ## Approved repair checkpoint
 

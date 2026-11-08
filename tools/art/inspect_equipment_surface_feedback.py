@@ -10,13 +10,16 @@ import json
 import math
 import struct
 import re
+import sys
 import bpy
 import bmesh
 from mathutils import Vector
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT/'Assets/Threadborne/Player/LocalDoll'
-OUT = ROOT/'LocalOnly/Equipment/FeedbackReview2026_11_07_2325'
+ASSETS = (ROOT/'LocalOnly/Equipment/SurfaceCleanup2026_11_07/Candidate'
+          if '--candidate' in sys.argv else ROOT/'Assets/Threadborne/Player/LocalDoll')
+OUT = (ASSETS/'SurfaceReview' if '--candidate' in sys.argv else
+       ROOT/'LocalOnly/Equipment/SurfaceCleanup2026_11_07/InstalledSurfaceReview')
 OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'.gdignore').touch()
 records = {}
@@ -100,6 +103,11 @@ before = ROOT/'LocalOnly/Equipment/FeedbackReview2026_11_07/BeforeAssets/FittedS
 old_objects = load(before)
 old_hand = next(obj for obj in old_objects if obj.type=='MESH' and obj.name.startswith('Shared_Wooden_Hands'))
 records['before_hand_surface'] = surface_stats(old_hand)
+rejected=ROOT/'LocalOnly/Equipment/SurfaceCleanup2026_11_07/Before/FittedSets/base_gloves.glb'
+if rejected.exists():
+    rejected_objects=load(rejected)
+    rejected_hand=next(obj for obj in rejected_objects if obj.type=='MESH' and obj.name.startswith('Shared_Wooden_Hands'))
+    records['rejected_hand_surface']=surface_stats(rejected_hand)
 for key in ('base_boots','blue_boots','base_head_chest','blue_head_chest'):
     objects = load(before.parent/(key+'.glb'))
     obj = next(obj for obj in objects if obj.type=='MESH' and not obj.name.startswith('Shared_'))

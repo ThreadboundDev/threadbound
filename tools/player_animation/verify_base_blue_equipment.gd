@@ -130,6 +130,8 @@ func run() -> void:
 				check(visual._skeleton.get_bone_global_pose(visual._skeleton.find_bone("hand.L")).is_finite(), "Finite mixed-loadout pose")
 				if facing == 1 and combination in [0,5,7] and action in [&"idle_4",&"run_1",&"casting_2"]:
 					await capture(visual._viewport, "swap_%d_%s" % [combination, action])
+				if facing == 1 and action == &"idle_2":
+					await capture_joint_closeups(visual,combination)
 		if combination in [0, 7]:
 			var gloves = player.current_gloves
 			var launch: Vector2 = player.to_global(visual.get_grapple_origin_player_offset())
@@ -183,6 +185,35 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	call_deferred("quit",0 if failures.is_empty() else 1)
+
+
+func capture_joint_closeups(visual: Node, combination: int) -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var camera: Camera3D = visual._camera
+	var transform := camera.global_transform
+	var size := camera.size
+	var viewport_size: Vector2i = visual._viewport.size
+	visual._viewport.size = Vector2i(900,700)
+	var joints := {"wrist_L":"hand.L","wrist_R":"hand.R","forearm_L":"forearm.L","shin_L":"shin.L"}
+	for label: String in joints:
+		var bone: int = visual._skeleton.find_bone(joints[label])
+		var target: Vector3 = visual._skeleton.to_global(visual._skeleton.get_bone_global_pose(bone).origin)
+		if label == "shin_L":
+			var rest: Transform3D = visual._skeleton.get_bone_global_rest(bone)
+			var local := rest.affine_inverse()*Vector3(.115,.415,-.020)
+			target = visual._skeleton.to_global(visual._skeleton.get_bone_global_pose(bone)*local)
+		camera.size = .40 if label.begins_with("wrist") else .30
+		camera.look_at_from_position(target+Vector3(-3,1,1),target,Vector3.UP)
+		await capture(visual._viewport,"joint_%d_%s" % [combination,label])
+		if label == "wrist_L":
+			var shells: Array[Node] = visual._model_root.find_children("ObjectOutline","MeshInstance3D",true,false)
+			for shell: MeshInstance3D in shells: shell.hide()
+			await capture(visual._viewport,"joint_%d_%s_plain" % [combination,label])
+			for shell: MeshInstance3D in shells: shell.show()
+	camera.global_transform = transform
+	camera.size = size
+	visual._viewport.size = viewport_size
 
 
 func verify_sleeve_motion(player: Node2D, visual: Node, manager: Node) -> void:
