@@ -1,0 +1,41 @@
+{
+  "source_sha256": "59b0e46f099edff443496989f42ca88255042d9004825a8a910326dba1466406",
+  "vertices": 25661,
+  "triangles": 48489,
+  "geometry_world_max_error": 0.0,
+  "uv_layers": [
+    "PaintedAtlasUV"
+  ],
+  "texture_size": [
+    4096,
+    4096
+  ],
+  "front_reference_bounds": [
+    131,
+    1404,
+    55,
+    961
+  ],
+  "back_reference_bounds": [
+    133,
+    1401,
+    56,
+    962
+  ],
+  "side_reference_bounds": [
+    413,
+    1017,
+    57,
+    1023
+  ],
+  "method": "Front/back projection plus visibility-weighted side paint guide, silhouette padding, local-thickness blending, emission bake to UV atlas",
+  "limitations": "Reference shading is included in base color; hidden surfaces and side transitions retain projection compromises. Side guide is generated color guidance, not anatomy authority. Unrigged comparison candidate, no gameplay replacement.",
+  "export_validation": {
+    "triangles": 48489,
+    "mesh_count": 1,
+    "max_world_position_error": 0,
+    "uv_loops_checked": 145467,
+    "embedded_images": 1,
+    "external_texture_dependencies": 0
+  }
+}
