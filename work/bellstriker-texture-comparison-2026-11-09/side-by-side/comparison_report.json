@@ -1,0 +1,30 @@
+{
+  "CODEX": {
+    "triangles": 48489,
+    "source_dimensions": [
+      0.99951171875,
+      0.4614258408546448,
+      0.74267578125
+    ],
+    "normalization_scale": 1.0004885197850513,
+    "texture_pixels": [
+      4096,
+      4096
+    ]
+  },
+  "TRIPO": {
+    "triangles": 48489,
+    "source_dimensions": [
+      0.99951171875,
+      0.4614258408546448,
+      0.74267578125
+    ],
+    "normalization_scale": 1.0004885197850513,
+    "texture_pixels": [
+      4096,
+      4096
+    ]
+  },
+  "normalized_surface_vertex_distance_max": 0.0,
+  "comparison": "Original base-color images; equal world lighting, scale, roughness, metallic, specular, camera and rotation. No recoloring."
+}
