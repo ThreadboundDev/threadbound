@@ -50,8 +50,13 @@ Local packages are under `Builds/current-2026-11-09/`:
 - `Threadbound_Demo_2026-11-09.zip`: 1,036,472,987 bytes.
 - `Threadbound_Blue_2026-11-09.zip`: 1,770,535,000 bytes.
 
-These exceed Discord's single-attachment limit. Delivery is pending Chase's
-choice of external download hosting; no build links have been posted yet.
+Chase authorized GitHub hosting. Both ZIPs are published on the
+[Latest Builds prerelease](https://github.com/ThreadboundDev/threadbound/releases/tag/latest-builds).
+GitHub reports both assets uploaded, with SHA-256 digests matching the local
+archives. The reusable release tag points to export checkpoint `4186da31`.
+The Discord announcement is drafted in Chrome's E31 `#current-builds` tab.
+Automatic UI input could fill the message but could not focus/send it; Chase
+was asked to click the composer and press Enter. Delivery verification is pending.
 Local logs, render captures, archive verification, and SHA-256 receipts are
 kept alongside the packages. The resource selector includes global script
 classes, string-based loads, and external/shared model textures.
