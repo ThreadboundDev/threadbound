@@ -4,6 +4,14 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 player appearance comparison
+
+T48 comparison. The isolated Chamber launcher `tools/player_animation/start_og_base_trial.ps1` cycles OG Base, original 2D sprites, baked OG sprites, the current modular doll, the earlier equipped doll, and the original 3D player. F7 advances and Shift+F7 goes back. The same player controller, position and Chamber camera carry through each switch.
+
+Chase called out the original 2D look as the source of the character's charm. The original sprite appearance uses the archived 24 body clips at their authored scale with the current logical animation clock. The baked OG study covers idle, run and jump. To recover the archived frames locally, run `tools/art/prepare_legacy_player_frames.py` with Python from the repository root. It writes to `LocalOnly/OG_Export_Trial/legacy_sprites/`.
+
+The rendered check covered idle, run and jump with every appearance, preserved the live player through switching, and confirmed forward and reverse wraparound.
+
 ## November 11 OG Base live rig trial
 
 T48 live fit. Open the Chamber with `tools/player_animation/start_og_base_trial.ps1` and press F7 to compare the new mesh with the current player. The trial uses the Chamber's normal player, side camera, live 78-bone skeleton and 64 loaded clips. The Downloads FBX had no UVs, texture or rig, so `tools/art/fit_og_base_trial.py` applies vertex paint and fits the sculpt to the modular doll's rest pose. From the repository root, run it with Blender's `--python` argument and pass the FBX path after `--`. It writes the editable Blender file and runtime GLB under `LocalOnly/OG_Export_Trial/`. The launcher uses the existing isolated Sprite Study project.
