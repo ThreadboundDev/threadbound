@@ -4,6 +4,7 @@ render_mode unshaded, cull_front, shadows_disabled, fog_disabled;
 uniform vec4 outline_color : source_color = vec4(0.015, 0.012, 0.012, 1.0);
 uniform float outline_source_pixels = 6.0;
 uniform bool fine_hat_detail = false;
+uniform bool use_vertex_width_mask = false;
 
 void vertex() {
 	vec4 view_position = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
@@ -15,6 +16,9 @@ void vertex() {
 	// Expand a real 3D shell, including depth. A screen-only displacement can
 	// move a back face over a nearer fold without moving that back face away.
 	float detail_scale = fine_hat_detail ? mix(1.0, 0.25, smoothstep(1.68, 1.75, VERTEX.y)) : 1.0;
+	if (use_vertex_width_mask) {
+		detail_scale *= COLOR.r;
+	}
 	view_position.xyz += view_normal * (units_per_pixel * outline_source_pixels * detail_scale);
 	// Keep the hull behind the source surface at folds and thin accessories.
 	// Its lateral expansion still supplies the edge where no source face covers it.
