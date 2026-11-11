@@ -240,9 +240,24 @@ func verify() -> void:
 			if weapon.is_visible_in_tree() != (step != 1):
 				fail("B must toggle the sword and shield together on step %d." % step)
 				return
+	var idle_delay: float = visual.idle_variation_delay
+	visual.idle_variation_delay = 0.1
+	for frame in 20:
+		if visual._current_action != &"idle_4":
+			break
+		await frames(1)
+	visual.idle_variation_delay = idle_delay
+	if visual._current_action not in [&"idle_1", &"idle_2", &"idle_3"]:
+		fail("The movement check must start during an idle variation.")
+		return
 	var start := player.position.x
 	Input.action_press("move_right")
-	await frames(14)
+	await frames(3)
+	if visual._current_action != &"run_1" or visual._queued_action != &"":
+		Input.action_release("move_right")
+		fail("Running must interrupt the idle variation and clear its queued return to idle.")
+		return
+	await frames(11)
 	Input.action_release("move_right")
 	if player.position.x < start + 12:
 		fail("The player cannot move on the greybox floor.")

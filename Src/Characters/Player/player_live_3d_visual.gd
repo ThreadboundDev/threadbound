@@ -28,6 +28,8 @@ const LOOPING_ACTIONS := {
 	&"hanging_idle_1": true,
 }
 
+const IDLE_VARIATIONS: Array[StringName] = [&"idle_1", &"idle_2", &"idle_3"]
+
 const LOWER_BODY_BONES: Array[StringName] = [
 	&"pelvis",
 	&"thigh.L", &"shin.L", &"foot.L", &"toe.L",
@@ -658,7 +660,13 @@ func get_current_action_remaining_duration() -> float:
 
 
 func is_playing_transition() -> bool:
-	return _queued_action != &"" and _animation_player and _animation_player.is_playing()
+	# An idle variation queues the base idle for when the player stays still.
+	return (
+		_queued_action != &""
+		and _current_action not in IDLE_VARIATIONS
+		and _animation_player
+		and _animation_player.is_playing()
+	)
 
 
 func _select_action(logical_name: StringName) -> Dictionary:
@@ -780,7 +788,7 @@ func _update_idle_variation(delta: float) -> void:
 	if _idle_elapsed < idle_variation_delay:
 		return
 	_idle_elapsed = 0.0
-	var variants: Array[StringName] = [&"idle_1", &"idle_2", &"idle_3"]
+	var variants: Array[StringName] = IDLE_VARIATIONS.duplicate()
 	if upright_idle_strength > 0.0:
 		variants.erase(&"idle_1")
 	var variant := variants[_idle_variant_index % variants.size()]

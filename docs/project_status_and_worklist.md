@@ -4,6 +4,10 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 idle interruption fix
+
+Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.
+
 ## November 11 wooden doll grip comparison
 
 T48 hand pose. Chase found the slot 5 wooden doll read well under the reference lights and noted that the Chamber lighting washes out the 3D character. The lighting room now starts with a compact grip and H toggles the original. The preview brings the four fingers closer together, curls the thumb in, and preserves the existing release and ledge animations. It uses the existing bone pivots and carved geometry. Match the grip to actual handles during the gear fit pass.
