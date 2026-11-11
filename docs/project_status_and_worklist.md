@@ -6,6 +6,8 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+T48 follow-up. Use the [fresh OG front/back modeling pair](../work/og-base-turnaround-2026-11-10/model_pair.md) for the first 3D trial. The two files show the clean Base outfit, articulated ivory hands and empty left harness. Model generation and in-game review remain open.
+
 T48 cloth and baked movement review. In `LocalOnly/OG_Material_Review/`,
 `OG_Cloth_Review.blend` uses quieter fray color, plain ivory above the boots
 and a firmer ink outline in its renders. A separate `OG_Motion_Trial.blend`
