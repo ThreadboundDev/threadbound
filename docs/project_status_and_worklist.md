@@ -21,6 +21,14 @@ open. Checkpoint: `art: render player sprite comparison from retained rig` on
 `threadbound/art-player-sprite-lookdev`. Next action: Chase reviews the look
 before any protected shape changes or runtime conversion.
 
+November 10 T46 follow-up: Chase requested an in-game view. The isolated
+`play_preview.gd` trial follows the existing player with idle/run/jump sprites
+inside the actual Chamber, using normal movement bindings, HUD and camera.
+Six grounding/movement/animation/landing checks pass; three live screenshots
+are saved. Combat, grapple and equipment-swap presentation remain unsupported.
+Production scene/controller files are untouched; visual acceptance remains open.
+Checkpoint: `art: add in-game movement preview for rendered sprites`.
+
 ## November 5 hands-on acceptance
 
 - [x] **Development feedback tool — Accepted.** Chase confirms the tool is

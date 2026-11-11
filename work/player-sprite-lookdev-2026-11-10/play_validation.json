@@ -1,0 +1,12 @@
+{
+	"checks": 6,
+	"combat_and_equipment_animation": "unsupported in this visual trial",
+	"movement_and_jump": "passed",
+	"production_controller_modified": false,
+	"user_data": "C:/Users/chase/AppData/Roaming/Godot/app_userdata/Threadbound Sprite Study 2026-11-10",
+	"visual_clips": [
+		"idle",
+		"run",
+		"jump"
+	]
+}

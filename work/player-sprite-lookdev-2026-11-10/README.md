@@ -4,6 +4,23 @@ Status: **Awaiting Chase's visual review.** This is a requested rendering-only
 proof using the retained detailed character. It does not select a final art
 direction, replace the current player, or change equipment or combat systems.
 
+## In-game movement preview follow-up
+
+Chase subsequently requested seeing the character in game. `play_preview.gd`
+now supplies an isolated movement trial in the actual Chamber using the existing
+controller, HUD and camera. It hides the original presentation only at runtime
+and follows the player with the rendered idle/run/jump atlases, including facing.
+The production scene/controller remain untouched. Combat, grapple and equipment
+swap animations are unsupported in this trial; other controller states use the
+available movement images. This is not a complete player conversion.
+
+From the prepared `import_project/`, launch Godot with
+`--path . --script res://review/play_preview.gd --rendering-method forward_plus`.
+Use the normal movement bindings. Append `-- --verify` for the automated trial.
+Six checks passed for initial grounding, movement distance, run selection,
+airborne state, jump selection and landing. See `play_validation.json` and
+`play_idle.png`, `play_run.png`, `play_jump.png` for evidence.
+
 ## Review these first
 
 - [Original sprite / retained model / illustrated render](comparison.png).
