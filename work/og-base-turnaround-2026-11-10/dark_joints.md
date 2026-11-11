@@ -1,5 +1,11 @@
 # OG Base hands with dark joints
 
+For the current pair use the [front](og_base_dark_joints_front.png) and [corrected rear](og_base_dark_joints_back_v2.png). Visual review confirmed two dark breaks on all eight long fingers in the corrected rear, one per thumb, and separate round knuckle caps. The rear edit also softened some cloth texture slightly.
+
+Built-in ImageGen rear correction prompt:
+
+Edit ONLY the fingers of Image 1, the back-view full-body T-pose. Image 2 is the matching front view and is only a guide to the joint breaks. Keep the exact canvas, rear body, proportions, rear head, outfit, colors, wrists, smooth backs of hands and round raised ivory knuckle caps of Image 1. Critical change: on EACH of the eight non-thumb fingers, show exactly THREE ivory phalange pieces separated by exactly TWO narrow dark espresso articulation gaps: one at roughly one-third of the visible finger length and one at roughly two-thirds. Existing gap counts as one; add a clear second gap on every long finger, including both pinkies. Keep a single dark break on each thumb, with two ivory segments. The round ivory knuckle caps on the back of each hand are separate from the two bands counted on the fingers. Both hands have five distinct digits. No veins, tendons, fingernails, props or text. Match the dark brown thread stitching and front finger segmentation. Preserve all areas outside the fingers.
+
 The [front](og_base_dark_joints_front.png) and [back](og_base_dark_joints_back.png) show dark recessed finger gaps and smooth ivory. The rear retains circular knuckle caps. Both images were reviewed at full size and are 1254 × 1254. The front edit subtly softened the fabric pattern outside the hands.
 
 Built-in ImageGen prompt, applied once to each view:
