@@ -6,6 +6,8 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+T48 follow-up. The [empty mount and doll-hand study](../work/og-base-turnaround-2026-11-10/empty_mount_doll_hands.md) is the latest review target. Fit the existing coil and needle separately. Review mask shell fit after the OG head is modeled.
+
 T48 harness follow-up. Review the [Base study with the existing rope-and-needle harness](../work/og-base-turnaround-2026-11-10/existing_harness_study.md). Coverage can vary by set around the same wrist and finger rig. Art review and mesh fitting remain open.
 
 T48 follow-up. The [integrated gauntlet turnaround](../work/og-base-turnaround-2026-11-10/integrated_gauntlet.md) is the latest review target. Both views share one sheet, and the Base grapple sits inside the left glove's forearm housing. Fit and deployment checks remain open.
