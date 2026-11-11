@@ -1,6 +1,6 @@
 # OG Base hands with dark joints
 
-For the current pair use the [front](og_base_dark_joints_front.png) and [corrected rear](og_base_dark_joints_back_v2.png). Visual review confirmed two dark breaks on all eight long fingers in the corrected rear, one per thumb, and separate round knuckle caps. The rear edit also softened some cloth texture slightly.
+Use the [matched front](og_base_dark_joints_front_v2.png) and [corrected rear](og_base_dark_joints_back_v2.png). Both 1254 × 1254 views show two dark articulation breaks on every long finger and one on each thumb. The front was generated from the corrected rear to match its warm ivory, charcoal cloth and brown leather. It has smooth palms, an empty harness and slightly stronger cloth texture. The rear shows the round knuckle caps.
 
 Built-in ImageGen rear correction prompt:
 

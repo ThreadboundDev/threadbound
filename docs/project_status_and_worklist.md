@@ -6,7 +6,7 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
-T48 rear finger correction. The [corrected rear](../work/og-base-turnaround-2026-11-10/og_base_dark_joints_back_v2.png) shows two breaks per long finger and one per thumb, with the circular knuckle caps. Pair it with the existing dark-joint front.
+T48 matched hand turnaround. Use the [matched front](../work/og-base-turnaround-2026-11-10/og_base_dark_joints_front_v2.png) and [corrected rear](../work/og-base-turnaround-2026-11-10/og_base_dark_joints_back_v2.png). Both show two dark breaks per long finger and one per thumb. The front has smooth palms and the rear has circular knuckle caps.
 
 T48 hand revision. Review the [dark-joint front and back pair](../work/og-base-turnaround-2026-11-10/dark_joints.md). The fingers have dark articulation breaks and the rear hands retain circular knuckles with smooth surfaces.
 
