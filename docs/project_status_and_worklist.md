@@ -4,6 +4,12 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 doll equipment retest
+
+Chase wants to revisit the doll as the base for interchangeable gear and masks, pending the fit in motion. The existing modular doll and Base/Blue inventory path are the baseline for the trial. Rigid mask shells follow the head bone. Flexible gear uses the doll rig with fitted weights and coverage at shared joins. Blender Surface Deform is an optional fitting aid for close clothing. Keep the runtime gear on the shared armature.
+
+The rendered inventory retest passed 843 checks across eight Base/Blue combinations, both masks, a mask surviving a Head / Chest swap, and grapple deployment. The rendered poses still show exposed joins near the cuffs and boot tops. The local Chamber shortcut is `LocalOnly/OG_Export_Trial/Play Threadbound Doll Equipment Test.lnk`. Open Inventory with I and select Equipment. The fit remains open for visual review.
+
 ## November 11 player appearance comparison
 
 T48 comparison. The isolated Chamber launcher `tools/player_animation/start_og_base_trial.ps1` cycles OG Base, original 2D sprites, baked OG sprites, the current modular doll, the earlier equipped doll, and the original 3D player. F7 advances and Shift+F7 goes back. The same player controller, position and Chamber camera carry through each switch.
