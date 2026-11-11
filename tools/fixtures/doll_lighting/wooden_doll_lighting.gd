@@ -254,6 +254,7 @@ func verify_grip(rendered: bool, out: String) -> bool:
 		camera.size = 0.32
 		camera.look_at_from_position(target + Vector3(-2, 0.7, 0.6), target, Vector3.UP)
 		var spans: Array[float] = []
+		var pinky_angles: Array[float] = []
 		for compact in [false, true]:
 			await tap_key(KEY_H)
 			if compact_grip != compact:
@@ -266,6 +267,11 @@ func verify_grip(rendered: bool, out: String) -> bool:
 				var a := palm * skeleton.get_bone_global_pose(index).origin
 				var b := palm * skeleton.get_bone_global_pose(pinky).origin
 				spans.append(absf(b.x - a.x))
+				if compact:
+					var ring := skeleton.find_bone("ring.03." + side)
+					var pinky_tip := GRIP.segment_direction(skeleton, pinky, -1)
+					var ring_tip := GRIP.segment_direction(skeleton, ring, -1)
+					pinky_angles.append(rad_to_deg(pinky_tip.angle_to(ring_tip)))
 			, CONNECT_ONE_SHOT)
 			skeleton.advance(0.0)
 			await get_tree().process_frame
@@ -277,7 +283,10 @@ func verify_grip(rendered: bool, out: String) -> bool:
 		if spans.size() != 2 or spans[1] > 0.85 * spans[0]:
 			fail("The revised grip must reduce finger spread on hand " + side)
 			return false
-		print("DOLL_GRIP ", side, " span ", spans[0], " -> ", spans[1])
+		if pinky_angles.size() != 1 or pinky_angles[0] > 12.0:
+			fail("The pinky tip must follow the ring finger on hand " + side)
+			return false
+		print("DOLL_GRIP ", side, " span ", spans[0], " -> ", spans[1], " pinky angle=", pinky_angles[0])
 	visual._play_action(&"casting_2", &"", 0.1, true)
 	set_compact_grip(true)
 	if not is_zero_approx(grip.influence):

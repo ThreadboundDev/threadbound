@@ -5,14 +5,12 @@ const SPREAD := {
 	"index": [-12.0, 0.0],
 	"middle": [0.0, 0.0],
 	"ring": [11.0, 0.0],
-	"pinky": [25.0, 0.0],
 	"thumb": [-18.0, 0.0, 0.0],
 }
 const CURL := {
 	"index": [-6.0, -3.0],
 	"middle": [-4.0, -2.0],
 	"ring": [-5.0, -3.0],
-	"pinky": [-7.0, -2.0],
 	"thumb": [-12.0, -7.0, -20.0],
 }
 const GRIP_ACTIONS := [
@@ -25,6 +23,7 @@ const GRIP_ACTIONS := [
 ]
 
 var joint_corrections: Dictionary
+var pinky_guides: Array[Vector4i]
 
 
 func _ready() -> void:
@@ -41,6 +40,13 @@ func _ready() -> void:
 				var fan := Quaternion(axis, deg_to_rad(mirror * correction * SPREAD[digit][segment]))
 				var curl := Quaternion(Vector3.RIGHT, deg_to_rad(correction * CURL[digit][segment]))
 				joint_corrections[bone] = [fan, curl]
+		for segment in range(1, 4):
+			var pinky := skeleton.find_bone("pinky.%02d.%s" % [segment, side])
+			var ring := skeleton.find_bone("ring.%02d.%s" % [segment, side])
+			var pinky_next := skeleton.find_bone("pinky.%02d.%s" % [segment + 1, side]) if segment < 3 else -1
+			var ring_next := skeleton.find_bone("ring.%02d.%s" % [segment + 1, side]) if segment < 3 else -1
+			if pinky >= 0 and ring >= 0:
+				pinky_guides.append(Vector4i(pinky, ring, pinky_next, ring_next))
 
 
 func _process_modification_with_delta(_delta: float) -> void:
@@ -50,3 +56,22 @@ func _process_modification_with_delta(_delta: float) -> void:
 		var animated := skeleton.get_bone_pose_rotation(bone)
 		# Adduct the flexed fingers around the palm's length, then curl locally.
 		skeleton.set_bone_pose_rotation(bone, (angles[0] * animated * angles[1]).normalized())
+	# The carved pinky is shorter and its joints curl at different angles in the
+	# source clip. Follow the neighboring finger from the knuckle to the tip.
+	for guide in pinky_guides:
+		var pinky_direction := segment_direction(skeleton, guide.x, guide.z)
+		var ring_direction := segment_direction(skeleton, guide.y, guide.w)
+		var target := pinky_direction.slerp(ring_direction, 0.88)
+		var parent := skeleton.get_bone_parent(guide.x)
+		var parent_rotation := skeleton.get_bone_global_pose(parent).basis.get_rotation_quaternion()
+		var swing := Quaternion(pinky_direction, target)
+		var local_swing := parent_rotation.inverse() * swing * parent_rotation
+		var animated := skeleton.get_bone_pose_rotation(guide.x)
+		skeleton.set_bone_pose_rotation(guide.x, (local_swing * animated).normalized())
+
+
+static func segment_direction(skeleton: Skeleton3D, bone: int, next: int) -> Vector3:
+	var pose := skeleton.get_bone_global_pose(bone)
+	if next >= 0:
+		return (skeleton.get_bone_global_pose(next).origin - pose.origin).normalized()
+	return pose.basis.y.normalized()
