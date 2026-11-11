@@ -4,6 +4,12 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 wooden doll lighting room
+
+T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison and hides the equipment in this fixture. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.
+
+Use these four presets as the starting references for the doll and future gear. The fixture lights the 3D body in its character viewport and the blockout with matching 2D lights. The steady bulb and torch change angle and strength as the doll moves. The preset choice keeps the player and camera framing in place. The rendered check verified the exact body, hidden equipment, keyboard switching, reset, movement, jump, distinct body renders and torch flicker. Material changes and gear fitting remain open.
+
 ## November 11 doll equipment retest
 
 Chase wants to revisit the doll as the base for interchangeable gear and masks, pending the fit in motion. The existing modular doll and Base/Blue inventory path are the baseline for the trial. Rigid mask shells follow the head bone. Flexible gear uses the doll rig with fitted weights and coverage at shared joins. Blender Surface Deform is an optional fitting aid for close clothing. Keep the runtime gear on the shared armature.

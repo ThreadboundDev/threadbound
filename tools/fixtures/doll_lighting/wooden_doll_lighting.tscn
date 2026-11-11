@@ -1,0 +1,168 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tools/fixtures/doll_lighting/wooden_doll_lighting.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_block.tscn" id="3_block"]
+[ext_resource type="Texture2D" path="res://Src/Environment/WingLighting/wing_light_falloff.png" id="4_falloff"]
+
+[sub_resource type="CanvasItemMaterial" id="Unshaded"]
+light_mode = 1
+
+[node name="WoodenDollLighting" type="Node2D"]
+script = ExtResource("1_room")
+
+[node name="Backdrop" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.22, 0.25, 0.28, 1)
+polygon = PackedVector2Array(-1600, -1000, 1600, -1000, 1600, 320, -1600, 320)
+
+[node name="Geometry" type="Node2D" parent="."]
+
+[node name="Floor" parent="Geometry" instance=ExtResource("3_block")]
+position = Vector2(0, 64)
+size = Vector2(1664, 128)
+block_color = Color(0.22, 0.23, 0.25, 1)
+
+[node name="LeftWall" parent="Geometry" instance=ExtResource("3_block")]
+position = Vector2(-768, -160)
+size = Vector2(128, 320)
+block_color = Color(0.19, 0.20, 0.22, 1)
+
+[node name="RightWall" parent="Geometry" instance=ExtResource("3_block")]
+position = Vector2(768, -160)
+size = Vector2(128, 320)
+block_color = Color(0.19, 0.20, 0.22, 1)
+
+[node name="JumpBlock" parent="Geometry" instance=ExtResource("3_block")]
+position = Vector2(-420, -32)
+size = Vector2(160, 64)
+block_color = Color(0.24, 0.25, 0.27, 1)
+
+[node name="TorchBackplate" type="Polygon2D" parent="Geometry"]
+position = Vector2(260, -140)
+z_index = -4
+color = Color(0.24, 0.25, 0.28, 1)
+polygon = PackedVector2Array(-37, -106, 37, -106, 37, 139, -37, 139)
+
+[node name="ReferenceMark" type="Marker2D" parent="."]
+
+[node name="FloorMark" type="Line2D" parent="ReferenceMark"]
+material = SubResource("Unshaded")
+z_index = 31
+points = PackedVector2Array(-20, 4, 20, 4)
+width = 3.0
+default_color = Color(0.71, 0.74, 0.78, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(0, -75)
+
+[node name="RoomCamera" type="Camera2D" parent="."]
+position = Vector2(0, -142)
+process_callback = 0
+zoom = Vector2(1.68, 1.68)
+
+[node name="RoomLights" type="Node2D" parent="."]
+
+[node name="Sun" type="Node2D" parent="RoomLights"]
+visible = false
+
+[node name="WorldSun" type="DirectionalLight2D" parent="RoomLights/Sun"]
+rotation_degrees = -34.0
+color = Color(1, 0.92, 0.79, 1)
+energy = 0.4
+range_item_cull_mask = 1
+
+[node name="Bulb" type="Node2D" parent="RoomLights"]
+visible = false
+position = Vector2(-104, -266)
+
+[node name="BulbGlow" type="PointLight2D" parent="RoomLights/Bulb"]
+color = Color(1, 0.92, 0.79, 1)
+energy = 0.72
+texture = ExtResource("4_falloff")
+texture_scale = 2.8
+range_item_cull_mask = 1
+
+[node name="Cord" type="Line2D" parent="RoomLights/Bulb"]
+points = PackedVector2Array(0, -235, 0, -10)
+width = 3.0
+default_color = Color(0.44, 0.46, 0.49, 1)
+
+[node name="Glass" type="Polygon2D" parent="RoomLights/Bulb"]
+material = SubResource("Unshaded")
+color = Color(1, 0.93, 0.78, 1)
+polygon = PackedVector2Array(-5, -13, 5, -13, 5, -7, 10, -2, 11, 5, 6, 11, -6, 11, -11, 5, -10, -2, -5, -7)
+
+[node name="Torch" type="Node2D" parent="RoomLights"]
+visible = false
+position = Vector2(225, -146)
+
+[node name="WallGlow" type="PointLight2D" parent="RoomLights/Torch"]
+color = Color(1, 0.55, 0.26, 1)
+energy = 1.08
+texture = ExtResource("4_falloff")
+texture_scale = 2.4
+range_item_cull_mask = 1
+
+[node name="Bracket" type="Line2D" parent="RoomLights/Torch"]
+points = PackedVector2Array(43, 26, 13, 20, 0, 3)
+width = 8.0
+default_color = Color(0.44, 0.40, 0.36, 1)
+
+[node name="Flame" type="Node2D" parent="RoomLights/Torch"]
+
+[node name="Outer" type="Polygon2D" parent="RoomLights/Torch/Flame"]
+material = SubResource("Unshaded")
+color = Color(1, 0.47, 0.18, 1)
+polygon = PackedVector2Array(-10, 2, -12, -8, -6, -18, -4, -10, 4, -28, 5, -16, 12, -8, 9, 3, 0, 7)
+
+[node name="Inner" type="Polygon2D" parent="RoomLights/Torch/Flame"]
+material = SubResource("Unshaded")
+color = Color(1, 0.86, 0.54, 1)
+polygon = PackedVector2Array(-5, 3, -5, -5, 1, -15, 5, -6, 6, 0, 1, 5)
+
+[node name="ActorLights" type="Node3D" parent="."]
+
+[node name="NeutralKey" type="DirectionalLight3D" parent="ActorLights"]
+rotation_degrees = Vector3(-27, -60, 0)
+light_color = Color(0.96, 0.98, 1, 1)
+light_energy = 1.08
+
+[node name="SunKey" type="DirectionalLight3D" parent="ActorLights"]
+visible = false
+light_color = Color(1, 0.92, 0.79, 1)
+light_energy = 1.38
+shadow_enabled = true
+
+[node name="BulbKey" type="OmniLight3D" parent="ActorLights"]
+visible = false
+light_color = Color(1, 0.92, 0.79, 1)
+light_energy = 2.2
+omni_range = 5.0
+omni_attenuation = 1.3
+
+[node name="TorchKey" type="OmniLight3D" parent="ActorLights"]
+visible = false
+light_color = Color(1, 0.54, 0.25, 1)
+light_energy = 2.5
+omni_range = 4.4
+omni_attenuation = 1.35
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 15
+
+[node name="Status" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 25.0
+theme_override_colors/font_color = Color(0.96, 0.96, 0.97, 1)
+theme_override_colors/font_shadow_color = Color(0.03, 0.03, 0.04, 1)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 30
+text = "Neutral | Soft white reference"
+
+[node name="Controls" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 69.0
+theme_override_colors/font_color = Color(0.78, 0.81, 0.85, 1)
+theme_override_font_sizes/font_size = 20
+text = "1 Neutral     2 Sun     3 Bulb     4 Torch     R Reset position     Wheel Zoom"
