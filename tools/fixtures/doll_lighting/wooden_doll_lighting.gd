@@ -1,6 +1,7 @@
 extends Node2D
 ## Isolated lighting study for the earlier equipped doll's wooden body.
 
+const GRIP := preload("res://tools/fixtures/doll_lighting/wooden_doll_grip.gd")
 const PRESETS := [
 	"Neutral | Soft white reference",
 	"Sun | Warm directional light from above and in front",
@@ -24,6 +25,7 @@ const BACKDROP := [
 @onready var player: CharacterBody2D = $Player
 @onready var view: Camera2D = $RoomCamera
 @onready var status: Label = $HUD/Status
+@onready var hand_status: Label = $HUD/Hands
 @onready var backdrop: Polygon2D = $Backdrop
 @onready var fixtures: Array[CanvasItem] = [$RoomLights/Sun, $RoomLights/Bulb, $RoomLights/Torch]
 @onready var bulb_source: Node2D = $RoomLights/Bulb
@@ -42,6 +44,8 @@ var elapsed := 0.0
 var torch_actor_energy := 0.0
 var torch_world_energy := 0.0
 var test_pose := false
+var grip: SkeletonModifier3D
+var compact_grip := true
 
 
 func _enter_tree() -> void:
@@ -77,6 +81,11 @@ func _ready() -> void:
 	for node in player.find_children("*", "Light2D", true, false):
 		node.range_item_cull_mask = 0
 	visual.sword_smear_enabled = false
+	grip = GRIP.new()
+	grip.name = "CompactGripPreview"
+	visual._skeleton.add_child(grip)
+	process_priority = visual.process_priority + 1
+	set_compact_grip(true)
 	for node in visual._viewport.get_children():
 		if node is Light3D:
 			node.hide()
@@ -92,11 +101,13 @@ func _ready() -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if not event is InputEventKey or not event.pressed or event.echo:
+	if not is_instance_valid(grip) or not event is InputEventKey or not event.pressed or event.echo:
 		return
 	match event.physical_keycode:
 		KEY_1, KEY_2, KEY_3, KEY_4:
 			select_preset(event.physical_keycode - KEY_1)
+		KEY_H:
+			set_compact_grip(not compact_grip)
 		KEY_R:
 			player.position = $ReferenceMark.position + Vector2(0, -75)
 			player.velocity = Vector2.ZERO
@@ -124,7 +135,15 @@ func _process(delta: float) -> void:
 		return
 	if not test_pose:
 		elapsed += delta
+		var weight := 1.0 if compact_grip and visual._current_action in GRIP.GRIP_ACTIONS else 0.0
+		grip.influence = move_toward(grip.influence, weight, delta * 12.0)
 	update_lights()
+
+
+func set_compact_grip(enabled: bool) -> void:
+	compact_grip = enabled
+	grip.influence = 1.0 if enabled and visual._current_action in GRIP.GRIP_ACTIONS else 0.0
+	hand_status.text = "H  Hands: " + ("Compact grip" if enabled else "Original grip")
 
 
 func _physics_process(_delta: float) -> void:
@@ -212,8 +231,59 @@ func verify() -> void:
 	if is_equal_approx(before, torch.light_energy) or rendered and hashes.size() != PRESETS.size():
 		fail("The torch must flicker and the actor renders must differ.")
 		return
-	print("DOLL_LIGHTING_VERIFIED model, equipment hidden, movement, jump, four presets and torch flicker")
+	if not await verify_grip(rendered, out):
+		return
+	print("DOLL_LIGHTING_VERIFIED model, movement, jump, lighting, torch flicker and grip comparison")
 	get_tree().quit()
+
+
+func verify_grip(rendered: bool, out: String) -> bool:
+	player.set_physics_process(false)
+	select_preset(0)
+	set_process(false)
+	var skeleton: Skeleton3D = visual._skeleton
+	var camera: Camera3D = visual._camera
+	var animation: AnimationPlayer = visual._animation_player
+	visual._play_action(&"idle_4", &"", 0.25, true)
+	animation.advance(0.0)
+	animation.pause()
+	visual._viewport.size = Vector2i(700, 800)
+	for side in ["R", "L"]:
+		var hand := skeleton.find_bone("hand." + side)
+		var target := skeleton.to_global(skeleton.get_bone_global_pose(hand) * Vector3(0, 0.10, 0))
+		camera.size = 0.32
+		camera.look_at_from_position(target + Vector3(-2, 0.7, 0.6), target, Vector3.UP)
+		var spans: Array[float] = []
+		for compact in [false, true]:
+			await tap_key(KEY_H)
+			if compact_grip != compact:
+				fail("H must switch the hand comparison.")
+				return false
+			skeleton.skeleton_updated.connect(func():
+				var palm := skeleton.get_bone_global_pose(hand).affine_inverse()
+				var index := skeleton.find_bone("index.03." + side)
+				var pinky := skeleton.find_bone("pinky.03." + side)
+				var a := palm * skeleton.get_bone_global_pose(index).origin
+				var b := palm * skeleton.get_bone_global_pose(pinky).origin
+				spans.append(absf(b.x - a.x))
+			, CONNECT_ONE_SHOT)
+			skeleton.advance(0.0)
+			await get_tree().process_frame
+			if rendered:
+				await RenderingServer.frame_post_draw
+				var label := "compact" if compact else "original"
+				var closeup: Image = visual._viewport.get_texture().get_image()
+				closeup.save_png(out.path_join("grip_%s_%s.png" % [label, side]))
+		if spans.size() != 2 or spans[1] > 0.85 * spans[0]:
+			fail("The revised grip must reduce finger spread on hand " + side)
+			return false
+		print("DOLL_GRIP ", side, " span ", spans[0], " -> ", spans[1])
+	visual._play_action(&"casting_2", &"", 0.1, true)
+	set_compact_grip(true)
+	if not is_zero_approx(grip.influence):
+		fail("The grapple cast must retain its open-hand animation.")
+		return false
+	return true
 
 
 func tap_key(code: Key) -> void:

@@ -4,6 +4,12 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 wooden doll grip comparison
+
+T48 hand pose. Chase found the slot 5 wooden doll read well under the reference lights and noted that the Chamber lighting washes out the 3D character. The lighting room now starts with a compact grip and H toggles the original. The preview brings the four fingers closer together, curls the thumb in, and preserves the existing release and ledge animations. It uses the existing bone pivots and carved geometry. Match the grip to actual handles during the gear fit pass.
+
+The rendered check measured idle index-to-pinky span dropping from 0.1180 to 0.0929 on the right and from 0.1095 to 0.0891 on the left. The grapple cast bypasses the grip correction. The Chamber lighting is a separate review note.
+
 ## November 11 wooden doll lighting room
 
 T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison and hides the equipment in this fixture. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.
