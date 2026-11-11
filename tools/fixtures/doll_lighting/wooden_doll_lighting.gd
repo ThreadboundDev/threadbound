@@ -3,7 +3,9 @@ extends Node2D
 
 const GRIP := preload("res://tools/fixtures/doll_lighting/wooden_doll_grip.gd")
 const WEAPON_MESH_NAMES := [&"Threadborne_Sword", &"Threadborne_Shield_Combined_Test"]
-const IDLE_HILT_OFFSET := Vector3(0.0, 0.037, -0.006)
+const HILT_CENTER := Vector3(0.032, 0.042, -0.043)
+const HILT_OFFSET := Vector3(0.0, 0.043, 0.009)
+const HILT_TILT := -17.0
 const PRESETS := [
 	"Neutral | Soft white reference",
 	"Sun | Warm directional light from above and in front",
@@ -50,8 +52,9 @@ var grip: GRIP
 var compact_grip := true
 var weapons: Array[MeshInstance3D] = []
 var sword: MeshInstance3D
-var sword_rest_position: Vector3
-var sword_idle_offset: Vector3
+var sword_rest_transform: Transform3D
+var sword_fitted_transform: Transform3D
+var has_sword_fit := false
 
 
 func _enter_tree() -> void:
@@ -87,14 +90,17 @@ func _ready() -> void:
 			weapons.append(mesh)
 	sword = visual._model_root.find_child("Threadborne_Sword", true, false)
 	if sword:
-		sword_rest_position = sword.position
+		sword_rest_transform = sword.transform
 		var parent := sword.get_parent() as Node3D
-		var parent_in_hand := Basis.IDENTITY
+		var parent_in_hand := Transform3D.IDENTITY
 		while parent and not parent is BoneAttachment3D:
-			parent_in_hand = parent.basis * parent_in_hand
+			parent_in_hand = parent.transform * parent_in_hand
 			parent = parent.get_parent() as Node3D
 		if parent is BoneAttachment3D and parent.bone_name == &"hand.R":
-			sword_idle_offset = parent_in_hand.inverse() * IDLE_HILT_OFFSET
+			var tilt := Basis(Vector3.BACK, deg_to_rad(HILT_TILT))
+			var fit := Transform3D(tilt, HILT_CENTER + HILT_OFFSET - tilt * HILT_CENTER)
+			sword_fitted_transform = parent_in_hand.affine_inverse() * fit * parent_in_hand * sword_rest_transform
+			has_sword_fit = true
 	for node in visual._model_root.find_children("*", "MeshInstance3D", true, false):
 		var mesh := node as MeshInstance3D
 		var source := mesh.get_parent() if mesh.get_meta("outline_only", false) else mesh
@@ -182,13 +188,13 @@ func set_weapons_visible(enabled: bool) -> void:
 
 
 func sword_grip_target() -> float:
-	return 1.0 if compact_grip and sword and sword.visible and not sword_idle_offset.is_zero_approx() and visual._current_action in GRIP.SWORD_IDLE_ACTIONS else 0.0
+	return 1.0 if compact_grip and has_sword_fit and sword.visible and visual._current_action in GRIP.GRIP_ACTIONS else 0.0
 
 
 func update_sword_grip(weight: float) -> void:
 	grip.sword_grip_weight = weight
-	if sword:
-		sword.position = sword_rest_position + sword_idle_offset * weight
+	if has_sword_fit:
+		sword.transform = sword_rest_transform.interpolate_with(sword_fitted_transform, weight)
 
 
 func _physics_process(_delta: float) -> void:
@@ -304,9 +310,9 @@ func verify() -> void:
 		return
 	if not await verify_grip(rendered, out):
 		return
-	if not await verify_idle_hilt():
+	if not await verify_hilt_in_motion():
 		return
-	print("DOLL_LIGHTING_VERIFIED sword and shield, movement, lighting, grip comparison and idle hilt fit")
+	print("DOLL_LIGHTING_VERIFIED sword and shield, movement, lighting and hilt contact across motion")
 	get_tree().quit()
 
 
@@ -328,6 +334,7 @@ func verify_grip(rendered: bool, out: String) -> bool:
 		camera.look_at_from_position(target + Vector3(-2, 0.7, 0.6), target, Vector3.UP)
 		var spans: Array[float] = []
 		var pinky_angles: Array[float] = []
+		var hilt_contact: Array[bool] = []
 		for compact in [false, true]:
 			await tap_key(KEY_H)
 			if compact_grip != compact:
@@ -344,6 +351,10 @@ func verify_grip(rendered: bool, out: String) -> bool:
 					var ring := skeleton.find_bone("ring.03." + side)
 					var pinky_tip := GRIP.segment_direction(skeleton, pinky, -1)
 					var ring_tip := GRIP.segment_direction(skeleton, ring, -1)
+					if side == "R":
+						pinky_tip = GRIP.carved_tip_direction(skeleton, skeleton.find_bone("pinky.02.R"), pinky)
+						ring_tip = GRIP.carved_tip_direction(skeleton, skeleton.find_bone("ring.02.R"), ring)
+						hilt_contact.append(verify_finger_contact(skeleton, palm))
 					pinky_angles.append(rad_to_deg(pinky_tip.angle_to(ring_tip)))
 			, CONNECT_ONE_SHOT)
 			skeleton.advance(0.0)
@@ -359,6 +370,17 @@ func verify_grip(rendered: bool, out: String) -> bool:
 		if pinky_angles.size() != 1 or pinky_angles[0] > 12.0:
 			fail("The pinky tip must follow the ring finger on hand " + side)
 			return false
+		if side == "R" and hilt_contact != [true]:
+			fail("The fitted sword fingers must wrap around the hilt.")
+			return false
+		if side == "R" and rendered:
+			var palm_pose := skeleton.get_bone_global_pose(hand)
+			var inside := skeleton.to_global(palm_pose * Vector3(0.07, 0.19, -0.70))
+			camera.look_at_from_position(inside, target, Vector3.UP)
+			await get_tree().process_frame
+			await RenderingServer.frame_post_draw
+			var closeup: Image = visual._viewport.get_texture().get_image()
+			closeup.save_png(out.path_join("armed_grip_palm_R.png"))
 		print("DOLL_GRIP ", side, " span ", spans[0], " -> ", spans[1], " pinky angle=", pinky_angles[0])
 	visual._play_action(&"casting_2", &"", 0.1, true)
 	set_compact_grip(true)
@@ -368,31 +390,68 @@ func verify_grip(rendered: bool, out: String) -> bool:
 	return true
 
 
-func verify_idle_hilt() -> bool:
+func verify_finger_contact(skeleton: Skeleton3D, palm: Transform3D) -> bool:
+	# Cross-sections measured at the four fingers on the fitted hilt. Radii
+	# include the thickness of the finger, so 1.0 represents contact.
+	var sections := {
+		"index": [Vector2(0.1006, -0.0368), Vector2(0.0354, 0.0346)],
+		"middle": [Vector2(0.0916, -0.0338), Vector2(0.0340, 0.0339)],
+		"ring": [Vector2(0.0832, -0.0328), Vector2(0.0314, 0.0333)],
+		"pinky": [Vector2(0.0764, -0.0313), Vector2(0.0293, 0.0298)],
+	}
+	for digit in sections:
+		var middle := skeleton.find_bone(digit + ".02.R")
+		var tip := skeleton.find_bone(digit + ".03.R")
+		var middle_position := palm * skeleton.get_bone_global_pose(middle).origin
+		var tip_position := palm * skeleton.get_bone_global_pose(tip).origin
+		var tip_length := skeleton.get_bone_global_rest(tip).origin.distance_to(
+			skeleton.get_bone_global_rest(middle).origin
+		)
+		var end := tip_position + palm.basis * GRIP.carved_tip_direction(skeleton, middle, tip) * tip_length
+		var center: Vector2 = sections[digit][0]
+		var radii: Vector2 = sections[digit][1]
+		var middle_section := (Vector2(middle_position.y, middle_position.z) - center) / radii
+		var tip_section := (Vector2(tip_position.y, tip_position.z) - center) / radii
+		var end_section := (Vector2(end.y, end.z) - center) / radii
+		var middle_clearance := Geometry2D.get_closest_point_to_segment(Vector2.ZERO, middle_section, tip_section).length()
+		var tip_clearance := Geometry2D.get_closest_point_to_segment(Vector2.ZERO, tip_section, end_section).length()
+		if not (middle_clearance >= 0.90 and tip_clearance >= 0.90 and tip_clearance <= 1.12 and end_section.x < 0.15 and end_section.y < 0.0):
+			print("HILT_CONTACT ", digit, " clearance ", middle_clearance, " ", tip_clearance, " end ", end_section)
+			return false
+	return true
+
+
+func verify_hilt_in_motion() -> bool:
 	var skeleton: Skeleton3D = visual._skeleton
 	var hand := skeleton.find_bone("hand.R")
 	var animation: AnimationPlayer = visual._animation_player
-	for action: StringName in GRIP.SWORD_IDLE_ACTIONS:
+	for action: StringName in [&"idle_1", &"idle_2", &"idle_3", &"idle_4", &"run_1", &"jump_1", &"slash_2"]:
 		var reference := Vector3.ZERO
 		var length: float = visual.get_action_duration(action)
 		if length <= 0.0:
-			fail("Missing idle clip " + String(action))
+			fail("Missing grip verification clip " + String(action))
 			return false
 		for frame in 12:
 			visual._play_action(action, &"", length * frame / 12.0, true)
 			animation.advance(0.0)
 			animation.pause()
 			set_compact_grip(true)
+			var contacts: Array[bool] = []
+			skeleton.skeleton_updated.connect(func():
+				var palm := skeleton.get_bone_global_pose(hand).affine_inverse()
+				contacts.append(verify_finger_contact(skeleton, palm))
+			, CONNECT_ONE_SHOT)
+			skeleton.advance(0.0)
 			await get_tree().process_frame
 			var hand_pose := skeleton.global_transform * skeleton.get_bone_global_pose(hand)
 			var hilt := hand_pose.affine_inverse() * sword.global_position
 			if frame == 0:
 				reference = hilt
-			if grip.sword_grip_weight != 1.0 or hilt.distance_to(reference) > 0.001:
+			if grip.sword_grip_weight != 1.0 or hilt.distance_to(reference) > 0.001 or contacts != [true]:
 				fail("The sword must stay seated during " + String(action))
 				return false
 	set_compact_grip(false)
-	if grip.sword_grip_weight != 0.0 or not sword.position.is_equal_approx(sword_rest_position):
+	if grip.sword_grip_weight != 0.0 or not sword.transform.is_equal_approx(sword_rest_transform):
 		fail("The original comparison must restore the authored sword position.")
 		return false
 	return true

@@ -21,7 +21,13 @@ const GRIP_ACTIONS := [
 	&"slash_1", &"slash_2", &"slash_3", &"slash_4", &"slash_5",
 	&"air_attack_forward", &"air_attack_up", &"air_attack_down",
 ]
-const SWORD_IDLE_ACTIONS := [&"idle_1", &"idle_2", &"idle_3", &"idle_4"]
+# Flexion in the palm plane, fitted to the wrapped handle on this sword.
+const SWORD_FINGER_ANGLES := {
+	"index": [-69.0, -109.0, -171.0],
+	"middle": [-91.0, -115.0, -169.0],
+	"ring": [-97.0, -113.0, -155.0],
+	"pinky": [-75.0, -101.0, -149.0],
+}
 const SWORD_THUMB_DIRECTIONS := [
 	Vector3(-0.55, 0.56, -0.62),
 	Vector3(-0.10, 0.22, -0.97),
@@ -32,14 +38,18 @@ var joint_corrections: Dictionary
 var pinky_guides: Array[Vector4i]
 var sword_grip_weight := 0.0
 var sword_hand := -1
-var sword_thumb: PackedInt32Array
+var sword_digits: Dictionary
 
 
 func _ready() -> void:
 	var skeleton := get_skeleton()
 	sword_hand = skeleton.find_bone("hand.R")
-	for segment in range(1, 4):
-		sword_thumb.append(skeleton.find_bone("thumb.%02d.R" % segment))
+	for digit in ["index", "middle", "ring", "pinky", "thumb"]:
+		var joints := PackedInt32Array()
+		for segment in range(1, 4):
+			joints.append(skeleton.find_bone("%s.%02d.R" % [digit, segment]))
+		if not joints.has(-1):
+			sword_digits[digit] = joints
 	for side in ["R", "L"]:
 		var mirror := 1.0 if side == "R" else -1.0
 		for digit in SPREAD:
@@ -75,14 +85,35 @@ func _process_modification_with_delta(_delta: float) -> void:
 		var ring_direction := segment_direction(skeleton, guide.y, guide.w)
 		var target := pinky_direction.slerp(ring_direction, 0.88)
 		aim_segment(skeleton, guide.x, pinky_direction, target)
-	if sword_grip_weight > 0.0 and sword_hand >= 0 and not sword_thumb.has(-1):
-		var palm := skeleton.get_bone_global_pose(sword_hand).basis.orthonormalized()
-		for segment in sword_thumb.size():
-			var bone := sword_thumb[segment]
-			var next := sword_thumb[segment + 1] if segment < sword_thumb.size() - 1 else -1
-			var direction := segment_direction(skeleton, bone, next)
-			var target: Vector3 = palm * SWORD_THUMB_DIRECTIONS[segment].normalized()
-			aim_segment(skeleton, bone, direction, direction.slerp(target, sword_grip_weight))
+	if sword_grip_weight > 0.0 and sword_hand >= 0:
+		fit_sword_digits(skeleton)
+
+
+func fit_sword_digits(skeleton: Skeleton3D) -> void:
+	var palm := skeleton.get_bone_global_pose(sword_hand).basis.orthonormalized()
+	for digit in sword_digits:
+		var joints: PackedInt32Array = sword_digits[digit]
+		for segment in joints.size():
+			var bone := joints[segment]
+			var direction := (
+				segment_direction(skeleton, bone, joints[segment + 1])
+				if segment < 2 else carved_tip_direction(skeleton, joints[1], bone)
+			)
+			var aim: Vector3
+			if digit == "thumb":
+				aim = SWORD_THUMB_DIRECTIONS[segment].normalized()
+			else:
+				var angle := deg_to_rad(SWORD_FINGER_ANGLES[digit][segment])
+				aim = Vector3(0, cos(angle), sin(angle))
+			aim_segment(skeleton, bone, direction, direction.slerp(palm * aim, sword_grip_weight))
+
+
+static func carved_tip_direction(skeleton: Skeleton3D, previous: int, tip: int) -> Vector3:
+	# The carved tip was built along the preceding segment's rest axis.
+	var rest := skeleton.get_bone_global_rest(tip)
+	var previous_rest := skeleton.get_bone_global_rest(previous)
+	var local_axis := rest.basis.inverse() * (rest.origin - previous_rest.origin).normalized()
+	return (skeleton.get_bone_global_pose(tip).basis * local_axis).normalized()
 
 
 static func aim_segment(skeleton: Skeleton3D, bone: int, direction: Vector3, target: Vector3) -> void:
