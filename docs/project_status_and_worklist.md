@@ -1,8 +1,25 @@
 # Threadbound current TODO list
 
-Updated November 7, 2026. This is the single current priority list. The saved
+Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
+
+## November 10 player sprite study
+
+**T46 — rendered player sprite comparison: Awaiting visual review.** Chase
+requested a separate proof toward the older illustrated character. The
+[comparison, motion previews and actual Chamber captures](../work/player-sprite-lookdev-2026-11-10/README.md)
+reuse the retained detailed Blender rig with experimental shading and a
+deterministic black silhouette edge. No mesh proportions, current player,
+equipment/combat systems or production scenes are changed. The 51 fixed-canvas
+idle/run/jump samples retain consistent registration, with baked jump lift
+removed. Source-file integrity and frame bounds pass; the Godot 4.7.2 Forward+
+capture succeeds in a separate save project, with shutdown resource diagnostics
+recorded. This is a frozen-scene look study, not playable controller integration
+or accepted art. Head proportions, simpler clothing and modular rendering remain
+open. Checkpoint: `art: render player sprite comparison from retained rig` on
+`threadbound/art-player-sprite-lookdev`. Next action: Chase reviews the look
+before any protected shape changes or runtime conversion.
 
 ## November 5 hands-on acceptance
 

@@ -1,0 +1,15 @@
+{
+  "source": "ArtSource\\Player\\Blender\\imported_character\\mixamo_test\\Threadborne_Equipped_Animation_Test.blend",
+  "source_sha256": "b6de66d8ae292024ec6a8e18401b1cbe2fe1da9fb23f170323b136817aee002b",
+  "geometry_sha256": "5fdf4c644bf9bccc38547254147ca451ed7343d9ff727202e3e69de62c96a440",
+  "geometry_vertices": 982421,
+  "source_unchanged": true,
+  "geometry_changes": false,
+  "mode": "stills",
+  "canvas": [
+    600,
+    800
+  ],
+  "camera": "level three-quarter orthographic (-4,-6); true -X side stills also supplied",
+  "outline": "applied by package_study.py after rendering"
+}

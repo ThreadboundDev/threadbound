@@ -1,0 +1,12 @@
+{
+	"controller_integrated": false,
+	"display": "Windows",
+	"feet": "(3.0, -3527.126)",
+	"player_on_floor": true,
+	"production_files_modified": false,
+	"purpose": "Frozen-scene visual comparison only",
+	"renderer": "forward_plus",
+	"scene": "res://Src/Environment/World/Chamber Of The First Weave.tscn",
+	"sprite_material": "Unshaded for baked-color comparison; lit variant also saved",
+	"user_data": "C:/Users/chase/AppData/Roaming/Godot/app_userdata/Threadbound Sprite Study 2026-11-10"
+}

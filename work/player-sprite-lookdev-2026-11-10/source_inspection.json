@@ -1,0 +1,4348 @@
+{
+  "source": "ArtSource\\Player\\Blender\\imported_character\\mixamo_test\\Threadborne_Equipped_Animation_Test.blend",
+  "sha256": "b6de66d8ae292024ec6a8e18401b1cbe2fe1da9fb23f170323b136817aee002b",
+  "engine": "CYCLES",
+  "camera": {
+    "location": [
+      -6.0,
+      0.0,
+      1.274999976158142
+    ],
+    "rotation": [
+      1.5707963705062866,
+      -0.0,
+      -1.5707963705062866
+    ],
+    "ortho_scale": 3.0
+  },
+  "view": {
+    "transform": "Standard",
+    "look": "None",
+    "exposure": 0.0
+  },
+  "objects": [
+    {
+      "name": "Threadborne_Posing_Preview",
+      "type": "MESH",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.7119338512420654,
+        1.1976940631866455,
+        1.6355701684951782
+      ],
+      "vertices": 39045,
+      "materials": [
+        "Threadborne_Costume_Material"
+      ]
+    },
+    {
+      "name": "Threadborne_Rig",
+      "type": "ARMATURE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.590021014213562,
+        1.0418518781661987,
+        1.5716650485992432
+      ]
+    },
+    {
+      "name": "Light",
+      "type": "LIGHT",
+      "hide_render": true,
+      "location": [
+        4.076245307922363,
+        1.0054539442062378,
+        5.903861999511719
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy": 1000.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Threadborne_Sprite_Camera",
+      "type": "CAMERA",
+      "hide_render": false,
+      "location": [
+        -6.0,
+        0.0,
+        1.274999976158142
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Threadborne_Source_Duplicate",
+      "type": "MESH",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2445068359375,
+        0.980804443359375,
+        0.9295654296875
+      ],
+      "vertices": 982421,
+      "materials": [
+        "tripo_material_d7d11554-e2f0-4032-a645-6b120e3ba377.001"
+      ]
+    },
+    {
+      "name": "Threadborne_Character",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        1.8992186784744263,
+        0.47346025705337524,
+        1.7999999523162842
+      ],
+      "vertices": 982421,
+      "materials": [
+        "Threadborne_Costume_Material"
+      ]
+    },
+    {
+      "name": "Mixamo_Source_Idle",
+      "type": "ARMATURE",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        55.741668701171875,
+        181.73667907714844,
+        119.28776550292969
+      ]
+    },
+    {
+      "name": "Mixamo_Source_Skin",
+      "type": "MESH",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        1.9000746011734009,
+        0.47356927394866943,
+        1.7997430562973022
+      ],
+      "vertices": 39045,
+      "materials": [
+        "Threadborne_Costume_Material.001"
+      ]
+    },
+    {
+      "name": "Mixamo_Source_Run",
+      "type": "ARMATURE",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        68.19204711914062,
+        169.01219177246094,
+        93.975830078125
+      ]
+    },
+    {
+      "name": "Mixamo_Source_Jump",
+      "type": "ARMATURE",
+      "hide_render": true,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        58.86882400512695,
+        168.850830078125,
+        91.09837341308594
+      ]
+    },
+    {
+      "name": "Threadborne_Sword_ROOT",
+      "type": "EMPTY",
+      "hide_render": false,
+      "location": [
+        0.018149588257074356,
+        0.04305502399802208,
+        -0.0435187928378582
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Threadborne_Sword",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        0.3149999976158142,
+        -0.3100000023841858
+      ],
+      "dimensions": [
+        0.10780671238899231,
+        0.2286742925643921,
+        0.9006580114364624
+      ],
+      "vertices": 198366,
+      "materials": [
+        "Threadborne_Imported_Weapon_Artwork"
+      ]
+    },
+    {
+      "name": "Threadborne_Shield_ROOT",
+      "type": "EMPTY",
+      "hide_render": false,
+      "location": [
+        -0.010568850673735142,
+        0.16580109298229218,
+        0.07800034433603287
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.041",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.040",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.039",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.038",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.037",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.036",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339986741542816
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.035",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062982276082039,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.034",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062982276082039,
+        0.003433997044339776
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.033",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062982276082039,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.032",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034340042620897293
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.031",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.030",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.029",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.028",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.027",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.026",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.00406300276517868,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.025",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062999505549669,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.024",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062998108565807,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.023",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.003434013808146119
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.022",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.003434013808146119
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.021",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.020",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.019",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434013808146119
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.018",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434013808146119
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.017",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.016",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.015",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.014",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062982276082039,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.013",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630074217915535,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.012",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062982276082039,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.011",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.010",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003434001002460718
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.009",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.008",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.007",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062994848936796,
+        0.003433997044339776
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.006",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339986741542816
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.005",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.00406300276517868,
+        0.0034339986741542816
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.004",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062999505549669,
+        0.0034339979756623507
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.003",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.004062999505549669,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.002",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch.001",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Wrap_Stitch",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011049997992813587,
+        0.0040630013681948185,
+        0.0034339947160333395
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Plate.003",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.0430000014603138,
+        0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.01190000120550394,
+        0.05354999378323555,
+        0.03994998335838318
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Plate.002",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.0430000014603138,
+        0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.01190000120550394,
+        0.05354999378323555,
+        0.03994998335838318
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Plate.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.0430000014603138,
+        -0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.01190000120550394,
+        0.05354999378323555,
+        0.03994998335838318
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Plate",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.0430000014603138,
+        -0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.01190000120550394,
+        0.05354999378323555,
+        0.03994998335838318
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Inset.003",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.052000001072883606,
+        0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.00595000060275197,
+        0.043349992483854294,
+        0.028899990022182465
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Inset.002",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.052000001072883606,
+        0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.00595000060275197,
+        0.043349992483854294,
+        0.028899990022182465
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Inset.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.052000001072883606,
+        -0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.00595000060275197,
+        0.043349992483854294,
+        0.028899990022182465
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Strap_Anchor_Inset",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.052000001072883606,
+        -0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.00595000060275197,
+        0.043349992483854294,
+        0.028899990022182465
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Raised_Leather_Arm_Loop.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.11109938472509384,
+        0.03229999914765358,
+        0.17820023000240326
+      ],
+      "vertices": 130,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Raised_Leather_Arm_Loop",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0992690771818161,
+        0.03229999914765358,
+        0.17816540598869324
+      ],
+      "vertices": 130,
+      "materials": [
+        "Shield \u2022 brown leather arm straps"
+      ]
+    },
+    {
+      "name": "Shield_Ornament_Rear_Cap.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.011050001718103886,
+        0.049097444862127304,
+        0.04487297683954239
+      ],
+      "vertices": 14,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Ornament_Rear_Cap",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.011050001718103886,
+        0.049097444862127304,
+        0.04487299174070358
+      ],
+      "vertices": 14,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Original_Front",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.12040730565786362,
+        0.5059471130371094,
+        0.5248566269874573
+      ],
+      "vertices": 359703,
+      "materials": [
+        "Threadborne_Imported_Weapon_Artwork"
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.079",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00629647821187973,
+        0.0010200171964243054,
+        0.003710005432367325
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.078",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.005225569009780884,
+        0.0010200171964243054,
+        0.003666510572656989
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.077",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004520466085523367,
+        0.0010200171964243054,
+        0.003620887640863657
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.076",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003953865729272366,
+        0.0010200171964243054,
+        0.0035675892140716314
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.075",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003451849101111293,
+        0.0010200171964243054,
+        0.0035014599561691284
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.074",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00298232096247375,
+        0.0010200171964243054,
+        0.0034169272985309362
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.073",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0025271305348724127,
+        0.0010200171964243054,
+        0.0033082056324929
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.072",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0020719782914966345,
+        0.0010200171964243054,
+        0.003170966636389494
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.071",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0016026528319343925,
+        0.0010200171964243054,
+        0.003005593316629529
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.070",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011060447432100773,
+        0.0010200171964243054,
+        0.002820695284754038
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.069",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0014406675472855568,
+        0.0010200171964243054,
+        0.002945448737591505
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.068",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0019178332295268774,
+        0.0010200171964243054,
+        0.003118735970929265
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.067",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0023761140182614326,
+        0.0010200171964243054,
+        0.003265746869146824
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.066",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0028297211974859238,
+        0.0010200171964243054,
+        0.0033836441580206156
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.065",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0032927643042057753,
+        0.0010200171964243054,
+        0.00347561901435256
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.064",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0037814180832356215,
+        0.0010200171964243054,
+        0.0035472349263727665
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.063",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004321267828345299,
+        0.0010200171964243054,
+        0.003604225581511855
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.062",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004966891370713711,
+        0.0010200171964243054,
+        0.0036518338602036238
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.061",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.005867892876267433,
+        0.0010200171964243054,
+        0.003695312887430191
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.060",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.007684714626520872,
+        0.0010200171964243054,
+        0.0037422403693199158
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.059",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00629647821187973,
+        0.0010199918178841472,
+        0.003710005432367325
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.058",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.005225569009780884,
+        0.0010199918178841472,
+        0.003666510572656989
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.057",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004520466085523367,
+        0.0010199918178841472,
+        0.003620887640863657
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.056",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003953865729272366,
+        0.0010199918178841472,
+        0.0035675892140716314
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.055",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003451849101111293,
+        0.0010199918178841472,
+        0.0035014599561691284
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.054",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00298232096247375,
+        0.0010199918178841472,
+        0.0034169272985309362
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.053",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0025271305348724127,
+        0.0010199918178841472,
+        0.0033082056324929
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.052",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0020719782914966345,
+        0.0010199918178841472,
+        0.003170966636389494
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.051",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0016026528319343925,
+        0.0010199918178841472,
+        0.003005593316629529
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.050",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0011060447432100773,
+        0.0010199918178841472,
+        0.002820695284754038
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.049",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0014406675472855568,
+        0.0010199918178841472,
+        0.002945448737591505
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.048",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0019178332295268774,
+        0.0010199918178841472,
+        0.003118735970929265
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.047",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0023761140182614326,
+        0.0010199918178841472,
+        0.003265746869146824
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.046",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0028297211974859238,
+        0.0010199918178841472,
+        0.0033836441580206156
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.045",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0032927643042057753,
+        0.0010199918178841472,
+        0.00347561901435256
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.044",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0037814180832356215,
+        0.0010199918178841472,
+        0.0035472349263727665
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.043",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004321267828345299,
+        0.0010199918178841472,
+        0.003604225581511855
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.042",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004966891370713711,
+        0.0010199918178841472,
+        0.0036518338602036238
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.041",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.005867892876267433,
+        0.0010199918178841472,
+        0.003695312887430191
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.040",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.007684714626520872,
+        0.0010199918178841472,
+        0.0037422403693199158
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.039",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0057073067873716354,
+        0.0010199981043115258,
+        0.0036889673210680485
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.038",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004763114731758833,
+        0.0010199981043115258,
+        0.003638695925474167
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.037",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004141803365200758,
+        0.0010199981043115258,
+        0.0035873735323548317
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.036",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0036420163232833147,
+        0.0010199981043115258,
+        0.003529059235006571
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.035",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003197959391400218,
+        0.0010199981043115258,
+        0.003458902472630143
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.034",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0027806784491986036,
+        0.0010199981043115258,
+        0.00337227969430387
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.033",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0023736695293337107,
+        0.0010199981043115258,
+        0.003265033708885312
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.032",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0019645073916763067,
+        0.0010199981043115258,
+        0.003134811529889703
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.031",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0015420081326738,
+        0.0010199981043115258,
+        0.002983174519613385
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.030",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001096823951229453,
+        0.0010199981043115258,
+        0.0028172896709293127
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.029",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0013964885147288442,
+        0.0010199981043115258,
+        0.002928938716650009
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.028",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001825688173994422,
+        0.0010199981043115258,
+        0.003086415585130453
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.027",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0022380927111953497,
+        0.0010199981043115258,
+        0.003224207554012537
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.026",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0026445062831044197,
+        0.0010199981043115258,
+        0.0033389946911484003
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.025",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0030568349175155163,
+        0.0010199981043115258,
+        0.003432085271924734
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.024",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0034896316938102245,
+        0.0010199981043115258,
+        0.0035072199534624815
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.023",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003966202028095722,
+        0.0010199981043115258,
+        0.003568957094103098
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.022",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004535190295428038,
+        0.0010199981043115258,
+        0.003622037125751376
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.021",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00532929040491581,
+        0.0010199981043115258,
+        0.0036718365736305714
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.020",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.006933621596544981,
+        0.0010199981043115258,
+        0.0037271552719175816
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.019",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0057073067873716354,
+        0.001020001363940537,
+        0.0036889673210680485
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.018",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004763114731758833,
+        0.001020001363940537,
+        0.003638695925474167
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.017",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004141803365200758,
+        0.001020001363940537,
+        0.0035873735323548317
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.016",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0036420163232833147,
+        0.001020001363940537,
+        0.003529059235006571
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.015",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003197959391400218,
+        0.001020001363940537,
+        0.003458902472630143
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.014",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0027806784491986036,
+        0.001020001363940537,
+        0.00337227969430387
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.013",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0023736695293337107,
+        0.001020001363940537,
+        0.003265033708885312
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.012",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0019645073916763067,
+        0.001020001363940537,
+        0.003134811529889703
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.011",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0015420081326738,
+        0.001020001363940537,
+        0.002983174519613385
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.010",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001096823951229453,
+        0.001020001363940537,
+        0.0028172896709293127
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.009",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0013964885147288442,
+        0.001020001363940537,
+        0.002928938716650009
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.008",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001825688173994422,
+        0.001020001363940537,
+        0.003086415585130453
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.007",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0022380927111953497,
+        0.001020001363940537,
+        0.003224207554012537
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.006",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0026445062831044197,
+        0.001020001363940537,
+        0.0033389946911484003
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.005",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0030568349175155163,
+        0.001020001363940537,
+        0.003432085271924734
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.004",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0034896316938102245,
+        0.001020001363940537,
+        0.0035072199534624815
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.003",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.003966202028095722,
+        0.001020001363940537,
+        0.003568957094103098
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.002",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.004535190295428038,
+        0.001020001363940537,
+        0.003622037125751376
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch.001",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.00532929040491581,
+        0.001020001363940537,
+        0.0036718365736305714
+      ]
+    },
+    {
+      "name": "Shield_Leather_Edge_Stitch",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.006933621596544981,
+        0.001020001363940537,
+        0.0037271552719175816
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.035",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        -0.13899999856948853,
+        0.24075506627559662
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.034",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        -0.24075506627559662,
+        0.13899999856948853
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.033",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        -0.27799999713897705,
+        0.0
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.032",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        -0.24075506627559662,
+        -0.13899999856948853
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.031",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        -0.13899999856948853,
+        -0.24075505137443542
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.030",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.0,
+        -0.27799999713897705
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.029",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.13900001347064972,
+        -0.24075505137443542
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.028",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.24075506627559662,
+        -0.13899999856948853
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.027",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.27799999713897705,
+        0.0
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.026",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.24075506627559662,
+        0.13899999856948853
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.025",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.13900001347064972,
+        0.24075506627559662
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.024",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.03200000151991844,
+        0.0,
+        0.27799999713897705
+      ],
+      "dimensions": [
+        0.002431000117212534,
+        0.004419999197125435,
+        0.00441999826580286
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.023",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05900000035762787,
+        0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.003740000305697322,
+        0.006799998693168163,
+        0.006799997296184301
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.022",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.12600000202655792,
+        0.12099999934434891
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.021",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.12600000202655792,
+        0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.020",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.07799999415874481,
+        0.12099999934434891
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.019",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.07799999415874481,
+        0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.018",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05900000035762787,
+        0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.003740000305697322,
+        0.006799998693168163,
+        0.006799997296184301
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.017",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.12600000202655792,
+        -0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.016",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.12600000202655792,
+        -0.12099999189376831
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.015",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.07799999415874481,
+        -0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.014",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        0.07799999415874481,
+        -0.12099999189376831
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.013",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05900000035762787,
+        -0.10199999809265137,
+        0.10500000417232513
+      ],
+      "dimensions": [
+        0.003740000305697322,
+        0.006799998693168163,
+        0.006799997296184301
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.012",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.07800000160932541,
+        0.12099999934434891
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.011",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.07800000160932541,
+        0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.010",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.12600000202655792,
+        0.12099999934434891
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.009",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.12600000202655792,
+        0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.008",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05900000035762787,
+        -0.10199999809265137,
+        -0.10500000417232513
+      ],
+      "dimensions": [
+        0.003740000305697322,
+        0.006799998693168163,
+        0.006799997296184301
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.007",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.07800000160932541,
+        -0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.006",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.07800000160932541,
+        -0.12099999189376831
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.005",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.12600000202655792,
+        -0.08900000154972076
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.004",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.05400000140070915,
+        -0.12600000202655792,
+        -0.12099999189376831
+      ],
+      "dimensions": [
+        0.0022440003231167793,
+        0.004079999402165413,
+        0.004079998470842838
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.003",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04800000041723251,
+        0.019999995827674866,
+        0.2549999952316284
+      ],
+      "dimensions": [
+        0.0028050001710653305,
+        0.005099999252706766,
+        0.005099997855722904
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.002",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04800000041723251,
+        -0.020000003278255463,
+        0.2549999952316284
+      ],
+      "dimensions": [
+        0.0028050001710653305,
+        0.005099999252706766,
+        0.005099997855722904
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04800000041723251,
+        0.019999995827674866,
+        -0.2549999952316284
+      ],
+      "dimensions": [
+        0.0028050001710653305,
+        0.005099999252706766,
+        0.005099997855722904
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brass_Rivet",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04800000041723251,
+        -0.020000003278255463,
+        -0.2549999952316284
+      ],
+      "dimensions": [
+        0.0028050001710653305,
+        0.005099999252706766,
+        0.005099997855722904
+      ],
+      "vertices": 86,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brace_End_Plate.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04100000113248825,
+        0.0,
+        0.2549999952316284
+      ],
+      "dimensions": [
+        0.007650000508874655,
+        0.05184999480843544,
+        0.02124999277293682
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brace_End_Plate",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04100000113248825,
+        0.0,
+        -0.2549999952316284
+      ],
+      "dimensions": [
+        0.007650000508874655,
+        0.05184999480843544,
+        0.02124999277293682
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.027",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.026",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.025",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.024",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.023",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.022",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.021",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.020",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.019",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839321978390217
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.018",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839321978390217
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.017",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839323841035366
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.016",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839323841035366
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.015",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839323841035366
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.014",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839323841035366
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.013",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839321978390217
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.012",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.012839321978390217
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.011",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.010",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.009",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.008",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.007",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.006",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.005",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.004",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.003",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.002",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283932849764824
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch.001",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283931639045477
+      ]
+    },
+    {
+      "name": "Shield_Brace_Cross_Stitch",
+      "type": "CURVE",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.001190001261420548,
+        0.016030604019761086,
+        0.01283931639045477
+      ]
+    },
+    {
+      "name": "Shield_Back_Vertical_Sewn_Brace",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.029999999329447746,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.010200001299381256,
+        0.04419999569654465,
+        0.46749982237815857
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 charcoal sewn wraps"
+      ]
+    },
+    {
+      "name": "Shield_Back_Horizontal_Brace",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        -0.04100000113248825,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0136000020429492,
+        0.22694995999336243,
+        0.04164998233318329
+      ],
+      "vertices": 8,
+      "materials": [
+        "Shield \u2022 charcoal sewn wraps"
+      ]
+    },
+    {
+      "name": "Shield_Back_Diagonal_Wrap.001",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0025500005576759577,
+        0.39949995279312134,
+        0.2552766799926758
+      ],
+      "vertices": 130,
+      "materials": [
+        "Shield \u2022 charcoal sewn wraps"
+      ]
+    },
+    {
+      "name": "Shield_Back_Diagonal_Wrap",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.0025500005576759577,
+        0.39949995279312134,
+        0.2552766799926758
+      ],
+      "vertices": 130,
+      "materials": [
+        "Shield \u2022 charcoal sewn wraps"
+      ]
+    },
+    {
+      "name": "Shield_Back_Brass_Rim",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.02550000324845314,
+        0.48959991335868835,
+        0.4895997941493988
+      ],
+      "vertices": 768,
+      "materials": [
+        "Shield \u2022 aged brass"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_10",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321089759469032,
+        0.27585306763648987
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_09",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.043210919946432114,
+        0.37136995792388916
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_08",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.043210919946432114,
+        0.429243803024292
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_07",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090877056122,
+        0.4639453589916229
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_06",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090877056122,
+        0.4806049168109894
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_05",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.48279982805252075
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_04",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.4806049168109894
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_03",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.4639453589916229
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_02",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.4292437434196472
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_01",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.3713699281215668
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Shield_Back_Board_00",
+      "type": "MESH",
+      "hide_render": false,
+      "location": [
+        0.0,
+        -0.14000000059604645,
+        0.029999999329447746
+      ],
+      "dimensions": [
+        0.01615000143647194,
+        0.04321090131998062,
+        0.27585306763648987
+      ],
+      "vertices": 68,
+      "materials": [
+        "Shield \u2022 dark worn backing"
+      ]
+    },
+    {
+      "name": "Threadborne_Sword_ROOT_FOLLOW",
+      "type": "EMPTY",
+      "hide_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Threadborne_Shield_ROOT_FOLLOW",
+      "type": "EMPTY",
+      "hide_render": false,
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Shield \u2022 aged brass",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "image": null
+        },
+        {
+          "name": "Vector Math",
+          "type": "VECT_MATH",
+          "image": null
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "image": null
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "image": null
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "image": null
+        }
+      ],
+      "links": [
+        "Texture Coordinate.Generated -> Vector Math.Vector",
+        "Vector Math.Vector -> Noise Texture.Vector",
+        "Noise Texture.Factor -> Color Ramp.Factor",
+        "Color Ramp.Color -> Principled BSDF.Base Color",
+        "Noise Texture.Factor -> Bump.Height",
+        "Bump.Normal -> Principled BSDF.Normal",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    },
+    {
+      "name": "Shield \u2022 brown leather arm straps",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "image": null
+        },
+        {
+          "name": "Vector Math",
+          "type": "VECT_MATH",
+          "image": null
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "image": null
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "image": null
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "image": null
+        }
+      ],
+      "links": [
+        "Texture Coordinate.Generated -> Vector Math.Vector",
+        "Vector Math.Vector -> Noise Texture.Vector",
+        "Noise Texture.Factor -> Color Ramp.Factor",
+        "Color Ramp.Color -> Principled BSDF.Base Color",
+        "Noise Texture.Factor -> Bump.Height",
+        "Bump.Normal -> Principled BSDF.Normal",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    },
+    {
+      "name": "Shield \u2022 charcoal sewn wraps",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "image": null
+        },
+        {
+          "name": "Vector Math",
+          "type": "VECT_MATH",
+          "image": null
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "image": null
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "image": null
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "image": null
+        }
+      ],
+      "links": [
+        "Texture Coordinate.Generated -> Vector Math.Vector",
+        "Vector Math.Vector -> Noise Texture.Vector",
+        "Noise Texture.Factor -> Color Ramp.Factor",
+        "Color Ramp.Color -> Principled BSDF.Base Color",
+        "Noise Texture.Factor -> Bump.Height",
+        "Bump.Normal -> Principled BSDF.Normal",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    },
+    {
+      "name": "Shield \u2022 dark worn backing",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "image": null
+        },
+        {
+          "name": "Vector Math",
+          "type": "VECT_MATH",
+          "image": null
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "image": null
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "image": null
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "image": null
+        }
+      ],
+      "links": [
+        "Texture Coordinate.Generated -> Vector Math.Vector",
+        "Vector Math.Vector -> Noise Texture.Vector",
+        "Noise Texture.Factor -> Color Ramp.Factor",
+        "Color Ramp.Color -> Principled BSDF.Base Color",
+        "Noise Texture.Factor -> Bump.Height",
+        "Bump.Normal -> Principled BSDF.Normal",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    },
+    {
+      "name": "Shield \u2022 golden stitching",
+      "nodes": [
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Texture Coordinate",
+          "type": "TEX_COORD",
+          "image": null
+        },
+        {
+          "name": "Vector Math",
+          "type": "VECT_MATH",
+          "image": null
+        },
+        {
+          "name": "Noise Texture",
+          "type": "TEX_NOISE",
+          "image": null
+        },
+        {
+          "name": "Color Ramp",
+          "type": "VALTORGB",
+          "image": null
+        },
+        {
+          "name": "Bump",
+          "type": "BUMP",
+          "image": null
+        }
+      ],
+      "links": [
+        "Texture Coordinate.Generated -> Vector Math.Vector",
+        "Vector Math.Vector -> Noise Texture.Vector",
+        "Noise Texture.Factor -> Color Ramp.Factor",
+        "Color Ramp.Color -> Principled BSDF.Base Color",
+        "Noise Texture.Factor -> Bump.Height",
+        "Bump.Normal -> Principled BSDF.Normal",
+        "Principled BSDF.BSDF -> Material Output.Surface"
+      ]
+    },
+    {
+      "name": "Threadborne_Costume_Material",
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Threadborne_BaseColor"
+        },
+        {
+          "name": "Separate Color",
+          "type": "SEPARATE_COLOR",
+          "image": null
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "Threadborne_Occlusion_Roughness_Metallic"
+        },
+        {
+          "name": "Normal Map",
+          "type": "NORMAL_MAP",
+          "image": null
+        },
+        {
+          "name": "Image Texture.002",
+          "type": "TEX_IMAGE",
+          "image": "Threadborne_Normal"
+        }
+      ],
+      "links": [
+        "Principled BSDF.BSDF -> Material Output.Surface",
+        "Image Texture.Color -> Principled BSDF.Base Color",
+        "Separate Color.Blue -> Principled BSDF.Metallic",
+        "Separate Color.Green -> Principled BSDF.Roughness",
+        "Image Texture.001.Color -> Separate Color.Color",
+        "Normal Map.Normal -> Principled BSDF.Normal",
+        "Image Texture.002.Color -> Normal Map.Color"
+      ]
+    },
+    {
+      "name": "Threadborne_Costume_Material.001",
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Normal Map",
+          "type": "NORMAL_MAP",
+          "image": null
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Threadborne_BaseColor.001"
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "Threadborne_Normal.001"
+        }
+      ],
+      "links": [
+        "Principled BSDF.BSDF -> Material Output.Surface",
+        "Normal Map.Normal -> Principled BSDF.Normal",
+        "Image Texture.Color -> Principled BSDF.Base Color",
+        "Image Texture.001.Color -> Normal Map.Color"
+      ]
+    },
+    {
+      "name": "Threadborne_Imported_Weapon_Artwork",
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Color_663e8d12-f981-429b-babe-2406f36f0653"
+        },
+        {
+          "name": "Separate Color",
+          "type": "SEPARATE_COLOR",
+          "image": null
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "ORM_663e8d12-f981-429b-babe-2406f36f0653"
+        },
+        {
+          "name": "Normal Map",
+          "type": "NORMAL_MAP",
+          "image": null
+        },
+        {
+          "name": "Image Texture.002",
+          "type": "TEX_IMAGE",
+          "image": "NormalGL_663e8d12-f981-429b-babe-2406f36f0653"
+        }
+      ],
+      "links": [
+        "Principled BSDF.BSDF -> Material Output.Surface",
+        "Image Texture.Color -> Principled BSDF.Base Color",
+        "Separate Color.Blue -> Principled BSDF.Metallic",
+        "Separate Color.Green -> Principled BSDF.Roughness",
+        "Image Texture.001.Color -> Separate Color.Color",
+        "Normal Map.Normal -> Principled BSDF.Normal",
+        "Image Texture.002.Color -> Normal Map.Color"
+      ]
+    },
+    {
+      "name": "tripo_material_d7d11554-e2f0-4032-a645-6b120e3ba377.001",
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "image": null
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "image": null
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "image": "Color_d7d11554-e2f0-4032-a645-6b120e3ba377.001"
+        },
+        {
+          "name": "Separate Color",
+          "type": "SEPARATE_COLOR",
+          "image": null
+        },
+        {
+          "name": "Image Texture.001",
+          "type": "TEX_IMAGE",
+          "image": "ORM_d7d11554-e2f0-4032-a645-6b120e3ba377.001"
+        },
+        {
+          "name": "Normal Map",
+          "type": "NORMAL_MAP",
+          "image": null
+        },
+        {
+          "name": "Image Texture.002",
+          "type": "TEX_IMAGE",
+          "image": "NormalGL_d7d11554-e2f0-4032-a645-6b120e3ba377.001"
+        }
+      ],
+      "links": [
+        "Principled BSDF.BSDF -> Material Output.Surface",
+        "Image Texture.Color -> Principled BSDF.Base Color",
+        "Separate Color.Blue -> Principled BSDF.Metallic",
+        "Separate Color.Green -> Principled BSDF.Roughness",
+        "Image Texture.001.Color -> Separate Color.Color",
+        "Normal Map.Normal -> Principled BSDF.Normal",
+        "Image Texture.002.Color -> Normal Map.Color"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Color_663e8d12-f981-429b-babe-2406f36f0653",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Color_d7d11554-e2f0-4032-a645-6b120e3ba377.001",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "NormalGL_663e8d12-f981-429b-babe-2406f36f0653",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "NormalGL_d7d11554-e2f0-4032-a645-6b120e3ba377.001",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "ORM_663e8d12-f981-429b-babe-2406f36f0653",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "ORM_d7d11554-e2f0-4032-a645-6b120e3ba377.001",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Render Result",
+      "path": "",
+      "packed": false,
+      "size": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Threadborne_BaseColor",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Threadborne_BaseColor.001",
+      "path": "//..\\..\\..\\..\\..\\..\\..\\..\\..\\home\\app\\mixamo-mini\\tmp\\skins_0a046f28-7c23-4fd5-8584-b45b519a22b8.fbm\\Threadborne_BaseColor.png",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Threadborne_Normal",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Threadborne_Normal.001",
+      "path": "//..\\..\\..\\..\\..\\..\\..\\..\\..\\home\\app\\mixamo-mini\\tmp\\skins_0a046f28-7c23-4fd5-8584-b45b519a22b8.fbm\\Threadborne_Normal.png",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Threadborne_Occlusion_Roughness_Metallic",
+      "path": "",
+      "packed": true,
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "name": "Viewer Node",
+      "path": "",
+      "packed": false,
+      "size": [
+        256,
+        256
+      ]
+    }
+  ]
+}

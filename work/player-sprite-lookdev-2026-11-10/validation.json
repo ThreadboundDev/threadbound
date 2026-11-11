@@ -1,0 +1,18 @@
+{
+  "source_sha256": "b6de66d8ae292024ec6a8e18401b1cbe2fe1da9fb23f170323b136817aee002b",
+  "source_unchanged": true,
+  "fixed_canvas_frames": 51,
+  "frames_touching_outline_gutter": [],
+  "clip_counts": {
+    "idle": 31,
+    "run": 9,
+    "jump": 11
+  },
+  "jump_lift_removed": true,
+  "engine_captures": 4,
+  "renderer": "forward_plus",
+  "controller_integrated": false,
+  "unrelated_working_tree": "same unrelated path/status set as task start",
+  "engine_shutdown_diagnostics": "Texture RID/ObjectDB/resource cleanup diagnostics remain; see README",
+  "visual_acceptance": "Pending Chase review"
+}
