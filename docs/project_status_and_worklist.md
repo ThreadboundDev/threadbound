@@ -29,6 +29,16 @@ are saved. Combat, grapple and equipment-swap presentation remain unsupported.
 Production scene/controller files are untouched; visual acceptance remains open.
 Checkpoint: `art: add in-game movement preview for rendered sprites`.
 
+November 10 T46 correction: Chase rejected the angled, low-resolution proxy
+as an unfair comparison and requested the current bones and animations.
+`current_rig_preview.gd` now uses the production retained-costume rig (62 bones,
+64 clips), current side camera and 1600 × 1800 output. F7 compares live output
+with native-resolution raster snapshots of the same rig. Movement, jump,
+landing, attack, facing and native-size assertions pass. This on-demand raster
+comparison still uses live 3D as its source; offline export remains open.
+The old 240 × 320 three-clip preview is superseded. Appearance acceptance remains
+open. Checkpoint: `fix: use current rig and native resolution in sprite comparison`.
+
 ## November 5 hands-on acceptance
 
 - [x] **Development feedback tool — Accepted.** Chase confirms the tool is

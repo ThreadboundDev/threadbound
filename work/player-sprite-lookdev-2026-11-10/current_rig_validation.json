@@ -1,0 +1,12 @@
+{
+	"bones": 62,
+	"camera": "(-7.0, 1.15, 0.0)",
+	"clips": 64,
+	"movement_jump_landing_attack_facing": "passed",
+	"note": "Full-resolution raster snapshots of current live rig; not the old 12fps atlas proxy",
+	"offline_sprite_runtime": false,
+	"production_animation_logic": "unmodified",
+	"raster_is_native_resolution": true,
+	"source": "res://Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb",
+	"viewport": "(1600, 1800)"
+}

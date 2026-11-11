@@ -4,7 +4,44 @@ Status: **Awaiting Chase's visual review.** This is a requested rendering-only
 proof using the retained detailed character. It does not select a final art
 direction, replace the current player, or change equipment or combat systems.
 
-## In-game movement preview follow-up
+## Corrected comparison: current rig and native resolution
+
+Chase rejected the earlier preview as an unfair comparison: it used the older
+three-clip test, a front-biased camera and 240 × 320 images enlarged by gameplay
+zoom. Those earlier files are historical evidence, not the review target.
+
+Use `current_rig_preview.gd` in the isolated project instead:
+
+```text
+--path . --script res://review/current_rig_preview.gd --rendering-method forward_plus -- --original-player
+```
+
+This uses the production `PlayerLive3DVisual` source and its retained-costume
+MODEL, current 62-bone rig and 64 loaded clips, authored attacks, upright poses,
+lower-body blends and gameplay state selection. The original-player flag selects
+the retained costume rather than the local fitted doll; no retargeting or pose
+approximation is introduced. The camera is the production side camera at
+(-7, 1.15, 0), and captures keep all 1600 × 1800 source pixels. The same current
+display scale, registration, flip, material and level lighting remain in use.
+
+F7 toggles the live render and full-resolution raster snapshots of that same
+rig, refreshed at up to 30 fps. **This is an on-demand raster comparison, not
+an offline sprite-sheet player.** It retains the live rig as the image source
+so every current action and blend stays available. A final offline bake still
+needs its own implementation and validation; this does not claim that the
+runtime no longer contains a 3D model or that shader changes recover the old art.
+
+Append `--verify` after the original-player flag to exercise the corrected
+preview. Grounding, movement, run selection, jump, landing, attack, facing,
+side camera and native-resolution assertions pass. See
+`current_rig_validation.json`, the four `current_rig_*.png` game captures and
+their `_native.png` source renders. One test initially tried to force facing
+directly while the controller was active; the final check uses actual leftward
+input, as normal gameplay does. The initial failed attempt is not a pass.
+
+Checkpoint: `fix: use current rig and native resolution in sprite comparison`.
+
+## Earlier in-game movement preview (superseded)
 
 Chase subsequently requested seeing the character in game. `play_preview.gd`
 now supplies an isolated movement trial in the actual Chamber using the existing
