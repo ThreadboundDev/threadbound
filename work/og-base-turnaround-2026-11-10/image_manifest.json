@@ -1,0 +1,24 @@
+{
+  "images": [
+    {
+      "file": "og_base_front_tpose.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "2b787baffd8d95edbf44495868013789bb6b23ae095e4df3fc21b954ed30e593",
+      "png_integrity": "pass"
+    },
+    {
+      "file": "og_base_back_tpose.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "5c7780161a3412267fd2046d62e60855a955ccc7acb76ffd4f170a39e22fa694",
+      "png_integrity": "pass"
+    }
+  ],
+  "same_canvas": true,
+  "visual_review": "Front/back orientation and corrected rear hands/heels checked; generated views are approximate"
+}

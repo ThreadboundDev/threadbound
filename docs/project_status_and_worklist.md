@@ -4,6 +4,22 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 10 OG base T-pose references
+
+**T48 — OG front/back model references: Awaiting visual review.** Chase
+requested T-pose front/back inputs for a morning model-generation experiment
+and asked about cleaner versus tattered base clothing. The
+[clean-base reference pair, ZIP and exact prompts](../work/og-base-turnaround-2026-11-10/README.md)
+retain the large round head and painted style. The recommendation is the original
+clean silhouette with modest surface wear, consistent covered equipment joins
+and separate cloth/leather/ivory dye roles. It is not yet an accepted replacement
+or a change to Identity rules. Final front/rear framing, hands, heels and shading
+were visually reviewed; PNG integrity and matching dimensions pass. No model,
+rig, runtime asset or UV/texture maps are changed. Checkpoint:
+`art: prepare OG clean-base front and back T poses` on
+`threadbound/art-og-base-turnaround`. Next: Chase reviews the reference pair
+and trials a generated model; mixed gear and animated deformation remain open.
+
 ## November 10 OG Blue-gear concepts
 
 **T47 — OG character in Blue gear: Awaiting visual review.** Chase is
