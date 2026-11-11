@@ -14,9 +14,9 @@ Pinky follow-up. The compact pose now guides all three pinky segments along the 
 
 ## November 11 wooden doll lighting room
 
-T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison and hides the equipment in this fixture. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.
+T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison. The original sword and shield are visible by default. B toggles both for a bare-hand comparison, and H switches the grip. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.
 
-Use these four presets as the starting references for the doll and future gear. The fixture lights the 3D body in its character viewport and the blockout with matching 2D lights. The steady bulb and torch change angle and strength as the doll moves. The preset choice keeps the player and camera framing in place. The rendered check verified the exact body, hidden equipment, keyboard switching, reset, movement, jump, distinct body renders and torch flicker. Material changes and gear fitting remain open.
+Use these four presets as the starting references for the doll and future gear. The fixture lights the 3D body in its character viewport and the blockout with matching 2D lights. The steady bulb and torch change angle and strength as the doll moves. The preset choice keeps the player and camera framing in place. The rendered check verified the exact body, both weapons, keyboard switching, reset, movement, jump, distinct body renders and torch flicker. Armed close-ups show both grips for fit review. Material changes and gear fitting remain open.
 
 ## November 11 doll equipment retest
 

@@ -173,3 +173,10 @@ offset_top = 99.0
 theme_override_colors/font_color = Color(0.78, 0.81, 0.85, 1)
 theme_override_font_sizes/font_size = 20
 text = "H  Hands: Compact grip"
+
+[node name="Weapons" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 126.0
+theme_override_colors/font_color = Color(0.78, 0.81, 0.85, 1)
+theme_override_font_sizes/font_size = 20
+text = "B  Sword and shield: Shown"

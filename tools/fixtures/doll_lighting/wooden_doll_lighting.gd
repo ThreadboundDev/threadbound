@@ -2,6 +2,7 @@ extends Node2D
 ## Isolated lighting study for the earlier equipped doll's wooden body.
 
 const GRIP := preload("res://tools/fixtures/doll_lighting/wooden_doll_grip.gd")
+const WEAPON_MESH_NAMES := [&"Threadborne_Sword", &"Threadborne_Shield_Combined_Test"]
 const PRESETS := [
 	"Neutral | Soft white reference",
 	"Sun | Warm directional light from above and in front",
@@ -46,6 +47,7 @@ var torch_world_energy := 0.0
 var test_pose := false
 var grip: SkeletonModifier3D
 var compact_grip := true
+var weapons: Array[MeshInstance3D] = []
 
 
 func _enter_tree() -> void:
@@ -75,9 +77,15 @@ func _ready() -> void:
 		if OS.get_cmdline_user_args().has("--verify"):
 			get_tree().quit(1)
 		return
+	for mesh_name in WEAPON_MESH_NAMES:
+		var mesh: MeshInstance3D = visual._model_root.find_child(mesh_name, true, false)
+		if mesh:
+			weapons.append(mesh)
 	for node in visual._model_root.find_children("*", "MeshInstance3D", true, false):
-		if node != body and not body.is_ancestor_of(node):
-			node.hide()
+		var mesh := node as MeshInstance3D
+		var source := mesh.get_parent() if mesh.get_meta("outline_only", false) else mesh
+		if source != body and not weapons.has(source):
+			mesh.hide()
 	for node in player.find_children("*", "Light2D", true, false):
 		node.range_item_cull_mask = 0
 	visual.sword_smear_enabled = false
@@ -86,6 +94,7 @@ func _ready() -> void:
 	visual._skeleton.add_child(grip)
 	process_priority = visual.process_priority + 1
 	set_compact_grip(true)
+	set_weapons_visible(true)
 	for node in visual._viewport.get_children():
 		if node is Light3D:
 			node.hide()
@@ -108,6 +117,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			select_preset(event.physical_keycode - KEY_1)
 		KEY_H:
 			set_compact_grip(not compact_grip)
+		KEY_B:
+			if not weapons.is_empty():
+				set_weapons_visible(not weapons[0].visible)
 		KEY_R:
 			player.position = $ReferenceMark.position + Vector2(0, -75)
 			player.velocity = Vector2.ZERO
@@ -146,6 +158,12 @@ func set_compact_grip(enabled: bool) -> void:
 	hand_status.text = "H  Hands: " + ("Compact grip" if enabled else "Original grip")
 
 
+func set_weapons_visible(enabled: bool) -> void:
+	for weapon in weapons:
+		weapon.visible = enabled
+	$HUD/Weapons.text = "B  Sword and shield: " + ("Shown" if enabled else "Hidden")
+
+
 func _physics_process(_delta: float) -> void:
 	view.position.x = clampf(player.position.x * 0.65, -210.0, 210.0)
 
@@ -180,10 +198,21 @@ func verify() -> void:
 	if not player.is_on_floor() or visual.model_scene.resource_path != visual.DOLL_PREVIEW_PATH or not body.is_visible_in_tree():
 		fail("The exact slot 5 wooden doll must start on the greybox floor.")
 		return
-	for part in ["Threadborne_Sword", "Threadborne_Shield_Combined_Test", "Base_Grapple_Braided_Strand_1"]:
-		if visual._model_root.find_child(part, true, false).is_visible_in_tree():
-			fail("Equipment is still visible: " + part)
-			return
+	if weapons.size() != WEAPON_MESH_NAMES.size():
+		fail("The slot 5 sword and shield must both load.")
+		return
+	var grapple: MeshInstance3D = visual._model_root.find_child("Base_Grapple_Braided_Strand_1", true, false)
+	if grapple and grapple.is_visible_in_tree():
+		fail("The grapple coil must stay hidden in the weapon preview.")
+		return
+	for step in 3:
+		if step > 0:
+			await tap_key(KEY_B)
+			await frames(2)
+		for weapon in weapons:
+			if weapon.is_visible_in_tree() != (step != 1):
+				fail("B must toggle the sword and shield together on step %d." % step)
+				return
 	var start := player.position.x
 	Input.action_press("move_right")
 	await frames(14)
@@ -222,7 +251,7 @@ func verify() -> void:
 			var actor: Image = visual._viewport.get_texture().get_image()
 			hashes[hash(actor.get_data())] = true
 			var image := get_viewport().get_texture().get_image()
-			if image.save_png(out.path_join(["neutral", "sun", "bulb", "torch"][i] + ".png")) != OK:
+			if image.save_png(out.path_join(["armed_neutral", "armed_sun", "armed_bulb", "armed_torch"][i] + ".png")) != OK:
 				fail("Could not save the lighting comparison.")
 				return
 	var before := torch.light_energy
@@ -233,7 +262,7 @@ func verify() -> void:
 		return
 	if not await verify_grip(rendered, out):
 		return
-	print("DOLL_LIGHTING_VERIFIED model, movement, jump, lighting, torch flicker and grip comparison")
+	print("DOLL_LIGHTING_VERIFIED sword and shield, movement, jump, lighting, torch flicker and grip comparison")
 	get_tree().quit()
 
 
@@ -279,7 +308,7 @@ func verify_grip(rendered: bool, out: String) -> bool:
 				await RenderingServer.frame_post_draw
 				var label := "compact" if compact else "original"
 				var closeup: Image = visual._viewport.get_texture().get_image()
-				closeup.save_png(out.path_join("grip_%s_%s.png" % [label, side]))
+				closeup.save_png(out.path_join("armed_grip_%s_%s.png" % [label, side]))
 		if spans.size() != 2 or spans[1] > 0.85 * spans[0]:
 			fail("The revised grip must reduce finger spread on hand " + side)
 			return false
