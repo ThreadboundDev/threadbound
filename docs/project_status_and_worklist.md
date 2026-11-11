@@ -6,6 +6,8 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+T48 follow-up. The [integrated gauntlet turnaround](../work/og-base-turnaround-2026-11-10/integrated_gauntlet.md) is the latest review target. Both views share one sheet, and the Base grapple sits inside the left glove's forearm housing. Fit and deployment checks remain open.
+
 November 11 T48 revision. Review the [v2 reference pair and notes](../work/og-base-turnaround-2026-11-10/revision_v2.md) before generating a model. The head is smaller and the Base gloves cover all fingers. Glove mesh fitting and equipment behavior remain open.
 
 **T48 — OG front/back model references: Awaiting visual review.** Chase
