@@ -6,6 +6,15 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+T48 Blender material review. The exact open Tripo mesh was snapshotted from
+the unsaved scene and treated in `LocalOnly/OG_Material_Review/OG_Material_Review.blend`.
+The comparison uses its packed color texture, matte painted shading, oval eye
+paint and ink outlines in the front and side renders. Reopening verified matching
+vertices, faces and UV coordinates. The source is an unrigged T-pose. Head shape
+and torn hems remain visible for review. The comparison is open in Blender.
+The Blender file and renders are local. Next, Chase reviews the material pass
+before choosing any silhouette or mask changes.
+
 T48 follow-up. The [empty mount and doll-hand study](../work/og-base-turnaround-2026-11-10/empty_mount_doll_hands.md) is the latest review target. Fit the existing coil and needle separately. Review mask shell fit after the OG head is modeled.
 
 T48 harness follow-up. Review the [Base study with the existing rope-and-needle harness](../work/og-base-turnaround-2026-11-10/existing_harness_study.md). Coverage can vary by set around the same wrist and finger rig. Art review and mesh fitting remain open.
