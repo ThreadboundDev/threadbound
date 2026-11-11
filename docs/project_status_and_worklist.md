@@ -6,6 +6,17 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+T48 cloth and baked movement review. In `LocalOnly/OG_Material_Review/`,
+`OG_Cloth_Review.blend` uses quieter fray color, plain ivory above the boots
+and a firmer ink outline in its renders. A separate `OG_Motion_Trial.blend`
+uses trial weights transferred from the fitted game rig. Idle, run and jump
+use the existing `idle_4`, `run_1` and `jump_1` clips. All 51 native-resolution
+frames passed the outline margin check. Black silhouette growth is baked into
+the atlases. The isolated Chamber preview passed movement, jump, landing,
+facing and display-toggle checks. F7 switches between baked movement and
+the live player. Some skirt and cuff deformation still needs fitting. The
+local comparison covers movement only. Art and acceptance await review.
+
 T48 Blender material review. The exact open Tripo mesh was snapshotted from
 the unsaved scene and treated in `LocalOnly/OG_Material_Review/OG_Material_Review.blend`.
 The comparison uses its packed color texture, matte painted shading, oval eye
