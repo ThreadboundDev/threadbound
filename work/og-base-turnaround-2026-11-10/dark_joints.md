@@ -1,0 +1,7 @@
+# OG Base hands with dark joints
+
+The [front](og_base_dark_joints_front.png) and [back](og_base_dark_joints_back.png) show dark recessed finger gaps and smooth ivory. The rear retains circular knuckle caps. Both images were reviewed at full size and are 1254 × 1254. The front edit subtly softened the fabric pattern outside the hands.
+
+Built-in ImageGen prompt, applied once to each view:
+
+Edit ONLY the two hands of this full character T-pose image. Preserve the rest of the exact image including camera, crop, outfit, stitched head, boots, bracers and empty harness if visible. Keep all five ivory digits and their current pose. Make the existing finger articulation gaps into clearly visible dark espresso narrow bands, same near-black brown as the head stitches, especially each mid-finger joint. These are recessed gaps between rounded ivory segments, not painted stitch crosses, no additional hand jewelry. On backs of the hands, preserve the small existing circular ivory knuckle caps at the finger bases, with a narrow dark recessed edge. Make the entire ivory hand surface between these caps and wrists perfectly smooth and gently shaded. REMOVE all raised veins, long tendon ridges, branching lines, wrinkles, and anatomical striations from both hands; no nails or realistic veins. If palm-facing keep smooth palms. Match original warm ivory. Do not change front/back direction or add any text. Only change hand surface and joint shading. Full original canvas.
