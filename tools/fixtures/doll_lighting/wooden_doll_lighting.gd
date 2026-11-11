@@ -3,6 +3,7 @@ extends Node2D
 
 const GRIP := preload("res://tools/fixtures/doll_lighting/wooden_doll_grip.gd")
 const WEAPON_MESH_NAMES := [&"Threadborne_Sword", &"Threadborne_Shield_Combined_Test"]
+const IDLE_HILT_OFFSET := Vector3(0.0, 0.037, -0.006)
 const PRESETS := [
 	"Neutral | Soft white reference",
 	"Sun | Warm directional light from above and in front",
@@ -45,9 +46,12 @@ var elapsed := 0.0
 var torch_actor_energy := 0.0
 var torch_world_energy := 0.0
 var test_pose := false
-var grip: SkeletonModifier3D
+var grip: GRIP
 var compact_grip := true
 var weapons: Array[MeshInstance3D] = []
+var sword: MeshInstance3D
+var sword_rest_position: Vector3
+var sword_idle_offset: Vector3
 
 
 func _enter_tree() -> void:
@@ -81,6 +85,16 @@ func _ready() -> void:
 		var mesh: MeshInstance3D = visual._model_root.find_child(mesh_name, true, false)
 		if mesh:
 			weapons.append(mesh)
+	sword = visual._model_root.find_child("Threadborne_Sword", true, false)
+	if sword:
+		sword_rest_position = sword.position
+		var parent := sword.get_parent() as Node3D
+		var parent_in_hand := Basis.IDENTITY
+		while parent and not parent is BoneAttachment3D:
+			parent_in_hand = parent.basis * parent_in_hand
+			parent = parent.get_parent() as Node3D
+		if parent is BoneAttachment3D and parent.bone_name == &"hand.R":
+			sword_idle_offset = parent_in_hand.inverse() * IDLE_HILT_OFFSET
 	for node in visual._model_root.find_children("*", "MeshInstance3D", true, false):
 		var mesh := node as MeshInstance3D
 		var source := mesh.get_parent() if mesh.get_meta("outline_only", false) else mesh
@@ -149,6 +163,7 @@ func _process(delta: float) -> void:
 		elapsed += delta
 		var weight := 1.0 if compact_grip and visual._current_action in GRIP.GRIP_ACTIONS else 0.0
 		grip.influence = move_toward(grip.influence, weight, delta * 12.0)
+		update_sword_grip(move_toward(grip.sword_grip_weight, sword_grip_target(), delta * 12.0))
 	update_lights()
 
 
@@ -156,12 +171,24 @@ func set_compact_grip(enabled: bool) -> void:
 	compact_grip = enabled
 	grip.influence = 1.0 if enabled and visual._current_action in GRIP.GRIP_ACTIONS else 0.0
 	hand_status.text = "H  Hands: " + ("Compact grip" if enabled else "Original grip")
+	update_sword_grip(sword_grip_target())
 
 
 func set_weapons_visible(enabled: bool) -> void:
 	for weapon in weapons:
 		weapon.visible = enabled
 	$HUD/Weapons.text = "B  Sword and shield: " + ("Shown" if enabled else "Hidden")
+	update_sword_grip(sword_grip_target())
+
+
+func sword_grip_target() -> float:
+	return 1.0 if compact_grip and sword and sword.visible and not sword_idle_offset.is_zero_approx() and visual._current_action in GRIP.SWORD_IDLE_ACTIONS else 0.0
+
+
+func update_sword_grip(weight: float) -> void:
+	grip.sword_grip_weight = weight
+	if sword:
+		sword.position = sword_rest_position + sword_idle_offset * weight
 
 
 func _physics_process(_delta: float) -> void:
@@ -262,7 +289,9 @@ func verify() -> void:
 		return
 	if not await verify_grip(rendered, out):
 		return
-	print("DOLL_LIGHTING_VERIFIED sword and shield, movement, jump, lighting, torch flicker and grip comparison")
+	if not await verify_idle_hilt():
+		return
+	print("DOLL_LIGHTING_VERIFIED sword and shield, movement, lighting, grip comparison and idle hilt fit")
 	get_tree().quit()
 
 
@@ -320,6 +349,36 @@ func verify_grip(rendered: bool, out: String) -> bool:
 	set_compact_grip(true)
 	if not is_zero_approx(grip.influence):
 		fail("The grapple cast must retain its open-hand animation.")
+		return false
+	return true
+
+
+func verify_idle_hilt() -> bool:
+	var skeleton: Skeleton3D = visual._skeleton
+	var hand := skeleton.find_bone("hand.R")
+	var animation: AnimationPlayer = visual._animation_player
+	for action: StringName in GRIP.SWORD_IDLE_ACTIONS:
+		var reference := Vector3.ZERO
+		var length: float = visual.get_action_duration(action)
+		if length <= 0.0:
+			fail("Missing idle clip " + String(action))
+			return false
+		for frame in 12:
+			visual._play_action(action, &"", length * frame / 12.0, true)
+			animation.advance(0.0)
+			animation.pause()
+			set_compact_grip(true)
+			await get_tree().process_frame
+			var hand_pose := skeleton.global_transform * skeleton.get_bone_global_pose(hand)
+			var hilt := hand_pose.affine_inverse() * sword.global_position
+			if frame == 0:
+				reference = hilt
+			if grip.sword_grip_weight != 1.0 or hilt.distance_to(reference) > 0.001:
+				fail("The sword must stay seated during " + String(action))
+				return false
+	set_compact_grip(false)
+	if grip.sword_grip_weight != 0.0 or not sword.position.is_equal_approx(sword_rest_position):
+		fail("The original comparison must restore the authored sword position.")
 		return false
 	return true
 

@@ -12,6 +12,8 @@ The rendered check measured idle index-to-pinky span dropping from 0.1180 to 0.0
 
 Pinky follow-up. The compact pose now guides all three pinky segments along the ring finger's curl. In the matched idle frame, the two pinky tips were within four degrees of their adjacent ring fingers, and the grip still narrowed on both hands. The rendered lighting-room and grapple-release checks passed.
 
+Sword idle follow-up. Across the idle loops the sword already followed the wrist, but the handle sat behind the curled fingers and the thumb extended past it. The compact grip now seats the hilt farther into the right palm and wraps the thumb around it. The offset lives in the preview's hand attachment. The rendered check sampled 48 poses across all four idle clips, and H restored the authored sword position.
+
 ## November 11 wooden doll lighting room
 
 T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison. The original sword and shield are visible by default. B toggles both for a bare-hand comparison, and H switches the grip. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.

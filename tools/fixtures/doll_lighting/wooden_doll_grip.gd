@@ -21,13 +21,25 @@ const GRIP_ACTIONS := [
 	&"slash_1", &"slash_2", &"slash_3", &"slash_4", &"slash_5",
 	&"air_attack_forward", &"air_attack_up", &"air_attack_down",
 ]
+const SWORD_IDLE_ACTIONS := [&"idle_1", &"idle_2", &"idle_3", &"idle_4"]
+const SWORD_THUMB_DIRECTIONS := [
+	Vector3(-0.55, 0.56, -0.62),
+	Vector3(-0.10, 0.22, -0.97),
+	Vector3(0.80, 0.36, -0.38),
+]
 
 var joint_corrections: Dictionary
 var pinky_guides: Array[Vector4i]
+var sword_grip_weight := 0.0
+var sword_hand := -1
+var sword_thumb: PackedInt32Array
 
 
 func _ready() -> void:
 	var skeleton := get_skeleton()
+	sword_hand = skeleton.find_bone("hand.R")
+	for segment in range(1, 4):
+		sword_thumb.append(skeleton.find_bone("thumb.%02d.R" % segment))
 	for side in ["R", "L"]:
 		var mirror := 1.0 if side == "R" else -1.0
 		for digit in SPREAD:
@@ -62,12 +74,24 @@ func _process_modification_with_delta(_delta: float) -> void:
 		var pinky_direction := segment_direction(skeleton, guide.x, guide.z)
 		var ring_direction := segment_direction(skeleton, guide.y, guide.w)
 		var target := pinky_direction.slerp(ring_direction, 0.88)
-		var parent := skeleton.get_bone_parent(guide.x)
-		var parent_rotation := skeleton.get_bone_global_pose(parent).basis.get_rotation_quaternion()
-		var swing := Quaternion(pinky_direction, target)
-		var local_swing := parent_rotation.inverse() * swing * parent_rotation
-		var animated := skeleton.get_bone_pose_rotation(guide.x)
-		skeleton.set_bone_pose_rotation(guide.x, (local_swing * animated).normalized())
+		aim_segment(skeleton, guide.x, pinky_direction, target)
+	if sword_grip_weight > 0.0 and sword_hand >= 0 and not sword_thumb.has(-1):
+		var palm := skeleton.get_bone_global_pose(sword_hand).basis.orthonormalized()
+		for segment in sword_thumb.size():
+			var bone := sword_thumb[segment]
+			var next := sword_thumb[segment + 1] if segment < sword_thumb.size() - 1 else -1
+			var direction := segment_direction(skeleton, bone, next)
+			var target: Vector3 = palm * SWORD_THUMB_DIRECTIONS[segment].normalized()
+			aim_segment(skeleton, bone, direction, direction.slerp(target, sword_grip_weight))
+
+
+static func aim_segment(skeleton: Skeleton3D, bone: int, direction: Vector3, target: Vector3) -> void:
+	var parent := skeleton.get_bone_parent(bone)
+	var parent_rotation := skeleton.get_bone_global_pose(parent).basis.get_rotation_quaternion()
+	var swing := Quaternion(direction, target)
+	var local_swing := parent_rotation.inverse() * swing * parent_rotation
+	var animated := skeleton.get_bone_pose_rotation(bone)
+	skeleton.set_bone_pose_rotation(bone, (local_swing * animated).normalized())
 
 
 static func segment_direction(skeleton: Skeleton3D, bone: int, next: int) -> Vector3:
