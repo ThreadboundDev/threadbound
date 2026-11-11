@@ -4,6 +4,20 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 10 OG Blue-gear concepts
+
+**T47 — OG character in Blue gear: Awaiting visual review.** Chase is
+considering the original 2D character and requested costume concepts for morning
+review. [Three studies and exact built-in ImageGen prompts](../work/og-blue-gear-concepts-2026-11-10/README.md)
+show the established Blue outfit with its wicker hat, a hat-off option, and a
+standing/running pose sheet, preserving the OG head, hands and painted outlines.
+Visual inspection is complete; generated ribbon/profile drift is recorded.
+These are concepts, not rig/deformation evidence or accepted replacement art.
+No runtime or native rig changes are made. Checkpoint:
+`art: visualize OG character in established Blue gear` on
+`threadbound/art-og-blue-gear-concepts`. Next: Chase reviews the silhouette and
+outfit before choosing any 2D rigging or 3D model follow-up.
+
 ## November 10 player sprite study
 
 **T46 — rendered player sprite comparison: Awaiting visual review.** Chase
