@@ -4,6 +4,12 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 11 OG Base live rig trial
+
+T48 live fit. Open the Chamber with `tools/player_animation/start_og_base_trial.ps1` and press F7 to compare the new mesh with the current player. The trial uses the Chamber's normal player, side camera, live 78-bone skeleton and 64 loaded clips. The Downloads FBX had no UVs, texture or rig, so `tools/art/fit_og_base_trial.py` applies vertex paint and fits the sculpt to the modular doll's rest pose. From the repository root, run it with Blender's `--python` argument and pass the FBX path after `--`. It writes the editable Blender file and runtime GLB under `LocalOnly/OG_Export_Trial/`. The launcher uses the existing isolated Sprite Study project.
+
+The rendered check passed idle, run, jump, landing, attack, mirrored facing, grapple deployment and the comparison toggle. Sword, shield and grapple parts use the existing equipment visuals. The costume is still one mesh. Hand and cuff deformation, hardware alignment, and separate armor pieces for gear swaps await art review.
+
 ## November 10 OG base T-pose references
 
 T48 matched hand turnaround. Use the [matched front](../work/og-base-turnaround-2026-11-10/og_base_dark_joints_front_v2.png) and [corrected rear](../work/og-base-turnaround-2026-11-10/og_base_dark_joints_back_v2.png). Both show two dark breaks per long finger and one per thumb. The front has smooth palms and the rear has circular knuckle caps.
