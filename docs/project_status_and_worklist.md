@@ -6,6 +6,8 @@ recovery baseline remains `16b3bd3c`; dated evidence is in the
 
 ## November 10 OG base T-pose references
 
+November 11 T48 revision. Review the [v2 reference pair and notes](../work/og-base-turnaround-2026-11-10/revision_v2.md) before generating a model. The head is smaller and the Base gloves cover all fingers. Glove mesh fitting and equipment behavior remain open.
+
 **T48 — OG front/back model references: Awaiting visual review.** Chase
 requested T-pose front/back inputs for a morning model-generation experiment
 and asked about cleaner versus tattered base clothing. The
