@@ -106,7 +106,6 @@ func _ready() -> void:
 		var source := mesh.get_parent() if mesh.get_meta("outline_only", false) else mesh
 		if source != body and not weapons.has(source):
 			mesh.hide()
-	taper_hand_outlines(body)
 	for node in player.find_children("*", "Light2D", true, false):
 		node.range_item_cull_mask = 0
 	visual.sword_smear_enabled = false
@@ -128,28 +127,6 @@ func _ready() -> void:
 	print("DOLL_LIGHTING_READY ", visual.model_scene.resource_path)
 	if OS.get_cmdline_user_args().has("--verify"):
 		await verify()
-
-
-func taper_hand_outlines(body: MeshInstance3D) -> void:
-	var outline := body.get_node_or_null("ObjectOutline") as MeshInstance3D
-	if not outline or not outline.mesh or not outline.material_override is ShaderMaterial:
-		return
-	var masked_mesh := ArrayMesh.new()
-	for surface in outline.mesh.get_surface_count():
-		var arrays := outline.mesh.surface_get_arrays(surface)
-		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
-		var width_mask := PackedColorArray()
-		width_mask.resize(vertices.size())
-		for i in vertices.size():
-			# Bind-pose X runs along the outstretched arm on the slot 5 doll.
-			var width := lerpf(1.0, 0.18, smoothstep(0.42, 0.57, absf(vertices[i].x)))
-			width_mask[i] = Color(width, width, width, 1.0)
-		arrays[Mesh.ARRAY_COLOR] = width_mask
-		masked_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	var material := outline.material_override.duplicate() as ShaderMaterial
-	material.set_shader_parameter("use_vertex_width_mask", true)
-	outline.mesh = masked_mesh
-	outline.material_override = material
 
 
 func _unhandled_key_input(event: InputEvent) -> void:

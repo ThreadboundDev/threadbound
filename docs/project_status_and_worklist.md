@@ -20,8 +20,6 @@ Sword idle follow-up. Across the idle loops the sword already followed the wrist
 
 Sword contact follow-up. The preview fits the hilt to the angled knuckle row and poses each right finger around its measured cross-section. The thumb crosses the other side. The rendered check verified contact against the measured cross-sections and a stable hand attachment in 84 samples across all four idle clips, run, jump and a slash. H restores the original pose and weapon transform. The fit is still a lighting-room comparison.
 
-Shield-arm outline follow-up. Matched torch renders with each outline toggled isolated the wrist spikes to the doll outline. The lighting-room mesh now tapers that outline across the forearms and hands in the bind pose. The torso and shield retain their outline widths. The shared shader uses the mask only when enabled by the preview.
-
 ## November 11 wooden doll lighting room
 
 T48 lighting comparison. Open `tools/fixtures/doll_lighting/wooden_doll_lighting.tscn` with F6 or use the local Play Wooden Doll Lighting shortcut. It uses the wooden body from slot 5 of the Chamber comparison. The original sword and shield are visible by default. B toggles both for a bare-hand comparison, and H switches the grip. The room uses the standard Greybox blocks and the live player animations. Use 1 for neutral, 2 for sun, 3 for a steady bulb, and 4 for a flickering wall torch. R returns to the reference mark, and the mouse wheel zooms.
