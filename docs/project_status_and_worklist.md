@@ -12,6 +12,16 @@ gear. Use the wooden doll as the reference for new character artwork, including
 the main menu concept. The first revised menu study shows the unequipped doll
 in the Chamber of the First Weave. Menu installation awaits art review.
 
+## November 12 title screen concept
+
+Chase's target is the wooden doll seated in an open Blossom of Eryndor on the
+right, idly passing a single thread between its hands. Put the title and plain
+menu rows on the left. The live portrait should show the current save's
+equipped pieces and use the new game appearance when there is no save.
+The current demo checkpoint does not serialize the equipped loadout. The
+concept is for visual review. A live portrait, equipment persistence and the
+seated animation are pending implementation approval.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.
