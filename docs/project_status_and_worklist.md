@@ -4,11 +4,11 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
-## November 12 public demo refresh proposal
+## Demo 2.0 Polish To-Do List
 
-Release target: a Windows update on the existing
-[Threadbound itch.io page](https://threadbounddev.itch.io/threadbound). Use
-`0.1.1` as the proposed version, subject to the release decision. Keep the
+Release target: Demo 2.0, a Windows update on the existing
+[Threadbound itch.io page](https://threadbounddev.itch.io/threadbound). Confirm
+the exact version string before export and use it consistently on itch.io. Keep the
 current Chamber of the First Weave route, tutorial, objectives, Proto-Weaver,
 ending and Keep Exploring loop. The public build should show the wooden
 Threadborne in motion and address the bugs that most disrupt a first playthrough.
@@ -18,19 +18,19 @@ is a story direction for later production.
 
 ### 1. Establish the candidate baseline and triage bugs
 
-- Record the public Windows ZIP version, contents and hash. Replay it and the
+- [ ] Record the public Windows ZIP version, contents and hash. Replay it and the
   latest saved candidate from the main menu with isolated profiles. Use a
   copied public-demo save and remapped controls to test Continue and settings.
   The [November 9 exports](current_playtest_builds.md) are useful reference
   builds. They used saved working-tree changes, started directly in a level
   and were checked for startup and rendering.
-- Save Godot, Blender and Krita work before switching tasks. Review the
+- [ ] Save Godot, Blender and Krita work before switching tasks. Review the
   existing local changes and checkpoint the approved dependencies by scope.
   Record the exact integration commit, Godot version and matching Windows
   export templates before cutting a candidate. Check that a fresh checkout
   has the runtime assets it needs, including the wooden doll and its fitted
   gear, without relying on a developer's local asset paths.
-- For each bug, record build, room or landmark, input, expected and observed
+- [ ] For each bug, record build, room or landmark, input, expected and observed
   behavior. Fix crashes, lost saves, softlocks, blocked objectives and lost
   control first. Then prioritize input, camera, grapple, collision and combat
   feedback defects that recur on the normal route. Reproduce the old reports
@@ -39,13 +39,13 @@ is a story direction for later production.
 
 ### 2. Fit the wooden doll and stabilize the demo animations
 
-- Compare the slot 5 wooden doll and the latest saved hand, grip and seam
+- [ ] Compare the slot 5 wooden doll and the latest saved hand, grip and seam
   work in the actual Chamber at gameplay scale. Choose one demo kit from the
   gear the route already uses. Check the sword, shield, grapple, clothing and
   any gear or mask changes the demo exposes against that kit. Preserve
   current equipment behavior and leave the broader interchangeable-gear
   design for a separate proposal.
-- Use the existing rig and clips as the starting point. Verify both facings,
+- [ ] Use the existing rig and clips as the starting point. Verify both facings,
   idle-to-run, jump and second jump, land, dash, ledge, grapple cast and
   release, guard, attacks, hurt, death and respawn. Judge feet and hand contact,
   silhouette, and whether cuffs, knees and weapons visibly intersect in the
@@ -55,41 +55,56 @@ is a story direction for later production.
 
 ### 3. Overhaul Chamber lighting, then tune VFX and sound in the same rooms
 
-- **Lighting.** Use the doll lighting room's neutral, sun, bulb and torch
+- [ ] **Lighting.** Use the doll lighting room's neutral, sun, bulb and torch
   comparisons as a reference. Replay the opening, dark traversal, colored
   objective fixtures and boss arena with the final doll and gear. Tune the
   character and room lights together so the wood retains detail, the
   silhouette reads in shadow, and traversal cues and enemy tells stand out.
   Capture matched before/after frames and record frame times at repeatable
   settings on target Windows hardware.
-- **VFX.** Start with sword contacts, guard feedback, grapple launch and
+- [ ] **VFX.** Start with sword contacts, guard feedback, grapple launch and
   latch, and Flow. Use the existing VFX studies and tests. Check at normal
   speed that effects follow the blade, match contact timing and leave the
   player, enemy tells and platform edges readable. Any proposed change to
   attack timing, damage or hitboxes follows the combat approval process.
-- **Sound.** A/B the current cues in-game before choosing additions. Audition
+- [ ] **Sound.** A/B the current cues in-game before choosing additions. Audition
   footsteps and landings, grapple release and latch, guard and sword contact,
   and one Chamber ambience layer if it helps the scene. Start with existing
   sources and the [NOX audition](assets/nox_sound_audition_2026_10_28.md).
   Keep cues that improve timing or feedback, verify their provenance and
   listen for masking or excessive repetition during the full route.
 
-### 4. Test the exact Windows export and make the release decision
+### 4. Revisit the menus
 
-- Run relevant T10 checks below and the rendered player, lighting and VFX
+- [ ] Review the main menu layout and the latest concept showing the unequipped
+  wooden doll in the Chamber. Check logo and button contrast, spacing, and
+  readability at common window sizes. Get art approval before installing a
+  replacement.
+- [ ] Play through Main Menu, Pause, Options and Inventory on keyboard/mouse and
+  DualSense. Check New Game and Continue with and without a save, default
+  focus, focus when returning from a submenu, Back/Cancel, prompts when
+  switching input, and inventory tab navigation.
+- [ ] Change volume, brightness and controls from the menus, relaunch, and check
+  that settings persist. Resume from Pause and Inventory during play and
+  verify that closing a menu restores control without triggering a dash.
+  Include these checks in the exported build smoke test.
+
+### 5. Test the exact Windows export and make the release decision
+
+- [ ] Run relevant T10 checks below and the rendered player, lighting and VFX
   checks. Run the Windows x64 release export from a recorded commit through
   the normal main menu on keyboard/mouse and DualSense. Cover New Game,
   tutorial, all objectives and doors, Proto-Weaver, ending, Keep Exploring,
-  death and Knot recovery, pause/options, checkpoint Continue, and relaunch
+  death and Knot recovery, the menu checks above, checkpoint Continue, and relaunch
   with fresh and copied old data. Verify player settings survive the upgrade.
   Test the exported files from a clean install, outside Godot.
-- Reuse the [playtest export tooling](current_playtest_builds.md) where it
+- [ ] Reuse the [playtest export tooling](current_playtest_builds.md) where it
   fits. Review the public package for developer helpers, fixtures and local
   content, confirm required resource and license files, and record export
   settings, size and SHA-256. Keep a verified copy of the previous public
   download for rollback. Have an E31 tester run the candidate from the start
   and report the build and last landmark if blocked.
-- Release after the full route passes, reproducible release blockers are
+- [ ] Release after the full route passes, reproducible release blockers are
   fixed, performance is acceptable on the tested hardware, and Chase signs
   off on the look, known issues and exact candidate. If old saves fail, fix
   compatibility or agree and communicate a safe upgrade path first.
@@ -98,16 +113,16 @@ is a story direction for later production.
   rollback steps. A `butler` push can go live when the upload completes.
   [itch.io build upload documentation](https://itch.io/docs/butler/pushing.html)
 
-### 5. Use the release as a small marketing beat
+### 6. Use the release as a small marketing beat
 
-- Prepare a 20–30 second gameplay clip from the release candidate that shows
+- [ ] Prepare a 20–30 second gameplay clip from the release candidate that shows
   the wooden doll, a grapple into movement or combat, and a readable lighting
   change. Capture three gameplay screenshots from that build and make the
   first itch screenshot show the new character clearly. Verify the project
   description, demo version and applicable AI disclosure against the shipped
   content.
   [itch.io creator guidelines](https://itch.io/docs/creators/quality-guidelines)
-- Once the public download is verified, publish a short update linked to
+- [ ] Once the public download is verified, publish a short update linked to
   Devlog #5. Lead with what players can try, list the most noticeable fixes,
   and point to the download and feedback survey. Share the clip and direct
   itch link in E31 and one relevant community that permits self-promotion.
