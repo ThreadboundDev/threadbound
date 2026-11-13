@@ -16,11 +16,17 @@ in the Chamber of the First Weave. Menu installation awaits art review.
 
 Chase's target is the wooden doll seated in an open Blossom of Eryndor on the
 right, idly passing a single thread between its hands. Put the title and plain
-menu rows on the left. The live portrait should show the current save's
-equipped pieces and use the new game appearance when there is no save.
-The current demo checkpoint does not serialize the equipped loadout. The
-concept is for visual review. A live portrait, equipment persistence and the
-seated animation are pending implementation approval.
+menu rows on the left. Keep the Chamber of the First Weave ruin in the first
+backdrop. The longer term goal is a backdrop for each biome, selected from
+the checkpoint that Continue will load. Use the Chamber when there is no save
+or no backdrop for that checkpoint.
+
+The live portrait should use a separate instance of the actual 3D doll with
+the saved gear pieces. The inventory portrait already renders the rig and
+modular gear in its own viewport, but gets its gear from the active player.
+The checkpoint stores its scene path and ID, but does not store the equipped
+loadout. Use the new game appearance when there is no saved loadout. A live
+portrait, equipment persistence and the seated animation await approval.
 
 ## November 11 idle interruption fix
 
