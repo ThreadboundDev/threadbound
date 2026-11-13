@@ -18,6 +18,7 @@ var _completed_world_events: Dictionary = {}
 var _unlocked_lore: Dictionary = {&"threadbound": true}
 var _read_lore: Dictionary = {}
 var _checkpoint_scene_path := ""
+var _checkpoint_loadout := PackedInt32Array([0, 1, 2])
 var _checkpoint_id: StringName = &""
 var _checkpoint_position := Vector2.ZERO
 var _tutorial_completed := false
@@ -111,6 +112,7 @@ func save_checkpoint(checkpoint_id: StringName, scene_path: String, player_posit
 	_checkpoint_id = checkpoint_id
 	_checkpoint_scene_path = scene_path
 	_checkpoint_position = player_position
+	_checkpoint_loadout = PackedInt32Array(EquipManager.current_equip)
 
 	_tutorial_completion_recorded = true
 	_write_progress()
@@ -132,6 +134,13 @@ func load_checkpoint() -> bool:
 
 	_checkpoint_id = StringName(str(config.get_value("checkpoint", "id", "")))
 	_checkpoint_scene_path = str(config.get_value("checkpoint", "scene_path", ""))
+	_checkpoint_loadout = PackedInt32Array([0, 1, 2])
+	var saved_loadout: Variant = config.get_value("checkpoint", "portrait_loadout", null)
+	if saved_loadout is PackedInt32Array and saved_loadout.size() == _checkpoint_loadout.size():
+		for slot in _checkpoint_loadout.size():
+			var item: int = saved_loadout[slot]
+			if item >= 0 and item <= EquipManager.YELLOW_GLOVES_SLOT and item % 3 == slot:
+				_checkpoint_loadout[slot] = item
 	_checkpoint_position = Vector2(
 		float(config.get_value("checkpoint", "position_x", 0.0)),
 		float(config.get_value("checkpoint", "position_y", 0.0))
@@ -174,6 +183,7 @@ func clear_checkpoint() -> void:
 func clear_run() -> void:
 	_checkpoint_id = &""
 	_checkpoint_scene_path = ""
+	_checkpoint_loadout = PackedInt32Array([0, 1, 2])
 	_checkpoint_position = Vector2.ZERO
 	_tutorial_completed = false
 	_tutorial_completion_recorded = false
@@ -208,6 +218,9 @@ func get_checkpoint_position() -> Vector2:
 
 func get_checkpoint_id() -> StringName:
 	return _checkpoint_id
+
+func get_checkpoint_loadout() -> PackedInt32Array:
+	return _checkpoint_loadout.duplicate()
 
 func mark_tutorial_completed() -> void:
 	if _tutorial_completed:
@@ -294,6 +307,7 @@ func _write_progress() -> void:
 	config.set_value("meta", "save_version", SAVE_VERSION)
 	config.set_value("checkpoint", "id", String(_checkpoint_id))
 	config.set_value("checkpoint", "scene_path", _checkpoint_scene_path)
+	config.set_value("checkpoint", "portrait_loadout", _checkpoint_loadout)
 	config.set_value("checkpoint", "position_x", _checkpoint_position.x)
 	config.set_value("checkpoint", "position_y", _checkpoint_position.y)
 	config.set_value("progress", "tutorial_completed", _tutorial_completed)

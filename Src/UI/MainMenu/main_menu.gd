@@ -2,12 +2,7 @@ extends Control
 
 const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn"
 
-@export var selector_offset := Vector2(20.0, -15.0)
-@export var selected_scale := Vector2(1.04, 1.04)
-@export var normal_scale := Vector2.ONE
-@export var disabled_alpha := 0.55
-
-@onready var selector: TextureRect = $Selector as TextureRect
+@onready var selection: ColorRect = $MenuButtons/Selection
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
 @onready var confirmation_layer: Control = $NewJourneyConfirmation as Control
@@ -41,15 +36,13 @@ func _ready() -> void:
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
-		row.pivot_offset = row.size * 0.5
 		row.mouse_entered.connect(_select_index.bind(i))
 		row.gui_input.connect(_on_row_gui_input.bind(i))
 	for i in confirmation_choices.size():
 		confirmation_choices[i].mouse_entered.connect(_select_confirmation.bind(i))
 		confirmation_choices[i].gui_input.connect(_on_confirmation_gui_input.bind(i))
 
-	_select_index(_selected_index, true)
-	_refresh_continue_state()
+	_select_index(0 if DemoProgress.has_checkpoint() else 1, true)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
@@ -104,35 +97,18 @@ func _select_index(index: int, instant := false) -> void:
 
 	_selected_index = wrapi(index, 0, rows.size())
 	for i in rows.size():
-		_set_row_selected(i, i == _selected_index, instant)
+		_set_row_selected(i, i == _selected_index)
 
-	var row := rows[_selected_index]
-	var plaque := row.get_node("Plaque") as TextureRect
-	selector.visible = true
-	selector.global_position = plaque.global_position + Vector2(plaque.size.x, 0.0) + selector_offset
+	selection.position.y = rows[_selected_index].position.y
 
-func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
-	var row := rows[index]
-	var plaque := row.get_node("Plaque") as TextureRect
-	var label := row.get_node("Label") as Label
-	var target_scale := selected_scale if is_selected else normal_scale
-	var target_alpha := 1.0 if _is_row_enabled(index) else disabled_alpha
-	var target_color := Color(1.0, 0.91, 0.72, target_alpha) if is_selected else Color(0.78, 0.70, 0.58, target_alpha)
-
-	if instant:
-		row.scale = target_scale
-		plaque.modulate = Color(1.0, 1.0, 1.0, target_alpha)
-		label.modulate = target_color
-		return
-
-	if _row_tweens.has(row):
-		(_row_tweens[row] as Tween).kill()
-	var tween := create_tween()
-	_row_tweens[row] = tween
-	tween.set_parallel(true)
-	tween.tween_property(row, "scale", target_scale, 0.12)
-	tween.tween_property(plaque, "modulate", Color(1.0, 1.0, 1.0, target_alpha), 0.12)
-	tween.tween_property(label, "modulate", target_color, 0.12)
+func _set_row_selected(index: int, is_selected: bool) -> void:
+	var label := rows[index].get_node("Label") as Label
+	var target_color := Color("#d8d2c0")
+	if not _is_row_enabled(index):
+		target_color = Color("#999b96")
+	elif is_selected:
+		target_color = Color("#f2e7cf")
+	label.modulate = target_color
 
 func _activate_selected() -> void:
 	AudioManager.play_ui(&"menu_select")
@@ -181,7 +157,6 @@ func _request_new_journey() -> void:
 	_confirmation_index = 1
 	confirmation_layer.visible = true
 	$MenuButtons.visible = false
-	selector.visible = false
 	_select_confirmation(_confirmation_index, true)
 
 func _hide_new_journey_confirmation() -> void:
@@ -227,12 +202,11 @@ func _is_row_enabled(index: int) -> bool:
 
 func _refresh_continue_state() -> void:
 	for i in rows.size():
-		_set_row_selected(i, i == _selected_index, true)
+		_set_row_selected(i, i == _selected_index)
 
 func _show_options() -> void:
 	_showing_options = true
 	$MenuButtons.visible = false
-	selector.visible = false
 	options_panel.visible = true
 
 func _hide_options() -> void:
@@ -244,7 +218,6 @@ func _hide_options() -> void:
 func _show_playtest_support() -> void:
 	_showing_support = true
 	$MenuButtons.visible = false
-	selector.visible = false
 	options_panel.visible = false
 	support_panel.open()
 

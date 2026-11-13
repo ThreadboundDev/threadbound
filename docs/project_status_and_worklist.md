@@ -21,12 +21,20 @@ backdrop. The longer term goal is a backdrop for each biome, selected from
 the checkpoint that Continue will load. Use the Chamber when there is no save
 or no backdrop for that checkpoint.
 
-The live portrait should use a separate instance of the actual 3D doll with
-the saved gear pieces. The inventory portrait already renders the rig and
-modular gear in its own viewport, but gets its gear from the active player.
-The checkpoint stores its scene path and ID, but does not store the equipped
-loadout. Use the new game appearance when there is no saved loadout. A live
-portrait, equipment persistence and the seated animation await approval.
+Chase approved installing the Chamber backdrop with an empty painted Blossom
+and the live 3D doll seated in front of it. The title uses the inventory's
+modular gear renderer and material treatment in a 1440 × 1200 viewport with
+8× MSAA. The save-point sit clip supplies the seat pose. The hands hold a
+thread with a gentle idle sway. The checkpoint now records the gloves, boots
+and head/chest indices for the portrait. Older saves use the starting gear.
+The menu uses the existing local doll and gear exports. The painted Blossom
+and menu are available when those exports are absent.
+
+Forward+ renders verified the starting outfit and a saved mix of Blue gloves
+and head/chest with Base boots. Settings, Playtest Support, the New Journey
+confirmation and the menu cancel guard passed. Godot reported resource
+diagnostics at shutdown. Other biome art and a full thread handoff animation
+remain future work. Review the seated portrait with F5 in Godot.
 
 ## November 11 idle interruption fix
 

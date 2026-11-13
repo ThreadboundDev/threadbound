@@ -6,6 +6,7 @@
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 # Preserve delivered art and work references without large binary Git blobs.
+"Assets/UI/Main Menu/chamber_title_backdrop.png" filter=lfs diff=lfs merge=lfs -text
 *.blend@ filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.png filter=lfs diff=lfs merge=lfs -text
 outputs/**/*.jpg filter=lfs diff=lfs merge=lfs -text
