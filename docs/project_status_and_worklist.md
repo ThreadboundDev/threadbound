@@ -4,6 +4,14 @@ Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
 
+## November 12 player art direction
+
+Chase confirmed the wooden doll as Threadbound's playable character. The doll
+is the base body, and players dress it with individual pieces as they unlock
+gear. Use the wooden doll as the reference for new character artwork, including
+the main menu concept. The first revised menu study shows the unequipped doll
+in the Chamber of the First Weave. Menu installation awaits art review.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.
