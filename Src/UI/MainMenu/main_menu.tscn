@@ -93,20 +93,6 @@ offset_right = 546.0
 offset_bottom = 774.0
 mouse_filter = 2
 
-[node name="Selection" type="ColorRect" parent="MenuButtons"]
-layout_mode = 0
-offset_right = 432.0
-offset_bottom = 60.0
-mouse_filter = 2
-color = Color(0.204, 0.235, 0.259, 0.87)
-
-[node name="Marker" type="ColorRect" parent="MenuButtons/Selection"]
-layout_mode = 0
-offset_right = 4.0
-offset_bottom = 60.0
-mouse_filter = 2
-color = Color(0.855, 0.776, 0.612, 1)
-
 [node name="Continue" type="Control" parent="MenuButtons" unique_id=390074975]
 layout_mode = 0
 offset_top = 0.0

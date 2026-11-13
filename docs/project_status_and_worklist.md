@@ -42,6 +42,17 @@ The original Chamber checkpoint cannot Continue from this screen. Starting
 a New Journey still asks before replacing it. Both title entry paths were
 verified in Godot with the live wooden doll. The pause menu is separate.
 
+The title screen uses the shared nine-slice button theme in
+`Src/UI/menu_button_theme.gd`. The two simple SVGs keep their corners and
+border thickness as the buttons resize. The theme uses Almendra and includes
+normal, hover, pressed, disabled and focus styles. For a native Godot Button,
+assign `theme = MENU_BUTTON_THEME.create(accent, font_size)` after preloading
+the script as `MENU_BUTTON_THEME`. The title exposes `button_accent` so a
+future biome backdrop can supply its own color. Chamber amber is the current
+default. Blue, Red and Yellow accents were rendered for comparison.
+Forward+ review checked compact and wide buttons, keyboard navigation,
+disabled Continue and opening Settings.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.

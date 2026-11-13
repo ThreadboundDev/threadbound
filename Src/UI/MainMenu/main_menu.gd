@@ -2,8 +2,10 @@ extends Control
 
 const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn"
 const ORIGINAL_DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn"
+const MENU_BUTTON_THEME := preload("res://Src/UI/menu_button_theme.gd")
 
-@onready var selection: ColorRect = $MenuButtons/Selection
+@export var button_accent := MENU_BUTTON_THEME.CHAMBER
+
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
 @onready var confirmation_layer: Control = $NewJourneyConfirmation as Control
@@ -23,6 +25,7 @@ var _showing_support := false
 var _confirming_new_journey := false
 var _confirmation_index := 1
 var _starting_new_journey := false
+var _button_theme: Theme
 
 func _ready() -> void:
 	AudioManager.play_title_screen_music()
@@ -34,9 +37,11 @@ func _ready() -> void:
 		DemoProgress.checkpoint_changed.connect(_refresh_continue_state)
 	options_panel.back_requested.connect(_hide_options)
 	support_panel.back_requested.connect(_hide_playtest_support)
+	_button_theme = MENU_BUTTON_THEME.create(button_accent)
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
+		row.draw.connect(_draw_menu_row.bind(i))
 		row.mouse_entered.connect(_select_index.bind(i))
 		row.gui_input.connect(_on_row_gui_input.bind(i))
 	for i in confirmation_choices.size():
@@ -100,16 +105,26 @@ func _select_index(index: int, instant := false) -> void:
 	for i in rows.size():
 		_set_row_selected(i, i == _selected_index)
 
-	selection.position.y = rows[_selected_index].position.y
-
 func _set_row_selected(index: int, is_selected: bool) -> void:
-	var label := rows[index].get_node("Label") as Label
-	var target_color := Color("#d8d2c0")
+	var row := rows[index]
+	var label := row.get_node("Label") as Label
+	var target_color := MENU_BUTTON_THEME.TEXT
 	if not _is_row_enabled(index):
-		target_color = Color("#999b96")
+		target_color = MENU_BUTTON_THEME.DISABLED_TEXT
 	elif is_selected:
-		target_color = Color("#f2e7cf")
+		target_color = MENU_BUTTON_THEME.ACTIVE_TEXT
 	label.modulate = target_color
+	row.queue_redraw()
+
+func _draw_menu_row(index: int) -> void:
+	var row := rows[index]
+	var rect := Rect2(Vector2.ZERO, row.size)
+	var enabled := _is_row_enabled(index)
+	var selected := index == _selected_index
+	var state := &"disabled" if not enabled else (&"hover" if selected else &"normal")
+	row.draw_style_box(_button_theme.get_stylebox(state, &"Button"), rect)
+	if selected:
+		row.draw_style_box(_button_theme.get_stylebox(&"focus", &"Button"), rect)
 
 func _activate_selected() -> void:
 	AudioManager.play_ui(&"menu_select")
