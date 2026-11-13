@@ -8,6 +8,8 @@ const SHIELD_REST := Vector2(435, 516)
 
 var _thread_ends := PackedVector2Array()
 var _thread_time := 0.0
+var _hearth_light: OmniLight3D
+var _hearth_time := 0.0
 
 
 func _ready() -> void:
@@ -71,13 +73,19 @@ func _ready() -> void:
 	environment.background_color = Color(0, 0, 0, 0)
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color(0.77, 0.81, 0.91)
-	environment.ambient_light_energy = 0.42
+	environment.ambient_light_energy = 0.29
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	world.environment = environment
 	viewport.add_child(world)
-	_add_light(viewport, Vector3(-2, 3, 4), Color(1.0, 0.89, 0.73), 0.88)
-	_add_light(viewport, Vector3(2, 2, -4), Color(1.0, 0.70, 0.42), 1.12)
-	_add_light(viewport, Vector3(-4, 1, -2), Color(0.61, 0.76, 1.0), 0.35)
+	_add_light(viewport, Vector3(-2, 3, 4), Color(0.86, 0.90, 1.0), 0.43)
+	_add_light(viewport, Vector3(2, 2, -4), Color(1.0, 0.73, 0.48), 0.53)
+	_hearth_light = OmniLight3D.new()
+	_hearth_light.name = "BlossomGlow"
+	_hearth_light.position = Vector3(0.20, 0.37, 0.84)
+	_hearth_light.light_color = Color(1.0, 0.64, 0.34)
+	_hearth_light.light_energy = 0.52
+	_hearth_light.omni_range = 1.85
+	viewport.add_child(_hearth_light)
 
 	var camera := Camera3D.new()
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
@@ -150,6 +158,9 @@ func _raise_forearm(skeleton: Skeleton3D, side: String, lift: Vector3) -> void:
 
 
 func _process(delta: float) -> void:
+	if _hearth_light:
+		_hearth_time = fmod(_hearth_time + delta, TAU / 1.15)
+		_hearth_light.light_energy = 0.52 + 0.027 * sin(_hearth_time * 1.15) + 0.015 * sin(_hearth_time * 3.45)
 	if _thread_ends.size() != 2:
 		return
 	_thread_time = fmod(_thread_time + delta, 6.0)
