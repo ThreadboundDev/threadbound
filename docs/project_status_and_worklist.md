@@ -65,6 +65,27 @@ The browser prototype uses sample data for gear, settings, knot costs, and
 shop interactions. See the [screen and action inventory](../work/menu-concepts/README.md)
 before applying the concepts to the game.
 
+## November 13 menu review
+
+Chase likes the current simple button treatment for this pass. The
+[Inventory concept](../work/menu-concepts/index.html#inventory) now uses the
+original character layout with gear on either side of the standing doll and
+Pattern above it. The bag stays alongside it. Proposed equipment icon standard
+for review is a transparent 128 × 128 px canvas with a centered 104 × 104 px
+safe area. The desktop concept displays item art at 64 × 64 px. The browser
+review verified slot inspection, equipping, both full outfit previews, icon
+dimensions and narrow layout. The other concepts remain available for review.
+
+The Godot title now has a lower ambient fill and a localized amber light that
+flickers gently across the live doll and resting weapons. Forward+ review
+verified the light animation, the Base and saved Blue outfit renders and both
+weapon props. The seated pose holds while the thread sways. For a future art
+pass, Chase wants a quiet bonfire mood with a backdrop tied to the last save
+area. The proposed next asset is a 3D Blossom in the portrait viewport so the
+doll, petals, and weapons can share depth and contact shadows. The backdrop
+can remain painted per biome. This model and the inventory rollout are open
+for hands-on review and scope approval.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.

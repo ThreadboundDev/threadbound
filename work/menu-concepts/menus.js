@@ -6,7 +6,7 @@ const pages = ["Pause", "Settings", "Inventory", "Map", "Lore", "Controls", "Blo
 const gameTabs = ["Inventory", "Map", "Lore", "Controls"];
 const settingTabs = ["Graphics", "Audio", "Gameplay", "Controls"];
 const settings = new Map();
-const equipped = ["Base Gloves", "Base Boots", "Base Head / Chest"];
+const equipped = [0, 1, 2];
 const reflect = {
   Reflect: "Rest, restore health, save progress, and reset the world.",
   Weave: "Spend Thread Knots to strengthen your Threadborne.",
@@ -22,7 +22,8 @@ const shop = [
   ["Field Note: Tensioner", 2, "The Follower’s observations on Tensioners."],
   ["Field Note: Loomkin", 2, "The Follower’s observations on Loomkin."]
 ];
-let page = "Pause";
+const initialPage = pages.find(name => name.toLowerCase().replaceAll(" ", "-") === location.hash.slice(1));
+let page = initialPage ?? "Pause";
 let settingTab = "Graphics";
 let inventoryTab = "Equipment";
 let settingsFrom = "Pause";
@@ -41,7 +42,8 @@ const upgraded = new Set();
 function button(label, action, options = {}) {
   const disabled = options.disabled ? " disabled" : "";
   const active = options.active === undefined ? "" : ' aria-pressed="' + options.active + '"';
-  return '<button type="button" data-action="' + action + '"' + active + disabled + ">" + label + "</button>";
+  const accessibleLabel = options.label ? ' aria-label="' + options.label + '"' : "";
+  return '<button type="button" data-action="' + action + '"' + active + disabled + accessibleLabel + ">" + label + "</button>";
 }
 
 function tabs(items, active, action) {
@@ -86,32 +88,56 @@ function settingsScreen() {
 }
 
 const gear = [
-  ["Base Gloves", "base_grapple_icon.png", 0, "Thread wraps and grapple needle."],
-  ["Base Boots", "base_boots_icon.png", 1, "Standard Threadborne footwork."],
-  ["Base Head / Chest", "base_chest_icon.png", 2, "The starting outfit."],
-  ["Blue Gloves", "base_grapple_icon.png", 0, "Blue equipment for the gloves slot."]
+  ["Base Gloves", "base_gloves", "UI/Inventory/base_grapple_icon.png", 0, "Thread wraps and grapple needle."],
+  ["Base Boots", "base_boots", "UI/Inventory/base_boots_icon.png", 1, "Standard Threadborne footwork."],
+  ["Base Head / Chest", "base_head_chest", "UI/Inventory/base_chest_icon.png", 2, "The starting outfit."],
+  ["Blue Gloves", "blue_gloves", "Threadborne/Equipment/Blue Gear/blue_glove_icon.png", 0, "Blue equipment for the gloves slot."],
+  ["Blue Boots", "blue_boots", "UI/Inventory/base_boots_icon.png", 1, "Blue equipment for the boots slot."],
+  ["Blue Head / Chest", "blue_head_chest", "UI/Inventory/base_chest_icon.png", 2, "Blue equipment for the head and chest slot."]
 ];
+const iconReview = "../../LocalOnly/MainMenuReview/";
+
+function gearIcon(item) {
+  return '<img class="gear-icon" alt="" src="' + iconReview + "icon-" + item[1] + '.png" onerror="this.onerror=null;this.src=\'../../Assets/' + item[2] + '\'">';
+}
+
+function equippedSlot(slot, item, action) {
+  return '<div class="equipped-slot"><span>' + slot + "</span>" +
+    button(item ? gearIcon(item) : '<span class="empty-slot">—</span>', action,
+      {disabled: !item, label: slot + " · " + (item ? item[0] : "Empty")}) + "</div>";
+}
 
 function inventoryScreen() {
   const categories = ["All", "Key Items", "Equipment", "Materials"];
   let contents = '<p class="quiet">No items in this sample category.</p>';
   if (inventoryTab === "Equipment" || inventoryTab === "All") {
     const item = gear[categoryItem];
+    const wearing = equipped[item[3]] === categoryItem;
     contents = '<div class="inventory-slots">' + gear.map((entry, i) => button(
-      '<img alt="" src="' + assets + 'Inventory/' + entry[1] + '">' + entry[0],
-      "gear:" + i, {active: i === categoryItem})).join("") + '</div><h2>' + item[0] +
-      '</h2><p class="description">' + item[3] + "</p>" + button("Equip", "equip");
+      gearIcon(entry) + '<span>' + entry[0] + '</span>',
+      "gear:" + i, {active: i === categoryItem})).join("") + '</div><div class="item-detail"><h2>' + item[0] +
+      '</h2><p class="description">' + item[4] + "</p>" +
+      button(wearing ? "Equipped" : "Equip", "equip", {disabled: wearing}) + "</div>";
   } else if (inventoryTab === "Materials") {
     contents = row("Thread Knots", '<output>' + knots + "</output>");
   }
-  const slots = ["Gloves", "Boots", "Head / Chest", "Weapon", "Pattern"].map((label, i) =>
-    row(label, "<output>" + [...equipped, "Weaver’s Shuttle", "None"][i] + "</output>")).join("");
+  const left = equippedSlot("Weapon", ["Weaver’s Shuttle", "weapon", "UI/Inventory/weaver_shuttle_icon.png"], "weapon-detail") +
+    equippedSlot("Gloves", gear[equipped[0]], "inspect-slot:0");
+  const right = equippedSlot("Head / Chest", gear[equipped[2]], "inspect-slot:2") +
+    equippedSlot("Boots", gear[equipped[1]], "inspect-slot:1");
   const statRows = stats.map(([name, value]) => row(name, "<output>" + value + "</output>")).join("");
-  return '<div class="columns"><section class="panel"><h2>Threadborne</h2>' +
-    '<img class="portrait" src="portrait.png" alt="Modular wooden doll wearing its starting gear">' + slots +
-    '<p class="quiet">Thread Identity · Uncommitted</p></section><section class="panel">' +
-    tabs(categories, inventoryTab, "category") + contents + '</section></div><details class="panel"><summary>Stats</summary>' +
-    statRows + "</details>";
+  const outfit = equipped.every((item, slot) => item === slot) ? "base" :
+    equipped.every((item, slot) => item === slot + 3) ? "blue" : "base";
+  const portrait = '<img class="portrait" src="' + iconReview + 'paper-doll-' + outfit +
+    '.png" alt="Wooden doll, sample outfit preview" onerror="this.onerror=null;this.src=\'portrait.png\'">';
+  return '<div class="columns inventory-layout"><section class="panel character-panel"><h2>Threadborne</h2>' +
+    '<div class="paper-doll">' + equippedSlot("Pattern", null, "") +
+    '<div class="slot-rail">' + left + '</div><div class="portrait-stage">' + portrait +
+    '</div><div class="slot-rail">' + right + '</div></div><div class="identity">' +
+    '<span>Thread Identity</span><span class="quiet">Uncommitted</span></div></section>' +
+    '<section class="panel pack-panel"><div class="pack-header"><h2>Inventory</h2><span class="accent">Thread Knots · ' +
+    knots + '</span></div>' + tabs(categories, inventoryTab, "category") + contents +
+    '</section></div><details class="panel"><summary>Stats</summary><div class="stat-grid">' + statRows + "</div></details>";
 }
 
 function loreScreen() {
@@ -235,7 +261,9 @@ document.addEventListener("click", event => {
     case "back-settings": showPage(settingsFrom); return;
     case "category": inventoryTab = ["All", "Key Items", "Equipment", "Materials"][index]; break;
     case "gear": categoryItem = index; break;
-    case "equip": equipped[gear[categoryItem][2]] = gear[categoryItem][0]; break;
+    case "inspect-slot": inventoryTab = "Equipment"; categoryItem = equipped[index]; break;
+    case "weapon-detail": notice.textContent = "Weaver’s Shuttle · Equipped weapon"; return;
+    case "equip": equipped[gear[categoryItem][3]] = categoryItem; break;
     case "lore": loreIndex = index; break;
     case "device":
       controlDevice = index === 0 ? "Keyboard & Mouse" : "Controller";

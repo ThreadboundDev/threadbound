@@ -39,15 +39,31 @@ button:disabled{cursor:default;opacity:.65}
 .hint{font-size:14px;margin-top:19px}
 .description{min-height:52px}
 .map{display:block;width:min(100%,820px);max-height:385px;object-fit:contain;margin:auto}
-.inventory-slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:15px 0}
-.inventory-slots button{min-height:62px;text-align:center;padding:6px;font-size:19px}
-.inventory-slots img{width:43px;height:43px;object-fit:contain;display:block;margin:auto}
+.inventory-layout{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.inventory-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
+.inventory-slots button{display:grid;justify-items:center;align-content:start;gap:5px;min-height:103px;text-align:center;padding:8px 4px;font-size:18px;line-height:1.1}
+.gear-icon{width:64px;height:64px;object-fit:contain;display:block}
+.character-panel,.pack-panel{min-width:0}
+.paper-doll{display:grid;grid-template-columns:minmax(72px,1fr) minmax(90px,2.25fr) minmax(72px,1fr);gap:9px;align-items:center}
+.paper-doll>.equipped-slot{grid-column:1 / -1}
+.slot-rail{display:grid;gap:22px}
+.equipped-slot{display:grid;justify-items:center;gap:5px;text-align:center;color:var(--muted);font:19px Almendra,serif}
+.equipped-slot button{display:grid;place-items:center;width:80px;height:80px;padding:0;text-align:center}
+.empty-slot{font-size:26px;color:var(--muted)}
+.portrait-stage{display:grid;place-items:end center;min-height:305px;background:radial-gradient(ellipse at 50% 68%,#56606a44,transparent 69%)}
+.portrait{display:block;width:100%;height:305px;object-fit:contain;object-position:center bottom}
+.identity,.pack-header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.identity,.item-detail{border-top:1px solid #515d6770;padding-top:12px;margin-top:15px}
+.pack-header h2,.item-detail h2{margin-bottom:5px}
+.pack-panel .tabs{margin-bottom:0}
+.pack-panel .tabs button{font-size:19px;padding:7px 11px}
+.item-detail .description{min-height:0;margin:8px 0 14px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:25px}
 .gear-list{display:grid;gap:7px}
 .gear-list button{display:flex;justify-content:space-between;gap:8px;font-size:20px}
 .notice{position:absolute;left:clamp(24px,6vw,92px);bottom:0;color:var(--accent);margin:0 0 12px;font-size:14px}
 .frame .compact{max-width:540px}
 .qr{width:116px;background:#fff;padding:6px;border-radius:3px}
-.portrait{display:block;width:150px;height:183px;object-fit:contain;object-position:center 22%;float:right;margin:0 0 8px 10px}
 .follower{display:block;width:180px;height:145px;object-fit:contain;float:right;margin:0 0 8px 10px}
 .map-wrap{position:relative;width:min(100%,720px);margin:auto}
 .map-marker{position:absolute;left:49%;top:61%;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid #202b34;box-shadow:0 0 0 2px var(--accent)}
@@ -55,4 +71,6 @@ button:disabled{cursor:default;opacity:.65}
 .quick-select button:last-child{grid-column:1 / -1;justify-self:center;min-width:110px}
 details.panel{margin-top:12px}
 summary{font:23px Almendra,serif;cursor:pointer}
-@media(max-width:730px){.columns{grid-template-columns:1fr}.frame{min-height:600px;padding:22px 18px 42px}.review{padding:12px}.row{gap:10px}.row select{max-width:52%}.inventory-slots{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:880px){.inventory-layout{grid-template-columns:1fr}}
+@media(max-width:730px){.columns{grid-template-columns:1fr}.frame{min-height:600px;padding:22px 18px 42px}.review{padding:12px}.row{gap:10px}.row select{max-width:52%}.stat-grid{grid-template-columns:1fr}}
+@media(max-width:400px){.gear-icon{width:56px;height:56px}.inventory-slots button{font-size:16px}.equipped-slot button{width:72px;height:72px}}
