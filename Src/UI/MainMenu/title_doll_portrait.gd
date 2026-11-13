@@ -1,8 +1,10 @@
 extends TextureRect
 ## A seated copy of the modular doll, rendered separately from the painted seat.
 
-const VIEWPORT_SIZE := Vector2i(1440, 1200)
+const VIEWPORT_SIZE := Vector2i(1440, 1611)
 const SEAT_CLIP := "stand_to_sit_1"
+const SWORD_REST := Vector2(492, 546)
+const SHIELD_REST := Vector2(435, 516)
 
 var _thread_ends := PackedVector2Array()
 var _thread_time := 0.0
@@ -44,9 +46,6 @@ func _ready() -> void:
 	var loadout := DemoProgress.get_checkpoint_loadout()
 	for slot_type in loadout.size():
 		equipment._on_gameplay_equipment_changed(slot_type, loadout[slot_type])
-	# The hands are free while resting. The sword is authored as a drawn weapon.
-	equipment.clear_slot(&"weapon")
-
 	var styling := PlayerLive3DVisual.new()
 	styling._apply_toon_materials(model, 1.5)
 	styling.free()
@@ -82,21 +81,60 @@ func _ready() -> void:
 
 	var camera := Camera3D.new()
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 1.99
+	camera.size = 1.99 * 604.0 / 450.0
 	viewport.add_child(camera)
 	camera.look_at_from_position(Vector3(2.6, 1.55, 5.8), Vector3(0, 0.65, 0), Vector3.UP)
 	camera.current = true
+	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D
+	if equipped_weapon:
+		equipped_weapon.hide()
 	texture = viewport.get_texture()
 	# Projection is stable once the viewport has drawn with its own camera.
 	await RenderingServer.frame_post_draw
 	if not is_inside_tree():
 		return
+	if equipped_weapon:
+		_stage_resting_weapons(viewport, camera, equipped_weapon)
+		equipment.clear_slot(&"weapon")
 	for side in ["R", "L"]:
 		var hand := skeleton.find_bone("hand." + side)
 		var fingertip := skeleton.find_bone("f_index.03." + side)
 		if hand >= 0:
 			var point := skeleton.to_global(skeleton.get_bone_global_pose(fingertip if fingertip >= 0 else hand).origin)
 			_thread_ends.append(camera.unproject_position(point) / Vector2(VIEWPORT_SIZE))
+
+
+func _stage_resting_weapons(viewport: SubViewport, camera: Camera3D, equipped_weapon: Node3D) -> void:
+	var resting := Node3D.new()
+	resting.name = "RestingWeapons"
+	viewport.add_child(resting)
+	var styling := PlayerLive3DVisual.new()
+	for child in equipped_weapon.get_children():
+		var source := child as MeshInstance3D
+		if not source or not source.mesh:
+			continue
+		var is_sword := source.name == &"Threadborne_Sword"
+		var is_shield := String(source.name).begins_with("Shield_")
+		if not is_sword and not is_shield:
+			continue
+		# Use the same mesh and styled materials, with a rigid pose independent of the hands.
+		var prop := MeshInstance3D.new()
+		prop.name = source.name
+		prop.mesh = source.mesh
+		for surface in prop.mesh.get_surface_count():
+			prop.set_surface_override_material(surface, source.get_active_material(surface))
+		resting.add_child(prop)
+		var anchor := SWORD_REST if is_sword else SHIELD_REST
+		var origin := Vector3(-0.79, 1.48, 0.69) if is_sword else Vector3(0.61, 1.61, -0.024)
+		var rotation := Basis(Vector3.RIGHT, deg_to_rad(82.0 if is_sword else 77.0))
+		var lean := Basis(Vector3.BACK, deg_to_rad(17.0 if is_sword else -11.0))
+		var facing := Basis(Vector3.UP, deg_to_rad(-19.0 if is_sword else 22.0))
+		var basis := camera.global_basis * lean * facing * rotation
+		var screen_point := anchor * Vector2(VIEWPORT_SIZE) / size
+		var world_point := camera.project_position(screen_point, 5.8)
+		prop.global_transform = Transform3D(basis, world_point - basis * origin)
+		styling._install_object_outline(prop, 1.5)
+	styling.free()
 
 
 func _raise_forearm(skeleton: Skeleton3D, side: String, lift: Vector3) -> void:

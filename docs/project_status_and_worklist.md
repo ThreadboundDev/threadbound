@@ -53,6 +53,18 @@ default. Blue, Red and Yellow accents were rendered for comparison.
 Forward+ review checked compact and wide buttons, keyboard navigation,
 disabled Continue and opening Settings.
 
+The title portrait props the current Base sword and shield against the right
+side of the Blossom. It uses the equipment renderer's meshes and materials
+with rigid poses so the doll can keep holding the thread. The portrait uses
+the current Base weapon set until there is a saved weapon selection.
+
+The [menu concept gallery](../work/menu-concepts/index.html) is ready for
+visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
+Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
+The browser prototype uses sample data for gear, settings, knot costs, and
+shop interactions. See the [screen and action inventory](../work/menu-concepts/README.md)
+before applying the concepts to the game.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.

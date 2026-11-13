@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadbound · Menu concepts</title>
+<link rel="stylesheet" href="menus.css">
+<body>
+  <header class="review">
+    <span>Threadbound <small>Menu concepts</small></span>
+    <nav id="screens" aria-label="Choose a menu concept"></nav>
+  </header>
+  <main id="frame" class="frame" data-scene="pause">
+    <div id="screen" class="screen"></div>
+    <p id="notice" class="notice" role="status"></p>
+  </main>
+  <footer class="review">
+    <span>Visual prototype · Sample values and local interactions</span>
+    <label>Accent <select id="accent">
+      <option value="chamber">Chamber</option><option value="blue">Blue</option>
+      <option value="red">Red</option><option value="yellow">Yellow</option>
+    </select></label>
+  </footer>
+  <script src="menus.js"></script>
+</body>
+</html>

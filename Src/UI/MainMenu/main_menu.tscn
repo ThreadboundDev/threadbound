@@ -67,9 +67,9 @@ color = Color(0, 0, 0, 0.08)
 [node name="TitleDoll" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 1261.0
-offset_top = 477.0
+offset_top = 400.0
 offset_right = 1801.0
-offset_bottom = 927.0
+offset_bottom = 1004.0
 mouse_filter = 2
 expand_mode = 1
 script = ExtResource("8_portrait")
