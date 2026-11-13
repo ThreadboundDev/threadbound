@@ -1,0 +1,11 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/World/Chamber Of The First Weave.tscn" id="1_chamber"]
+[ext_resource type="PackedScene" path="res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb" id="2_doll"]
+
+[node name="COTFW - Demo Level" instance=ExtResource("1_chamber")]
+
+[node name="Live3DVisual" parent="Player" index="0"]
+model_scene = ExtResource("2_doll")
+
+[editable path="Player"]

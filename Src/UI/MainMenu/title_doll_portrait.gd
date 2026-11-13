@@ -89,6 +89,8 @@ func _ready() -> void:
 	texture = viewport.get_texture()
 	# Projection is stable once the viewport has drawn with its own camera.
 	await RenderingServer.frame_post_draw
+	if not is_inside_tree():
+		return
 	for side in ["R", "L"]:
 		var hand := skeleton.find_bone("hand." + side)
 		var fingertip := skeleton.find_bone("f_index.03." + side)

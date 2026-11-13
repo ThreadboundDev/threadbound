@@ -36,6 +36,12 @@ confirmation and the menu cancel guard passed. Godot reported resource
 diagnostics at shutdown. Other biome art and a full thread handoff animation
 remain future work. Review the seated portrait with F5 in Godot.
 
+The Blossom screen is the startup main menu for Demo 2.0. New Journey opens
+`Chamber Of The First Weave - Demo 2.0.tscn` and Continue resumes its saves.
+The original Chamber checkpoint cannot Continue from this screen. Starting
+a New Journey still asks before replacing it. Both title entry paths were
+verified in Godot with the live wooden doll. The pause menu is separate.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.

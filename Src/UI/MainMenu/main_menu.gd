@@ -1,6 +1,7 @@
 extends Control
 
-const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn"
+const DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn"
+const ORIGINAL_DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First Weave.tscn"
 
 @onready var selection: ColorRect = $MenuButtons/Selection
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
@@ -42,7 +43,7 @@ func _ready() -> void:
 		confirmation_choices[i].mouse_entered.connect(_select_confirmation.bind(i))
 		confirmation_choices[i].gui_input.connect(_on_confirmation_gui_input.bind(i))
 
-	_select_index(0 if DemoProgress.has_checkpoint() else 1, true)
+	_select_index(0 if _can_continue() else 1, true)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F5:
@@ -114,7 +115,7 @@ func _activate_selected() -> void:
 	AudioManager.play_ui(&"menu_select")
 	match rows[_selected_index].name:
 		&"Continue":
-			if DemoProgress.has_checkpoint():
+			if _can_continue():
 				AudioManager.play_ui(&"enter_world")
 				get_tree().change_scene_to_file(DemoProgress.get_checkpoint_scene_path())
 			else:
@@ -198,7 +199,10 @@ func _pulse_unavailable(row: Control) -> void:
 
 func _is_row_enabled(index: int) -> bool:
 	var row_name := rows[index].name
-	return (row_name == &"Continue" and DemoProgress.has_checkpoint()) or row_name == &"NewJourney" or row_name == &"Settings" or row_name == &"Extras" or row_name == &"Quit"
+	return row_name != &"Continue" or _can_continue()
+
+func _can_continue() -> bool:
+	return DemoProgress.has_checkpoint() and DemoProgress.get_checkpoint_scene_path() != ORIGINAL_DEMO_SCENE
 
 func _refresh_continue_state() -> void:
 	for i in rows.size():

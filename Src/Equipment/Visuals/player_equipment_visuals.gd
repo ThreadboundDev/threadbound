@@ -199,8 +199,9 @@ func _retire(old: Node3D) -> void:
 	old.queue_free()
 	# Material RIDs can still be referenced by the preceding render submission.
 	# Hold their resources through the next submission after freeing the nodes.
-	await get_tree().process_frame
-	await get_tree().process_frame
+	var tree := get_tree()
+	await tree.process_frame
+	await tree.process_frame
 	materials.clear()
 
 
