@@ -109,6 +109,14 @@ and `idle_3` flagged right-wrist angles above 72 degrees at frames 99
 and 69 respectively. The local `Idle_Review_Audit.json` indexes the peak
 wrist-angle frames for all 48 base clips. Visual review remains pending.
 
+Chase approved the edited idle as the base-model animation reference and
+flagged movement in the shield-hand thumb. The local
+`Wooden_Doll_Idle_Shield_Thumb_Review.blend` preserves the frame-23 thumb
+grip across all 62 frames. Blender measured about 6.3 mm of original
+thumb-tip travel relative to the hand and confirmed that the edit leaves
+every other evaluated bone transform identical. The corrected thumb awaits
+playback review before it is adopted.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
