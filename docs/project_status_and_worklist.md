@@ -98,6 +98,17 @@ four additional review actions. The intended wrist must be confirmed in
 Blender before declaring a master or rebuilding the runtime body and fitted
 glove hands.
 
+Chase confirmed the November 11 wrist-grip look and put animation review
+first. The November 12 `Wooden_Doll_Torso_Seam_Review.blend` opens at frame
+23 on `Review - hinged fingers and seated wrists`. Keep that saved
+idle and `Reference - Chase's frame 23 pose` available as references.
+The audited wrist angles match at frame 23. The archived `idle_4` action
+has different wrist angles there. Review the edited idle in Blender before
+working through the remaining base actions. The first checks on `idle_2`
+and `idle_3` flagged right-wrist angles above 72 degrees at frames 99
+and 69 respectively. The local `Idle_Review_Audit.json` indexes the peak
+wrist-angle frames for all 48 base clips. Visual review remains pending.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
