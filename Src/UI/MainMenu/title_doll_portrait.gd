@@ -10,6 +10,7 @@ const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
 const SEAT_OFFSET := Vector2(-26, 59)
 const HEARTH_ENERGY := 0.66
+const SHADOW_RECEIVER_LAYER := 2
 
 @export var show_gear := true
 
@@ -95,7 +96,13 @@ func _ready() -> void:
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	world.environment = environment
 	viewport.add_child(world)
-	_add_light(viewport, Vector3(-2, 3, 4), Color(0.86, 0.90, 1.0), 0.34)
+	var key := _add_light(viewport, Vector3(-2, 6, 3), Color(0.86, 0.90, 1.0), 0.34)
+	key.name = "OverheadKey"
+	key.light_cull_mask |= SHADOW_RECEIVER_LAYER
+	key.shadow_enabled = true
+	key.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+	key.directional_shadow_max_distance = 10.0
+	key.shadow_blur = 1.5
 	_add_light(viewport, Vector3(2, 2, -4), Color(1.0, 0.73, 0.48), 0.53)
 	_hearth_light = OmniLight3D.new()
 	_hearth_light.name = "BlossomGlow"
@@ -103,6 +110,7 @@ func _ready() -> void:
 	_hearth_light.light_color = Color(1.0, 0.64, 0.34)
 	_hearth_light.light_energy = HEARTH_ENERGY
 	_hearth_light.omni_range = 1.85
+	_hearth_light.light_cull_mask = 1
 	viewport.add_child(_hearth_light)
 
 	var camera := Camera3D.new()
@@ -113,6 +121,8 @@ func _ready() -> void:
 	camera.current = true
 	_camera = camera
 	_place_doll_on_seat(model)
+	_add_shadow_receiver(viewport, "CushionShadow", &"thigh.L", Vector3(-0.25, -0.12, 0.08), Vector2(0.95, 0.56), Color(0.065, 0.055, 0.078, 0.62))
+	_add_shadow_receiver(viewport, "FloorShadow", &"toe.R", Vector3(0.02, -0.04, -0.06), Vector2(0.86, 0.56), Color(0.09, 0.06, 0.05, 0.52))
 	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D if equipment else null
 	if equipped_weapon:
 		_stage_resting_weapons(viewport, camera, equipped_weapon)
@@ -128,16 +138,28 @@ func _place_doll_on_seat(model: Node3D) -> void:
 	_pose_leg("L", Vector2(9, -41), -0.025)
 	var hips := _project_bone(&"pelvis")
 	# Spread the soft shadow across the cushion and keep the dense part at contact.
-	_add_contact_shadow(hips + Vector2(-10, 16), Vector2(174, 66), Color(0.032, 0.039, 0.065, 0.66))
-	_add_contact_shadow(hips + Vector2(-3, 9), Vector2(105, 35), Color(0.019, 0.023, 0.039, 0.88))
-	var right_knee := _project_bone(&"shin.R")
-	_add_contact_shadow(hips.lerp(right_knee, 0.46) + Vector2(-2, 9), Vector2(96, 29),
-		Color(0.023, 0.032, 0.054, 0.82), Vector2.RIGHT.angle_to(right_knee - hips))
-	_add_contact_shadow(hips + Vector2(22, 12), Vector2(65, 30), Color(0.021, 0.029, 0.050, 0.72))
+	_add_contact_shadow(hips + Vector2(-3, 9), Vector2(105, 35), Color(0.019, 0.023, 0.039, 0.48))
 	var floor_contact := _project_bone(&"toe.R") + Vector2(7, 8)
-	_add_contact_shadow(floor_contact + Vector2(7, 1), Vector2(94, 27), Color(0.11, 0.074, 0.049, 0.49), -0.12)
-	_add_contact_shadow(floor_contact, Vector2(56, 13), Color(0.09, 0.055, 0.033, 0.86), -0.12)
-	_add_contact_shadow(_project_bone(&"toe.L") + Vector2(1, 9), Vector2(49, 15), Color(0.066, 0.054, 0.06, 0.55))
+	_add_contact_shadow(floor_contact, Vector2(56, 13), Color(0.09, 0.055, 0.033, 0.49), -0.12)
+
+
+func _add_shadow_receiver(viewport: SubViewport, receiver_name: String, anchor: StringName, offset: Vector3, extent: Vector2, tint: Color) -> void:
+	var plane := PlaneMesh.new()
+	plane.size = extent
+	var material := StandardMaterial3D.new()
+	material.shadow_to_opacity = true
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.disable_ambient_light = true
+	material.albedo_color = tint
+	var receiver := MeshInstance3D.new()
+	receiver.name = receiver_name
+	receiver.mesh = plane
+	receiver.material_override = material
+	receiver.layers = SHADOW_RECEIVER_LAYER
+	receiver.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	viewport.add_child(receiver)
+	var bone := _skeleton.get_bone_global_pose(_skeleton.find_bone(anchor))
+	receiver.global_position = _skeleton.to_global(bone.origin) + offset
 
 
 func _project_bone(name: StringName) -> Vector2:
@@ -331,12 +353,14 @@ func _draw() -> void:
 	draw_polyline(points, Color(1.0, 0.88, 0.65), 1.45, true)
 
 
-func _add_light(viewport: SubViewport, position: Vector3, color: Color, energy: float) -> void:
+func _add_light(viewport: SubViewport, position: Vector3, color: Color, energy: float) -> DirectionalLight3D:
 	var light := DirectionalLight3D.new()
 	light.light_color = color
 	light.light_energy = energy
+	light.light_cull_mask = 1
 	viewport.add_child(light)
 	light.look_at_from_position(position, Vector3(0, 0.6, 0), Vector3.UP)
+	return light
 
 
 func _on_gear_changed(slot: StringName, _item: EquipmentVisualDefinition, equipment: PlayerEquipmentVisuals) -> void:
