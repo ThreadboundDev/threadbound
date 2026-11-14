@@ -280,5 +280,13 @@ changes still follow the approval requirements above.
 Do not merge, rewrite history, or publish a build merely to satisfy a Git
 checkpoint. Follow review and release approval requirements separately.
 
+## Blender working files
+
+Reuse one working .blend for an active art pass. Edit the open Blender file
+when it is the intended working file. If the edit was made in another file,
+open the updated file in the active Blender window before handing it back for
+review. Check for unsaved changes before switching, then verify the file name
+and active action in Blender. Keep source files and meaningful checkpoints,
+and avoid creating a new .blend for every tweak.
 
 
