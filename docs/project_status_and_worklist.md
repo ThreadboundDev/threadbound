@@ -172,6 +172,13 @@ transfer and hand contact during those transitions still need animation.
 Chase proposed an explicit sheath key and/or auto-stow after 15–20 seconds.
 Gameplay behavior remains a design decision after the animation review.
 
+Use [Threadbound Character Master](../ArtSource/Player/Blender/Threadbound_Character_Master.blend)
+as the wooden player character source. It consolidates the approved idles,
+46 remaining base review actions, six stowed clips with accepted fists, and
+four sheath/draw references. The Drawn and Stowed view layers share one rig
+and body. Stowed preserves Chase's sword and shield placements. Gameplay
+exports and transition handoffs remain separate work.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
