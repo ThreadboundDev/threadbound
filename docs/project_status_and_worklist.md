@@ -134,6 +134,17 @@ the shield hand moved 17.3 mm and thumb drift relative to the hand stayed below
 0.001 mm. Next for Blender review is `idle_2`, with the sword wrist bending
 72.5 degrees at frame 99. That variation is still pending approval.
 
+Chase spotted the shoulder and wrist balls leaving their sockets in `idle_2`.
+The shoulder and wrist bones have negligible translation in the original
+action. Their fitted ball centers sit off the rotation pivots, so the ball
+centers move relative to the sockets during the pose change. The local
+`Idle_2_Socket_Review_Action.blend` contains only the review action for the
+existing working file. It seats both shoulders and both wrists at the
+first idle's frame-23 centers and retains the source rotations. Across
+1,449 Blender samples the fitted centers drifted by at most 0.035 mm.
+Review the pose and full loop before adopting the action in-game. Use
+ball-center travel relative to the socket to check subsequent animations.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
