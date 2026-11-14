@@ -150,6 +150,13 @@ After Chase's visual review, the action library was updated with
 farther forward in chest space. Across 1,449 samples the new seat held
 within 0.035 mm. Check the revised fit in Blender before approving `idle_2`.
 
+Chase placed the sword-side shoulder at frame 99 and approved the baked
+seat. The updated local review file uses the approved first idle's frame-23
+sword grip throughout `idle_2`. All 15 finger bones matched in hand space
+across 725 samples. Keep this grip whenever the sword is drawn. Sheathing
+can release the sword hand, and grapple motion can use the shield arm
+independently. The grip awaits visual approval before gameplay integration.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
