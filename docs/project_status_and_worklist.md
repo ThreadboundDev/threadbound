@@ -86,6 +86,18 @@ checks across eight loadouts. The title sits 11 pixels lower while keeping
 its foot contacts through the stitching loop. The rebuilt Blender and GLB
 files stay local.
 
+November 14 wrist review takes priority over further title art. Blender
+confirmed that the active modular body came from the November 7 scripted
+hand replacement. That script cuts the generated forearm back to 0.668 m
+from the centerline and builds a separate wrist seat and palm. The
+November 11 original-hands and wrist-grip review files keep the generated
+wrist geometry and its weights. Their wrist and forearm rest transforms
+match the active rig. The November 12 torso-seam review also preserves
+the original wrist components, with changed finger rest transforms and
+four additional review actions. The intended wrist must be confirmed in
+Blender before declaring a master or rebuilding the runtime body and fitted
+glove hands.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
