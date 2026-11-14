@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
+
 const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
 
@@ -24,7 +27,12 @@ var _showing_options := false
 var _showing_support := false
 var _closing := false
 
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		_apply_demo_style()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 110
 	add_to_group("pause_menu")
@@ -44,6 +52,29 @@ func _ready() -> void:
 		row.gui_input.connect(_on_row_gui_input.bind(i))
 
 	_select_index(_selected_index, true)
+
+func _apply_demo_style() -> void:
+	$Dim.color = MenuStyle.SCRIM
+	$MenuRoot/Background.hide()
+	$MenuRoot/Separator.hide()
+	var title := $MenuRoot/Title as Label
+	title.set_anchors_preset(Control.PRESET_CENTER_LEFT)
+	title.offset_left = 154
+	title.offset_right = 594
+	title.offset_top = -236
+	title.offset_bottom = -156
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	var buttons := $MenuRoot/Buttons as Control
+	buttons.set_anchors_preset(Control.PRESET_CENTER_LEFT)
+	buttons.offset_left = 154
+	buttons.offset_right = 594
+	buttons.offset_top = -124
+	buttons.offset_bottom = 200
+	for i in rows.size():
+		var row := rows[i]
+		row.position = Vector2(0, i * 80)
+		row.size = Vector2(420, 64)
+		MenuStyle.row(row)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _closing:
@@ -86,6 +117,8 @@ func _select_index(index: int, instant := false) -> void:
 	for i in rows.size():
 		_set_row_selected(i, i == _selected_index, instant)
 
+	if _demo_style:
+		return
 	var row := rows[_selected_index]
 	var plaque := row.get_node("Plaque") as TextureRect
 	selector.visible = true
@@ -93,6 +126,9 @@ func _select_index(index: int, instant := false) -> void:
 
 func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var row := rows[index]
+	if _demo_style:
+		MenuStyle.select_row(row, is_selected)
+		return
 	var plaque := row.get_node("Plaque") as TextureRect
 	var label := row.get_node("Label") as Label
 	var target_scale := selected_scale if is_selected else normal_scale

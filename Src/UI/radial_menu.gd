@@ -37,7 +37,17 @@ var hovered_slot: Control = null
 var controller_hover_active := false
 var pulse_tweens: Dictionary = {}
 
+
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		MenuStyle.plate($MenuFadeContainer/Background/Plate)
+		for slot in [hermit_gloves_slot, monarch_gloves_slot, sage_gloves_slot]:
+			MenuStyle.plate(slot.get_node("Panel"), true)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 	menu_fade_container.visible = false
@@ -171,6 +181,8 @@ func _get_entry_for_slot(target: Control) -> Dictionary:
 # === HOVER ===
 
 func _on_slot_hover(slot: Control) -> void:
+	if _demo_style:
+		MenuStyle.select_plate(slot.get_node("Panel"), true)
 	var icon = slot.get_node_or_null("Icon") as TextureRect
 	if not icon:
 		return
@@ -192,6 +204,8 @@ func _on_slot_hover(slot: Control) -> void:
 	pulse_tweens[slot] = pulse
 
 func _on_slot_unhover(slot: Control) -> void:
+	if _demo_style:
+		MenuStyle.select_plate(slot.get_node("Panel"), false)
 	var icon = slot.get_node_or_null("Icon") as TextureRect
 	if not icon:
 		return
@@ -301,6 +315,8 @@ func _reset_slot_visuals() -> void:
 	pulse_tweens.clear()
 
 	for entry in slot_data:
+		if _demo_style:
+			MenuStyle.select_plate(entry.slot.get_node("Panel"), false)
 		var icon = entry.slot.get_node_or_null("Icon") as TextureRect
 		if icon:
 			icon.modulate = Color.WHITE

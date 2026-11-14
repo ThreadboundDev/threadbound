@@ -3,6 +3,7 @@ extends CanvasLayer
 
 signal closed
 
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
 const MAIN_MENU_SCENE := "res://Src/UI/MainMenu/main_menu.tscn"
 
 @export var config: DemoEndingConfig
@@ -30,7 +31,17 @@ var _closing := false
 var _focus_visuals_enabled := true
 var _focus_buttons: Array[Button] = []
 
+
 func _ready() -> void:
+	if MenuStyle.enabled(self):
+		$Root/Background.color = MenuStyle.SURFACE
+		$Root/ThreadGold.hide()
+		$Root/ThreadBlue.hide()
+		$Root/ThreadRed.hide()
+		MenuStyle.plate($Root/MainPage/Content/PersonalNote)
+		MenuStyle.plate($Root/CreditsPage/CreditsPanel)
+		MenuStyle.plate($Root/NotePage/NotePanel)
+		MenuStyle.native_buttons(self)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group("demo_ending_screen")
 	feedback_button.pressed.connect(_open_feedback)

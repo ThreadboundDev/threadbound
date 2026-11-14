@@ -106,17 +106,27 @@ var _center_idle_tween: Tween
 var _displayed_knot_count := -1
 var _stick_navigation_armed := true
 
+
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
+var _demo_style := false
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group("interaction_prompt_owners")
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_cache_stat_nodes()
-	_layout_radial_graph()
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		_layout_demo_menu()
+	else:
+		_layout_radial_graph()
 	_refresh_input_labels()
 	_refresh()
 	_select_index(0, true)
 	_play_intro_animation()
-	_start_center_idle()
+	if not _demo_style:
+		_start_center_idle()
 
 func set_player(player: Node) -> void:
 	_player = player
@@ -188,6 +198,48 @@ func _cache_stat_nodes() -> void:
 		node.gui_input.connect(_on_stat_gui_input.bind(i))
 		_stat_nodes.append(node)
 
+func _layout_demo_menu() -> void:
+	$Shade.color = MenuStyle.SCRIM
+	$Header/HeaderEmblem.hide()
+	$Header.position.x = -54.0
+	$Header/Divider.hide()
+	center_ornament.hide()
+	center_emblem.hide()
+	connectors.hide()
+	var knots := $KnotPanel as TextureRect
+	knots.position = Vector2(788, 224)
+	MenuStyle.plate(knots)
+	var prompt := $PromptPanel as TextureRect
+	prompt.position = Vector2(788, 386)
+	MenuStyle.plate(prompt)
+	graph_root.position = Vector2(122, 224)
+	selected_scale = Vector2.ONE
+	for i in _stat_nodes.size():
+		var row := _stat_nodes[i]
+		row.position = Vector2(0, i * 99)
+		row.size = Vector2(622, 82)
+		var backing := row.get_node("Ring") as TextureRect
+		MenuStyle.plate(backing, true)
+		backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		backing.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		var title := row.get_node("Title") as Label
+		title.position = Vector2(84, 0)
+		title.size = Vector2(274, 82)
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var icon := row.get_node("Icon") as TextureRect
+		icon.position = Vector2(16, 15)
+		icon.size = Vector2(52, 52)
+		var values := row.get_node("Values") as Label
+		values.position = Vector2(360, 0)
+		values.size = Vector2(238, 82)
+		values.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		values.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		values.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.get_node("Cost").hide()
+		row.get_node("CostIcon").hide()
+
 func _layout_radial_graph() -> void:
 	_layout_center_piece()
 	for i in _stat_nodes.size():
@@ -237,7 +289,7 @@ func _select_index(index: int, instant := false) -> void:
 		var node := _stat_nodes[i]
 		var selected: bool = i == _selected_index
 		node.scale = selected_scale if selected else normal_scale
-		node.modulate = Color.WHITE if selected else Color(0.62, 0.58, 0.5, 0.78)
+		node.modulate = Color.WHITE if selected or _demo_style else Color(0.62, 0.58, 0.5, 0.78)
 		_set_node_selected_visuals(node, selected)
 
 	_update_prompt()
@@ -297,7 +349,8 @@ func _refresh_stat_nodes() -> void:
 		var values := node.get_node_or_null("Values") as Label
 		var cost := node.get_node_or_null("Cost") as Label
 		if ring:
-			ring.texture = _get_ring_texture(accent)
+			if not _demo_style:
+				ring.texture = _get_ring_texture(accent)
 			ring.modulate = Color.WHITE
 		if title:
 			title.text = String(data["title"])
@@ -341,7 +394,10 @@ func _set_node_selected_visuals(node: Control, selected: bool) -> void:
 	var muted := Color(0.8, 0.74, 0.62, 0.72)
 
 	if ring:
-		ring.modulate = bright if selected else muted
+		if _demo_style:
+			MenuStyle.select_plate(ring as Control, selected)
+		else:
+			ring.modulate = bright if selected else muted
 	if title:
 		title.modulate.a = 1.0 if selected else 0.72
 	if icon:
@@ -354,6 +410,8 @@ func _set_node_selected_visuals(node: Control, selected: bool) -> void:
 		cost_icon.modulate = Color.WHITE if selected else Color(0.72, 0.66, 0.52, 0.72)
 
 func _start_selected_pulse(node: Control) -> void:
+	if _demo_style:
+		return
 	if _selected_pulse_tween:
 		_selected_pulse_tween.kill()
 	var ring := node.get_node_or_null("Ring") as CanvasItem

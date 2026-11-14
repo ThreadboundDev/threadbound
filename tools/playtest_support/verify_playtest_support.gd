@@ -49,7 +49,7 @@ func _verify_welcome() -> void:
 func _verify_main_menu() -> void:
 	var main_menu := MAIN_MENU.instantiate()
 	var support_label := main_menu.get_node_or_null("MenuButtons/Extras/Label") as Label
-	_expect(support_label != null and support_label.text == "PLAYTEST SUPPORT", "Main menu exposes Playtest Support.")
+	_expect(support_label != null and support_label.text.nocasecmp_to("Playtest Support") == 0, "Main menu exposes Playtest Support.")
 	var support_panel := main_menu.get_node_or_null("PlaytestSupportPanel") as PlaytestSupportPanel
 	_expect(support_panel != null and support_panel.config == SUPPORT, "Main menu uses the shared support panel and configuration.")
 	main_menu.free()

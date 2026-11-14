@@ -5,6 +5,8 @@ const PAUSE_OPEN_BLOCK_UNTIL_META := &"pause_open_block_until_msec"
 const PAUSE_OPEN_BLOCK_MSEC := 180
 const PATTERN_OVERLAY_SHADER := preload("res://Src/Characters/Player/player_pattern_overlay.gdshader")
 const CHARACTER_PREVIEW := preload("res://Src/UI/GameMenu/inventory_character_preview.gd")
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+const EQUIPMENT_ICON_SIZE := 64.0
 const TAB_ORDER: Array[StringName] = [&"Inventory", &"Map", &"Lore", &"Controls"]
 const BINDING_KIND_BUTTON: StringName = &"button"
 const BINDING_KIND_MOVE: StringName = &"move"
@@ -327,7 +329,12 @@ var _lore_footer_label: Label
 var _lore_entries: Array[StringName] = []
 var _lore_index := 0
 
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		_apply_demo_style()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 108
 	add_to_group("game_menu")
@@ -457,6 +464,56 @@ func _on_tab_gui_input(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_select_tab(index)
 
+func _apply_demo_style() -> void:
+	$Dim.color = MenuStyle.SCRIM
+	$MenuRoot/Background.hide()
+	$MenuRoot/Separator.hide()
+	for tab in tab_labels + inventory_category_tabs:
+		MenuStyle.tab(tab)
+	var page := $MenuRoot/Pages/InventoryPage
+	page.get_node("CharacterPanel/Separator").hide()
+	for path in ["CharacterPanel/Backing", "InventoryPanel/Backing", "ItemTooltip/Backing"]:
+		MenuStyle.plate(page.get_node(path))
+	var identity := page.get_node("IdentityStatsPanel") as Control
+	identity.get_node("Stats_Backing").hide()
+	identity.get_node("Identity_Backing").hide()
+	MenuStyle.plate(identity)
+	var currency := page.get_node("CurrenciesPanel") as Control
+	var knots := currency.get_node("ThreadKnots") as Control
+	currency.scale = Vector2.ONE
+	currency.position = Vector2(728, 666)
+	currency.size = Vector2(295, 62)
+	MenuStyle.plate(currency.get_node("Backing"))
+	knots.position = Vector2.ZERO
+	knots.get_node("Icon").size = Vector2(44, 44)
+	var knot_name := knots.get_node("Name") as Label
+	knot_name.position = Vector2(108, 15)
+	knot_name.show()
+	var knot_count := knots.get_node("Count") as Label
+	knot_count.position = Vector2(66, 3)
+	knot_count.size.x = 40
+	MenuStyle.plate($MenuRoot/Pages/ControlsPage/ControlsLayout/CalloutLayouts/KeyboardMouse/BindingPanel/Backing)
+	for slot in equipment_slots_root.get_children():
+		var frame := slot.get_node_or_null("Frame") as TextureRect
+		if not frame:
+			continue
+		MenuStyle.plate(frame, true)
+		_center_equipment_square(frame, 80.0)
+		_center_equipment_square(slot.get_node("Icon"), EQUIPMENT_ICON_SIZE)
+	for slot in inventory_slots_root.get_children():
+		var frame := slot.get_node_or_null("InventoryFrame") as TextureRect
+		if frame:
+			MenuStyle.plate(frame, true)
+
+func _center_equipment_square(control: TextureRect, edge: float) -> void:
+	control.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	control.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	control.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	control.offset_left = -edge * 0.5
+	control.offset_top = -edge * 0.5
+	control.offset_right = edge * 0.5
+	control.offset_bottom = edge * 0.5
+
 func _setup_inventory_ui() -> void:
 	for i in inventory_category_tabs.size():
 		var tab := inventory_category_tabs[i]
@@ -517,6 +574,11 @@ func _select_inventory_category(category: StringName) -> void:
 func _update_inventory_category_tabs() -> void:
 	for i in inventory_category_tabs.size():
 		var is_selected := INVENTORY_CATEGORIES[i] == _inventory_category
+		if _demo_style:
+			MenuStyle.select_tab(inventory_category_tabs[i], is_selected)
+			if is_selected and _inventory_category_focus:
+				inventory_category_tabs[i].modulate = Color(1.12, 1.12, 1.12)
+			continue
 		inventory_category_tabs[i].modulate = selected_tab_color if is_selected else normal_tab_color
 		inventory_category_tabs[i].scale = Vector2(1.12, 1.12) if is_selected and _inventory_category_focus else selected_tab_scale if is_selected else normal_tab_scale
 
@@ -655,6 +717,17 @@ func _set_inventory_focus(slot: Control) -> void:
 func _update_inventory_focus_visuals() -> void:
 	if not inventory_slots_root:
 		return
+	if _demo_style:
+		for slot in equipment_slots_root.get_children() + inventory_slots_root.get_children():
+			var frame := slot.get_node_or_null("Frame") as TextureRect
+			if not frame:
+				frame = slot.get_node_or_null("InventoryFrame") as TextureRect
+			if frame:
+				MenuStyle.select_plate(frame, slot == _inventory_focused_slot)
+				if slot.get_meta("inventory_item", {}).is_empty():
+					frame.modulate.a = 0.45
+		_inventory_selection_pointer.hide()
+		return
 	for child in inventory_slots_root.get_children():
 		if not child is Control:
 			continue
@@ -784,6 +857,10 @@ func _setup_lore_ui() -> void:
 	detail_panel.size = Vector2(1218.0, 780.0)
 	detail_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lore_page.add_child(detail_panel)
+	if _demo_style:
+		MenuStyle.plate(left_panel)
+		MenuStyle.plate(detail_panel)
+		_lore_list_label.size.x = left_panel.size.x - 60
 	_lore_category_label = Label.new()
 	_lore_category_label.position = Vector2(48.0, 34.0)
 	_lore_category_label.size = Vector2(1120.0, 38.0)
@@ -866,6 +943,9 @@ func _update_tab_visuals() -> void:
 	for i in tab_labels.size():
 		var is_selected := i == _selected_index
 		var is_hovered := i == _hovered_tab_index
+		if _demo_style:
+			MenuStyle.select_tab(tab_labels[i], is_selected, is_hovered)
+			continue
 		tab_labels[i].modulate = selected_tab_color if is_selected else hover_tab_color if is_hovered else normal_tab_color
 		tab_labels[i].scale = selected_tab_scale if is_selected else normal_tab_scale
 
@@ -1862,6 +1942,8 @@ func _set_inventory_slot_item(slot: Control, item: Dictionary) -> void:
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		slot.add_child(icon)
+	if _demo_style:
+		_center_equipment_square(icon, EQUIPMENT_ICON_SIZE)
 	icon.z_index = 1
 	icon.visible = true
 	var texture_id := String(item.get("icon_texture", ""))
@@ -1953,7 +2035,7 @@ func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
 	var icon := slot.get_node_or_null("Icon") as TextureRect
 	if icon:
 		icon.texture = _get_inventory_icon_texture(String(item.get("icon_texture", "")))
-		if slot_name == "GlovesSlot" and PlayerEquipmentVisuals.fitted_outfits_available():
+		if not _demo_style and slot_name == "GlovesSlot" and PlayerEquipmentVisuals.fitted_outfits_available():
 			icon.offset_left = 8
 			icon.offset_top = 25
 			icon.offset_right = -8

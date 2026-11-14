@@ -12,7 +12,14 @@ extends CanvasLayer
 var _focus_visuals_enabled := true
 var _focus_buttons: Array[Button] = []
 
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
 func _ready() -> void:
+	if MenuStyle.enabled(self):
+		$Root/GoldThread.hide()
+		$Root/Veil.color = MenuStyle.SCRIM
+		MenuStyle.plate($Root/Panel)
+		MenuStyle.native_buttons(self)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group("playtest_welcome")
 	if DemoProgress.has_checkpoint() or DemoProgress.has_acknowledged_playtest_welcome():

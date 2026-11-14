@@ -3,6 +3,7 @@ class_name OptionsPanel
 
 signal back_requested
 
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
 const TAB_ORDER: Array[StringName] = [&"Graphics", &"Audio", &"Gameplay", &"Controls"]
 const GAME_MENU_SCENE := preload("res://Src/UI/GameMenu/game_menu.tscn")
 
@@ -57,7 +58,20 @@ var _pending_brightness := DisplaySettings.DEFAULT_BRIGHTNESS
 var _graphics_dirty := false
 var _last_input_family: StringName = &"keyboard_mouse"
 
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		MenuStyle.plate($Background)
+		$MeditationEmblem.hide()
+		$BottomSeparator.hide()
+		$RowSeparatorTemplate.hide()
+		for tab in tab_labels:
+			MenuStyle.tab(tab)
+		MenuStyle.slider(brightness_slider)
+		for slider in sliders:
+			MenuStyle.slider(slider)
 	for i in tab_labels.size():
 		tab_labels[i].mouse_filter = Control.MOUSE_FILTER_STOP
 		tab_labels[i].gui_input.connect(_on_tab_gui_input.bind(i))
@@ -310,6 +324,9 @@ func _update_tab_visuals() -> void:
 	for i in tab_labels.size():
 		var selected := i == _selected_tab_index
 		var hovered := i == _hovered_tab_index
+		if _demo_style:
+			MenuStyle.select_tab(tab_labels[i], selected, hovered)
+			continue
 		tab_labels[i].modulate = Color(1.0, 0.82, 0.36, 1.0) if selected else Color(0.9, 0.72, 0.48, 1.0) if hovered else Color(0.68, 0.58, 0.42, 1.0)
 
 func _configure_option_rows() -> void:

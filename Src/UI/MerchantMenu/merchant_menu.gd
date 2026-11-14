@@ -83,7 +83,16 @@ var _shop_rows: Array[Control] = []
 var _closing := false
 var _input_family: StringName = &"keyboard_mouse"
 
+
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		MenuStyle.plate(background)
+		MenuStyle.plate(dialogue_panel)
+		MenuStyle.plate($Root/ShopPanel/DescriptionPanel)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 108
 	add_to_group("merchant_menu")
@@ -217,6 +226,8 @@ func _show_farewell() -> void:
 
 func _set_full_screen_presentation(is_full_screen: bool, show_choices := false) -> void:
 	dim.color = Color(0, 0, 0, 0.62) if is_full_screen else Color(0, 0, 0, 0.18)
+	if _demo_style and is_full_screen:
+		dim.color = MenuStyle.SCRIM
 	background.visible = is_full_screen
 	title_label.visible = is_full_screen
 	status_label.visible = is_full_screen
@@ -272,6 +283,8 @@ func _create_choice_row(text: String) -> Control:
 	background.color = Color(0.05, 0.045, 0.035, 0.82)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(background)
+	if _demo_style:
+		MenuStyle.plate(background, true)
 	var label := Label.new()
 	label.name = "Label"
 	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 10)
@@ -292,7 +305,11 @@ func _select_hub(index: int, instant := false) -> void:
 	for i in _choice_rows.size():
 		var selected := i == _hub_index
 		var row := _choice_rows[i]
-		(row.get_node("Background") as ColorRect).color = Color(0.12, 0.095, 0.055, 0.92) if selected else Color(0.05, 0.045, 0.035, 0.82)
+		var backing := row.get_node("Background") as ColorRect
+		if _demo_style:
+			MenuStyle.select_plate(backing, selected)
+		else:
+			backing.color = Color(0.12, 0.095, 0.055, 0.92) if selected else Color(0.05, 0.045, 0.035, 0.82)
 		(row.get_node("Label") as Label).modulate = selected_color if selected else normal_color
 
 func _activate_hub_choice(index: int) -> void:
@@ -331,6 +348,8 @@ func _create_item_row(item: Dictionary) -> Control:
 	background.color = Color(0.05, 0.045, 0.035, 0.82)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(background)
+	if _demo_style:
+		MenuStyle.plate(background, true)
 	var icon_path := String(item["icon_path"])
 	if icon_path.is_empty():
 		var page_icon := Label.new()
@@ -396,7 +415,11 @@ func _refresh_shop_rows() -> void:
 		var unavailable := _is_sold_out(StringName(item["id"])) or not _merchant_allows_item(StringName(item["id"]))
 		var selected := i == _shop_index
 		var color := disabled_color if unavailable else (selected_color if selected else normal_color)
-		(row.get_node("Background") as ColorRect).color = Color(0.12, 0.095, 0.055, 0.92) if selected else Color(0.05, 0.045, 0.035, 0.82)
+		var backing := row.get_node("Background") as ColorRect
+		if _demo_style:
+			MenuStyle.select_plate(backing, selected)
+		else:
+			backing.color = Color(0.12, 0.095, 0.055, 0.92) if selected else Color(0.05, 0.045, 0.035, 0.82)
 		(row.get_node("Name") as Label).modulate = color
 		(row.get_node("Cost") as Label).modulate = color
 	_refresh_description()

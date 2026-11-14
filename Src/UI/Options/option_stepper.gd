@@ -26,7 +26,15 @@ var _checked := false
 var _dropdown_open := false
 var _dropdown_blocker: Control
 
+
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+var _demo_style := false
+
 func _ready() -> void:
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style and value_backing:
+		MenuStyle.plate(value_backing, true)
+		$Divider.hide()
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_refresh_text()
 	_refresh_mode()
@@ -63,6 +71,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func set_selected(is_selected: bool) -> void:
 	modulate = Color(1.12, 1.06, 0.9, 1.0) if is_selected else Color.WHITE
+	if _demo_style and value_backing:
+		modulate = Color.WHITE
+		MenuStyle.select_plate(value_backing, is_selected)
 	if is_selected:
 		grab_focus()
 
@@ -131,7 +142,8 @@ func _refresh_mode() -> void:
 	var uses_check := mode == "toggle"
 	if value_backing:
 		value_backing.visible = true
-		value_backing.texture = dropdown_texture if mode == "dropdown" else plain_button_texture
+		if not _demo_style:
+			value_backing.texture = dropdown_texture if mode == "dropdown" else plain_button_texture
 	if value_label:
 		value_label.visible = true
 	if check_box:
@@ -231,6 +243,8 @@ func _create_dropdown_item(text: String, index: int) -> Control:
 	backing.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	backing.stretch_mode = TextureRect.STRETCH_SCALE
 	item.add_child(backing)
+	if _demo_style:
+		MenuStyle.plate(backing, true)
 
 	var item_label := Label.new()
 	item_label.name = "Label"
@@ -252,9 +266,15 @@ func _on_dropdown_item_gui_input(event: InputEvent, index: int) -> void:
 		accept_event()
 
 func _on_dropdown_item_mouse_entered(item: Control) -> void:
+	if _demo_style:
+		MenuStyle.select_plate(item.get_node("Backing"), true)
+		return
 	item.modulate = Color(1.16, 1.08, 0.82, 1.0)
 
 func _on_dropdown_item_mouse_exited(item: Control, index: int) -> void:
+	if _demo_style:
+		MenuStyle.select_plate(item.get_node("Backing"), index == _selected_option_index)
+		return
 	item.modulate = Color(1.1, 0.94, 0.62, 1.0) if index == _selected_option_index else Color.WHITE
 
 func _refresh_dropdown_highlight() -> void:
@@ -263,4 +283,4 @@ func _refresh_dropdown_highlight() -> void:
 	for i in dropdown_items.get_child_count():
 		var item := dropdown_items.get_child(i) as Control
 		if item:
-			item.modulate = Color(1.1, 0.94, 0.62, 1.0) if i == _selected_option_index else Color.WHITE
+			_on_dropdown_item_mouse_exited(item, i)

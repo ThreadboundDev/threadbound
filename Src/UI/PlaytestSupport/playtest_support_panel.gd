@@ -13,7 +13,13 @@ signal back_requested
 var _focus_visuals_enabled := true
 var _focus_buttons: Array[Button] = []
 
+
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
 func _ready() -> void:
+	if MenuStyle.enabled(self):
+		MenuStyle.plate($Panel)
+		MenuStyle.native_buttons(self)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_focus_buttons = [playtest_report_button, bug_report_button, back_button]
 	playtest_report_button.pressed.connect(_open_playtest_report)

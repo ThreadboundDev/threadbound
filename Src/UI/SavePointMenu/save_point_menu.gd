@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+const MenuStyle := preload("res://Src/UI/demo_20_menu_style.gd")
+
+
 signal option_selected(option_name: StringName)
 signal rise_requested
 
@@ -64,12 +67,19 @@ var _player: Node
 var _weave_panel: Control
 var _pre_weave_blur_state: Dictionary = {}
 
+var _demo_style := false
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 90
 	add_to_group("save_point_menu")
 	_configure_initial_state()
 	_ensure_row_count(WEAVE_OPTIONS.size())
+	_demo_style = MenuStyle.enabled(self)
+	if _demo_style:
+		MenuStyle.plate($MenuRoot/TextBox)
+		for row in rows:
+			MenuStyle.row(row)
 	for i in rows.size():
 		var row := rows[i]
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -225,14 +235,19 @@ func _select_index(index: int, instant := false) -> void:
 		if rows[i].visible:
 			_set_row_selected(i, i == _selected_index, instant)
 
+	_refresh_description()
+	if _demo_style:
+		return
 	var row := rows[_selected_index]
 	var plaque := row.get_node("Plaque") as TextureRect
 	selector.visible = true
 	selector.global_position = plaque.global_position + Vector2(plaque.size.x, 0.0) + selector_offset
-	_refresh_description()
 
 func _set_row_selected(index: int, is_selected: bool, instant: bool) -> void:
 	var row := rows[index]
+	if _demo_style:
+		MenuStyle.select_row(row, is_selected)
+		return
 	var plaque := row.get_node("Plaque") as TextureRect
 	var label := row.get_node("Label") as Label
 	var target_scale := selected_scale if is_selected else normal_scale

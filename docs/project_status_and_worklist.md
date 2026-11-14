@@ -83,8 +83,18 @@ weapon props. The seated pose holds while the thread sways. For a future art
 pass, Chase wants a quiet bonfire mood with a backdrop tied to the last save
 area. The proposed next asset is a 3D Blossom in the portrait viewport so the
 doll, petals, and weapons can share depth and contact shadows. The backdrop
-can remain painted per biome. This model and the inventory rollout are open
-for hands-on review and scope approval.
+can remain painted per biome. The 3D Blossom is still a separate art pass.
+
+Chase approved installing the reviewed menus in Demo 2.0 for hands-on feedback.
+The title and Demo 2.0 share charcoal panels and nine-slice Almendra choices
+with a Chamber amber focus state. The original demo keeps its existing
+presentation. Inventory keeps the live equipped doll in the center of its
+character panel, with equipment slots surrounding it and the bag alongside.
+Demo 2.0 displays equipment icons in centered 64 × 64 logical-pixel bounds.
+Use the proposed 128 × 128 transparent source standard for future icon art.
+Weave now presents its six stats as a list alongside the existing upgrade
+information. Start with F5 in Godot and use New Journey or a Demo 2.0 Continue
+save to playtest. Art acceptance is pending Chase’s in-game feedback.
 
 ## November 11 idle interruption fix
 
