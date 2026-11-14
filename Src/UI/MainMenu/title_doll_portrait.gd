@@ -8,7 +8,8 @@ const WRIST_CENTERS := {&"hand.R": Vector3(-0.7056, 1.5266, -0.0156), &"hand.L":
 const SWORD_REST := Vector2(480, 568)
 const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
-const SEAT_OFFSET := Vector2(-30, 49)
+const SEAT_OFFSET := Vector2(-26, 59)
+const HEARTH_ENERGY := 0.66
 
 @export var show_gear := true
 
@@ -90,17 +91,17 @@ func _ready() -> void:
 	environment.background_color = Color(0, 0, 0, 0)
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color(0.77, 0.81, 0.91)
-	environment.ambient_light_energy = 0.29
+	environment.ambient_light_energy = 0.24
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	world.environment = environment
 	viewport.add_child(world)
-	_add_light(viewport, Vector3(-2, 3, 4), Color(0.86, 0.90, 1.0), 0.43)
+	_add_light(viewport, Vector3(-2, 3, 4), Color(0.86, 0.90, 1.0), 0.34)
 	_add_light(viewport, Vector3(2, 2, -4), Color(1.0, 0.73, 0.48), 0.53)
 	_hearth_light = OmniLight3D.new()
 	_hearth_light.name = "BlossomGlow"
-	_hearth_light.position = Vector3(0.20, 0.37, 0.84)
+	_hearth_light.position = Vector3(0.17, 0.31, 0.66)
 	_hearth_light.light_color = Color(1.0, 0.64, 0.34)
-	_hearth_light.light_energy = 0.52
+	_hearth_light.light_energy = HEARTH_ENERGY
 	_hearth_light.omni_range = 1.85
 	viewport.add_child(_hearth_light)
 
@@ -123,11 +124,20 @@ func _ready() -> void:
 func _place_doll_on_seat(model: Node3D) -> void:
 	# The cushion is painted, so match the pelvis and boot contacts in screen space.
 	model.global_position += _screen_offset(SEAT_OFFSET)
-	_pose_leg("R", Vector2(-27, 50), -0.02)
-	_pose_leg("L", Vector2(13, -31), -0.025)
-	_add_contact_shadow(Vector2(240, 400), Vector2(122, 37), 0.62)
-	_add_contact_shadow(Vector2(148, 579), Vector2(62, 19), 0.46)
-	_add_contact_shadow(Vector2(254, 500), Vector2(57, 16), 0.43)
+	_pose_leg("R", Vector2(-31, 40), -0.02)
+	_pose_leg("L", Vector2(9, -41), -0.025)
+	var hips := _project_bone(&"pelvis")
+	var thighs := _project_bone(&"thigh.R").lerp(_project_bone(&"thigh.L"), 0.5)
+	var seat_contact := hips.lerp(thighs, 0.72) + Vector2(1, 21)
+	_add_contact_shadow(seat_contact, Vector2(148, 52), Color(0.035, 0.043, 0.067, 0.54))
+	_add_contact_shadow(seat_contact + Vector2(-4, 4), Vector2(99, 25), Color(0.026, 0.028, 0.045, 0.75))
+	_add_contact_shadow(_project_bone(&"toe.R") + Vector2(4, 8), Vector2(61, 20), Color(0.10, 0.064, 0.04, 0.66))
+	_add_contact_shadow(_project_bone(&"toe.L") + Vector2(1, 9), Vector2(47, 15), Color(0.066, 0.054, 0.06, 0.46))
+
+
+func _project_bone(name: StringName) -> Vector2:
+	var pose := _skeleton.get_bone_global_pose(_skeleton.find_bone(name))
+	return _camera.unproject_position(_skeleton.to_global(pose.origin)) * size / Vector2(VIEWPORT_SIZE)
 
 
 func _screen_offset(pixels: Vector2) -> Vector3:
@@ -168,9 +178,9 @@ func _aim_bone(bone: int, from: Vector3, toward: Vector3) -> void:
 	_skeleton.set_bone_global_pose(bone, pose)
 
 
-func _add_contact_shadow(center: Vector2, extent: Vector2, opacity: float) -> void:
+func _add_contact_shadow(center: Vector2, extent: Vector2, tint: Color) -> void:
 	var gradient := Gradient.new()
-	gradient.colors = PackedColorArray([Color(0.12, 0.075, 0.045, opacity), Color(0.12, 0.075, 0.045, 0.0)])
+	gradient.colors = PackedColorArray([tint, Color(tint, 0.0)])
 	var soft_shadow := GradientTexture2D.new()
 	soft_shadow.gradient = gradient
 	soft_shadow.fill = GradientTexture2D.FILL_RADIAL
@@ -291,7 +301,7 @@ func _raise_forearm(skeleton: Skeleton3D, side: String, lift: Vector3) -> void:
 func _process(delta: float) -> void:
 	if _hearth_light:
 		_hearth_time = fmod(_hearth_time + delta, TAU / 1.15)
-		_hearth_light.light_energy = 0.52 + 0.027 * sin(_hearth_time * 1.15) + 0.015 * sin(_hearth_time * 3.45)
+		_hearth_light.light_energy = HEARTH_ENERGY + 0.027 * sin(_hearth_time * 1.15) + 0.015 * sin(_hearth_time * 3.45)
 	if not _skeleton or not _camera:
 		return
 	_idle_time = fmod(_idle_time + delta, STITCH_CYCLE)
