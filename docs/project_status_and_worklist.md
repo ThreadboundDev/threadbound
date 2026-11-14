@@ -23,18 +23,22 @@ or no backdrop for that checkpoint.
 
 Chase approved installing the Chamber backdrop with an empty painted Blossom
 and the live 3D doll seated in front of it. The title uses the inventory's
-modular gear renderer and material treatment in a 1440 × 1200 viewport with
-8× MSAA. The save-point sit clip supplies the seat pose. The hands hold a
-thread with a gentle idle sway. The checkpoint now records the gloves, boots
-and head/chest indices for the portrait. Older saves use the starting gear.
+modular gear renderer and material treatment in a 1440 × 1611 viewport with
+8× MSAA. The save-point sit clip supplies the seat pose. The doll breathes
+and works a thread between its hands in a 6.8-second seated loop. The thread
+tracks the fingertips and tightens during each pull. The checkpoint records
+the gloves, boots and head/chest indices for the portrait. Older saves use the
+starting gear.
 The menu uses the existing local doll and gear exports. The painted Blossom
 and menu are available when those exports are absent.
 
 Forward+ renders verified the starting outfit and a saved mix of Blue gloves
 and head/chest with Base boots. Settings, Playtest Support, the New Journey
 confirmation and the menu cancel guard passed. Godot reported resource
-diagnostics at shutdown. Other biome art and a full thread handoff animation
-remain future work. Review the seated portrait with F5 in Godot.
+diagnostics at shutdown. The updated idle and sword placement passed headless
+checks for the loop seam, planted feet, moving thread endpoints and sword
+framing. Review the motion and material read with F6 in Godot. Other biome
+art remains future work.
 
 The Blossom screen is the startup main menu for Demo 2.0. New Journey opens
 `Chamber Of The First Weave - Demo 2.0.tscn` and Continue resumes its saves.
@@ -61,10 +65,11 @@ default. Blue, Red and Yellow accents were rendered for comparison.
 Forward+ review checked compact and wide buttons, keyboard navigation,
 disabled Continue and opening Settings.
 
-The title portrait props the current Base sword and shield against the right
-side of the Blossom. It uses the equipment renderer's meshes and materials
-with rigid poses so the doll can keep holding the thread. The portrait uses
-the current Base weapon set until there is a saved weapon selection.
+The title portrait props the current Base sword beside the shield on the
+right side of the Blossom. It uses rigid copies of the equipped weapon meshes
+so the blade keeps its silhouette and the doll can keep holding the thread.
+The portrait uses the current Base weapon set until there is a saved weapon
+selection.
 
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
@@ -86,9 +91,8 @@ dimensions and narrow layout. The other concepts remain available for review.
 
 The Godot title now has a lower ambient fill and a localized amber light that
 flickers gently across the live doll and resting weapons. Forward+ review
-verified the light animation, the Base and saved Blue outfit renders and both
-weapon props. The seated pose holds while the thread sways. For a future art
-pass, Chase wants a quiet bonfire mood with a backdrop tied to the last save
+verified the light animation and the Base and saved Blue outfit renders.
+For a future art pass, Chase wants a quiet bonfire mood with a backdrop tied to the last save
 area. The proposed next asset is a 3D Blossom in the portrait viewport so the
 doll, petals, and weapons can share depth and contact shadows. The backdrop
 can remain painted per biome. The 3D Blossom is still a separate art pass.

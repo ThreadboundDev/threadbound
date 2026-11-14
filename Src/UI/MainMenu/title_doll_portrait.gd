@@ -3,11 +3,16 @@ extends TextureRect
 
 const VIEWPORT_SIZE := Vector2i(1440, 1611)
 const SEAT_CLIP := "stand_to_sit_1"
-const SWORD_REST := Vector2(492, 546)
-const SHIELD_REST := Vector2(435, 516)
+const SWORD_REST := Vector2(480, 568)
+const SHIELD_REST := Vector2(416, 516)
+const STITCH_CYCLE := 6.8
 
 var _thread_ends := PackedVector2Array()
-var _thread_time := 0.0
+var _idle_time := 0.0
+var _thread_pull := 0.0
+var _skeleton: Skeleton3D
+var _camera: Camera3D
+var _seated_rotations: Dictionary[StringName, Quaternion] = {}
 var _hearth_light: OmniLight3D
 var _hearth_time := 0.0
 
@@ -64,8 +69,11 @@ func _ready() -> void:
 	if not seated:
 		viewport.queue_free()
 		return
-	_raise_forearm(skeleton, "R", Vector3(-0.14, 0.20, 0.06))
-	_raise_forearm(skeleton, "L", Vector3(0.09, 0.11, 0.02))
+	_skeleton = skeleton
+	for bone_name: StringName in [&"spine", &"chest", &"head", &"forearm.R", &"forearm.L", &"hand.R", &"hand.L"]:
+		var bone := skeleton.find_bone(bone_name)
+		if bone >= 0:
+			_seated_rotations[bone_name] = skeleton.get_bone_pose_rotation(bone)
 
 	var world := WorldEnvironment.new()
 	var environment := Environment.new()
@@ -93,23 +101,13 @@ func _ready() -> void:
 	viewport.add_child(camera)
 	camera.look_at_from_position(Vector3(2.6, 1.55, 5.8), Vector3(0, 0.65, 0), Vector3.UP)
 	camera.current = true
+	_camera = camera
 	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D
-	if equipped_weapon:
-		equipped_weapon.hide()
-	texture = viewport.get_texture()
-	# Projection is stable once the viewport has drawn with its own camera.
-	await RenderingServer.frame_post_draw
-	if not is_inside_tree():
-		return
 	if equipped_weapon:
 		_stage_resting_weapons(viewport, camera, equipped_weapon)
 		equipment.clear_slot(&"weapon")
-	for side in ["R", "L"]:
-		var hand := skeleton.find_bone("hand." + side)
-		var fingertip := skeleton.find_bone("f_index.03." + side)
-		if hand >= 0:
-			var point := skeleton.to_global(skeleton.get_bone_global_pose(fingertip if fingertip >= 0 else hand).origin)
-			_thread_ends.append(camera.unproject_position(point) / Vector2(VIEWPORT_SIZE))
+	texture = viewport.get_texture()
+	_pose_idle()
 
 
 func _stage_resting_weapons(viewport: SubViewport, camera: Camera3D, equipped_weapon: Node3D) -> void:
@@ -128,21 +126,72 @@ func _stage_resting_weapons(viewport: SubViewport, camera: Camera3D, equipped_we
 		# Use the same mesh and styled materials, with a rigid pose independent of the hands.
 		var prop := MeshInstance3D.new()
 		prop.name = source.name
-		prop.mesh = source.mesh
+		prop.mesh = _rigid_mesh(source.mesh)
 		for surface in prop.mesh.get_surface_count():
 			prop.set_surface_override_material(surface, source.get_active_material(surface))
 		resting.add_child(prop)
 		var anchor := SWORD_REST if is_sword else SHIELD_REST
-		var origin := Vector3(-0.79, 1.48, 0.69) if is_sword else Vector3(0.61, 1.61, -0.024)
+		var origin := Vector3(-0.79, 1.48, 0.7593) if is_sword else Vector3(0.61, 1.61, -0.024)
 		var rotation := Basis(Vector3.RIGHT, deg_to_rad(82.0 if is_sword else 77.0))
-		var lean := Basis(Vector3.BACK, deg_to_rad(17.0 if is_sword else -11.0))
-		var facing := Basis(Vector3.UP, deg_to_rad(-19.0 if is_sword else 22.0))
+		var lean := Basis(Vector3.BACK, deg_to_rad(-8.0 if is_sword else -11.0))
+		var facing := Basis(Vector3.UP, deg_to_rad(-6.0 if is_sword else 22.0))
 		var basis := camera.global_basis * lean * facing * rotation
-		var screen_point := anchor * Vector2(VIEWPORT_SIZE) / size
-		var world_point := camera.project_position(screen_point, 5.8)
+		# Use the portrait's own dimensions. Camera projection can still use the
+		# root viewport until the first SubViewport frame has been submitted.
+		var frame := anchor / size - Vector2(0.5, 0.5)
+		var span := Vector2(camera.size * VIEWPORT_SIZE.aspect(), camera.size)
+		var world_point := camera.to_global(Vector3(frame.x * span.x, -frame.y * span.y, -5.8))
 		prop.global_transform = Transform3D(basis, world_point - basis * origin)
 		styling._install_object_outline(prop, 1.5)
 	styling.free()
+
+
+func _rigid_mesh(source: Mesh) -> ArrayMesh:
+	var rigid := ArrayMesh.new()
+	for surface in source.get_surface_count():
+		var arrays := source.surface_get_arrays(surface)
+		arrays[Mesh.ARRAY_BONES] = null
+		arrays[Mesh.ARRAY_WEIGHTS] = null
+		rigid.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return rigid
+
+
+func _pose_idle() -> void:
+	for bone_name in _seated_rotations:
+		var bone := _skeleton.find_bone(bone_name)
+		_skeleton.set_bone_pose_rotation(bone, _seated_rotations[bone_name])
+
+	# One pass reaches toward the other hand, draws the thread out, then settles.
+	var phase := _idle_time / STITCH_CYCLE
+	var reach := smoothstep(0.08, 0.25, phase) * (1.0 - smoothstep(0.34, 0.49, phase))
+	var pull := smoothstep(0.34, 0.56, phase) * (1.0 - smoothstep(0.65, 0.87, phase))
+	var breath := sin(phase * TAU * 2.0)
+	_thread_pull = pull
+	_rotate_from_seat(&"spine", Vector3.RIGHT, breath * 0.027 + reach * 0.024)
+	_rotate_from_seat(&"chest", Vector3.RIGHT, breath * 0.023)
+	_rotate_from_seat(&"head", Vector3.RIGHT, 0.045 + reach * 0.095 - pull * 0.035)
+	_raise_forearm(_skeleton, "R", Vector3(-0.14 + reach * 0.24 - pull * 0.13, 0.20 + pull * 0.11, 0.06 + reach * 0.075))
+	_raise_forearm(_skeleton, "L", Vector3(0.09 - reach * 0.06 + pull * 0.024, 0.11 + reach * 0.062, 0.02))
+	_rotate_from_seat(&"hand.R", Vector3.UP, reach * 0.20 - pull * 0.12)
+	_rotate_from_seat(&"hand.L", Vector3.UP, -reach * 0.10)
+
+	_thread_ends.clear()
+	for side in ["R", "L"]:
+		var index := _skeleton.find_bone("index.03." + side)
+		var thumb := _skeleton.find_bone("thumb.03." + side)
+		var hand := _skeleton.find_bone("hand." + side)
+		if hand < 0:
+			return
+		var pinch := _skeleton.get_bone_global_pose(hand).origin
+		if index >= 0 and thumb >= 0:
+			pinch = _skeleton.get_bone_global_pose(index).origin.lerp(_skeleton.get_bone_global_pose(thumb).origin, 0.4)
+		_thread_ends.append(_camera.unproject_position(_skeleton.to_global(pinch)) / Vector2(VIEWPORT_SIZE))
+	queue_redraw()
+
+
+func _rotate_from_seat(bone_name: StringName, axis: Vector3, radians: float) -> void:
+	if _seated_rotations.has(bone_name):
+		_skeleton.set_bone_pose_rotation(_skeleton.find_bone(bone_name), _seated_rotations[bone_name] * Quaternion(axis, radians))
 
 
 func _raise_forearm(skeleton: Skeleton3D, side: String, lift: Vector3) -> void:
@@ -161,10 +210,10 @@ func _process(delta: float) -> void:
 	if _hearth_light:
 		_hearth_time = fmod(_hearth_time + delta, TAU / 1.15)
 		_hearth_light.light_energy = 0.52 + 0.027 * sin(_hearth_time * 1.15) + 0.015 * sin(_hearth_time * 3.45)
-	if _thread_ends.size() != 2:
+	if not _skeleton or not _camera:
 		return
-	_thread_time = fmod(_thread_time + delta, 6.0)
-	queue_redraw()
+	_idle_time = fmod(_idle_time + delta, STITCH_CYCLE)
+	_pose_idle()
 
 
 func _draw() -> void:
@@ -172,7 +221,7 @@ func _draw() -> void:
 		return
 	var start := _thread_ends[0] * size
 	var end := _thread_ends[1] * size
-	var bend := 23.0 + 3.5 * sin(_thread_time * TAU / 6.0)
+	var bend := lerpf(23.0, 4.0, _thread_pull)
 	var middle := (start + end) * 0.5 + Vector2(0.0, bend * 2.0)
 	var points := PackedVector2Array()
 	for i in 25:
