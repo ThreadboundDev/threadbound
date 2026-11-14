@@ -127,12 +127,17 @@ func _place_doll_on_seat(model: Node3D) -> void:
 	_pose_leg("R", Vector2(-31, 40), -0.02)
 	_pose_leg("L", Vector2(9, -41), -0.025)
 	var hips := _project_bone(&"pelvis")
-	var thighs := _project_bone(&"thigh.R").lerp(_project_bone(&"thigh.L"), 0.5)
-	var seat_contact := hips.lerp(thighs, 0.72) + Vector2(1, 21)
-	_add_contact_shadow(seat_contact, Vector2(148, 52), Color(0.035, 0.043, 0.067, 0.54))
-	_add_contact_shadow(seat_contact + Vector2(-4, 4), Vector2(99, 25), Color(0.026, 0.028, 0.045, 0.75))
-	_add_contact_shadow(_project_bone(&"toe.R") + Vector2(4, 8), Vector2(61, 20), Color(0.10, 0.064, 0.04, 0.66))
-	_add_contact_shadow(_project_bone(&"toe.L") + Vector2(1, 9), Vector2(47, 15), Color(0.066, 0.054, 0.06, 0.46))
+	# Spread the soft shadow across the cushion and keep the dense part at contact.
+	_add_contact_shadow(hips + Vector2(-10, 16), Vector2(174, 66), Color(0.032, 0.039, 0.065, 0.66))
+	_add_contact_shadow(hips + Vector2(-3, 9), Vector2(105, 35), Color(0.019, 0.023, 0.039, 0.88))
+	var right_knee := _project_bone(&"shin.R")
+	_add_contact_shadow(hips.lerp(right_knee, 0.46) + Vector2(-2, 9), Vector2(96, 29),
+		Color(0.023, 0.032, 0.054, 0.82), Vector2.RIGHT.angle_to(right_knee - hips))
+	_add_contact_shadow(hips + Vector2(22, 12), Vector2(65, 30), Color(0.021, 0.029, 0.050, 0.72))
+	var floor_contact := _project_bone(&"toe.R") + Vector2(7, 8)
+	_add_contact_shadow(floor_contact + Vector2(7, 1), Vector2(94, 27), Color(0.11, 0.074, 0.049, 0.49), -0.12)
+	_add_contact_shadow(floor_contact, Vector2(56, 13), Color(0.09, 0.055, 0.033, 0.86), -0.12)
+	_add_contact_shadow(_project_bone(&"toe.L") + Vector2(1, 9), Vector2(49, 15), Color(0.066, 0.054, 0.06, 0.55))
 
 
 func _project_bone(name: StringName) -> Vector2:
@@ -178,9 +183,10 @@ func _aim_bone(bone: int, from: Vector3, toward: Vector3) -> void:
 	_skeleton.set_bone_global_pose(bone, pose)
 
 
-func _add_contact_shadow(center: Vector2, extent: Vector2, tint: Color) -> void:
+func _add_contact_shadow(center: Vector2, extent: Vector2, tint: Color, angle := 0.0) -> void:
 	var gradient := Gradient.new()
-	gradient.colors = PackedColorArray([tint, Color(tint, 0.0)])
+	gradient.offsets = PackedFloat32Array([0.0, 0.42, 1.0])
+	gradient.colors = PackedColorArray([tint, Color(tint, tint.a * 0.55), Color(tint, 0.0)])
 	var soft_shadow := GradientTexture2D.new()
 	soft_shadow.gradient = gradient
 	soft_shadow.fill = GradientTexture2D.FILL_RADIAL
@@ -193,6 +199,8 @@ func _add_contact_shadow(center: Vector2, extent: Vector2, tint: Color) -> void:
 	shadow.show_behind_parent = true
 	shadow.size = extent
 	shadow.position = center - extent * 0.5
+	shadow.pivot_offset = extent * 0.5
+	shadow.rotation = angle
 	add_child(shadow)
 
 
