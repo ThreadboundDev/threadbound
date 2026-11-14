@@ -165,6 +165,13 @@ The largest sampled drift was 0.61 mm. Drawn-sword candidates use the approved
 grip, with seven ledge and water clips flagged for free-hand and weapon
 visibility review. Foot contact and socket fit still need visual review.
 
+The local `Wooden_Doll_Sheathed_Review.blend` previews hip-mounted sword,
+back-mounted shield, and free-hand idle, walk, run, jump, swim, and water idle.
+Four source sword transition actions are available for comparison. Gear
+transfer and hand contact during those transitions still need animation.
+Chase proposed an explicit sheath key and/or auto-stow after 15–20 seconds.
+Gameplay behavior remains a design decision after the animation review.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
