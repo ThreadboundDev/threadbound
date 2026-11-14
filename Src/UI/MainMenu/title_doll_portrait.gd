@@ -2,7 +2,9 @@ extends TextureRect
 ## A seated copy of the modular doll, rendered separately from the painted seat.
 
 const VIEWPORT_SIZE := Vector2i(1440, 1611)
-const SEAT_CLIP := "stand_to_sit_1"
+const TITLE_DOLL := "res://Assets/Threadborne/Player/LocalDoll/title_master_doll.glb"
+const SEAT_CLIP := &"Animation"
+const WRIST_CENTERS := {&"hand.R": Vector3(-0.7056, 1.5266, -0.0156), &"hand.L": Vector3(0.7064, 1.5266, -0.0156)}
 const SWORD_REST := Vector2(480, 568)
 const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
@@ -16,12 +18,14 @@ var _thread_pull := 0.0
 var _skeleton: Skeleton3D
 var _camera: Camera3D
 var _seated_rotations: Dictionary[StringName, Quaternion] = {}
+var _seated_wrist_positions: Dictionary[StringName, Vector3] = {}
+var _wrist_pivots: Dictionary[StringName, Vector3] = {}
 var _hearth_light: OmniLight3D
 var _hearth_time := 0.0
 
 
 func _ready() -> void:
-	var model_path := PlayerLive3DVisual.MODULAR_DOLL_PATH
+	var model_path := TITLE_DOLL
 	if not ResourceLoader.exists(model_path):
 		return
 	var model_scene := load(model_path) as PackedScene
@@ -63,22 +67,22 @@ func _ready() -> void:
 	styling._apply_toon_materials(model, 1.5)
 	styling.free()
 
-	var seated := false
-	for clip in player.get_animation_list():
-		if String(clip).to_lower().ends_with(SEAT_CLIP):
-			player.play(clip)
-			player.seek(maxf(0.0, player.get_animation(clip).length - 0.034), true)
-			player.pause()
-			seated = true
-			break
-	if not seated:
+	if not player.has_animation(SEAT_CLIP):
 		viewport.queue_free()
 		return
+	player.play(SEAT_CLIP)
+	player.seek(player.get_animation(SEAT_CLIP).length, true)
+	player.pause()
 	_skeleton = skeleton
 	for bone_name: StringName in [&"spine", &"chest", &"head", &"forearm.R", &"forearm.L", &"hand.R", &"hand.L"]:
 		var bone := skeleton.find_bone(bone_name)
 		if bone >= 0:
 			_seated_rotations[bone_name] = skeleton.get_bone_pose_rotation(bone)
+	for bone_name: StringName in WRIST_CENTERS:
+		var bone := skeleton.find_bone(bone_name)
+		if bone >= 0:
+			_seated_wrist_positions[bone_name] = skeleton.get_bone_pose_position(bone)
+			_wrist_pivots[bone_name] = skeleton.get_bone_global_rest(bone).affine_inverse() * WRIST_CENTERS[bone_name]
 
 	var world := WorldEnvironment.new()
 	var environment := Environment.new()
@@ -263,7 +267,13 @@ func _pose_idle() -> void:
 
 func _rotate_from_seat(bone_name: StringName, axis: Vector3, radians: float) -> void:
 	if _seated_rotations.has(bone_name):
-		_skeleton.set_bone_pose_rotation(_skeleton.find_bone(bone_name), _seated_rotations[bone_name] * Quaternion(axis, radians))
+		var bone := _skeleton.find_bone(bone_name)
+		var rest := _seated_rotations[bone_name]
+		var rotation := rest * Quaternion(axis, radians)
+		_skeleton.set_bone_pose_rotation(bone, rotation)
+		if _wrist_pivots.has(bone_name):
+			var pivot := _wrist_pivots[bone_name] * _skeleton.get_bone_pose_scale(bone)
+			_skeleton.set_bone_pose_position(bone, _seated_wrist_positions[bone_name] + rest * pivot - rotation * pivot)
 
 
 func _raise_forearm(skeleton: Skeleton3D, side: String, lift: Vector3) -> void:
