@@ -8,6 +8,8 @@ const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
 const SEAT_OFFSET := Vector2(-30, 38)
 
+@export var show_gear := true
+
 var _thread_ends := PackedVector2Array()
 var _idle_time := 0.0
 var _thread_pull := 0.0
@@ -20,7 +22,7 @@ var _hearth_time := 0.0
 
 func _ready() -> void:
 	var model_path := PlayerLive3DVisual.MODULAR_DOLL_PATH
-	if not ResourceLoader.exists(model_path) or not PlayerEquipmentVisuals.default_assets_available():
+	if not ResourceLoader.exists(model_path):
 		return
 	var model_scene := load(model_path) as PackedScene
 	if not model_scene:
@@ -45,19 +47,21 @@ func _ready() -> void:
 	add_child(viewport)
 	viewport.add_child(model)
 
-	var equipment := PlayerEquipmentVisuals.new()
-	equipment.name = "EquipmentVisuals"
-	model.add_child(equipment)
-	if not equipment.initialize(skeleton):
-		viewport.queue_free()
-		return
-	var loadout := DemoProgress.get_checkpoint_loadout()
-	for slot_type in loadout.size():
-		equipment._on_gameplay_equipment_changed(slot_type, loadout[slot_type])
+	var equipment: PlayerEquipmentVisuals
+	if show_gear and PlayerEquipmentVisuals.default_assets_available():
+		equipment = PlayerEquipmentVisuals.new()
+		equipment.name = "EquipmentVisuals"
+		model.add_child(equipment)
+		if not equipment.initialize(skeleton):
+			viewport.queue_free()
+			return
+		var loadout := DemoProgress.get_checkpoint_loadout()
+		for slot_type in loadout.size():
+			equipment._on_gameplay_equipment_changed(slot_type, loadout[slot_type])
+		equipment.item_changed.connect(_on_gear_changed.bind(equipment))
 	var styling := PlayerLive3DVisual.new()
 	styling._apply_toon_materials(model, 1.5)
 	styling.free()
-	equipment.item_changed.connect(_on_gear_changed.bind(equipment))
 
 	var seated := false
 	for clip in player.get_animation_list():
@@ -104,7 +108,7 @@ func _ready() -> void:
 	camera.current = true
 	_camera = camera
 	_place_doll_on_seat(model)
-	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D
+	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D if equipment else null
 	if equipped_weapon:
 		_stage_resting_weapons(viewport, camera, equipped_weapon)
 		equipment.clear_slot(&"weapon")
