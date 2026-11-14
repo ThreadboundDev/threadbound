@@ -87,7 +87,8 @@ func _process(delta: float) -> void:
 		skeleton.clear_bones_global_pose_override()
 		animation_player.advance(delta)
 		# The frontal portrait needs the blade biased to the other side of the face.
-		PlayerLive3DVisual.apply_idle_sword_clearance_pose(skeleton, -1.0)
+		if animation_player.current_animation != PlayerLive3DVisual.APPROVED_IDLE_CLIP:
+			PlayerLive3DVisual.apply_idle_sword_clearance_pose(skeleton, -1.0)
 
 
 func _mirror_item(slot: StringName, item: EquipmentVisualDefinition) -> void:

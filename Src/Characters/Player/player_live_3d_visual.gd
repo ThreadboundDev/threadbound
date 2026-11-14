@@ -5,6 +5,8 @@ extends Node2D
 const MODEL := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_equipped_combat_swings.glb")
 const DOLL_PREVIEW_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb"
 const MODULAR_DOLL_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb"
+const APPROVED_IDLE := preload("res://Src/Characters/Player/Animations/approved_idle_4.tres")
+const APPROVED_IDLE_CLIP := &"approved/idle_4"
 const EQUIPMENT_VISUALS := preload("res://Src/Equipment/Visuals/player_equipment_visuals.gd")
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
@@ -852,6 +854,8 @@ func _build_viewport() -> void:
 	_install_water_combo(_animation_player, _skeleton)
 	_index_clips()
 	_clips.merge(_install_upright_idles(_animation_player, _skeleton), true)
+	if _install_approved_idle(_animation_player):
+		_clips[&"idle_4"] = APPROVED_IDLE_CLIP
 	_clips.merge(_install_upright_runs(_animation_player, _skeleton), true)
 	if not Engine.is_editor_hint():
 		_build_lower_body_sampler()
@@ -1206,7 +1210,16 @@ func _build_lower_body_sampler() -> void:
 	_lower_sampler_skeleton = _find_first_type(_lower_sampler_root, "Skeleton3D") as Skeleton3D
 	_install_authored_attacks(_lower_sampler_player, _lower_sampler_skeleton)
 	_install_upright_idles(_lower_sampler_player, _lower_sampler_skeleton)
+	_install_approved_idle(_lower_sampler_player)
 	_install_upright_runs(_lower_sampler_player, _lower_sampler_skeleton)
+
+
+func _install_approved_idle(target: AnimationPlayer) -> bool:
+	if not target or model_scene.resource_path != MODULAR_DOLL_PATH:
+		return false
+	var library := AnimationLibrary.new()
+	library.add_animation(&"idle_4", APPROVED_IDLE)
+	return target.add_animation_library(&"approved", library) == OK
 
 
 func _install_upright_runs(target: AnimationPlayer, skeleton: Skeleton3D) -> Dictionary:
@@ -1556,7 +1569,8 @@ func _apply_idle_sword_clearance(delta: float) -> void:
 	if _logical_animation != &"Idle" or _air_slash_active or not _skeleton:
 		_idle_sword_clearance_weight = 0.0
 		return
-	var target := 1.0 if _current_action == &"idle_4" else 0.0
+	var use_clearance := _current_action == &"idle_4" and _clips.get(&"idle_4") != APPROVED_IDLE_CLIP
+	var target := 1.0 if use_clearance else 0.0
 	_idle_sword_clearance_weight = move_toward(_idle_sword_clearance_weight, target, delta / 0.15)
 	if _idle_sword_clearance_weight <= 0.0:
 		return

@@ -114,8 +114,8 @@ flagged movement in the shield-hand thumb. The local
 `Wooden_Doll_Idle_Shield_Thumb_Review.blend` preserves the frame-23 thumb
 grip across all 62 frames. Blender measured about 6.3 mm of original
 thumb-tip travel relative to the hand and confirmed that the edit leaves
-every other evaluated bone transform identical. The corrected thumb awaits
-playback review before it is adopted.
+every other evaluated bone transform identical. Chase approved the corrected
+idle on November 14.
 
 The November 14 feedback recording shows `Wooden_Doll_Torso_Seam_Review.blend`
 playing `Review - hinged fingers and seated wrists`. The corrected file is
@@ -124,6 +124,15 @@ playing `Review - hinged fingers and seated wrists`. The corrected file is
 through the loop, the original 527 thumb-weighted vertices move up to 7.3 mm
 relative to the palm. The corrected vertices stay within 0.001 mm of their
 frame-23 positions in hand space and follow the hand through the idle.
+
+Demo 2.0 now plays the approved action as `idle_4` on the modular wooden doll.
+The inventory portrait uses the same clip. The animation is adapted to the
+installed body's existing finger pivots, and both views preserve the authored
+wrist motion. The master Blender body and its geometry still need a matching
+game export as the animation review progresses. In 245 sampled Demo 2.0 poses,
+the shield hand moved 17.3 mm and thumb drift relative to the hand stayed below
+0.001 mm. Next for Blender review is `idle_2`, with the sword wrist bending
+72.5 degrees at frame 99. That variation is still pending approval.
 
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
