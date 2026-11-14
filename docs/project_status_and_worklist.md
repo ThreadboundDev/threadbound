@@ -157,6 +157,14 @@ across 725 samples. Keep this grip whenever the sword is drawn. Sheathing
 can release the sword hand, and grapple motion can use the shield arm
 independently. The grip awaits visual approval before gameplay integration.
 
+Chase approved `idle_2`, and Demo 2.0 now plays it as an idle variation.
+The local `Wooden_Doll_Animation_Review.blend` holds both approved idles and
+46 `Review |` actions for the rest of the base library. The pass seats the
+shoulder, elbow, wrist, hip, knee and ankle balls relative to their sockets.
+The largest sampled drift was 0.61 mm. Drawn-sword candidates use the approved
+grip, with seven ledge and water clips flagged for free-hand and weapon
+visibility review. Foot contact and socket fit still need visual review.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.

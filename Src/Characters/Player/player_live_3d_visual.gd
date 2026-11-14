@@ -6,6 +6,7 @@ const MODEL := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadbor
 const DOLL_PREVIEW_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_equipped.glb"
 const MODULAR_DOLL_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb"
 const APPROVED_IDLE := preload("res://Src/Characters/Player/Animations/approved_idle_4.tres")
+const APPROVED_IDLE_VARIATION := preload("res://Src/Characters/Player/Animations/approved_idle_2.tres")
 const APPROVED_IDLE_CLIP := &"approved/idle_4"
 const EQUIPMENT_VISUALS := preload("res://Src/Equipment/Visuals/player_equipment_visuals.gd")
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
@@ -856,6 +857,7 @@ func _build_viewport() -> void:
 	_clips.merge(_install_upright_idles(_animation_player, _skeleton), true)
 	if _install_approved_idle(_animation_player):
 		_clips[&"idle_4"] = APPROVED_IDLE_CLIP
+		_clips[&"idle_2"] = &"approved/idle_2"
 	_clips.merge(_install_upright_runs(_animation_player, _skeleton), true)
 	if not Engine.is_editor_hint():
 		_build_lower_body_sampler()
@@ -1219,6 +1221,7 @@ func _install_approved_idle(target: AnimationPlayer) -> bool:
 		return false
 	var library := AnimationLibrary.new()
 	library.add_animation(&"idle_4", APPROVED_IDLE)
+	library.add_animation(&"idle_2", APPROVED_IDLE_VARIATION)
 	return target.add_animation_library(&"approved", library) == OK
 
 
@@ -1569,7 +1572,7 @@ func _apply_idle_sword_clearance(delta: float) -> void:
 	if _logical_animation != &"Idle" or _air_slash_active or not _skeleton:
 		_idle_sword_clearance_weight = 0.0
 		return
-	var use_clearance := _current_action == &"idle_4" and _clips.get(&"idle_4") != APPROVED_IDLE_CLIP
+	var use_clearance: bool = _current_action == &"idle_4" and _clips.get(&"idle_4") != APPROVED_IDLE_CLIP
 	var target := 1.0 if use_clearance else 0.0
 	_idle_sword_clearance_weight = move_toward(_idle_sword_clearance_weight, target, delta / 0.15)
 	if _idle_sword_clearance_weight <= 0.0:
