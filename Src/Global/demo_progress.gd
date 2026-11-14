@@ -139,7 +139,7 @@ func load_checkpoint() -> bool:
 	if saved_loadout is PackedInt32Array and saved_loadout.size() == _checkpoint_loadout.size():
 		for slot in _checkpoint_loadout.size():
 			var item: int = saved_loadout[slot]
-			if item >= 0 and item <= EquipManager.YELLOW_GLOVES_SLOT and item % 3 == slot:
+			if item == EquipManager.EMPTY_SLOT or (item >= 0 and item <= EquipManager.YELLOW_GLOVES_SLOT and item % 3 == slot):
 				_checkpoint_loadout[slot] = item
 	_checkpoint_position = Vector2(
 		float(config.get_value("checkpoint", "position_x", 0.0)),

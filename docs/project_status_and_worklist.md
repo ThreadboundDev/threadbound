@@ -96,6 +96,12 @@ Weave now presents its six stats as a list alongside the existing upgrade
 information. Start with F5 in Godot and use New Journey or a Demo 2.0 Continue
 save to playtest. Art acceptance is pending Chase’s in-game feedback.
 
+In the modular doll inventory, select equipped Base gloves, boots or head/chest
+to leave that gear slot empty, or select the Base piece in the bag to toggle it.
+Empty slots keep the starting grapple, jump and dash available. The doll and
+inventory preview update immediately. The next Blossom checkpoint saves those
+slots for Continue and the title portrait.
+
 ## November 11 idle interruption fix
 
 Running now interrupts a playing idle variation and clears its queued return to idle. The regression starts the flourish through the normal idle timer, presses the movement input, and checks the run clip and empty queue within three physics frames.

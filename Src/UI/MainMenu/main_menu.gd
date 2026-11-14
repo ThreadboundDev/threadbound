@@ -132,6 +132,7 @@ func _activate_selected() -> void:
 		&"Continue":
 			if _can_continue():
 				AudioManager.play_ui(&"enter_world")
+				EquipManager.restore_loadout(DemoProgress.get_checkpoint_loadout())
 				get_tree().change_scene_to_file(DemoProgress.get_checkpoint_scene_path())
 			else:
 				_pulse_unavailable(rows[_selected_index])
@@ -156,6 +157,7 @@ func _start_new_journey() -> void:
 
 func _perform_new_journey_transition() -> void:
 	DemoProgress.clear_run()
+	EquipManager.restore_loadout(DemoProgress.get_checkpoint_loadout())
 	AudioManager.play_ui(&"enter_world")
 	var error := get_tree().change_scene_to_file(DEMO_SCENE)
 	if error != OK:

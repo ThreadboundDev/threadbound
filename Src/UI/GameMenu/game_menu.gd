@@ -601,8 +601,8 @@ func _on_inventory_slot_gui_input(event: InputEvent, slot: Node) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var item: Dictionary = slot.get_meta("inventory_item", {})
 		if not item.is_empty():
-			_show_inventory_tooltip(item)
 			_try_equip_inventory_item(item)
+			_show_inventory_tooltip(slot.get_meta("inventory_item", {}))
 
 func _handle_inventory_controller_navigation(event: InputEvent) -> bool:
 	if not (event is InputEventJoypadButton or event is InputEventJoypadMotion):
@@ -638,7 +638,7 @@ func _handle_inventory_controller_navigation(event: InputEvent) -> bool:
 		var item: Dictionary = _inventory_focused_slot.get_meta("inventory_item", {})
 		if not item.is_empty():
 			_try_equip_inventory_item(item)
-			_show_inventory_tooltip(item, _inventory_focused_slot)
+			_show_inventory_tooltip(_inventory_focused_slot.get_meta("inventory_item", {}), _inventory_focused_slot)
 		return true
 	return false
 
@@ -668,6 +668,10 @@ func _get_populated_inventory_slots() -> Array[Control]:
 	for child in inventory_slots_root.get_children():
 		if child is Control and not (child as Control).get_meta("inventory_item", {}).is_empty():
 			result.append(child as Control)
+	if equipment_slots_root and EquipManager.supports_empty_gear():
+		for slot_name in ["GlovesSlot", "BootsSlot", "ChestSlot"]:
+			var slot := equipment_slots_root.get_node(slot_name) as Control
+			result.append(slot)
 	return result
 
 func _move_inventory_focus(direction: Vector2) -> void:
@@ -723,8 +727,10 @@ func _update_inventory_focus_visuals() -> void:
 			if not frame:
 				frame = slot.get_node_or_null("InventoryFrame") as TextureRect
 			if frame:
-				MenuStyle.select_plate(frame, slot == _inventory_focused_slot)
-				if slot.get_meta("inventory_item", {}).is_empty():
+				var selected := slot == _inventory_focused_slot
+				MenuStyle.select_plate(frame, selected)
+				var item: Dictionary = slot.get_meta("inventory_item", {})
+				if not selected and String(item.get("icon_texture", "")).is_empty():
 					frame.modulate.a = 0.45
 		_inventory_selection_pointer.hide()
 		return
@@ -769,7 +775,12 @@ func _show_inventory_tooltip(item: Dictionary, anchor: Control = null) -> void:
 		return
 	inventory_tooltip.visible = true
 	inventory_tooltip_title.text = String(item.get("name", "ITEM")).to_upper()
-	inventory_tooltip_description.text = String(item.get("description", "")).to_upper()
+	var description := String(item.get("description", ""))
+	var index := int(item.get("equip_slot_idx", -1))
+	if index in [0, 1, 2] and EquipManager.supports_empty_gear():
+		var action := "UNEQUIP" if EquipManager.current_equip[index] == index else "EQUIP"
+		description += "\nSELECT TO " + action
+	inventory_tooltip_description.text = description.to_upper()
 	_position_inventory_tooltip(anchor)
 
 func _position_inventory_tooltip(anchor: Control = null) -> void:
@@ -2000,7 +2011,8 @@ func _try_equip_inventory_item(item: Dictionary) -> void:
 	if not EquipManager.is_slot_unlocked(slot_idx):
 		return
 	AudioManager.play_ui(&"menu_select")
-	EquipManager.equip_item(slot_idx)
+	if not EquipManager.clear_base_gear(slot_idx):
+		EquipManager.equip_item(slot_idx)
 	_update_equipped_slot_items()
 
 func _update_equipped_slot_items() -> void:
@@ -2043,9 +2055,13 @@ func _apply_equipped_slot_item(slot_name: String, item: Dictionary) -> void:
 	var value_label := slot.get_node_or_null("Value") as Label
 	if value_label:
 		value_label.text = String(item.get("name", ""))
+		if slot_name in ["GlovesSlot", "BootsSlot", "ChestSlot"]:
+			value_label.visible = item.get("name") == "EMPTY"
 
 func _get_equipped_clothing_item(slot_type: int) -> Dictionary:
 	var equipped_index := int(EquipManager.current_equip[slot_type])
+	if equipped_index == EquipManager.EMPTY_SLOT:
+		return {"name": "EMPTY", "description": "Select an item from the bag to equip it."}
 	var base_item: Dictionary = {}
 	for item in INVENTORY_ITEMS:
 		var item_index := int(item.get("equip_slot_idx", -1))

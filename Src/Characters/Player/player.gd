@@ -706,8 +706,9 @@ func _ready() -> void:
 	if ability_cooldown_timer:
 		ability_cooldown_timer.timeout.connect(_on_ability_cooldown_timeout)
 
-	if base_gloves_scene:
-		equip_gloves(base_gloves_scene)
+	var starting_gloves := EquipManager.get_current_glove_scene(self) if EquipManager else base_gloves_scene
+	if starting_gloves:
+		equip_gloves(starting_gloves)
 	if EquipManager:
 		EquipManager.call_deferred("apply_current_pattern_to_player")
 

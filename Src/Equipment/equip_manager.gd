@@ -6,6 +6,7 @@ const BLUE_GLOVES_SCENE := preload("res://Src/Equipment/blue_gloves.tscn")
 const RED_GLOVES_SCENE := preload("res://Src/Equipment/red_gloves.tscn")
 const YELLOW_GLOVES_SCENE := preload("res://Src/Equipment/yellow_gloves.tscn")
 const MERCHANT_KNOT_PATTERN: EquipmentPattern = preload("res://Src/Equipment/Patterns/merchant_knot_pattern.tres")
+const EMPTY_SLOT := PlayerEquipmentVisuals.EMPTY_SLOT
 const BLUE_GLOVES_SLOT := 3
 const RED_GLOVES_SLOT := 6
 const YELLOW_GLOVES_SLOT := 9
@@ -38,10 +39,37 @@ func equip_item(slot_idx: int) -> void:
 		unequip_slot(slot_type)
 		return
 
+	var showing_base_gear := current_equip[slot_type] == EMPTY_SLOT and slot_idx == slot_type
 	current_equip[slot_type] = slot_idx
-
-	_create_and_attach_equipment(slot_idx)
+	if not showing_base_gear:
+		_create_and_attach_equipment(slot_idx)
 	equip_changed.emit(slot_type, slot_idx)
+
+func supports_empty_gear() -> bool:
+	var player := get_tree().get_first_node_in_group("player")
+	var visual := player.get_node_or_null("Live3DVisual") as PlayerLive3DVisual if player else null
+	return visual != null and visual.equipment_visuals != null
+
+
+func clear_base_gear(slot_type: int) -> bool:
+	if slot_type < 0 or slot_type >= current_equip.size():
+		return false
+	if current_equip[slot_type] != slot_type or not supports_empty_gear():
+		return false
+	# The Base ability remains active while the doll wears no gear in this slot.
+	current_equip[slot_type] = EMPTY_SLOT
+	equip_changed.emit(slot_type, EMPTY_SLOT)
+	return true
+
+
+func restore_loadout(loadout: PackedInt32Array) -> void:
+	for slot in current_equip.size():
+		var item := loadout[slot] if slot < loadout.size() else slot
+		if item == EMPTY_SLOT or (item % 3 == slot and is_slot_unlocked(item)):
+			current_equip[slot] = item
+		else:
+			current_equip[slot] = slot
+
 
 func is_slot_unlocked(slot_idx: int) -> bool:
 	match slot_idx:
@@ -147,6 +175,12 @@ func _apply_pattern_to_player() -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player and player.has_method("apply_equipment_pattern"):
 		player.apply_equipment_pattern(current_pattern)
+
+func get_current_glove_scene(player: Node) -> PackedScene:
+	var index := current_equip[0]
+	if index == 0 or index == EMPTY_SLOT:
+		return player.get("base_gloves_scene") as PackedScene
+	return _get_glove_scene(index, player)
 
 func _get_glove_scene(slot_idx: int, player: Node) -> PackedScene:
 	if slot_idx == BLUE_GLOVES_SLOT:

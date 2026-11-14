@@ -4,6 +4,7 @@ extends Node3D
 ## The presentation for the existing three equipment slots and separate weapon.
 ## Does not own abilities, unlocks, costs or attack timing.
 
+const EMPTY_SLOT := -1
 const SLOTS: Array[StringName] = [&"gloves", &"boots", &"head_chest", &"weapon"]
 const DEFAULT_LOADOUT := preload("res://Src/Equipment/Visuals/base_gear_loadout.tres")
 const FITTED_LOADOUT := preload("res://Src/Equipment/Visuals/base_blue_gear_loadout.tres")
@@ -54,6 +55,8 @@ func initialize(target: Skeleton3D) -> bool:
 		var item := DEFAULT_LOADOUT.get_meta(String(slot)) as EquipmentVisualDefinition
 		if slot_type < 3:
 			var index := int(manager.current_equip[slot_type]) if manager else slot_type
+			if index == EMPTY_SLOT:
+				continue
 			item = _variants.get(Vector2i(slot_type, index), _variants.get(Vector2i(slot_type, slot_type), item))
 		if not equip(item):
 			return false
@@ -261,6 +264,9 @@ func _on_gameplay_equipment_changed(slot_type: int, gameplay_index: int) -> void
 	if slot_type < 0 or slot_type >= 3:
 		return
 	var slot := SLOTS[slot_type]
+	if gameplay_index == EMPTY_SLOT:
+		clear_slot(slot)
+		return
 	var item := _variants.get(Vector2i(slot_type, gameplay_index)) as EquipmentVisualDefinition
 	if not item:
 		item = _variants.get(Vector2i(slot_type, slot_type), DEFAULT_LOADOUT.get_meta(String(slot))) as EquipmentVisualDefinition

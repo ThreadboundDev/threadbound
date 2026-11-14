@@ -98,6 +98,33 @@ func run() -> void:
 			for frame in 20:
 				await process_frame
 			await capture("inventory_blue_idle")
+	var base_slots := ["GlovesSlot", "BootsSlot", "ChestSlot"]
+	var abilities: Array[Node] = [player.current_boots, player.current_chest]
+	for slot in base_slots.size():
+		cells[slot].gui_input.emit(click)
+		var gear_slot := menu.equipment_slots_root.get_node(base_slots[slot]) as Control
+		if slot == 1:
+			menu._set_inventory_focus(gear_slot)
+			var accept := InputEventJoypadButton.new()
+			accept.button_index = JOY_BUTTON_A
+			accept.pressed = true
+			check(menu._handle_inventory_controller_navigation(accept), "Controller confirms on equipped boots")
+		else:
+			gear_slot.gui_input.emit(click)
+		var name: StringName = PlayerEquipmentVisuals.SLOTS[slot]
+		check(manager.current_equip[slot] == manager.EMPTY_SLOT, "Inventory clears Base " + String(name))
+		check(not source.equipment_visuals.equipped.has(name), "Gameplay removes Base " + String(name))
+		check(not preview.equipment.equipped.has(name), "Preview removes Base " + String(name))
+		check(gear_slot.get_node("Icon").texture == null, "Equipped icon clears for " + String(name))
+	check(is_instance_valid(player.current_gloves) and player.current_gloves.scene_file_path == manager.BASE_GLOVES_SCENE.resource_path, "Empty gloves retain the Base grapple")
+	check(player.current_boots == abilities[0] and player.current_chest == abilities[1], "Removing gear retains jump and dash")
+	check(preview.equipment.equipped.has(&"weapon"), "Removing Base gear keeps the weapon")
+	check(not preview.equipment.cloth_motion.simulator.active, "Removing head/chest stops its cloth simulation")
+	await capture("inventory_unequipped")
+	for slot in base_slots.size():
+		cells[slot].gui_input.emit(click)
+		var name: StringName = PlayerEquipmentVisuals.SLOTS[slot]
+		check(manager.current_equip[slot] == slot and preview.equipment.equipped.has(name), "Base " + String(name) + " can be re-equipped from the bag")
 	if PlayerEquipmentVisuals.mask_preview_available(&"hermit"):
 		menu._try_equip_inventory_item({"mask_id": &"hermit"})
 		check(preview.equipment.equipped.get(&"mask_preview") == source.equipment_visuals.equipped.get(&"mask_preview"), "Equipped mask appears on the portrait")
