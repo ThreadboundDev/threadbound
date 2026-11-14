@@ -6,6 +6,7 @@ const SEAT_CLIP := "stand_to_sit_1"
 const SWORD_REST := Vector2(480, 568)
 const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
+const SEAT_OFFSET := Vector2(-30, 38)
 
 var _thread_ends := PackedVector2Array()
 var _idle_time := 0.0
@@ -102,12 +103,79 @@ func _ready() -> void:
 	camera.look_at_from_position(Vector3(2.6, 1.55, 5.8), Vector3(0, 0.65, 0), Vector3.UP)
 	camera.current = true
 	_camera = camera
+	_place_doll_on_seat(model)
 	var equipped_weapon := equipment._roots.get(&"weapon") as Node3D
 	if equipped_weapon:
 		_stage_resting_weapons(viewport, camera, equipped_weapon)
 		equipment.clear_slot(&"weapon")
 	texture = viewport.get_texture()
 	_pose_idle()
+
+
+func _place_doll_on_seat(model: Node3D) -> void:
+	# The cushion is painted, so match the pelvis and boot contacts in screen space.
+	model.global_position += _screen_offset(SEAT_OFFSET)
+	_pose_leg("R", Vector2(-27, 61), -0.02)
+	_pose_leg("L", Vector2(13, -20), -0.025)
+	_add_contact_shadow(Vector2(240, 389), Vector2(122, 37), 0.62)
+	_add_contact_shadow(Vector2(148, 579), Vector2(62, 19), 0.46)
+	_add_contact_shadow(Vector2(254, 500), Vector2(57, 16), 0.43)
+
+
+func _screen_offset(pixels: Vector2) -> Vector3:
+	return _camera.global_basis * Vector3(pixels.x, -pixels.y, 0.0) * (_camera.size / size.y)
+
+
+func _pose_leg(side: String, ankle_offset: Vector2, depth: float) -> void:
+	var thigh := _skeleton.find_bone("thigh." + side)
+	var shin := _skeleton.find_bone("shin." + side)
+	var foot := _skeleton.find_bone("foot." + side)
+	if thigh < 0 or shin < 0 or foot < 0:
+		return
+
+	var hip := _skeleton.get_bone_global_pose(thigh).origin
+	var knee := _skeleton.get_bone_global_pose(shin).origin
+	var ankle_pose := _skeleton.get_bone_global_pose(foot)
+	var ankle := ankle_pose.origin
+	var upper_length := hip.distance_to(knee)
+	var lower_length := knee.distance_to(ankle)
+	var offset := _screen_offset(ankle_offset) + _camera.global_basis.z * depth
+	var target := ankle + _skeleton.global_basis.inverse() * offset
+	var axis := (target - hip).normalized()
+	var distance := clampf(hip.distance_to(target), absf(upper_length - lower_length) + 0.001, upper_length + lower_length - 0.001)
+	# Keep the knee bending along the side of the original sit pose.
+	var bend := (knee - hip).slide(axis).normalized()
+	var along := (upper_length * upper_length + distance * distance - lower_length * lower_length) / (2.0 * distance)
+	var rise := sqrt(maxf(0.0, upper_length * upper_length - along * along))
+	var new_knee := hip + axis * along + bend * rise
+	var new_ankle := hip + axis * distance
+	_aim_bone(thigh, knee - hip, new_knee - hip)
+	_aim_bone(shin, _skeleton.get_bone_global_pose(foot).origin - new_knee, new_ankle - new_knee)
+	_skeleton.set_bone_global_pose(foot, Transform3D(ankle_pose.basis, _skeleton.get_bone_global_pose(foot).origin))
+
+
+func _aim_bone(bone: int, from: Vector3, toward: Vector3) -> void:
+	var pose := _skeleton.get_bone_global_pose(bone)
+	pose.basis = Basis(Quaternion(from.normalized(), toward.normalized())) * pose.basis
+	_skeleton.set_bone_global_pose(bone, pose)
+
+
+func _add_contact_shadow(center: Vector2, extent: Vector2, opacity: float) -> void:
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray([Color(0.12, 0.075, 0.045, opacity), Color(0.12, 0.075, 0.045, 0.0)])
+	var soft_shadow := GradientTexture2D.new()
+	soft_shadow.gradient = gradient
+	soft_shadow.fill = GradientTexture2D.FILL_RADIAL
+	soft_shadow.fill_from = Vector2(0.5, 0.5)
+	soft_shadow.fill_to = Vector2(1.0, 0.5)
+	var shadow := TextureRect.new()
+	shadow.texture = soft_shadow
+	shadow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	shadow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	shadow.show_behind_parent = true
+	shadow.size = extent
+	shadow.position = center - extent * 0.5
+	add_child(shadow)
 
 
 func _stage_resting_weapons(viewport: SubViewport, camera: Camera3D, equipped_weapon: Node3D) -> void:

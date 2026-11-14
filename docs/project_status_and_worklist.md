@@ -29,6 +29,9 @@ and works a thread between its hands in a 6.8-second seated loop. The thread
 tracks the fingertips and tightens during each pull. The checkpoint records
 the gloves, boots and head/chest indices for the portrait. Older saves use the
 starting gear.
+The doll sits lower and left on the cushion, with one boot extended toward
+the floor and the other resting on the Blossom's lip. Soft shadows mark the
+contact points against the painted backdrop.
 The menu uses the existing local doll and gear exports. The painted Blossom
 and menu are available when those exports are absent.
 
