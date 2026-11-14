@@ -4,6 +4,7 @@ extends RefCounted
 const ButtonTheme := preload("res://Src/UI/menu_button_theme.gd")
 const DEMO := "res://Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn"
 const TITLE := "res://Src/UI/MainMenu/main_menu.tscn"
+const TITLE_PREVIEW := "res://Src/UI/MainMenu/title_screen_preview.tscn"
 const SURFACE := Color("#1a1b20")
 const EDGE := Color("#454249")
 const SCRIM := Color(0.045, 0.047, 0.06, 0.78)
@@ -20,7 +21,7 @@ static func enabled(node: Node) -> bool:
 			return true
 		ancestor = ancestor.get_parent()
 	var scene := node.get_tree().current_scene
-	return scene != null and scene.scene_file_path in [DEMO, TITLE]
+	return scene != null and scene.scene_file_path in [DEMO, TITLE, TITLE_PREVIEW]
 
 
 static func button_theme() -> Theme:

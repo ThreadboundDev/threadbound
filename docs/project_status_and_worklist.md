@@ -42,6 +42,14 @@ The original Chamber checkpoint cannot Continue from this screen. Starting
 a New Journey still asks before replacing it. Both title entry paths were
 verified in Godot with the live wooden doll. The pause menu is separate.
 
+For title-only review, open
+[`title_screen_preview.tscn`](../Src/UI/MainMenu/title_screen_preview.tscn)
+and press F6 in Godot. This runs the live title scene with Settings, Playtest
+Support and the New Journey confirmation. Continue uses the current
+checkpoint to show its enabled state and saved portrait. Continue and
+confirmed New Journey play their feedback and stay at the title without
+changing the checkpoint. Edit `main_menu.tscn` for layout or art changes.
+
 The title screen uses the shared nine-slice button theme in
 `Src/UI/menu_button_theme.gd`. The two simple SVGs keep their corners and
 border thickness as the buttons resize. The theme uses Almendra and includes

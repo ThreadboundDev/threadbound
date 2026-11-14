@@ -5,6 +5,7 @@ const ORIGINAL_DEMO_SCENE := "res://Src/Environment/World/Chamber Of The First W
 const MENU_BUTTON_THEME := preload("res://Src/UI/menu_button_theme.gd")
 
 @export var button_accent := MENU_BUTTON_THEME.CHAMBER
+@export var title_screen_preview := false
 
 @onready var options_panel: OptionsPanel = $OptionsPanel as OptionsPanel
 @onready var support_panel: PlaytestSupportPanel = $PlaytestSupportPanel as PlaytestSupportPanel
@@ -131,9 +132,7 @@ func _activate_selected() -> void:
 	match rows[_selected_index].name:
 		&"Continue":
 			if _can_continue():
-				AudioManager.play_ui(&"enter_world")
-				EquipManager.restore_loadout(DemoProgress.get_checkpoint_loadout())
-				get_tree().change_scene_to_file(DemoProgress.get_checkpoint_scene_path())
+				_continue_journey()
 			else:
 				_pulse_unavailable(rows[_selected_index])
 		&"NewJourney":
@@ -147,7 +146,20 @@ func _activate_selected() -> void:
 		_:
 			_pulse_unavailable(rows[_selected_index])
 
+func _continue_journey() -> void:
+	AudioManager.play_ui(&"enter_world")
+	if title_screen_preview:
+		print("Title screen preview: Continue")
+		return
+	EquipManager.restore_loadout(DemoProgress.get_checkpoint_loadout())
+	get_tree().change_scene_to_file(DemoProgress.get_checkpoint_scene_path())
+
 func _start_new_journey() -> void:
+	if title_screen_preview:
+		_hide_new_journey_confirmation()
+		AudioManager.play_ui(&"enter_world")
+		print("Title screen preview: New Journey")
+		return
 	if _starting_new_journey:
 		return
 	_starting_new_journey = true
@@ -168,7 +180,7 @@ func _perform_new_journey_transition() -> void:
 func _request_new_journey() -> void:
 	if _starting_new_journey:
 		return
-	if not DemoProgress.has_checkpoint():
+	if not title_screen_preview and not DemoProgress.has_checkpoint():
 		_start_new_journey()
 		return
 	_confirming_new_journey = true
