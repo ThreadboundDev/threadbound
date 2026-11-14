@@ -77,6 +77,10 @@ selection.
 For the seating and motion review, the title temporarily shows the bare
 wooden doll without clothing or weapon props. Restore the presentation by
 enabling `show_gear` on `TitleDoll` in `main_menu.tscn`.
+The bare title uses the November 7 export with the carved wrist and hand
+repair. The November 3 modular body export still contains the older bare hands.
+Both body exports contain the original 48 animation clips. The title sits 11
+pixels lower while keeping its foot contacts through the stitching loop.
 
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,

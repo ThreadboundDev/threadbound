@@ -6,7 +6,7 @@ const SEAT_CLIP := "stand_to_sit_1"
 const SWORD_REST := Vector2(480, 568)
 const SHIELD_REST := Vector2(416, 516)
 const STITCH_CYCLE := 6.8
-const SEAT_OFFSET := Vector2(-30, 38)
+const SEAT_OFFSET := Vector2(-30, 49)
 
 @export var show_gear := true
 
@@ -21,7 +21,8 @@ var _hearth_time := 0.0
 
 
 func _ready() -> void:
-	var model_path := PlayerLive3DVisual.MODULAR_DOLL_PATH
+	var repaired_body := not show_gear and ResourceLoader.exists(PlayerLive3DVisual.DOLL_PREVIEW_PATH)
+	var model_path := PlayerLive3DVisual.DOLL_PREVIEW_PATH if repaired_body else PlayerLive3DVisual.MODULAR_DOLL_PATH
 	if not ResourceLoader.exists(model_path):
 		return
 	var model_scene := load(model_path) as PackedScene
@@ -35,6 +36,11 @@ func _ready() -> void:
 		return
 	var skeleton := skeletons[0] as Skeleton3D
 	var player := players[0] as AnimationPlayer
+	if repaired_body:
+		# The repaired export also contains its gameplay preview props.
+		for mesh: MeshInstance3D in model.find_children("*", "MeshInstance3D", true, false):
+			if mesh.name != &"Threadborne_Doll":
+				mesh.free()
 
 	var viewport := SubViewport.new()
 	viewport.name = "SeatedDollViewport"
@@ -119,9 +125,9 @@ func _ready() -> void:
 func _place_doll_on_seat(model: Node3D) -> void:
 	# The cushion is painted, so match the pelvis and boot contacts in screen space.
 	model.global_position += _screen_offset(SEAT_OFFSET)
-	_pose_leg("R", Vector2(-27, 61), -0.02)
-	_pose_leg("L", Vector2(13, -20), -0.025)
-	_add_contact_shadow(Vector2(240, 389), Vector2(122, 37), 0.62)
+	_pose_leg("R", Vector2(-27, 50), -0.02)
+	_pose_leg("L", Vector2(13, -31), -0.025)
+	_add_contact_shadow(Vector2(240, 400), Vector2(122, 37), 0.62)
 	_add_contact_shadow(Vector2(148, 579), Vector2(62, 19), 0.46)
 	_add_contact_shadow(Vector2(254, 500), Vector2(57, 16), 0.43)
 
