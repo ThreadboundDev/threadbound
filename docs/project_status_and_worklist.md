@@ -117,6 +117,14 @@ thumb-tip travel relative to the hand and confirmed that the edit leaves
 every other evaluated bone transform identical. The corrected thumb awaits
 playback review before it is adopted.
 
+The November 14 feedback recording shows `Wooden_Doll_Torso_Seam_Review.blend`
+playing `Review - hinged fingers and seated wrists`. The corrected file is
+`Wooden_Doll_Idle_Shield_Thumb_Review.blend`, saved with
+`Review - seated wrists and steady shield thumb` active. At 245 samples
+through the loop, the original 527 thumb-weighted vertices move up to 7.3 mm
+relative to the palm. The corrected vertices stay within 0.001 mm of their
+frame-23 positions in hand space and follow the hand through the idle.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
