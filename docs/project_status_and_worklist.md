@@ -145,6 +145,11 @@ first idle's frame-23 centers and retains the source rotations. Across
 Review the pose and full loop before adopting the action in-game. Use
 ball-center travel relative to the socket to check subsequent animations.
 
+After Chase's visual review, the action library was updated with
+`Review - idle_2 forward shoulder seat`. The sword-side ball sits 8 mm
+farther forward in chest space. Across 1,449 samples the new seat held
+within 0.035 mm. Check the revised fit in Blender before approving `idle_2`.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
