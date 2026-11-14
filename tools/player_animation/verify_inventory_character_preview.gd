@@ -99,6 +99,14 @@ func run() -> void:
 				await process_frame
 			await capture("inventory_blue_idle")
 	var base_slots := ["GlovesSlot", "BootsSlot", "ChestSlot"]
+	var gameplay_hands := source._model_root.find_child("Doll_Covered_Hands", true, false) as MeshInstance3D
+	var preview_hands := preview.model.find_child("Doll_Covered_Hands", true, false) as MeshInstance3D
+	check(gameplay_hands != null and preview_hands != null and gameplay_hands.mesh == preview_hands.mesh,
+		"Gameplay and inventory use the same repaired bare hands")
+	if not gameplay_hands or not preview_hands:
+		quit(1)
+		return
+	check(not gameplay_hands.visible and not preview_hands.visible, "Fitted gloves cover the bare hands")
 	var abilities: Array[Node] = [player.current_boots, player.current_chest]
 	for slot in base_slots.size():
 		cells[slot].gui_input.emit(click)
@@ -120,6 +128,7 @@ func run() -> void:
 	check(player.current_boots == abilities[0] and player.current_chest == abilities[1], "Removing gear retains jump and dash")
 	check(preview.equipment.equipped.has(&"weapon"), "Removing Base gear keeps the weapon")
 	check(not preview.equipment.cloth_motion.simulator.active, "Removing head/chest stops its cloth simulation")
+	check(gameplay_hands.visible and preview_hands.visible, "Removing gloves shows the repaired bare hands")
 	await capture("inventory_unequipped")
 	for slot in base_slots.size():
 		cells[slot].gui_input.emit(click)

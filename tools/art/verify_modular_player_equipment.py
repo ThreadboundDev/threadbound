@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import struct
+import sys
 from mathutils import Vector
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -29,19 +30,29 @@ def clips(doc):
     return {a['name']:max(doc['accessors'][s['input']]['max'][0] for s in a['samplers']) for a in doc.get('animations',[])}
 
 
-build=json.loads((OUT/'build_report.json').read_text())
-for name,digest in build['source_sha256'].items():
-    check('source archive intact: '+name,hashlib.sha256((ROOT/'Assets/Threadborne/Equipment/Base Gear'/name).read_bytes()).hexdigest()==digest)
 base=document(EXPORT/'threadborne_doll_modular.glb')
 original=document(EXPORT/'threadborne_doll_equipped.glb')
 check('body retains 48 clips',len(clips(base))==48 and clips(base).keys()==clips(original).keys())
 check('body preserves clip durations',max(abs(clips(base)[k]-v) for k,v in clips(original).items())<.034)
-check('body only with reversible covered regions',set(n['name'] for n in base['nodes'] if 'mesh' in n)=={'Threadborne_Doll','Doll_Covered_Gloves','Doll_Covered_Boots','Doll_Covered_HeadChest'})
+body_meshes={n['name']:base['meshes'][n['mesh']] for n in base['nodes'] if 'mesh' in n}
+check('body only with reversible covered regions',set(body_meshes)=={'Threadborne_Doll','Doll_Covered_Gloves','Doll_Covered_Boots','Doll_Covered_HeadChest','Doll_Covered_Hands'})
+hand_materials={base['materials'][p['material']]['name'] for p in body_meshes['Doll_Covered_Hands']['primitives']}
+check('bare hands use both repaired Blender materials',hand_materials=={'Doll_Carved_Wood','Doll_Dark_Wood_Hinges'})
 original_body=next(n['mesh'] for n in original['nodes'] if n.get('name')=='Threadborne_Doll')
 original_triangles=sum(original['accessors'][p['indices']]['count']//3 for p in original['meshes'][original_body]['primitives'])
 split_triangles=sum(base['accessors'][p['indices']]['count']//3 for mesh in base['meshes'] for p in mesh['primitives'])
 check('coverage partition preserves every original body triangle',split_triangles==original_triangles,{'original':original_triangles,'partition':split_triangles})
 check('body retains all 62 joints',len(base['skins'][0]['joints'])==62)
+if "--" in sys.argv and "--body-only" in sys.argv[sys.argv.index("--") + 1:]:
+    bpy.ops.wm.open_mainfile(filepath=str(OUT/'Threadborne_Doll_Modular.blend'))
+    check('editable source retains all 48 actions after reopening',len(bpy.data.actions)==48)
+    check('editable source retains all repaired body regions',all(bpy.data.objects.get(name) is not None for name in body_meshes))
+    print('REPAIRED_BODY_CHECKS', len(checks), flush=True)
+    sys.exit(0)
+
+build=json.loads((OUT/'build_report.json').read_text())
+for name,digest in build['source_sha256'].items():
+    check('source archive intact: '+name,hashlib.sha256((ROOT/'Assets/Threadborne/Equipment/Base Gear'/name).read_bytes()).hexdigest()==digest)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=str(EXPORT/'threadborne_doll_modular.glb'))
 rig=next(o for o in bpy.data.objects if o.type=='ARMATURE')

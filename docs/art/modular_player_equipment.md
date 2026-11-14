@@ -38,6 +38,20 @@ Original archives are preserved in `Assets/Threadborne/Equipment/Base Gear/`.
 The existing equipped doll export is the verified animation/rest-skeleton input;
 the previous equipped doll and editable source are preserved.
 
+The modular body uses the repaired November 7 Blender export. Its carved wrists
+and hands form a separate coverage region that the fitted Base and Blue gloves
+cover with their matching hands. The older bare mesh is archived outside the
+runtime asset directory.
+
+To rebuild only the repaired body and leave fitted equipment in place, run
+`--python tools/art/prepare_modular_player_equipment.py -- --body-only`. This
+stages the GLB, blend and texture in `LocalOnly/Equipment/RepairedModularBody`.
+Install the GLB in `LocalDoll` and save the blend in the modular equipment
+source directory below. Run
+`--python tools/art/verify_modular_player_equipment.py -- --body-only` to check
+the installed export and editable source. The historical full exporter also
+rebuilds the original gear, so use the body-only command for doll revisions.
+
 Run Blender 5.2 in background mode with:
 
 ```text

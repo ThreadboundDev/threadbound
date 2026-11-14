@@ -21,8 +21,7 @@ var _hearth_time := 0.0
 
 
 func _ready() -> void:
-	var repaired_body := not show_gear and ResourceLoader.exists(PlayerLive3DVisual.DOLL_PREVIEW_PATH)
-	var model_path := PlayerLive3DVisual.DOLL_PREVIEW_PATH if repaired_body else PlayerLive3DVisual.MODULAR_DOLL_PATH
+	var model_path := PlayerLive3DVisual.MODULAR_DOLL_PATH
 	if not ResourceLoader.exists(model_path):
 		return
 	var model_scene := load(model_path) as PackedScene
@@ -36,11 +35,6 @@ func _ready() -> void:
 		return
 	var skeleton := skeletons[0] as Skeleton3D
 	var player := players[0] as AnimationPlayer
-	if repaired_body:
-		# The repaired export also contains its gameplay preview props.
-		for mesh: MeshInstance3D in model.find_children("*", "MeshInstance3D", true, false):
-			if mesh.name != &"Threadborne_Doll":
-				mesh.free()
 
 	var viewport := SubViewport.new()
 	viewport.name = "SeatedDollViewport"

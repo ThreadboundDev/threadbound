@@ -10,6 +10,7 @@ import json
 import math
 import re
 import struct
+import sys
 import zipfile
 
 import bpy
@@ -25,6 +26,7 @@ OUT = ROOT / 'ArtSource/Player/Blender/PaleDollStudy/GameReadyDoll/ModularEquipm
 EXPORT = ROOT / 'Assets/Threadborne/Player/LocalDoll/Equipment'
 SCRATCH = ROOT / 'tmp/modular-equipment-inputs'
 BOOT_CUFF_HEIGHT = .415  # Midway between the .173 ankle and .665 knee joints.
+BODY_ONLY = "--body-only" in sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else False
 for path in [OUT, EXPORT, SCRATCH]:
     path.mkdir(parents=True, exist_ok=True)
 
@@ -54,6 +56,108 @@ report = {'source_sha256': {}, 'pieces': {}, 'slot_groups': {
     'head_chest': ['base_cowl', 'base_tunic', 'base_pants'],
     'gloves': ['base_bracers'], 'boots': ['base_boots'],
     'weapon': ['base_sword', 'base_shield']}}
+
+# The fitted bracers bring their own copy of the repaired hands. Keep the
+# naked body's carved hands in a separate region for that coverage mask.
+HAND_MATERIALS = {"Doll_Carved_Wood", "Doll_Dark_Wood_Hinges"}
+assert HAND_MATERIALS <= {material.name for material in body.data.materials}
+
+
+def export(path, objects, animations=False):
+    bpy.ops.object.select_all(action='DESELECT')
+    for obj in [rig]+objects:
+        obj.select_set(True)
+    bpy.context.view_layer.objects.active=rig
+    bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,
+        export_animations=animations,export_animation_mode='ACTIONS',export_force_sampling=True,
+        export_skins=True,export_def_bones=False,export_cameras=False,export_lights=False,
+        export_materials='EXPORT',export_yup=True)
+    configure_textures(path)
+
+
+def configure_textures(path):
+    # Seed the extracted images and their import policy before Godot's first
+    # scan. Lossless disk compression leaves large 3D images uncompressed in
+    # VRAM; use the same GPU compression as the existing doll textures.
+    raw=path.read_bytes()
+    json_length=struct.unpack_from('<I',raw,12)[0]
+    document=json.loads(raw[20:20+json_length])
+    binary_start=20+json_length+8
+    for image in document.get('images',[]):
+        view=document['bufferViews'][image['bufferView']]
+        suffix='.jpg' if image['mimeType']=='image/jpeg' else '.png'
+        image_path=path.parent/(path.stem+'_'+image['name']+suffix)
+        assert image_path.resolve().is_relative_to(path.parent.resolve())
+        offset=binary_start+view.get('byteOffset',0)
+        image_path.write_bytes(raw[offset:offset+view['byteLength']])
+        config_path=Path(str(image_path)+'.import')
+        if config_path.exists():
+            config=config_path.read_text()
+            config=re.sub(r'^compress/mode=.*$', 'compress/mode=2', config, flags=re.M)
+            config=re.sub(r'^detect_3d/compress_to=.*$', 'detect_3d/compress_to=0', config, flags=re.M)
+        else:
+            resource_path='res://'+image_path.relative_to(ROOT).as_posix()
+            config='[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[deps]\nsource_file="'+resource_path+'"\n\n[params]\ncompress/mode=2\nmipmaps/generate=true\ndetect_3d/compress_to=0\n'
+        config_path.write_text(config)
+
+
+def build_body(blend_path, export_path):
+    # Covered shell faces become reversible presentation masks. Closed boots must
+    # not draw the doll's bare toes through their leather during ankle flexion.
+    # Each original face belongs to exactly one region; no body art is discarded.
+    regions={name:[] for name in ['Threadborne_Doll','Doll_Covered_Gloves','Doll_Covered_Boots','Doll_Covered_HeadChest','Doll_Covered_Hands']}
+    for polygon in body.data.polygons:
+        p=body.matrix_world@polygon.center
+        if body.data.materials[polygon.material_index].name in HAND_MATERIALS:
+            region='Doll_Covered_Hands'
+        elif p.z<BOOT_CUFF_HEIGHT:
+            region='Doll_Covered_Boots'
+        elif .467<abs(p.x)<.683 and 1.34<p.z<1.66:
+            region='Doll_Covered_Gloves'
+        elif abs(p.x)<.20 and .83<p.z<1.40:
+            region='Doll_Covered_HeadChest'
+        else:
+            region='Threadborne_Doll'
+        regions[region].append(polygon.index)
+    template=body.data.copy()
+    body_objects=[]
+    for name,indices in regions.items():
+        obj=body if name=='Threadborne_Doll' else body.copy()
+        if obj!=body: bpy.context.collection.objects.link(obj)
+        obj.data=template.copy();obj.name=name;obj.data.name=name
+        keep=set(indices)
+        bm=bmesh.new();bm.from_mesh(obj.data);bm.faces.ensure_lookup_table()
+        bmesh.ops.delete(bm,geom=[f for f in bm.faces if f.index not in keep],context='FACES')
+        bmesh.ops.delete(bm,geom=[v for v in bm.verts if not v.link_faces],context='VERTS')
+        bm.to_mesh(obj.data);bm.free()
+        body_objects.append(obj)
+    report['body_regions']={name:len(indices) for name,indices in regions.items()}
+    assert sum(report['body_regions'].values())==len(template.polygons)
+
+    # Preserve all 48 source clips only on the body export. Gear contains skins but
+    # no duplicate animation clocks; every piece follows the one live skeleton.
+    rig.data.pose_position='POSE'
+    rig.animation_data.action=bpy.data.actions['idle_4']
+    rig.animation_data.action_slot=bpy.data.actions['idle_4'].slots[0]
+    for action in bpy.data.actions:
+        action.use_fake_user=True
+    bpy.context.scene.frame_set(1)
+    for image in bpy.data.images:
+        if image.source=='FILE' and not image.packed_file:
+            image.pack()
+    bpy.ops.wm.save_as_mainfile(filepath=str(blend_path),compress=True)
+
+
+    export(export_path,body_objects,True)
+
+
+if BODY_ONLY:
+    candidate = ROOT / 'LocalOnly/Equipment/RepairedModularBody'
+    candidate.mkdir(parents=True, exist_ok=True)
+    (candidate/'.gdignore').touch()
+    build_body(candidate/'Threadborne_Doll_Modular.blend', candidate/'threadborne_doll_modular.glb')
+    print('REPAIRED_MODULAR_BODY_EXPORTED', report['body_regions'], flush=True)
+    sys.exit(0)
 
 
 def imported(archive):
@@ -295,89 +399,7 @@ world=tip.matrix_world.copy();tip.matrix_world=Matrix.Identity(4);tip.data.trans
 skin(tip,'Grapple_Needle_Tip',lambda p:{'forearm.L':1},'base_bracers')
 tube('Grapple_Needle_Tether',[Vector((.49,-.108,1.519)),Vector((.477,-.115,1.49)),Vector((.49,-.104,1.472))],.003,rope)
 
-# Covered shell faces become reversible presentation masks. Closed boots must
-# not draw the doll's bare toes through their leather during ankle flexion.
-# Each original face belongs to exactly one region; no body art is discarded.
-regions={name:[] for name in ['Threadborne_Doll','Doll_Covered_Gloves','Doll_Covered_Boots','Doll_Covered_HeadChest']}
-for polygon in body.data.polygons:
-    p=body.matrix_world@polygon.center
-    if p.z<BOOT_CUFF_HEIGHT:
-        region='Doll_Covered_Boots'
-    elif .467<abs(p.x)<.683 and 1.34<p.z<1.66:
-        region='Doll_Covered_Gloves'
-    elif abs(p.x)<.20 and .83<p.z<1.40:
-        region='Doll_Covered_HeadChest'
-    else:
-        region='Threadborne_Doll'
-    regions[region].append(polygon.index)
-template=body.data.copy()
-body_objects=[]
-for name,indices in regions.items():
-    obj=body if name=='Threadborne_Doll' else body.copy()
-    if obj!=body: bpy.context.collection.objects.link(obj)
-    obj.data=template.copy();obj.name=name;obj.data.name=name
-    keep=set(indices)
-    bm=bmesh.new();bm.from_mesh(obj.data);bm.faces.ensure_lookup_table()
-    bmesh.ops.delete(bm,geom=[f for f in bm.faces if f.index not in keep],context='FACES')
-    bmesh.ops.delete(bm,geom=[v for v in bm.verts if not v.link_faces],context='VERTS')
-    bm.to_mesh(obj.data);bm.free()
-    body_objects.append(obj)
-report['body_regions']={name:len(indices) for name,indices in regions.items()}
-assert sum(report['body_regions'].values())==len(template.polygons)
-
-# Preserve all 48 source clips only on the body export. Gear contains skins but
-# no duplicate animation clocks; every piece follows the one live skeleton.
-rig.data.pose_position='POSE'
-rig.animation_data.action=bpy.data.actions['idle_4']
-rig.animation_data.action_slot=bpy.data.actions['idle_4'].slots[0]
-for action in bpy.data.actions:
-    action.use_fake_user=True
-bpy.context.scene.frame_set(1)
-for image in bpy.data.images:
-    if image.source=='FILE' and not image.packed_file:
-        image.pack()
-bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'Threadborne_Doll_Modular.blend'),compress=True)
-
-
-def export(path, objects, animations=False):
-    bpy.ops.object.select_all(action='DESELECT')
-    for obj in [rig]+objects:
-        obj.select_set(True)
-    bpy.context.view_layer.objects.active=rig
-    bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,
-        export_animations=animations,export_animation_mode='ACTIONS',export_force_sampling=True,
-        export_skins=True,export_def_bones=False,export_cameras=False,export_lights=False,
-        export_materials='EXPORT',export_yup=True)
-    configure_textures(path)
-
-
-def configure_textures(path):
-    # Seed the extracted images and their import policy before Godot's first
-    # scan. Lossless disk compression leaves large 3D images uncompressed in
-    # VRAM; use the same GPU compression as the existing doll textures.
-    raw=path.read_bytes()
-    json_length=struct.unpack_from('<I',raw,12)[0]
-    document=json.loads(raw[20:20+json_length])
-    binary_start=20+json_length+8
-    for image in document.get('images',[]):
-        view=document['bufferViews'][image['bufferView']]
-        suffix='.jpg' if image['mimeType']=='image/jpeg' else '.png'
-        image_path=path.parent/(path.stem+'_'+image['name']+suffix)
-        assert image_path.resolve().is_relative_to(path.parent.resolve())
-        offset=binary_start+view.get('byteOffset',0)
-        image_path.write_bytes(raw[offset:offset+view['byteLength']])
-        config_path=Path(str(image_path)+'.import')
-        if config_path.exists():
-            config=config_path.read_text()
-            config=re.sub(r'^compress/mode=.*$', 'compress/mode=2', config, flags=re.M)
-            config=re.sub(r'^detect_3d/compress_to=.*$', 'detect_3d/compress_to=0', config, flags=re.M)
-        else:
-            resource_path='res://'+image_path.relative_to(ROOT).as_posix()
-            config='[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[deps]\nsource_file="'+resource_path+'"\n\n[params]\ncompress/mode=2\nmipmaps/generate=true\ndetect_3d/compress_to=0\n'
-        config_path.write_text(config)
-
-
-export(EXPORT.parent/'threadborne_doll_modular.glb',body_objects,True)
+build_body(OUT/'Threadborne_Doll_Modular.blend', EXPORT.parent/'threadborne_doll_modular.glb')
 rig.animation_data.action=None
 rig.data.pose_position='REST'
 bpy.context.view_layer.update()
