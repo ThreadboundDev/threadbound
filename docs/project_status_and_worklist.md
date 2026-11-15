@@ -179,6 +179,14 @@ four sheath/draw references. The Drawn and Stowed view layers share one rig
 and body. Stowed preserves Chase's sword and shield placements. Gameplay
 exports and transition handoffs remain separate work.
 
+Base armor fitting uses the naked wooden doll master and the individual
+Base Gear source archives for cowl, tunic, pants, bracers, and boots. The
+grapple hardware attaches to the left bracer. The local fitting scene
+`LocalOnly/Equipment/BaseArmorReview/Threadbound_Base_Armor_Fit.blend`
+uses the approved master idle and a reversible boot coverage mask. It
+contains no replacement mannequin hands, heads, or shin inserts. Demo 2.0
+still uses its current armor while the individual pieces are being fitted.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
