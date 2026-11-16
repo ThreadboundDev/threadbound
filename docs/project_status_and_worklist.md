@@ -201,6 +201,11 @@ seat, and removes the leftover faces bridging the trouser hems. Front, rear,
 and underside renders are in the local Base Armor Review directory. Inspect
 the inner hem edges and check clearance in motion before exporting.
 
+Outfit B follow-up adds ease over the rear thighs and uses the original
+fabric for separate open knee linings. The low rear T-pose render shows the
+thigh patches covered and both hems separated. Check the liner edges and
+knee clearance in motion before export.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
