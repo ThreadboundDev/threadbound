@@ -228,6 +228,11 @@ into the damaged undersides. The copied polygons retain their original
 corner UVs, colored trim, and frayed ends. The open cuffs are retained and
 the new joins are ready for close-up and motion review.
 
+Outfit B's inner-thigh seams were welded and relaxed in the fitting file.
+The seam faces now sample neighboring cloth instead of trim, and both
+close-up T-pose renders show the colored flecks removed. The frayed hems
+remain, with clearance in motion still to be reviewed.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
