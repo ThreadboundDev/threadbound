@@ -195,6 +195,12 @@ hem coverage. Both share the boots, bracers, left grapple, and a T-pose
 fitting action with seated wrists. The approved gameplay actions remain
 available for motion review. Outfit choice and gameplay export are pending.
 
+Outfit B is the active Blender review. The T-pose pass seats the fabric
+facing under the cowl, adds clearance at the knees, rear thighs, back, and
+seat, and removes the leftover faces bridging the trouser hems. Front, rear,
+and underside renders are in the local Base Armor Review directory. Inspect
+the inner hem edges and check clearance in motion before exporting.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
