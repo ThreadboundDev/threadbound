@@ -223,6 +223,11 @@ mesh now extends the existing edges and uses Outfit B's texture atlas for the
 new cloth faces. Review the joins and fabric pattern before accepting or
 exporting the outfit.
 
+The latest Outfit B pass mirrors intact sleeve tops and outer trouser cloth
+into the damaged undersides. The copied polygons retain their original
+corner UVs, colored trim, and frayed ends. The open cuffs are retained and
+the new joins are ready for close-up and motion review.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
