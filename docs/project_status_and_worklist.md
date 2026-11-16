@@ -239,6 +239,12 @@ projected from the surrounding sleeve fabric, with the shoulder trim and
 frayed elbow cuffs retained. Close-up T-pose renders confirm the large splits
 are closed. Small distal gaps and clearance in motion remain for review.
 
+The Base grapple bundle and needle are now fitted to the left bracer with
+one rope keeper and two needle keepers. Fitting-pose checks place the rope
+and needle about 3 mm clear of the bracer. The front and back sleeve joins
+were softened and remapped from nearby cloth. Texture transitions remain
+visible in the closest views. Review deployment and the fit in motion.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
