@@ -217,6 +217,12 @@ The added cloth uses the existing outfit material and has at least 11 mm of
 sampled radial clearance from the master upper arms in fitting T-pose. Both
 underarm renders were reviewed. Sleeve clearance in motion is pending.
 
+Chase clarified that the sleeve and inner knee repairs should continue the
+original garment surface. The separate liners were removed. The local fitting
+mesh now extends the existing edges and uses Outfit B's texture atlas for the
+new cloth faces. Review the joins and fabric pattern before accepting or
+exporting the outfit.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
