@@ -206,6 +206,12 @@ fabric for separate open knee linings. The low rear T-pose render shows the
 thigh patches covered and both hems separated. Check the liner edges and
 knee clearance in motion before export.
 
+The Base fitting T-pose seats the wrist balls on the measured ends of the
+master forearms. The bracer mouths were realigned and the leather cleared
+from the underside of the forearms. Bracers and the left grapple remain
+forearm-bound. Both underside views passed the static review. Check the
+cuffs through wrist motion before exporting.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
