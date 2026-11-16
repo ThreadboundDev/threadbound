@@ -212,6 +212,11 @@ from the underside of the forearms. Bracers and the left grapple remain
 forearm-bound. Both underside views passed the static review. Check the
 cuffs through wrist motion before exporting.
 
+Outfit B now has continuous open sleeves beneath the original frayed cuffs.
+The added cloth uses the existing outfit material and has at least 11 mm of
+sampled radial clearance from the master upper arms in fitting T-pose. Both
+underarm renders were reviewed. Sleeve clearance in motion is pending.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
