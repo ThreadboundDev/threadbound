@@ -187,6 +187,14 @@ uses the approved master idle and a reversible boot coverage mask. It
 contains no replacement mannequin hands, heads, or shin inserts. Demo 2.0
 still uses its current armor while the individual pieces are being fitted.
 
+The Base fitting file offers two outfits on the same master doll. View layer
+A unifies the individual cowl, tunic, and pants with matching cloth at the
+sleeves and a quieter trouser seam. View layer B uses the older garment shell
+after stripping embedded mannequin surfaces and matching the neckline and
+hem coverage. Both share the boots, bracers, left grapple, and a T-pose
+fitting action with seated wrists. The approved gameplay actions remain
+available for motion review. Outfit choice and gameplay export are pending.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
