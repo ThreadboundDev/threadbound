@@ -245,6 +245,12 @@ and needle about 3 mm clear of the bracer. The front and back sleeve joins
 were softened and remapped from nearby cloth. Texture transitions remain
 visible in the closest views. Review deployment and the fit in motion.
 
+The Outfit B overhead pass eases the sleeve profiles across the joins,
+blends the existing weave across both sections, and corrects inward-facing
+exterior polygons. The local Blender review material uses a second UV map
+and blend attribute. Bake the result into the export material if accepted.
+Overhead and side T-pose renders are available. Motion review is pending.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
