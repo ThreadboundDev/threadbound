@@ -233,6 +233,12 @@ The seam faces now sample neighboring cloth instead of trim, and both
 close-up T-pose renders show the colored flecks removed. The frayed hems
 remain, with clearance in motion still to be reviewed.
 
+Outfit B's broken sleeve joins were replaced with continuous cloth between
+the original shoulder-side and cuff-side edges. The repaired bands use UVs
+projected from the surrounding sleeve fabric, with the shoulder trim and
+frayed elbow cuffs retained. Close-up T-pose renders confirm the large splits
+are closed. Small distal gaps and clearance in motion remain for review.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
