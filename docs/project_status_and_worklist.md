@@ -302,8 +302,23 @@ In the November 18 Blender fitting pass, the Base needle shaft was widened
 to about twice its previous width and given a deeper profile. The cord now
 leaves the outer turn of the coil, wraps close to the wrist through the
 underside guide, and loops through the needle eye with its end bound down.
-The fitting file is local to the art workspace. Demo 2.0 still uses the
-previous export.
+That revision was reviewed in the local Blender fitting file.
+
+Outfit B, the fitted bracers, and the fitted boots are now the Base visuals
+in Demo 2.0. The gear export uses only deforming bones and their parents,
+so the fitting rig's finger rests do not enter armor skin binds. The seven
+meshes total about 98,000 triangles. The body coverage hides the protected
+torso, forearm, and foot regions while keeping the exposed head and hands.
+The Godot demo passed 65 checks for equip, unequip, mixed Base and Blue gear,
+sampled animation clips, and stowed and deployed grapple visibility.
+
+The master fitting file has new armhole and thigh weights. The sampled run
+and wall hang clear the large areas of exposed wood. The shoulder band can
+still pinch in close-up. Outfit B uses skinned cloth for this pass. The red
+and green channels of the fitted dye texture select cloth and gold stitching.
+Neutral, pale, saturated gold, and blackened states were reviewed in Blender
+with the demo character's light directions and colors. Runtime Identity
+binding and a visual playthrough of the full motion set are pending.
 
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
