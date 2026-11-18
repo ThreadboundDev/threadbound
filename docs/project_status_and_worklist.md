@@ -279,6 +279,13 @@ weights interpolated from the shirt. The fitting T-pose and approved idle
 frame 23 were rendered for review. The idle frame still shows sleeve
 clipping around the shoulder. Full animation and export are pending.
 
+The local Base bracer fitting now has a wound cord, fitted leather
+retainers, and a straightened stowed needle with a cord lead through its
+eye. The retained coil and the removable needle were rendered together
+and with the needle hidden. Demo 2.0 hides the stowed needle mesh during a
+cast and draws an active needle sprite and rope line. The Blender hardware
+and its new material finishes still need export and a gameplay check.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
