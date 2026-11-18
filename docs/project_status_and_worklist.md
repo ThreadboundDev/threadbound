@@ -286,6 +286,12 @@ and with the needle hidden. Demo 2.0 hides the stowed needle mesh during a
 cast and draws an active needle sprite and rope line. The Blender hardware
 and its new material finishes still need export and a gameplay check.
 
+The fitted Base glove in Demo 2.0 now routes its cord under the left wrist
+through a bracer guide. The needle is stowed with its eye toward the wrist.
+The launch and rope line use the guide's forearm anchor in both facings.
+The stowed lead clears the shield strap in the exported rest fit. The edit
+is also saved in the local Blender fitting file.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
