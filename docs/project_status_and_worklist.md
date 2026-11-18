@@ -257,6 +257,10 @@ their original UVs sampling both light and dark areas of the body atlas.
 Both hand close-ups were checked. The master still carries the original
 UVs and should receive the correction after visual approval.
 
+The fitting copy now uses larger, textured areas of the original palm atlas
+on the pale finger segments. Both hand renders were checked for visible
+grain and dark hinge separation. The revised finish is pending approval.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
