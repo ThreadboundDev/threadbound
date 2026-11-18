@@ -298,6 +298,13 @@ rope retainers and broader needle keepers. The stowed end is threaded
 through the eye from the wrist guide. Overhead and both side T-pose views
 were checked. This local fitting revision is awaiting visual approval.
 
+In the November 18 Blender fitting pass, the Base needle shaft was widened
+to about twice its previous width and given a deeper profile. The cord now
+leaves the outer turn of the coil, wraps close to the wrist through the
+underside guide, and loops through the needle eye with its end bound down.
+The fitting file is local to the art workspace. Demo 2.0 still uses the
+previous export.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
