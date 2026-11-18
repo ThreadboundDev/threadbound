@@ -292,6 +292,12 @@ The launch and rope line use the guide's forearm anchor in both facings.
 The stowed lead clears the shield strap in the exported rest fit. The edit
 is also saved in the local Blender fitting file.
 
+The current Blender review puts the needle on top of the Base bracer.
+The cord diameter is now 7.6 mm, increased from 6.3 mm, with wider, longer
+rope retainers and broader needle keepers. The stowed end is threaded
+through the eye from the wrist guide. Overhead and both side T-pose views
+were checked. This local fitting revision is awaiting visual approval.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
