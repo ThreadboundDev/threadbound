@@ -261,6 +261,11 @@ The fitting copy now uses larger, textured areas of the original palm atlas
 on the pale finger segments. Both hand renders were checked for visible
 grain and dark hinge separation. The revised finish is pending approval.
 
+Outfit B's shoulder crown was raised between the cowl and stitched band.
+The fitting T-pose and approved idle frame 23 were rendered for review.
+The edit preserves existing cloth UVs and weights. Full motion clearance
+still needs checking.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
