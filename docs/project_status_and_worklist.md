@@ -266,6 +266,13 @@ The fitting T-pose and approved idle frame 23 were rendered for review.
 The edit preserves existing cloth UVs and weights. Full motion clearance
 still needs checking.
 
+The local Outfit B fitting copy now has smoother sleeves, with connected
+cloth at the repaired joins and a wider weave blend using the original
+atlas. The stitched shoulder bands and frayed cuffs are visible in the
+overhead, side, rear, and underside T-pose renders. A slight weave change
+remains by the shoulder trim in close-ups. Full motion and export still
+need checking.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
