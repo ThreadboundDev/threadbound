@@ -251,6 +251,12 @@ exterior polygons. The local Blender review material uses a second UV map
 and blend attribute. Bake the result into the export material if accepted.
 Overhead and side T-pose renders are available. Motion review is pending.
 
+The Base fitting copy remaps the four rebuilt fingers on each hand to pale
+palm wood and restores darker hinges. The inconsistent color came from
+their original UVs sampling both light and dark areas of the body atlas.
+Both hand close-ups were checked. The master still carries the original
+UVs and should receive the correction after visual approval.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
