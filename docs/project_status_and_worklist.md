@@ -329,6 +329,16 @@ close-up. The fitted shoulder adjustment stays within 2 cm. The export
 retains the original atlas, UVs, and 27,421 triangles. The reimport passed
 all 65 Demo 2.0 equipment checks.
 
+The Demo 2.0 wrist review traced the old outline and bright lighting to
+an identically named local smoke-test scene. The duplicate scene file
+was removed. The canonical demo uses the reduced character lights,
+excludes 2D room lighting from the player during gear review, and turns
+off the player outline. The modular body now uses the master
+forearm, wrist and hand geometry with the existing game skeleton and
+48 embedded clips. The new wrist seats preserve hand rotation. Across
+812 headless checks, both wrist centers held their seats in nine gameplay
+clips, and Base and Blue equipment continued to bind.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.

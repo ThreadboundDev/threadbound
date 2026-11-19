@@ -8,6 +8,12 @@ const MODULAR_DOLL_PATH := "res://Assets/Threadborne/Player/LocalDoll/threadborn
 const APPROVED_IDLE := preload("res://Src/Characters/Player/Animations/approved_idle_4.tres")
 const APPROVED_IDLE_VARIATION := preload("res://Src/Characters/Player/Animations/approved_idle_2.tres")
 const APPROVED_IDLE_CLIP := &"approved/idle_4"
+const MASTER_HANDS_MESH := "Master_Wrists_and_Hands"
+# Each entry pairs the master ball center in hand space with its approved seat in forearm space.
+const MASTER_WRIST_SEATS := {
+	"L": [Vector3(-0.013156, -0.002788, 0.026796), Vector3(-0.006148, 0.255651, -0.010572)],
+	"R": [Vector3(0.013163, -0.003584, 0.026722), Vector3(0.004329, 0.268128, -0.026755)],
+}
 const EQUIPMENT_VISUALS := preload("res://Src/Equipment/Visuals/player_equipment_visuals.gd")
 const AUTHORED_ATTACKS := preload("res://Assets/Threadborne/Player/Equipped3DTest/threadborne_authored_attacks.glb")
 const SWORD_SWEEP := preload("res://Src/VFX/sword_sweep_vfx.gd")
@@ -46,6 +52,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var camera_size := 2.8
 @export var object_outline_width := 2.0
 @export_range(0.0, 2.0, 0.01) var character_light_scale := 1.0
+@export var receive_level_lighting := true
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
 @export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
@@ -86,6 +93,7 @@ var _door_progress := 0.0
 var _door_start_yaw := 0.0
 var _camera: Camera3D
 var _sword_mesh: MeshInstance3D
+var _master_hand_mesh: MeshInstance3D
 var equipment_visuals: PlayerEquipmentVisuals
 var _sword_sweep: SwordSweepVFX
 var _thread_sweep: Node2D
@@ -157,12 +165,17 @@ func _process(delta: float) -> void:
 	_hide_legacy_visuals()
 	if Engine.is_editor_hint():
 		return
+	if _master_hand_mesh and (_door_active or _upper_body_overlay_active):
+		for side: String in MASTER_WRIST_SEATS:
+			var hand := _skeleton.find_bone("hand." + side)
+			_skeleton.set_bone_global_pose_override(hand, Transform3D.IDENTITY, 0.0, false)
 	if equipment_visuals:
 		var gloves = _player.get("current_gloves")
 		equipment_visuals.set_grapple_stowed(not gloves or gloves.grapple_state == BaseGloves.GrappleState.STOWED)
 	if _door_active:
 		if equipment_visuals and equipment_visuals.cloth_motion:
 			equipment_visuals.cloth_motion.reset()
+		_seat_master_wrists()
 		_update_house_door_pose()
 		return
 	var facing := _get_visual_facing(delta)
@@ -189,6 +202,7 @@ func _process(delta: float) -> void:
 	_apply_grapple_aim_override()
 	_apply_idle_sword_clearance(delta)
 	_apply_run_sword_arm_motion()
+	_seat_master_wrists()
 	if _skeleton and _pelvis_index >= 0:
 		var pelvis_displacement := (
 			_skeleton.get_bone_global_pose(_pelvis_index).origin.y - _pelvis_rest_y
@@ -828,6 +842,9 @@ func _build_viewport() -> void:
 	_viewport.add_child(_model_root)
 	_animation_player = _find_first_type(_model_root, "AnimationPlayer") as AnimationPlayer
 	_skeleton = _find_first_type(_model_root, "Skeleton3D") as Skeleton3D
+	var hands := _model_root.find_child("Doll_Covered_Hands", true, false) as MeshInstance3D
+	if _skeleton and hands and hands.mesh and hands.mesh.resource_name.ends_with(MASTER_HANDS_MESH):
+		_master_hand_mesh = hands
 	if model_scene.resource_path == MODULAR_DOLL_PATH:
 		equipment_visuals = EQUIPMENT_VISUALS.new()
 		equipment_visuals.name = "EquipmentVisuals"
@@ -901,7 +918,7 @@ func _build_viewport() -> void:
 	_display.name = "Live3DComposite"
 	# World lights include lighting layer 2; the player's layer-1 soul glow
 	# should illuminate nearby scenery without washing out its own model.
-	_display.light_mask = 2
+	_display.light_mask = 2 if receive_level_lighting else 0
 	_display.texture = _viewport.get_texture()
 	_display.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_display.scale = display_scale
@@ -1569,6 +1586,20 @@ func _apply_run_sword_arm_motion() -> void:
 		pose.basis = Basis(Vector3.RIGHT,angle*run_sword_arm_motion)*pose.basis
 		_skeleton.set_bone_global_pose_override(index,pose,1.0,true)
 		_skeleton.force_update_all_bone_transforms()
+
+
+func _seat_master_wrists() -> void:
+	if not _master_hand_mesh or not _master_hand_mesh.visible:
+		return
+	for side: String in MASTER_WRIST_SEATS:
+		var hand := _skeleton.find_bone("hand." + side)
+		var forearm := _skeleton.find_bone("forearm." + side)
+		var resting: Array = MASTER_WRIST_SEATS[side]
+		var pose := _skeleton.get_bone_global_pose(hand)
+		var center: Vector3 = _skeleton.get_bone_global_pose(forearm) * resting[1]
+		# Move the joint center and carry the existing grip rotation with it.
+		pose.origin = center - pose.basis * resting[0]
+		_skeleton.set_bone_global_pose_override(hand, pose, 1.0, true)
 
 
 func _apply_idle_sword_clearance(delta: float) -> void:

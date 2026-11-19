@@ -9,5 +9,6 @@
 model_scene = ExtResource("2_doll")
 object_outline_width = 0.0
 character_light_scale = 0.65
+receive_level_lighting = false
 
 [editable path="Player"]
