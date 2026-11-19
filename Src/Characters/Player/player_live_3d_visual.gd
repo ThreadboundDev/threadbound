@@ -45,6 +45,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var display_scale := Vector2(0.25, 0.25)
 @export var camera_size := 2.8
 @export var object_outline_width := 2.0
+@export_range(0.0, 2.0, 0.01) var character_light_scale := 1.0
 @export var idle_variation_delay := 6.0
 @export var base_playback_speed := 1.25
 @export_range(0.0, 1.0, 0.05) var upright_idle_strength := 1.0
@@ -817,7 +818,7 @@ func _build_viewport() -> void:
 	environment.background_color = Color(0, 0, 0, 0)
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color(0.65, 0.76, 0.90)
-	environment.ambient_light_energy = 0.65
+	environment.ambient_light_energy = 0.65 * character_light_scale
 	environment.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	environment_node.environment = environment
 	_viewport.add_child(environment_node)
@@ -880,19 +881,19 @@ func _build_viewport() -> void:
 
 	var key_light := DirectionalLight3D.new()
 	key_light.light_color = Color(1.0, 0.94, 0.84)
-	key_light.light_energy = 1.45
+	key_light.light_energy = 1.45 * character_light_scale
 	key_light.shadow_enabled = true
 	_viewport.add_child(key_light)
 	key_light.look_at_from_position(Vector3(-4.0, 3.2, -2.8), Vector3(0, 1.0, 0), Vector3.UP)
 	var rim_light := DirectionalLight3D.new()
 	rim_light.light_color = Color(0.31, 0.47, 0.76)
-	rim_light.light_energy = 0.65
+	rim_light.light_energy = 0.65 * character_light_scale
 	_viewport.add_child(rim_light)
 	rim_light.look_at_from_position(Vector3(3.0, 2.4, 2.2), Vector3(0, 1.0, 0), Vector3.UP)
 	var fill_light := DirectionalLight3D.new()
 	fill_light.name = "SoftSkyFill"
 	fill_light.light_color = Color(0.72, 0.84, 1.0)
-	fill_light.light_energy = 0.65
+	fill_light.light_energy = 0.65 * character_light_scale
 	_viewport.add_child(fill_light)
 	fill_light.look_at_from_position(Vector3(-5.0, 1.7, 3.0), Vector3(0, 1.0, 0), Vector3.UP)
 
@@ -1035,6 +1036,8 @@ func _apply_toon_materials(root: Node, outline_pixels := -1.0) -> void:
 
 
 func _install_object_outline(source: MeshInstance3D, pixels: float) -> void:
+	if pixels <= 0.0:
+		return
 	var outline := source.get_node_or_null("ObjectOutline") as MeshInstance3D
 	if not outline:
 		outline = MeshInstance3D.new()
