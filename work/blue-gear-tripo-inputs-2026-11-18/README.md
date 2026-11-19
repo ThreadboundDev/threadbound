@@ -12,3 +12,5 @@ Upload one PNG per generation.
 The [Blue Hermit turnaround](../blue-hermit-monk-2026-11-04/README.md) supplies the costume design. The two free ribbon tails can be made separately in Blender at their collar and rear hip anchors. The existing [Blue grapple input](../blue-hermit-monk-2026-11-04/blue_grapple_single_upload.png) supplies the detachable grapple. Inspect generated openings at the collar, sleeves, trouser cuffs, bracer ends, and boot top before fitting.
 
 The indigo cloth and wraps give the set visible Identity color regions. Leather, wicker, and brass provide its fixed finishes.
+
+The [blank porcelain mask](blank-porcelain-mask.png) is a separate generation input for a shared face shell. Fit the rim and depth to the master doll and check its clearance under the hat before adding variant eye openings or Pattern paint.
