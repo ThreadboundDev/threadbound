@@ -320,6 +320,15 @@ Neutral, pale, saturated gold, and blackened states were reviewed in Blender
 with the demo character's light directions and colors. Runtime Identity
 binding and a visual playthrough of the full motion set are pending.
 
+The Outfit B clipping pass adds clearance at the inner shoulder band and
+adjusts the rear tunic weights for the grapple tuck. Checks use rendered
+poses sampled from the installed demo. The idle, run, and crouch samples
+cover the shoulder wood. The wall hang and overhead swing have greatly
+reduced exposure. A thin edge can still appear in the tightest swing
+close-up. The fitted shoulder adjustment stays within 2 cm. The export
+retains the original atlas, UVs, and 27,421 triangles. The reimport passed
+all 65 Demo 2.0 equipment checks.
+
 The [menu concept gallery](../work/menu-concepts/index.html) is ready for
 visual review. It covers Pause, Settings, Inventory, Map, Lore, Controls,
 Blossom, Weave, the Follower, Hot Swap, Playtest Support, and Demo Ending.
