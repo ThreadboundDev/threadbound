@@ -934,7 +934,7 @@ func _build_viewport() -> void:
 	# Color grading only; each object has its own depth-tested outline mesh.
 	if _model_root.find_child("Threadborne_Doll", true, false):
 		# Leave headroom for the level's additive 2D lights on pale lacquer.
-		outline_material.set_shader_parameter("exposure", 0.62)
+		outline_material.set_shader_parameter("exposure", 0.62 if receive_level_lighting else 1.0)
 	_display.material = outline_material
 	_player.add_child.call_deferred(_display)
 
