@@ -1,0 +1,4 @@
+*.log
+godot_checks.json
+user_data_before.json
+worklist_entry.txt

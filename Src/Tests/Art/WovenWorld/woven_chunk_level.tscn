@@ -1,0 +1,121 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_chunk_level.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/ground_a.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/ground_b.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/ground_c.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_small.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_medium.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_large.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_long.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/tree_alt.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/foliage_alt.tscn" id="10"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/blossom_shrub.tscn" id="11"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/tree.png" id="12"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/foliage_green.png" id="13"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/rock_low.png" id="14"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/rock_tall.png" id="15"]
+
+[node name="WovenChunkLevel" type="Node2D"]
+editor_description = "F6: full-depth ground chunks and four floating platform sizes. Static Geometry and Decorations are editable in this scene. Roots of placeables mark the walkable cap or planting base. 1/2/3: review positions, C: collision, R: return to start."
+script = ExtResource("1")
+
+[node name="Geometry" type="Node2D" parent="."]
+z_index = -5
+
+[node name="GroundA" parent="Geometry" instance=ExtResource("2")]
+position = Vector2(-64, 800)
+
+[node name="GroundB" parent="Geometry" instance=ExtResource("3")]
+position = Vector2(1856, 704)
+
+[node name="GroundC" parent="Geometry" instance=ExtResource("4")]
+position = Vector2(3552, 768)
+
+[node name="StepA" parent="Geometry" instance=ExtResource("5")]
+position = Vector2(1392, 520)
+
+[node name="BridgeA" parent="Geometry" instance=ExtResource("6")]
+position = Vector2(1712, 368)
+
+[node name="ShelfB" parent="Geometry" instance=ExtResource("7")]
+position = Vector2(2240, 392)
+
+[node name="StepB" parent="Geometry" instance=ExtResource("5")]
+position = Vector2(3120, 420)
+
+[node name="BridgeB" parent="Geometry" instance=ExtResource("6")]
+position = Vector2(3440, 336)
+
+[node name="ShelfC" parent="Geometry" instance=ExtResource("8")]
+position = Vector2(3984, 400)
+
+[node name="Decorations" type="Node2D" parent="."]
+z_index = -8
+
+[node name="PinkTreeLeft" type="Sprite2D" parent="Decorations"]
+position = Vector2(-160, 70)
+scale = Vector2(0.6, 0.6)
+centered = false
+texture = ExtResource("12")
+
+[node name="GreenTreeMiddle" parent="Decorations" instance=ExtResource("9")]
+position = Vector2(2860, 716)
+scale = Vector2(0.75, 0.75)
+
+[node name="PinkTreeRight" type="Sprite2D" parent="Decorations"]
+position = Vector2(4540, 122)
+scale = Vector2(0.55, 0.55)
+centered = false
+texture = ExtResource("12")
+
+[node name="LowRockLeft" type="Sprite2D" parent="Decorations"]
+position = Vector2(1050, 804)
+offset = Vector2(0, -150)
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("14")
+
+[node name="TallRockMiddle" type="Sprite2D" parent="Decorations"]
+position = Vector2(3260, 717)
+offset = Vector2(0, -250)
+scale = Vector2(0.54, 0.54)
+texture = ExtResource("15")
+
+[node name="LowRockRight" type="Sprite2D" parent="Decorations"]
+position = Vector2(5050, 775)
+offset = Vector2(0, -150)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("14")
+
+[node name="Planting" type="Node2D" parent="."]
+z_index = 3
+
+[node name="FernLeft" parent="Planting" instance=ExtResource("10")]
+position = Vector2(280, 808)
+scale = Vector2(0.55, 0.55)
+
+[node name="PinkShrubLeft" parent="Planting" instance=ExtResource("11")]
+position = Vector2(1200, 812)
+scale = Vector2(0.52, 0.52)
+
+[node name="LeafClusterMiddle" type="Sprite2D" parent="Planting"]
+position = Vector2(2050, 715)
+offset = Vector2(0, -140)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("13")
+
+[node name="FernMiddle" parent="Planting" instance=ExtResource("10")]
+position = Vector2(3000, 716)
+scale = Vector2(0.45, 0.45)
+
+[node name="PinkShrubMiddle" parent="Planting" instance=ExtResource("11")]
+position = Vector2(2570, 715)
+scale = Vector2(0.48, 0.48)
+
+[node name="FernRight" parent="Planting" instance=ExtResource("10")]
+position = Vector2(3860, 780)
+scale = Vector2(0.5, 0.5)
+
+[node name="PinkShrubRight" parent="Planting" instance=ExtResource("11")]
+position = Vector2(4820, 780)
+scale = Vector2(0.55, 0.55)

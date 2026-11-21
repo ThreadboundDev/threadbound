@@ -1,0 +1,13 @@
+{
+  "checks": 109,
+  "failures": [],
+  "platform_sizes": [
+    256,
+    448,
+    768,
+    1024
+  ],
+  "player_model": "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb",
+  "renderer": "forward_plus",
+  "surface_count": 9
+}

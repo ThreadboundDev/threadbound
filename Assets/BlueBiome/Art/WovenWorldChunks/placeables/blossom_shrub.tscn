@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/blossom_shrub.png" id="1"]
+
+[node name="blossom_shrub" type="Node2D"]
+metadata/asset_id = "blossom_shrub"
+metadata/kind = "decoration"
+
+[node name="Art" type="Sprite2D" parent="."]
+centered = false
+position = Vector2(-160, -177)
+texture = ExtResource("1")

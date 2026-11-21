@@ -1676,3 +1676,29 @@ not a complete slope/corner autotile set. Godot's shader-cache permission and
 shutdown resource/RID diagnostics remain recorded limitations. Visual acceptance
 and production adoption are pending Chase's review. Task checkpoint subject:
 `art: add woven world test kit and review scene`.
+
+## November 20 woven world chunk follow-up
+
+**T49 follow-up | Awaiting hands-on review.** Chase liked the woven low-poly
+style and found the small repeating terrain to be the weakness. He requested
+full-depth ground chunks, differently sized floating platforms and decoration
+variants for a playable test. The first tile kit remains a comparison source;
+this chunk approach is the current audition.
+
+Delivered three deep ground pieces, four independently drawn platform sizes
+(256/448/768/1024 px), a green tree, fern variant and blossom shrub. Each of the
+ten new images has a native placeable scene with a measured cap/planting anchor.
+`Src/Tests/Art/WovenWorld/woven_chunk_level.tscn` contains editable geometry and
+decoration nodes, three ground chunks and six platforms, with the actual modular
+player. 1/2/3 change review positions, C shows collision and R returns to start.
+The unchanged movement supports both ground gaps and the optional upper path.
+
+Validation: 105 headless checks and 109 Forward+ checks pass, including all
+surface contacts, both ground jumps, double-jump entry, five upper jump links,
+safe fall reset and three rendered views. Six save/settings CFG hashes are
+unchanged. The ground is whole source art with no tiled fill or seam blending.
+Source depth below the cap is 871–1059 px. Background coverage was corrected for
+the exposed gaps. See [delivery, full prompts and images](../ArtSource/Deliveries/WovenWorldChunks/README.md).
+Godot shader-cache permission and shutdown resource/RID diagnostics remain noted.
+Visual acceptance and production adoption are pending Chase's review. Task
+checkpoint subject: `art: add deep ground chunks and playable art route`.

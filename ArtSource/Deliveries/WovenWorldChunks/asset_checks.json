@@ -1,0 +1,152 @@
+{
+  "preparation": "Whole-source alpha trim and proportional resize only; no tiles, repeated fill, seam blending or image redrawing.",
+  "assets": {
+    "ground_a": {
+      "kind": "ground",
+      "width": 1792,
+      "height": 1125,
+      "source_alpha_bounds": [
+        43,
+        74,
+        1450,
+        910
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 66,
+      "surface_left": 47,
+      "surface_right": 1752,
+      "depth_below_surface": 1059,
+      "opaque_body_fraction": 1.0
+    },
+    "ground_b": {
+      "kind": "ground",
+      "width": 1536,
+      "height": 928,
+      "source_alpha_bounds": [
+        43,
+        89,
+        1450,
+        876
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 57,
+      "surface_left": 38,
+      "surface_right": 1501,
+      "depth_below_surface": 871,
+      "opaque_body_fraction": 1.0
+    },
+    "ground_c": {
+      "kind": "ground",
+      "width": 1792,
+      "height": 1028,
+      "source_alpha_bounds": [
+        24,
+        99,
+        1490,
+        855
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 77,
+      "surface_left": 36,
+      "surface_right": 1752,
+      "depth_below_surface": 951,
+      "opaque_body_fraction": 1.0
+    },
+    "platform_small": {
+      "kind": "platform",
+      "width": 256,
+      "height": 85,
+      "source_alpha_bounds": [
+        216,
+        272,
+        1342,
+        447
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 7,
+      "surface_left": 9,
+      "surface_right": 251
+    },
+    "platform_medium": {
+      "kind": "platform",
+      "width": 448,
+      "height": 97,
+      "source_alpha_bounds": [
+        129,
+        187,
+        1914,
+        413
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 9,
+      "surface_left": 11,
+      "surface_right": 436
+    },
+    "platform_large": {
+      "kind": "platform",
+      "width": 768,
+      "height": 120,
+      "source_alpha_bounds": [
+        55,
+        212,
+        2062,
+        322
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 11,
+      "surface_left": 16,
+      "surface_right": 756
+    },
+    "platform_long": {
+      "kind": "platform",
+      "width": 1024,
+      "height": 135,
+      "source_alpha_bounds": [
+        40,
+        239,
+        2093,
+        275
+      ],
+      "source_corner_alpha": 0,
+      "surface_y": 6,
+      "surface_left": 17,
+      "surface_right": 1008
+    },
+    "tree_alt": {
+      "kind": "decoration",
+      "width": 920,
+      "height": 882,
+      "source_alpha_bounds": [
+        12,
+        29,
+        1230,
+        1179
+      ],
+      "source_corner_alpha": 0
+    },
+    "foliage_alt": {
+      "kind": "decoration",
+      "width": 360,
+      "height": 180,
+      "source_alpha_bounds": [
+        124,
+        61,
+        1527,
+        763
+      ],
+      "source_corner_alpha": 0
+    },
+    "blossom_shrub": {
+      "kind": "decoration",
+      "width": 320,
+      "height": 177,
+      "source_alpha_bounds": [
+        58,
+        114,
+        1422,
+        788
+      ],
+      "source_corner_alpha": 0
+    }
+  }
+}
