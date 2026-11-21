@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/EaveRunnerSpriteStudy/eave_runner_sprite_study.gd" id="1"]
+
+[node name="EaveRunnerSpriteStudy" type="Node2D"]
+script = ExtResource("1")

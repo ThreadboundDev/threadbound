@@ -1,0 +1,539 @@
+{
+  "checks": [
+    "24 complete drawings isolated using alpha-connected bodies, including figures crossing the generated cell boundaries.",
+    "All registered frames fit inside a 512x512 transparent canvas with at least a 4px margin.",
+    "Floor anchor shared across clips; airborne run drawings retain their vertical lift.",
+    "Original alpha retained; no chroma-keying, repainting, inferred in-between poses or runtime 3D rendering."
+  ],
+  "clips": {
+    "idle": {
+      "frames": 8,
+      "sha256": "12a05ac62196fb989bfd72a343a475da6868cb65b47323e1d3472c15155f602a",
+      "source_alpha": true,
+      "complete_bodies": 8,
+      "registration": [
+        {
+          "source_rect": [
+            62,
+            53,
+            274,
+            434
+          ],
+          "source_anchor": [
+            208,
+            483
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            110,
+            50,
+            274,
+            434
+          ],
+          "opaque_pixels": 56008
+        },
+        {
+          "source_rect": [
+            451,
+            46,
+            269,
+            441
+          ],
+          "source_anchor": [
+            592,
+            483
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            115,
+            43,
+            269,
+            441
+          ],
+          "opaque_pixels": 56106
+        },
+        {
+          "source_rect": [
+            834,
+            36,
+            270,
+            451
+          ],
+          "source_anchor": [
+            976,
+            483
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            114,
+            33,
+            270,
+            451
+          ],
+          "opaque_pixels": 56538
+        },
+        {
+          "source_rect": [
+            1219,
+            29,
+            269,
+            458
+          ],
+          "source_anchor": [
+            1360,
+            483
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            115,
+            26,
+            269,
+            458
+          ],
+          "opaque_pixels": 56944
+        },
+        {
+          "source_rect": [
+            67,
+            543,
+            269,
+            456
+          ],
+          "source_anchor": [
+            208,
+            995
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            115,
+            28,
+            269,
+            456
+          ],
+          "opaque_pixels": 57115
+        },
+        {
+          "source_rect": [
+            451,
+            561,
+            269,
+            438
+          ],
+          "source_anchor": [
+            592,
+            995
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            115,
+            46,
+            269,
+            438
+          ],
+          "opaque_pixels": 55963
+        },
+        {
+          "source_rect": [
+            835,
+            566,
+            269,
+            433
+          ],
+          "source_anchor": [
+            976,
+            995
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            115,
+            51,
+            269,
+            433
+          ],
+          "opaque_pixels": 55790
+        },
+        {
+          "source_rect": [
+            1216,
+            567,
+            272,
+            432
+          ],
+          "source_anchor": [
+            1360,
+            995
+          ],
+          "scale": 1,
+          "visual_lunge_x": 0,
+          "destination": [
+            112,
+            52,
+            272,
+            432
+          ],
+          "opaque_pixels": 56209
+        }
+      ]
+    },
+    "run": {
+      "frames": 8,
+      "sha256": "9bd1964a2553f9736ea72e1a43dcf121e4f9fe300a0009cbd9ba4f0002340201",
+      "source_alpha": true,
+      "complete_bodies": 8,
+      "registration": [
+        {
+          "source_rect": [
+            21,
+            48,
+            362,
+            415
+          ],
+          "source_anchor": [
+            225,
+            459
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            40,
+            44,
+            384,
+            440
+          ],
+          "opaque_pixels": 59214
+        },
+        {
+          "source_rect": [
+            428,
+            61,
+            313,
+            400
+          ],
+          "source_anchor": [
+            598,
+            459
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            76,
+            58,
+            332,
+            424
+          ],
+          "opaque_pixels": 50815
+        },
+        {
+          "source_rect": [
+            828,
+            46,
+            242,
+            415
+          ],
+          "source_anchor": [
+            968,
+            459
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            108,
+            42,
+            257,
+            440
+          ],
+          "opaque_pixels": 46304
+        },
+        {
+          "source_rect": [
+            1199,
+            25,
+            286,
+            413
+          ],
+          "source_anchor": [
+            1347,
+            459
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            99,
+            20,
+            303,
+            438
+          ],
+          "opaque_pixels": 49047
+        },
+        {
+          "source_rect": [
+            23,
+            559,
+            360,
+            417
+          ],
+          "source_anchor": [
+            226,
+            971
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            41,
+            43,
+            382,
+            442
+          ],
+          "opaque_pixels": 58111
+        },
+        {
+          "source_rect": [
+            441,
+            573,
+            307,
+            402
+          ],
+          "source_anchor": [
+            606,
+            971
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            81,
+            58,
+            325,
+            426
+          ],
+          "opaque_pixels": 52547
+        },
+        {
+          "source_rect": [
+            821,
+            558,
+            257,
+            416
+          ],
+          "source_anchor": [
+            970,
+            971
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            98,
+            42,
+            272,
+            441
+          ],
+          "opaque_pixels": 48532
+        },
+        {
+          "source_rect": [
+            1194,
+            536,
+            287,
+            422
+          ],
+          "source_anchor": [
+            1347,
+            971
+          ],
+          "scale": 1.06,
+          "visual_lunge_x": 0,
+          "destination": [
+            94,
+            19,
+            304,
+            447
+          ],
+          "opaque_pixels": 50707
+        }
+      ]
+    },
+    "slash": {
+      "frames": 8,
+      "sha256": "aa3a46337753b7076b63f352c304be01af523152b3e497a4d44669abfac906a8",
+      "source_alpha": true,
+      "complete_bodies": 8,
+      "registration": [
+        {
+          "source_rect": [
+            64,
+            60,
+            257,
+            390
+          ],
+          "source_anchor": [
+            203,
+            447
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 0,
+          "destination": [
+            101,
+            48,
+            287,
+            435
+          ],
+          "opaque_pixels": 48579
+        },
+        {
+          "source_rect": [
+            430,
+            82,
+            275,
+            369
+          ],
+          "source_anchor": [
+            572,
+            447
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": -3,
+          "destination": [
+            95,
+            73,
+            307,
+            411
+          ],
+          "opaque_pixels": 45735
+        },
+        {
+          "source_rect": [
+            796,
+            90,
+            281,
+            361
+          ],
+          "source_anchor": [
+            952,
+            447
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": -5,
+          "destination": [
+            77,
+            82,
+            313,
+            403
+          ],
+          "opaque_pixels": 46257
+        },
+        {
+          "source_rect": [
+            1142,
+            121,
+            379,
+            330
+          ],
+          "source_anchor": [
+            1360,
+            447
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 20,
+          "destination": [
+            33,
+            117,
+            423,
+            368
+          ],
+          "opaque_pixels": 47034
+        },
+        {
+          "source_rect": [
+            10,
+            630,
+            380,
+            333
+          ],
+          "source_anchor": [
+            203,
+            959
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 24,
+          "destination": [
+            65,
+            113,
+            424,
+            371
+          ],
+          "opaque_pixels": 48267
+        },
+        {
+          "source_rect": [
+            423,
+            623,
+            296,
+            340
+          ],
+          "source_anchor": [
+            554,
+            959
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 16,
+          "destination": [
+            126,
+            105,
+            330,
+            379
+          ],
+          "opaque_pixels": 45138
+        },
+        {
+          "source_rect": [
+            810,
+            597,
+            284,
+            366
+          ],
+          "source_anchor": [
+            983,
+            959
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 6,
+          "destination": [
+            69,
+            76,
+            317,
+            408
+          ],
+          "opaque_pixels": 47001
+        },
+        {
+          "source_rect": [
+            1218,
+            572,
+            263,
+            391
+          ],
+          "source_anchor": [
+            1363,
+            959
+          ],
+          "scale": 1.115,
+          "visual_lunge_x": 0,
+          "destination": [
+            94,
+            48,
+            293,
+            436
+          ],
+          "opaque_pixels": 49581
+        }
+      ]
+    }
+  },
+  "source": "built-in image_gen drawings; deterministic slicing and registration only"
+}
