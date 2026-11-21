@@ -190,10 +190,24 @@ rules. Validate them with the actual wooden doll at gameplay zoom:
 - Ground foliage must have complete, staggered leaf/stem endings and irregular
   transparent gaps. Avoid a straight cropped bottom. Make separate overhanging
   rim variants where leaves need to cross the leading edge of a rock.
+- Apply the same placement rule to all props sitting on a platform: no exposed
+  hard cropped bottom that reads as a cutout edge. Give the base intentional
+  contact with its support; organic shapes need complete natural endings.
 - Use tight, stronger occlusion at planted soles with a softer surrounding
   shadow. A shallow top plane can support rear/front soles at slightly different
   projected rows. Keep that contact within the visible surface. Added scene
   lights do not automatically improve a separately drawn contact shadow.
+
+Chase's Ground A collision adjustment and subsequent in-game screenshot are the
+current placement reference: the boots sit within the visible top plane and the
+shadow supports contact. He described this as much closer, not final acceptance
+of every asset. Both new foliage bases are preferable to the original clipped
+base; no single variant has been selected for every placement. The character's
+dark outline may still contribute to separation from the environment. Treat that
+as a visual comparison to investigate, preserving readable silhouettes; no
+global outline removal or production shader change is approved by this feedback.
+The reference is archived in
+`ArtSource/Deliveries/WovenWorldChunks/grounding_refinement/chase_ground_a_placement_reference.png`.
 
 The current experiments are test-scene auditions; production adoption and wider
 asset replacement still follow review and approval.

@@ -34,3 +34,19 @@ The parent delivery contains the 132 headless / 139 Forward+ check reports and
 actual in-game close-ups. Cache-permission and shutdown resource diagnostics
 remain documented there. All assertions passed; final visual acceptance remains
 with Chase.
+
+## Chase's placement review
+
+`chase_ground_a_placement_reference.png` is Chase's in-game screenshot after his
+manual Ground A collision adjustment. He reports the placement is much closer
+and the shadow helps. This is the reference for feet sitting within the top
+plane. His current saved Ground A collider begins 4 px below its earlier datum;
+the asset and edited level are preserved outside this documentation checkpoint.
+The prior automated reports predate this manual edit and were not rerun for a
+documentation-only update.
+
+Either new foliage variant is preferable to the hard clipped original. Across
+placed props, avoid an exposed cropped baseline; make bases contact the support
+intentionally. Matching foliage colors/detail is still pending. The dark player
+outline is a suspected remaining source of separation, awaiting a controlled
+visual comparison before changing player rendering.

@@ -1749,3 +1749,22 @@ Known cache/shutdown diagnostics remain documented. See
 [delivery notes and sources](../ArtSource/Deliveries/WovenWorldChunks/README.md).
 Visual acceptance and production adoption remain pending. Task checkpoint
 subject: `art: refine foliage edges and character grounding`.
+
+## November 21 Ground A placement review
+
+**T49 visual feedback | Direction recorded; further comparisons pending.** Chase
+adjusted Ground A collision and reports that the boots now sit much closer to
+being in the scene. The contact shadow helps. His screenshot is archived in the
+[refinement delivery](../ArtSource/Deliveries/WovenWorldChunks/grounding_refinement/README.md)
+and establishes the placement reference, without accepting every art candidate.
+Both irregular foliage bases are preferable to the original hard bottom. All
+props placed on platforms need intentional base contact without exposed cropped
+edges. Dark player outlines may contribute to the remaining separation; compare
+outline treatment before any broader player-rendering change. No outline or
+asset replacement was made in this documentation checkpoint.
+
+Chase's Ground A collider edit (4 px below the prior datum) and edited level are
+preserved outside this commit. Existing automated reports predate that manual
+edit; this update only records feedback and requires no runtime test. Task
+checkpoint subject: `docs: record grounded placement and prop edge feedback`.
+Save and checkpoint the manual scene/collider changes before another art pass.
