@@ -1702,3 +1702,28 @@ the exposed gaps. See [delivery, full prompts and images](../ArtSource/Deliverie
 Godot shader-cache permission and shutdown resource/RID diagnostics remain noted.
 Visual acceptance and production adoption are pending Chase's review. Task
 checkpoint subject: `art: add deep ground chunks and playable art route`.
+
+## November 21 doll contact shadow
+
+**T49 contact-shadow follow-up | Awaiting hands-on review.** Chase requested a
+shadow under the doll to anchor it in the environment. The chunk-level audition
+now has a soft cap-projected ellipse and smaller contact marks following the
+actual animated feet. The shadow fades/shrinks with elevation, remains on the
+receiving cap, clips at cliff edges, ignores overhead platforms and hides over
+gaps. It uses a native unlit radial gradient. Player animation, collision and
+production scenes are unchanged.
+
+Chase's local scene edits/reverts are preserved outside this checkpoint. Review
+startup now reuses a placed player/camera when present, preventing duplicates
+and preserving authored follow/zoom, or creates the runtime pair when absent.
+Verification: 123 headless and 128 Forward+ checks pass, including the full route
+and shadow cases. The original review's fallback creation path passes 37 checks.
+Fresh grounded/airborne captures and [delivery notes](../ArtSource/Deliveries/WovenWorldChunks/README.md)
+record the result. Existing camera/cache/shutdown diagnostics remain documented.
+Hands-on acceptance and production adoption are pending Chase's review. Task
+checkpoint subject: `fix: ground art-test doll with contact shadows`.
+
+Chase likes the overall style and vibrance. Platform foliage and shrubs remain
+a cohesion issue; the next art refinement should unify greens, shading/detail
+scale and planted edges. No foliage replacement is part of the shadow fix.
+Save and checkpoint Chase's final reverted scene before changing art tasks.

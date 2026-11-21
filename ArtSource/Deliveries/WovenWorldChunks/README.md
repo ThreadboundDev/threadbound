@@ -76,13 +76,16 @@ before using the kit in production.
 
 ## Verification and review
 
-- **105 headless checks passed:** ten image/scene deliveries, visible cap
+- **123 headless checks passed:** ten image/scene deliveries, visible cap
   alignment, full-depth bodies, all nine placed surfaces supporting the actual
   player, both ground gaps, double-jump upper entry, all five upper jump links,
-  safe fall reset and three grounded review positions.
-- **109 Forward+ checks passed:** the same coverage plus three 1920 x 1080
-  route captures and a collision review. See `gpu_checks.json`, `route_1.png`,
-  `route_2.png`, `route_3.png` and `collision_review.png`.
+  safe fall reset, three grounded review positions and the contact-shadow checks
+  described below. The older review's fallback player/camera path also passes
+  its 37 headless checks; see `base_review_checks.json`.
+- **128 Forward+ checks passed:** the same coverage plus three 1920 x 1080
+  route captures, an airborne contact-shadow image and a collision review.
+  See `gpu_checks.json`, `route_1.png`, `route_2.png`, `route_3.png`,
+  `contact_shadow_airborne.png` and `collision_review.png`.
 - The background uses the existing lake/cliff and village artwork. The source
   lake pixels extend through the deeper gaps to remove the previous backdrop's
   horizontal cutoff. No production backdrop image is modified.
@@ -98,3 +101,35 @@ cap contact, cliff scale and platform silhouettes while moving. Chase's visual
 acceptance and production adoption remain pending. The current work list records
 the scoped checkpoint; unrelated repository edits and staged deletions are
 preserved outside this delivery.
+
+## November 21 contact-shadow follow-up
+
+Chase requested a shadow beneath the doll to connect it visually to the world.
+The chunk level now draws a soft contact ellipse on the nearest authored cap
+below the character, plus smaller contact marks at the projected animated heel
+and toe positions. It stays on the receiving surface during flight, becomes
+smaller and fainter with height, clips at cap edges and disappears over gaps.
+The gradient is native Godot data and remains unlit so the daylight fixture
+does not wash it out. Player geometry, animation and collision are unchanged.
+
+Chase's local scene edits are preserved outside this checkpoint. During review
+he reported reverting some additions; the on-disk scene still contained an
+authored player and 0.83-zoom room camera when verification ran. The shared
+startup now reuses saved Player/Camera2D nodes instead of spawning a second
+pair, leaving the authored camera controller in charge of follow composition.
+Without placed nodes it retains the original runtime creation path. Save and
+checkpoint the final reverted scene separately; do not restore additions from
+an earlier on-disk version over the user's editor state.
+
+Verification covers one player/one camera, the shadow on all nine caps, grounded
+opacity, both animated foot projections, airborne fade and fixed surface height,
+ignoring overhead platforms, clipping at an edge and hiding over a gap. Existing
+movement/route checks still pass. The authored camera emits Godot's physics-
+interpolation callback warning; cache/shutdown diagnostics remain as noted above.
+This shadow is installed in the art-test level. Production-level adoption is
+separate from this visual audition.
+
+Chase's follow-up review confirms that he likes the art style and vibrance.
+Platform foliage and shrubs do not yet blend well together. The next art
+refinement should unify their greens, shading/detail scale and planted edges.
+No foliage replacement is included in this shadow checkpoint.

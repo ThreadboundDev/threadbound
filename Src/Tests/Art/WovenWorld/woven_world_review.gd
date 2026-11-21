@@ -50,16 +50,23 @@ func _ready() -> void:
 	_build_backdrop()
 	_build_terrain()
 	_build_layouts()
-	player = PLAYER.instantiate()
-	player.name = "Player"
-	player.position = SPAWNS[0]
-	player.z_index = 2
-	add_child(player)
-	camera = Camera2D.new()
-	camera.position = Vector2(960, 540)
-	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
-	camera.position_smoothing_enabled = false
-	add_child(camera)
+	# A reviewer may place the real player/camera in the editable scene.
+	# Reuse those saved instances and their visual/camera settings.
+	player = get_node_or_null("Player") as CharacterBody2D
+	if player == null:
+		player = PLAYER.instantiate()
+		player.name = "Player"
+		player.position = SPAWNS[0]
+		player.z_index = 2
+		add_child(player)
+	camera = get_node_or_null("Camera2D") as Camera2D
+	if camera == null:
+		camera = Camera2D.new()
+		camera.name = "Camera2D"
+		camera.position = Vector2(960, 540)
+		camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
+		camera.position_smoothing_enabled = false
+		add_child(camera)
 	_build_review_labels()
 	if OS.get_cmdline_user_args().has("--verify-woven-kit"):
 		_verify.call_deferred()
@@ -191,7 +198,8 @@ func _update_label() -> void:
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player) or not is_instance_valid(camera):
 		return
-	camera.position.x = clampf(player.position.x, 960, WORLD_WIDTH - 960)
+	if camera.get_script() == null:
+		camera.position.x = clampf(player.position.x, 960, WORLD_WIDTH - 960)
 	var layout := 0 if player.position.x < 2560 else 1
 	if active_layout != layout:
 		active_layout = layout

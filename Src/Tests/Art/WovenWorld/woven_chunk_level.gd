@@ -7,15 +7,22 @@ const CHUNK_DELIVERY := "res://ArtSource/Deliveries/WovenWorldChunks/"
 const ROUTE_WIDTH := 5504.0
 const REVIEW_SPAWNS := [Vector2(720, 720), Vector2(2450, 624), Vector2(4540, 688)]
 const REVIEW_NAMES := ["LAKESIDE APPROACH", "GREEN CANOPY", "UPPER SHELF"]
+const CONTACT_SHADOW := preload("res://Src/Tests/Art/WovenWorld/woven_contact_shadow.gd")
 
 var asset_records: Dictionary
 var surfaces: Array[Dictionary] = []
 var fall_resets := 0
+var contact_shadow: Node2D
 
 
 func _ready() -> void:
 	asset_records = JSON.parse_string(FileAccess.get_file_as_string(CHUNKS + "asset_metadata.json"))["assets"]
 	super._ready()
+	contact_shadow = CONTACT_SHADOW.new()
+	contact_shadow.name = "PlayerContactShadow"
+	contact_shadow.target = player
+	contact_shadow.receivers = surfaces
+	add_child(contact_shadow)
 	get_window().title = "Threadbound — Woven Chunk Level"
 	var help := status_label.get_parent().get_child(1) as Label
 	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nNormal movement and jump controls. Gaps reset you safely."
@@ -78,7 +85,8 @@ func _update_label() -> void:
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player) or not is_instance_valid(camera):
 		return
-	camera.position.x = clampf(player.position.x, 960, ROUTE_WIDTH - 960)
+	if camera.get_script() == null:
+		camera.position.x = clampf(player.position.x, 960, ROUTE_WIDTH - 960)
 	var zone := 0 if player.position.x < 1800 else (1 if player.position.x < 3500 else 2)
 	if active_layout != zone:
 		active_layout = zone
@@ -150,6 +158,12 @@ func _verify() -> void:
 		get_window().size = Vector2i(1920, 1080)
 	_check(find_children("*", "TileMapLayer", true, false).is_empty(), "Chunk level has no TileMap or repeated terrain fill.")
 	_check(surfaces.size() == 9, "Three ground pieces and six platform placements are present.")
+	var players_in_scene := 0
+	for actor in get_tree().get_nodes_in_group("player"):
+		if is_ancestor_of(actor):
+			players_in_scene += 1
+	_check(players_in_scene == 1, "The saved scene player is reused without a duplicate actor.")
+	_check(find_children("*", "Camera2D", true, false).size() == 1, "The saved camera is reused without a duplicate camera.")
 	var platform_widths: Dictionary = {}
 	for id in asset_records:
 		var data: Dictionary = asset_records[id]
@@ -176,6 +190,28 @@ func _verify() -> void:
 		await _physics_frames(30)
 		_check(player.is_on_floor(), "Supported floor contact: " + String(surface.node.name))
 		_check(absf(player.position.y + 69.245 - float(surface.y)) < 1.5, "Physical cap matches authored surface: " + String(surface.node.name))
+		_check(contact_shadow.main.visible and absf(contact_shadow.main.global_position.y - float(surface.y) - 2) < 0.5, "Shadow follows the receiving cap: " + String(surface.node.name))
+	# Shadow remains on ground during flight and clips at unsupported edges.
+	await _put_player_at(Vector2(720, 730))
+	await _physics_frames(15)
+	var grounded_opacity: float = contact_shadow.main.modulate.a
+	_check(grounded_opacity > 0.25, "Grounded shadow gives clear contact.")
+	_check(contact_shadow._foot_points().size() == 2, "Contact marks use both animated feet.")
+	await _put_player_at(Vector2(720, 550))
+	await _physics_frames(3)
+	_check(contact_shadow.main.visible and contact_shadow.main.modulate.a < grounded_opacity, "Airborne shadow fades while remaining on the ground.")
+	_check(absf(contact_shadow.main.global_position.y - 802) < 0.5, "Airborne shadow does not rise with the character.")
+	await _capture_view("contact_shadow_airborne.png")
+	await _put_player_at(Vector2(1516, 730))
+	await _physics_frames(15)
+	_check(contact_shadow.receiver.node.name == &"GroundA", "Shadow ignores a platform above the character.")
+	var ground_a := _surface_named("GroundA")
+	await _put_player_at(Vector2(ground_a.right - 4, ground_a.y - 70))
+	await _physics_frames(5)
+	_check(contact_shadow.main.visible and contact_shadow.clipped_right <= float(ground_a.right), "Shadow clips to the cliff edge.")
+	await _put_player_at(Vector2(1800, 930))
+	await _physics_frames(3)
+	_check(not contact_shadow.main.visible, "No ground shadow is drawn over the empty gap.")
 	# Traverse each actual ground gap with ordinary movement and a held jump.
 	for pair in [["GroundA", "GroundB"], ["GroundB", "GroundC"]]:
 		var from := _surface_named(pair[0])
