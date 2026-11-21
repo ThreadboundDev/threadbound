@@ -1,0 +1,43 @@
+{
+  "generator": "Built-in image_gen tool; backend version not exposed.",
+  "assets": [
+    {
+      "id": "foliage_soft_base",
+      "width": 759,
+      "anchor": 0.91,
+      "reference": "C:/Users/chase/Documents/threadbound/Assets/BlueBiome/Art/WovenWorldTestKit/foliage_green.png",
+      "prompt": "Edit the referenced Threadbound foliage stamp into a NEW non-destructive variant. Preserve the existing broad folded green leaves, ferns, faceted low-poly shading, leaf-vein weave patterns, lighting from upper left, three-value greens and overall wide low silhouette. Fix the unnaturally straight chopped-off BASE. The lower silhouette must consist of individual fully formed leaf tips, curled small stems and natural transparent gaps at staggered heights. Keep the plant grounded around an invisible narrow planting region, but NO continuous horizontal edge, no rectangular bottom, no flat green band, no soil or rock pedestal. Let some small leaves taper below the planting region, less than one tenth of total height. Main leaf identities remain recognizable. Whole object fully visible with generous genuine transparent alpha margins, all negative gaps alpha. NO background, floor, shadow, text, frame, grid or checkerboard. One isolated plant stamp, not a scene.",
+      "generated_path": "C:\\Users\\chase\\.codex\\generated_images\\01a1fc0d-cee9-7602-b0bb-6d29a83f92ea\\exec-425f0a73-6985-4f0d-9c15-69053ae24445.png"
+    },
+    {
+      "id": "foliage_rim",
+      "width": 759,
+      "anchor": 0.73,
+      "reference": "C:/Users/chase/Documents/threadbound/Assets/BlueBiome/Art/WovenWorldTestKit/foliage_green.png",
+      "prompt": "Using the referenced foliage as the exact style/plant-family reference, create ONE NEW side-view rock-lip foliage stamp. Same folded green broad leaves, fern accents, angular low-poly shading and fine woven leaf veins, same lighting and greens. Main growth is a low wide asymmetric tuft. Crucially the plant has a NATURAL IRREGULAR LOWER EDGE and a few complete long curved leaves cascading downward over an imaginary ledge, occupying approximately the lower quarter of the stamp. Different leaves end at different heights with transparent negative spaces between them. Clustered visible stems near the center, loose disconnected silhouette toward the tips. No horizontal clipped baseline, no block of grass, no straight rectangular lower border. Do NOT draw the rock or ground: plant only, genuine transparent alpha background, no cast shadow, text, watermark or baked checkerboard. Whole plant completely within frame with safe margins. Broad graceful leaf shapes, restrained detail.",
+      "generated_path": "C:\\Users\\chase\\.codex\\generated_images\\01a1fc0d-cee9-7602-b0bb-6d29a83f92ea\\exec-04e49ac1-de58-4af4-8153-e12b1b0e4604.png"
+    },
+    {
+      "id": "platform_integrated_top",
+      "width": 448,
+      "standing_back_y": 6,
+      "standing_front_y": 26,
+      "anchor_y": 16,
+      "reference": "C:/Users/chase/Documents/threadbound/Assets/BlueBiome/Art/WovenWorldChunks/platform_small.png",
+      "prompt": "Create a new integrated-top variant of this exact floating rock platform. Keep the same side-scrolling orthographic game style, faceted low-poly slate, sparse woven mineral lines, neutral grey material, soft upper-left daylight and irregular broken underside. The player needs a SHALLOW VISIBLE UPPER PLANE WITH ENOUGH FRONT-TO-BACK DEPTH TO STAND ON, with a collision line conceptually across its middle. It is one continuous NATURAL GREY ROCK, not a separate slab on top. The upper rock plane uses the SAME grey stone as the front, slightly lighter due to daylight; geological facets and fracture lines continue naturally around the upper/front transition. No tan, cream, beige, pink, sandstone, paving stones, deck, uniform slab, added rim, icing layer, sandwich construction, plate or contrasting cap. The front edge of the upper plane is organically uneven and broken, merging into the front faces without a thick horizontal side band. Sparse green moss only in small edge patches, leaving room for feet. Aim for an obvious but restrained top-plane reveal around the upper quarter of the overall object height, enough for two boots to make contact at slightly different projected depths. The top plane stays level across the main walking span. Side-on, not isometric or top-down; no path receding away from camera. The whole piece is compact and weighty with a generous grey rock body. One fully visible isolated platform with genuine transparent alpha margins. No character, vegetation clumps, cast shadow, text, background or watermark.",
+      "generated_path": "C:\\Users\\chase\\.codex\\generated_images\\01a1fc0d-cee9-7602-b0bb-6d29a83f92ea\\exec-96ca2b03-47dc-4eab-b140-1a8acf425059.png"
+    }
+  ],
+  "rejected_attempts": [
+    {
+      "source": "sources/platform_broad_cap_draft.png",
+      "reason": "Too thin and overly literal tan material.",
+      "prompt": "Edit the referenced small floating slate platform into a NEW Threadbound game-art variant. Preserve the neutral grey faceted low-poly rock body, moss-green material family, subtle directional mineral linework, upper-left daylight and side-view orthographic elevation. The essential change is a MUCH BROADER CLEAR TAN STANDING SURFACE ON TOP. Show a shallow upper plane as a horizontal pale worn-stone walkway, wide enough in apparent depth for two full boots and their contact shadows. When delivered 256 pixels wide, this clean tan strip should be about 28–32 pixels deep from its rear edge to the front moss rim. Keep it level across most of the width, no slope, no receding walkway, no isometric angle. Put thin irregular moss along the FRONT rim and small patches at the extreme sides, keep the central standing surface unobstructed. Stone body beneath remains approximately 70–90 pixels deep with an irregular complete underside. One complete floating slab isolated on genuine transparent alpha with safe margins on all sides. No plants, character, shadows, scenery, labels, watermark, checkerboard or canvas floor. Do not just make the whole slab taller: give the top visible WALKING PLANE the required depth."
+    },
+    {
+      "source": "sources/platform_broad_cap_rejected.png",
+      "reason": "User rejected the separate tan slice; color was a reference identifier, not a requirement.",
+      "prompt": "Edit this exact platform asset. The previous edit still made the tan top too thin at gameplay scale. INCREASE THE VISIBLE DEPTH OF THE TAN UPPER WALKING PLANE BY TWO AND A HALF TIMES, keeping the width unchanged and the grey rock-body depth unchanged. Expand the canvas height as needed. The tan upper plane must occupy about 40 percent of the complete object's height. It should look like a broad flat landing pad that two full boots can rest on, with room for their contact shadows. This is a deliberate 2.5D shallow top-plane reveal, not a narrow colored rim. Target ratio: when scaled to 256 pixels wide, the tan walking strip must be at least 30 pixels tall, with roughly 70–90 pixels of grey rock beneath. Top and front boundaries of that tan strip run horizontally across the central 80 percent of the platform width. Keep moss only along the FRONT edge and small extreme-side patches, leave the standing area clear. Preserve exact existing dimensional low-poly slate style, stone colors, directional mineral lines and upper-left sunlight; clean broken underside. One isolated platform, genuine transparent alpha all around, safe margins. No plants, characters, shadows, labels, watermark, checkerboard or background. Whole asset in frame."
+    }
+  ]
+}

@@ -171,6 +171,33 @@ Texture should never overpower readability.
 
 ---
 
+## November 21 standing-plane and foliage refinement
+
+Chase's woven low-poly audition establishes these asset-generation and placement
+rules. Validate them with the actual wooden doll at gameplay zoom:
+
+- Walkable pieces need visible front-to-back depth on their upper surface, with
+  room for both projected boots and contact shadows. Mark the standing/collision
+  line inside that plane, with usable surface ahead of and behind the soles.
+- The top uses the material of the object: stone, wood, soil, grass or another
+  intentional local material. **Tan is not a requirement.** It was a way to
+  identify the current example. Avoid adding a contrasting flat cap or separate
+  slice merely to create standing space. Keep geological or construction forms
+  continuous through the upper/front transition.
+- Judge depth from the foot footprint and camera view, not a universal color
+  threshold or fixed pixel quota. Annotate the front/back limits after visual
+  review. A first opaque alpha row or a thin moss lip is not a standing plane.
+- Ground foliage must have complete, staggered leaf/stem endings and irregular
+  transparent gaps. Avoid a straight cropped bottom. Make separate overhanging
+  rim variants where leaves need to cross the leading edge of a rock.
+- Use tight, stronger occlusion at planted soles with a softer surrounding
+  shadow. A shallow top plane can support rear/front soles at slightly different
+  projected rows. Keep that contact within the visible surface. Added scene
+  lights do not automatically improve a separately drawn contact shadow.
+
+The current experiments are test-scene auditions; production adoption and wider
+asset replacement still follow review and approval.
+
 # 6. Cave + Architecture Philosophy
 
 Threadbound regions often merge:

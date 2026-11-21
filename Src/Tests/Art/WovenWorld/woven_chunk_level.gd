@@ -8,16 +8,23 @@ const ROUTE_WIDTH := 5504.0
 const REVIEW_SPAWNS := [Vector2(720, 720), Vector2(2450, 624), Vector2(4540, 688)]
 const REVIEW_NAMES := ["LAKESIDE APPROACH", "GREEN CANOPY", "UPPER SHELF"]
 const CONTACT_SHADOW := preload("res://Src/Tests/Art/WovenWorld/woven_contact_shadow.gd")
+const REFINEMENT := "res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/"
 
 var asset_records: Dictionary
 var surfaces: Array[Dictionary] = []
 var fall_resets := 0
 var contact_shadow: Node2D
+var refinement_records: Dictionary
+var foliage_preview: Sprite2D
+var foliage_original_texture: Texture2D
+var foliage_original_offset := Vector2.ZERO
+var foliage_mode := 2
 
 
 func _ready() -> void:
 	asset_records = JSON.parse_string(FileAccess.get_file_as_string(CHUNKS + "asset_metadata.json"))["assets"]
 	super._ready()
+	_apply_grounding_refinement()
 	contact_shadow = CONTACT_SHADOW.new()
 	contact_shadow.name = "PlayerContactShadow"
 	contact_shadow.target = player
@@ -25,10 +32,41 @@ func _ready() -> void:
 	add_child(contact_shadow)
 	get_window().title = "Threadbound — Woven Chunk Level"
 	var help := status_label.get_parent().get_child(1) as Label
-	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nNormal movement and jump controls. Gaps reset you safely."
+	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nV: compare foliage bases    Normal movement and jump controls."
 	_switch_layout(0)
 	if OS.get_cmdline_user_args().has("--verify-woven-chunks"):
 		_verify.call_deferred()
+
+
+func _apply_grounding_refinement() -> void:
+	refinement_records = JSON.parse_string(FileAccess.get_file_as_string(REFINEMENT + "asset_metadata.json"))
+	# Keep physics surfaces fixed; register artwork so the standing line falls
+	# inside the visible top plane instead of on its rear edge.
+	for surface in surfaces:
+		if surface.kind == "ground":
+			var art := surface.node.get_node("Art") as Sprite2D
+			art.position.y -= 12
+	var platform_art := $Geometry/BridgeA/Art as Sprite2D
+	platform_art.texture = load(REFINEMENT + "platform_integrated_top.png")
+	platform_art.position.y = -float(refinement_records.platform_integrated_top.anchor_y)
+	foliage_preview = get_node_or_null("Planting/LeafClusterMiddle") as Sprite2D
+	if foliage_preview:
+		foliage_original_texture = foliage_preview.texture
+		foliage_original_offset = foliage_preview.offset
+		_update_foliage_preview()
+
+
+func _update_foliage_preview() -> void:
+	if not foliage_preview:
+		return
+	if foliage_mode == 0:
+		foliage_preview.texture = foliage_original_texture
+		foliage_preview.offset = foliage_original_offset
+	else:
+		var id := "foliage_soft_base" if foliage_mode == 1 else "foliage_rim"
+		var data: Dictionary = refinement_records[id]
+		foliage_preview.texture = load(REFINEMENT + id + ".png")
+		foliage_preview.offset = Vector2(0, float(data.height) * 0.5 - float(data.anchor_y))
 
 
 func _build_backdrop() -> void:
@@ -104,6 +142,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_2: _switch_layout(1)
 		KEY_3: _switch_layout(2)
 		KEY_R: _switch_layout(0)
+		KEY_V:
+			foliage_mode = (foliage_mode + 1) % 3
+			_update_foliage_preview()
 		KEY_C:
 			join_overlay = not join_overlay
 			get_tree().debug_collisions_hint = join_overlay
@@ -164,6 +205,25 @@ func _verify() -> void:
 			players_in_scene += 1
 	_check(players_in_scene == 1, "The saved scene player is reused without a duplicate actor.")
 	_check(find_children("*", "Camera2D", true, false).size() == 1, "The saved camera is reused without a duplicate camera.")
+	var top_plane: Dictionary = refinement_records.platform_integrated_top
+	_check(int(top_plane.anchor_y) - int(top_plane.standing_back_y) >= 8 and int(top_plane.standing_front_y) - int(top_plane.anchor_y) >= 8, "Standing datum has depth on both sides inside the integrated top plane.")
+	for id in ["foliage_soft_base", "foliage_rim"]:
+		var image := Image.load_from_file(ProjectSettings.globalize_path(REFINEMENT + id + ".png"))
+		var ends: Array[int] = []
+		for x in range(20, image.get_width() - 20, 16):
+			for y in range(image.get_height() - 1, -1, -1):
+				if image.get_pixel(x, y).a > 0.35:
+					ends.append(y)
+					break
+		_check(not ends.is_empty() and ends.max() - ends.min() >= 20, "Foliage lower edge has staggered leaf tips: " + id)
+		image = null
+	if foliage_preview:
+		for mode in 3:
+			foliage_mode = mode
+			_update_foliage_preview()
+			_check(foliage_preview.texture != null, "Foliage comparison mode %d is available." % mode)
+		foliage_mode = 2
+		_update_foliage_preview()
 	var platform_widths: Dictionary = {}
 	for id in asset_records:
 		var data: Dictionary = asset_records[id]
@@ -191,12 +251,32 @@ func _verify() -> void:
 		_check(player.is_on_floor(), "Supported floor contact: " + String(surface.node.name))
 		_check(absf(player.position.y + 69.245 - float(surface.y)) < 1.5, "Physical cap matches authored surface: " + String(surface.node.name))
 		_check(contact_shadow.main.visible and absf(contact_shadow.main.global_position.y - float(surface.y) - 2) < 0.5, "Shadow follows the receiving cap: " + String(surface.node.name))
+		if surface.node.name == &"BridgeA" and DisplayServer.get_name() != "headless":
+			var old_zoom := camera.zoom
+			var old_y := camera.position.y
+			camera.zoom = Vector2(2, 2)
+			camera.position.y = 280
+			await _physics_frames(3)
+			await _capture_view("integrated_top_review.png")
+			camera.zoom = old_zoom
+			camera.position.y = old_y
+			await _physics_frames(3)
 	# Shadow remains on ground during flight and clips at unsupported edges.
 	await _put_player_at(Vector2(720, 730))
 	await _physics_frames(15)
 	var grounded_opacity: float = contact_shadow.main.modulate.a
-	_check(grounded_opacity > 0.25, "Grounded shadow gives clear contact.")
+	_check(grounded_opacity > 0.4, "Grounded shadow has the stronger contact opacity.")
 	_check(contact_shadow._foot_points().size() == 2, "Contact marks use both animated feet.")
+	var foot_offsets: Array[float] = []
+	var visible_contacts := 0
+	var points: PackedVector2Array = contact_shadow._foot_points()
+	for index in points.size():
+		foot_offsets.append(points[index].y - 800)
+		if contact_shadow.contacts[index].visible:
+			visible_contacts += 1
+			_check(absf(contact_shadow.contacts[index].global_position.y - points[index].y - 2) < 0.1, "Dense contact follows sole depth inside the top plane.")
+	_check(visible_contacts >= 1 and contact_shadow.spread.visible, "Dense sole contact and soft spread both render.")
+	print("GROUNDING_FOOT_OFFSETS ", JSON.stringify(foot_offsets))
 	await _put_player_at(Vector2(720, 550))
 	await _physics_frames(3)
 	_check(contact_shadow.main.visible and contact_shadow.main.modulate.a < grounded_opacity, "Airborne shadow fades while remaining on the ground.")
@@ -267,10 +347,22 @@ func _verify() -> void:
 		await _physics_frames(45)
 		_check(player.is_on_floor(), "Review position %d is grounded." % (zone + 1))
 		await _capture_view("route_%d.png" % (zone + 1))
+	if DisplayServer.get_name() != "headless":
+		await _put_player_at(Vector2(2270, 634))
+		await _physics_frames(30)
+		var old_zoom := camera.zoom
+		var old_y := camera.position.y
+		camera.zoom = Vector2(2, 2)
+		camera.position.y = 700
+		await _physics_frames(3)
+		await _capture_view("foliage_edge_review.png")
+		camera.zoom = old_zoom
+		camera.position.y = old_y
+		await _physics_frames(3)
 	join_overlay = true
 	queue_redraw()
 	await get_tree().process_frame
-	await _capture_view("collision_review.png")
+	await _capture_view("grounding_collision_review.png")
 	var result := {"checks": check_count, "failures": failures, "renderer": RenderingServer.get_current_rendering_method(), "surface_count": surfaces.size(), "platform_sizes": platform_widths.keys(), "player_model": player.live_3d_visual.model_scene.resource_path}
 	var file := FileAccess.open(CHUNK_DELIVERY + "godot_checks.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(result, "  ") + "\n")

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/foliage_rim.png" id="1"]
+
+[node name="Foliage" type="Node2D"]
+
+[node name="Art" type="Sprite2D" parent="."]
+centered = false
+position = Vector2(-379.5, -264)
+texture = ExtResource("1")

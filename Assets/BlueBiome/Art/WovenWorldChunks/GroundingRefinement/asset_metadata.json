@@ -1,0 +1,37 @@
+{
+  "foliage_soft_base": {
+    "width": 759,
+    "height": 277,
+    "source_alpha_bounds": [
+      13,
+      0,
+      2039,
+      744
+    ],
+    "anchor_y": 252
+  },
+  "foliage_rim": {
+    "width": 759,
+    "height": 362,
+    "source_alpha_bounds": [
+      216,
+      9,
+      1583,
+      756
+    ],
+    "anchor_y": 264
+  },
+  "platform_integrated_top": {
+    "width": 448,
+    "height": 132,
+    "source_alpha_bounds": [
+      61,
+      74,
+      2084,
+      615
+    ],
+    "standing_back_y": 6,
+    "standing_front_y": 26,
+    "anchor_y": 16
+  }
+}

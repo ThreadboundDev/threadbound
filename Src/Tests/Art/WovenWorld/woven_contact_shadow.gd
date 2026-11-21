@@ -7,6 +7,7 @@ var receiver: Dictionary = {}
 var ground_distance := INF
 var clipped_right := 0.0
 var main: Sprite2D
+var spread: Sprite2D
 var contacts: Array[Sprite2D] = []
 var maximum_height := 640.0
 
@@ -25,6 +26,7 @@ func _ready() -> void:
 	texture.fill = GradientTexture2D.FILL_RADIAL
 	texture.fill_from = Vector2(0.5, 0.5)
 	texture.fill_to = Vector2(1, 0.5)
+	spread = _sprite(texture)
 	main = _sprite(texture)
 	for foot in 2:
 		contacts.append(_sprite(texture))
@@ -56,7 +58,7 @@ func _receiver_below(point: Vector2) -> Dictionary:
 	return nearest
 
 
-func _paint(sprite: Sprite2D, center_x: float, surface: Dictionary, extent: Vector2, opacity: float) -> void:
+func _paint(sprite: Sprite2D, center_x: float, surface: Dictionary, extent: Vector2, opacity: float, y_offset := 2.0) -> void:
 	var left := maxf(center_x - extent.x * 0.5, float(surface.left))
 	var right := minf(center_x + extent.x * 0.5, float(surface.right))
 	if right - left < 1.0 or opacity <= 0.001:
@@ -65,8 +67,8 @@ func _paint(sprite: Sprite2D, center_x: float, surface: Dictionary, extent: Vect
 	var texture_left := (left - (center_x - extent.x * 0.5)) / extent.x * 192.0
 	sprite.region_rect = Rect2(texture_left, 0, (right - left) / extent.x * 192.0, 192)
 	sprite.scale = extent / 192.0
-	sprite.global_position = Vector2((left + right) * 0.5, float(surface.y) + 2.0)
-	sprite.modulate = Color(0.09, 0.065, 0.045, opacity)
+	sprite.global_position = Vector2((left + right) * 0.5, float(surface.y) + y_offset)
+	sprite.modulate = Color(0.055, 0.065, 0.075, opacity)
 	sprite.show()
 	if sprite == main:
 		clipped_right = right
@@ -101,6 +103,7 @@ func _foot_points() -> PackedVector2Array:
 
 func _process(_delta: float) -> void:
 	main.hide()
+	spread.hide()
 	for contact in contacts:
 		contact.hide()
 	receiver = {}
@@ -119,12 +122,17 @@ func _process(_delta: float) -> void:
 	if not receiver.is_empty():
 		ground_distance = maxf(float(receiver.y) - feet.y, 0.0)
 		var height_ratio := clampf(ground_distance / maximum_height, 0, 1)
-		var extent := Vector2(width * lerpf(1.0, 0.6, height_ratio), lerpf(18.0, 24.0, height_ratio))
-		_paint(main, center_x, receiver, extent, 0.32 * pow(1.0 - height_ratio, 1.5))
+		var extent := Vector2((width + 10) * lerpf(1.0, 0.6, height_ratio), lerpf(18.0, 24.0, height_ratio))
+		var fade := pow(1.0 - height_ratio, 1.5)
+		_paint(spread, center_x + 16, receiver, Vector2(extent.x * 1.18, 25), 0.16 * fade, 5)
+		_paint(main, center_x, receiver, extent, 0.44 * fade)
 	for index in points.size():
-		var surface := _receiver_below(points[index])
-		if surface.is_empty():
+		if not target.is_on_floor() or receiver.is_empty():
 			continue
-		var separation := absf(float(surface.y) - points[index].y)
-		var opacity := 0.34 * clampf(1.0 - separation / 18.0, 0, 1)
-		_paint(contacts[index], points[index].x, surface, Vector2(36, 9), opacity)
+		var separation := absf(float(receiver.y) - points[index].y)
+		if separation > 14:
+			continue
+		# The top surface is a shallow plane: rear/front feet may project to
+		# different rows. Put contact under each sole within that plane.
+		var opacity := 0.56 * clampf(1.0 - separation / 28.0, 0, 1)
+		_paint(contacts[index], points[index].x, receiver, Vector2(40, 10), opacity, points[index].y - float(receiver.y) + 2)

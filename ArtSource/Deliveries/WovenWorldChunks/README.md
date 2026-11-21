@@ -17,6 +17,8 @@ Open `res://Src/Tests/Art/WovenWorld/woven_chunk_level.tscn` in Godot and press
 - **1 / 2 / 3:** move between the three review positions.
 - **C:** show collision and walkable surface lines.
 - **R:** return to the start.
+- **V:** compare the original, irregular-base and hanging-rim foliage at the
+  middle ground's leaf cluster.
 - Normal movement and jump controls work. The lower route has two ground gaps;
   the optional upper route starts with the existing double jump.
 - Missing a jump returns the player to the current review area without damage.
@@ -76,16 +78,19 @@ before using the kit in production.
 
 ## Verification and review
 
-- **123 headless checks passed:** ten image/scene deliveries, visible cap
+- **132 headless checks passed:** ten original image/scene deliveries, visible cap
   alignment, full-depth bodies, all nine placed surfaces supporting the actual
   player, both ground gaps, double-jump upper entry, all five upper jump links,
   safe fall reset, three grounded review positions and the contact-shadow checks
-  described below. The older review's fallback player/camera path also passes
+  described below, plus the refinement's top-plane depth and foliage silhouettes.
+  The older review's fallback player/camera path also passes
   its 37 headless checks; see `base_review_checks.json`.
-- **128 Forward+ checks passed:** the same coverage plus three 1920 x 1080
-  route captures, an airborne contact-shadow image and a collision review.
+- **139 Forward+ checks passed:** the same coverage plus seven 1920 x 1080
+  captures: three route views, airborne shadow, integrated rock top, foliage edge
+  and collision review.
   See `gpu_checks.json`, `route_1.png`, `route_2.png`, `route_3.png`,
-  `contact_shadow_airborne.png` and `collision_review.png`.
+  `contact_shadow_airborne.png`, `integrated_top_review.png`,
+  `foliage_edge_review.png` and `grounding_collision_review.png`.
 - The background uses the existing lake/cliff and village artwork. The source
   lake pixels extend through the deeper gaps to remove the previous backdrop's
   horizontal cutoff. No production backdrop image is modified.
@@ -133,3 +138,30 @@ Chase's follow-up review confirms that he likes the art style and vibrance.
 Platform foliage and shrubs do not yet blend well together. The next art
 refinement should unify their greens, shading/detail scale and planted edges.
 No foliage replacement is included in this shadow checkpoint.
+
+## November 21 standing-plane and foliage refinement
+
+Chase clarified that **tan was only a way to identify the existing surface**.
+Walkable tops can use the object's natural material. They need visible depth
+for the feet, with the collision datum inside that plane, rather than a separate
+contrasting slice. The latest sample continues grey rock across the upper/front
+transition. Two rejected tan attempts remain only in the source archive.
+
+The audition applies the new integrated-rock sample to BridgeA at runtime and
+registers the three ground sprites 12 px higher relative to their fixed physics
+surfaces. This places the standing line farther inside their existing top planes.
+No collider, movement or user-authored scene placement is changed. Runtime
+foliage comparison is limited to `Planting/LeafClusterMiddle`: V cycles original,
+irregular base and hanging rim. The rim is the default. Broader foliage palette
+and detail-scale cohesion still need review.
+
+The shadow now has denser animated sole contacts and a softer surrounding
+spread. Contacts follow each foot's projected row within the shallow top plane;
+the rear foot is not forced onto the front foot's row. This is drawn contact
+shading, independent of adding a scene light.
+
+See [refinement sources and preparation](grounding_refinement/README.md).
+The original image files and Chase's edited scene remain preserved. F6 runs the
+same `woven_chunk_level.tscn`; visual acceptance and production adoption remain
+pending. Current verification used the scene's fallback runtime player/camera
+after Chase removed the authored pair, and confirmed one player and one camera.

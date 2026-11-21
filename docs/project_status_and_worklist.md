@@ -1727,3 +1727,25 @@ Chase likes the overall style and vibrance. Platform foliage and shrubs remain
 a cohesion issue; the next art refinement should unify greens, shading/detail
 scale and planted edges. No foliage replacement is part of the shadow fix.
 Save and checkpoint Chase's final reverted scene before changing art tasks.
+
+## November 21 standing-plane and foliage refinement
+
+**T49 refinement | Awaiting hands-on acceptance.** Chase clarified that tan only
+identified the existing tops. Surfaces need visible front-to-back depth with the
+standing datum inside their natural material, not a contrasting slice. This
+material-agnostic direction is recorded in `docs/art/environment_art_style.md`.
+
+Added an integrated grey-rock platform and two foliage silhouettes (irregular
+planting base and hanging rim). The same chunk test auditions BridgeA and the
+middle leaf cluster at runtime; V cycles foliage comparisons. Ground sprite
+registration puts the fixed standing datum farther inside the visible top.
+Stronger sole contacts follow the animated foot rows, with a soft shadow spread.
+Original source assets, player physics and Chase's scene edits are preserved.
+Wider foliage palette/detail cohesion remains pending.
+
+Validation: 132 headless and 139 Forward+ checks passed, with integrated-top,
+foliage-edge, route, airborne and collision captures. Six CFG hashes unchanged.
+Known cache/shutdown diagnostics remain documented. See
+[delivery notes and sources](../ArtSource/Deliveries/WovenWorldChunks/README.md).
+Visual acceptance and production adoption remain pending. Task checkpoint
+subject: `art: refine foliage edges and character grounding`.
