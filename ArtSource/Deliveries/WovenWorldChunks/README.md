@@ -23,7 +23,12 @@ Open `res://Src/Tests/Art/WovenWorld/woven_chunk_level.tscn` in Godot and press
   Thin material is the starting mode; the current mode is shown in the heading.
 - Normal movement and jump controls work. The lower route has two ground gaps;
   the optional upper route starts with the existing double jump.
-- Missing a jump returns the player to the current review area without damage.
+- Falling into a gap enters the new swim basin. Recovery stones provide a route
+  back to land; leaving the basin below the recovery limit resets safely.
+
+The current editable shoreline pass starts at the chamber mouth on the left;
+R returns there. Backdrop, water, daylight, player and camera are saved scene
+nodes. See [shoreline editing and latest verification](shore_transition/README.md).
 
 `Geometry`, `Decorations` and `Planting` are authored nodes in the scene and
 can be repositioned in Godot. The level instances the actual production player
@@ -51,10 +56,14 @@ All ten new images and their native placeable scenes are under
 | `blossom_shrub` | 320 x 177 | Low pink flowering shrub |
 
 Drag the corresponding `.tscn` from `placeables/` into a scene. A ground or
-platform root marks its walkable plane at local Y=0; its artwork is offset to
+platform root marks its nominal walkable plane at local Y=0; its artwork is offset to
 that plane and its collider is already aligned. Decoration roots mark the
 planting base, centered horizontally. Ground pieces have solid rectangular
 bodies; platform caps use one-way collision. Decorations have no collision.
+
+Chase's ground collider calibration is now checkpointed: actual Ground A/B/C
+caps are 4/5/15 px below that nominal datum. Use their actual shapes when placing
+feet or shadows; the test reads those shapes rather than assuming root Y=0.
 
 The test places three ground chunks and six platforms using the four distinct
 platform sources. It also reuses the first kit's pink tree, leaves and boulders.
@@ -79,6 +88,10 @@ Collision caps remain simple horizontal planes; inspect contact at the edges
 before using the kit in production.
 
 ## Verification and review
+
+The latest shoreline pass records **179 headless / 201 Forward+ checks** in
+`shore_transition/`, including swimming and the saved editor composition. The
+reports below describe the earlier pre-water outline checkpoint.
 
 - **146 headless checks passed:** ten original image/scene deliveries, visible cap
   alignment, full-depth bodies, all nine placed surfaces supporting the actual

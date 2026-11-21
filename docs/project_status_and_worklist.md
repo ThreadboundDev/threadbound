@@ -1798,19 +1798,47 @@ Save and checkpoint the manual ground/level edits before changing art tasks.
 
 ## November 21 proposed woven shoreline transition
 
-**T49 level direction | Implementation proposal prepared for approval.** Chase
+**T49 level direction | Approved; first pass delivered below.** Chase
 wants playable water, editor-visible scenery and a left-side chamber exit in
 the woven chunk scene. Use chunks as large landmasses rising from the lake,
 leading toward the Blue rooftops. Reuse existing polygon water/swimming and
 native saved backdrop/light/player/camera nodes. Preserve manual collider and
 placement edits, thin outlines and irregular foliage bases.
 
-The [concrete proposal](design/woven_shore_transition_proposal_2026_11_21.md)
+The [approved proposal](design/woven_shore_transition_proposal_2026_11_21.md)
 lists files, the chamber-mouth/entry-spawn layout, initial waterline, swimming
-preview scope and verification. The production chamber's ending/menu route is
-retained for the first audition. Implementation entails scene restructuring;
-AGENTS.md requires explanation, file list and approval before those edits.
-Only documentation has changed. Task checkpoint subject:
-`docs: propose editable woven shoreline transition`.
-Manual scene/ground edits still need a saved, reviewed Git checkpoint before
-another implementation pass; unrelated staging is preserved.
+preview scope and verification. Chase approved the scene restructuring required
+by this scope. The first-pass delivery below records the implementation and
+preserves the production chamber's ending/menu route for the audition.
+Proposal checkpoint: `ef12573a` — `docs: propose editable woven shoreline transition`.
+Manual scene/ground edits are now checkpointed with the shoreline delivery;
+unrelated staging is preserved.
+
+## November 21 editable shoreline first pass
+
+**T49 transition level | Approved implementation delivered; hands-on review pending.**
+Chase approved the linked shoreline scope. The same `woven_chunk_level.tscn`
+now saves its backdrop/parallax, water, lighting, one actual player/camera and
+chamber-side entry. Existing runtime ground/art registration is authored in the
+scene. The level opens in Godot with these components visible before F6.
+
+The waterline starts at Y=900. Two 96 px recovery stones at Y=948 let swimming
+rise to dry footing, followed by a normal jump to the island. The current basin
+floor is Y=1344; camera coverage stops at Y=1440 and recovery is below Y=1600.
+The left chamber mouth is a dry, walkable existing-art blockout with an entry
+spawn; the right rooftop marker identifies the future handoff. Production
+chamber/menu/demo-ending routing remains as approved for this test pass.
+
+Preserved and checkpointed Chase's existing island/decor transforms and all
+three byte-identical manually adjusted ground colliders. Thin outlines, contact
+shadows and V foliage comparison remain. R returns to chamber entry; 1/2/3
+review islands. No core player, equipment or shared water shader changed.
+
+Validation: 179 headless, 201 Forward+ and 37 older-review checks passed. Eighteen
+actual game captures and a Godot editor overview are in the
+[shoreline delivery](../ArtSource/Deliveries/WovenWorldChunks/shore_transition/README.md).
+Six CFG hashes unchanged. Existing shader-cache/shutdown diagnostics and the
+legacy glove helper's missing Swim_Idle message remain documented. Entrance
+art polish, water/composition acceptance and live room connections remain for
+review. Task checkpoint subject:
+`level: add editable woven shoreline and chamber entrance`.

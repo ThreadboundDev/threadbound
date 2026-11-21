@@ -1,23 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://7l4b8d44b0st"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ground_c.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://fanv86i61v5j" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ground_c.png" id="1"]
 
 [sub_resource type="RectangleShape2D" id="Shape"]
-size = Vector2(1716, 951)
+size = Vector2(1716, 936)
 
-[node name="ground_c" type="Node2D"]
+[node name="ground_c" type="Node2D" unique_id=948543390]
 metadata/asset_id = "ground_c"
 metadata/kind = "ground"
 
-[node name="Art" type="Sprite2D" parent="."]
-centered = false
+[node name="Art" type="Sprite2D" parent="." unique_id=369245877]
 position = Vector2(0, -77)
 texture = ExtResource("1")
+centered = false
 
-[node name="Body" type="StaticBody2D" parent="."]
+[node name="Body" type="StaticBody2D" parent="." unique_id=511283522]
 position = Vector2(894, 475.5)
-collision_layer = 1
 collision_mask = 0
 
-[node name="Shape" type="CollisionShape2D" parent="Body"]
+[node name="Shape" type="CollisionShape2D" parent="Body" unique_id=1763253688]
+position = Vector2(0, 7.5)
 shape = SubResource("Shape")

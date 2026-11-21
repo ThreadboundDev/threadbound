@@ -1,6 +1,7 @@
 # Woven shoreline transition — proposed November 21, 2026
 
-Status: prepared for approval before scene restructuring. Chase requests water,
+Status: Chase approved this scope on November 21. First playable pass delivered;
+hands-on layout and visual acceptance remain pending. Chase requests water,
 editor-visible scenery and a left-side exit from the chamber into this level.
 The chunks should read as substantial landmasses emerging from the lake, with
 the route leading toward the Blue rooftops. This applies the existing regional
@@ -87,3 +88,24 @@ accepted HEAD, using `threadbound/level-woven-shore-transition` if separated
 from the current art branch. Commit/push after relevant checks and record which
 visual/route acceptance remains pending. No production-route publication or
 merge is part of this first pass.
+
+## First-pass delivery
+
+The saved scene now contains the backdrop/parallax sprites, one daylight, one
+actual player/camera, polygon lake, chamber-mouth assembly and rooftop approach
+marker. Existing runtime art registration is saved as scene overrides. Chase's
+three ground colliders retain their exact pre-pass contents and are checkpointed
+with the level. No shared player/water shader or production chamber file changed.
+
+The waterline starts at Y=900. Two 96 px one-way recovery stones at Y=948 let
+the swimmer rise to dry footing and jump back onto an island. These were added
+after testing showed diagonal swimming into a sheer wall loses momentum. The
+invisible basin floor is at Y=1344; camera coverage ends at Y=1440 and fallback
+recovery starts below Y=1600. The basin is an editable test space, not a finished
+underwater route. The chamber mouth is an existing-art blockout with dry entry;
+room-to-room routing and finished entrance art remain for later review.
+
+The [delivery](../../ArtSource/Deliveries/WovenWorldChunks/shore_transition/README.md)
+records editor controls, numerical checks, actual editor/gameplay captures and
+known diagnostics. Thin contours, contact shadows and foliage comparison remain
+available. Main-menu/demo-ending routing stays as approved in the first-pass scope.

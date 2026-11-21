@@ -3,13 +3,16 @@ extends "res://Src/Tests/Art/WovenWorld/woven_world_review.gd"
 ## Geometry and decorations are native authored placeables in the companion scene.
 
 const CHUNKS := "res://Assets/BlueBiome/Art/WovenWorldChunks/"
-const CHUNK_DELIVERY := "res://ArtSource/Deliveries/WovenWorldChunks/"
+const CHUNK_DELIVERY := "res://ArtSource/Deliveries/WovenWorldChunks/shore_transition/"
 const ROUTE_WIDTH := 5504.0
 const REVIEW_SPAWNS := [Vector2(720, 720), Vector2(2450, 624), Vector2(4540, 688)]
 const REVIEW_NAMES := ["LAKESIDE APPROACH", "GREEN CANOPY", "UPPER SHELF"]
 const CONTACT_SHADOW := preload("res://Src/Tests/Art/WovenWorld/woven_contact_shadow.gd")
 const REFINEMENT := "res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/"
 const OUTLINE_COMPARISON := preload("res://Src/Tests/Art/WovenWorld/woven_outline_comparison.gd")
+
+@export var preview_swimming := true
+@export var recovery_y := 1600.0
 
 var asset_records: Dictionary
 var surfaces: Array[Dictionary] = []
@@ -21,12 +24,14 @@ var foliage_original_texture: Texture2D
 var foliage_original_offset := Vector2.ZERO
 var foliage_mode := 2
 var outline_comparison: RefCounted
+var camera_manual := false
 
 
 func _ready() -> void:
 	asset_records = JSON.parse_string(FileAccess.get_file_as_string(CHUNKS + "asset_metadata.json"))["assets"]
 	super._ready()
 	_apply_grounding_refinement()
+	player.debug_blue_water_power_unlocked = preview_swimming
 	outline_comparison = OUTLINE_COMPARISON.new()
 	outline_comparison.initialize(player.live_3d_visual)
 	contact_shadow = CONTACT_SHADOW.new()
@@ -36,27 +41,19 @@ func _ready() -> void:
 	add_child(contact_shadow)
 	get_window().title = "Threadbound — Woven Chunk Level"
 	var help := status_label.get_parent().get_child(1) as Label
-	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nO: compare outlines    V: compare foliage bases    Normal movement and jump controls."
-	_switch_layout(0)
+	help.text = "1 / 2 / 3: islands    C: collision    R: chamber entry\nO: outlines    V: foliage    Normal movement / swimming controls."
+	_go_chamber_entry()
 	if OS.get_cmdline_user_args().has("--verify-woven-chunks"):
 		_verify.call_deferred()
 
 
 func _apply_grounding_refinement() -> void:
 	refinement_records = JSON.parse_string(FileAccess.get_file_as_string(REFINEMENT + "asset_metadata.json"))
-	# Keep physics surfaces fixed; register artwork so the standing line falls
-	# inside the visible top plane instead of on its rear edge.
-	for surface in surfaces:
-		if surface.kind == "ground":
-			var art := surface.node.get_node("Art") as Sprite2D
-			art.position.y -= 12
-	var platform_art := $Geometry/BridgeA/Art as Sprite2D
-	platform_art.texture = load(REFINEMENT + "platform_integrated_top.png")
-	platform_art.position.y = -float(refinement_records.platform_integrated_top.anchor_y)
+	# Default art and registration are saved in the scene for editor parity.
 	foliage_preview = get_node_or_null("Planting/LeafClusterMiddle") as Sprite2D
 	if foliage_preview:
-		foliage_original_texture = foliage_preview.texture
-		foliage_original_offset = foliage_preview.offset
+		foliage_original_texture = load(KIT + "foliage_green.png")
+		foliage_original_offset = Vector2(0, -140)
 		_update_foliage_preview()
 
 
@@ -74,33 +71,7 @@ func _update_foliage_preview() -> void:
 
 
 func _build_backdrop() -> void:
-	# Deep gaps expose more water than the previous flat-ground audition.
-	# Extend the existing lake pixels through that view instead of ending the
-	# backdrop at y=850 and exposing a flat-color horizontal boundary.
-	var layer := CanvasLayer.new()
-	layer.layer = -20
-	add_child(layer)
-	var source_horizon := int(FAR.get_height() * 0.884)
-	for slice in [
-		{"region": Rect2(0, 0, FAR.get_width(), source_horizon), "y": 0.0, "height": 704.0},
-		{"region": Rect2(0, source_horizon, FAR.get_width(), FAR.get_height() - source_horizon), "y": 704.0, "height": 376.0},
-	]:
-		var atlas := AtlasTexture.new()
-		atlas.atlas = FAR
-		atlas.region = slice.region
-		atlas.filter_clip = true
-		var sprite := Sprite2D.new()
-		sprite.texture = atlas
-		sprite.centered = false
-		sprite.position.y = slice.y
-		sprite.scale = Vector2(1920.0 / atlas.get_width(), float(slice.height) / atlas.get_height())
-		layer.add_child(sprite)
-	var village := Sprite2D.new()
-	village.texture = VILLAGE
-	village.centered = false
-	village.position = Vector2(0, 470)
-	village.scale = Vector2(1920.0 / VILLAGE.get_width(), 400.0 / VILLAGE.get_height())
-	layer.add_child(village)
+	pass # Native saved Backdrop is visible and editable before running.
 
 
 func _build_terrain() -> void:
@@ -113,8 +84,11 @@ func _build_terrain() -> void:
 		var right := to_local(shape.to_global(Vector2(cap.end.x, cap.position.y)))
 		surfaces.append({"id": id, "node": piece, "kind": data.kind,
 			"left": left.x, "right": right.x, "y": left.y})
-	_collision_rect(Rect2(-64, -200, 64, 1600))
-	_collision_rect(Rect2(5304, -200, 64, 1600))
+	var entry_shape := $ChamberMouth/Floor/Shape as CollisionShape2D
+	var entry_cap := entry_shape.shape.get_rect()
+	var entry_left := entry_shape.global_position + entry_cap.position
+	surfaces.append({"id": "chamber_landing", "node": $ChamberMouth, "kind": "entry",
+		"left": entry_left.x, "right": entry_left.x + entry_cap.size.x, "y": entry_left.y})
 
 
 func _build_layouts() -> void:
@@ -132,13 +106,13 @@ func _update_label() -> void:
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player) or not is_instance_valid(camera):
 		return
-	if camera.get_script() == null:
-		camera.position.x = clampf(player.position.x, 960, ROUTE_WIDTH - 960)
+	if camera.get_script() == null and not camera_manual:
+		camera.position = Vector2(player.position.x, clampf(player.position.y - 190, 500, 950))
 	var zone := 0 if player.position.x < 1800 else (1 if player.position.x < 3500 else 2)
 	if active_layout != zone:
 		active_layout = zone
 		_update_label()
-	if player.position.y > 1280:
+	if player.position.y > recovery_y:
 		fall_resets += 1
 		_switch_layout(active_layout)
 
@@ -150,7 +124,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_1: _switch_layout(0)
 		KEY_2: _switch_layout(1)
 		KEY_3: _switch_layout(2)
-		KEY_R: _switch_layout(0)
+		KEY_R: _go_chamber_entry()
 		KEY_O:
 			outline_comparison.set_mode(outline_comparison.mode + 1)
 			_update_label()
@@ -172,6 +146,12 @@ func _switch_layout(index: int) -> void:
 	player.velocity = Vector2.ZERO
 	player.reset_physics_interpolation()
 	_update_label()
+
+
+func _go_chamber_entry() -> void:
+	_switch_layout(0)
+	player.global_position = $ChamberMouth/ChamberEntrySpawn.global_position
+	player.reset_physics_interpolation()
 
 
 func _draw() -> void:
@@ -210,7 +190,7 @@ func _verify() -> void:
 		get_window().mode = Window.MODE_WINDOWED
 		get_window().size = Vector2i(1920, 1080)
 	_check(find_children("*", "TileMapLayer", true, false).is_empty(), "Chunk level has no TileMap or repeated terrain fill.")
-	_check(surfaces.size() == 9, "Three ground pieces and six platform placements are present.")
+	_check(surfaces.size() == 12, "Three islands, six platforms, two water recovery shelves and the chamber landing are present.")
 	var players_in_scene := 0
 	for actor in get_tree().get_nodes_in_group("player"):
 		if is_ancestor_of(actor):
@@ -264,6 +244,7 @@ func _verify() -> void:
 		_check(absf(player.position.y + 69.245 - float(surface.y)) < 1.5, "Physical cap matches authored surface: " + String(surface.node.name))
 		_check(contact_shadow.main.visible and absf(contact_shadow.main.global_position.y - float(surface.y) - 2) < 0.5, "Shadow follows the receiving cap: " + String(surface.node.name))
 		if surface.node.name == &"BridgeA" and DisplayServer.get_name() != "headless":
+			camera_manual = true
 			var old_zoom := camera.zoom
 			var old_y := camera.position.y
 			camera.zoom = Vector2(2, 2)
@@ -273,6 +254,7 @@ func _verify() -> void:
 			camera.zoom = old_zoom
 			camera.position.y = old_y
 			await _physics_frames(3)
+			camera_manual = false
 	# Shadow remains on ground during flight and clips at unsupported edges.
 	await _put_player_at(Vector2(720, 730))
 	# Allow the landing pose to finish before judging planted sole contact.
@@ -351,10 +333,11 @@ func _verify() -> void:
 		Input.action_release("move_right")
 		_check(landed, "Playable upper link: %s to %s" % [pair[0], pair[1]])
 	# A missed jump returns control without damage, death or save changes.
-	await _put_player_at(Vector2(1800, 1150))
 	var reset_before := fall_resets
+	await _put_player_at(Vector2(1800, recovery_y + 100))
 	await _physics_frames(45)
 	_check(fall_resets > reset_before and not player.is_dead, "Gap fall safely returns the real player.")
+	await _verify_shore_transition()
 	await _verify_outline_comparison()
 	for zone in 3:
 		_switch_layout(zone)
@@ -362,17 +345,19 @@ func _verify() -> void:
 		_check(player.is_on_floor(), "Review position %d is grounded." % (zone + 1))
 		await _capture_view("route_%d.png" % (zone + 1))
 	if DisplayServer.get_name() != "headless":
+		camera_manual = true
 		await _put_player_at(Vector2(2270, 634))
 		await _physics_frames(30)
 		var old_zoom := camera.zoom
-		var old_y := camera.position.y
+		var old_position := camera.position
 		camera.zoom = Vector2(2, 2)
-		camera.position.y = 700
+		camera.position = Vector2(player.position.x, 700)
 		await _physics_frames(3)
 		await _capture_view("foliage_edge_review.png")
 		camera.zoom = old_zoom
-		camera.position.y = old_y
+		camera.position = old_position
 		await _physics_frames(3)
+		camera_manual = false
 	join_overlay = true
 	queue_redraw()
 	await get_tree().process_frame
@@ -388,6 +373,78 @@ func _verify() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	get_tree().quit(0 if failures.is_empty() else 1)
+
+
+func _verify_shore_transition() -> void:
+	var lake := $ShoreWater/Lake
+	_check($Backdrop.get_child_count() == 2, "Backdrop parallax layers are authored in the saved scene.")
+	_check(find_children("ReviewDaylight", "PointLight2D", true, false).size() == 1, "Authored daylight is reused without a duplicate.")
+	_check(lake.lake_presentation and not lake.air_pocket, "Existing polygon lake supplies the shoreline water.")
+	_check(lake.contains_global_point(Vector2(camera.limit_left, lake.get_surface_global_y() + 64)), "Lake extends past the left camera edge without an exposed rectangular cut.")
+	var entry := _surface_named("ChamberMouth")
+	var boundary_shape := $LeftBoundary/Shape as CollisionShape2D
+	_check(float(entry.left) <= boundary_shape.global_position.x + boundary_shape.shape.get_rect().end.x, "Chamber floor meets the left boundary without a hidden drop.")
+	_check(player.debug_blue_water_power_unlocked == preview_swimming, "Swimming preview is local to this level's player instance.")
+	_check($Geometry/BridgeA/Art.texture.resource_path.ends_with("platform_integrated_top.png"), "Integrated platform is saved and visible in the editor.")
+	var original_scene := load("res://Src/Tests/Art/WovenWorld/woven_chunk_level.tscn") as PackedScene
+	var scene_state := original_scene.get_state()
+	var saved_player := false
+	for index in scene_state.get_node_count():
+		saved_player = saved_player or scene_state.get_node_name(index) == &"Player"
+	_check(saved_player, "The actual player is authored once in the saved scene.")
+	_go_chamber_entry()
+	await _physics_frames(45)
+	_check(player.is_on_floor() and not player.is_in_prototype_water(), "Chamber entry is supported and dry.")
+	await _capture_view("chamber_entry.png")
+	Input.action_press("move_right")
+	await _physics_frames(105)
+	Input.action_release("move_right")
+	await _physics_frames(15)
+	_check(player.position.x > 50 and player.is_on_floor(), "Player walks from the chamber mouth onto Ground A.")
+	for pair in [["GroundA", "GroundB"], ["GroundB", "GroundC"]]:
+		var left := _surface_named(pair[0])
+		var right := _surface_named(pair[1])
+		var gap_center := (float(left.right) + float(right.left)) * 0.5
+		var resets := fall_resets
+		await _put_player_at(Vector2(gap_center, lake.get_surface_global_y() + 100))
+		await _physics_frames(12)
+		_check(player.is_in_prototype_water(), "Swimmable water in gap after " + pair[0])
+		var start_y := player.position.y
+		Input.action_press("move_up")
+		await _physics_frames(7)
+		Input.action_release("move_up")
+		_check(player.position.y < start_y, "Existing swimming moves upward in gap after " + pair[0])
+		_check(fall_resets == resets, "Valid swimming does not trigger gap recovery after " + pair[0])
+		await _capture_view("water_after_%s.png" % pair[0])
+		Input.action_press("move_up")
+		for frame in 120:
+			await get_tree().physics_frame
+			if not player.is_in_prototype_water() and player.is_on_floor():
+				break
+		Input.action_release("move_up")
+		_check(not player.is_in_prototype_water() and player.is_on_floor(), "Swimming upward reaches dry footing on the recovery shelf after " + pair[0])
+		if player.is_on_floor() and player.position.y + 69.245 > float(left.y) + 5:
+			Input.action_press("Jump")
+			Input.action_press("move_left")
+			await _physics_frames(30)
+			Input.action_release("Jump")
+			Input.action_release("move_left")
+			for frame in 150:
+				await get_tree().physics_frame
+				if player.is_on_floor() and not player.is_in_prototype_water():
+					break
+		print("SHORE_RECOVERY ", pair[0], " ", player.position, " velocity=", player.velocity)
+		_check(not player.is_in_prototype_water() and player.is_on_floor() and player.position.x < float(left.right), "Swimmer can breach and return to the left island after " + pair[0])
+	for name in ["GroundA", "GroundB", "GroundC"]:
+		var island := _surface_named(name)
+		_check(float(island.y) < lake.get_surface_global_y(), "Dry island cap above the adjustable waterline: " + name)
+	await _put_player_at(Vector2(1810, 1170))
+	await _physics_frames(45)
+	_check(player.is_in_prototype_water() and lake.underwater_view > 0.9, "Diving opens the existing underwater presentation.")
+	await _capture_view("submerged.png")
+	_switch_layout(2)
+	await _physics_frames(45)
+	await _capture_view("rooftop_approach.png")
 
 
 func _verify_outline_comparison() -> void:

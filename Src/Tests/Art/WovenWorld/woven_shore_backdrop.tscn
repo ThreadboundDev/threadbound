@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/far_sky_cliffs.png" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/near_lake_village.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="Sky"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 2172, 640)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Lake"]
+atlas = ExtResource("1")
+region = Rect2(0, 640, 2172, 84)
+filter_clip = true
+
+[node name="ShoreBackdrop" type="Node2D"]
+z_index = -30
+editor_description = "Saved editor-visible backdrop. Select individual sky, lake or village sprites to compose the shore. Parallax scales are editable."
+
+[node name="SkyAndLake" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.12, 0.08)
+
+[node name="SkyCliffs" type="Sprite2D" parent="SkyAndLake"]
+position = Vector2(-1400, -200)
+scale = Vector2(3.6, 1.40625)
+texture = SubResource("Sky")
+centered = false
+
+[node name="DistantLake" type="Sprite2D" parent="SkyAndLake"]
+position = Vector2(-1400, 700)
+scale = Vector2(3.6, 17)
+texture = SubResource("Lake")
+centered = false
+
+[node name="Village" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.22, 0.12)
+
+[node name="WestVillage" type="Sprite2D" parent="Village"]
+position = Vector2(-1000, 363)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2")
+centered = false
+
+[node name="MiddleVillage" type="Sprite2D" parent="Village"]
+position = Vector2(1600, 363)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2")
+centered = false
+
+[node name="EastVillage" type="Sprite2D" parent="Village"]
+position = Vector2(4200, 363)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2")
+centered = false

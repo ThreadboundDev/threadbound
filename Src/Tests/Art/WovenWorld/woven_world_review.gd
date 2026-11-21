@@ -33,20 +33,21 @@ func _ready() -> void:
 	# This daylight fixture lights only its layer, leaving generated art unchanged.
 	# DirectionalLight2D ignores item masks; a uniform point-light texture
 	# preserves the source colors on scenery while lighting the actor composite.
-	var daylight := PointLight2D.new()
-	daylight.name = "ReviewDaylight"
-	daylight.range_item_cull_mask = 2
-	daylight.energy = 0.65
-	daylight.position = Vector2(WORLD_WIDTH * 0.5, 540)
-	var white := Gradient.new()
-	white.colors = PackedColorArray([Color.WHITE, Color.WHITE])
-	var light_texture := GradientTexture2D.new()
-	light_texture.gradient = white
-	light_texture.width = 64
-	light_texture.height = 64
-	daylight.texture = light_texture
-	daylight.texture_scale = 128
-	add_child(daylight)
+	if get_node_or_null("ReviewDaylight") == null:
+		var daylight := PointLight2D.new()
+		daylight.name = "ReviewDaylight"
+		daylight.range_item_cull_mask = 2
+		daylight.energy = 0.65
+		daylight.position = Vector2(WORLD_WIDTH * 0.5, 540)
+		var white := Gradient.new()
+		white.colors = PackedColorArray([Color.WHITE, Color.WHITE])
+		var light_texture := GradientTexture2D.new()
+		light_texture.gradient = white
+		light_texture.width = 64
+		light_texture.height = 64
+		daylight.texture = light_texture
+		daylight.texture_scale = 128
+		add_child(daylight)
 	_build_backdrop()
 	_build_terrain()
 	_build_layouts()

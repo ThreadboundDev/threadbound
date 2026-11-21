@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/rock_tall.png" id="1"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/rock_wide.png" id="2"]
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_large.tscn" id="3"]
+
+[sub_resource type="RectangleShape2D" id="Floor"]
+size = Vector2(1120, 120)
+
+[sub_resource type="RectangleShape2D" id="Ceiling"]
+size = Vector2(660, 120)
+
+[node name="ChamberMouth" type="Node2D"]
+editor_description = "Left-side chamber exit assembly. ChamberEntrySpawn is the future room handoff target. Walk right out of the dry passage onto Ground A. Current production chamber routing is retained."
+
+[node name="Recess" type="Polygon2D" parent="."]
+z_index = -12
+polygon = PackedVector2Array(-1024, 430, -720, 405, -580, 450, -360, 510, -240, 600, -210, 804, -1024, 804)
+color = Color(0.105, 0.145, 0.16, 1)
+
+[node name="InnerStone" type="Polygon2D" parent="."]
+z_index = -11
+polygon = PackedVector2Array(-1024, 430, -720, 405, -580, 450, -360, 510, -240, 600, -390, 550, -650, 480, -1024, 500)
+color = Color(0.23, 0.255, 0.265, 1)
+
+[node name="RoofStone" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-650, 300)
+scale = Vector2(0.9, 1.05)
+texture = ExtResource("2")
+centered = false
+
+[node name="RearPillar" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-1040, 300)
+scale = Vector2(0.7, 1)
+texture = ExtResource("1")
+centered = false
+
+[node name="RearRoofStone" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(-1190, 290)
+scale = Vector2(0.8, 0.9)
+texture = ExtResource("2")
+centered = false
+
+[node name="LandingArt" parent="." instance=ExtResource("3")]
+position = Vector2(-1000, 804)
+scale = Vector2(1.3, 1)
+z_index = -3
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(-528, 864)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("Floor")
+
+[node name="Roof" type="StaticBody2D" parent="."]
+position = Vector2(-694, 360)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Roof"]
+shape = SubResource("Ceiling")
+
+[node name="ChamberEntrySpawn" type="Marker2D" parent="."]
+position = Vector2(-540, 730)
+gizmo_extents = 36.0

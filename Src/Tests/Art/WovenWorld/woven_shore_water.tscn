@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="1"]
+
+[sub_resource type="RectangleShape2D" id="BasinFloor"]
+size = Vector2(6560, 80)
+
+[node name="ShoreWater" type="Node2D"]
+editor_description = "Move/reshape Lake's polygon to tune the waterline and basin. BasinFloor is the invisible sandbox floor; camera limits keep source-art undersides out of view."
+
+[node name="Lake" parent="." instance=ExtResource("1")]
+position = Vector2(2240, 900)
+lake_presentation = true
+painted_surface = true
+surface_opacity = 0.9
+water_color = Color(0.08, 0.47, 0.55, 0.34)
+immersion_opacity = 0.15
+deep_water_color = Color(0.025, 0.17, 0.22, 1)
+points = PackedVector2Array(-3456, 0, 3280, 0, 3280, 580, -3456, 580)
+
+[node name="BasinFloor" type="StaticBody2D" parent="."]
+position = Vector2(2240, 1384)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="BasinFloor"]
+shape = SubResource("BasinFloor")
+
+[editable path="Lake"]
