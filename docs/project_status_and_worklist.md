@@ -1795,3 +1795,22 @@ Existing editor-settings/cache/shutdown diagnostics remain documented. Exact
 colored-versus-dark selection and production adoption remain open. Task
 checkpoint subject: `art: audition thin material outlines in woven level`.
 Save and checkpoint the manual ground/level edits before changing art tasks.
+
+## November 21 proposed woven shoreline transition
+
+**T49 level direction | Implementation proposal prepared for approval.** Chase
+wants playable water, editor-visible scenery and a left-side chamber exit in
+the woven chunk scene. Use chunks as large landmasses rising from the lake,
+leading toward the Blue rooftops. Reuse existing polygon water/swimming and
+native saved backdrop/light/player/camera nodes. Preserve manual collider and
+placement edits, thin outlines and irregular foliage bases.
+
+The [concrete proposal](design/woven_shore_transition_proposal_2026_11_21.md)
+lists files, the chamber-mouth/entry-spawn layout, initial waterline, swimming
+preview scope and verification. The production chamber's ending/menu route is
+retained for the first audition. Implementation entails scene restructuring;
+AGENTS.md requires explanation, file list and approval before those edits.
+Only documentation has changed. Task checkpoint subject:
+`docs: propose editable woven shoreline transition`.
+Manual scene/ground edits still need a saved, reviewed Git checkpoint before
+another implementation pass; unrelated staging is preserved.
