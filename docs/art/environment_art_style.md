@@ -209,6 +209,14 @@ global outline removal or production shader change is approved by this feedback.
 The reference is archived in
 `ArtSource/Deliveries/WovenWorldChunks/grounding_refinement/chase_ground_a_placement_reference.png`.
 
+Chase subsequently approved an outline audition and reported that thin outlines
+look much better. Prefer the reduced width in this woven-world test. The audition
+halves the existing per-part widths, keeping finer hand/hardware ratios, and
+compares original ink with thin dark and thin material-family colors. Colored
+ink is the current test default; exact dark-versus-colored preference and wider
+production adoption remain open. Preserve the readable sword, shield and limb
+boundaries when evaluating this softer treatment in motion.
+
 The current experiments are test-scene auditions; production adoption and wider
 asset replacement still follow review and approval.
 

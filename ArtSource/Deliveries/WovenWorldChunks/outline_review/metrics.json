@@ -1,0 +1,29 @@
+[
+  {
+    "mode": "ORIGINAL",
+    "near_black_pixels": 1618,
+    "opaque_pixels": 7514,
+    "sample_size": [
+      400,
+      300
+    ]
+  },
+  {
+    "mode": "THIN DARK",
+    "near_black_pixels": 828,
+    "opaque_pixels": 6937,
+    "sample_size": [
+      400,
+      300
+    ]
+  },
+  {
+    "mode": "THIN MATERIAL",
+    "near_black_pixels": 29,
+    "opaque_pixels": 6937,
+    "sample_size": [
+      400,
+      300
+    ]
+  }
+]

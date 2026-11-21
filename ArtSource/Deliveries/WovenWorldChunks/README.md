@@ -19,6 +19,8 @@ Open `res://Src/Tests/Art/WovenWorld/woven_chunk_level.tscn` in Godot and press
 - **R:** return to the start.
 - **V:** compare the original, irregular-base and hanging-rim foliage at the
   middle ground's leaf cluster.
+- **O:** cycle original, thin dark and thin material-colored character outlines.
+  Thin material is the starting mode; the current mode is shown in the heading.
 - Normal movement and jump controls work. The lower route has two ground gaps;
   the optional upper route starts with the existing double jump.
 - Missing a jump returns the player to the current review area without damage.
@@ -78,19 +80,22 @@ before using the kit in production.
 
 ## Verification and review
 
-- **132 headless checks passed:** ten original image/scene deliveries, visible cap
+- **146 headless checks passed:** ten original image/scene deliveries, visible cap
   alignment, full-depth bodies, all nine placed surfaces supporting the actual
   player, both ground gaps, double-jump upper entry, all five upper jump links,
   safe fall reset, three grounded review positions and the contact-shadow checks
-  described below, plus the refinement's top-plane depth and foliage silhouettes.
+  described below, plus the refinement's top-plane depth, foliage silhouettes,
+  outline comparison and exact restoration of original outline materials.
   The older review's fallback player/camera path also passes
   its 37 headless checks; see `base_review_checks.json`.
-- **139 Forward+ checks passed:** the same coverage plus seven 1920 x 1080
-  captures: three route views, airborne shadow, integrated rock top, foliage edge
-  and collision review.
+- **163 Forward+ checks passed:** the same coverage plus thirteen 1920 x 1080
+  captures: three route views, airborne shadow, integrated rock top, foliage edge,
+  collision review and six matched outline comparisons. Render checks verify
+  the requested camera zoom and changes in silhouette area and near-black ink.
   See `gpu_checks.json`, `route_1.png`, `route_2.png`, `route_3.png`,
   `contact_shadow_airborne.png`, `integrated_top_review.png`,
   `foliage_edge_review.png` and `grounding_collision_review.png`.
+  The six outline images and actor-only measurements are in `outline_review/`.
 - The background uses the existing lake/cliff and village artwork. The source
   lake pixels extend through the deeper gaps to remove the previous backdrop's
   horizontal cutoff. No production backdrop image is modified.
@@ -165,3 +170,27 @@ The original image files and Chase's edited scene remain preserved. F6 runs the
 same `woven_chunk_level.tscn`; visual acceptance and production adoption remain
 pending. Current verification used the scene's fallback runtime player/camera
 after Chase removed the authored pair, and confirmed one player and one camera.
+
+## November 21 outline comparison
+
+Chase approved trying thinner, material-colored contours after his placement
+review. He then reported that the thin outline looks much better, establishing
+thin width as the preferred audition direction. The colored treatment remains
+the test default; O keeps all three modes available for comparison while moving.
+
+The comparison uses the current player's actual depth-tested outline shells.
+Thin modes halve each shell's existing width, retaining the finer hand/hardware
+ratios. Material mode uses restrained dark wood, leather, cloth and metal colors.
+Only instance-local material copies change. Original materials restore exactly,
+and newly equipped visual parts receive the selected comparison mode. No player
+renderer source, shader asset or equipment definition is modified.
+
+The test now reads receiving surfaces from the actual collider shapes, so
+Chase's manual Ground A cap adjustment also moves the contact shadow and debug
+line. The grounding check waits for the landing pose to settle. His ground asset
+and scene files remain outside this checkpoint. Current checks include those
+local edits; the cap reader also supports the earlier placement without edits.
+
+See [matched captures and comparison details](outline_review/README.md). Runtime
+production adoption remains a separate step. Editor import emitted its existing
+empty settings-path diagnostic; shader-cache and shutdown diagnostics remain.

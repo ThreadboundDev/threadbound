@@ -9,6 +9,7 @@ const REVIEW_SPAWNS := [Vector2(720, 720), Vector2(2450, 624), Vector2(4540, 688
 const REVIEW_NAMES := ["LAKESIDE APPROACH", "GREEN CANOPY", "UPPER SHELF"]
 const CONTACT_SHADOW := preload("res://Src/Tests/Art/WovenWorld/woven_contact_shadow.gd")
 const REFINEMENT := "res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/"
+const OUTLINE_COMPARISON := preload("res://Src/Tests/Art/WovenWorld/woven_outline_comparison.gd")
 
 var asset_records: Dictionary
 var surfaces: Array[Dictionary] = []
@@ -19,12 +20,15 @@ var foliage_preview: Sprite2D
 var foliage_original_texture: Texture2D
 var foliage_original_offset := Vector2.ZERO
 var foliage_mode := 2
+var outline_comparison: RefCounted
 
 
 func _ready() -> void:
 	asset_records = JSON.parse_string(FileAccess.get_file_as_string(CHUNKS + "asset_metadata.json"))["assets"]
 	super._ready()
 	_apply_grounding_refinement()
+	outline_comparison = OUTLINE_COMPARISON.new()
+	outline_comparison.initialize(player.live_3d_visual)
 	contact_shadow = CONTACT_SHADOW.new()
 	contact_shadow.name = "PlayerContactShadow"
 	contact_shadow.target = player
@@ -32,7 +36,7 @@ func _ready() -> void:
 	add_child(contact_shadow)
 	get_window().title = "Threadbound — Woven Chunk Level"
 	var help := status_label.get_parent().get_child(1) as Label
-	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nV: compare foliage bases    Normal movement and jump controls."
+	help.text = "1 / 2 / 3: review positions    C: collision    R: return to start\nO: compare outlines    V: compare foliage bases    Normal movement and jump controls."
 	_switch_layout(0)
 	if OS.get_cmdline_user_args().has("--verify-woven-chunks"):
 		_verify.call_deferred()
@@ -103,9 +107,12 @@ func _build_terrain() -> void:
 	for piece in $Geometry.get_children():
 		var id: String = piece.get_meta("asset_id")
 		var data: Dictionary = asset_records[id]
+		var shape := piece.get_node("Body/Shape") as CollisionShape2D
+		var cap := shape.shape.get_rect()
+		var left := to_local(shape.to_global(cap.position))
+		var right := to_local(shape.to_global(Vector2(cap.end.x, cap.position.y)))
 		surfaces.append({"id": id, "node": piece, "kind": data.kind,
-			"left": piece.position.x + float(data.surface_left),
-			"right": piece.position.x + float(data.surface_right), "y": piece.position.y})
+			"left": left.x, "right": right.x, "y": left.y})
 	_collision_rect(Rect2(-64, -200, 64, 1600))
 	_collision_rect(Rect2(5304, -200, 64, 1600))
 
@@ -116,6 +123,8 @@ func _build_layouts() -> void:
 
 func _update_label() -> void:
 	status_label.text = "WOVEN CHUNKS  /  " + REVIEW_NAMES[active_layout]
+	if outline_comparison:
+		status_label.text += "  /  " + OUTLINE_COMPARISON.LABELS[outline_comparison.mode]
 	if join_overlay:
 		status_label.text += "  /  COLLISION"
 
@@ -142,6 +151,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		KEY_2: _switch_layout(1)
 		KEY_3: _switch_layout(2)
 		KEY_R: _switch_layout(0)
+		KEY_O:
+			outline_comparison.set_mode(outline_comparison.mode + 1)
+			_update_label()
 		KEY_V:
 			foliage_mode = (foliage_mode + 1) % 3
 			_update_foliage_preview()
@@ -263,15 +275,17 @@ func _verify() -> void:
 			await _physics_frames(3)
 	# Shadow remains on ground during flight and clips at unsupported edges.
 	await _put_player_at(Vector2(720, 730))
-	await _physics_frames(15)
+	# Allow the landing pose to finish before judging planted sole contact.
+	await _physics_frames(45)
 	var grounded_opacity: float = contact_shadow.main.modulate.a
 	_check(grounded_opacity > 0.4, "Grounded shadow has the stronger contact opacity.")
 	_check(contact_shadow._foot_points().size() == 2, "Contact marks use both animated feet.")
 	var foot_offsets: Array[float] = []
+	var ground_a := _surface_named("GroundA")
 	var visible_contacts := 0
 	var points: PackedVector2Array = contact_shadow._foot_points()
 	for index in points.size():
-		foot_offsets.append(points[index].y - 800)
+		foot_offsets.append(points[index].y - float(ground_a.y))
 		if contact_shadow.contacts[index].visible:
 			visible_contacts += 1
 			_check(absf(contact_shadow.contacts[index].global_position.y - points[index].y - 2) < 0.1, "Dense contact follows sole depth inside the top plane.")
@@ -280,12 +294,11 @@ func _verify() -> void:
 	await _put_player_at(Vector2(720, 550))
 	await _physics_frames(3)
 	_check(contact_shadow.main.visible and contact_shadow.main.modulate.a < grounded_opacity, "Airborne shadow fades while remaining on the ground.")
-	_check(absf(contact_shadow.main.global_position.y - 802) < 0.5, "Airborne shadow does not rise with the character.")
+	_check(absf(contact_shadow.main.global_position.y - float(ground_a.y) - 2) < 0.5, "Airborne shadow does not rise with the character.")
 	await _capture_view("contact_shadow_airborne.png")
 	await _put_player_at(Vector2(1516, 730))
 	await _physics_frames(15)
 	_check(contact_shadow.receiver.node.name == &"GroundA", "Shadow ignores a platform above the character.")
-	var ground_a := _surface_named("GroundA")
 	await _put_player_at(Vector2(ground_a.right - 4, ground_a.y - 70))
 	await _physics_frames(5)
 	_check(contact_shadow.main.visible and contact_shadow.clipped_right <= float(ground_a.right), "Shadow clips to the cliff edge.")
@@ -342,6 +355,7 @@ func _verify() -> void:
 	var reset_before := fall_resets
 	await _physics_frames(45)
 	_check(fall_resets > reset_before and not player.is_dead, "Gap fall safely returns the real player.")
+	await _verify_outline_comparison()
 	for zone in 3:
 		_switch_layout(zone)
 		await _physics_frames(45)
@@ -363,6 +377,8 @@ func _verify() -> void:
 	queue_redraw()
 	await get_tree().process_frame
 	await _capture_view("grounding_collision_review.png")
+	outline_comparison.release()
+	_check(outline_comparison.originals.is_empty(), "Verification releases temporary outline materials after restoring originals.")
 	var result := {"checks": check_count, "failures": failures, "renderer": RenderingServer.get_current_rendering_method(), "surface_count": surfaces.size(), "platform_sizes": platform_widths.keys(), "player_model": player.live_3d_visual.model_scene.resource_path}
 	var file := FileAccess.open(CHUNK_DELIVERY + "godot_checks.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(result, "  ") + "\n")
@@ -372,3 +388,94 @@ func _verify() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	get_tree().quit(0 if failures.is_empty() else 1)
+
+
+func _verify_outline_comparison() -> void:
+	var visual: Node = player.live_3d_visual
+	var original_width: float = visual.object_outline_width
+	outline_comparison.set_mode(0)
+	_check(not outline_comparison.originals.is_empty(), "Comparison found the actual character's outline shells.")
+	var source_widths: Dictionary = {}
+	for id in outline_comparison.originals:
+		var record: Dictionary = outline_comparison.originals[id]
+		source_widths[id] = record.material.get_shader_parameter("outline_source_pixels")
+	for mode in [1, 2, 0]:
+		outline_comparison.set_mode(mode)
+		var widths_ok := true
+		var colors_ok := true
+		var sources_ok := true
+		for id in source_widths:
+			var record: Dictionary = outline_comparison.originals[id]
+			var shell: MeshInstance3D = record.shell.get_ref()
+			var material := shell.material_override as ShaderMaterial
+			var width: float = material.get_shader_parameter("outline_source_pixels")
+			widths_ok = widths_ok and is_equal_approx(width, float(source_widths[id]) * (1.0 if mode == 0 else OUTLINE_COMPARISON.WIDTH_SCALE))
+			sources_ok = sources_ok and is_equal_approx(float(record.material.get_shader_parameter("outline_source_pixels")), float(source_widths[id]))
+			if mode == 0:
+				sources_ok = sources_ok and material == record.material
+			elif mode == 2:
+				colors_ok = colors_ok and material.get_shader_parameter("outline_color") == record.color
+		_check(widths_ok, "Outline mode %d preserves relative detail widths." % mode)
+		_check(sources_ok, "Outline mode %d leaves originals intact and restores them exactly." % mode)
+		_check(colors_ok, "Outline mode %d uses its selected ink treatment." % mode)
+	_check(is_equal_approx(visual.object_outline_width, original_width), "Comparison keeps the production renderer's width setting unchanged.")
+	outline_comparison.set_mode(2)
+	_switch_layout(0)
+	await _physics_frames(45)
+	_check(player.is_on_floor(), "Outline comparison retains Ground A floor contact.")
+	_check(absf(contact_shadow.main.global_position.y - float(_surface_named("GroundA").y) - 2) < 0.5, "Contact shadow follows the edited collider cap.")
+	if DisplayServer.get_name() == "headless":
+		return
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(CHUNK_DELIVERY + "outline_review"))
+	# Freeze the entire live pose for matched comparisons; only shell materials
+	# and the explanatory label change between images.
+	var old_camera_mode := camera.process_mode
+	camera.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().paused = true
+	var old_zoom := camera.zoom
+	var old_position := camera.position
+	var ink_metrics: Array[Dictionary] = []
+	for zoom in [1.0, 2.0]:
+		camera.zoom = Vector2.ONE * zoom
+		camera.position.y = 540 if zoom == 1 else 760
+		if zoom == 2:
+			camera.position.x = player.position.x
+		camera.reset_physics_interpolation()
+		await _physics_frames(3)
+		camera.force_update_scroll()
+		_check(is_equal_approx(get_viewport().canvas_transform.get_scale().x, zoom), "Comparison capture uses the requested %.1fx camera zoom." % zoom)
+		for mode in 3:
+			outline_comparison.set_mode(mode)
+			_update_label()
+			await get_tree().process_frame
+			await _capture_view("outline_review/%s_%d.png" % ["gameplay" if zoom == 1 else "close", mode])
+			if zoom == 1:
+				ink_metrics.append(_outline_ink_metrics())
+	_check(int(ink_metrics[0].opaque_pixels) > int(ink_metrics[1].opaque_pixels), "Rendered thin outline reduces the expanded silhouette area.")
+	_check(int(ink_metrics[2].near_black_pixels) < int(ink_metrics[1].near_black_pixels), "Rendered material ink reduces near-black pixels at the same thin width.")
+	var metrics_file := FileAccess.open(CHUNK_DELIVERY + "outline_review/metrics.json", FileAccess.WRITE)
+	metrics_file.store_string(JSON.stringify(ink_metrics, "  ") + "\n")
+	metrics_file.close()
+	camera.zoom = old_zoom
+	camera.position = old_position
+	camera.force_update_scroll()
+	get_tree().paused = false
+	camera.process_mode = old_camera_mode
+	outline_comparison.set_mode(2)
+	_update_label()
+
+
+func _outline_ink_metrics() -> Dictionary:
+	var viewport: SubViewport = player.live_3d_visual.get("_viewport")
+	var image := viewport.get_texture().get_image()
+	image.resize(400, 300, Image.INTERPOLATE_NEAREST)
+	var opaque := 0
+	var near_black := 0
+	for y in image.get_height():
+		for x in image.get_width():
+			var pixel := image.get_pixel(x, y)
+			if pixel.a > 0.8:
+				opaque += 1
+				if maxf(pixel.r, maxf(pixel.g, pixel.b)) < 0.1:
+					near_black += 1
+	return {"mode": OUTLINE_COMPARISON.LABELS[outline_comparison.mode], "sample_size": [400, 300], "opaque_pixels": opaque, "near_black_pixels": near_black}

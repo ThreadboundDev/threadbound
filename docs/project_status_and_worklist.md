@@ -1768,3 +1768,30 @@ preserved outside this commit. Existing automated reports predate that manual
 edit; this update only records feedback and requires no runtime test. Task
 checkpoint subject: `docs: record grounded placement and prop edge feedback`.
 Save and checkpoint the manual scene/collider changes before another art pass.
+
+## November 21 thin-outline audition
+
+**T49 refinement | Thin width preferred by Chase; ink comparison available.**
+Chase approved trying thinner/material-colored character outlines and then
+reported that the thin treatment looks much better. The woven chunk test now
+starts in thin material mode. O cycles original, thin dark and thin material;
+V retains the foliage comparison. Main contours use half their original width,
+retaining finer hand/hardware ratios and depth-tested per-object silhouettes.
+
+The helper changes only instance-local outline material copies, restores the
+originals exactly and handles newly loaded equipment visuals. Production player
+source, shader assets and equipment definitions remain unchanged. The shadow
+and collision overlay now read actual collider caps, including Chase's manual
+Ground A adjustment; his ground asset and level edits remain uncommitted and
+untouched. Ground-contact verification waits for the landing pose to settle.
+
+Validation: 146 headless and 163 Forward+ checks passed with thirteen current
+captures, including six matched outline views at verified 1x/2x zoom. Actor-only
+render measurements confirm reduced silhouette area with thin width and fewer
+near-black pixels with colored ink. Six CFG hashes and the user-edited player,
+renderer, Ground A and level files remain unchanged. See
+[comparison and measurements](../ArtSource/Deliveries/WovenWorldChunks/outline_review/README.md).
+Existing editor-settings/cache/shutdown diagnostics remain documented. Exact
+colored-versus-dark selection and production adoption remain open. Task
+checkpoint subject: `art: audition thin material outlines in woven level`.
+Save and checkpoint the manual ground/level edits before changing art tasks.
