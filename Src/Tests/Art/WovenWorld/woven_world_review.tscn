@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_world_review.gd" id="1"]
+
+[node name="WovenWorldReview" type="Node2D"]
+editor_description = "F6: small woven low-poly kit in two arrangements, using the unchanged real player. 1/2 switch views, T shows terrain joins, R resets. Art audition only."
+script = ExtResource("1")

@@ -1652,3 +1652,27 @@ For listed `.gd` scripts that extend `SceneTree`, use Godot's `--headless --path
 - [Bellstriker revisions](art/bellstriker_v1.md)
 - [Approved ecosystem prototype direction](design/blue_swordfish_ecosystem_and_environmental_combat.md)
 - [September checkpoint validation](checkpoint_2026_09_26.md)
+
+## November 20 woven low-poly world audition
+
+**T49 | Awaiting hands-on review.** Chase approved exploring low-poly forms with
+woven directional surface lines and authorized a small reusable test kit in-game.
+This is the current scoped art audition; existing production priorities retain
+their acceptance state.
+
+The delivery contains one tree, green and blossom foliage, three rock shapes,
+and a three-cell collision-free terrain TileSet (two top variants and fill).
+`Src/Tests/Art/WovenWorld/woven_world_review.tscn` reuses all six stamps in two
+arrangements with the actual modular wooden player and existing lake backdrops.
+F6 runs the test; 1/2 switch views, T exposes joins, R resets. No production art
+is replaced. Numerical checks pass: 37 headless, 40 Forward+, eight exact RGBA
+terrain boundary comparisons and unchanged hashes for six save/settings files.
+Actual 1920 x 1080 rendered views, full prompts, sources and preparation tools
+are in [the delivery](../ArtSource/Deliveries/WovenWorldTestKit/README.md).
+
+Review the woven detail at gameplay size, doll/environment fit, moss/boot
+contact and visible repetition/blend bands. The three-cell terrain is a proof,
+not a complete slope/corner autotile set. Godot's shader-cache permission and
+shutdown resource/RID diagnostics remain recorded limitations. Visual acceptance
+and production adoption are pending Chase's review. Task checkpoint subject:
+`art: add woven world test kit and review scene`.

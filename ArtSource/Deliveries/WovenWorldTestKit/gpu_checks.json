@@ -1,0 +1,6 @@
+{
+  "checks": 40,
+  "failures": [],
+  "player_model": "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb",
+  "renderer": "forward_plus"
+}

@@ -1,0 +1,99 @@
+{
+  "assets": [
+    {
+      "corner_alpha": 0,
+      "width": 1239,
+      "height": 1200,
+      "id": "tree",
+      "source_alpha_bounds": [
+        21,
+        29,
+        1212,
+        1174
+      ]
+    },
+    {
+      "corner_alpha": 0,
+      "width": 759,
+      "height": 280,
+      "id": "foliage_green",
+      "source_alpha_bounds": [
+        69,
+        235,
+        1380,
+        509
+      ]
+    },
+    {
+      "corner_alpha": 0,
+      "width": 744,
+      "height": 400,
+      "id": "foliage_blossom",
+      "source_alpha_bounds": [
+        20,
+        81,
+        1482,
+        797
+      ]
+    },
+    {
+      "corner_alpha": 0,
+      "width": 595,
+      "height": 300,
+      "id": "rock_low",
+      "source_alpha_bounds": [
+        235,
+        265,
+        1053,
+        531
+      ]
+    },
+    {
+      "corner_alpha": 0,
+      "width": 878,
+      "height": 240,
+      "id": "rock_wide",
+      "source_alpha_bounds": [
+        93,
+        240,
+        1584,
+        433
+      ]
+    },
+    {
+      "corner_alpha": 0,
+      "width": 329,
+      "height": 500,
+      "id": "rock_tall",
+      "source_alpha_bounds": [
+        61,
+        83,
+        902,
+        1372
+      ]
+    }
+  ],
+  "terrain": {
+    "border_max_channel_difference": {
+      "top_a_to_fill": 0,
+      "top_b_to_fill": 0,
+      "top_b_to_b": 0,
+      "fill_below_fill": 0,
+      "top_a_to_b": 0,
+      "fill_to_fill": 0,
+      "top_a_to_a": 0,
+      "top_b_to_a": 0
+    },
+    "cell": 256,
+    "source_alpha_bounds": [
+      100,
+      217,
+      1974,
+      281
+    ],
+    "atlas": [
+      768,
+      256
+    ]
+  }
+}

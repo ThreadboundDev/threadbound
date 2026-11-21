@@ -1,0 +1,4 @@
+*.log
+*.pid
+user_data_before.json
+godot_checks.json
