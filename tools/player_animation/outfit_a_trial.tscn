@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn" id="1"]
+[ext_resource type="Script" path="res://tools/player_animation/outfit_a_trial.gd" id="2"]
+
+[node name="COTFW - Outfit A Trial" instance=ExtResource("1")]
+
+[node name="Live3DVisual" parent="Player" index="0"]
+script = ExtResource("2")
+
+[editable path="Player"]
