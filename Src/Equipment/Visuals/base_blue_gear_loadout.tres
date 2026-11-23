@@ -6,8 +6,7 @@
 script = ExtResource("1")
 item_id = &"base_fitted_gloves"
 slot = "gloves"
-model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_bracers_b.glb")
-hidden_body_meshes = PackedStringArray("Doll_Covered_Gloves")
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_grapple_glove.glb")
 grapple_origin = Vector3(0.00819219, 0.23383948, -0.04061319)
 
 [sub_resource type="Resource" id="Item1"]
@@ -21,7 +20,7 @@ hidden_body_meshes = PackedStringArray("Doll_Covered_Boots")
 script = ExtResource("1")
 item_id = &"base_fitted_head_chest"
 slot = "head_chest"
-model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_outfit_b.glb")
+model_paths = PackedStringArray("res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_outfit_a.glb")
 hidden_body_meshes = PackedStringArray("Doll_Covered_HeadChest")
 
 [sub_resource type="Resource" id="Item3"]
