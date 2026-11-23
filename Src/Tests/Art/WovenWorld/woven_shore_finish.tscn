@@ -1,0 +1,371 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_route_interaction.gd" id="interaction"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/farmstead.png" id="farmstead"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/terraces.png" id="terraces"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/gate.png" id="gate"]
+
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="light"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/foliage_rim.png" id="rim"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/tree_alt.png" id="tree"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldTestKit/rock_wide.png" id="rock"]
+
+[ext_resource type="PackedScene" path="res://Src/Enemies/EaveRunner/eave_runner.tscn" id="runner"]
+
+[ext_resource type="PackedScene" path="res://Src/Enemies/LoomHeron/loom_heron.tscn" id="heron"]
+
+[sub_resource type="RectangleShape2D" id="Reach"]
+size = Vector2(158, 184)
+
+[sub_resource type="LabelSettings" id="Prompt"]
+font_size = 19
+font_color = Color(0.96, 0.95, 0.84, 1)
+outline_size = 8
+outline_color = Color(0.065, 0.12, 0.15, 0.98)
+
+[node name="ShoreFinish" type="Node2D"]
+
+[node name="FarmFields" type="Parallax2D" parent="."]
+z_index = -9
+scroll_scale = Vector2(0.78, 0.98)
+
+[node name="WestPaddies" type="Sprite2D" parent="FarmFields"]
+position = Vector2(3410, 492)
+scale = Vector2(0.63, 0.39)
+texture = ExtResource("terraces")
+centered = false
+modulate = Color(0.75, 0.87, 0.85, 1)
+
+[node name="EastPaddies" type="Sprite2D" parent="FarmFields"]
+position = Vector2(4560, 411)
+scale = Vector2(0.82, 0.47)
+texture = ExtResource("terraces")
+centered = false
+flip_h = true
+modulate = Color(0.78, 0.89, 0.86, 1)
+
+[node name="FarmOutpost" type="Sprite2D" parent="."]
+position = Vector2(3955, 383)
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("farmstead")
+centered = false
+z_index = -7
+
+[node name="RooftopWaystation" type="Sprite2D" parent="."]
+position = Vector2(4784, 470)
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("farmstead")
+centered = false
+flip_h = true
+z_index = -7
+
+[node name="Foreground" type="Parallax2D" parent="."]
+z_index = 6
+scroll_scale = Vector2(1.15, 1.04)
+
+[node name="DarkLeavesWest" type="Sprite2D" parent="Foreground"]
+position = Vector2(257, 959)
+scale = Vector2(0.67, 0.72)
+texture = ExtResource("rim")
+centered = false
+modulate = Color(0.13, 0.24, 0.27, 1)
+
+[node name="DarkLeavesEast" type="Sprite2D" parent="Foreground"]
+position = Vector2(4305, 976)
+scale = Vector2(0.78, 0.75)
+texture = ExtResource("rim")
+centered = false
+flip_h = true
+modulate = Color(0.15, 0.28, 0.30, 1)
+
+[node name="NearBough" type="Sprite2D" parent="Foreground"]
+position = Vector2(-1660, -608)
+scale = Vector2(1.12, 1.15)
+texture = ExtResource("tree")
+centered = false
+modulate = Color(0.20, 0.28, 0.28, 1)
+
+[node name="FoundationsReeds" type="Sprite2D" parent="."]
+position = Vector2(3280, 1289)
+scale = Vector2(0.43, 0.42)
+texture = ExtResource("rim")
+centered = false
+modulate = Color(0.52, 0.73, 0.67, 1)
+z_index = -2
+
+[node name="CulvertFoundation" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(3261, 1340)
+scale = Vector2(0.50, 0.88)
+texture = ExtResource("rock")
+modulate = Color(0.56, 0.79, 0.80, 1)
+centered = false
+
+[node name="FarmLantern" type="PointLight2D" parent="."]
+position = Vector2(4453, 627)
+texture = ExtResource("light")
+texture_scale = 1.15
+color = Color(1, 0.69, 0.34, 1)
+energy = 0.49
+range_item_cull_mask = 3
+
+[node name="RooftopLantern" type="PointLight2D" parent="."]
+position = Vector2(5028, 652)
+texture = ExtResource("light")
+texture_scale = 0.86
+color = Color(1, 0.72, 0.38, 1)
+energy = 0.44
+range_item_cull_mask = 3
+
+[node name="CaveDaybreak" type="PointLight2D" parent="."]
+position = Vector2(-350, 612)
+texture = ExtResource("light")
+texture_scale = 1.6
+color = Color(1, 0.78, 0.50, 1)
+energy = 0.44
+range_item_cull_mask = 3
+
+[node name="Encounters" type="Node2D" parent="."]
+
+[node name="ShorePatrol" parent="Encounters" instance=ExtResource("runner")]
+position = Vector2(2850, 705)
+
+[node name="TerraceHeron" parent="Encounters" instance=ExtResource("heron")]
+position = Vector2(4270, 208)
+
+[node name="WestSluice" type="Area2D" parent="."]
+position = Vector2(1065, 738)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "Open sluice"
+
+[node name="Reach" type="CollisionShape2D" parent="WestSluice"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="WestSluice"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
+
+[node name="Pedestal" type="Polygon2D" parent="WestSluice"]
+polygon = PackedVector2Array(-27, 66, -23, 0, -13, -16, 17, -13, 26, 65)
+color = Color(0.27, 0.33, 0.35, 1)
+
+[node name="Front" type="Polygon2D" parent="WestSluice"]
+polygon = PackedVector2Array(-21, 65, -17, 2, 15, 4, 20, 65)
+color = Color(0.36, 0.40, 0.38, 1)
+
+[node name="Valve" type="Polygon2D" parent="WestSluice"]
+polygon = PackedVector2Array(0, -23, 15, -6, 0, 11, -15, -6)
+color = Color(1, 0.68, 0.31, 1)
+
+[node name="Glow" type="PointLight2D" parent="WestSluice"]
+position = Vector2(0, -6)
+texture = ExtResource("light")
+texture_scale = 0.67
+color = Color(1, 0.73, 0.44, 1)
+energy = 0.41
+range_item_cull_mask = 3
+
+[node name="EastSluice" type="Area2D" parent="."]
+position = Vector2(4210, 717)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "Open sluice"
+
+[node name="Reach" type="CollisionShape2D" parent="EastSluice"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="EastSluice"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
+
+[node name="Pedestal" type="Polygon2D" parent="EastSluice"]
+polygon = PackedVector2Array(-27, 66, -23, 0, -13, -16, 17, -13, 26, 65)
+color = Color(0.27, 0.33, 0.35, 1)
+
+[node name="Front" type="Polygon2D" parent="EastSluice"]
+polygon = PackedVector2Array(-21, 65, -17, 2, 15, 4, 20, 65)
+color = Color(0.36, 0.40, 0.38, 1)
+
+[node name="Valve" type="Polygon2D" parent="EastSluice"]
+polygon = PackedVector2Array(0, -23, 15, -6, 0, 11, -15, -6)
+color = Color(1, 0.68, 0.31, 1)
+
+[node name="Glow" type="PointLight2D" parent="EastSluice"]
+position = Vector2(0, -6)
+texture = ExtResource("light")
+texture_scale = 0.67
+color = Color(1, 0.73, 0.44, 1)
+energy = 0.41
+range_item_cull_mask = 3
+
+[node name="VillageRoad" type="Area2D" parent="."]
+position = Vector2(5155, 709)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "To Village Rooftops"
+destination = "res://Src/Tests/Art/WovenWorld/woven_landing_rooftops.tscn"
+return_anchor = &"VillageRoad"
+
+[node name="Reach" type="CollisionShape2D" parent="VillageRoad"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="VillageRoad"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
+
+[node name="Post" type="Polygon2D" parent="VillageRoad"]
+polygon = PackedVector2Array(-51, 78, -49, -52, -40, -55, -39, 78)
+color = Color(0.37, 0.26, 0.17, 1)
+
+[node name="Direction" type="Polygon2D" parent="VillageRoad"]
+polygon = PackedVector2Array(-83, -56, -6, -60, 12, -46, -6, -30, -83, -31)
+color = Color(0.18, 0.29, 0.45, 1)
+
+[node name="Arrow" type="Line2D" parent="VillageRoad"]
+points = PackedVector2Array(-69, -45, -11, -45, -21, -52, -11, -45, -21, -38)
+width = 3.0
+default_color = Color(0.93, 0.73, 0.42, 1)
+
+[node name="FloodedCulvert" type="Area2D" parent="."]
+position = Vector2(3468, 1232)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "Enter Flooded Cistern"
+destination = "res://Src/Tests/Art/WovenWorld/woven_landing_cistern.tscn"
+requires_water = true
+return_anchor = &"FloodedCulvert"
+
+[node name="Reach" type="CollisionShape2D" parent="FloodedCulvert"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="FloodedCulvert"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
+
+[node name="Arch" type="Sprite2D" parent="FloodedCulvert"]
+position = Vector2(-173, -155)
+scale = Vector2(0.265, 0.265)
+texture = ExtResource("gate")
+centered = false
+z_index = -2
+
+[node name="Glow" type="PointLight2D" parent="FloodedCulvert"]
+position = Vector2(0, 14)
+texture = ExtResource("light")
+texture_scale = 1.18
+color = Color(0.29, 0.87, 1, 1)
+energy = 0.65
+range_item_cull_mask = 3
+
+[node name="UpperGate" type="Area2D" parent="."]
+position = Vector2(4680, 327)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "To Waterfall Lookout"
+destination = "res://Src/Tests/Art/WovenWorld/woven_landing_lookout.tscn"
+required_sluices = 2
+return_anchor = &"UpperGate"
+
+[node name="Reach" type="CollisionShape2D" parent="UpperGate"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="UpperGate"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
+
+[node name="Arch" type="Sprite2D" parent="UpperGate"]
+position = Vector2(-172, -225)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("gate")
+centered = false
+modulate = Color(0.93, 0.88, 0.73, 1)
+z_index = -1
+
+[node name="Latch" type="Polygon2D" parent="UpperGate"]
+polygon = PackedVector2Array(-55, -41, -39, -76, -12, -95, 18, -87, 40, -65, 54, -29, 50, 60, -54, 60)
+color = Color(0.17, 0.20, 0.21, 1)
+
+[node name="Crossbar" type="Polygon2D" parent="UpperGate/Latch"]
+polygon = PackedVector2Array(-53, -15, 53, -28, 51, -9, -53, 4)
+color = Color(0.54, 0.36, 0.22, 1)
+
+[node name="Grain" type="Line2D" parent="UpperGate/Latch"]
+points = PackedVector2Array(-38, -65, -40, 57, -18, 57, -16, -85, 8, -88, 7, 57, 29, 57, 31, -71)
+width = 2.0
+default_color = Color(0.36, 0.40, 0.37, 1)
+
+[node name="SluiceSeal" type="Polygon2D" parent="UpperGate/Latch"]
+polygon = PackedVector2Array(0, -32, 17, -12, 0, 7, -17, -12)
+color = Color(0.91, 0.65, 0.32, 1)
+
+[node name="Glow" type="PointLight2D" parent="UpperGate"]
+position = Vector2(0, 1)
+texture = ExtResource("light")
+texture_scale = 1.18
+color = Color(0.98, 0.60, 0.25, 1)
+energy = 0.5
+range_item_cull_mask = 3
+
+[connection signal="sluice_opened" from="WestSluice" to="UpperGate" method="register_sluice"]
+[connection signal="sluice_opened" from="EastSluice" to="UpperGate" method="register_sluice"]

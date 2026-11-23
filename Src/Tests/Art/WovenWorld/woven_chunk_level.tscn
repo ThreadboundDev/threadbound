@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dkxkpshgbsege" path="res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/foliage_rim.png" id="rim_foliage"]
 [ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_shore_backdrop.tscn" id="shore_backdrop"]
 [ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_shore_water.tscn" id="shore_water"]
+[ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_shore_finish.tscn" id="shore_finish"]
 
 [sub_resource type="Gradient" id="DaylightGradient"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -31,7 +32,7 @@ gradient = SubResource("DaylightGradient")
 size = Vector2(64, 2048)
 
 [node name="WovenChunkLevel" type="Node2D" unique_id=1698643409]
-editor_description = "Editable shoreline audition: chamber mouth at left, swimmable gaps between landmasses, Blue rooftop approach at right. Saved backdrop/water/light/player/camera. F6 play; R entry; 1/2/3 islands; O outlines; V foliage; C collision."
+editor_description = "Woven shoreline. Leave the cavern on the left and explore the farm road, flooded cistern and two-sluice lookout gate. F6 play."
 script = ExtResource("1")
 
 [node name="Geometry" type="Node2D" parent="." unique_id=979140875]
@@ -158,11 +159,16 @@ scale = Vector2(0.55, 0.55)
 
 [node name="ShoreWater" parent="." unique_id=1158876007 instance=ExtResource("shore_water")]
 
+[node name="Lake" parent="ShoreWater" index="0"]
+points = PackedVector2Array(-3456, 0, 3280, 0, 3298, 1230, -3453, 1234)
+
 [node name="CollisionPolygon2D" parent="ShoreWater/Lake" index="0"]
 self_modulate = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-3280, 0, 3280, 0, 3280, 580, -3280, 580)
+polygon = PackedVector2Array(-3456, 0, 3280, 0, 3298, 1230, -3453, 1234)
 
 [node name="ChamberMouth" parent="." unique_id=1548386122 instance=ExtResource("chamber_mouth")]
+
+[node name="ShoreFinish" parent="." instance=ExtResource("shore_finish")]
 
 [node name="ReviewDaylight" type="PointLight2D" parent="." unique_id=1648139001]
 position = Vector2(2240, 540)
@@ -197,11 +203,6 @@ collision_mask = 0
 
 [node name="Shape" type="CollisionShape2D" parent="RightBoundary" unique_id=1714485418]
 shape = SubResource("Boundary")
-
-[node name="RooftopApproach" type="Marker2D" parent="." unique_id=1531304319]
-editor_description = "Right-hand handoff toward Blue rooftops. Future production room connection; this marker changes no demo/menu routing."
-position = Vector2(5150, 700)
-gizmo_extents = 48.0
 
 [editable path="Geometry/GroundA"]
 [editable path="Geometry/GroundB"]

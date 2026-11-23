@@ -3,8 +3,7 @@ extends "res://Src/Tests/Art/WovenWorld/woven_world_review.gd"
 ## Geometry and decorations are native authored placeables in the companion scene.
 
 const CHUNKS := "res://Assets/BlueBiome/Art/WovenWorldChunks/"
-const CHUNK_DELIVERY := "res://ArtSource/Deliveries/WovenWorldChunks/shore_transition/"
-const ROUTE_WIDTH := 5504.0
+const CHUNK_DELIVERY := "res://ArtSource/Deliveries/WovenWorldChunks/shore_finish/"
 const REVIEW_SPAWNS := [Vector2(720, 720), Vector2(2450, 624), Vector2(4540, 688)]
 const REVIEW_NAMES := ["LAKESIDE APPROACH", "GREEN CANOPY", "UPPER SHELF"]
 const CONTACT_SHADOW := preload("res://Src/Tests/Art/WovenWorld/woven_contact_shadow.gd")
@@ -39,11 +38,14 @@ func _ready() -> void:
 	contact_shadow.target = player
 	contact_shadow.receivers = surfaces
 	add_child(contact_shadow)
-	get_window().title = "Threadbound — Woven Chunk Level"
+	get_window().title = "Threadbound — Woven Shore"
 	var help := status_label.get_parent().get_child(1) as Label
 	help.text = "1 / 2 / 3: islands    C: collision    R: chamber entry\nO: outlines    V: foliage    Normal movement / swimming controls."
 	_go_chamber_entry()
+	_resume_shore_route()
 	if OS.get_cmdline_user_args().has("--verify-woven-chunks"):
+		# Traversal checks and matched art captures need repeatable poses.
+		$ShoreFinish/Encounters.queue_free()
 		_verify.call_deferred()
 
 
@@ -96,7 +98,7 @@ func _build_layouts() -> void:
 
 
 func _update_label() -> void:
-	status_label.text = "WOVEN CHUNKS  /  " + REVIEW_NAMES[active_layout]
+	status_label.text = "WOVEN SHORE  /  " + REVIEW_NAMES[active_layout]
 	if outline_comparison:
 		status_label.text += "  /  " + OUTLINE_COMPARISON.LABELS[outline_comparison.mode]
 	if join_overlay:
@@ -152,6 +154,27 @@ func _go_chamber_entry() -> void:
 	_switch_layout(0)
 	player.global_position = $ChamberMouth/ChamberEntrySpawn.global_position
 	player.reset_physics_interpolation()
+
+
+func _resume_shore_route() -> void:
+	if not get_tree().has_meta(&"woven_shore_return"):
+		return
+	var saved: Dictionary = get_tree().get_meta(&"woven_shore_return")
+	get_tree().remove_meta(&"woven_shore_return")
+	var route: StringName = saved.anchor
+	var portal := $ShoreFinish.get_node_or_null(NodePath(String(route))) as Area2D
+	if not portal:
+		return
+	player.global_position = portal.global_position + Vector2(-90 if route != &"FloodedCulvert" else 0, 0)
+	player.reset_physics_interpolation()
+	if saved.sluices[0]:
+		$ShoreFinish/WestSluice.open_sluice()
+	if saved.sluices[1]:
+		$ShoreFinish/EastSluice.open_sluice()
+
+
+func get_sluice_state() -> Array[bool]:
+	return [$ShoreFinish/WestSluice.opened, $ShoreFinish/EastSluice.opened]
 
 
 func _draw() -> void:

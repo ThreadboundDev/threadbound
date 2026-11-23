@@ -1842,3 +1842,13 @@ legacy glove helper's missing Swim_Idle message remain documented. Entrance
 art polish, water/composition acceptance and live room connections remain for
 review. Task checkpoint subject:
 `level: add editable woven shoreline and chamber entrance`.
+
+## November 23 Woven Shore and Outfit A
+
+**T49 shoreline level | Playable finish delivered for hands-on review.** Outfit A and the Blender-fitted grapple glove replace the two fitted base visuals at checkpoint `b22443a3`. Existing equipped item IDs and Blue variant indices carry through.
+
+The saved level opens under the woven cavern mouth and runs east past reflective water, rice terraces, two indigo farm shelters, and the dormant falls. The Eave Runner patrols the middle island and the Loom Heron guards the upper approach. Trees and foliage follow the existing faceted weave style. The existing village panorama and water rendering support the editable parallax, lighting and swim route.
+
+The east road leads to the Village Rooftops landing. The second gap's underwater arch leads to the Flooded Cistern landing. Two sluices release the high gate to the Waterfall Lookout landing. Each uses the Interact action and offers a return to the shore. Sluice progress carries during the visit. The destination landings establish the room handoffs, with broader expansion and the production demo connection reserved for later.
+
+The Godot checks passed on the development checkout. Traversal passed 179 headless and 201 rendered checks. The separate interaction suite passed 20 headless and 29 rendered checks, including all six scene changes and the lock sequence. Final captures, the generated PNGs and the full image prompts are recorded in the [Woven Shore delivery](../ArtSource/Deliveries/WovenWorldChunks/shore_finish/README.md). Task checkpoint subject is `level: finish woven shore and connect three routes`.

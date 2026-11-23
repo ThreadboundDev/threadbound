@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/far_sky_cliffs.png" id="1"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/near_lake_village.png" id="2"]
+[ext_resource type="Shader" path="res://Src/Tests/Art/WovenWorld/woven_village_edge_fade.gdshader" id="3"]
+
+[sub_resource type="ShaderMaterial" id="VillageFade"]
+shader = ExtResource("3")
 
 [sub_resource type="AtlasTexture" id="Sky"]
 atlas = ExtResource("1")
@@ -21,14 +25,14 @@ editor_description = "Saved editor-visible backdrop. Select individual sky, lake
 scroll_scale = Vector2(0.12, 0.08)
 
 [node name="SkyCliffs" type="Sprite2D" parent="SkyAndLake"]
-position = Vector2(-1400, -200)
-scale = Vector2(3.6, 1.40625)
+position = Vector2(-1120, -200)
+scale = Vector2(1.58, 1.40625)
 texture = SubResource("Sky")
 centered = false
 
 [node name="DistantLake" type="Sprite2D" parent="SkyAndLake"]
-position = Vector2(-1400, 700)
-scale = Vector2(3.6, 17)
+position = Vector2(-1120, 700)
+scale = Vector2(1.58, 17)
 texture = SubResource("Lake")
 centered = false
 
@@ -36,18 +40,21 @@ centered = false
 scroll_scale = Vector2(0.22, 0.12)
 
 [node name="WestVillage" type="Sprite2D" parent="Village"]
+material = SubResource("VillageFade")
 position = Vector2(-1000, 363)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2")
 centered = false
 
 [node name="MiddleVillage" type="Sprite2D" parent="Village"]
+material = SubResource("VillageFade")
 position = Vector2(1600, 363)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2")
 centered = false
 
 [node name="EastVillage" type="Sprite2D" parent="Village"]
+material = SubResource("VillageFade")
 position = Vector2(4200, 363)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2")

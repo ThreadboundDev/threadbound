@@ -1,0 +1,132 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_route_landing.gd" id="landing"]
+
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_route_interaction.gd" id="interaction"]
+
+[ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="player"]
+
+[ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_shore_backdrop.tscn" id="back"]
+
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_long.tscn" id="shelf"]
+
+[ext_resource type="PackedScene" path="res://Assets/BlueBiome/Art/WovenWorldChunks/placeables/platform_medium.tscn" id="step"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/gate.png" id="feature"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png" id="cave"]
+
+[ext_resource type="Texture2D" path="res://Src/Environment/World/lighting/player_light.png" id="light"]
+
+[sub_resource type="RectangleShape2D" id="Reach"]
+size = Vector2(158, 184)
+
+[sub_resource type="LabelSettings" id="Prompt"]
+font_size = 19
+font_color = Color(0.96, 0.95, 0.84, 1)
+outline_size = 8
+outline_color = Color(0.065, 0.12, 0.15, 0.98)
+
+[sub_resource type="RectangleShape2D" id="Floor"]
+size = Vector2(2000, 84)
+
+[sub_resource type="RectangleShape2D" id="Wall"]
+size = Vector2(64, 1800)
+
+[node name="WaterfallLookout" type="Node2D"]
+script = ExtResource("landing")
+
+[node name="Backdrop" parent="." instance=ExtResource("back")]
+
+[node name="Landmark" type="Sprite2D" parent="."]
+position = Vector2(1130, 330)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("feature")
+centered = false
+z_index = -6
+
+[node name="Landing" parent="." instance=ExtResource("shelf")]
+position = Vector2(0, 696)
+scale = Vector2(1.95, 1)
+z_index = -3
+
+[node name="UpperStep" parent="." instance=ExtResource("step")]
+position = Vector2(660, 478)
+z_index = -3
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(960, 742)
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("Floor")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="West" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-32, 600)
+shape = SubResource("Wall")
+
+[node name="East" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1952, 600)
+shape = SubResource("Wall")
+
+[node name="LandingLight" type="PointLight2D" parent="."]
+position = Vector2(940, 420)
+texture = ExtResource("light")
+texture_scale = 6
+color = Color(1, 0.88, 0.73, 1)
+energy = 0.7
+range_item_cull_mask = 3
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(420, 625)
+
+[node name="Player" parent="." instance=ExtResource("player")]
+position = Vector2(420, 625)
+z_index = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(620, 450)
+zoom = Vector2(0.94, 0.94)
+process_callback = 0
+limit_left = -64
+limit_right = 1984
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Location" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 22.0
+offset_right = 520.0
+offset_bottom = 55.0
+theme_override_colors/font_outline_color = Color(0.05, 0.13, 0.15, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 24
+text = "Waterfall Lookout"
+
+[node name="BackToShore" type="Area2D" parent="."]
+position = Vector2(180, 630)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("interaction")
+action_text = "Return to Woven Shore"
+destination = "res://Src/Tests/Art/WovenWorld/woven_chunk_level.tscn"
+
+[node name="Reach" type="CollisionShape2D" parent="BackToShore"]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="Label" parent="BackToShore"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -210.0
+offset_right = 210.0
+offset_top = -124.0
+offset_bottom = -88.0
+mouse_filter = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+label_settings = SubResource("Prompt")
