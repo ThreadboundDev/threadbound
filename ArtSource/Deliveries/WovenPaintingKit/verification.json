@@ -1,0 +1,25 @@
+{
+  "stamps": 15,
+  "opened_in_krita": true,
+  "png_dimensions_and_hashes_verified": true,
+  "atlas_layer_scale_verified": true,
+  "files": [
+    {
+      "file": "Woven_Shore_Atlas.ora",
+      "layers": 17,
+      "dimensions": [
+        6400,
+        5872
+      ]
+    },
+    {
+      "file": "Woven_Shore_Painting.ora",
+      "layers": 7,
+      "dimensions": [
+        12800,
+        4608
+      ]
+    }
+  ],
+  "open_alpha_verified": true
+}

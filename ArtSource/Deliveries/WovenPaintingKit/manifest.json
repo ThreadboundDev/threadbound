@@ -1,0 +1,272 @@
+[
+  {
+    "name": "ground_long",
+    "family": "ground",
+    "file": "stamps/ground_long.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1576,
+      435
+    ],
+    "game_width": 1560,
+    "opaque_backdrop": false,
+    "sha256": "8f1d35e0beb1bbc7593779ee05b60821327510eb573badef2bfb0a0e7bffea37",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/platform_integrated_top.png",
+    "prompt": "A long solid full-depth ground chunk, straight broad walkable top of continuous grey slate with narrow olive moss, plateau spans most of width. Deep irregular cliff face large grey and subtle woven mineral grain. Landmass roughly 2:1 width to depth. No floating bank underside on the visible top. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "ground_broken",
+    "family": "ground",
+    "file": "stamps/ground_broken.png",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "size": [
+      1456,
+      963
+    ],
+    "game_width": 1440,
+    "opaque_backdrop": false,
+    "sha256": "f6f28e50e14105e05cf6b27a05c965623422e10a65785a5729a5831d7159f498",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/platform_integrated_top.png",
+    "prompt": "One solid full-depth slate landmass for a shoreline in a side-scroller. Level broad traversable top with visible depth; ragged moss and fractures concentrated at edges, angular face narrows slightly lower. Deep cliff wall. Broad roughly 3:2 composition. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "ground_cavern",
+    "family": "ground",
+    "file": "stamps/ground_cavern.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1496,
+      673
+    ],
+    "game_width": 1480,
+    "opaque_backdrop": false,
+    "sha256": "d372261f85777d4902f33d7ec46a5dde469c4437c63d8a8c984ca0f63283deab",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "Solid full-depth ground chunk for inside a cavern, broad level physical top shows depth in its natural slate, pale worn vein lines along the top, dark slate blue vertical faces and earth fissures. Very little moss. Deep cliff body. Broad roughly 2:1 composition. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "float_step",
+    "family": "floating",
+    "file": "stamps/float_step.png",
+    "source_size": [
+      2021,
+      778
+    ],
+    "size": [
+      396,
+      124
+    ],
+    "game_width": 380,
+    "opaque_backdrop": false,
+    "sha256": "e1b9e361d150e96d5d51cce54085f890c9d11e3fa0fac9eb1c110c71d66c7a66",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/platform_integrated_top.png",
+    "prompt": "One small fat floating rock ledge, broad level grey slate upper surface with enough visible front-to-back depth for boots at center, irregular chipped faces, wisps of moss only at corners. 2.6:1 shape. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "float_bridge",
+    "family": "floating",
+    "file": "stamps/float_bridge.png",
+    "source_size": [
+      2172,
+      724
+    ],
+    "size": [
+      916,
+      125
+    ],
+    "game_width": 900,
+    "opaque_backdrop": false,
+    "sha256": "099e998ca454a9adfa78a699e1110d4ec98683634147fbfb9ebc371090ba0688",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/platform_integrated_top.png",
+    "prompt": "One long shallow floating stone shelf, long flat walkable top revealed in oblique side elevation, natural continuous slate with streaks of subtle pale weave, uneven angular bottom and two small moss drapes. 5:1 silhouette. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "float_cave",
+    "family": "floating",
+    "file": "stamps/float_cave.png",
+    "source_size": [
+      2076,
+      757
+    ],
+    "size": [
+      636,
+      187
+    ],
+    "game_width": 620,
+    "opaque_backdrop": false,
+    "sha256": "c5513733117ed2b1ffb9c97a15d2b1d3b960c0ad8011d70d973e05552e22596f",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One medium floating cave ledge, flatter top of cool dark slate with fine pale mineral weave and subtle faceted blue shadows, no grass, generous visible standing plane, thicker broken underside with pointed facets. 3.7:1 shape. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_wall",
+    "family": "pieces",
+    "file": "stamps/cave_wall.png",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "size": [
+      566,
+      1291
+    ],
+    "game_width": 550,
+    "opaque_backdrop": false,
+    "sha256": "fd18cc2cb66855a075282ef370b2ee6e4ae19290584e557baa79cd7621b85ad9",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One vertical cave sidewall stamp with a bold irregular winding RIGHT exposed contour and coherent faceted LEFT stone volume. Dark slate grey warm seams and very sparse warm roots, hues of the source. Portrait vertical. It stacks behind cave pieces, closed tapered alpha silhouette, no cut floor. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_ceiling",
+    "family": "pieces",
+    "file": "stamps/cave_ceiling.png",
+    "source_size": [
+      2172,
+      724
+    ],
+    "size": [
+      1566,
+      417
+    ],
+    "game_width": 1550,
+    "opaque_backdrop": false,
+    "sha256": "bbebd2af8bd03eaa46e93d59128b77e18a9b50bc49a536c0583f387f773b5ed1",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One long horizontal hanging cave ceiling lip, weighty blue-grey slate slabs with interwoven facets at the front, a few golden roots across the slate, separately tapered tooth edges hanging DOWN, broadly level roof above, pair of bevels across thin lower ridge. No opening or ground, isolated overhang strip. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_pillar",
+    "family": "pieces",
+    "file": "stamps/cave_pillar.png",
+    "source_size": [
+      1024,
+      1536
+    ],
+    "size": [
+      386,
+      575
+    ],
+    "game_width": 370,
+    "opaque_backdrop": false,
+    "sha256": "625fe2fc6154f8ce737f431e85705053f2042a9c32cb4041a32c49926220cb1b",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One isolated connecting cave column with a tapering naturally jagged shape, dark stone folds and pale woven veins and subtle strands of golden roots. Tall slender, heavy base and broad crown taper to individual edges. No rectangular backdrop. Potential for rotation or scaling. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_mouth_tall",
+    "family": "openings",
+    "file": "stamps/cave_mouth_tall.png",
+    "source_size": [
+      1141,
+      1379
+    ],
+    "size": [
+      1116,
+      1348
+    ],
+    "game_width": 1100,
+    "opaque_backdrop": false,
+    "sha256": "8f29e71cf117492838b8bd831ca04e34d8d62ba09a388901b8679d0e369365dc",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One tall asymmetrical cavern exit frame, dramatic open mouth with genuine clear transparent portal hole to show a separate painted backdrop. Angular blue slate roof curves down into uneven thick side buttresses, one side shorter, ochre roots and selective olive moss, minimal flowers. Open through-cavity with no fake black interior fill and no platform across bottom. Long root arms follow the cave curve, heroic tall mouth, entire outline separated from canvas. Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_mouth_low",
+    "family": "openings",
+    "file": "stamps/cave_mouth_low.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1526,
+      734
+    ],
+    "game_width": 1510,
+    "opaque_backdrop": false,
+    "sha256": "465fb5905919670b7e302869cebb5d358370ca2f968ce43f2f7f778830017be2",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One low wide side-scrolling cavern opening frame, distinctive asymmetric low slate roof and broken tapered pillars at both edges, branching ochre roots and slate facets with delicate woven veins, sparse moss. Large genuine empty transparent negative space under the arch for painted background. No ground or interior painting. Roughly 2:1 composition Original Threadbound side-scrolling game stamp. Use the input strictly as a style guide for faceted woven low-poly materials; design a distinct object. Large clearly separated planes, restraint in the veins, no bold outlines. Side-on with shallow top reveal, no perspective vanishing point. No character, lettering, UI, separate ground plane or cutout rectangle. Entire shape with clean contours, real transparent alpha margins around all loose edges, no checkerboard."
+  },
+  {
+    "name": "cave_mouth_shore",
+    "family": "openings",
+    "file": "stamps/cave_mouth_shore.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1516,
+      1160
+    ],
+    "game_width": 1500,
+    "opaque_backdrop": false,
+    "sha256": "ee942ddabbb91e349dd84f5095628bf6c24d5cf5ef32e21afbe7528ea1423fae",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "Existing woven shore cavern opening retained as a reference and selectable stamp."
+  },
+  {
+    "name": "cave_rear_deep",
+    "family": "backdrop",
+    "file": "stamps/cave_rear_deep.png",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "size": [
+      1900,
+      1267
+    ],
+    "game_width": 1900,
+    "opaque_backdrop": true,
+    "sha256": "b80f969c26bf392567b2abf323f80a047ad029e17a0af849599e0940ea6d0b80",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One very wide background panel for interior cavern, edge-to-edge artwork meant to sit behind geometry. Soft layered dark blue slate scallops and deep nested planes with subtle weave grain, very low contrast center for readability, side layered mineral columns from dark at edges to airy petrol slate in middle. No opening, no light source, no ground line, no platforms, no flowers. 3:2 with generous coverage. Match existing woven low-poly rock while using much softer contrast for background depth. No text or symbols. Fully painted opaque background."
+  },
+  {
+    "name": "cave_rear_mineral",
+    "family": "backdrop",
+    "file": "stamps/cave_rear_mineral.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1900,
+      950
+    ],
+    "game_width": 1900,
+    "opaque_backdrop": true,
+    "sha256": "159f4b3f78a9cdadd2b27ed1c446ee01464a2c6892bdfc9d092fc515f2e3b9a0",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "One wide edge-to-edge background for inner cavern. A few broad recessed faceted blue-grey mineral planes and faint golden-grey woven seam arcs running diagonally, atmospheric calmer than foreground cave reference, quiet middle negative space. No hole, no character, no plants or ground line. Whole backdrop opaque. Match existing woven low-poly rock while using much softer contrast for background depth. No text or symbols. Fully painted opaque background."
+  },
+  {
+    "name": "cave_rear_submerged",
+    "family": "backdrop",
+    "file": "stamps/cave_rear_submerged.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "size": [
+      1900,
+      950
+    ],
+    "game_width": 1900,
+    "opaque_backdrop": true,
+    "sha256": "924249c47f8ac5ddf96c12eb93a38b5856217b519ac5b012100eea5565c07058",
+    "style_reference": "Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/cavern.png",
+    "prompt": "Create one edge-to-edge opaque 2D side-scrolling background panel for a submerged natural cave in Threadbound. Use the supplied cave only as the original game's style guide: low-poly faceted stone planes and subtle woven mineral incisions. Large, open, quiet blue-green negative space through the central two-thirds for roomy swimming, sparse recessed cool-teal stalactites at upper sides, distant slate shelves fading into cool blue atmospheric layers. Wide landscape composition. Soft contrast and subdued far depth, occasional muted mineral striations. No interface, figures, coral, fish, flat waterline, playable ledges, cutout edge, surface reflections or beams that imply a fixed waterline, text or symbols. Opaque painting only, uniform framing suitable for a far Krita background."
+  }
+]

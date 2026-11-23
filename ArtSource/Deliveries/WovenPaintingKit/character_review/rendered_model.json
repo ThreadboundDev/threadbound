@@ -1,0 +1,20 @@
+{
+  "equipment_paths": {
+    "boots": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_boots_b.glb"
+    ],
+    "gloves": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_grapple_glove.glb"
+    ],
+    "head_chest": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_outfit_a.glb"
+    ],
+    "weapon": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_sword.glb",
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_shield.glb"
+    ]
+  },
+  "outline_shells_hidden": 34,
+  "rig_path": "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb",
+  "same_frozen_idle_pose": true
+}

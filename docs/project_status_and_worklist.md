@@ -1852,3 +1852,11 @@ The saved level opens under the woven cavern mouth and runs east past reflective
 The east road leads to the Village Rooftops landing. The second gap's underwater arch leads to the Flooded Cistern landing. Two sluices release the high gate to the Waterfall Lookout landing. Each uses the Interact action and offers a return to the shore. Sluice progress carries during the visit. The destination landings establish the room handoffs, with broader expansion and the production demo connection reserved for later.
 
 The Godot checks passed on the development checkout. Traversal passed 179 headless and 201 rendered checks. The separate interaction suite passed 20 headless and 29 rendered checks, including all six scene changes and the lock sequence. Final captures, the generated PNGs and the full image prompts are recorded in the [Woven Shore delivery](../ArtSource/Deliveries/WovenWorldChunks/shore_finish/README.md). Task checkpoint subject is `level: finish woven shore and connect three routes`.
+
+## November 23 Woven Shore painting workflow
+
+**T49 direction reset | Stamp kit ready for painting.** Chase wants to compose the full shore in Krita. The earlier Godot route is a prototype. Build the roomy above-water and underwater layout in paint first, then implement real platforming, traversal, encounters, the puzzle and the exits against that layout. Trees, foliage and houses can be added as editable Godot objects.
+
+The [painting delivery](../ArtSource/Deliveries/WovenPaintingKit/README.md) includes a 12,800 × 4,608 layered game-scale canvas and a 15-piece layered atlas. Both opened in Krita. The kit includes three ground pieces, three floating platforms, three modular cave pieces, three openings and three cave backgrounds. Fourteen images are new and one is the existing shore opening. PNG dimensions, alpha and atlas layer scaling were verified. The painting canvas is ready for Chase to compose.
+
+The new character needs a separate export pass. Godot was loading the November 21 Outfit A export with older boots, while the newer November 23 source is the local Base Armor Fit Blender file. The boot spikes and finger gaps persist with outline shells disabled in a frozen comparison. See the delivery for the loaded asset paths and both images. Task checkpoint subject is `art: build Woven Shore painting stamp kit`.
