@@ -1,0 +1,190 @@
+{
+  "scale": 2.5,
+  "canvas": [
+    2172,
+    724
+  ],
+  "waterline": 486,
+  "layers": {
+    "far_lake": {
+      "origin": [
+        0,
+        0
+      ],
+      "size": [
+        2172,
+        724
+      ]
+    },
+    "lakebed": {
+      "origin": [
+        0,
+        486
+      ],
+      "size": [
+        2172,
+        238
+      ]
+    },
+    "chamber": {
+      "origin": [
+        0,
+        0
+      ],
+      "size": [
+        684,
+        651
+      ]
+    },
+    "tree_island": {
+      "origin": [
+        371,
+        280
+      ],
+      "size": [
+        232,
+        285
+      ]
+    },
+    "swim_up_island": {
+      "origin": [
+        728,
+        311
+      ],
+      "size": [
+        334,
+        284
+      ]
+    },
+    "floating_west_step": {
+      "origin": [
+        544,
+        249
+      ],
+      "size": [
+        94,
+        64
+      ]
+    },
+    "floating_west_shelf": {
+      "origin": [
+        642,
+        192
+      ],
+      "size": [
+        200,
+        77
+      ]
+    },
+    "floating_high_west": {
+      "origin": [
+        856,
+        150
+      ],
+      "size": [
+        86,
+        57
+      ]
+    },
+    "floating_center": {
+      "origin": [
+        891,
+        232
+      ],
+      "size": [
+        130,
+        61
+      ]
+    },
+    "floating_east_step": {
+      "origin": [
+        1014,
+        192
+      ],
+      "size": [
+        68,
+        50
+      ]
+    },
+    "floating_east_shelf": {
+      "origin": [
+        1076,
+        146
+      ],
+      "size": [
+        122,
+        64
+      ]
+    },
+    "floating_gate_step": {
+      "origin": [
+        1200,
+        113
+      ],
+      "size": [
+        136,
+        60
+      ]
+    },
+    "village_bank": {
+      "origin": [
+        1106,
+        0
+      ],
+      "size": [
+        1066,
+        570
+      ]
+    },
+    "irrigation_walk": {
+      "origin": [
+        1309,
+        103
+      ],
+      "size": [
+        699,
+        167
+      ]
+    },
+    "irrigation_latch": {
+      "origin": [
+        1308,
+        77
+      ],
+      "size": [
+        101,
+        92
+      ]
+    },
+    "aqueduct": {
+      "origin": [
+        1205,
+        503
+      ],
+      "size": [
+        967,
+        221
+      ]
+    },
+    "dock": {
+      "origin": [
+        1972,
+        340
+      ],
+      "size": [
+        200,
+        304
+      ]
+    },
+    "aqueduct_grate": {
+      "origin": [
+        1320,
+        530
+      ],
+      "size": [
+        99,
+        133
+      ]
+    }
+  }
+}
