@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_landing_cistern.tscn" id="base"]
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_concept_handoff.gd" id="handoff"]
+
+[node name="AqueductsFromShore" instance=ExtResource("base")]
+
+[node name="BackToShore" parent="." index="14"]
+script = ExtResource("handoff")
+action_text = "Swim back to the shore"
+destination = "res://Src/Tests/Art/WovenWorld/woven_shore_concept.tscn"
+arrival = &"Aqueduct"
+position = Vector2(180, 1065)
+
+[node name="Location" parent="HUD" index="0"]
+text = "The Aqueducts"

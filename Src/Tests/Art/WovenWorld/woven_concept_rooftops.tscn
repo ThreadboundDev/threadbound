@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://Src/Tests/Art/WovenWorld/woven_landing_rooftops.tscn" id="base"]
+[ext_resource type="Script" path="res://Src/Tests/Art/WovenWorld/woven_concept_handoff.gd" id="handoff"]
+
+[sub_resource type="RectangleShape2D" id="HighReturn"]
+size = Vector2(200, 180)
+
+[node name="VillageRooftopsFromShore" instance=ExtResource("base")]
+
+[node name="BackToShore" parent="." index="14"]
+script = ExtResource("handoff")
+action_text = "Return to the shore road"
+destination = "res://Src/Tests/Art/WovenWorld/woven_shore_concept.tscn"
+arrival = &"VillageRoad"
+
+[node name="UpperReturn" type="Area2D" parent="."]
+position = Vector2(1250, 626)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Take the ridge walk"
+destination = "res://Src/Tests/Art/WovenWorld/woven_shore_concept.tscn"
+arrival = &"IrrigationEast"
+
+[node name="Reach" type="CollisionShape2D" parent="UpperReturn"]
+shape = SubResource("HighReturn")
+
+[node name="Prompt" type="Label" parent="UpperReturn"]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_right = 220.0
+offset_top = -123.0
+offset_bottom = -92.0
+mouse_filter = 2
+horizontal_alignment = 1
