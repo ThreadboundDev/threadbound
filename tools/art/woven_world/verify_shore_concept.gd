@@ -5,7 +5,7 @@ const FOLDER := "res://Src/Tests/Art/WovenWorld/"
 const SHORE := FOLDER + "woven_shore_concept.tscn"
 const ROOFTOPS := FOLDER + "woven_concept_rooftops.tscn"
 const AQUEDUCTS := FOLDER + "woven_concept_aqueducts.tscn"
-const DELIVERY := "res://ArtSource/Deliveries/WovenShoreConcept/"
+const DELIVERY := "res://ArtSource/Deliveries/WovenShoreNativeStamps/"
 const SCALE := 2.5
 const FEET := 69.245
 
@@ -26,6 +26,7 @@ func _run() -> void:
 	_check(get_nodes_in_group(&"player").size() == 1, "One player instanced on arrival")
 	_check(_player().is_on_floor() and _player().position.x < 825, "Arrival on dry cave floor")
 	_check(current_scene.has_node("Encounters/ShorePatrol"), "Shore combat encounter instanced")
+	_verify_art_stamps()
 	await _capture("game_chamber.png")
 	# Keep jump timings independent of enemies while checking the authored geometry.
 	current_scene.get_node("Encounters").queue_free()
@@ -43,6 +44,8 @@ func _run() -> void:
 	await _jump_between(1179, 169, 1263, 139, false, "Arrive at the locked high route")
 	_check(current_scene.get_node("Art/IrrigationLatch").visible, "High gate starts closed")
 	await _capture("game_upper_route.png")
+	await _visit(Vector2(4760, 866))
+	await _capture("game_farm_road.png")
 
 	await _visit(Vector2(697, 608) * SCALE)
 	_check(_player().is_in_prototype_water(), "Lake physics active beneath island gaps")
@@ -112,6 +115,21 @@ func _run() -> void:
 	report.store_string(JSON.stringify(result, "  ") + "\n")
 	print("WOVEN_SHORE_CONCEPT ", JSON.stringify(result))
 	quit(0 if failures.is_empty() else 1)
+
+
+func _verify_art_stamps() -> void:
+	var stamps := current_scene.get_node("Art").find_children("*", "Sprite2D")
+	var concept_crops: Array[String] = []
+	var enlarged: Array[String] = []
+	for stamp: Sprite2D in stamps:
+		if stamp.texture == null or stamp.texture.resource_path.contains("/ConceptLayout/"):
+			concept_crops.append(stamp.name)
+		if stamp.scale.x > 1.0 or stamp.scale.y > 1.0:
+			enlarged.append(stamp.name)
+	_check(stamps.size() > 30 and concept_crops.is_empty(), "Gameplay art uses independently placed stamps: %s" % str(concept_crops))
+	_check(enlarged.is_empty(), "Gameplay stamps are placed at or below their original pixel size: %s" % str(enlarged))
+	_check(current_scene.has_node("Art/IslandTree") and current_scene.has_node("Art/FieldCottage"),
+		"Tree and cottage art are editable separately from the ground")
 
 
 func _jump_between(x_from: float, y_from: float, x_to: float, y_to: float, double_jump: bool, label: String) -> void:

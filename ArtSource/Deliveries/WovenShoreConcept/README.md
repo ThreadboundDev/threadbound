@@ -1,5 +1,7 @@
 # Woven Shore concept layout
 
+This delivery records the layout study. The [standalone stamp delivery](../WovenShoreNativeStamps/README.md) shows the current Godot artwork.
+
 Open `res://Src/Tests/Art/WovenWorld/woven_shore_concept.tscn` in Godot and press **F6**. The scene uses the project player, camera, Blue lake, interaction prompts, and the Eave Runner. The original shoreline scene and production Chamber route remain available.
 
 - Leave the low Chamber mouth and cross the two islands to the farm road. The road leads to the Village Rooftops preview landing.

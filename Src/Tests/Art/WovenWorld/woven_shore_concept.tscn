@@ -18,37 +18,77 @@
 
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/lakebed.png" id="lakebed"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/chamber.png" id="chamber"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/tree_alt.png" id="canopy_tree"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/tree_island.png" id="tree_island"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/blossom_shrub.png" id="pink_shrub"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/swim_up_island.png" id="swim_up_island"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/foliage_rim.png" id="leaf_cluster"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_west_step.png" id="floating_west_step"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/terraces.png" id="rice_terrace"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_west_shelf.png" id="floating_west_shelf"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/farmstead.png" id="farmstead"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_high_west.png" id="floating_high_west"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/hidden_shelf.png" id="hidden_shelf"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_center.png" id="floating_center"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_mouth.png" id="chamber_mouth"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_east_step.png" id="floating_east_step"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_floor.png" id="chamber_floor"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_east_shelf.png" id="floating_east_shelf"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/tree_island_stone.png" id="tree_island_stone"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/floating_gate_step.png" id="floating_gate_step"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/nook_island.png" id="nook_island"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/village_bank.png" id="village_bank"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/rock_step.png" id="rock_step"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/irrigation_walk.png" id="irrigation_walk"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/bank_slope.png" id="bank_slope"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/irrigation_latch.png" id="irrigation_latch"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank_taper.png" id="shore_bank_taper"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/aqueduct.png" id="aqueduct"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/village_bluff.png" id="village_bluff"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/dock.png" id="dock"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank.png" id="shore_bank"]
 
-[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/aqueduct_grate.png" id="aqueduct_grate"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/cottage_small.png" id="cottage_small"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_foundation.png" id="aqueduct_foundation"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_intake.png" id="aqueduct_intake"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_grille.png" id="aqueduct_grille"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_bay.png" id="aqueduct_bay"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_span.png" id="irrigation_span"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_gate.png" id="irrigation_gate"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/dock_pier.png" id="dock_pier"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/lakebed_rocks.png" id="lakebed_rocks"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_bough.png" id="chamber_bough"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_short.png" id="floating_short"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_moss.png" id="floating_moss"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_split.png" id="floating_split"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_wide.png" id="floating_wide"]
+
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_lantern.png" id="shore_lantern"]
+
+[sub_resource type="Gradient" id="NookBubbleGradient"]
+offsets = PackedFloat32Array(0, 0.59, 0.77, 1)
+colors = PackedColorArray(0.43, 0.76, 0.86, 0, 0.51, 0.84, 0.92, 0.04, 0.76, 0.96, 0.99, 0.66, 0.47, 0.79, 0.88, 0)
+
+[sub_resource type="GradientTexture2D" id="NookBubbleTexture"]
+gradient = SubResource("NookBubbleGradient")
+width = 18
+height = 18
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
 
 [sub_resource type="RectangleShape2D" id="Rect_119_12"]
 size = Vector2(297.5, 30)
@@ -118,7 +158,7 @@ size = Vector2(220, 212.5)
 
 [node name="WovenShoreConcept" type="Node2D"]
 script = ExtResource("script")
-editor_description = "Painted Woven Shore from the approved side-view layout. Select Terrain for collision, Art for individual registered stamps, and Interactions for exit and gate triggers."
+editor_description = "Painted Woven Shore from the approved side-view layout. Select Terrain for collision, Art for individually generated stamps, and Interactions for exit and gate triggers."
 
 [node name="FarLandscape" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.95, 1)
@@ -144,121 +184,434 @@ z_index = 0
 
 [node name="Art" type="Node2D" parent="."]
 
-[node name="Chamber" type="Sprite2D" parent="Art"]
-position = Vector2(0, 0)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("chamber")
+[node name="HiddenShelf" type="Sprite2D" parent="Art"]
+position = Vector2(90, 144)
+scale = Vector2(0.67058824, 0.54027665)
+texture = ExtResource("hidden_shelf")
+centered = false
+z_index = -5
+
+[node name="ChamberMouth" type="Sprite2D" parent="Art"]
+position = Vector2(-48, 539)
+scale = Vector2(0.50808314, 0.65947242)
+texture = ExtResource("chamber_mouth")
+centered = false
+z_index = -4
+
+[node name="ChamberLanding" type="Sprite2D" parent="Art"]
+position = Vector2(-44, 879)
+scale = Vector2(0.41778601, 0.79943899)
+texture = ExtResource("chamber_floor")
 centered = false
 z_index = -3
 
-[node name="TreeIsland" type="Sprite2D" parent="Art"]
-position = Vector2(927.5, 700)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("tree_island")
+[node name="TreeIslandStone" type="Sprite2D" parent="Art"]
+position = Vector2(937, 973)
+scale = Vector2(0.37599469, 0.39912759)
+texture = ExtResource("tree_island_stone")
 centered = false
 z_index = -3
+
+[node name="IslandTree" type="Sprite2D" parent="Art"]
+position = Vector2(960, 674)
+scale = Vector2(0.36739130, 0.36961451)
+texture = ExtResource("canopy_tree")
+centered = false
+z_index = -4
+
+[node name="IslandFoliage" type="Sprite2D" parent="Art"]
+position = Vector2(1210, 936)
+scale = Vector2(0.24769433, 0.20994475)
+texture = ExtResource("leaf_cluster")
+centered = false
+z_index = -2
+
+[node name="IslandBlossoms" type="Sprite2D" parent="Art"]
+position = Vector2(932, 955)
+scale = Vector2(0.40937500, 0.36723164)
+texture = ExtResource("pink_shrub")
+centered = false
+z_index = -2
+
+[node name="NookBacking" type="Polygon2D" parent="Art"]
+z_index = -3
+polygon = PackedVector2Array(1978, 1060, 2466, 1060, 2460, 1183, 2435, 1291, 2033, 1293, 2009, 1188)
+vertex_colors = PackedColorArray(0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 0, 0.024, 0.19, 0.24, 0, 0.024, 0.19, 0.24, 1)
 
 [node name="SwimUpIsland" type="Sprite2D" parent="Art"]
-position = Vector2(1820, 777.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("swim_up_island")
+position = Vector2(1824, 868)
+scale = Vector2(0.56745480, 0.59123344)
+texture = ExtResource("nook_island")
 centered = false
 z_index = -3
 
+[node name="NookDryLedge" type="Sprite2D" parent="Art"]
+position = Vector2(2301, 1144)
+scale = Vector2(0.06659729, 0.15360502)
+texture = ExtResource("rock_step")
+centered = false
+z_index = -2
+modulate = Color(0.65, 0.82, 0.83, 1)
+
+[node name="NookIslandBlossoms" type="Sprite2D" parent="Art"]
+position = Vector2(1973, 825)
+scale = Vector2(0.56250000, 0.53672316)
+texture = ExtResource("pink_shrub")
+centered = false
+z_index = -2
+
+[node name="NookIslandFerns" type="Sprite2D" parent="Art"]
+position = Vector2(2438, 872)
+scale = Vector2(0.23583663, 0.17955801)
+texture = ExtResource("leaf_cluster")
+centered = false
+z_index = -2
+
+[node name="ClimbOutLedge" type="Sprite2D" parent="Art"]
+position = Vector2(2781, 1160)
+scale = Vector2(0.10093652, 0.23510972)
+texture = ExtResource("rock_step")
+centered = false
+z_index = -2
+
+[node name="ClimbOutRoot" type="Sprite2D" parent="Art"]
+position = Vector2(2825, 1061)
+scale = Vector2(0.18355360, 0.33132530)
+texture = ExtResource("bank_slope")
+centered = false
+z_index = -5
+modulate = Color(0.81, 0.93, 0.95, 1)
+
+[node name="FarBankSlope" type="Sprite2D" parent="Art"]
+position = Vector2(3074, 333)
+scale = Vector2(0.98139990, 0.93825301)
+texture = ExtResource("bank_slope")
+centered = false
+z_index = -8
+
+[node name="WestPierFooting" type="Sprite2D" parent="Art"]
+position = Vector2(3264, 550)
+scale = Vector2(0.50234962, 0.96791444)
+texture = ExtResource("shore_bank_taper")
+centered = false
+z_index = -7
+modulate = Color(0.82, 0.91, 0.93, 1)
+
+[node name="RooftopBluff" type="Sprite2D" parent="Art"]
+position = Vector2(4740, 320)
+scale = Vector2(0.53458697, 0.79026217)
+texture = ExtResource("village_bluff")
+centered = false
+z_index = -7
+modulate = Color(0.95, 0.96, 0.95, 1)
+
+[node name="UpperTerrace" type="Sprite2D" parent="Art"]
+position = Vector2(3830, 566)
+scale = Vector2(0.60202931, 0.38105975)
+texture = ExtResource("rice_terrace")
+centered = false
+z_index = -6
+
+[node name="LowerTerrace" type="Sprite2D" parent="Art"]
+position = Vector2(3370, 654)
+scale = Vector2(0.54678692, 0.30326945)
+texture = ExtResource("rice_terrace")
+centered = false
+z_index = -6
+
+[node name="WestFarmBank" type="Sprite2D" parent="Art"]
+position = Vector2(2934, 905)
+scale = Vector2(0.62121917, 0.96766744)
+texture = ExtResource("shore_bank")
+centered = false
+z_index = -4
+
+[node name="EastFarmBank" type="Sprite2D" parent="Art"]
+position = Vector2(4137, 893)
+scale = Vector2(0.45723684, 1.00000000)
+texture = ExtResource("shore_bank_taper")
+centered = false
+z_index = -4
+
+[node name="Farmstead" type="Sprite2D" parent="Art"]
+position = Vector2(4160, 680)
+scale = Vector2(0.28861330, 0.29875986)
+texture = ExtResource("farmstead")
+centered = false
+z_index = -5
+
+[node name="FieldCottage" type="Sprite2D" parent="Art"]
+position = Vector2(4657, 724)
+scale = Vector2(0.23324852, 0.23315508)
+texture = ExtResource("cottage_small")
+centered = false
+z_index = -5
+
+[node name="FarmPinkBush" type="Sprite2D" parent="Art"]
+position = Vector2(4022, 862)
+scale = Vector2(0.54062500, 0.48022599)
+texture = ExtResource("pink_shrub")
+centered = false
+z_index = -2
+
+[node name="FieldFern" type="Sprite2D" parent="Art"]
+position = Vector2(3361, 869)
+scale = Vector2(0.23451910, 0.20994475)
+texture = ExtResource("leaf_cluster")
+centered = false
+z_index = -2
+
+[node name="UpperRooftop" type="Sprite2D" parent="Art"]
+position = Vector2(5062, 70)
+scale = Vector2(0.29686175, 0.29732620)
+texture = ExtResource("cottage_small")
+centered = false
+z_index = -5
+
+[node name="UpperThresholdWest" type="Sprite2D" parent="Art"]
+position = Vector2(4938, 350)
+scale = Vector2(0.11654527, 0.25705329)
+texture = ExtResource("rock_step")
+centered = false
+z_index = -3
+
+[node name="UpperThresholdEast" type="Sprite2D" parent="Art"]
+position = Vector2(5124, 328)
+scale = Vector2(0.18990635, 0.34796238)
+texture = ExtResource("rock_step")
+centered = false
+z_index = -3
+
+[node name="UpperSlopeTree" type="Sprite2D" parent="Art"]
+position = Vector2(4755, 136)
+scale = Vector2(0.22934783, 0.23015873)
+texture = ExtResource("canopy_tree")
+centered = false
+z_index = -6
+flip_h = true
+modulate = Color(0.95, 0.99, 0.94, 1)
+
+[node name="AqueductFoundationCap" type="Sprite2D" parent="Art"]
+position = Vector2(2954, 1181)
+scale = Vector2(0.99068901, 0.91935484)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+z_index = -8
+flip_h = true
+
+[node name="FarmBankFooting" type="Sprite2D" parent="Art"]
+position = Vector2(3375, 1065)
+scale = Vector2(0.52327747, 0.62211982)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+z_index = -8
+
+[node name="AqueductFoundationBase" type="Sprite2D" parent="Art"]
+position = Vector2(2979, 1392)
+scale = Vector2(0.98649907, 0.97695853)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+z_index = -8
+
+[node name="AqueductEntrance" type="Sprite2D" parent="Art"]
+position = Vector2(3177, 1259)
+scale = Vector2(0.32280220, 0.40744467)
+texture = ExtResource("aqueduct_intake")
+centered = false
+z_index = -2
+
+[node name="AqueductGrate" type="Sprite2D" parent="Art"]
+position = Vector2(3300, 1349)
+scale = Vector2(0.22328042, 0.21275019)
+texture = ExtResource("aqueduct_grille")
+centered = false
+z_index = 3
+
+[node name="AqueductBay1" type="Sprite2D" parent="Art"]
+position = Vector2(3510, 1304)
+scale = Vector2(0.30515118, 0.53566009)
+texture = ExtResource("aqueduct_bay")
+centered = false
+z_index = -6
+
+[node name="IrrigationSpan1" type="Sprite2D" parent="Art"]
+position = Vector2(3285, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+z_index = -3
+
+[node name="AqueductBay2" type="Sprite2D" parent="Art"]
+position = Vector2(4040, 1304)
+scale = Vector2(0.30515118, 0.53566009)
+texture = ExtResource("aqueduct_bay")
+centered = false
+z_index = -6
+
+[node name="IrrigationSpan2" type="Sprite2D" parent="Art"]
+position = Vector2(3855, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+z_index = -3
+
+[node name="AqueductBay3" type="Sprite2D" parent="Art"]
+position = Vector2(4570, 1304)
+scale = Vector2(0.30515118, 0.53566009)
+texture = ExtResource("aqueduct_bay")
+centered = false
+z_index = -6
+
+[node name="IrrigationSpan3" type="Sprite2D" parent="Art"]
+position = Vector2(4425, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+z_index = -3
+
+[node name="IrrigationLatch" type="Sprite2D" parent="Art"]
+position = Vector2(3303, 139)
+scale = Vector2(0.17633675, 0.15096860)
+texture = ExtResource("irrigation_gate")
+centered = false
+z_index = 3
+
+[node name="Dock" type="Sprite2D" parent="Art"]
+position = Vector2(4921, 803)
+scale = Vector2(0.39253628, 0.56243330)
+texture = ExtResource("dock_pier")
+centered = false
+z_index = -3
+
+[node name="LakebedWest" type="Sprite2D" parent="Art"]
+position = Vector2(-75, 1654)
+scale = Vector2(0.55423970, 0.55254237)
+texture = ExtResource("lakebed_rocks")
+centered = false
+z_index = -5
+
+[node name="LakebedCenter" type="Sprite2D" parent="Art"]
+position = Vector2(1340, 1704)
+scale = Vector2(0.49739460, 0.48813559)
+texture = ExtResource("lakebed_rocks")
+centered = false
+z_index = -5
+flip_h = true
+
+[node name="LakebedEast" type="Sprite2D" parent="Art"]
+position = Vector2(2630, 1680)
+scale = Vector2(0.50923733, 0.50847458)
+texture = ExtResource("lakebed_rocks")
+centered = false
+z_index = -5
+
 [node name="FloatingWestStep" type="Sprite2D" parent="Art"]
-position = Vector2(1360, 622.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_west_step")
+position = Vector2(1368.5, 681.84)
+scale = Vector2(0.10856574, 0.12349398)
+texture = ExtResource("floating_short")
 centered = false
 z_index = -3
 
 [node name="FloatingWestShelf" type="Sprite2D" parent="Art"]
-position = Vector2(1605, 480)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_west_shelf")
+position = Vector2(1616, 522.96)
+scale = Vector2(0.22182933, 0.25382932)
+texture = ExtResource("floating_moss")
 centered = false
 z_index = -3
 
 [node name="FloatingHighWest" type="Sprite2D" parent="Art"]
-position = Vector2(2140, 375)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_high_west")
+position = Vector2(2162, 422.15)
+scale = Vector2(0.09203365, 0.12277580)
+texture = ExtResource("floating_split")
 centered = false
 z_index = -3
 
 [node name="FloatingCenter" type="Sprite2D" parent="Art"]
-position = Vector2(2227.5, 580)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_center")
+position = Vector2(2239, 631.5)
+scale = Vector2(0.14447059, 0.19455253)
+texture = ExtResource("floating_wide")
 centered = false
 z_index = -3
 
 [node name="FloatingEastStep" type="Sprite2D" parent="Art"]
-position = Vector2(2535, 480)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_east_step")
+position = Vector2(2537, 523.92)
+scale = Vector2(0.07893426, 0.09939759)
+texture = ExtResource("floating_short")
 centered = false
 z_index = -3
+flip_h = true
 
 [node name="FloatingEastShelf" type="Sprite2D" parent="Art"]
-position = Vector2(2690, 365)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_east_shelf")
+position = Vector2(2704.5, 408.1)
+scale = Vector2(0.14027709, 0.17081851)
+texture = ExtResource("floating_split")
 centered = false
 z_index = -3
 
 [node name="FloatingGateStep" type="Sprite2D" parent="Art"]
-position = Vector2(3000, 282.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("floating_gate_step")
+position = Vector2(3015, 337.05)
+scale = Vector2(0.14235294, 0.18482490)
+texture = ExtResource("floating_wide")
 centered = false
 z_index = -3
+flip_h = true
 
-[node name="VillageBank" type="Sprite2D" parent="Art"]
-position = Vector2(2765, 0)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("village_bank")
+[node name="ChamberPaperLantern" type="Sprite2D" parent="Art"]
+position = Vector2(139, 742)
+scale = Vector2(0.16399287, 0.17922374)
+texture = ExtResource("shore_lantern")
 centered = false
+z_index = -1
+
+[node name="ClimbOutPaperLantern" type="Sprite2D" parent="Art"]
+position = Vector2(2961, 977)
+scale = Vector2(0.11764706, 0.12671233)
+texture = ExtResource("shore_lantern")
+centered = false
+z_index = -1
+
+[node name="IrrigationPaperLantern" type="Sprite2D" parent="Art"]
+position = Vector2(4910, 53)
+scale = Vector2(0.16221034, 0.17465753)
+texture = ExtResource("shore_lantern")
+centered = false
+z_index = -1
+flip_h = true
+
+[node name="IntakeInterior" type="Polygon2D" parent="Art"]
 z_index = -5
+polygon = PackedVector2Array(3278, 1624, 3278, 1460, 3292, 1410, 3325, 1371, 3379, 1333, 3436, 1330, 3495, 1357, 3530, 1392, 3547, 1460, 3547, 1624)
+uv = PackedVector2Array(288, 549, 288, 317, 351, 247, 501, 192, 745, 139, 1003, 135, 1270, 173, 1428, 222, 1505, 317, 1505, 549)
+texture = ExtResource("aqueduct_bay")
 
-[node name="IrrigationWalk" type="Sprite2D" parent="Art"]
-position = Vector2(3272.5, 257.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("irrigation_walk")
-centered = false
-z_index = -4
-
-[node name="IrrigationLatch" type="Sprite2D" parent="Art"]
-position = Vector2(3270, 192.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("irrigation_latch")
-centered = false
-z_index = 3
-
-[node name="Aqueduct" type="Sprite2D" parent="Art"]
-position = Vector2(3012.5, 1257.5)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("aqueduct")
-centered = false
-z_index = -5
-
-[node name="Dock" type="Sprite2D" parent="Art"]
-position = Vector2(4930, 850)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("dock")
-centered = false
-z_index = -3
-
-[node name="AqueductGrate" type="Sprite2D" parent="Art"]
-position = Vector2(3300, 1325)
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("aqueduct_grate")
-centered = false
-z_index = 3
+[node name="NookBubbles" type="CPUParticles2D" parent="Art"]
+position = Vector2(2197.5, 1470)
+z_index = 1
+amount = 12
+lifetime = 3.1
+preprocess = 3.1
+randomness = 0.48
+texture = SubResource("NookBubbleTexture")
+emission_shape = 3
+emission_rect_extents = Vector2(24, 5)
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, -8)
+initial_velocity_min = 60.0
+initial_velocity_max = 78.0
+scale_amount_min = 0.32
+scale_amount_max = 0.72
 
 [node name="NearFraming" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1.08, 1)
 z_index = 3
+
+[node name="ChamberBough" type="Sprite2D" parent="NearFraming"]
+position = Vector2(-112, -56)
+scale = Vector2(0.78183521, 0.56132756)
+texture = ExtResource("chamber_bough")
+centered = false
+z_index = -1
 
 [node name="WestLeaves" type="Sprite2D" parent="NearFraming"]
 position = Vector2(-290, 1710)

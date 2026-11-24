@@ -1,0 +1,457 @@
+{
+  "reference": "ArtSource/Deliveries/WovenShoreConcept/sources/approved_layout.png",
+  "source": "Built-in image generation, one isolated-object generation per file",
+  "preparation": "Each output was cropped to its alpha bounds. Runtime PNGs retain their original pixel resolution.",
+  "assets": {
+    "chamber_mouth": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_mouth.png",
+      "generated_px": [
+        1774,
+        887
+      ],
+      "trim_box": [
+        21,
+        23,
+        1753,
+        857
+      ],
+      "texture_px": [
+        1732,
+        834
+      ],
+      "prompt": "Create one NEW isolated, full-resolution production PNG for Threadbound. The attached Woven Shore concept is purely a visual style and shape reference. Render the named object by itself filling most of the canvas, with a little transparent margin. Straight orthographic side elevation for a 2D platformer, a shallow visible top surface on horizontal landings, no 3D vanishing point. Match the reference's rich faceted low-poly material, slate-blue and grey color, olive and golden-green moss, warm golden ochre exposed roots and carved threadlike diagonal lines. Make fine crossing parallel fibers and engraved weave lines intentional, sharp and visible at game zoom. Use naturally shaped edge contours, no heavy outlines, no ambient shadow outside the sprite, no fake checkerboard, no adjacent objects, no text. Real transparent background. A massive asymmetric lower cavern mouth frame facing screen RIGHT, from the left edge of the map. Tall gray-blue wraparound slate arch with a thick rear left buttress, roots following the stone curves, long tapering overhang to the right, broad deep charcoal rocky recessed chamber interior inside the arch in the bottom left. The bottom of the opening is open and flat for an independent floor to overlap. The far right is genuinely transparent daylit space under the taper. Full silhouette approximately 2:1 across. No shelf over it, no ground underneath, no lights or foliage in the doorway."
+    },
+    "hidden_shelf": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/hidden_shelf.png",
+      "generated_px": [
+        1254,
+        1254
+      ],
+      "trim_box": [
+        72,
+        11,
+        1092,
+        1240
+      ],
+      "texture_px": [
+        1020,
+        1229
+      ],
+      "prompt": "Create one NEW isolated, full-resolution production PNG for Threadbound. The attached Woven Shore concept is purely a visual style and shape reference. Render the named object by itself filling most of the canvas, with a little transparent margin. Straight orthographic side elevation for a 2D platformer, a shallow visible top surface on horizontal landings, no 3D vanishing point. Match the reference's rich faceted low-poly material, slate-blue and grey color, olive and golden-green moss, warm golden ochre exposed roots and carved threadlike diagonal lines. Make fine crossing parallel fibers and engraved weave lines intentional, sharp and visible at game zoom. Use naturally shaped edge contours, no heavy outlines, no ambient shadow outside the sprite, no fake checkerboard, no adjacent objects, no text. Real transparent background. One short fixed rock alcove shelf high on a cliff as an independently placeable sprite. Left side anchored to a chunky slate stone root-covered upright that rises behind its left half, right side exposed as a short level grey moss-edged landing with generous headroom and a visible upper surface, facing the viewer squarely. Shelf should sit halfway up the supporting rock and extend toward the right. Dark navy-ish slate in the sheltered alcove, a few golden root strands and layered woven leaves on left. Conceal the left half behind natural branches, leave the right lip open. No ground or distant scenery. 1:1 bounding shape."
+    },
+    "tree_island_stone": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/tree_island_stone.png",
+      "generated_px": [
+        1610,
+        977
+      ],
+      "trim_box": [
+        52,
+        36,
+        1560,
+        953
+      ],
+      "texture_px": [
+        1508,
+        917
+      ],
+      "prompt": "Create one NEW isolated, full-resolution production PNG for Threadbound. The attached Woven Shore concept is purely a visual style and shape reference. Render the named object by itself filling most of the canvas, with a little transparent margin. Straight orthographic side elevation for a 2D platformer, a shallow visible top surface on horizontal landings, no 3D vanishing point. Match the reference's rich faceted low-poly material, slate-blue and grey color, olive and golden-green moss, warm golden ochre exposed roots and carved threadlike diagonal lines. Make fine crossing parallel fibers and engraved weave lines intentional, sharp and visible at game zoom. Use naturally shaped edge contours, no heavy outlines, no ambient shadow outside the sprite, no fake checkerboard, no adjacent objects, no text. Real transparent background. One stand-alone lake rock pillar / island, flat natural grey-slate grassy mossy top that comfortably supports a separate tree, untouched flat surface visible front to back. A rugged angular chunky blade of slate slate-blue and charcoal, long enough vertically to be half-sunken in water, roots wrapping its sides, golden-green fringe at top. Side view, roughly 1.65:1 width relative to height, top edge mostly straight, lower sides taper gently into a natural blunt bottom. Sparse root pattern, interlaced oblique incised grain. No tree, no bushes, no water or reflections, no ground behind."
+    },
+    "nook_island": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/nook_island.png",
+      "generated_px": [
+        1510,
+        1041
+      ],
+      "trim_box": [
+        33,
+        25,
+        1471,
+        1006
+      ],
+      "texture_px": [
+        1438,
+        981
+      ],
+      "prompt": "Create one NEW isolated, full-resolution production PNG for Threadbound. The attached Woven Shore concept is purely a visual style and shape reference. Render the named object by itself filling most of the canvas, with a little transparent margin. Straight orthographic side elevation for a 2D platformer, a shallow visible top surface on horizontal landings, no 3D vanishing point. Match the reference's rich faceted low-poly material, slate-blue and grey color, olive and golden-green moss, warm golden ochre exposed roots and carved threadlike diagonal lines. Make fine crossing parallel fibers and engraved weave lines intentional, sharp and visible at game zoom. Use naturally shaped edge contours, no heavy outlines, no ambient shadow outside the sprite, no fake checkerboard, no adjacent objects, no text. Real transparent background. A medium landscape rocky island stamp with a swim-up cavern pocket excavated into it. Shape is a clear inverted U, a broad flat moss-edged traversable top with strong blue-gray slate roof thickness and two short independent rock legs tapering downward. The alcove opens downward between the legs. Dark turquoise recessed slate back wall within the upper half of the hollow, ends smoothly just below the midway height, then genuine transparent open negative space between rock feet all the way to the bottom edge. The wide entrance points down, draw no floor connecting the two rock feet. A small natural ledge protrudes into the hollow on its right midway up. No platform lip across the entrance, scenery, water, bubbles, stairs or markings. Thick faceted stone, warm crossing woven thread lines. Approximate width to height 1.45:1, centered."
+    },
+    "shore_bank": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        13,
+        162,
+        2162,
+        595
+      ],
+      "texture_px": [
+        2149,
+        433
+      ],
+      "prompt": "Create one NEW isolated, full-resolution production PNG for Threadbound. The attached Woven Shore concept is purely a visual style and shape reference. Render the named object by itself filling most of the canvas, with a little transparent margin. Straight orthographic side elevation for a 2D platformer, a shallow visible top surface on horizontal landings, no 3D vanishing point. Match the reference's rich faceted low-poly material, slate-blue and grey color, olive and golden-green moss, warm golden ochre exposed roots and carved threadlike diagonal lines. Make fine crossing parallel fibers and engraved weave lines intentional, sharp and visible at game zoom. Use naturally shaped edge contours, no heavy outlines, no ambient shadow outside the sprite, no fake checkerboard, no adjacent objects, no text. Real transparent background. One very broad natural rock bank segment with a nearly uninterrupted walkable flat slate trail along the entire upper edge, supplied as an individual long terrain chunk. Side view visible top width with a little space for feet, narrow uneven drapes of lime-olive moss along the front lip, thick dark-blue angular rock below, patches of exposed warm roots following the stone's diagonal facets, precise subtle interlaced vein marks. The lower silhouette can slope and taper. Width to height approximately 3:1 and fill the frame. No plants taller than ankle height on the top, no houses, props, terraces, floating pieces, water or background."
+    },
+    "shore_bank_taper": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank_taper.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        23,
+        187,
+        2151,
+        561
+      ],
+      "texture_px": [
+        2128,
+        374
+      ],
+      "prompt": "One fresh standalone broad long rocky cliff bank stamp for Threadbound's Woven Shore. Strict orthographic side elevation. Long continuous gently level upper surface of worn grey slate with thin moss, enough visible depth at center to stand on. Thick deep blue-gray faceted slate rock on the front cliff face, fine pale diagonal woven lines cross into weave patterns over angular polygon facets, elegant rusty roots and a few fine hanging moss tongues. Right edge narrows organically to a little shoulder where a wood pier can join it. Width to height 3:1, full texture filling canvas with true alpha. The input scene is style only. No building, tree, river, floating platforms, ground behind it, lettering or checkerboard."
+    },
+    "irrigation_span": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_span.png",
+      "generated_px": [
+        1942,
+        809
+      ],
+      "trim_box": [
+        13,
+        16,
+        1930,
+        795
+      ],
+      "texture_px": [
+        1917,
+        779
+      ],
+      "prompt": "Render one NEW isolated full-resolution game asset drawn from scratch for Threadbound's Woven Shore. The input is ONLY an art direction reference. A single object filling most of the frame, genuine transparent surround and clear gaps where called for, no shadows floating outside its shape. True straight side elevation from a 2D Metroidvania with slight visible top face, thin subtle contours, precise low-poly beveled facets, pale diagonal woven incisions in blue-gray slate, golden root fibers and dark indigo wood where applicable, clean stylized outdoor daylight. The fine woven lines must read sharply in close-up. No scenery, sky, ocean, characters, ground plane, checkerboard, lettering, logos or neighboring accessories. ONE repeatable section of high outdoor irrigation viaduct. An elegant stone bridge made of one large round arch and two narrow straight feet at left and right, genuine alpha through the tall open arch and all around. Long continuous walkable top with a shallow open dry masonry irrigation trough behind a slim warm cedar and rope railing on front side. Entire structure viewed purely side-on, symmetrical end profiles to repeat, not perspective. Ratio 2.4:1. No gate or stairs. Blue-gray slate faces engraved with fine offset weave, browned wooden stanchions, small touches of lime moss."
+    },
+    "irrigation_gate": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_gate.png",
+      "generated_px": [
+        1024,
+        1536
+      ],
+      "trim_box": [
+        72,
+        20,
+        951,
+        1517
+      ],
+      "texture_px": [
+        879,
+        1497
+      ],
+      "prompt": "Render one NEW isolated full-resolution game asset drawn from scratch for Threadbound's Woven Shore. The input is ONLY an art direction reference. A single object filling most of the frame, genuine transparent surround and clear gaps where called for, no shadows floating outside its shape. True straight side elevation from a 2D Metroidvania with slight visible top face, thin subtle contours, precise low-poly beveled facets, pale diagonal woven incisions in blue-gray slate, golden root fibers and dark indigo wood where applicable, clean stylized outdoor daylight. The fine woven lines must read sharply in close-up. No scenery, sky, ocean, characters, ground plane, checkerboard, lettering, logos or neighboring accessories. ONE narrow timber portcullis grille of clean ladder-like upright heavy wood slats, bronze bolts and a visible little side latch, a separate shallow carved dark wood upright rail frame, authentic open transparent gaps between the slats and outside. Tall slightly portrait, closed, no bridge, no cliff, no floor. Warm ochre cedar with visibly crossed grain accents in the same woven faceted style."
+    },
+    "aqueduct_intake": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_intake.png",
+      "generated_px": [
+        1536,
+        1024
+      ],
+      "trim_box": [
+        40,
+        13,
+        1496,
+        1007
+      ],
+      "texture_px": [
+        1456,
+        994
+      ],
+      "prompt": "Render one NEW isolated full-resolution game asset drawn from scratch for Threadbound's Woven Shore. The input is ONLY an art direction reference. A single object filling most of the frame, genuine transparent surround and clear gaps where called for, no shadows floating outside its shape. True straight side elevation from a 2D Metroidvania with slight visible top face, thin subtle contours, precise low-poly beveled facets, pale diagonal woven incisions in blue-gray slate, golden root fibers and dark indigo wood where applicable, clean stylized outdoor daylight. The fine woven lines must read sharply in close-up. No scenery, sky, ocean, characters, ground plane, checkerboard, lettering, logos or neighboring accessories. ONE front-cutaway stone arch intake rim for a submerged aqueduct. Near-facing semicircular, walls are chunky angular stone voussoirs, two vertical piers with worn interlaced milling, a broad thick slab foot spanning below the arch with a few natural teal-green plants at far edges. THROUGH-OPEN transparent center between the piers where a separately generated barred grate will fit, it must have no solid interior fill. Weathered cool teal blue stone, faceted and woven, brighter on rim, panel palette already underwater-tinted without water or caustics in negative space. No gate, background or continuation to tunnel."
+    },
+    "aqueduct_grille": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_grille.png",
+      "generated_px": [
+        1132,
+        1390
+      ],
+      "trim_box": [
+        91,
+        19,
+        1036,
+        1368
+      ],
+      "texture_px": [
+        945,
+        1349
+      ],
+      "prompt": "Render one NEW isolated full-resolution game asset drawn from scratch for Threadbound's Woven Shore. The input is ONLY an art direction reference. A single object filling most of the frame, genuine transparent surround and clear gaps where called for, no shadows floating outside its shape. True straight side elevation from a 2D Metroidvania with slight visible top face, thin subtle contours, precise low-poly beveled facets, pale diagonal woven incisions in blue-gray slate, golden root fibers and dark indigo wood where applicable, clean stylized outdoor daylight. The fine woven lines must read sharply in close-up. No scenery, sky, ocean, characters, ground plane, checkerboard, lettering, logos or neighboring accessories. ONE dark blue-gray wrought iron barred grate for an underwater intake. Arch-shaped rounded top, black iron slender vertical bars and only two crossbars with worn pale highlights, little warm brown bolts and metal latches. Subtle cyan-blue oxidation. Entire gate including ends, negative space between slender bars with true transparency, surrounding canvas transparent, no arch stones or architectural frame, no text."
+    },
+    "aqueduct_bay": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_bay.png",
+      "generated_px": [
+        1862,
+        845
+      ],
+      "trim_box": [
+        38,
+        104,
+        1824,
+        763
+      ],
+      "texture_px": [
+        1786,
+        659
+      ],
+      "prompt": "Render one NEW isolated full-resolution game asset drawn from scratch for Threadbound's Woven Shore. The input is ONLY an art direction reference. A single object filling most of the frame, genuine transparent surround and clear gaps where called for, no shadows floating outside its shape. True straight side elevation from a 2D Metroidvania with slight visible top face, thin subtle contours, precise low-poly beveled facets, pale diagonal woven incisions in blue-gray slate, golden root fibers and dark indigo wood where applicable, clean stylized outdoor daylight. The fine woven lines must read sharply in close-up. No scenery, sky, ocean, characters, ground plane, checkerboard, lettering, logos or neighboring accessories. One modular submerged stone aqueduct tunnel BAY shown as a strict true 2D side-on cutaway. Broad exactly level masonry floor and ceiling strips meet across a curved vaulted blue stone back wall. Clearly visible interior swimmable void is indicated by a recessed dark blue back wall and columns at left and right edges ONLY, no gate/no solid wall across the opening. Center back wall cool shadow with small facet panels and angled engraved pale fibers for woven stone. Side view wide rectangle approximately 2.2:1, entire module with transparent edges, left and right straight join surfaces for adjoining identical modules, no outside terrain, water or perspective vanishing point."
+    },
+    "floating_moss": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_moss.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        27,
+        108,
+        2148,
+        565
+      ],
+      "texture_px": [
+        2121,
+        457
+      ],
+      "prompt": "Render one NEW sharply detailed production object for Threadbound, isolated on genuine transparent alpha. The supplied scene establishes style only. Orthographic side-scrolling elevation, shallow visible top surfaces, strong single readable shape, slate-blue large low-poly facets with precise patterned crossings of pale fine grain lines, natural chartreuse moss and warm golden ochre fibers where relevant; use consistent clean early-day lighting. Avoid canvas shadows, perspective vanishing point, scenery, water, text, character or fake checkerboards. Preserve finer line art at 100 percent view. One medium width low floating slate platform slice, all of its broad top face flat and exposed and walkable, roughly 4:1 wide to height, thin uneven bright green moss hugging the front, only a few small pink blossoms on the far left and stems on the far right. Stacked sharp individual slate-blue rock facets with pale diagonal engraved fibers, deep cool blue shadow underneath. Single platform with lots of useful landing surface."
+    },
+    "dock_pier": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/dock_pier.png",
+      "generated_px": [
+        1482,
+        1062
+      ],
+      "trim_box": [
+        17,
+        65,
+        1464,
+        1002
+      ],
+      "texture_px": [
+        1447,
+        937
+      ],
+      "prompt": "Render one NEW sharply detailed production object for Threadbound, isolated on genuine transparent alpha. The supplied scene establishes style only. Orthographic side-scrolling elevation, shallow visible top surfaces, strong single readable shape, slate-blue large low-poly facets with precise patterned crossings of pale fine grain lines, natural chartreuse moss and warm golden ochre fibers where relevant; use consistent clean early-day lighting. Avoid canvas shadows, perspective vanishing point, scenery, water, text, character or fake checkerboards. Preserve finer line art at 100 percent view. One independently placeable short wooden dock module, viewed entirely in side elevation. A flat broad timber-plank walkway cap, with light rope railing, three tall vertical piles and crossed supports. The dock cap supports a player, thick board and plank detail. Warm amber cedar with fine angled crossed grain cleanly incised in big facets and turquoise-toned aged lower posts. The area between pilings is transparent. 1.4:1 width to height. No surroundings, no water, no building, no ladder."
+    },
+    "cottage_small": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/cottage_small.png",
+      "generated_px": [
+        1536,
+        1024
+      ],
+      "trim_box": [
+        184,
+        16,
+        1363,
+        951
+      ],
+      "texture_px": [
+        1179,
+        935
+      ],
+      "prompt": "Render one NEW sharply detailed production object for Threadbound, isolated on genuine transparent alpha. The supplied scene establishes style only. Orthographic side-scrolling elevation, shallow visible top surfaces, strong single readable shape, slate-blue large low-poly facets with precise patterned crossings of pale fine grain lines, natural chartreuse moss and warm golden ochre fibers where relevant; use consistent clean early-day lighting. Avoid canvas shadows, perspective vanishing point, scenery, water, text, character or fake checkerboards. Preserve finer line art at 100 percent view. One small single-story outlying farming cottage from the reference's blue village, modest and visibly narrower than a big village house. Side view with a slight look at the front, swept deep-indigo roof with thin pale geometric lines in the blue tiles, warm woven cedar walls, one vertical sliding amber window, tiny dry porch with individually ending posts, uneven alpha silhouette at its base. No paving, vegetation, source scene, landscape or trims around the canvas."
+    },
+    "bank_slope": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/bank_slope.png",
+      "generated_px": [
+        2098,
+        749
+      ],
+      "trim_box": [
+        28,
+        52,
+        2071,
+        716
+      ],
+      "texture_px": [
+        2043,
+        664
+      ],
+      "prompt": "Render one NEW sharply detailed production object for Threadbound, isolated on genuine transparent alpha. The supplied scene establishes style only. Orthographic side-scrolling elevation, shallow visible top surfaces, strong single readable shape, slate-blue large low-poly facets with precise patterned crossings of pale fine grain lines, natural chartreuse moss and warm golden ochre fibers where relevant; use consistent clean early-day lighting. Avoid canvas shadows, perspective vanishing point, scenery, water, text, character or fake checkerboards. Preserve finer line art at 100 percent view. ONE chunky long irregular rocky hillside behind a riverbank, viewed in pure horizontal side elevation. A low left shoulder rises slowly up and to the right and ends in a deeper chunky rock buttress. A collection of joined blue-gray stone facets with small diagonal woven engravings, narrow root veins and restrained moss patches. Width about 2.8 times height. Jagged transparent outline and no buildings, trees, ledges, grass floor, water, brick structures, open cavern or valley beyond."
+    },
+    "chamber_bough": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_bough.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        18,
+        16,
+        2154,
+        709
+      ],
+      "texture_px": [
+        2136,
+        693
+      ],
+      "prompt": "Render one NEW sharply detailed production object for Threadbound, isolated on genuine transparent alpha. The supplied scene establishes style only. Orthographic side-scrolling elevation, shallow visible top surfaces, strong single readable shape, slate-blue large low-poly facets with precise patterned crossings of pale fine grain lines, natural chartreuse moss and warm golden ochre fibers where relevant; use consistent clean early-day lighting. Avoid canvas shadows, perspective vanishing point, scenery, water, text, character or fake checkerboards. Preserve finer line art at 100 percent view. One thick gnarled ancient tree branch that grows from a cut base at the left and sweeps right, slowly up and then down in a very wide horizontal canopy arch. Bark visibly braided, fine wood grain follows the angular geometry, sparse overlapping broad angular leaves with engraved crosshatched veins draping under the middle and tip, a few pink blooms. Works as a near-foreground mask at the top edge of a cave mouth. Do not include terrain, other branches off the canvas except connecting the left cut end, a trunk going to ground, or scenery."
+    },
+    "chamber_floor": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_floor.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        7,
+        6,
+        2166,
+        719
+      ],
+      "texture_px": [
+        2159,
+        713
+      ],
+      "prompt": "One isolated transparent production terrain sprite for Threadbound's Woven Shore, dense precise engraved woven lines and faceted slate like the attached style reference, entirely freshly rendered. This object is a broad asymmetrical left cliff floor chunk for the LOWER cave exit, with flat uninterrupted walkable natural blue-grey worn slate top and a sparse green moss fringe at the RIGHT exposed edge. The right end juts out as a slightly tapering rock lip then slopes down, long ragged rocky underside tapering toward left where this chunk joins a cave wall. Large indigo grey faces with woven golden mineral strands, selectively bright from right daylight. Wide 2:1 or 3:1 landscape side elevation, shallow depth on top surface for feet. A full standalone ground object, no doorway, branch, props, background, water, text, checkerboard or shadows outside shape."
+    },
+    "lakebed_rocks": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/lakebed_rocks.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        31,
+        204,
+        2142,
+        499
+      ],
+      "texture_px": [
+        2111,
+        295
+      ],
+      "prompt": "One isolated elongated rock cluster for the lower foreground at the underwater edge of this Threadbound side-scrolling scene. Use the input only as style reference; draw the asset independently and make the crosswise engraved pale thread lines sharp on teal-blue low-poly stone and pebbles. Broad, relatively low trail of rocks with fragments tapering on both sides, and a minimal group of angular turquoise reeds emerging among them. Entirely transparent edges, top and negative spaces; no wall, water, atmospheric strokes, bubbles, sky, floor beyond object, border, or lettering. Side view and slight upper planar surfaces. Low horizontal footprint approximately 3:1."
+    },
+    "rock_step": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/rock_step.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        122,
+        209,
+        2044,
+        528
+      ],
+      "texture_px": [
+        1922,
+        319
+      ],
+      "prompt": "One standalone small flat low solid rock foothold horizontally oriented, a knee-high ledge on a cave or shore cliff. Game view defined by the scene reference. Fills a wide transparent canvas with clean organic edges. Rock surface is dark gray-blue faceted slate, a shallow flat natural standing top clear through center, only a little mottled green moss on its corners. Fine sharp pale incised lines with subtle crosshatched fibers. Thick enough underneath to bury into a cliff, blackish slate angled chipped faces. No other props or ground, no water, character, shadows outside, lettering or fake checkerboard. Isolated game sprite. Ratio roughly 3 to 1."
+    },
+    "floating_short": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_short.png",
+      "generated_px": [
+        2079,
+        756
+      ],
+      "trim_box": [
+        36,
+        21,
+        2044,
+        685
+      ],
+      "texture_px": [
+        2008,
+        664
+      ],
+      "prompt": "Draw just ONE independent high-resolution sprite with true transparent surroundings. Match the supplied Threadbound reference's low-poly woven look only. Crisp tiny crosswise pale engraved fibers on cut blue slate faces, woven golden veins, amber daytime rim shading and golden-olive moss, side elevation in a 2D game with shallow visible upper faces and readable silhouettes. No other objects outside the specified sprite, no scenery, no text. A small chunky irregular floating stepping stone with a completely level natural slate foot surface across its center, two dark irregular angular facets below, a narrow moss tongue far left and a few bright green shoots far right. Approximately 2.75:1 width to height. Zoom in to use the canvas. No grass in center, no fake rim slice."
+    },
+    "floating_split": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_split.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        76,
+        63,
+        2097,
+        625
+      ],
+      "texture_px": [
+        2021,
+        562
+      ],
+      "prompt": "Draw just ONE independent high-resolution sprite with true transparent surroundings. Match the supplied Threadbound reference's low-poly woven look only. Crisp tiny crosswise pale engraved fibers on cut blue slate faces, woven golden veins, amber daytime rim shading and golden-olive moss, side elevation in a 2D game with shallow visible upper faces and readable silhouettes. No other objects outside the specified sprite, no scenery, no text. Medium playable floating rock shelf with a shallow flat blue-gray slate slab top spreading wider than its base. Underneath are two subtly split broad faceted lobes of stone with thin bright warm seams in one lobe and detailed diagonal crossing engraved grain. Mostly moss on the corners and small isolated pink flowering sprig far right. 3.3:1 width to height, squarely facing camera."
+    },
+    "floating_wide": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_wide.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        24,
+        139,
+        2149,
+        653
+      ],
+      "texture_px": [
+        2125,
+        514
+      ],
+      "prompt": "Draw just ONE independent high-resolution sprite with true transparent surroundings. Match the supplied Threadbound reference's low-poly woven look only. Crisp tiny crosswise pale engraved fibers on cut blue slate faces, woven golden veins, amber daytime rim shading and golden-olive moss, side elevation in a 2D game with shallow visible upper faces and readable silhouettes. No other objects outside the specified sprite, no scenery, no text. One broad independent high quality floating ledge with smooth flat grey top and a few woven moss wisps over the left lip. Thick faceted irregular underside, one asymmetric angled hanging point right of center, pale fine visible diagonal cross-woven markings on faces, two narrow copper-root fibers at left. Width 4 times height. Natural shape with a usable slate top across most of width. Closed separate silhouette."
+    },
+    "shore_lantern": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_lantern.png",
+      "generated_px": [
+        1409,
+        1116
+      ],
+      "trim_box": [
+        142,
+        117,
+        1264,
+        993
+      ],
+      "texture_px": [
+        1122,
+        876
+      ],
+      "prompt": "Draw just ONE independent high-resolution sprite with true transparent surroundings. Match the supplied Threadbound reference's low-poly woven look only. Crisp tiny crosswise pale engraved fibers on cut blue slate faces, woven golden veins, amber daytime rim shading and golden-olive moss, side elevation in a 2D game with shallow visible upper faces and readable silhouettes. No other objects outside the specified sprite, no scenery, no text. One warm illuminated square woven timber and paper lantern hanging on a single small side-mounted cedar bracket. Amber paper, no broad glow around the lamp; genuine alpha around all edges including inside the mount gaps. Tiny diamond pattern on the paper, finely engraved crossgrain on the wood and copper pegs, a distinct slanted side bracket. Side-scroller prop without wall or post behind it. Fill the available canvas with just the prop."
+    },
+    "aqueduct_foundation": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_foundation.png",
+      "generated_px": [
+        2172,
+        724
+      ],
+      "trim_box": [
+        13,
+        198,
+        2161,
+        632
+      ],
+      "texture_px": [
+        2148,
+        434
+      ],
+      "prompt": "One independently generated broad low underwater rock foundation PNG. Isolated foreground natural bedrock slab only on transparent canvas, no water or nearby objects. It will sit behind a separately assembled aqueduct stone wall cutaway. Long, nearly flat rough upper rim that slopes down gently toward the left, chunky layered slate compresses from blue-gray on top to muted royal teal in its depth, asymmetric angular lower silhouette, warm worn mineral seams with small delicately etched woven line grain. A few roots follow the diagonal planes, only sparse dark teal lake plants along exposed corners. Side elevation, wide landscape at least 3:1, large asset fills canvas. Keep it moderately dark so a bright ruined stone sprite in front reads clearly. Style reference only. No arch or cavities, bricks, gate, shore, text, sky, checkerboard, underwater glow behind the item, no composited backdrop."
+    },
+    "village_bluff": {
+      "path": "Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/village_bluff.png",
+      "generated_px": [
+        1536,
+        1024
+      ],
+      "trim_box": [
+        23,
+        165,
+        1512,
+        966
+      ],
+      "texture_px": [
+        1489,
+        801
+      ],
+      "prompt": "One detached high-detail cliff buttress rock stamp that can sit beneath the rightmost high village rooftop. Entirely new isolated PNG, Threadbound woven low poly style reference only. True 2D side elevation. Portrait or square silhouette, broad roughly horizontal top extends across the upper right for a building while the upper left shoulder slopes outward gradually down and to the left into a chunky lower foot. The right edge is nearly vertical so it visually connects beyond a room boundary. Blue-gray slate, vivid thin uneven golden-green moss fringing the left contours, finely incised pale diagonal crossings on angular facets, warm roots. Closed silhouette, bold big slate surfaces, empty transparent margins. No buildings, full scene, water, sky, paths, layers of shelves, text, or background."
+    }
+  }
+}
