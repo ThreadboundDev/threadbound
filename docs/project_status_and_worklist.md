@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 25 Outfit A fitting export
+
+The shared Base Outfit A mesh now uses the saved November 23 fit from
+`Threadbound_Base_Armor_Fit.blend`. The existing modular body, boots and grapple
+glove are still used. Re-exported boots and glove matched their installed files
+byte for byte. The export uses the neutral cloth fit and the game rig. The
+Blender-only animation review reel stays in the source file.
+
+Godot reimported the mesh without errors. Ten checks confirmed that Blue
+Blockout and Demo 2.0 attach and animate the revised outfit. Blue Blockout also
+rendered successfully in Forward+. Checkpoint `asset: install November 23 Outfit A fit`.
+
 ## November 25 fresh Blue blockout
 
 Chase requested a fresh scene with the existing Blue backgrounds and Room Greybox
