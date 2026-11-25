@@ -9,7 +9,7 @@ must leave the visible game folders too. A second pass stages 512 additional fil
 current gameplay checks and source art remain. No permanent deletion or gameplay edits.
 See [the second cleanup report](organization/cleanup_2026_11_25_pass2.md).
 Validation completed: 512 hashes verified, normal and fresh-import demo/Blue launches passed,
-startup title loaded and all 39 player-presentation checks passed. Git receipt follows the checkpoint.
+startup title loaded and all 39 player-presentation checks passed. Cleanup delivered in `fd0b69b2`; validation completed and all 512 moved-file hashes verified.
 
 ## November 25 game and Krita cleanup
 

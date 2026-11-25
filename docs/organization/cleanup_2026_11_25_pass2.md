@@ -40,6 +40,6 @@ All 512 moved files match their SHA-256 hashes. The new batch uses a separate di
 - Only one hidden historical water layout remains for a current bank-dive regression; the 23 obsolete layouts and their dedicated old prototype checks are staged.
 - The temporary source/import snapshot was removed after validation, keeping the verification logs without leaving another game copy.
 
-Git receipt follows the checkpoint. Local evidence stays under `tmp/cleanup-2026-11-25/pass2/`.
+Cleanup checkpoint: `fd0b69b2` — `chore: retire unused Blue assets and prototype checks`. Local evidence stays under `tmp/cleanup-2026-11-25/pass2/`.
 
 Validation uses the existing development checkout. Its pre-existing runtime/source edits and earlier deletions remain separate; this cleanup checkpoint is not a clean-checkout release validation.
