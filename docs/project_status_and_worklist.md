@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 25 Blue Ricefield Crossing
+
+First dressed pass from Chase's 512-cell Blue blockout. The cave opening,
+upper timber crossing, lower ricefield terraces, west house and submerged
+stone aqueduct use individual existing art assets. Water meets the backdrop
+horizon at Y = 0. The route markers and the original blockout stay available.
+The new scene uses the current doll, fixed spawn, swimmable lake and two Blue
+encounters. Open `blue_ricefield_crossing.tscn` for hands-on art review.
+
+Verified 24 level checks, 31 platform-drop checks and Forward+ playback. The
+TileMap drop safety fix is `6e87ea93`. See the
+[crossing guide](../Src/Environment/BlueBiome/BLUE_RICEFIELD_CROSSING.md).
+Level checkpoint subject is `level: dress Blue Ricefield Crossing`.
+
 ## November 25 Outfit A fitting export
 
 The shared Base Outfit A mesh now uses the saved November 23 fit from
