@@ -7,8 +7,9 @@ be layered into one room. The [expansion](../ArtSource/BlueBiome/Krita/Woven_Blu
 adds 18 platforms, nine cave edges and four rear cave textures. The pieces
 share the approved vivid palette and diagonal woven slate. A 16-layer
 OpenRaster example shows a complete cave using the separate textures,
-walls, floor and ledges. The expansion is ready to import at Chase's
-convenience.
+walls, floor and ledges. The expansion is installed in Krita. Krita
+registered 31 expansion presets and four new category tags, with 67 presets
+under **Threadbound - Woven Blue**. Blue Blockout is open for hands-on testing.
 
 All 31 transparent cutouts and 62 bundle resources passed validation.
 The four rear fields have opaque centers and the example recomposes
