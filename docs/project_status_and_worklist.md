@@ -9,7 +9,8 @@ unique user paintings, active doll/equipment sources and required builder inputs
 Old playable art experiments, unused assets, redundant deliveries and backups are in
 `Staged for Delete/2026-11-25/`; five Chamber KRA sources are in `ArtSource/Chamber/Krita/`.
 Nothing is permanently deleted. See [the report and restore instructions](organization/cleanup_2026_11_25.md).
-Validation and Git receipt will be recorded when checks complete.
+Cleanup delivered in `dee1b81d`; 1,003 moves hash-verified, demo/Blue/title launch checks passed,
+and 25,920 clock plus 39 player-presentation checks passed. Review files before permanent deletion.
 
 Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
