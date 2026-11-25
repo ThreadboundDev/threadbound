@@ -1964,7 +1964,10 @@ func _has_solid_overlap(at: Vector2) -> bool:
 	query.transform.origin += at-global_position
 	query.collision_mask = collision_mask
 	var excluded: Array[RID] = [get_rid()]
-	for excepted in get_collision_exceptions(): excluded.append(excepted.get_rid())
+	for excepted in get_collision_exceptions():
+		# TileMap physics exceptions may have a RID without a body node.
+		if is_instance_valid(excepted):
+			excluded.append(excepted.get_rid())
 	for contact in _one_way_drop_exceptions: excluded.append(contact.rid)
 	query.exclude = excluded
 	for overlap in get_world_2d().direct_space_state.intersect_shape(query, 64):
