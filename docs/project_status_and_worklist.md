@@ -14,6 +14,10 @@ TileMap drop safety fix is `6e87ea93`. See the
 [crossing guide](../Src/Environment/BlueBiome/BLUE_RICEFIELD_CROSSING.md).
 Level checkpoint subject is `level: dress Blue Ricefield Crossing`.
 
+Fresh-checkout validation restored 27 byte-identical textures still referenced by
+the committed player and three glove scenes. All 55 checks then passed. The
+checkout also reported missing development-only feedback and Godot AI files.
+
 ## November 25 Outfit A fitting export
 
 The shared Base Outfit A mesh now uses the saved November 23 fit from

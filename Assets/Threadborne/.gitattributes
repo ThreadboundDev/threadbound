@@ -1,0 +1,4 @@
+hurt.png filter=lfs diff=lfs merge=lfs -text
+sit.png filter=lfs diff=lfs merge=lfs -text
+Player_Normalized_V1/*.png filter=lfs diff=lfs merge=lfs -text
+Run/*.png filter=lfs diff=lfs merge=lfs -text
