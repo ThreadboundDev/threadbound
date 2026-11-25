@@ -9,7 +9,8 @@ paintable floor, editable Spawn, current player/camera/HUD and separate parallax
 backgrounds. F6 tests; R and falling out return to Spawn. No old Woven route restored.
 Twelve headless checks passed and Forward+ playback rendered correctly. See the
 [workspace guide](../Src/Environment/BlueBiome/BLUE_BLOCKOUT.md).
-Task checkpoint: `level: add fresh Blue blockout workspace`.
+Delivered in `e84179a2` — `level: add fresh Blue blockout workspace`.
+The scene is open in Godot with Geometry selected and Room Greybox visible.
 
 ## November 25 deeper asset-folder cleanup
 

@@ -11,3 +11,5 @@ Open `blue_blockout.tscn` and press **F6** to test. This is the fresh Blue level
 No enemies, puzzles, route layouts or old Woven Shore scenes were restored. Build the new layout here, save the scene, then checkpoint before switching art or level tasks.
 
 Validation: 12 headless checks passed for starter collision, one-way tiles, textures, player model, reset/fall recovery, camera and HUD. Forward+ playback rendered the Blue background, current doll and starter floor correctly. Existing shutdown resource warnings remain. This was verified in the current development checkout; pre-existing implementation edits remain separate from the level checkpoint.
+
+Level checkpoint: `e84179a2`. The scene was left open in the 2D editor with **Geometry** selected and **Room Greybox** visible.
