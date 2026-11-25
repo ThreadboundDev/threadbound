@@ -1,18 +1,18 @@
 # Threadbound current TODO list
 
-## November 25 Blue Ricefield Crossing
+## November 25 Blue blockout in Krita
 
-First dressed pass from Chase's 512-cell Blue blockout. The cave opening,
-upper timber crossing, lower ricefield terraces, west house and submerged
-stone aqueduct use individual existing art assets. Water meets the backdrop
-horizon at Y = 0. The route markers and the original blockout stay available.
-The new scene uses the current doll, fixed spawn, swimmable lake and two Blue
-encounters. Open `blue_ricefield_crossing.tscn` for hands-on art review.
+Chase will paint the authored Blue blockout using the existing stamp library.
+[Blue Blockout in Krita](../ArtSource/BlueBiome/Krita/Blue_Blockout.kra) is a
+6784 × 4096 painting file at one canvas pixel per Godot unit. World origin
+is canvas (1536, 2816). Three empty stamp layers sit above individually
+toggleable solid terrain, one-way platforms, route markers, waterline and
+original backdrop guides. The optional 128 px guide grid starts hidden.
 
-Verified 24 level checks, 31 platform-drop checks and Forward+ playback. The
-TileMap drop safety fix is `6e87ea93`. See the
-[crossing guide](../Src/Environment/BlueBiome/BLUE_RICEFIELD_CROSSING.md).
-Level checkpoint subject is `level: dress Blue Ricefield Crossing`.
+The original playable blockout stays in the project. The experimental
+Ricefield Crossing scene and its dedicated asset copies were retired at
+Chase's request. Prior level checkpoint `83c0e002` preserves that experiment
+in history. The shared platform-drop and player texture repairs are retained.
 
 Fresh-checkout validation restored 27 byte-identical textures still referenced by
 the committed player and three glove scenes. All 55 checks then passed. The
