@@ -1,0 +1,845 @@
+{
+  "image_generation": "Built-in image_gen",
+  "sheets": {
+    "solid": {
+      "sha256": "49fa0d6e3be6bb5ad73bd35e963130c20d76f7ddd8818e92fc805a8776403a3f",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Derive a new production piece sheet from the three input references for original Threadbound Woven Blue, a 2D side-scrolling game. Image 1 is the same existing stone material family and overall value ramp; images 2 and 3 are the approved vibrant game palette/standing-plane reference only. Retain the warm apricot limestone top, blue-violet slate facet sides with oxidation orange on selected planes, restrained diagonal ochre thread accents inside the surface, and bright yellow-green moss in small clumps in daylight. Preserve the broad faceted shapes and woven mineral grain, match facet scale and light direction across every piece. Match neutral rock hues closely between ALL pieces so repeated assets will overlap and appear to be one landmass. Keep the texture broadly diagonal and striped at a single scale, no wraps, trim, straight bright plate edges or decorative swirls that make a seam obvious. Clear 2D side elevation with modest top reveal; no perspective vanishing point. Genuine transparent alpha in the background and occluded openings. Lay out independent stamps in a regular grid with serious transparent gutters at least ten percent of the sheet cell dimension from EVERY real edge. No visible grid, no headers, no text, no character, no backgrounds, no ground plane or separate cast shadows. Keep every piece and leaf tip entirely within its cell. Crisp readable gameplay silhouettes; modest patterned surface density.\nA 3-by-3 sprite sheet of nine distinct solid land-platform shapes, as reusable building blocks. Row 1: (1) wide deep continuous flat central slate mass with subtly staggered natural ends; (2) shallow wide flat cream-top moss shelf as an ordinary terrain transition; (3) chunky uneven left half-wall bank with its height of flat usable top constant. Row 2: (4) right half-wall bank opposite to 3 with similarly flat walking surface; (5) rock ramp rising gently right, with wide gradual slope surface visible; (6) companion ramp falling gently right. Row 3: (7) two-step terrace bench with wide straight treads; (8) compact thick flat squared slate block with minimal moss suitable for repetition; (9) long wet shoreline shelf with hints of turquoise reflected light in the sides and bare pale stone top, nothing separate. Tops are integrated continuous material, no separate glued-on cap, and broad enough for the projected boots of the game character. Plain faces where pieces could overlap, less than three large weave bands per piece, keep separate variation in shape rather than unrelated stone palettes."
+    },
+    "floating": {
+      "sha256": "bebc1b8a84710d9b3f3081715f6c611b27961a5bd0d1be54810c0c548cf90207",
+      "size": [
+        2172,
+        724
+      ],
+      "prompt": "Derive a new production piece sheet from the three input references for original Threadbound Woven Blue, a 2D side-scrolling game. Image 1 is the same existing stone material family and overall value ramp; images 2 and 3 are the approved vibrant game palette/standing-plane reference only. Retain the warm apricot limestone top, blue-violet slate facet sides with oxidation orange on selected planes, restrained diagonal ochre thread accents inside the surface, and bright yellow-green moss in small clumps in daylight. Preserve the broad faceted shapes and woven mineral grain, match facet scale and light direction across every piece. Match neutral rock hues closely between ALL pieces so repeated assets will overlap and appear to be one landmass. Keep the texture broadly diagonal and striped at a single scale, no wraps, trim, straight bright plate edges or decorative swirls that make a seam obvious. Clear 2D side elevation with modest top reveal; no perspective vanishing point. Genuine transparent alpha in the background and occluded openings. Lay out independent stamps in a regular grid with serious transparent gutters at least ten percent of the sheet cell dimension from EVERY real edge. No visible grid, no headers, no text, no character, no backgrounds, no ground plane or separate cast shadows. Keep every piece and leaf tip entirely within its cell. Crisp readable gameplay silhouettes; modest patterned surface density.\nA 3-by-3 sprite sheet of nine distinct floating / one-way rock platform variations built from exactly the palette and material of the reference. Keep the physically walkable surface wide front to back and almost perfectly horizontal for each. Row 1: (1) long thin flat plank-like slate ledge with broken ends; (2) long flat ledge with an irregular shallow concave underside; (3) long ledge with two small downward diamond teeth. Row 2: (4) medium blunt floating wedge, (5) medium flat shelf with hanging roots at its right end only, (6) medium shelf with a left-side stone projection and small moss pockets. Row 3: (7) compact trapezoid step, (8) compact wide pill-shaped slate step with crisply faceted edge, (9) compact pale old slate ledge with subtle wet blue on the underside. Tops use warm pale apricot/cream stone, beveled narrow but readable edges. Keep repeatable pattern weight through every piece. Most are wider than high, w:h roughly 3:1 to 6:1 with empty transparency above and below. Roots and moss are accents rather than walking surfaces."
+    },
+    "cave_edges": {
+      "sha256": "29b15a389ae2f1e8088ebad69f26168837bd98d6b167f0a444dbb3443e6bfb59",
+      "size": [
+        1268,
+        1241
+      ],
+      "prompt": "Derive a new production piece sheet from the three input references for original Threadbound Woven Blue, a 2D side-scrolling game. Image 1 is the same existing stone material family and overall value ramp; images 2 and 3 are the approved vibrant game palette/standing-plane reference only. Retain the warm apricot limestone top, blue-violet slate facet sides with oxidation orange on selected planes, restrained diagonal ochre thread accents inside the surface, and bright yellow-green moss in small clumps in daylight. Preserve the broad faceted shapes and woven mineral grain, match facet scale and light direction across every piece. Match neutral rock hues closely between ALL pieces so repeated assets will overlap and appear to be one landmass. Keep the texture broadly diagonal and striped at a single scale, no wraps, trim, straight bright plate edges or decorative swirls that make a seam obvious. Clear 2D side elevation with modest top reveal; no perspective vanishing point. Genuine transparent alpha in the background and occluded openings. Lay out independent stamps in a regular grid with serious transparent gutters at least ten percent of the sheet cell dimension from EVERY real edge. No visible grid, no headers, no text, no character, no backgrounds, no ground plane or separate cast shadows. Keep every piece and leaf tip entirely within its cell. Crisp readable gameplay silhouettes; modest patterned surface density.\nA 3-by-3 sprite sheet of complementary cave framing and occlusion modules built from the reference slate. Same local blue/lavender slate, amber worn faces and tiny ochre crossings, lost highlights only in inward-facing recesses. Row 1: (1) thick left cave wall, heavy darkest irregular inward-facing straight right cut edge and simple outer side; (2) complementary right cave wall with an irregular inner left silhouette; (3) long broad cavern ceiling cap with gaps and some points projecting down, sturdy opaque solid top. Row 2: (4) rocky ceiling transition sloping length downward on the right, (5) a long flat cave floor lip with wide usable pale stone top, mostly moss-free and blue sides; (6) tall neutral cave pillar with branching fractures and a splayed foot. Row 3: (7) deep slate tall cave arch with a large genuinely transparent open center, (8) small slate stalactite cluster for blending under ceilings, (9) small projecting slate buttress with projecting geometry and jagged uneven transparent rim to hide a join. No full closed rooms, no built structures or lights. Make every layer individually readable and easy to overlap with the adjacent wall and ceiling material."
+    },
+    "cave_back": {
+      "sha256": "1846bd9e465308ace10857eaf63f1a4b2cd05015b72ae9c1953eafd0cae8e9f2",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Derive a new production piece sheet from the three input references for original Threadbound Woven Blue, a 2D side-scrolling game. Image 1 is the same existing stone material family and overall value ramp; images 2 and 3 are the approved vibrant game palette/standing-plane reference only. Retain the warm apricot limestone top, blue-violet slate facet sides with oxidation orange on selected planes, restrained diagonal ochre thread accents inside the surface, and bright yellow-green moss in small clumps in daylight. Preserve the broad faceted shapes and woven mineral grain, match facet scale and light direction across every piece. Match neutral rock hues closely between ALL pieces so repeated assets will overlap and appear to be one landmass. Keep the texture broadly diagonal and striped at a single scale, no wraps, trim, straight bright plate edges or decorative swirls that make a seam obvious. Clear 2D side elevation with modest top reveal; no perspective vanishing point. Genuine transparent alpha in the background and occluded openings. Lay out independent stamps in a regular grid with serious transparent gutters at least ten percent of the sheet cell dimension from EVERY real edge. No visible grid, no headers, no text, no character, no backgrounds, no ground plane or separate cast shadows. Keep every piece and leaf tip entirely within its cell. Crisp readable gameplay silhouettes; modest patterned surface density.\nMake a 2-by-2 sheet of FOUR generously sized standalone rear cave texture patches designed to cover a continuous large interior cave wall behind other stamps. These are material surfaces rather than separate boulders. Use the same directional weave, facet size, blue-violet slate, touches of warm copper mineral and the same light direction as the platform reference. Each patch is broadly rectangular horizontally and covers its full irregular mass with paint, at least 75 percent coverage within its own silhouette; uneven transparent feathered rock rims with no straight bordered vignette. Keep centers opaque and simple, designed to overlap. Patch 1 upper left is a broad mid-value blue-violet slate wall with subtle large angled facets, the basic material swatch. Patch 2 upper right is a deep shadow slate recess with muted lapis and purple facets, no big focal ridge. Patch 3 lower left is a slightly warmer mineral-streak face with only faint diagonal amber seams, match the mid-value at the outer border. Patch 4 lower right is a damp underwater slate wall with slate blue and restrained turquoise glints, same stone facets. Match matching edges so a soft overlap or overlaid buttress hides joins. No moss or accessories, no individual larger foreground rock, holes, framing, shelves, hanging curtains, lights, gradients from black, or ground bases. Avoid bright isolated border strokes at overlaps. Keep enough alpha between pieces to extract each independently."
+    }
+  },
+  "assets": [
+    {
+      "id": "woven_blue_deep_central_bank",
+      "name": "Deep Central Bank",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        30,
+        139,
+        528,
+        301
+      ],
+      "cell": [
+        0,
+        0,
+        528,
+        341
+      ],
+      "size": [
+        514,
+        178
+      ],
+      "default_size": 1024,
+      "file": "stamps/woven_blue_deep_central_bank.png",
+      "edge_pixels": 0,
+      "sha256": "affcc8b82ae935424b7a09a8a7272769e5c954d8c143df01f511596052ddc329"
+    },
+    {
+      "id": "woven_blue_shallow_slate_transition",
+      "name": "Shallow Slate Transition",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        556,
+        196,
+        979,
+        293
+      ],
+      "cell": [
+        528,
+        0,
+        1024,
+        341
+      ],
+      "size": [
+        439,
+        113
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_shallow_slate_transition.png",
+      "edge_pixels": 0,
+      "sha256": "535b2a5a3db337c1cbe0d88a87252209c2f85c836bc66726aef72a1a2d52bb0f"
+    },
+    {
+      "id": "woven_blue_high_left_bank",
+      "name": "High Left Bank",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        1028,
+        94,
+        1496,
+        298
+      ],
+      "cell": [
+        1024,
+        0,
+        1536,
+        341
+      ],
+      "size": [
+        484,
+        220
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_high_left_bank.png",
+      "edge_pixels": 0,
+      "sha256": "2ecf142f903203b9b7844222db49b850f405cc71d04c1d7347b0d39f9381f50d"
+    },
+    {
+      "id": "woven_blue_high_right_bank",
+      "name": "High Right Bank",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        45,
+        405,
+        495,
+        617
+      ],
+      "cell": [
+        0,
+        341,
+        512,
+        683
+      ],
+      "size": [
+        466,
+        228
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_high_right_bank.png",
+      "edge_pixels": 0,
+      "sha256": "b4e52b8ffb615921c671d923268f98612e9730896719d0ca1286e71bc4687c10"
+    },
+    {
+      "id": "woven_blue_ascending_slate_ramp",
+      "name": "Ascending Slate Ramp",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        526,
+        440,
+        986,
+        611
+      ],
+      "cell": [
+        512,
+        341,
+        1024,
+        683
+      ],
+      "size": [
+        476,
+        187
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_ascending_slate_ramp.png",
+      "edge_pixels": 0,
+      "sha256": "1066bfd2605b37763e694934fee050ebb725a2baa32040dc6aa5dfbcbd255d18"
+    },
+    {
+      "id": "woven_blue_descending_slate_ramp",
+      "name": "Descending Slate Ramp",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        1024,
+        443,
+        1495,
+        610
+      ],
+      "cell": [
+        1024,
+        341,
+        1536,
+        683
+      ],
+      "size": [
+        487,
+        183
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_descending_slate_ramp.png",
+      "edge_pixels": 0,
+      "sha256": "624e463d19c0ba7bc1937a1db5b83a8ecf117a4f8900d918c2c5dafb98668a81"
+    },
+    {
+      "id": "woven_blue_two_step_slate_bench",
+      "name": "Two Step Slate Bench",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        43,
+        730,
+        504,
+        926
+      ],
+      "cell": [
+        0,
+        683,
+        512,
+        1024
+      ],
+      "size": [
+        477,
+        212
+      ],
+      "default_size": 832,
+      "file": "stamps/woven_blue_two_step_slate_bench.png",
+      "edge_pixels": 0,
+      "sha256": "6288b1ebf73d038ab259bd70b5e4dafa760b47b5a9232b6bcf7064706c115298"
+    },
+    {
+      "id": "woven_blue_heavy_flat_slate_block",
+      "name": "Heavy Flat Slate Block",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        589,
+        744,
+        930,
+        926
+      ],
+      "cell": [
+        512,
+        683,
+        989,
+        1024
+      ],
+      "size": [
+        357,
+        198
+      ],
+      "default_size": 544,
+      "file": "stamps/woven_blue_heavy_flat_slate_block.png",
+      "edge_pixels": 0,
+      "sha256": "4cc9fc0c615fba232f5677cebea35397bedfba71b1b65f9f91b8ae526c36c356"
+    },
+    {
+      "id": "woven_blue_long_wet_shore_shelf",
+      "name": "Long Wet Shore Shelf",
+      "category": "Solid Platforms",
+      "sheet": "solid",
+      "source_bounds": [
+        989,
+        809,
+        1498,
+        920
+      ],
+      "cell": [
+        989,
+        683,
+        1536,
+        1024
+      ],
+      "size": [
+        525,
+        127
+      ],
+      "default_size": 864,
+      "file": "stamps/woven_blue_long_wet_shore_shelf.png",
+      "edge_pixels": 0,
+      "sha256": "c712fc3a817861ba94de1d181230d3a750663b0d7d03626d1b8cabcba6313bdf"
+    },
+    {
+      "id": "woven_blue_long_broken_edge_ledge",
+      "name": "Long Broken Edge Ledge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        30,
+        76,
+        700,
+        170
+      ],
+      "cell": [
+        0,
+        0,
+        724,
+        241
+      ],
+      "size": [
+        686,
+        110
+      ],
+      "default_size": 832,
+      "file": "stamps/woven_blue_long_broken_edge_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "eb29d410d365281345ba07696adcdb15eb2ae12ca3b283690df5661a56f614f0"
+    },
+    {
+      "id": "woven_blue_long_shallow_arc_ledge",
+      "name": "Long Shallow Arc Ledge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        756,
+        62,
+        1414,
+        192
+      ],
+      "cell": [
+        724,
+        0,
+        1448,
+        241
+      ],
+      "size": [
+        674,
+        146
+      ],
+      "default_size": 784,
+      "file": "stamps/woven_blue_long_shallow_arc_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "26d77570adb43b6429c4a4b3ad9364ff8c830b3f20f6eb203450518237c93fd3"
+    },
+    {
+      "id": "woven_blue_long_double_tooth_ledge",
+      "name": "Long Double Tooth Ledge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        1471,
+        69,
+        2143,
+        196
+      ],
+      "cell": [
+        1448,
+        0,
+        2172,
+        241
+      ],
+      "size": [
+        688,
+        143
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_long_double_tooth_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "737ce0268daeef46ad19edc6a7b05318e4cc5dce3f75cd2ae259fa1a5e1043d2"
+    },
+    {
+      "id": "woven_blue_medium_blunt_wedge",
+      "name": "Medium Blunt Wedge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        124,
+        288,
+        604,
+        468
+      ],
+      "cell": [
+        0,
+        241,
+        724,
+        501
+      ],
+      "size": [
+        496,
+        196
+      ],
+      "default_size": 616,
+      "file": "stamps/woven_blue_medium_blunt_wedge.png",
+      "edge_pixels": 0,
+      "sha256": "b887ecad7b834d692b40d86b71363726c55bc1d4263d4356e997f11b496b943d"
+    },
+    {
+      "id": "woven_blue_medium_right_root_ledge",
+      "name": "Medium Right Root Ledge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        786,
+        294,
+        1381,
+        501
+      ],
+      "cell": [
+        724,
+        241,
+        1448,
+        501
+      ],
+      "size": [
+        611,
+        223
+      ],
+      "default_size": 640,
+      "file": "stamps/woven_blue_medium_right_root_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "2160809eb4fcb1979b7d4c398a427e4b84944bea5af4858b91bcd16e6ad62d3c"
+    },
+    {
+      "id": "woven_blue_medium_left_spur_ledge",
+      "name": "Medium Left Spur Ledge",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        1507,
+        283,
+        2094,
+        452
+      ],
+      "cell": [
+        1448,
+        241,
+        2172,
+        501
+      ],
+      "size": [
+        603,
+        185
+      ],
+      "default_size": 608,
+      "file": "stamps/woven_blue_medium_left_spur_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "ea8e555ffb858352c4e4e75e868da19ccf32244230b30a7a3154b61bf065788f"
+    },
+    {
+      "id": "woven_blue_compact_trapezoid_step",
+      "name": "Compact Trapezoid Step",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        174,
+        547,
+        555,
+        691
+      ],
+      "cell": [
+        0,
+        501,
+        724,
+        724
+      ],
+      "size": [
+        397,
+        160
+      ],
+      "default_size": 384,
+      "file": "stamps/woven_blue_compact_trapezoid_step.png",
+      "edge_pixels": 0,
+      "sha256": "f6452c61964802c6fb00552b14a0298c6e0c0f75bb7f0fd305d4b9aeb1657dab"
+    },
+    {
+      "id": "woven_blue_compact_rounded_slate_step",
+      "name": "Compact Rounded Slate Step",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        817,
+        557,
+        1343,
+        682
+      ],
+      "cell": [
+        724,
+        501,
+        1448,
+        724
+      ],
+      "size": [
+        542,
+        141
+      ],
+      "default_size": 416,
+      "file": "stamps/woven_blue_compact_rounded_slate_step.png",
+      "edge_pixels": 0,
+      "sha256": "ce1d875653703114e83c0820e5c7af25ec437c6723436b9f24ee5daaf38ee2e4"
+    },
+    {
+      "id": "woven_blue_compact_damp_slate_step",
+      "name": "Compact Damp Slate Step",
+      "category": "Floating Platforms",
+      "sheet": "floating",
+      "source_bounds": [
+        1537,
+        570,
+        2060,
+        678
+      ],
+      "cell": [
+        1448,
+        501,
+        2172,
+        724
+      ],
+      "size": [
+        539,
+        124
+      ],
+      "default_size": 432,
+      "file": "stamps/woven_blue_compact_damp_slate_step.png",
+      "edge_pixels": 0,
+      "sha256": "66b8bcf9e2a496335138d67feb5e4a8a65440e5c5470233f32c8e7dfea975598"
+    },
+    {
+      "id": "woven_blue_left_recess_wall",
+      "name": "Left Recess Wall",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        29,
+        15,
+        351,
+        352
+      ],
+      "cell": [
+        0,
+        0,
+        423,
+        390
+      ],
+      "size": [
+        338,
+        353
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_left_recess_wall.png",
+      "edge_pixels": 0,
+      "sha256": "5dbad96a907229dd98ccc42ee0ad241222b029a3eb19cda6cf955b64b63460aa"
+    },
+    {
+      "id": "woven_blue_right_recess_wall",
+      "name": "Right Recess Wall",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        481,
+        13,
+        708,
+        352
+      ],
+      "cell": [
+        423,
+        0,
+        782,
+        390
+      ],
+      "size": [
+        243,
+        355
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_right_recess_wall.png",
+      "edge_pixels": 0,
+      "sha256": "986282d70a4779c466c3bbc2254954413b47236ad5a6a65aaeda901220e3fc60"
+    },
+    {
+      "id": "woven_blue_deep_cave_ceiling_cap",
+      "name": "Deep Cave Ceiling Cap",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        782,
+        46,
+        1252,
+        287
+      ],
+      "cell": [
+        782,
+        0,
+        1268,
+        390
+      ],
+      "size": [
+        486,
+        257
+      ],
+      "default_size": 928,
+      "file": "stamps/woven_blue_deep_cave_ceiling_cap.png",
+      "edge_pixels": 0,
+      "sha256": "a4ce62dda5eb36bb54719127bbd59d7f4473aa11949f786023ad07dbafd865ea"
+    },
+    {
+      "id": "woven_blue_sloping_cave_ceiling_join",
+      "name": "Sloping Cave Ceiling Join",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        16,
+        442,
+        409,
+        673
+      ],
+      "cell": [
+        0,
+        390,
+        423,
+        821
+      ],
+      "size": [
+        409,
+        247
+      ],
+      "default_size": 896,
+      "file": "stamps/woven_blue_sloping_cave_ceiling_join.png",
+      "edge_pixels": 0,
+      "sha256": "ae05df3a24a730c4c94c0771a1761157aec0f6e94968179d5d54abe3e6cda0bf"
+    },
+    {
+      "id": "woven_blue_cave_floor_lip",
+      "name": "Cave Floor Lip",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        429,
+        622,
+        869,
+        726
+      ],
+      "cell": [
+        423,
+        390,
+        869,
+        821
+      ],
+      "size": [
+        456,
+        120
+      ],
+      "default_size": 944,
+      "file": "stamps/woven_blue_cave_floor_lip.png",
+      "edge_pixels": 0,
+      "sha256": "8bddaad0bd14b126431e9994f39ce9a15d48bead68cd27d390cf8bcd353ea89b"
+    },
+    {
+      "id": "woven_blue_cave_fracture_pillar",
+      "name": "Cave Fracture Pillar",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        916,
+        390,
+        1212,
+        752
+      ],
+      "cell": [
+        869,
+        390,
+        1268,
+        821
+      ],
+      "size": [
+        312,
+        378
+      ],
+      "default_size": 664,
+      "file": "stamps/woven_blue_cave_fracture_pillar.png",
+      "edge_pixels": 0,
+      "sha256": "0b75f8f441b6d96da708d275748230a9ce63c21bfa559d5f7cd4193d0363c411"
+    },
+    {
+      "id": "woven_blue_tall_open_cave_arch",
+      "name": "Tall Open Cave Arch",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        11,
+        821,
+        487,
+        1181
+      ],
+      "cell": [
+        0,
+        821,
+        487,
+        1241
+      ],
+      "size": [
+        492,
+        376
+      ],
+      "default_size": 816,
+      "file": "stamps/woven_blue_tall_open_cave_arch.png",
+      "edge_pixels": 0,
+      "sha256": "9f21e9a8b576fbf4581e6f6571c9a7f476fe11b65838e4572fd38cc7bb6ee2b3"
+    },
+    {
+      "id": "woven_blue_stalactite_join_overlay",
+      "name": "Stalactite Join Overlay",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        504,
+        878,
+        846,
+        1105
+      ],
+      "cell": [
+        487,
+        821,
+        846,
+        1241
+      ],
+      "size": [
+        358,
+        243
+      ],
+      "default_size": 368,
+      "file": "stamps/woven_blue_stalactite_join_overlay.png",
+      "edge_pixels": 0,
+      "sha256": "5bad70b1fe4b61579bed2828eda4d76c13ef7ca002c18096f3b1297c9a53b3cc"
+    },
+    {
+      "id": "woven_blue_slate_buttress_join_overlay",
+      "name": "Slate Buttress Join Overlay",
+      "category": "Cave Edges",
+      "sheet": "cave_edges",
+      "source_bounds": [
+        930,
+        886,
+        1238,
+        1151
+      ],
+      "cell": [
+        846,
+        821,
+        1268,
+        1241
+      ],
+      "size": [
+        324,
+        281
+      ],
+      "default_size": 432,
+      "file": "stamps/woven_blue_slate_buttress_join_overlay.png",
+      "edge_pixels": 0,
+      "sha256": "83d3cc613bfcc3728622918d56e37e7e51414c23924ff344008c7af6dd8ee02d"
+    },
+    {
+      "id": "woven_blue_rear_slate_field",
+      "name": "Rear Slate Field",
+      "category": "Cave Textures",
+      "sheet": "cave_back",
+      "source_bounds": [
+        19,
+        23,
+        739,
+        493
+      ],
+      "cell": [
+        0,
+        0,
+        768,
+        509
+      ],
+      "size": [
+        736,
+        486
+      ],
+      "default_size": 1152,
+      "file": "stamps/woven_blue_rear_slate_field.png",
+      "edge_pixels": 0,
+      "sha256": "3f9226bb93e66c6150348985c0e95a6e8f140f76bd6e62d7fdb4aa6d86819852"
+    },
+    {
+      "id": "woven_blue_rear_shadow_field",
+      "name": "Rear Shadow Field",
+      "category": "Cave Textures",
+      "sheet": "cave_back",
+      "source_bounds": [
+        783,
+        22,
+        1516,
+        497
+      ],
+      "cell": [
+        768,
+        0,
+        1536,
+        509
+      ],
+      "size": [
+        749,
+        491
+      ],
+      "default_size": 1120,
+      "file": "stamps/woven_blue_rear_shadow_field.png",
+      "edge_pixels": 0,
+      "sha256": "b4d1457df106d3ad5e4446d4bd5430803ae2b7546a1e9802d69eb0b1b7d4cc0a"
+    },
+    {
+      "id": "woven_blue_rear_copper_vein_field",
+      "name": "Rear Copper Vein Field",
+      "category": "Cave Textures",
+      "sheet": "cave_back",
+      "source_bounds": [
+        21,
+        514,
+        744,
+        1008
+      ],
+      "cell": [
+        0,
+        509,
+        768,
+        1024
+      ],
+      "size": [
+        739,
+        510
+      ],
+      "default_size": 1056,
+      "file": "stamps/woven_blue_rear_copper_vein_field.png",
+      "edge_pixels": 0,
+      "sha256": "d2862d17d744b063b37c76b07a2ab1b182546eedfffd2a7bff2957d238b167cd"
+    },
+    {
+      "id": "woven_blue_rear_damp_slate_field",
+      "name": "Rear Damp Slate Field",
+      "category": "Cave Textures",
+      "sheet": "cave_back",
+      "source_bounds": [
+        768,
+        509,
+        1517,
+        1003
+      ],
+      "cell": [
+        768,
+        509,
+        1536,
+        1024
+      ],
+      "size": [
+        765,
+        510
+      ],
+      "default_size": 1120,
+      "file": "stamps/woven_blue_rear_damp_slate_field.png",
+      "edge_pixels": 0,
+      "sha256": "76e35068b42292ac50153dae19e0f4c3efa21d7a3b066b67f3757830d2d4b148"
+    }
+  ]
+}
