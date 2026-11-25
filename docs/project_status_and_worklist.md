@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 fresh Blue blockout
+
+Chase requested a fresh scene with the existing Blue backgrounds and Room Greybox
+tool. `Src/Environment/BlueBiome/blue_blockout.tscn` is the new authoring/test scene;
+`blue_lakeside_test.tscn` remains the old finished reference. It starts with one
+paintable floor, editable Spawn, current player/camera/HUD and separate parallax
+backgrounds. F6 tests; R and falling out return to Spawn. No old Woven route restored.
+Twelve headless checks passed and Forward+ playback rendered correctly. See the
+[workspace guide](../Src/Environment/BlueBiome/BLUE_BLOCKOUT.md).
+Task checkpoint: `level: add fresh Blue blockout workspace`.
+
 ## November 25 deeper asset-folder cleanup
 
 Chase clarified that individual unused assets and their obsolete prototype consumers

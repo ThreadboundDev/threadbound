@@ -17,6 +17,8 @@ Inside the actual game:
 - **Play/edit the game:** `project.godot`, then `Src/` for scenes and scripts.
 - **Current demo:** `Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn`.
   Keep the original Chamber scene because Demo 2.0 inherits it.
+- **New Blue blockout:** `Src/Environment/BlueBiome/blue_blockout.tscn`.
+  Use the Room Greybox bottom panel; [workspace guide](Src/Environment/BlueBiome/BLUE_BLOCKOUT.md).
 - **Blue reference level:** `Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
   One hidden water fixture remains under `tools/fixtures/blue_layouts/` for the bank-dive regression.
   The 23 obsolete fixture layouts are in deletion review.

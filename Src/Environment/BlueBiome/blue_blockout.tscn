@@ -1,0 +1,95 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/blue_blockout.gd" id="1_room"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/far_sky_cliffs.png" id="2_far"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/StillVillage/Backgrounds/near_lake_village.png" id="3_near"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Background/Clouds/blue_cloud_broad.tscn" id="4_cloud"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_tile_layer.tscn" id="5_terrain"]
+[ext_resource type="PackedScene" path="res://Src/Characters/Player/player.tscn" id="6_player"]
+[ext_resource type="PackedScene" path="res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb" id="7_doll"]
+[ext_resource type="PackedScene" path="res://Src/UI/combat_hud.tscn" id="8_hud"]
+
+[node name="BlueBlockout" type="Node2D"]
+script = ExtResource("1_room")
+editor_description = "Fresh Blue blockout. Select Geometry/GreyboxTerrain and use Room Greybox > Terrain Tiles. Move Spawn to change the test start. F6 plays this scene; R returns to Spawn."
+
+[node name="Backgrounds" type="Node2D" parent="."]
+editor_description = "Existing Blue background art. Locked as a group so blockout selection stays on geometry; unlock this branch to reposition the images."
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Sky" type="Polygon2D" parent="Backgrounds"]
+z_index = -100
+color = Color(0.419608, 0.784314, 0.956863, 1)
+polygon = PackedVector2Array(-50000, -50000, 50000, -50000, 50000, 50000, -50000, 50000)
+
+[node name="FarSkyCliffs" type="Parallax2D" parent="Backgrounds"]
+z_index = -95
+scroll_scale = Vector2(0.15, 0.1)
+
+[node name="Art" type="Sprite2D" parent="Backgrounds/FarSkyCliffs"]
+position = Vector2(1900, -450)
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("2_far")
+
+[node name="LakeVillage" type="Parallax2D" parent="Backgrounds"]
+z_index = -80
+scroll_scale = Vector2(0.3, 0.2)
+
+[node name="Art" type="Sprite2D" parent="Backgrounds/LakeVillage"]
+position = Vector2(1900, 60)
+scale = Vector2(3, 3)
+texture = ExtResource("3_near")
+
+[node name="Clouds" type="Parallax2D" parent="Backgrounds"]
+z_index = -90
+scroll_scale = Vector2(0.2, 0.12)
+
+[node name="CloudWest" parent="Backgrounds/Clouds" instance=ExtResource("4_cloud")]
+position = Vector2(-700, -500)
+scale = Vector2(0.85, 0.85)
+modulate = Color(1, 1, 1, 0.45)
+
+[node name="CloudMiddle" parent="Backgrounds/Clouds" instance=ExtResource("4_cloud")]
+position = Vector2(1000, -800)
+scale = Vector2(0.65, 0.65)
+modulate = Color(1, 1, 1, 0.45)
+
+[node name="CloudEast" parent="Backgrounds/Clouds" instance=ExtResource("4_cloud")]
+position = Vector2(2700, -450)
+scale = Vector2(0.95, 0.95)
+modulate = Color(1, 1, 1, 0.45)
+
+[node name="Geometry" type="Node2D" parent="."]
+editor_description = "Select GreyboxTerrain to paint tiles. Select Geometry before adding separate blocks, polygon water, hazards or water bulbs from Room Greybox."
+
+[node name="GreyboxTerrain" parent="Geometry" instance=ExtResource("5_terrain")]
+editor_description = "Starter floor only. Paint or erase with the existing solid/one-way TileMap palette."
+tile_map_data = PackedByteArray("AAD0/wIAAAAAAAAAAAD0/wMAAAAAAAAAAAD1/wIAAAAAAAAAAAD1/wMAAAAAAAAAAAD2/wIAAAAAAAAAAAD2/wMAAAAAAAAAAAD3/wIAAAAAAAAAAAD3/wMAAAAAAAAAAAD4/wIAAAAAAAAAAAD4/wMAAAAAAAAAAAD5/wIAAAAAAAAAAAD5/wMAAAAAAAAAAAD6/wIAAAAAAAAAAAD6/wMAAAAAAAAAAAD7/wIAAAAAAAAAAAD7/wMAAAAAAAAAAAD8/wIAAAAAAAAAAAD8/wMAAAAAAAAAAAD9/wIAAAAAAAAAAAD9/wMAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAIAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAAKAAMAAAAAAAAAAAALAAIAAAAAAAAAAAALAAMAAAAAAAAAAAAMAAIAAAAAAAAAAAAMAAMAAAAAAAAAAAA=")
+
+[node name="Spawn" type="Marker2D" parent="."]
+position = Vector2(0, 160)
+editor_description = "Move this marker to choose where F6/R and fall recovery start the player."
+
+[node name="Player" parent="." instance=ExtResource("6_player")]
+z_index = 10
+position = Vector2(0, 160)
+
+[node name="Live3DVisual" parent="Player" index="0"]
+model_scene = ExtResource("7_doll")
+object_outline_width = 0.0
+receive_level_lighting = false
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -160)
+zoom = Vector2(0.83, 0.83)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+visible = false
+layer = 20
+
+[node name="CombatHUD" parent="HUD" instance=ExtResource("8_hud")]
+
+[editable path="Player"]
