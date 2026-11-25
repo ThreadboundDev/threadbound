@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 deeper asset-folder cleanup
+
+Chase clarified that individual unused assets and their obsolete prototype consumers
+must leave the visible game folders too. A second pass stages 512 additional files
+(402.4 MiB), including the old keyed buildings, Pavilion3D_V2, unused Blue art and
+23 obsolete fixture layouts. The live cloud material, current model textures,
+current gameplay checks and source art remain. No permanent deletion or gameplay edits.
+See [the second cleanup report](organization/cleanup_2026_11_25_pass2.md).
+Validation completed: 512 hashes verified, normal and fresh-import demo/Blue launches passed,
+startup title loaded and all 39 player-presentation checks passed. Git receipt follows the checkpoint.
+
 ## November 25 game and Krita cleanup
 
 Chase requested an aggressive reversible cleanup. Demo 2.0 remains the current demo;

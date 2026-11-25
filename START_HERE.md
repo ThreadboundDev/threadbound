@@ -1,7 +1,7 @@
 # Where to find Threadbound files
 
-Current cleanup: [November 25 review and restoration guide](docs/organization/cleanup_2026_11_25.md).
-The new review folder is **inside this repository**: `Staged for Delete/2026-11-25/`.
+Current cleanup: [November 25 deeper asset cleanup](docs/organization/cleanup_2026_11_25_pass2.md), following [the first review](docs/organization/cleanup_2026_11_25.md).
+The new review folder is **inside this repository**: `Staged for Delete/2026-11-25-pass2/`; open `START_HERE.md` there.
 Nothing from this pass has been permanently deleted.
 
 These are the game-file locations previously recorded in `C:\Users\chase\Documents`:
@@ -18,7 +18,8 @@ Inside the actual game:
 - **Current demo:** `Src/Environment/World/Chamber Of The First Weave - Demo 2.0.tscn`.
   Keep the original Chamber scene because Demo 2.0 inherits it.
 - **Blue reference level:** `Src/Environment/BlueBiome/blue_lakeside_test.tscn`.
-  Historical layouts are hidden under `tools/fixtures/blue_layouts/` for regression checks.
+  One hidden water fixture remains under `tools/fixtures/blue_layouts/` for the bank-dive regression.
+  The 23 obsolete fixture layouts are in deletion review.
 - **Current player:** `Src/Characters/Player/`; its README explains the live 3D avatar,
   texture-free action clock, physics and equipment anchors.
 - **Current doll:** `ArtSource/Player/Blender/PaleDollStudy/GameReadyDoll/`
