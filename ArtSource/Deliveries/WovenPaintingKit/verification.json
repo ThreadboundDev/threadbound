@@ -14,12 +14,21 @@
     },
     {
       "file": "Woven_Shore_Painting.ora",
-      "layers": 7,
+      "layers": 8,
       "dimensions": [
         12800,
         4608
       ]
     }
   ],
-  "open_alpha_verified": true
+  "open_alpha_verified": true,
+  "player_reference": {
+    "file": "references/player_scale.png",
+    "dimensions": [130, 187],
+    "pixels_per_world_pixel": 1,
+    "player_layer_matches_capture": true,
+    "boot_soles_on_guide": true,
+    "player_layer_opened_in_krita": true,
+    "existing_paint_layers_verified": true
+  }
 }

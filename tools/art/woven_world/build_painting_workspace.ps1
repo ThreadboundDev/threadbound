@@ -1,10 +1,12 @@
-param([string]$Kit = (Join-Path $PSScriptRoot '../../../ArtSource/Deliveries/WovenPaintingKit'))
+param(
+    [string]$Kit = (Join-Path $PSScriptRoot '../../../ArtSource/Deliveries/WovenPaintingKit'),
+    [switch]$PaintingOnly
+)
 
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.IO.Compression
 $kitPath = (Resolve-Path -LiteralPath $Kit).Path
-$catalog = Get-Content -LiteralPath (Join-Path $kitPath 'manifest.json') -Raw | ConvertFrom-Json
 $utf8 = [Text.UTF8Encoding]::new($false)
 
 function New-Bitmap([int]$width, [int]$height) {
@@ -82,11 +84,21 @@ $font = [Drawing.Font]::new('Segoe UI',24,[Drawing.FontStyle]::Regular,[Drawing.
 $header = [Drawing.Font]::new('Segoe UI',54,[Drawing.FontStyle]::Bold,[Drawing.GraphicsUnit]::Pixel)
 $scalePen = [Drawing.Pen]::new([Drawing.Color]::FromArgb(180,113,189,204),3)
 $gridPen = [Drawing.Pen]::new([Drawing.Color]::FromArgb(55,141,209,224),2)
+$drawingTools = @($header, $font, $scalePen, $gridPen, $ink, $muted)
 
 # The painting canvas starts blank. Guides supply scale while keeping the
 # composition in the artist's hands. Each empty layer is independently editable.
 $width = 12800
 $height = 4608
+$playerReference = Get-Content -LiteralPath (Join-Path $kitPath 'references/player_scale.json') -Raw | ConvertFrom-Json
+$playerStamp = [Drawing.Bitmap]::FromFile((Join-Path $kitPath 'references/player_scale.png'))
+if ($playerReference.capture_pixels_per_world_pixel -ne 1 -or
+    $playerStamp.Width -ne $playerReference.crop_px[0] -or $playerStamp.Height -ne $playerReference.crop_px[1]) {
+    throw 'The player reference must match the recorded gameplay dimensions at 1:1.'
+}
+$floorY = 1342
+$playerX = 453 - [int]$playerReference.floor_x_px
+$playerY = $floorY - [int]$playerReference.floor_row_px
 $guides = New-Bitmap $width $height
 $g = [Drawing.Graphics]::FromImage($guides)
 $g.TextRenderingHint = [Drawing.Text.TextRenderingHint]::AntiAliasGridFit
@@ -98,11 +110,12 @@ for ($y = 0; $y -lt $height; $y += 512) { $g.DrawLine($gridPen,0,$y,$width,$y) }
 $g.DrawString('WOVEN SHORE  /  GAME SCALE 1:1', $header, $ink, 180, 100)
 $g.DrawString('Example camera frame at 1x zoom', $font, $muted, 180, 245)
 $g.DrawRectangle($scalePen,180,290,1920,1080)
-$g.DrawLine($scalePen,320,1150,320,1342)
-$g.DrawLine($scalePen,307,1150,333,1150)
-$g.DrawLine($scalePen,307,1342,333,1342)
-$g.DrawString('192 px actor scale reference', $font, $ink, 350, 1232)
-$g.DrawString('Hide the Scale guides layer before exporting your backgrounds.', $font, $muted, 180, 1410)
+$g.DrawLine($scalePen,320,$playerY,320,$floorY)
+$g.DrawLine($scalePen,307,$playerY,333,$playerY)
+$g.DrawLine($scalePen,307,$floorY,556,$floorY)
+$g.DrawString("Live player at 1x gameplay scale ($($playerStamp.Height) px in this pose)", $font, $ink, 580, ($floorY - 89))
+$g.DrawString('Move the Player reference layer beside your stamps to check their size.', $font, $muted, 580, ($floorY - 54))
+$g.DrawString('Hide the player reference, scale guides and preview matte before exporting.', $font, $muted, 180, 1410)
 $g.Dispose()
 $previewBase = New-Bitmap $width $height
 $g = [Drawing.Graphics]::FromImage($previewBase)
@@ -114,10 +127,16 @@ foreach ($name in @('01 Far backdrop','02 Rear cave and cliffs','03 Land and pla
     $paint.Add((New-Layer $name (New-Bitmap 1 1)))
 }
 $paint.Add((New-Layer 'Scale guides (hide before export)' $guides))
+$paint.Add((New-Layer 'Player reference at 1x (hide before export)' $playerStamp $playerX $playerY))
 Write-OpenRaster 'Woven_Shore_Painting.ora' 'Woven Shore Painting' $width $height $paint
 foreach ($layer in $paint) { $layer.bitmap.Dispose() }
+if ($PaintingOnly) {
+    foreach ($drawingTool in $drawingTools) { $drawingTool.Dispose() }
+    return
+}
 
 # Lay each stamp out at its delivered scale so copy/paste stays 1:1.
+$catalog = Get-Content -LiteralPath (Join-Path $kitPath 'manifest.json') -Raw | ConvertFrom-Json
 $atlasWidth = 6400
 $cellWidth = 2090
 $margin = 65
@@ -158,9 +177,4 @@ $g.Dispose()
 $atlas.Add((New-Layer 'Labels (hide for clean exports)' $labels))
 Write-OpenRaster 'Woven_Shore_Atlas.ora' 'Woven Shore Stamp Atlas' $atlasWidth $atlasHeight $atlas
 foreach ($layer in $atlas) { $layer.bitmap.Dispose() }
-$header.Dispose()
-$font.Dispose()
-$scalePen.Dispose()
-$gridPen.Dispose()
-$ink.Dispose()
-$muted.Dispose()
+foreach ($drawingTool in $drawingTools) { $drawingTool.Dispose() }

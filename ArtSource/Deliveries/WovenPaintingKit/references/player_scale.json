@@ -1,0 +1,31 @@
+{
+  "capture_pixels_per_world_pixel": 1,
+  "crop_px": [
+    130,
+    187
+  ],
+  "equipment_models": {
+    "boots": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_boots_b.glb"
+    ],
+    "gloves": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_grapple_glove.glb"
+    ],
+    "head_chest": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/OutfitATrial/base_outfit_a.glb"
+    ],
+    "weapon": [
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_sword.glb",
+      "res://Assets/Threadborne/Player/LocalDoll/Equipment/base_shield.glb"
+    ]
+  },
+  "floor_row_px": 187,
+  "floor_x_px": 57,
+  "gameplay_collider_row_px": 175,
+  "gameplay_composite_scale": [
+    0.25,
+    0.25
+  ],
+  "player_model": "res://Assets/Threadborne/Player/LocalDoll/threadborne_doll_modular.glb",
+  "scene": "res://Src/Tests/Art/WovenWorld/woven_shore_concept.tscn"
+}

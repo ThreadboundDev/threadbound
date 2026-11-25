@@ -1,19 +1,24 @@
 # Woven Shore painting kit
 
-The blank painting canvas is **12,800 × 4,608 px** at 1:1 game scale. Its starter layers leave room to compose the shoreline above and below water. The separate scale layer shows a 1,920 × 1,080 example camera view at 1× zoom and a 192 px actor-height reference. Those are references for painting, with no map layout or fixed waterline drawn onto the canvas.
+The painting canvas is **12,800 × 4,608 px** at 1:1 game scale. Its scale guide shows a 1,920 × 1,080 example camera view at 1× zoom. The movable player layer is captured from the live Godot model at its gameplay draw size. The standing pose is 187 px tall and the boot soles line up with the guide beneath it.
 
 | File | Use |
 | --- | --- |
-| [Woven Shore Painting](Woven_Shore_Painting.ora) | Blank layered OpenRaster document, opened and verified in Krita |
+| [Woven Shore Painting](Woven_Shore_Painting.ora) | Layered OpenRaster canvas with a movable gameplay-scale player |
 | [Woven Shore Atlas](Woven_Shore_Atlas.ora) | All 15 pieces on individual layers at their delivered scale |
 | [Atlas preview](Atlas_preview.jpg) | Quick overview of the kit |
 | [Stamp manifest](manifest.json) | Individual PNG paths, dimensions, hashes, references and full image prompts |
+| [Player reference](references/player_scale.png) | Transparent 130 × 187 px PNG for any 1:1 canvas |
 
-Copy a stamp layer from the atlas into the painting or place its transparent PNG from `stamps/`. Hide the scale guides and the preview matte for final layer exports. The stamp atlas also has its own selectable labels and preview matte. The lake and sky can go behind the tall or low cave openings, which have real transparency through the middle. The older shoreline entrance has a straight join on its left for burying against a wall or the edge of the map.
+Copy a stamp layer from the atlas into the painting or place its transparent PNG from `stamps/`. Move the player layer beside a ledge or opening to judge its size. Hide the player reference, scale guides and preview matte for final layer exports. The stamp atlas also has its own selectable labels and preview matte. The lake and sky can go behind the tall or low cave openings, which have real transparency through the middle. The older shoreline entrance has a straight join on its left for burying against a wall or the edge of the map.
 
 The library includes three ground shapes, three floating ledges, a wall, a ceiling and a pillar, three openings, and three opaque cave interiors. The deepest ground chunk is 963 px tall. The ledges reveal their natural stone surfaces so there is room to register a standing line inside the top. The third interior has subdued teal values and an open center for a wide underwater route.
 
 Fourteen new originals were created with the built-in image generation tool. `sources/` holds the original PNGs, including the existing opening for reproducibility. The alpha crop and proportional resize preserve the generated surfaces. `stamp_spec.json` preserves the inputs for `tools/art/woven_world/prepare_painting_kit.ps1` and `tools/art/woven_world/build_painting_workspace.ps1`. The latter assembles the editable documents at 1:1. `verification.json` records the checked PNG hashes, dimensions, transparent openings and independent layer bounds.
+
+## Lake floor
+
+The Godot playtest puts a wide [lakebed image](../../../Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/lakebed.png) on a separate, slightly slower parallax layer. The nearer [rocks and reeds](../../../Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/lakebed_rocks.png) are three placements of a transparent stamp at different sizes. The live Blue water layer adds tint and reflections over the scene. The two textures can also be placed on separate layers in Krita.
 
 ## Character review
 
