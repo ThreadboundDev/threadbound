@@ -1,0 +1,1000 @@
+[gd_scene format=3 uid="uid://bae75srva81wd"]
+
+[ext_resource type="Texture2D" uid="uid://bxeepduygke02" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_bay.png" id="aqueduct_bay"]
+[ext_resource type="Texture2D" uid="uid://d0rpw0vvy73tm" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_foundation.png" id="aqueduct_foundation"]
+[ext_resource type="Texture2D" uid="uid://tok0pk30b0aw" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_grille.png" id="aqueduct_grille"]
+[ext_resource type="Texture2D" uid="uid://brs4qlqkoiubj" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/aqueduct_intake.png" id="aqueduct_intake"]
+[ext_resource type="Texture2D" uid="uid://bpjk1ellgksi8" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/bank_slope.png" id="bank_slope"]
+[ext_resource type="Texture2D" uid="uid://dfwopio5bgoaq" path="res://Assets/BlueBiome/Art/WovenWorldChunks/tree_alt.png" id="canopy_tree"]
+[ext_resource type="Texture2D" uid="uid://r7jfibqu3pcv" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_bough.png" id="chamber_bough"]
+[ext_resource type="Texture2D" uid="uid://dp8vr2rm6n82g" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_floor.png" id="chamber_floor"]
+[ext_resource type="Texture2D" uid="uid://3r38u02ulw1h" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/chamber_mouth.png" id="chamber_mouth"]
+[ext_resource type="Texture2D" uid="uid://biwrq3mx8ey8n" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/cottage_small.png" id="cottage_small"]
+[ext_resource type="Texture2D" uid="uid://cxs4kn808tu1w" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/dock_pier.png" id="dock_pier"]
+[ext_resource type="Texture2D" uid="uid://bocs0ifqitrwe" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/farmstead.png" id="farmstead"]
+[ext_resource type="Texture2D" uid="uid://clpr73d225mli" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/far_lake.png" id="far_lake"]
+[ext_resource type="Texture2D" uid="uid://chi2qnhyrmbg7" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_moss.png" id="floating_moss"]
+[ext_resource type="Texture2D" uid="uid://bjqo07chpta1" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_short.png" id="floating_short"]
+[ext_resource type="Texture2D" uid="uid://gjdgxxvrno17" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_split.png" id="floating_split"]
+[ext_resource type="Texture2D" uid="uid://mwxvl5n4a1iv" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/floating_wide.png" id="floating_wide"]
+[ext_resource type="Script" uid="uid://bppd2ehmu0mer" path="res://Src/Tests/Art/WovenWorld/woven_concept_handoff.gd" id="handoff"]
+[ext_resource type="Texture2D" uid="uid://cja6qa1aq4lfp" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/hidden_shelf.png" id="hidden_shelf"]
+[ext_resource type="Texture2D" uid="uid://c8al2m5ttsg82" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_gate.png" id="irrigation_gate"]
+[ext_resource type="Texture2D" uid="uid://dm272b33fihj3" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/irrigation_span.png" id="irrigation_span"]
+[ext_resource type="Texture2D" uid="uid://cmc82wy4l1sfv" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ConceptLayout/lakebed.png" id="lakebed"]
+[ext_resource type="Texture2D" uid="uid://cdyq8mv3oursq" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/lakebed_rocks.png" id="lakebed_rocks"]
+[ext_resource type="Texture2D" uid="uid://ceqax8suqqvk6" path="res://Src/Environment/World/lighting/player_light.png" id="lamp"]
+[ext_resource type="Texture2D" uid="uid://dkxkpshgbsege" path="res://Assets/BlueBiome/Art/WovenWorldChunks/GroundingRefinement/foliage_rim.png" id="leaf_cluster"]
+[ext_resource type="Texture2D" uid="uid://dtxnv5n86o6g" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/nook_island.png" id="nook_island"]
+[ext_resource type="Texture2D" uid="uid://bwff8cm6wkna2" path="res://Assets/BlueBiome/Art/WovenWorldChunks/blossom_shrub.png" id="pink_shrub"]
+[ext_resource type="PackedScene" uid="uid://dia0qg14qiah1" path="res://Src/Characters/Player/player.tscn" id="player"]
+[ext_resource type="Texture2D" uid="uid://20dkr2lp5w2p" path="res://Assets/BlueBiome/Art/WovenWorldChunks/ShoreFinish/terraces.png" id="rice_terrace"]
+[ext_resource type="Texture2D" uid="uid://bay3n2qmyt3s2" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/rock_step.png" id="rock_step"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/EaveRunner/eave_runner.tscn" id="runner"]
+[ext_resource type="Script" uid="uid://d3w6dmq7kyslu" path="res://Src/Tests/Art/WovenWorld/woven_shore_concept.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://c7ijsdu5ef7t2" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank.png" id="shore_bank"]
+[ext_resource type="Texture2D" uid="uid://ox5sv610wccy" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_bank_taper.png" id="shore_bank_taper"]
+[ext_resource type="Texture2D" uid="uid://bsvjfjrwu2qyi" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/shore_lantern.png" id="shore_lantern"]
+[ext_resource type="Texture2D" uid="uid://odfvnxb6ubtp" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/tree_island_stone.png" id="tree_island_stone"]
+[ext_resource type="Texture2D" uid="uid://c7mje4hw4y8sa" path="res://Assets/BlueBiome/Art/WovenWorldChunks/NativeStamps/village_bluff.png" id="village_bluff"]
+[ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="water"]
+
+[sub_resource type="Gradient" id="NookBubbleGradient"]
+offsets = PackedFloat32Array(0, 0.59, 0.77, 1)
+colors = PackedColorArray(0.43, 0.76, 0.86, 0, 0.51, 0.84, 0.92, 0.04, 0.76, 0.96, 0.99, 0.66, 0.47, 0.79, 0.88, 0)
+
+[sub_resource type="GradientTexture2D" id="NookBubbleTexture"]
+gradient = SubResource("NookBubbleGradient")
+width = 18
+height = 18
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_119_12"]
+size = Vector2(297.5, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_63_8"]
+size = Vector2(157.5, 20)
+
+[sub_resource type="RectangleShape2D" id="Rect_47_9"]
+size = Vector2(117.5, 22.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_76_12"]
+size = Vector2(190, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_173_12"]
+size = Vector2(432.5, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_64_12"]
+size = Vector2(160, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_110_12"]
+size = Vector2(275, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_53_12"]
+size = Vector2(132.5, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_99_12"]
+size = Vector2(247.5, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_109_12"]
+size = Vector2(272.5, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_71_15"]
+size = Vector2(177.5, 37.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_198_20"]
+size = Vector2(495, 50)
+
+[sub_resource type="RectangleShape2D" id="Rect_688_16"]
+size = Vector2(1720, 40)
+
+[sub_resource type="RectangleShape2D" id="Rect_12_150"]
+size = Vector2(30, 375)
+
+[sub_resource type="RectangleShape2D" id="Rect_17_100"]
+size = Vector2(42.5, 250)
+
+[sub_resource type="RectangleShape2D" id="Rect_2224_32"]
+size = Vector2(5560, 80)
+
+[sub_resource type="RectangleShape2D" id="Rect_24_730"]
+size = Vector2(60, 1825)
+
+[sub_resource type="RectangleShape2D" id="Rect_82_75"]
+size = Vector2(205, 187.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_88_86"]
+size = Vector2(220, 215)
+
+[sub_resource type="RectangleShape2D" id="Rect_76_64"]
+size = Vector2(190, 160)
+
+[sub_resource type="RectangleShape2D" id="Rect_78_87"]
+size = Vector2(195, 217.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_88_85"]
+size = Vector2(220, 212.5)
+
+[node name="WovenShoreConcept" type="Node2D" unique_id=319887051]
+editor_description = "Painted Woven Shore from the approved side-view layout. Select Terrain for collision, Art for individually generated stamps, and Interactions for exit and gate triggers."
+script = ExtResource("script")
+
+[node name="FarLandscape" type="Parallax2D" parent="." unique_id=1357511630]
+z_index = -12
+scroll_scale = Vector2(0.95, 1)
+
+[node name="FarLake" type="Sprite2D" parent="FarLandscape" unique_id=587713076]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("far_lake")
+centered = false
+
+[node name="UnderwaterParallax" type="Parallax2D" parent="." unique_id=344886450]
+z_index = -10
+scroll_scale = Vector2(0.975, 1)
+
+[node name="Lakebed" type="Sprite2D" parent="UnderwaterParallax" unique_id=118559583]
+position = Vector2(0, 1215)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("lakebed")
+centered = false
+
+[node name="Art" type="Node2D" parent="." unique_id=81856943]
+
+[node name="HiddenShelf" type="Sprite2D" parent="Art" unique_id=1565806059]
+z_index = -5
+position = Vector2(-29, 195)
+scale = Vector2(0.67058825, 0.54027665)
+texture = ExtResource("hidden_shelf")
+centered = false
+
+[node name="ChamberMouth" type="Sprite2D" parent="Art" unique_id=1064102282]
+z_index = -4
+position = Vector2(-48, 539)
+scale = Vector2(0.50808316, 0.6594724)
+texture = ExtResource("chamber_mouth")
+centered = false
+
+[node name="ChamberLanding" type="Sprite2D" parent="Art" unique_id=1990032021]
+z_index = -3
+position = Vector2(-44, 879)
+scale = Vector2(0.417786, 0.799439)
+texture = ExtResource("chamber_floor")
+centered = false
+
+[node name="TreeIslandStone" type="Sprite2D" parent="Art" unique_id=584361404]
+z_index = -3
+position = Vector2(937, 973)
+scale = Vector2(0.37599468, 0.3991276)
+texture = ExtResource("tree_island_stone")
+centered = false
+
+[node name="IslandTree" type="Sprite2D" parent="Art" unique_id=1197783241]
+z_index = -4
+position = Vector2(960, 674)
+scale = Vector2(0.3673913, 0.3696145)
+texture = ExtResource("canopy_tree")
+centered = false
+
+[node name="IslandFoliage" type="Sprite2D" parent="Art" unique_id=1470692801]
+z_index = -2
+position = Vector2(1210, 936)
+scale = Vector2(0.24769433, 0.20994475)
+texture = ExtResource("leaf_cluster")
+centered = false
+
+[node name="IslandBlossoms" type="Sprite2D" parent="Art" unique_id=1996284331]
+z_index = -2
+position = Vector2(932, 955)
+scale = Vector2(0.409375, 0.36723164)
+texture = ExtResource("pink_shrub")
+centered = false
+
+[node name="NookBacking" type="Polygon2D" parent="Art" unique_id=2006961936]
+z_index = -3
+polygon = PackedVector2Array(1978, 1060, 2466, 1060, 2460, 1183, 2435, 1291, 2033, 1293, 2009, 1188)
+vertex_colors = PackedColorArray(0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 1, 0.024, 0.19, 0.24, 0, 0.024, 0.19, 0.24, 0, 0.024, 0.19, 0.24, 1)
+
+[node name="SwimUpIsland" type="Sprite2D" parent="Art" unique_id=845974093]
+z_index = -3
+position = Vector2(1824, 868)
+scale = Vector2(0.5674548, 0.59123343)
+texture = ExtResource("nook_island")
+centered = false
+
+[node name="NookDryLedge" type="Sprite2D" parent="Art" unique_id=44721006]
+modulate = Color(0.65, 0.82, 0.83, 1)
+z_index = -2
+position = Vector2(2301, 1144)
+scale = Vector2(0.06659729, 0.15360501)
+texture = ExtResource("rock_step")
+centered = false
+
+[node name="NookIslandBlossoms" type="Sprite2D" parent="Art" unique_id=1086934310]
+z_index = -2
+position = Vector2(1973, 825)
+scale = Vector2(0.5625, 0.53672314)
+texture = ExtResource("pink_shrub")
+centered = false
+
+[node name="NookIslandFerns" type="Sprite2D" parent="Art" unique_id=2090821089]
+z_index = -2
+position = Vector2(2438, 872)
+scale = Vector2(0.23583663, 0.17955801)
+texture = ExtResource("leaf_cluster")
+centered = false
+
+[node name="ClimbOutLedge" type="Sprite2D" parent="Art" unique_id=1276885361]
+z_index = -2
+position = Vector2(2781, 1160)
+scale = Vector2(0.10093652, 0.23510972)
+texture = ExtResource("rock_step")
+centered = false
+
+[node name="ClimbOutRoot" type="Sprite2D" parent="Art" unique_id=172596563]
+modulate = Color(0.81, 0.93, 0.95, 1)
+z_index = -5
+position = Vector2(2825, 1061)
+scale = Vector2(0.1835536, 0.3313253)
+texture = ExtResource("bank_slope")
+centered = false
+
+[node name="FarBankSlope" type="Sprite2D" parent="Art" unique_id=317057271]
+z_index = -8
+position = Vector2(3074, 333)
+scale = Vector2(0.9813999, 0.938253)
+texture = ExtResource("bank_slope")
+centered = false
+
+[node name="WestPierFooting" type="Sprite2D" parent="Art" unique_id=1480079721]
+modulate = Color(0.82, 0.91, 0.93, 1)
+z_index = -7
+position = Vector2(3264, 550)
+scale = Vector2(0.5023496, 0.96791446)
+texture = ExtResource("shore_bank_taper")
+centered = false
+
+[node name="RooftopBluff" type="Sprite2D" parent="Art" unique_id=1216223314]
+modulate = Color(0.95, 0.96, 0.95, 1)
+z_index = -7
+position = Vector2(4740, 320)
+scale = Vector2(0.53458697, 0.79026216)
+texture = ExtResource("village_bluff")
+centered = false
+
+[node name="UpperTerrace" type="Sprite2D" parent="Art" unique_id=441084513]
+z_index = -6
+position = Vector2(3830, 566)
+scale = Vector2(0.6020293, 0.38105974)
+texture = ExtResource("rice_terrace")
+centered = false
+
+[node name="LowerTerrace" type="Sprite2D" parent="Art" unique_id=956020413]
+z_index = -6
+position = Vector2(3370, 654)
+scale = Vector2(0.5467869, 0.30326945)
+texture = ExtResource("rice_terrace")
+centered = false
+
+[node name="WestFarmBank" type="Sprite2D" parent="Art" unique_id=1064969352]
+z_index = -4
+position = Vector2(2934, 905)
+scale = Vector2(0.62121916, 0.96766746)
+texture = ExtResource("shore_bank")
+centered = false
+
+[node name="EastFarmBank" type="Sprite2D" parent="Art" unique_id=874531059]
+z_index = -4
+position = Vector2(4137, 893)
+scale = Vector2(0.45723683, 1)
+texture = ExtResource("shore_bank_taper")
+centered = false
+
+[node name="Farmstead" type="Sprite2D" parent="Art" unique_id=1814572711]
+z_index = -5
+position = Vector2(4160, 680)
+scale = Vector2(0.2886133, 0.29875985)
+texture = ExtResource("farmstead")
+centered = false
+
+[node name="FieldCottage" type="Sprite2D" parent="Art" unique_id=1072042667]
+z_index = -5
+position = Vector2(4657, 724)
+scale = Vector2(0.23324852, 0.23315509)
+texture = ExtResource("cottage_small")
+centered = false
+
+[node name="FarmPinkBush" type="Sprite2D" parent="Art" unique_id=1270250785]
+z_index = -2
+position = Vector2(4022, 862)
+scale = Vector2(0.540625, 0.48022598)
+texture = ExtResource("pink_shrub")
+centered = false
+
+[node name="FieldFern" type="Sprite2D" parent="Art" unique_id=160998857]
+z_index = -2
+position = Vector2(3361, 869)
+scale = Vector2(0.2345191, 0.20994475)
+texture = ExtResource("leaf_cluster")
+centered = false
+
+[node name="UpperRooftop" type="Sprite2D" parent="Art" unique_id=2087277046]
+z_index = -5
+position = Vector2(5062, 70)
+scale = Vector2(0.29686174, 0.2973262)
+texture = ExtResource("cottage_small")
+centered = false
+
+[node name="UpperThresholdWest" type="Sprite2D" parent="Art" unique_id=2105667548]
+z_index = -3
+position = Vector2(4938, 350)
+scale = Vector2(0.11654527, 0.2570533)
+texture = ExtResource("rock_step")
+centered = false
+
+[node name="UpperThresholdEast" type="Sprite2D" parent="Art" unique_id=965684255]
+z_index = -3
+position = Vector2(5124, 328)
+scale = Vector2(0.18990634, 0.34796238)
+texture = ExtResource("rock_step")
+centered = false
+
+[node name="UpperSlopeTree" type="Sprite2D" parent="Art" unique_id=700338876]
+modulate = Color(0.95, 0.99, 0.94, 1)
+z_index = -6
+position = Vector2(4755, 136)
+scale = Vector2(0.22934783, 0.23015873)
+texture = ExtResource("canopy_tree")
+centered = false
+flip_h = true
+
+[node name="AqueductFoundationCap" type="Sprite2D" parent="Art" unique_id=1110504640]
+z_index = -8
+position = Vector2(2954, 1181)
+scale = Vector2(0.99068904, 0.91935486)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+flip_h = true
+
+[node name="FarmBankFooting" type="Sprite2D" parent="Art" unique_id=984748920]
+z_index = -8
+position = Vector2(3375, 1065)
+scale = Vector2(0.52327746, 0.62211984)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+
+[node name="AqueductFoundationBase" type="Sprite2D" parent="Art" unique_id=132156142]
+z_index = -8
+position = Vector2(2979, 1392)
+scale = Vector2(0.9864991, 0.9769585)
+texture = ExtResource("aqueduct_foundation")
+centered = false
+
+[node name="AqueductEntrance" type="Sprite2D" parent="Art" unique_id=1019521865]
+z_index = -2
+position = Vector2(3177, 1259)
+scale = Vector2(0.3228022, 0.40744466)
+texture = ExtResource("aqueduct_intake")
+centered = false
+
+[node name="AqueductGrate" type="Sprite2D" parent="Art" unique_id=419113269]
+z_index = 3
+position = Vector2(3300, 1349)
+scale = Vector2(0.22328041, 0.2127502)
+texture = ExtResource("aqueduct_grille")
+centered = false
+
+[node name="AqueductBay1" type="Sprite2D" parent="Art" unique_id=715174440]
+z_index = -6
+position = Vector2(3510, 1304)
+scale = Vector2(0.3051512, 0.5356601)
+texture = ExtResource("aqueduct_bay")
+centered = false
+
+[node name="IrrigationSpan1" type="Sprite2D" parent="Art" unique_id=655268039]
+z_index = -3
+position = Vector2(3285, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+
+[node name="AqueductBay2" type="Sprite2D" parent="Art" unique_id=1499044719]
+z_index = -6
+position = Vector2(4040, 1304)
+scale = Vector2(0.3051512, 0.5356601)
+texture = ExtResource("aqueduct_bay")
+centered = false
+
+[node name="IrrigationSpan2" type="Sprite2D" parent="Art" unique_id=1840008485]
+z_index = -3
+position = Vector2(3855, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+
+[node name="AqueductBay3" type="Sprite2D" parent="Art" unique_id=930196302]
+z_index = -6
+position = Vector2(4570, 1304)
+scale = Vector2(0.3051512, 0.5356601)
+texture = ExtResource("aqueduct_bay")
+centered = false
+
+[node name="IrrigationSpan3" type="Sprite2D" parent="Art" unique_id=331235310]
+z_index = -3
+position = Vector2(4425, 310)
+scale = Vector2(0.30568597, 0.36842105)
+texture = ExtResource("irrigation_span")
+centered = false
+
+[node name="IrrigationLatch" type="Sprite2D" parent="Art" unique_id=1966865228]
+z_index = 3
+position = Vector2(3303, 139)
+scale = Vector2(0.17633675, 0.1509686)
+texture = ExtResource("irrigation_gate")
+centered = false
+
+[node name="Dock" type="Sprite2D" parent="Art" unique_id=516564694]
+z_index = -3
+position = Vector2(4921, 803)
+scale = Vector2(0.39253628, 0.5624333)
+texture = ExtResource("dock_pier")
+centered = false
+
+[node name="LakebedWest" type="Sprite2D" parent="Art" unique_id=1877788996]
+z_index = -5
+position = Vector2(-75, 1654)
+scale = Vector2(0.5542397, 0.5525424)
+texture = ExtResource("lakebed_rocks")
+centered = false
+
+[node name="LakebedCenter" type="Sprite2D" parent="Art" unique_id=1324309979]
+z_index = -5
+position = Vector2(1340, 1704)
+scale = Vector2(0.4973946, 0.48813558)
+texture = ExtResource("lakebed_rocks")
+centered = false
+flip_h = true
+
+[node name="LakebedEast" type="Sprite2D" parent="Art" unique_id=1611470453]
+z_index = -5
+position = Vector2(2630, 1680)
+scale = Vector2(0.50923735, 0.5084746)
+texture = ExtResource("lakebed_rocks")
+centered = false
+
+[node name="FloatingWestStep" type="Sprite2D" parent="Art" unique_id=1225905002]
+z_index = -3
+position = Vector2(1368.5, 681.84)
+scale = Vector2(0.10856574, 0.12349398)
+texture = ExtResource("floating_short")
+centered = false
+
+[node name="FloatingWestShelf" type="Sprite2D" parent="Art" unique_id=704176441]
+z_index = -3
+position = Vector2(1616, 522.96)
+scale = Vector2(0.22182932, 0.25382933)
+texture = ExtResource("floating_moss")
+centered = false
+
+[node name="FloatingHighWest" type="Sprite2D" parent="Art" unique_id=1247947759]
+z_index = -3
+position = Vector2(2162, 422.15)
+scale = Vector2(0.09203365, 0.1227758)
+texture = ExtResource("floating_split")
+centered = false
+
+[node name="FloatingCenter" type="Sprite2D" parent="Art" unique_id=880672535]
+z_index = -3
+position = Vector2(2239, 631.5)
+scale = Vector2(0.14447059, 0.19455253)
+texture = ExtResource("floating_wide")
+centered = false
+
+[node name="FloatingEastStep" type="Sprite2D" parent="Art" unique_id=159338584]
+z_index = -3
+position = Vector2(2537, 523.92)
+scale = Vector2(0.07893426, 0.09939759)
+texture = ExtResource("floating_short")
+centered = false
+flip_h = true
+
+[node name="FloatingEastShelf" type="Sprite2D" parent="Art" unique_id=399304266]
+z_index = -3
+position = Vector2(2704.5, 408.1)
+scale = Vector2(0.14027709, 0.17081851)
+texture = ExtResource("floating_split")
+centered = false
+
+[node name="FloatingGateStep" type="Sprite2D" parent="Art" unique_id=584512901]
+z_index = -3
+position = Vector2(3015, 337.05)
+scale = Vector2(0.14235294, 0.1848249)
+texture = ExtResource("floating_wide")
+centered = false
+flip_h = true
+
+[node name="ChamberPaperLantern" type="Sprite2D" parent="Art" unique_id=203194257]
+z_index = -1
+position = Vector2(139, 742)
+scale = Vector2(0.16399287, 0.17922375)
+texture = ExtResource("shore_lantern")
+centered = false
+
+[node name="ClimbOutPaperLantern" type="Sprite2D" parent="Art" unique_id=954418530]
+z_index = -1
+position = Vector2(2961, 977)
+scale = Vector2(0.11764706, 0.12671234)
+texture = ExtResource("shore_lantern")
+centered = false
+
+[node name="IrrigationPaperLantern" type="Sprite2D" parent="Art" unique_id=323092569]
+z_index = -1
+position = Vector2(4910, 53)
+scale = Vector2(0.16221035, 0.17465752)
+texture = ExtResource("shore_lantern")
+centered = false
+flip_h = true
+
+[node name="IntakeInterior" type="Polygon2D" parent="Art" unique_id=1025809838]
+z_index = -5
+texture = ExtResource("aqueduct_bay")
+polygon = PackedVector2Array(3278, 1624, 3278, 1460, 3292, 1410, 3325, 1371, 3379, 1333, 3436, 1330, 3495, 1357, 3530, 1392, 3547, 1460, 3547, 1624)
+uv = PackedVector2Array(288, 549, 288, 317, 351, 247, 501, 192, 745, 139, 1003, 135, 1270, 173, 1428, 222, 1505, 317, 1505, 549)
+
+[node name="NookBubbles" type="CPUParticles2D" parent="Art" unique_id=598985903]
+z_index = 1
+position = Vector2(2197.5, 1470)
+amount = 12
+texture = SubResource("NookBubbleTexture")
+lifetime = 3.1
+preprocess = 3.1
+randomness = 0.48
+emission_shape = 3
+emission_rect_extents = Vector2(24, 5)
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, -8)
+initial_velocity_min = 60.0
+initial_velocity_max = 78.0
+scale_amount_min = 0.32
+scale_amount_max = 0.72
+
+[node name="NearFraming" type="Parallax2D" parent="." unique_id=1380425038]
+z_index = 3
+scroll_scale = Vector2(1.08, 1)
+
+[node name="ChamberBough" type="Sprite2D" parent="NearFraming" unique_id=503576367]
+z_index = -1
+position = Vector2(-1.0000076, -73)
+scale = Vector2(0.7818352, 0.5613276)
+texture = ExtResource("chamber_bough")
+centered = false
+
+[node name="WestLeaves" type="Sprite2D" parent="NearFraming" unique_id=1926615161]
+modulate = Color(0.11, 0.27, 0.29, 0.78)
+position = Vector2(-290, 1710)
+scale = Vector2(0.58, 0.42)
+texture = ExtResource("leaf_cluster")
+centered = false
+
+[node name="EastLeaves" type="Sprite2D" parent="NearFraming" unique_id=556347927]
+modulate = Color(0.11, 0.27, 0.29, 0.78)
+position = Vector2(5125, 1712.5)
+scale = Vector2(0.58, 0.42)
+texture = ExtResource("leaf_cluster")
+centered = false
+flip_h = true
+
+[node name="Terrain" type="Node2D" parent="." unique_id=80767907]
+
+[node name="ChamberLanding" type="StaticBody2D" parent="Terrain" unique_id=145152415]
+collision_mask = 0
+metadata/standing_span = Vector3(0, 825, 1085)
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/ChamberLanding" unique_id=1245305476]
+polygon = PackedVector2Array(0, 1085, 825, 1085, 810, 1187.5, 740, 1245, 625, 1315, 485, 1372.5, 267.5, 1472.5, 0, 1507.5)
+
+[node name="ChamberBrow" type="StaticBody2D" parent="Terrain" unique_id=1432430233]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/ChamberBrow" unique_id=897189257]
+polygon = PackedVector2Array(0, 0, 735, 0, 680, 325, 450, 462.5, 425, 587.5, 610, 650, 607.5, 780, 555, 802.5, 467.5, 725, 360, 677.5, 237.5, 680, 120, 727.5, 0, 812.5)
+
+[node name="HiddenShelf" type="StaticBody2D" parent="Terrain" unique_id=4024893]
+collision_mask = 0
+metadata/standing_span = Vector3(460, 757.5, 497.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/HiddenShelf" unique_id=874649452]
+position = Vector2(608.75, 512.5)
+shape = SubResource("Rect_119_12")
+one_way_collision = true
+
+[node name="TreeIsland" type="StaticBody2D" parent="Terrain" unique_id=524112046]
+collision_mask = 0
+metadata/standing_span = Vector3(967.5, 1482.5, 997.5)
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/TreeIsland" unique_id=66010021]
+polygon = PackedVector2Array(967.5, 997.5, 1482.5, 997.5, 1470, 1202.5, 1395, 1285, 1165, 1337.5, 1035, 1330, 970, 1212.5)
+
+[node name="TreePerch" type="StaticBody2D" parent="Terrain" unique_id=171325199]
+collision_mask = 0
+metadata/standing_span = Vector3(1080, 1237.5, 802.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/TreePerch" unique_id=1309934574]
+position = Vector2(1158.75, 812.5)
+shape = SubResource("Rect_63_8")
+one_way_collision = true
+
+[node name="NookRoof" type="StaticBody2D" parent="Terrain" unique_id=1746840101]
+collision_mask = 0
+metadata/standing_span = Vector3(1860, 2620, 927.5)
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/NookRoof" unique_id=1750296548]
+polygon = PackedVector2Array(1860, 927.5, 2620, 927.5, 2582.5, 1000, 2425, 1025, 2357.5, 1007.5, 2145, 1007.5, 2040, 1060, 1937.5, 1092.5)
+
+[node name="NookWestWall" type="StaticBody2D" parent="Terrain" unique_id=1842128296]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/NookWestWall" unique_id=1256613068]
+polygon = PackedVector2Array(1870, 1000, 2065, 1020, 2025, 1125, 2002.5, 1207.5, 2002.5, 1360, 2017.5, 1410, 1992.5, 1407.5, 1927.5, 1342.5, 1835, 1215)
+
+[node name="NookEastWall" type="StaticBody2D" parent="Terrain" unique_id=102666974]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/NookEastWall" unique_id=1619336538]
+polygon = PackedVector2Array(2395, 1012.5, 2610, 977.5, 2580, 1202.5, 2502.5, 1350, 2437.5, 1450, 2405, 1432.5, 2427.5, 1230, 2425, 1090)
+
+[node name="NookDryLedge" type="StaticBody2D" parent="Terrain" unique_id=763705349]
+collision_mask = 0
+metadata/standing_span = Vector3(2307.5, 2425, 1152.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/NookDryLedge" unique_id=1028950971]
+position = Vector2(2366.25, 1163.75)
+shape = SubResource("Rect_47_9")
+one_way_collision = true
+
+[node name="WestStep" type="StaticBody2D" parent="Terrain" unique_id=1459022294]
+collision_mask = 0
+metadata/standing_span = Vector3(1382.5, 1572.5, 692.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/WestStep" unique_id=1558064002]
+position = Vector2(1477.5, 707.5)
+shape = SubResource("Rect_76_12")
+one_way_collision = true
+
+[node name="WestShelf" type="StaticBody2D" parent="Terrain" unique_id=796308428]
+collision_mask = 0
+metadata/standing_span = Vector3(1635, 2067.5, 545)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/WestShelf" unique_id=403611788]
+position = Vector2(1851.25, 560)
+shape = SubResource("Rect_173_12")
+one_way_collision = true
+
+[node name="HighWest" type="StaticBody2D" parent="Terrain" unique_id=896009785]
+collision_mask = 0
+metadata/standing_span = Vector3(2175, 2335, 432.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/HighWest" unique_id=533586063]
+position = Vector2(2255, 447.5)
+shape = SubResource("Rect_64_12")
+one_way_collision = true
+
+[node name="Center" type="StaticBody2D" parent="Terrain" unique_id=1618829041]
+collision_mask = 0
+metadata/standing_span = Vector3(2255, 2530, 642.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/Center" unique_id=98189739]
+position = Vector2(2392.5, 657.5)
+shape = SubResource("Rect_110_12")
+one_way_collision = true
+
+[node name="EastStep" type="StaticBody2D" parent="Terrain" unique_id=1451622003]
+collision_mask = 0
+metadata/standing_span = Vector3(2550, 2682.5, 532.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/EastStep" unique_id=1131479812]
+position = Vector2(2616.25, 547.5)
+shape = SubResource("Rect_53_12")
+one_way_collision = true
+
+[node name="EastShelf" type="StaticBody2D" parent="Terrain" unique_id=504686686]
+collision_mask = 0
+metadata/standing_span = Vector3(2722.5, 2970, 422.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/EastShelf" unique_id=1358380176]
+position = Vector2(2846.25, 437.5)
+shape = SubResource("Rect_99_12")
+one_way_collision = true
+
+[node name="GateStep" type="StaticBody2D" parent="Terrain" unique_id=1089324410]
+collision_mask = 0
+metadata/standing_span = Vector3(3030, 3302.5, 347.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/GateStep" unique_id=1249557287]
+position = Vector2(3166.25, 362.5)
+shape = SubResource("Rect_109_12")
+one_way_collision = true
+
+[node name="LowerVillageBank" type="StaticBody2D" parent="Terrain" unique_id=65948770]
+collision_mask = 0
+metadata/standing_span = Vector3(2975, 4937.5, 932.5)
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/LowerVillageBank" unique_id=491601904]
+polygon = PackedVector2Array(2975, 927.5, 4957.5, 940, 5045, 955, 5032.5, 1095, 4950, 1210, 4792.5, 1287.5, 4150, 1297.5, 3607.5, 1295, 3435, 1252.5, 3300, 1292.5, 3215, 1375, 3070, 1322.5, 2937.5, 1237.5, 2942.5, 1092.5)
+
+[node name="ClimbOutLedge" type="StaticBody2D" parent="Terrain" unique_id=1732186450]
+collision_mask = 0
+metadata/standing_span = Vector3(2790, 2967.5, 1167.5)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/ClimbOutLedge" unique_id=1237037172]
+position = Vector2(2878.75, 1186.25)
+shape = SubResource("Rect_71_15")
+one_way_collision = true
+
+[node name="DockDeck" type="StaticBody2D" parent="Terrain" unique_id=1938519543]
+collision_mask = 0
+metadata/standing_span = Vector3(4935, 5430, 950)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/DockDeck" unique_id=2041508665]
+position = Vector2(5182.5, 975)
+shape = SubResource("Rect_198_20")
+one_way_collision = true
+
+[node name="IrrigationWalk" type="StaticBody2D" parent="Terrain" unique_id=1964316306]
+collision_mask = 0
+metadata/standing_span = Vector3(3297.5, 5017.5, 365)
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/IrrigationWalk" unique_id=2128864641]
+position = Vector2(4157.5, 385)
+shape = SubResource("Rect_688_16")
+one_way_collision = true
+
+[node name="IrrigationStairs" type="StaticBody2D" parent="Terrain" unique_id=2060191412]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/IrrigationStairs" unique_id=1198258939]
+polygon = PackedVector2Array(4932.5, 365, 4990, 362.5, 5090, 345, 5140, 337.5, 5430, 337.5, 5430, 407.5, 4875, 432.5)
+
+[node name="AqueductFloor" type="StaticBody2D" parent="Terrain" unique_id=929367260]
+collision_mask = 0
+metadata/standing_span = Vector3(3445, 5020, 1637.5)
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/AqueductFloor" unique_id=914866219]
+polygon = PackedVector2Array(3087.5, 1720, 3207.5, 1650, 3305, 1625, 3557.5, 1637.5, 5020, 1637.5, 5080, 1607.5, 5430, 1607.5, 5430, 1812.5, 3025, 1812.5)
+
+[node name="AqueductCeiling" type="StaticBody2D" parent="Terrain" unique_id=1306609340]
+collision_mask = 0
+
+[node name="Shape" type="CollisionPolygon2D" parent="Terrain/AqueductCeiling" unique_id=880496951]
+polygon = PackedVector2Array(3250, 1360, 3345, 1292.5, 3420, 1270, 3545, 1277.5, 3645, 1300, 5102.5, 1300, 5102.5, 1370, 3625, 1367.5, 3537.5, 1327.5, 3397.5, 1335, 3327.5, 1380)
+
+[node name="IrrigationBarrier" type="StaticBody2D" parent="Terrain" unique_id=1932505873]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/IrrigationBarrier" unique_id=1088801403]
+position = Vector2(3380, 177.5)
+shape = SubResource("Rect_12_150")
+
+[node name="IntakeBarrier" type="StaticBody2D" parent="Terrain" unique_id=462291988]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/IntakeBarrier" unique_id=1484473145]
+position = Vector2(3400, 1515)
+shape = SubResource("Rect_17_100")
+
+[node name="BasinFloor" type="StaticBody2D" parent="Terrain" unique_id=1208622502]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/BasinFloor" unique_id=585012027]
+position = Vector2(2650, 1820)
+shape = SubResource("Rect_2224_32")
+
+[node name="WestBoundary" type="StaticBody2D" parent="Terrain" unique_id=90505624]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/WestBoundary" unique_id=1140513075]
+position = Vector2(-30, 912.5)
+shape = SubResource("Rect_24_730")
+
+[node name="EastBoundary" type="StaticBody2D" parent="Terrain" unique_id=493283131]
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Terrain/EastBoundary" unique_id=793025721]
+position = Vector2(5460, 912.5)
+shape = SubResource("Rect_24_730")
+
+[node name="Lake" parent="." unique_id=1818409586 instance=ExtResource("water")]
+position = Vector2(0, 1215)
+lake_presentation = true
+immersion_opacity = 0.13
+painted_surface = true
+surface_opacity = 0.22
+deep_water_color = Color(0.025, 0.17, 0.22, 1)
+points = PackedVector2Array(0, 0, 5430, 0, 5430, 605, 0, 605)
+water_color = Color(0.08, 0.47, 0.55, 0.26)
+
+[node name="CollisionPolygon2D" parent="Lake" index="0"]
+self_modulate = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(0, 0, 5430, 0, 5430, 605, 0, 605)
+
+[node name="Lights" type="Node2D" parent="." unique_id=1294605152]
+
+[node name="ChamberLantern" type="PointLight2D" parent="Lights" unique_id=925109712]
+position = Vector2(240, 852.5)
+color = Color(1, 0.72, 0.39, 1)
+energy = 0.43
+range_item_cull_mask = 3
+texture = ExtResource("lamp")
+texture_scale = 2.55
+
+[node name="ClimbOutLantern" type="PointLight2D" parent="Lights" unique_id=2104070073]
+position = Vector2(3045, 1052.5)
+color = Color(1, 0.72, 0.39, 1)
+energy = 0.32
+range_item_cull_mask = 3
+texture = ExtResource("lamp")
+texture_scale = 1.95
+
+[node name="FarmLantern" type="PointLight2D" parent="Lights" unique_id=104318348]
+position = Vector2(4442.5, 872.5)
+color = Color(1, 0.72, 0.39, 1)
+energy = 0.28
+range_item_cull_mask = 3
+texture = ExtResource("lamp")
+texture_scale = 1.75
+
+[node name="IrrigationLantern" type="PointLight2D" parent="Lights" unique_id=1375236376]
+position = Vector2(5020, 140)
+color = Color(1, 0.72, 0.39, 1)
+energy = 0.34
+range_item_cull_mask = 3
+texture = ExtResource("lamp")
+texture_scale = 2.0
+
+[node name="Encounters" type="Node2D" parent="." unique_id=1014813084]
+
+[node name="ShorePatrol" parent="Encounters" unique_id=1794315839 instance=ExtResource("runner")]
+z_index = 1
+position = Vector2(2387.5, 830)
+prefer_wall = true
+home_leash = 950.0
+
+[node name="Arrivals" type="Node2D" parent="." unique_id=567302013]
+
+[node name="Chamber" type="Marker2D" parent="Arrivals" unique_id=878755413]
+position = Vector2(312.5, 1007.5)
+
+[node name="VillageRoad" type="Marker2D" parent="Arrivals" unique_id=250840489]
+position = Vector2(4950, 872.5)
+
+[node name="IrrigationEast" type="Marker2D" parent="Arrivals" unique_id=2138917462]
+position = Vector2(4650, 292.5)
+
+[node name="Aqueduct" type="Marker2D" parent="Arrivals" unique_id=740221251]
+position = Vector2(4887.5, 1507.5)
+
+[node name="Interactions" type="Node2D" parent="." unique_id=830658721]
+
+[node name="VillageRoad" type="Area2D" parent="Interactions" unique_id=2113786239]
+position = Vector2(5237.5, 872.5)
+collision_layer = 0
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Village rooftops"
+destination = "res://Src/Tests/Art/WovenWorld/woven_concept_rooftops.tscn"
+
+[node name="Reach" type="CollisionShape2D" parent="Interactions/VillageRoad" unique_id=972975301]
+shape = SubResource("Rect_82_75")
+
+[node name="Prompt" type="Label" parent="Interactions/VillageRoad" unique_id=612929677]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_top = -123.0
+offset_right = 220.0
+offset_bottom = -92.0
+horizontal_alignment = 1
+
+[node name="IrrigationLatch" type="Area2D" parent="Interactions" unique_id=728889713]
+position = Vector2(3570, 290)
+collision_layer = 0
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Release irrigation latch"
+
+[node name="Reach" type="CollisionShape2D" parent="Interactions/IrrigationLatch" unique_id=322630677]
+shape = SubResource("Rect_88_86")
+
+[node name="Prompt" type="Label" parent="Interactions/IrrigationLatch" unique_id=1479248614]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_top = -123.0
+offset_right = 220.0
+offset_bottom = -92.0
+horizontal_alignment = 1
+
+[node name="IrrigationExit" type="Area2D" parent="Interactions" unique_id=307318017]
+position = Vector2(5307.5, 270)
+collision_layer = 0
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Village rooftops"
+destination = "res://Src/Tests/Art/WovenWorld/woven_concept_rooftops.tscn"
+
+[node name="Reach" type="CollisionShape2D" parent="Interactions/IrrigationExit" unique_id=1876517226]
+shape = SubResource("Rect_76_64")
+
+[node name="Prompt" type="Label" parent="Interactions/IrrigationExit" unique_id=928781953]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_top = -123.0
+offset_right = 220.0
+offset_bottom = -92.0
+horizontal_alignment = 1
+
+[node name="IntakeLatch" type="Area2D" parent="Interactions" unique_id=351351290]
+position = Vector2(3267.5, 1505)
+collision_layer = 0
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Raise aqueduct intake grille"
+underwater = true
+
+[node name="Reach" type="CollisionShape2D" parent="Interactions/IntakeLatch" unique_id=2103670699]
+shape = SubResource("Rect_78_87")
+
+[node name="Prompt" type="Label" parent="Interactions/IntakeLatch" unique_id=436227108]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_top = -123.0
+offset_right = 220.0
+offset_bottom = -92.0
+horizontal_alignment = 1
+
+[node name="AqueductExit" type="Area2D" parent="Interactions" unique_id=2141699189]
+position = Vector2(5257.5, 1505)
+collision_layer = 0
+monitorable = false
+script = ExtResource("handoff")
+action_text = "Enter the Aqueducts"
+destination = "res://Src/Tests/Art/WovenWorld/woven_concept_aqueducts.tscn"
+underwater = true
+
+[node name="Reach" type="CollisionShape2D" parent="Interactions/AqueductExit" unique_id=1253040299]
+shape = SubResource("Rect_88_85")
+
+[node name="Prompt" type="Label" parent="Interactions/AqueductExit" unique_id=453952178]
+visible = false
+z_index = 110
+z_as_relative = false
+offset_left = -220.0
+offset_top = -123.0
+offset_right = 220.0
+offset_bottom = -92.0
+horizontal_alignment = 1
+
+[node name="Player" parent="." unique_id=64945814 instance=ExtResource("player")]
+z_index = 2
+position = Vector2(312.5, 1007.5)
+debug_blue_water_power_unlocked = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1624721480]
+position = Vector2(960, 1147.5)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 5430
+limit_bottom = 1810
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[editable path="Lake"]

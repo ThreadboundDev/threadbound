@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 game and Krita cleanup
+
+Chase requested an aggressive reversible cleanup. Demo 2.0 remains the current demo;
+`blue_lakeside_test.tscn` is the retained Blue reference. The original Chamber remains
+because Demo 2.0 inherits it. Current Woven Shore painting sources, village library,
+unique user paintings, active doll/equipment sources and required builder inputs stay.
+Old playable art experiments, unused assets, redundant deliveries and backups are in
+`Staged for Delete/2026-11-25/`; five Chamber KRA sources are in `ArtSource/Chamber/Krita/`.
+Nothing is permanently deleted. See [the report and restore instructions](organization/cleanup_2026_11_25.md).
+Validation and Git receipt will be recorded when checks complete.
+
 Updated November 10, 2026. This is the single current priority list. The saved
 recovery baseline remains `16b3bd3c`; dated evidence is in the
 [October 21 checkpoint](checkpoint_2026_10_21.md).
