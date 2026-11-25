@@ -1,0 +1,2 @@
+*.bundle filter=lfs diff=lfs merge=lfs -text
+stamps/*.png filter=lfs diff=lfs merge=lfs -text

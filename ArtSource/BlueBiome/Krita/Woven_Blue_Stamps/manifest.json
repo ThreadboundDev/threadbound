@@ -1,0 +1,987 @@
+{
+  "image_generation": "Built-in image_gen",
+  "sheets": {
+    "terrain": {
+      "sha256": "52e627ca35b5ce5ceb00210a522619bd8684d39009e506b0c2dc8a27f7ea687e",
+      "size": [
+        1268,
+        1241
+      ],
+      "prompt": {
+        "generation": "Use case: stylized-concept. Make one production sprite sheet for Threadbound's side-scrolling Blue biome, to cut into FULL-COLOR RGBA Krita stamp brushes. A strictly 3-column by 3-row matrix of nine separate objects on genuine transparent alpha, each centered in its own equal square cell with spacious empty margins on all four sides. Object edges must never touch another cell. Treat the nine cells as a composition scaffold only. No printed cells, line grid, checkerboard, words, text, character, decorative frame, isolated cast shadow or background. Each silhouette is fully contained. Strictly side elevation with a modest top reveal, like orthographic 2D game assets; no vanishing point, front-right diagonal or tilemap isometric angle. Art direction: stylized handmade flat faceted low-poly in 2D, broad clipped planes with directional woven threads following each surface, simple angular geometry softened by subtle fiber texture. Use a few readable folds and restrained interlace, with thin colored edge accents only. Distinct chunky silhouette, bright details confined to accents; cohesive muted mineral slate blue, blue-green and earth browns, woven warm ivory and a hint of faded terracotta or copper, softened golden daylight from upper left. Crisp readable at gameplay distance, intentional silhouette gaps and practical construction. Avoid painterly realism, noisy crosshatching, outlines in black, vector-flat sterile fills, glossy 3D rendering, bloom, multicolored crystal, deep photographic shadow, extraneous debris. Match the density and finish between all nine assets.\nObjects left-to-right by row: (1) broad moss-edged slate shelf and deep broken cliff face, (2) low wet dark slate ledge, (3) broad terraced rice-paddy earthen retaining bank with visible muted-moss surface; (4) thin suspended stone platform with a truly broad visible standing plane, (5) compact floating wedge rock with level standing top, (6) rugged tall vertical basalt pillar with a natural root base; (7) crooked cave opening framed by interlocked slate with real transparent opening, (8) overhanging ragged cavern ceiling with hanging root tips, (9) submerged green-blue worn stone arch with real transparent opening. All walkable tops have enough visible depth for projected boots and their shadow, as part of the same stone or soil, never a glued-on tan slice. Prioritize the dark palette range and bright moss only at upper edges. Wide pieces may span most of their cells with safe side margins.",
+        "palette_revision": "Image 1 is the editable original transparent stamp sheet. Images 2–4 are user-approved palette, lighting, and existing Threadbound art references only. Revise the ART COLOR AND LIGHT ONLY in image 1. Preserve all nine specific shapes, their order and grid arrangement, their side-facing low-poly woven sculpted planes and distinctive geometry. Keep the isolated cutouts complete with essentially the same layout, ample clear separations, real transparent background and transparent interior holes in arches, handles, and nets. Match the rich saturation, bold sunlit color, and crisp warm-to-cool contrasts of the reference environment; the colors should be immediately lively even in the thumbnail. Preserve directional thread detail without making things look like fabric toys. Use deep colored shadows and generous high-chroma middle tones, no overall desaturation, grey overlay, sepia fog, overexposure, or neon emission. No people, screenshots, background, checkerboard, writing, shadow ground planes, or extra elements.\nMake the walkable slate face closer to warm sunlit limestone and cool lavender-slate, with a clear warm cream/apricot continuous upper surface and very lively chartreuse/moss greens as in the level floor of the references. Hit the saturation of the copper orange faceted stone behind the player on selected exposed geological bands, green can drape over it. Bright spring green rice terraces above strong woven umber and ochre. Wet surfaces catch small saturated cyan notes. Aqueduct still reads submerged: teal cyan reflections and patches of vivid spring green algae against a blue shadow. The cave mouth still has a fully transparent hole."
+      }
+    },
+    "construction": {
+      "sha256": "4a29d9048e86f306ba581fb85bde84777cc4ae08a1aefcf4a8f0a1e777210778",
+      "size": [
+        1293,
+        1217
+      ],
+      "prompt": {
+        "generation": "Use case: stylized-concept. Make one production sprite sheet for Threadbound's side-scrolling Blue biome, to cut into FULL-COLOR RGBA Krita stamp brushes. A strictly 3-column by 3-row matrix of nine separate objects on genuine transparent alpha, each centered in its own equal square cell with spacious empty margins on all four sides. Object edges must never touch another cell. Treat the nine cells as a composition scaffold only. No printed cells, line grid, checkerboard, words, text, character, decorative frame, isolated cast shadow or background. Each silhouette is fully contained. Strictly side elevation with a modest top reveal, like orthographic 2D game assets; no vanishing point, front-right diagonal or tilemap isometric angle. Art direction: stylized handmade flat faceted low-poly in 2D, broad clipped planes with directional woven threads following each surface, simple angular geometry softened by subtle fiber texture. Use a few readable folds and restrained interlace, with thin colored edge accents only. Distinct chunky silhouette, bright details confined to accents; cohesive muted mineral slate blue, blue-green and earth browns, woven warm ivory and a hint of faded terracotta or copper, softened golden daylight from upper left. Crisp readable at gameplay distance, intentional silhouette gaps and practical construction. Avoid painterly realism, noisy crosshatching, outlines in black, vector-flat sterile fills, glossy 3D rendering, bloom, multicolored crystal, deep photographic shadow, extraneous debris. Match the density and finish between all nine assets.\nObjects left-to-right by row: (1) timber field footbridge deck of transverse gray cedar planks with rope lashing and a broad standing plane, (2) side-on repeating weathered cedar rail with three posts and one rope, (3) pair of tall wooden stilt supports with a single X brace; (4) indigo shingled low gable roof with slightly lifted ends, (5) asymmetric warm ochre woven-reed canopy with hem and absolutely no walls or posts, (6) warm woven-plaster wall infill with vertical timber framing plus one small shuttered window; (7) side-on doorway module with dark recessed door and a few pale textile strips, (8) hefty dark timber diagonal knee brace with rope bindings and pegs, (9) weathered blue slate sluice-gate masonry with wooden center gate. Shape roof, wall, and supports as individual interchangeable parts. Folk-industrial coastal architecture. Restrained blue, tawny gray umber, off-white weave and accent copper.",
+        "palette_revision": "Image 1 is the editable original transparent stamp sheet. Images 2–4 are user-approved palette, lighting, and existing Threadbound art references only. Revise the ART COLOR AND LIGHT ONLY in image 1. Preserve all nine specific shapes, their order and grid arrangement, their side-facing low-poly woven sculpted planes and distinctive geometry. Keep the isolated cutouts complete with essentially the same layout, ample clear separations, real transparent background and transparent interior holes in arches, handles, and nets. Match the rich saturation, bold sunlit color, and crisp warm-to-cool contrasts of the reference environment; the colors should be immediately lively even in the thumbnail. Preserve directional thread detail without making things look like fabric toys. Use deep colored shadows and generous high-chroma middle tones, no overall desaturation, grey overlay, sepia fog, overexposure, or neon emission. No people, screenshots, background, checkerboard, writing, shadow ground planes, or extra elements.\nBuild color harmony around the screenshot's sunlit orange and ochre wood, eggshell woven grass fabrics, and clearly blue-indigo roofs. Shift timber from ashy brown to aged warm cedar with saturated honey and ruddy-orange accents. Sky-reflective shadow planes can be saturated blue-teal. The awning gets sunlit marigold panels and pale hems, wall gets a terracotta cloth repeat, roof gets richer indigo. Use weathered colored materials, avoid muddy gray cast."
+      }
+    },
+    "vegetation": {
+      "sha256": "1f3d0d0f917a0cc300e9ee26830eda63f5491cc64b00a5d2bf5a38658c94c545",
+      "size": [
+        1261,
+        1247
+      ],
+      "prompt": {
+        "generation": "Use case: stylized-concept. Make one production sprite sheet for Threadbound's side-scrolling Blue biome, to cut into FULL-COLOR RGBA Krita stamp brushes. A strictly 3-column by 3-row matrix of nine separate objects on genuine transparent alpha, each centered in its own equal square cell with spacious empty margins on all four sides. Object edges must never touch another cell. Treat the nine cells as a composition scaffold only. No printed cells, line grid, checkerboard, words, text, character, decorative frame, isolated cast shadow or background. Each silhouette is fully contained. Strictly side elevation with a modest top reveal, like orthographic 2D game assets; no vanishing point, front-right diagonal or tilemap isometric angle. Art direction: stylized handmade flat faceted low-poly in 2D, broad clipped planes with directional woven threads following each surface, simple angular geometry softened by subtle fiber texture. Use a few readable folds and restrained interlace, with thin colored edge accents only. Distinct chunky silhouette, bright details confined to accents; cohesive muted mineral slate blue, blue-green and earth browns, woven warm ivory and a hint of faded terracotta or copper, softened golden daylight from upper left. Crisp readable at gameplay distance, intentional silhouette gaps and practical construction. Avoid painterly realism, noisy crosshatching, outlines in black, vector-flat sterile fills, glossy 3D rendering, bloom, multicolored crystal, deep photographic shadow, extraneous debris. Match the density and finish between all nine assets.\nObjects left-to-right by row: (1) irregular windswept shoreline willow with angular olive canopy and blue-brown visible full trunk, (2) smaller peach blossom tree with subdued dusty coral facets and full trunk, (3) clump of three small low shrubs with angular soft blue-green leaf clusters; (4) cluster of ripe rice stalks with pale ochre seed tips and individual roots, (5) squat triangular pine leaning subtly into the wind with full trunk, (6) cattail and lakeside reed tuft with angled long leaves and individual stems; (7) spread of creeping moss and small ferns draping over stone with real transparent gaps, (8) submerged cluster of thin dark teal ribbons of water grass, (9) lily pad and two muted pale leaves grouped at the water surface. Complete organic tips and staggered natural transparent gaps at all bases. Keep contact readable, no straight cut line and no ground, dirt oval or standalone shadow. Distinct leaf planes with sparse fiber lines.",
+        "palette_revision": "Image 1 is the editable original transparent stamp sheet. Images 2–4 are user-approved palette, lighting, and existing Threadbound art references only. Revise the ART COLOR AND LIGHT ONLY in image 1. Preserve all nine specific shapes, their order and grid arrangement, their side-facing low-poly woven sculpted planes and distinctive geometry. Keep the isolated cutouts complete with essentially the same layout, ample clear separations, real transparent background and transparent interior holes in arches, handles, and nets. Match the rich saturation, bold sunlit color, and crisp warm-to-cool contrasts of the reference environment; the colors should be immediately lively even in the thumbnail. Preserve directional thread detail without making things look like fabric toys. Use deep colored shadows and generous high-chroma middle tones, no overall desaturation, grey overlay, sepia fog, overexposure, or neon emission. No people, screenshots, background, checkerboard, writing, shadow ground planes, or extra elements.\nMain greens: sunlit yellow-green and electric chartreuse leaf faces in the screenshots, deep clean forest/emerald green underside, warm copper roots. Peach blossom tree uses truly vivid candy coral-pink, pink orchid, light rose, and chalky pale cream highlights; keep subdued green only as a small complementary shadow. Rice seed heads are saturated wheat ochre and lemon-gold with live bright grassy green blades. Cattails are penny orange and bright olive-green; submerged grasses are clean bright turquoise-teal with jade shadow. Lily pads use emerald in shadow and fresh spring chartreuse lit planes. Make saturation clear even at zoomed-out scale."
+      }
+    },
+    "props": {
+      "sha256": "6ffeefbd0f273bd671fe37c46d178032a6dad9b82cd08d2f8df202147849a246",
+      "size": [
+        1261,
+        1247
+      ],
+      "prompt": {
+        "generation": "Use case: stylized-concept. Make one production sprite sheet for Threadbound's side-scrolling Blue biome, to cut into FULL-COLOR RGBA Krita stamp brushes. A strictly 3-column by 3-row matrix of nine separate objects on genuine transparent alpha, each centered in its own equal square cell with spacious empty margins on all four sides. Object edges must never touch another cell. Treat the nine cells as a composition scaffold only. No printed cells, line grid, checkerboard, words, text, character, decorative frame, isolated cast shadow or background. Each silhouette is fully contained. Strictly side elevation with a modest top reveal, like orthographic 2D game assets; no vanishing point, front-right diagonal or tilemap isometric angle. Art direction: stylized handmade flat faceted low-poly in 2D, broad clipped planes with directional woven threads following each surface, simple angular geometry softened by subtle fiber texture. Use a few readable folds and restrained interlace, with thin colored edge accents only. Distinct chunky silhouette, bright details confined to accents; cohesive muted mineral slate blue, blue-green and earth browns, woven warm ivory and a hint of faded terracotta or copper, softened golden daylight from upper left. Crisp readable at gameplay distance, intentional silhouette gaps and practical construction. Avoid painterly realism, noisy crosshatching, outlines in black, vector-flat sterile fills, glossy 3D rendering, bloom, multicolored crystal, deep photographic shadow, extraneous debris. Match the density and finish between all nine assets.\nObjects left-to-right by row: (1) hanging amber woven paper lantern with a navy loop cap, (2) squat carved slate wayfinding light with amber cloth tucked into its opening, (3) narrow painted signpost with an unmarked horizontal plank and a complete base; (4) pair of ovoid woven reed grain baskets one closed and one with rolled straw, (5) wooden water bucket with braided handle and copper bindings, (6) compact fishing net draped on a side-on low cedar rack with tied knots and visible open mesh; (7) worn wooden hand winch with spool and rope on a side-on timber base, (8) woven sail cloth banner with tassels and hanging bar, (9) a little stepped stone water outlet spout with muted cool blue cloth ties. Fully contained objects, no external floors. Keep empty spaces under bars and between handles transparent. Low warm focal accents while still very much the same desaturated Blue biome palette.",
+        "palette_revision": "Image 1 is the editable original transparent stamp sheet. Images 2–4 are user-approved palette, lighting, and existing Threadbound art references only. Revise the ART COLOR AND LIGHT ONLY in image 1. Preserve all nine specific shapes, their order and grid arrangement, their side-facing low-poly woven sculpted planes and distinctive geometry. Keep the isolated cutouts complete with essentially the same layout, ample clear separations, real transparent background and transparent interior holes in arches, handles, and nets. Match the rich saturation, bold sunlit color, and crisp warm-to-cool contrasts of the reference environment; the colors should be immediately lively even in the thumbnail. Preserve directional thread detail without making things look like fabric toys. Use deep colored shadows and generous high-chroma middle tones, no overall desaturation, grey overlay, sepia fog, overexposure, or neon emission. No people, screenshots, background, checkerboard, writing, shadow ground planes, or extra elements.\nBring color to material accents like the screenshot's plant and coastal contrast: a vivid golden apricot lantern, sea-blue and turquoise cloth, burnt-orange cord and timber where appropriate, lively pale woven fibers, rich copper, subtle warm pink seam on the cream banner; water outlet is bright lagoon cyan, slate is cool periwinkle with clear warm sunlit faces. Keep the props cohesive with the terrain and foreground instead of making them washed-out or gray."
+      }
+    }
+  },
+  "assets": [
+    {
+      "id": "woven_blue_moss_slate_shelf",
+      "name": "Moss Slate Shelf",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        14,
+        59,
+        412,
+        372
+      ],
+      "cell": [
+        0,
+        0,
+        423,
+        403
+      ],
+      "size": [
+        414,
+        329
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_moss_slate_shelf.png",
+      "edge_pixels": 0,
+      "sha256": "1d09adf0928843af318bd33e981bba2a687a0115899c9b479b4248577ef3a15e"
+    },
+    {
+      "id": "woven_blue_wet_slate_ledge",
+      "name": "Wet Slate Ledge",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        430,
+        235,
+        816,
+        365
+      ],
+      "cell": [
+        423,
+        0,
+        845,
+        403
+      ],
+      "size": [
+        402,
+        146
+      ],
+      "default_size": 576,
+      "file": "stamps/woven_blue_wet_slate_ledge.png",
+      "edge_pixels": 0,
+      "sha256": "885b0f3e250531a6a8429251a6a18a6ab5c562c5f1292ae4e0c28494de71efdb"
+    },
+    {
+      "id": "woven_blue_rice_terrace_bank",
+      "name": "Rice Terrace Bank",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        847,
+        73,
+        1260,
+        367
+      ],
+      "cell": [
+        845,
+        0,
+        1268,
+        403
+      ],
+      "size": [
+        429,
+        310
+      ],
+      "default_size": 896,
+      "file": "stamps/woven_blue_rice_terrace_bank.png",
+      "edge_pixels": 0,
+      "sha256": "ad8e9380fc42fca9791460b859aa218a1a7939a14bc8d355df3b16ace80bae99"
+    },
+    {
+      "id": "woven_blue_floating_slate_shelf",
+      "name": "Floating Slate Shelf",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        10,
+        578,
+        407,
+        705
+      ],
+      "cell": [
+        0,
+        403,
+        423,
+        827
+      ],
+      "size": [
+        413,
+        143
+      ],
+      "default_size": 608,
+      "file": "stamps/woven_blue_floating_slate_shelf.png",
+      "edge_pixels": 0,
+      "sha256": "ba7af215d9b62cde1f4360525d613500f51c398126acfd6b06ed41362bfd12f3"
+    },
+    {
+      "id": "woven_blue_floating_wedge",
+      "name": "Floating Wedge",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        495,
+        539,
+        769,
+        750
+      ],
+      "cell": [
+        423,
+        403,
+        845,
+        827
+      ],
+      "size": [
+        290,
+        227
+      ],
+      "default_size": 384,
+      "file": "stamps/woven_blue_floating_wedge.png",
+      "edge_pixels": 0,
+      "sha256": "26cb1f278058241bbfaeb9d7c1ab3c89193aed3c0c006a05d206ed4757d0c948"
+    },
+    {
+      "id": "woven_blue_rooted_basalt_pillar",
+      "name": "Rooted Basalt Pillar",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        891,
+        403,
+        1215,
+        807
+      ],
+      "cell": [
+        845,
+        403,
+        1268,
+        827
+      ],
+      "size": [
+        340,
+        420
+      ],
+      "default_size": 640,
+      "file": "stamps/woven_blue_rooted_basalt_pillar.png",
+      "edge_pixels": 0,
+      "sha256": "a54aed604fae6bcd53472548412ce2725f048c53ef7c2e24e1c5cc9258602b29"
+    },
+    {
+      "id": "woven_blue_woven_cave_mouth",
+      "name": "Woven Cave Mouth",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        5,
+        865,
+        403,
+        1205
+      ],
+      "cell": [
+        0,
+        827,
+        423,
+        1241
+      ],
+      "size": [
+        414,
+        356
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_woven_cave_mouth.png",
+      "edge_pixels": 0,
+      "sha256": "6130913d37e9b96367d289bb0de5e999404926e1d5cdcc76d25b5b94cdeff80a"
+    },
+    {
+      "id": "woven_blue_cavern_ceiling",
+      "name": "Cavern Ceiling",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        425,
+        868,
+        824,
+        1165
+      ],
+      "cell": [
+        423,
+        827,
+        845,
+        1241
+      ],
+      "size": [
+        415,
+        313
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_cavern_ceiling.png",
+      "edge_pixels": 0,
+      "sha256": "fa2980354e97541cd8da22e83132f0decf0b0750ddf0cff871898485d88ff4e1"
+    },
+    {
+      "id": "woven_blue_submerged_aqueduct_arch",
+      "name": "Submerged Aqueduct Arch",
+      "category": "Terrain",
+      "sheet": "terrain",
+      "source_bounds": [
+        846,
+        896,
+        1266,
+        1204
+      ],
+      "cell": [
+        845,
+        827,
+        1268,
+        1241
+      ],
+      "size": [
+        436,
+        324
+      ],
+      "default_size": 768,
+      "file": "stamps/woven_blue_submerged_aqueduct_arch.png",
+      "edge_pixels": 0,
+      "sha256": "93fe3b75ef2590ff87cbe8f5428286f84d049d53c9c17b64d7202f708fac6677"
+    },
+    {
+      "id": "woven_blue_cedar_footbridge_deck",
+      "name": "Cedar Footbridge Deck",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        13,
+        174,
+        431,
+        350
+      ],
+      "cell": [
+        0,
+        0,
+        431,
+        406
+      ],
+      "size": [
+        434,
+        192
+      ],
+      "default_size": 640,
+      "file": "stamps/woven_blue_cedar_footbridge_deck.png",
+      "edge_pixels": 0,
+      "sha256": "287d45b848feb62cff26cb62cd065ec4e1221927f88d48d0c9282ad8f44727e7"
+    },
+    {
+      "id": "woven_blue_rope_rail",
+      "name": "Rope Rail",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        472,
+        166,
+        826,
+        350
+      ],
+      "cell": [
+        431,
+        0,
+        862,
+        406
+      ],
+      "size": [
+        370,
+        200
+      ],
+      "default_size": 512,
+      "file": "stamps/woven_blue_rope_rail.png",
+      "edge_pixels": 0,
+      "sha256": "32b47f64646e05b2047fbd59efbff1fea1ffc6eac91014079166761fe8bc83ac"
+    },
+    {
+      "id": "woven_blue_crossed_stilts",
+      "name": "Crossed Stilts",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        927,
+        35,
+        1236,
+        373
+      ],
+      "cell": [
+        862,
+        0,
+        1293,
+        406
+      ],
+      "size": [
+        325,
+        354
+      ],
+      "default_size": 576,
+      "file": "stamps/woven_blue_crossed_stilts.png",
+      "edge_pixels": 0,
+      "sha256": "df32b851c5be6d517cda6af39af1936c77a271498de6224a227b9cd19bc2ab97"
+    },
+    {
+      "id": "woven_blue_indigo_gable_roof",
+      "name": "Indigo Gable Roof",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        13,
+        522,
+        424,
+        731
+      ],
+      "cell": [
+        0,
+        406,
+        431,
+        811
+      ],
+      "size": [
+        427,
+        225
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_indigo_gable_roof.png",
+      "edge_pixels": 0,
+      "sha256": "309f9cd0afaf622e5f0cc29b3502ac852d7ac6ee9775684fb02471e616cfa8ed"
+    },
+    {
+      "id": "woven_blue_woven_reed_awning",
+      "name": "Woven Reed Awning",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        434,
+        492,
+        850,
+        727
+      ],
+      "cell": [
+        431,
+        406,
+        862,
+        811
+      ],
+      "size": [
+        432,
+        251
+      ],
+      "default_size": 480,
+      "file": "stamps/woven_blue_woven_reed_awning.png",
+      "edge_pixels": 0,
+      "sha256": "e088ed3dd2fa7a2e008c7863d9d7870d3e4008df5790ccbe1126f6dc206b4659"
+    },
+    {
+      "id": "woven_blue_shuttered_wall_panel",
+      "name": "Shuttered Wall Panel",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        875,
+        460,
+        1279,
+        742
+      ],
+      "cell": [
+        862,
+        406,
+        1293,
+        811
+      ],
+      "size": [
+        420,
+        298
+      ],
+      "default_size": 448,
+      "file": "stamps/woven_blue_shuttered_wall_panel.png",
+      "edge_pixels": 0,
+      "sha256": "f8f970045a64a66dfa3d8615907ec35f57e242542a5bf4038d55ac1075b29315"
+    },
+    {
+      "id": "woven_blue_recessed_doorway",
+      "name": "Recessed Doorway",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        58,
+        823,
+        379,
+        1175
+      ],
+      "cell": [
+        0,
+        811,
+        431,
+        1217
+      ],
+      "size": [
+        337,
+        368
+      ],
+      "default_size": 264,
+      "file": "stamps/woven_blue_recessed_doorway.png",
+      "edge_pixels": 0,
+      "sha256": "de0a045bb061bb73fef2f866ebf1e06d8e6f23f30342fb6337859ef34981b182"
+    },
+    {
+      "id": "woven_blue_timber_knee_brace",
+      "name": "Timber Knee Brace",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        479,
+        828,
+        810,
+        1166
+      ],
+      "cell": [
+        431,
+        811,
+        860,
+        1217
+      ],
+      "size": [
+        347,
+        354
+      ],
+      "default_size": 304,
+      "file": "stamps/woven_blue_timber_knee_brace.png",
+      "edge_pixels": 0,
+      "sha256": "a4a61c6119a4f77c4e371505c346181f6f7f17171dda667f174776ace41c0f88"
+    },
+    {
+      "id": "woven_blue_stone_sluice_gate",
+      "name": "Stone Sluice Gate",
+      "category": "Structures",
+      "sheet": "construction",
+      "source_bounds": [
+        860,
+        849,
+        1288,
+        1164
+      ],
+      "cell": [
+        860,
+        811,
+        1293,
+        1217
+      ],
+      "size": [
+        444,
+        331
+      ],
+      "default_size": 512,
+      "file": "stamps/woven_blue_stone_sluice_gate.png",
+      "edge_pixels": 0,
+      "sha256": "7c89087efe4cbb927354c7fad12ae3e7f24083fe6669e14b464903e80aa0be3b"
+    },
+    {
+      "id": "woven_blue_shore_willow",
+      "name": "Shore Willow",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        5,
+        0,
+        420,
+        392
+      ],
+      "cell": [
+        0,
+        0,
+        420,
+        416
+      ],
+      "size": [
+        431,
+        408
+      ],
+      "default_size": 704,
+      "file": "stamps/woven_blue_shore_willow.png",
+      "edge_pixels": 0,
+      "sha256": "5d14c21709ef7063b954319bb51187751d53f543707af0b92af32dc1c37f5b59"
+    },
+    {
+      "id": "woven_blue_peach_blossom_tree",
+      "name": "Peach Blossom Tree",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        420,
+        45,
+        833,
+        388
+      ],
+      "cell": [
+        420,
+        0,
+        840,
+        416
+      ],
+      "size": [
+        429,
+        359
+      ],
+      "default_size": 544,
+      "file": "stamps/woven_blue_peach_blossom_tree.png",
+      "edge_pixels": 0,
+      "sha256": "c5502d8dcc7709491e6a90d929c8cf5c6c21416aaf9be29c3bf6d7c54d3e810d"
+    },
+    {
+      "id": "woven_blue_low_shore_shrubs",
+      "name": "Low Shore Shrubs",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        840,
+        156,
+        1253,
+        381
+      ],
+      "cell": [
+        840,
+        0,
+        1261,
+        416
+      ],
+      "size": [
+        429,
+        241
+      ],
+      "default_size": 320,
+      "file": "stamps/woven_blue_low_shore_shrubs.png",
+      "edge_pixels": 0,
+      "sha256": "d05cb07467510cb9a27a2701ade5ceeded6e41d8c658315d534e56e78e2eb57e"
+    },
+    {
+      "id": "woven_blue_rice_stalk_cluster",
+      "name": "Rice Stalk Cluster",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        4,
+        445,
+        409,
+        807
+      ],
+      "cell": [
+        0,
+        416,
+        416,
+        831
+      ],
+      "size": [
+        421,
+        378
+      ],
+      "default_size": 184,
+      "file": "stamps/woven_blue_rice_stalk_cluster.png",
+      "edge_pixels": 0,
+      "sha256": "bcb932ab6c5da6f1fcbae8e5a5ad7284b2fb73d49e112e4efb7309b5c9534379"
+    },
+    {
+      "id": "woven_blue_wind_bent_pine",
+      "name": "Wind Bent Pine",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        416,
+        425,
+        833,
+        808
+      ],
+      "cell": [
+        416,
+        416,
+        833,
+        831
+      ],
+      "size": [
+        433,
+        399
+      ],
+      "default_size": 512,
+      "file": "stamps/woven_blue_wind_bent_pine.png",
+      "edge_pixels": 0,
+      "sha256": "b32046a18f1041c542deb36db74672ddbafe574a3c929340c334324e70dbc831"
+    },
+    {
+      "id": "woven_blue_cattail_tuft",
+      "name": "Cattail Tuft",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        833,
+        420,
+        1247,
+        800
+      ],
+      "cell": [
+        833,
+        416,
+        1261,
+        831
+      ],
+      "size": [
+        430,
+        396
+      ],
+      "default_size": 264,
+      "file": "stamps/woven_blue_cattail_tuft.png",
+      "edge_pixels": 0,
+      "sha256": "d71420f9b327f0b221cce5d2c59abc3a7bd700d132486c3e0a8b933a68df363c"
+    },
+    {
+      "id": "woven_blue_moss_and_fern_overhang",
+      "name": "Moss and Fern Overhang",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        9,
+        855,
+        401,
+        1221
+      ],
+      "cell": [
+        0,
+        831,
+        420,
+        1247
+      ],
+      "size": [
+        408,
+        382
+      ],
+      "default_size": 336,
+      "file": "stamps/woven_blue_moss_and_fern_overhang.png",
+      "edge_pixels": 0,
+      "sha256": "faba6f5fdfc0fb7196bf627e897144af334b448af44bb4c3ab4f5d6fc2529441"
+    },
+    {
+      "id": "woven_blue_submerged_grass",
+      "name": "Submerged Grass",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        429,
+        834,
+        815,
+        1225
+      ],
+      "cell": [
+        420,
+        831,
+        838,
+        1247
+      ],
+      "size": [
+        402,
+        407
+      ],
+      "default_size": 288,
+      "file": "stamps/woven_blue_submerged_grass.png",
+      "edge_pixels": 0,
+      "sha256": "3afba62b04f27c4524c199ec2303686e904f4ddf2c37d2a9473a3009581dbe85"
+    },
+    {
+      "id": "woven_blue_lily_pads",
+      "name": "Lily Pads",
+      "category": "Foliage",
+      "sheet": "vegetation",
+      "source_bounds": [
+        838,
+        927,
+        1248,
+        1118
+      ],
+      "cell": [
+        838,
+        831,
+        1261,
+        1247
+      ],
+      "size": [
+        426,
+        207
+      ],
+      "default_size": 192,
+      "file": "stamps/woven_blue_lily_pads.png",
+      "edge_pixels": 0,
+      "sha256": "e61bb0b0eac31cc70fedf67cf889cbc008cd913180a58b83fe6c97556dcfaee6"
+    },
+    {
+      "id": "woven_blue_hanging_amber_lantern",
+      "name": "Hanging Amber Lantern",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        96,
+        11,
+        320,
+        416
+      ],
+      "cell": [
+        0,
+        0,
+        420,
+        416
+      ],
+      "size": [
+        240,
+        421
+      ],
+      "default_size": 144,
+      "file": "stamps/woven_blue_hanging_amber_lantern.png",
+      "edge_pixels": 0,
+      "sha256": "78688ebdfbbd77a47960213c1be8fa2d38a40a20bc900a816798f19ff42a9b65"
+    },
+    {
+      "id": "woven_blue_slate_wayside_lantern",
+      "name": "Slate Wayside Lantern",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        472,
+        43,
+        766,
+        398
+      ],
+      "cell": [
+        420,
+        0,
+        841,
+        416
+      ],
+      "size": [
+        310,
+        371
+      ],
+      "default_size": 192,
+      "file": "stamps/woven_blue_slate_wayside_lantern.png",
+      "edge_pixels": 0,
+      "sha256": "75990b498771dca004ac0c8dfb72b7cf904c8ab15388f2ca8a584ff7528637bc"
+    },
+    {
+      "id": "woven_blue_blank_cedar_sign",
+      "name": "Blank Cedar Sign",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        901,
+        13,
+        1171,
+        414
+      ],
+      "cell": [
+        841,
+        0,
+        1261,
+        416
+      ],
+      "size": [
+        286,
+        417
+      ],
+      "default_size": 244,
+      "file": "stamps/woven_blue_blank_cedar_sign.png",
+      "edge_pixels": 0,
+      "sha256": "f7fb7e3cf7b91ad424bb0a8d3d2ee99bddfd85984dbe9cee2099b638aea26280"
+    },
+    {
+      "id": "woven_blue_reed_grain_baskets",
+      "name": "Reed Grain Baskets",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        20,
+        476,
+        406,
+        790
+      ],
+      "cell": [
+        0,
+        416,
+        420,
+        825
+      ],
+      "size": [
+        402,
+        330
+      ],
+      "default_size": 188,
+      "file": "stamps/woven_blue_reed_grain_baskets.png",
+      "edge_pixels": 0,
+      "sha256": "5da6a1be13c4dddd89a567c5c7cd913b5b19ecbcaa0dddc17af7cfeae4c928a0"
+    },
+    {
+      "id": "woven_blue_water_bucket",
+      "name": "Water Bucket",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        494,
+        436,
+        739,
+        802
+      ],
+      "cell": [
+        420,
+        416,
+        828,
+        825
+      ],
+      "size": [
+        261,
+        382
+      ],
+      "default_size": 132,
+      "file": "stamps/woven_blue_water_bucket.png",
+      "edge_pixels": 0,
+      "sha256": "4db74dd1107ef1335d0d9b9a22aa40cd348af17e6771279747257ebdbd17275f"
+    },
+    {
+      "id": "woven_blue_fishing_net_rack",
+      "name": "Fishing Net Rack",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        828,
+        485,
+        1246,
+        781
+      ],
+      "cell": [
+        828,
+        416,
+        1261,
+        825
+      ],
+      "size": [
+        434,
+        312
+      ],
+      "default_size": 312,
+      "file": "stamps/woven_blue_fishing_net_rack.png",
+      "edge_pixels": 0,
+      "sha256": "e38fd8f16c7c4a92e3eba8decb81f15ec45145eedf1c5d3c022eee6d84f914a6"
+    },
+    {
+      "id": "woven_blue_rope_winch",
+      "name": "Rope Winch",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        10,
+        863,
+        426,
+        1223
+      ],
+      "cell": [
+        0,
+        825,
+        426,
+        1247
+      ],
+      "size": [
+        432,
+        376
+      ],
+      "default_size": 256,
+      "file": "stamps/woven_blue_rope_winch.png",
+      "edge_pixels": 0,
+      "sha256": "e4c44ec281c5f6b5fb6f60c9292605835d9e0d8d1827a47dd3759587bc1656a2"
+    },
+    {
+      "id": "woven_blue_woven_hanging_banner",
+      "name": "Woven Hanging Banner",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        464,
+        825,
+        780,
+        1238
+      ],
+      "cell": [
+        426,
+        825,
+        821,
+        1247
+      ],
+      "size": [
+        332,
+        429
+      ],
+      "default_size": 232,
+      "file": "stamps/woven_blue_woven_hanging_banner.png",
+      "edge_pixels": 0,
+      "sha256": "25cceeef9a0a93eabf9cf61139a2c9a359d73cf7f06a9296e519235433a44a8b"
+    },
+    {
+      "id": "woven_blue_stone_water_outlet",
+      "name": "Stone Water Outlet",
+      "category": "Props",
+      "sheet": "props",
+      "source_bounds": [
+        821,
+        840,
+        1247,
+        1219
+      ],
+      "cell": [
+        821,
+        825,
+        1261,
+        1247
+      ],
+      "size": [
+        442,
+        395
+      ],
+      "default_size": 256,
+      "file": "stamps/woven_blue_stone_water_outlet.png",
+      "edge_pixels": 0,
+      "sha256": "83fe9a9b1ead5a04af4ee0177e398cc39c73a745b94ce849d1cc248a29b95a9d"
+    }
+  ]
+}

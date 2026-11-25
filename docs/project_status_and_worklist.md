@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 25 Woven Blue stamp library
+
+The first Woven Blue kit delivers 36 new full-color Krita stamps across
+terrain, structures, foliage, and props. The revised palette follows Chase's
+November 21 references with yellow-green foliage, coral blossom, sunlit
+limestone and warm cedar. See the [catalog and bundle](../ArtSource/BlueBiome/Krita/Woven_Blue_Stamps/README.md).
+
+Krita registered 36 tips and 36 presets under **Threadbound - Woven Blue**.
+The five older Threadbound bundles and 80 loose stamp files were hash-verified
+and moved to the local `Staged for Delete/2026-11-25-woven-stamps/` archive.
+The brush-tip pixel and preset-link checks passed for every stamp.
+
 ## November 25 Blue blockout in Krita
 
 Chase will paint the authored Blue blockout using the existing stamp library.
