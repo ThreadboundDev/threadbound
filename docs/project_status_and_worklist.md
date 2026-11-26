@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 26 Blue foliage and painted collision
+
+Chase's updated Krita painting is visible in the
+[Blue blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) at native
+scale. The cave foliage and submerged grass remain decorative. Nine
+editable solid polygons follow the painted rock silhouette, inset about
+8 px from the visible ink. The old tile layout is disabled in this
+playtest. The one-way bridge has short slopes where the deck meets rock.
+
+The Godot movement test walked from the cave across both deck approaches
+onto the east shelf without jumping and verified swimming. Ray checks
+hit the painted cave floor, a floating rock, the deck and the lakebed.
+A live frame confirmed the new foliage and the player's cave spawn.
+
 ## November 25 painted Blue blockout playtest
 
 The current [Blue blockout](../Src/Environment/BlueBiome/blue_blockout.tscn)
