@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 25 full-resolution Blue terrain chunks
+
+Chase requested higher-resolution walkable terrain with fewer seams.
+[Three standalone chunks](../ArtSource/BlueBiome/Krita/Woven_Blue_Terrain_Chunks/README.md)
+cover the Chamber exit and overhead shelf, a gently stepped connector,
+and a deep shore headland. The delivered native widths range from 1452 to
+2127 px after trimming margins. Each chunk contains its walking surface
+and rock face. The layered join example overlaps the cave landing with the
+connector apron and reconstructs the connector from two exact native crops.
+All three transparent PNGs, the bundle resources, and the join composition
+passed validation. Fit to the current collision is a separate playtest.
+
 ## November 25 first Blue painting in Godot
 
 Chase's first saved [Blue painting](../ArtSource/BlueBiome/Krita/Blue_Blockout.kra)

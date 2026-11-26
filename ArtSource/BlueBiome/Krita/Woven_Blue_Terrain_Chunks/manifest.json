@@ -1,0 +1,101 @@
+{
+  "generation": "Built-in ImageGen. One image per landmass at native resolution, with transparent margins cropped only.",
+  "assets": [
+    {
+      "id": "woven_blue_chunk_chamber_exit_cliff",
+      "name": "Chamber Exit Cliff",
+      "file": "chunks/chamber_exit_cliff.png",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "source_sha256": "66d0f018aa6b6c317f5c27bf273e810ec49a294d0b20c2a35d89b462fcf1c403",
+      "source_crop": [
+        32,
+        79,
+        1484,
+        947
+      ],
+      "pixel_size": [
+        1452,
+        868
+      ],
+      "default_size": 1452,
+      "prompt": "Use case: stylized-concept / full-resolution Godot side-scroll terrain stamp. Generate ONE complete contiguous landmass on real transparent alpha. Image 1 is the silhouette and routing guide for one connected piece; the dark blue area including the cave opening is empty alpha. The pale lines locate the two walking routes. Image 2 is the authored Godot blockout angle and relation between its Chamber exit and upper shelf. Image 3 is palette/material reference only. Do not reproduce the diagram's colors, screenshot, guide lines, background, or text. Follow the first image's overall asymmetry strongly: the cave opening sits near the left quarter and opens onto the LOWER long horizontal landing, about two-thirds down the object's overall height; the UPPER stepped broad shelf above it climbs gently to the right and projects a short distance. Preserve the clear open-air bay at upper right over the wide flat exit landing. The opening itself is large enough for a standing character, craggy with a thin shaded inner reveal and a real transparent center. It is carved into the same monolith, with feet integrated down to a huge blue-grey slate bed. There must be one unbroken visible standing plane all the way from cave threshold out toward the long low right end, generous front-to-back depth, and clear usable depth on the upper shelf. Exposed lower-right edge is near horizontal until the last small natural break so it can overlap a later companion flat landing. No break or contour line through the lower floor. No separate arch overlay, no floating platform. Rich directional diagonal woven stone fibers following broad low-poly slate faces, dry apricot tops, warm oxidation in a few lit facets, fresh vivid yellow-green moss around outer ledge edges only. No big ornamental rope. Soft local blue shadows, broad readable planes, hand-worked original game art. Camera near planar SIDE VIEW with very shallow top reveal, no isometric perspective, left/right walking direction. One single native-high-detail landscape image, use largest landscape resolution available and fill 90 percent of width with just enough fully transparent padding and no ground shadows. No characters, lettering, water, backdrop, crops into edges, grid, sheet of assets, glow, or environmental extras.",
+      "sha256": "f974efe883246fa5c5095ddbcb8dc12575a04bea87f3dfd4b69a457a8e9e169c"
+    },
+    {
+      "id": "woven_blue_chunk_stepped_connector_bank",
+      "name": "Stepped Connector Bank",
+      "file": "chunks/stepped_connector_bank.png",
+      "source_size": [
+        2172,
+        724
+      ],
+      "source_sha256": "d6575704f323e7d9fd339e7fb2ea8edd347e22f7dc38a36877b3eaa4fa1b89ae",
+      "source_crop": [
+        27,
+        21,
+        2154,
+        692
+      ],
+      "pixel_size": [
+        2127,
+        671
+      ],
+      "default_size": 2127,
+      "prompt": "Use case: stylized-concept / large modular side-scroller rock terrain for Threadbound. Image 1 establishes in-project bright slate and cloth-grain material; Image 2 shows the problem of separate surfaces with a hard gap. Generate one entirely new continuous landmass, not a picture of a scene. Landscape image at maximum available native resolution, a single wide unbroken rocky walking bank that spans about 92% of the image width. Create a useful asymmetrical route: a level shallow broad apron on the left third that receives an overlap from a cave exit landing, a shallow continuous upward rise in the middle third, and a long higher level shelf to the right with a gentle natural ending. The two terraces must join through the ramp as ONE integrated broad stone plane. Show a shallow top reveal with two usable boot depths; side-on game elevation, no vanishing point or isometric angle. Below it is one connected deep chunky hanging slate face, darker on angles, irregular stepped fractured lower silhouette. The first 20% of the left lip is simple warm pale stone with restrained moss and low-contrast face, so it can be overlapped under another chunk. Use bright yellow-green moss at other edges in small irregular clumps, cool blue-lavender slate faces with amber mineral warm highlights, long faint directional diagonally woven striations following the stone's face, spark of teal in damp seams, vivid but balanced. Keep front material and top material coherently structured together. Avoid wrap bands, stark contour lines, separate cap strip, holes, asset grid, floating smaller pieces, foreground objects, characters, water, grass landscape, floor plane, text, background, border, edge clipping. Full alpha around outline. One terrain chunk only. Highest native source detail, no enlarged mini-stamps.",
+      "sha256": "b2169e694b553f4cb3301e85ce36310aa1b4c734b89c113c7a8fc49fc67fbf97"
+    },
+    {
+      "id": "woven_blue_chunk_deep_shore_headland",
+      "name": "Deep Shore Headland",
+      "file": "chunks/deep_shore_headland.png",
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_sha256": "d530e81a66d9c529f6c2c48fa73281940c56e1951c6c794f67e241ffe2385975",
+      "source_crop": [
+        8,
+        79,
+        1738,
+        836
+      ],
+      "pixel_size": [
+        1730,
+        757
+      ],
+      "default_size": 1730,
+      "prompt": "Use case: stylized-concept / high-resolution Threadbound terrain stamp. Image 1 is our palette and broad believable standing surface reference. Image 2 shows an unwanted seam where a top stamp meets a lower material patch; design one new silhouette that solves this. ONE complete broad headland through waterline with natural concave triangular lower bedrock, real alpha around it. It is a wide mostly flat bank with a long traversable level apricot stone surface along the whole upper rim, then a subtle low offset at right for the next ledge. The front of the same rock flows uninterrupted to a deep downward asymmetric sloping mass, tallest under the left two-thirds and tapering toward the right. Leave the leftmost end of the top easy to overlap with a receiving shelf: plain level stone standing plane, a few small moss tufts behind the feet. Expose whole massive front in side-on 2D with a shallow top reveal; avoid isometric angle. Woven mineral grain is consistent and diagonal through top, dry face and cool submerged portion. Bright lime chartreuse in deliberate patches only, violet blue slate and touch of warm copper in dry planes, gradual shift to lagoon teal under the implied waterline, no graphic line, no painted water or background. Continuous facets crossing all levels of exposed stone, no abruptly repeating horizontal row, no separate floor, wall or filling strip. Strong big polygonal cuts with crisp contained irregular outline and intentional empty spaces outside; one chunk only, no sprite sheet. Use the largest native landscape format possible with 90 percent width used by the centered chunk, fully isolated, ample clear transparent padding; no text, character, roots or props obscuring the standing plane, stand-alone cast shadow or decorations.",
+      "sha256": "e767721281cf26762b03879b022e8a8166b54aa6ff3c4354be37e395ddc99aba"
+    }
+  ],
+  "join_example": {
+    "format": "OpenRaster",
+    "canvas": [
+      3388,
+      1024
+    ],
+    "chamber_offset": [
+      40,
+      40
+    ],
+    "connector_offset": [
+      1220,
+      312
+    ],
+    "connector_native_split": 1024,
+    "standing_band_checked": [
+      1320,
+      559,
+      1515,
+      619
+    ],
+    "checks": [
+      "Connector sections reconstruct original pixels exactly.",
+      "Opaque art spans the full tested overlap across the lower landing.",
+      "OpenRaster layers reproduce the merged preview exactly."
+    ]
+  }
+}
