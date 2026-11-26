@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 Woven Blue wood and rope bridge
+
+The [wood kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Wood_And_Bridge/README.md)
+includes two cedar texture fields, three tall supports, and a rope bridge
+with start, repeat, and end pieces. Each 744 px repeat adds two bays.
+The edges and internal mirror join passed pixel equality checks. The
+native OpenRaster example, eight PNGs, and all 16 bundle resources passed
+validation. A temporary Blue playtest rendered the art and normal movement
+crossed three repeats to the far end. The authoring scene remains separate
+from the temporary trial.
+
 ## November 25 connected terrain line-art proof
 
 Chase proposed drawing wall-attached terrain as one silhouette before paint.
