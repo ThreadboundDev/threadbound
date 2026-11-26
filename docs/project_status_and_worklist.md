@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 first Blue painting in Godot
+
+Chase's first saved [Blue painting](../ArtSource/BlueBiome/Krita/Blue_Blockout.kra)
+is visible in the existing [Blue blockout](../Src/Environment/BlueBiome/blue_blockout.tscn)
+at one canvas pixel per Godot unit. The scene uses the flattened export from
+`Src/Environment/Greybox/Blue_Blockout.png`. The export still contains the visible
+Krita guides and backgrounds. The original tile collision stays active with its
+debug overlay hidden, and play starts at Chase's cave marker for the preview.
+Verified a live game frame at the cave. Art and collision fit are for the
+next iteration.
+
 ## November 25 Woven Blue terrain and caves
 
 Chase requested more floating and solid platforms and cave textures that can
