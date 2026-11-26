@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" path="res://Src/Environment/Greybox/Blue_Blockout.png" id="9_krita_preview"]
 [ext_resource type="Texture2D" path="res://Src/Environment/Greybox/Blue_Blockout_BridgeFront.png" id="10_bridge_front"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="11_lake"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/blue_cave_mouth_foliage.tscn" id="12_foliage"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
@@ -136,6 +137,8 @@ z_index = 12
 position = Vector2(-1, -1734)
 texture = ExtResource("10_bridge_front")
 centered = false
+
+[node name="CaveMouthFoliage" parent="Geometry" instance=ExtResource("12_foliage")]
 
 [node name="PaintedBridge" type="StaticBody2D" parent="Geometry"]
 editor_description = "The one-way deck follows the planks with short slopes at the two rock joins."

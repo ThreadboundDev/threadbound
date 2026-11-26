@@ -1,0 +1,61 @@
+{
+  "generation": "Built-in ImageGen",
+  "stamps": {
+    "soft_tuft": {
+      "file": "soft_tuft.png",
+      "size": [
+        1872,
+        304
+      ],
+      "raw_size": [
+        2172,
+        724
+      ],
+      "sha256": "4cde2733096c5bbb9f4f65b01402ac0630d081dc200e5727fcb264a2a25e1e61",
+      "prompt": "Use case: illustration-story. Create ONE isolated game texture on real transparent alpha for Threadbound, a painterly 2D side-view platformer. Input reference is the user's own Blue painting. Reference the small soft grass along the landing by the pink tree and its lively color. Ignore the scenery, rocks, bridge, characters and tree. A single low, soft, horizontally spreading grassy cushion. Short fine tapered blades in a loose asymmetrical fan, a hazy low veil with feathery tips and a few clear tips over it. Height about one-third the width. A steady shallow root line. Render a hand-painted believable, airy translucent game cutout, for small in-game display and stackable Krita stamping. Palette dusty spring yellow-green sunlight, moss green midtones, restrained cool deep green root shadows. Quiet contrast, bright tips, fine softness in some edges. No heavy black outline, no backdrop, no landscape, no floor line, no dirt, no flowers, no text, no sheet, no labels. Single complete asset framed with 8% empty padding, straight side view. Trim lively details to the intended scale but preserve the genuine transparent negative space. No checkerboard in the artwork.",
+      "brush_px": 220
+    },
+    "upright_tuft": {
+      "file": "upright_tuft.png",
+      "size": [
+        1029,
+        691
+      ],
+      "raw_size": [
+        1536,
+        1024
+      ],
+      "sha256": "d97377bb0dee327a67c7ff2c02f1dfb2415de64c7ce6ed7ee7c2f7a13301ffb6",
+      "prompt": "Use case: illustration-story. Create ONE isolated game texture on real transparent alpha for Threadbound, a painterly 2D side-view platformer. Input reference is the user's own Blue painting. Reference the small soft grass along the landing by the pink tree and its lively color. Ignore the scenery, rocks, bridge, characters and tree. A single sparse upright tuft, tall slender pointed leaves, an uneven set of 9\u201313 narrow blades with open transparency between groups. A few arch lightly out, others are erect. Height about two-thirds the width. Thin soft painterly edges and a few crisp tapering glints. Render a hand-painted believable, airy translucent game cutout, for small in-game display and stackable Krita stamping. Palette dusty spring yellow-green sunlight, moss green midtones, restrained cool deep green root shadows. Quiet contrast, bright tips, fine softness in some edges. No heavy black outline, no backdrop, no landscape, no floor line, no dirt, no flowers, no text, no sheet, no labels. Single complete asset framed with 8% empty padding, straight side view. Trim lively details to the intended scale but preserve the genuine transparent negative space. No checkerboard in the artwork.",
+      "brush_px": 112
+    },
+    "fan_tuft": {
+      "file": "fan_tuft.png",
+      "size": [
+        1467,
+        575
+      ],
+      "raw_size": [
+        1659,
+        948
+      ],
+      "sha256": "7e42469555678b66959f72c906a1a4acad3466bf9994bf8d56716ae3f6326f68",
+      "prompt": "Use case: illustration-story. Create ONE isolated game texture on real transparent alpha for Threadbound, a painterly 2D side-view platformer. Input reference is the user's own Blue painting. Reference the small soft grass along the landing by the pink tree and its lively color. Ignore the scenery, rocks, bridge, characters and tree. A single wide wind-swept grass fan, organic arc to the right plus a few shorter leftward blades, open transparent spaces, leafy tips distinctly longer than the low blades. Width about 1.75 times height. Read as grass, with no stalks or flowers. Render a hand-painted believable, airy translucent game cutout, for small in-game display and stackable Krita stamping. Palette dusty spring yellow-green sunlight, moss green midtones, restrained cool deep green root shadows. Quiet contrast, bright tips, fine softness in some edges. No heavy black outline, no backdrop, no landscape, no floor line, no dirt, no flowers, no text, no sheet, no labels. Single complete asset framed with 8% empty padding, straight side view. Trim lively details to the intended scale but preserve the genuine transparent negative space. No checkerboard in the artwork.",
+      "brush_px": 152
+    },
+    "moss": {
+      "file": "moss.png",
+      "size": [
+        2047,
+        318
+      ],
+      "raw_size": [
+        2172,
+        724
+      ],
+      "sha256": "044e43dc395596436f55fd4bde0a27786af744b61f6dc89b1664cb4a519aa575",
+      "prompt": "Use case: illustration-story. Create ONE isolated game texture on real transparent alpha for Threadbound, a painterly 2D side-view platformer. Input reference is the user's own Blue painting. Reference the small soft grass along the landing by the pink tree and its lively color. Ignore the scenery, rocks, bridge, characters and tree. A single wide flat softly feathered low-lying moss texture field for stamping onto the face and top of blue slate. Soft overlapping little olive and celadon clustered leaf mounds, mottled fine texture and a couple of small rough edges. Wide 3:1 shape with irregular broken feathered alpha along all four sides. It fades into the underlying stone when stacked. No long grass blades. Consider this a material patch with almost no height, no rock included. Render a hand-painted believable, airy translucent game cutout, for small in-game display and stackable Krita stamping. Palette dusty spring yellow-green sunlight, moss green midtones, restrained cool deep green root shadows. Quiet contrast, bright tips, fine softness in some edges. No heavy black outline, no backdrop, no landscape, no floor line, no dirt, no flowers, no text, no sheet, no labels. Single complete asset framed with 8% empty padding, straight side view. Trim lively details to the intended scale but preserve the genuine transparent negative space. No checkerboard in the artwork.",
+      "brush_px": 256
+    }
+  }
+}

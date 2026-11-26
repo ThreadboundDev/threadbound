@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 26 cave-mouth foliage trial
+
+The [cave foliage kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md)
+adds 30 px terrain and 20 px floating-rock ink pens, three tintable grass
+stamps, and a tintable moss stamp. Krita registered all six presets under
+the Woven Blue inking and cave foliage tags.
+
+In [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn), the
+trial from the cave mouth to the first bridge post keeps the blossom tree
+behind the player. The painted ground rim covers the bottom of the boots.
+Nineteen grass tufts use subdivided 2D meshes, with roots pinned and tips
+responsive to wind and passing feet. Godot verified bending in both
+directions, recovery, and a live frame with the painted rim overlap.
+
 ## November 26 Blue foliage and painted collision
 
 Chase's updated Krita painting is visible in the

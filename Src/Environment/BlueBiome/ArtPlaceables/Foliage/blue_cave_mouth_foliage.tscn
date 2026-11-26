@@ -1,0 +1,67 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/grass_patch_2d.gd" id="1_patch"]
+[ext_resource type="Shader" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/cave_grass.gdshader" id="2_grass"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/soft_tuft.png" id="3_soft"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/upright_tuft.png" id="4_upright"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/fan_tuft.png" id="5_fan"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/moss.png" id="6_moss"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/ground_rim.png" id="7_rim"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grass"]
+shader = ExtResource("2_grass")
+
+[node name="CaveMouthFoliage" type="Node2D"]
+editor_description = "Foliage trial from the cave exit to the first bridge post. Grass placements are x, root y, and tuft width."
+
+[node name="MossInShade" type="Sprite2D" parent="."]
+modulate = Color(0.64, 0.8, 0.72, 0.62)
+z_index = 3
+position = Vector2(-1039, -1400)
+scale = Vector2(0.12, 0.065)
+texture = ExtResource("6_moss")
+
+[node name="MossAlongLip" type="Sprite2D" parent="."]
+modulate = Color(0.74, 0.84, 0.66, 0.69)
+z_index = 3
+position = Vector2(-343, -1407)
+scale = Vector2(0.16, 0.076)
+texture = ExtResource("6_moss")
+
+[node name="GrassBacking" type="MultiMeshInstance2D" parent="."]
+z_index = 4
+modulate = Color(0.78, 0.88, 0.75, 0.8)
+material = SubResource("ShaderMaterial_grass")
+texture = ExtResource("3_soft")
+script = ExtResource("1_patch")
+placements = PackedVector3Array(-1195, -1410, 164, -1008, -1409, 176, -805, -1393, 204, -564, -1409, 210, -347, -1415, 236, -112, -1411, 176)
+
+[node name="GroundRim" type="Sprite2D" parent="."]
+z_index = 11
+position = Vector2(-1256, -1466)
+texture = ExtResource("7_rim")
+centered = false
+
+[node name="GrassNearSoft" type="MultiMeshInstance2D" parent="."]
+z_index = 13
+modulate = Color(0.86, 0.96, 0.81, 0.85)
+material = SubResource("ShaderMaterial_grass")
+texture = ExtResource("3_soft")
+script = ExtResource("1_patch")
+placements = PackedVector3Array(-1129, -1408, 142, -848, -1394, 148, -648, -1405, 114, -304, -1415, 156, -119, -1410, 133)
+
+[node name="GrassNearUpright" type="MultiMeshInstance2D" parent="."]
+z_index = 14
+modulate = Color(0.86, 0.96, 0.8, 0.9)
+material = SubResource("ShaderMaterial_grass")
+texture = ExtResource("4_upright")
+script = ExtResource("1_patch")
+placements = PackedVector3Array(-1070, -1411, 67, -716, -1403, 69, -418, -1413, 82, -181, -1414, 68)
+
+[node name="GrassNearFans" type="MultiMeshInstance2D" parent="."]
+z_index = 14
+modulate = Color(0.81, 0.90, 0.74, 0.91)
+material = SubResource("ShaderMaterial_grass")
+texture = ExtResource("5_fan")
+script = ExtResource("1_patch")
+placements = PackedVector3Array(-936, -1402, 110, -550, -1409, 105, -224, -1415, 114, -59, -1409, 86)
