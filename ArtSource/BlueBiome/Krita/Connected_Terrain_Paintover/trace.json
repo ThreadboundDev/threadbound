@@ -1,0 +1,32 @@
+{
+  "active_tile_count": 502,
+  "solid": 422,
+  "one_way": 80,
+  "source": "Src/Environment/BlueBiome/blue_blockout.tscn (saved working scene)",
+  "tile_data_sha256": "07ebe4d7e69c58bb98d7a402e5b3dd4cbfb2296a61427ab6a9e347dd0592b42b",
+  "canvas_px": [
+    6784,
+    4096
+  ],
+  "world_origin_px": [
+    1536,
+    2816
+  ],
+  "chamber_canvas_origin_world": [
+    -1536,
+    -2432
+  ],
+  "pixels_per_world_unit": 1,
+  "chamber_proof": {
+    "tool": "Built-in ImageGen",
+    "prompt": "Use case: sketch-to-render. Paint over image 1, the user-level Chamber exit and upper shelf drawing. This is a strict geometry-preserving paintover proof for Threadbound's real 2D side-scroller. Image 2 is a material reference only. Use image 1's composition literally: its silhouette, long flat lower landing height and outline, sizable left cave opening, inward east-facing rock wall and all three upper terrace levels stay in exactly the same relative positions. Entire fresh artwork is a single connected landmass. Its grey shapes are rock; its warmer inner strips are the visible standing planes; its pale paper exterior including the inside of the cave opening must become TRUE transparent alpha. Keep the cave transparent from its left inner wall all the way to the threshold and do not fill it with black color or a background. No composition reframe, no scaling or floating platforms in the open upper-right area. Keep precisely the aspect ratio, major guide outline, same flat walking surface through the lower landing, and accurately divide the three stepped levels. Render crisp large hand-painted low-poly slate facets in slate-blue and violet shadows with warm mineral ochre sunlight. Fine diagonal woven mineral strands follow the planes and continue through the wall into the ledges; no rope bands or obvious separate stamped strips. Build continuous pale apricot stone walking surfaces into the rock itself with shallow side-view top depth, and paint small bright lime-green patches of fine grass and trailing moss where natural, along the shelf edges and on the lower landing shoulders while leaving usable quiet space for the player. Add two small human-scale amber woven lanterns against the stone near the left and right jamb of the cave opening, subtly warm their nearby facets with tightly localized glow, keeping the transparent opening and exterior clean. Side elevation for 2D gameplay, around five degrees of top reveal. Large rich readable color contrast, delicate real rock detail when seen at game scale, no luminous fantasy crystals, source graphics, paper, grid, type, border, separate ground surface, detached props, rest of level, or characters. Preserve native full resolution. One standalone terrain paintover with this exact connected outline.",
+    "paint_native_px": [
+      1348,
+      1167
+    ],
+    "paint_sha256": "c0556d9aa161228cb665af8d1b73b636a9173b1ef2bafacff9ae35a0c1c4cb15",
+    "registered_outline_iou": 0.9586,
+    "cave_opening_median_alpha": 0.0,
+    "actual_gameplay_alignment_verified": false
+  }
+}

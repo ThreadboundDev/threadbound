@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 connected terrain line-art proof
+
+Chase proposed drawing wall-attached terrain as one silhouette before paint.
+The [connected terrain delivery](../ArtSource/BlueBiome/Krita/Connected_Terrain_Paintover/README.md)
+includes a 1:1 trace of the current 502-cell Blue blockout, separate outline
+and paint layers, and a painted Chamber exit proof. The same stone planes
+continue through the wall, landing, and upper shelf. The cave opening has
+real alpha and the study includes grass and warm lantern light.
+The two layered documents recompose exactly. The proof is for art review
+and has yet to be fitted to Godot collision.
+
 ## November 25 full-resolution Blue terrain chunks
 
 Chase requested higher-resolution walkable terrain with fewer seams.
