@@ -1,18 +1,81 @@
 {
-  "generation": "Built-in ImageGen, one native source image per material or structure.",
+  "generation": "Built-in ImageGen outline revisions, with existing cedar texture fills reused byte-for-byte.",
+  "native_sources": {
+    "deck": {
+      "size": [
+        2172,
+        724
+      ],
+      "sha256": "e9171008efcc9eb7fec75ee8befa95f46470d2a3796c31886ded1953e63811da",
+      "prompt": "Use case: precise-object-edit. Image 1 is a wide isolated side-on rope bridge. Create the clean behind-character DECK ONLY from this asset. Remove all rope, railing uprights, base knots, and posts. Reconstruct the missing plank faces and continuous front beam beneath them in the original warm woven-cedar material. Keep the broad top walking plane exactly level and the front fascia exactly horizontal, with the same shallow side-on angle and repeated honest vertical planks. Keep the full long silhouette at the same native image width, no perspective warp or slope. Draw the stone-painting style BLACK contour around the whole deck perimeter and a few modest black timber seams. One flat continuous deck, no feet, supports, rope, or railing. Side view. Preserve clear margins for a native panorama. Image 2 is Chase's current Krita painting and indicates the ink style only: bold rounded black freehand perimeter strokes around textured fills, like a hand-drawn thick comic line, genuinely BLACK ink instead of brown contour shading. Preserve Image 1's vivid amber cedar fibers, cool shadow colors, side-on geometry and native detail. Keep an unbroken medium-thick black outside line, slightly irregular but clean. Around thin rope bundles use modest black outside strokes so the hemp stays readable. No checkerboard, scene, guide grid, gray matte, outside shadows, text, references, or unrelated shapes. Transparent RGBA outside."
+    },
+    "rails": {
+      "size": [
+        2172,
+        724
+      ],
+      "sha256": "39e1ff975becbe7a102c2bc0ffdb3e52e28fedec6aa3891179bfb9a48e01a732",
+      "prompt": "Use case: sketch-to-render. Paint only inside the existing outline of Image 1. Image 1 defines the literal black ink boundary to retain at all outer edges. It depicts six foreground bridge posts and five ropes; keep their exact evenly spaced x positions, horizontal footing, alpha spaces and geometry. The black line is finished ink, and must remain thick solid black around every post and rope, including the openings under the ropes. Fill inside the ink with vivid cedar grain and tightly braided ochre hemp like in Image 2, a material reference only. Paint brighter copper facets on posts and alternating light fibers in the rope. Do not paint over the ink. Replace the pale paper everywhere outside the black ink with real transparent RGBA, including every opening under the rope and between the bridge posts. The ink stays BLACK and opaque. No floor, deck, background, scenes or labels. Preserve the wide full 3:1 native canvas position and all six posts."
+    },
+    "post": {
+      "size": [
+        725,
+        2170
+      ],
+      "sha256": "7a4f4f2b5a7a85c60e1df84fcfb1ad557d6c1c914f38c2a78ab307147345692a",
+      "prompt": "Use case: precise-object-edit. Image 1 is the exact approved Tall Cedar Post. Add a strong black freehand perimeter line matching image 2 around the tall exterior silhouette and modest dark internal outlines at the lashings and water foot. Preserve the original native portrait dimensions, material grain, cap, long straight recognizable shape, and all existing color. Keep it as a single isolated full-height tall support PNG with clear margins. Image 2 is Chase's current Krita painting and indicates the ink style only: bold rounded black freehand perimeter strokes around textured fills, like a hand-drawn thick comic line, genuinely BLACK ink instead of brown contour shading. Preserve Image 1's vivid amber cedar fibers, cool shadow colors, side-on geometry and native detail. Keep an unbroken medium-thick black outside line, slightly irregular but clean. Around thin rope bundles use modest black outside strokes so the hemp stays readable. No checkerboard, scene, guide grid, gray matte, outside shadows, text, references, or unrelated shapes. Transparent RGBA outside."
+    },
+    "trestle": {
+      "size": [
+        724,
+        2172
+      ],
+      "sha256": "8b1217cbd8b988c17fb9839a0d3fda07fbb3e562da2db8686f04c4696b2b5468",
+      "prompt": "Use case: precise-object-edit. Image 1 is the exact approved Cross Braced Trestle. Add strong black freehand perimeter strokes in Chase's style. Trace its timber members and the edges of the empty braced diamonds, so all the triangular and diamond openings remain true transparent. Preserve the original three rows of cross braces and overall native portrait geometry along with the palette and detailed fibers. No floor or additional support. Image 2 is Chase's current Krita painting and indicates the ink style only: bold rounded black freehand perimeter strokes around textured fills, like a hand-drawn thick comic line, genuinely BLACK ink instead of brown contour shading. Preserve Image 1's vivid amber cedar fibers, cool shadow colors, side-on geometry and native detail. Keep an unbroken medium-thick black outside line, slightly irregular but clean. Around thin rope bundles use modest black outside strokes so the hemp stays readable. No checkerboard, scene, guide grid, gray matte, outside shadows, text, references, or unrelated shapes. Transparent RGBA outside."
+    },
+    "fork": {
+      "size": [
+        747,
+        2106
+      ],
+      "sha256": "837dd6cb5fe4278a3728965bc17f9bb79eba16124d502323d45c4a87b70eb2e5",
+      "prompt": "Use case: precise-object-edit. Image 1 is the exact approved Forked Pier. Add strong black freehand perimeter ink around this entire timber Y support, retaining the natural cap, warm copper and cedar texture, stone foot, lashings, and the hollow true-alpha gap between the forks. Use moderate black lines around the joinery. Keep native portrait dimensions and the whole tall silhouette with clean pad. No architecture around it. Image 2 is Chase's current Krita painting and indicates the ink style only: bold rounded black freehand perimeter strokes around textured fills, like a hand-drawn thick comic line, genuinely BLACK ink instead of brown contour shading. Preserve Image 1's vivid amber cedar fibers, cool shadow colors, side-on geometry and native detail. Keep an unbroken medium-thick black outside line, slightly irregular but clean. Around thin rope bundles use modest black outside strokes so the hemp stays readable. No checkerboard, scene, guide grid, gray matte, outside shadows, text, references, or unrelated shapes. Transparent RGBA outside."
+    }
+  },
+  "opaque_black_rim_fraction": {
+    "post": 1.0,
+    "trestle": 1.0,
+    "fork": 1.0,
+    "deck": 1.0,
+    "rails": 0.9968
+  },
   "bridge": {
-    "height": 433,
-    "standing_y": 289,
+    "height": 450,
     "repeat_width": 744,
-    "bays_per_repeat": 2,
     "start_width": 144,
     "end_width": 144,
-    "source_cut_x": [
-      155,
-      527
+    "bays_per_repeat": 2,
+    "standing_y": 288,
+    "deck_z": 4,
+    "front_rail_z": 20,
+    "rail_source_post_centers": [
+      156,
+      528,
+      900,
+      1272,
+      1644,
+      2017
     ],
-    "validated": "Repeat edges and mirrored middle match pixel-for-pixel. Start plus its adjacent bay preserves source pixels. Deck is opaque across the tested standing band."
+    "rail_placement_y": 0,
+    "deck_placement_y": 233
   },
+  "tests": [
+    "Paired deck and front images share the same dimensions and coordinates.",
+    "Repeat outer edges and internal mirrored edges match pixel for pixel.",
+    "Start segments preserve adjacency to the first bay and the standing band stays opaque.",
+    "OpenRaster layers recompose exactly.",
+    "All 22 Krita resource entries match their payloads and every preset resolves its own RGBA brush."
+  ],
   "assets": [
     {
       "id": "woven_blue_wood_cedar_texture",
@@ -57,172 +120,182 @@
     {
       "id": "woven_blue_wood_tall_cedar_post",
       "name": "Tall Cedar Post",
-      "file": "stamps/tall_cedar_post.png",
       "slug": "tall_cedar_post",
+      "file": "stamps/tall_cedar_post.png",
       "size": [
-        266,
-        2122
+        294,
+        2181
       ],
       "default_size": 704,
       "category": "Timber Supports",
-      "source": "post",
       "crop": [
-        230,
-        25,
-        496,
-        2147
+        215,
+        -5,
+        509,
+        2176
       ],
-      "sha256": "ca52754137365d3d568026d825c5a51d6a95fb3104f2048254ee3db043759800"
+      "source": "post",
+      "sha256": "452b1684740e4dacae4afcaa5911e8e50466ce61a727922717fb2ec3ff9873d8"
     },
     {
       "id": "woven_blue_wood_cross_braced_trestle",
       "name": "Cross Braced Trestle",
-      "file": "stamps/cross_braced_trestle.png",
       "slug": "cross_braced_trestle",
+      "file": "stamps/cross_braced_trestle.png",
       "size": [
-        649,
-        2100
+        687,
+        2174
       ],
       "default_size": 704,
       "category": "Timber Supports",
-      "source": "trestle",
       "crop": [
-        36,
-        40,
-        685,
-        2140
+        18,
+        -4,
+        705,
+        2170
       ],
-      "sha256": "5bf1829e83b6b6a9673e2a2118a99ef856c084d949baa363cc5d341c25f7ac90"
+      "source": "trestle",
+      "sha256": "70aa24f51bcda7523647a8d9ca1adecf20a37d25f09a80b2a40476a9daeed024"
     },
     {
       "id": "woven_blue_wood_forked_pier",
       "name": "Forked Pier",
-      "file": "stamps/forked_pier.png",
       "slug": "forked_pier",
+      "file": "stamps/forked_pier.png",
       "size": [
-        691,
-        1950
+        743,
+        2110
       ],
       "default_size": 704,
       "category": "Timber Supports",
-      "source": "fork",
       "crop": [
-        17,
-        147,
-        708,
-        2097
+        2,
+        -1,
+        745,
+        2109
       ],
-      "sha256": "a90d872a7e6ac304573e736e09345ed1d027474a8234dd6e13905a8b7d4aff0e"
+      "source": "fork",
+      "sha256": "5810545d845ef20ef13d3c1ff51c4e5a3205eb30aa62e6745af889801ed75f77"
     },
     {
-      "id": "woven_blue_wood_rope_bridge_start",
-      "name": "Rope Bridge Start",
-      "file": "stamps/rope_bridge_start.png",
-      "slug": "rope_bridge_start",
+      "id": "woven_blue_wood_rope_bridge_deck_start",
+      "name": "Rope Bridge Deck Start",
+      "slug": "rope_bridge_deck_start",
+      "file": "stamps/rope_bridge_deck_start.png",
       "size": [
         144,
-        433
+        450
       ],
-      "default_size": 433,
-      "category": "Rope Bridge",
-      "source": "bridge",
+      "default_size": 450,
+      "category": "Rope Bridge Decks",
       "crop": [
-        11,
-        140,
-        155,
-        573
+        3,
+        375,
+        147,
+        578
       ],
-      "sha256": "0d15a33187901f2d30ecb18c65565010bc4451d6d87a6a9d9180c31e9bec069b"
+      "source": "deck",
+      "sha256": "755cc4f588ec0e7b592d13eb35528ff6d0a89a7379270f45253becb304919247"
     },
     {
-      "id": "woven_blue_wood_rope_bridge_repeat",
-      "name": "Rope Bridge Repeat",
-      "file": "stamps/rope_bridge_repeat.png",
-      "slug": "rope_bridge_repeat",
+      "id": "woven_blue_wood_rope_bridge_deck_repeat",
+      "name": "Rope Bridge Deck Repeat",
+      "slug": "rope_bridge_deck_repeat",
+      "file": "stamps/rope_bridge_deck_repeat.png",
       "size": [
         744,
-        433
+        450
       ],
       "default_size": 744,
-      "category": "Rope Bridge",
-      "source": "bridge",
+      "category": "Rope Bridge Decks",
       "crop": [
-        155,
-        140,
-        527,
-        573
+        147,
+        375,
+        519,
+        578
       ],
-      "sha256": "e89fe09e9b1936f5587b31dd168f77133451672430569a5b93d5801424789471"
+      "source": "deck",
+      "sha256": "b5584586473ad06f51e90ec72db274f4c9816d25652019882b6e1b0b6e86b66a"
     },
     {
-      "id": "woven_blue_wood_rope_bridge_end",
-      "name": "Rope Bridge End",
-      "file": "stamps/rope_bridge_end.png",
-      "slug": "rope_bridge_end",
+      "id": "woven_blue_wood_rope_bridge_deck_end",
+      "name": "Rope Bridge Deck End",
+      "slug": "rope_bridge_deck_end",
+      "file": "stamps/rope_bridge_deck_end.png",
       "size": [
         144,
-        433
+        450
       ],
-      "default_size": 433,
-      "category": "Rope Bridge",
-      "source": "bridge",
+      "default_size": 450,
+      "category": "Rope Bridge Decks",
       "crop": [
-        11,
-        140,
-        155,
-        573
+        3,
+        375,
+        147,
+        578
       ],
-      "sha256": "ac8b6e6163c36ef019c52fd1b8921ec4b6de610873e1bc9768913ed5ca03ba87"
+      "source": "deck",
+      "sha256": "12cbe0c3f0ec8fbfd8909c2d896657361892510954d20941b564b2f18caccd01"
+    },
+    {
+      "id": "woven_blue_wood_rope_bridge_rail_start",
+      "name": "Rope Bridge Front Rail Start",
+      "slug": "rope_bridge_rail_start",
+      "file": "stamps/rope_bridge_rail_start.png",
+      "size": [
+        144,
+        450
+      ],
+      "default_size": 450,
+      "category": "Rope Bridge Fronts",
+      "crop": [
+        12,
+        138,
+        156,
+        580
+      ],
+      "source": "rails",
+      "sha256": "e1093c2de8f2ce456db53bdcc51bd4e450d4638eaccf148cf62f4ef3b9d27442"
+    },
+    {
+      "id": "woven_blue_wood_rope_bridge_rail_repeat",
+      "name": "Rope Bridge Front Rail Repeat",
+      "slug": "rope_bridge_rail_repeat",
+      "file": "stamps/rope_bridge_rail_repeat.png",
+      "size": [
+        744,
+        450
+      ],
+      "default_size": 744,
+      "category": "Rope Bridge Fronts",
+      "crop": [
+        156,
+        138,
+        528,
+        580
+      ],
+      "source": "rails",
+      "sha256": "be2f78edc3810f51614c334f2d8838dddcce5fcb477cfb2c59f59e16e52a2917"
+    },
+    {
+      "id": "woven_blue_wood_rope_bridge_rail_end",
+      "name": "Rope Bridge Front Rail End",
+      "slug": "rope_bridge_rail_end",
+      "file": "stamps/rope_bridge_rail_end.png",
+      "size": [
+        144,
+        450
+      ],
+      "default_size": 450,
+      "category": "Rope Bridge Fronts",
+      "crop": [
+        12,
+        138,
+        156,
+        580
+      ],
+      "source": "rails",
+      "sha256": "4c5550a885646b5fb477f0db66a91ed244ca975226a29d650229ab8047d525da"
     }
-  ],
-  "sources": {
-    "cedar": {
-      "source_px": [
-        2172,
-        724
-      ],
-      "source_sha256": "ca9ac17c0e441da498f399a58e23eba6298849ab6eee8de9b1d346f9bc52823d",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. One full-width rear TEXTURE PATCH, like a cave material texture swatch but made of golden weathered cedar. Oblong wide rough-edged rectangle, almost solid through its middle. Across this single plane there are large continuous diagonal planes of subtly interlaced cedar grain with soft warm apricot ochre sunlight. A few old grain checks and tiny dark knots only. Very subdued edge color, irregular alpha fringe shaped for overlapping another patch or clipping inside hand-drawn wall shapes. No perspective, no separate planks, face bevel, frame, carvings, ropes, supports, border, beveled end, or gaps in the middle."
-    },
-    "damp": {
-      "source_px": [
-        1774,
-        887
-      ],
-      "source_sha256": "3e562d646244bc347abcf9f760305839d98012f328650626901237fbd1c7f511",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. One full-width rear TEXTURE PATCH for darker wood beneath the bridge or indoors. Broad irregular rectangle of the same original cedar species and diagonal grain as the style, painted in rich dark indigo-brown and cedar with subtle copper grain and a cool turquoise water-reflected corner. Almost solid through the middle with restrained soft irregular edges suitable for overlap, plenty of clean material texture and no distinct object. Do not make it a painting of boards floating in space. No frame, outlines, knots bigger than a thumb, supports, isolated highlights, moss, scenery or marks. Use landscape native high resolution."
-    },
-    "post": {
-      "source_px": [
-        724,
-        2172
-      ],
-      "source_sha256": "cc163f932a2969a1cf58e5384e6ebe2cc7bfdd0a8b90d9764b5708af6af779ca",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. One single very tall weathered timber lake stilt, broad and vertical, roughly 4:1 height to width including clear natural edges. Hewn tapered warm cedar upright carved with long hand-worked grain, a small rope collar near the top and one middle band. Subtle worn water staining toward the base. Squared tenon cap for receiving a timber deck. Complete restrained foot with low simple tapered point. Tiny copper joinery pegs. No environment, no base platform, no character, no horizontal bridge. Portrait format and generous alpha padding."
-    },
-    "trestle": {
-      "source_px": [
-        724,
-        2172
-      ],
-      "source_sha256": "b1e9073511ad1a456235ffc9c16720051ee338041dc378278565a8ddadf0387e",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. One very tall side-on cedar trestle support, made from two parallel posts joined by rung and cross braces. Height clearly over 2.7 times the width. Top crossbeam supports a walkable deck; top is straight and level with shallow end face, authentic interlocked peg geometry. Rope lashings only at joins, warm amber amber faces, cool colored shadows and modest turquoise stains near bottom. Real transparent diamond gaps through the bracing. One portable complete module with total alpha outside. No deck, floor, scenery, extras, or other modules. Portrait format."
-    },
-    "fork": {
-      "source_px": [
-        724,
-        2172
-      ],
-      "source_sha256": "515693dbc0e330d0e28fd7770de502bc134fc82bdeec570ef0ae0c14374deebc",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. One tall heavy forked timber pier piling, a broad warm hewn base rising as a gently lean-cut old tree beam, two contained carved short knee braces spread toward the level tenon top. Side-on readable Y-like silhouette with a generous central upright, height roughly 3 times the widest point. One or two ochre braided lashings and a subdued blue damp foot. Warm grain follows the geometry across the forks. Enough room for a deck to sit on its upper seat, no hanging furniture, ground, or scene. Single transparent native portrait stamp."
-    },
-    "bridge": {
-      "source_px": [
-        2172,
-        724
-      ],
-      "source_sha256": "6bb699d482a141bcc21519e05c2efe59c985379953af920e6dc163d864dfac84",
-      "prompt": "Original Threadbound Woven Blue side-scrolling game artwork. Input image is a style and material swatch only. Make one large native-resolution standalone piece on real transparent alpha. Woven low-poly painting with broad warm copper-orange and golden cedar planes, crisp diagonally brushed fibers in the wood, cool violet/teal weathered shadow tones, and believable joinery. Shallow two-dimensional side elevation, upper-left illumination, high quality and crisp actual grain at gameplay zoom, natural dye and material contrast. Clear padding around all edges, no shadows floating outside, no background, no character, no typography, no element sheet. Generate a single WIDE high-resolution flat side-on rope footbridge span, one contiguous structure occupying almost all of a long landscape panorama. Image 1 is the existing warm cedar deck and image 2 the rope rail, material references only. Top of wooden deck must be straight, horizontal and precisely level for its entire walkable length, including BOTH ends, with no approach height change, dropped steps or angled abutments. Camera viewed straight along the broad side, slight shallow top reveal to show the full walkable cedar planks. Railings have evenly spaced identical cedar uprights with restrained soft catenaries of thick woven hemp rope sagging only between the posts. About six equally spaced posts and five almost identical accessible bays, an air gap between ropes and deck. Keep the center deck long and flat, with repeatable plank separation and the same deck thickness throughout. Plain straight continuous edge or beam below deck, modest tightly contained metal-tied wooden structure. No large feet, foundation slabs, breaks, rock, moving parts, land or water, branches, lights, labels or external cables. Decorative lashings concentrated at posts. True transparent air between rail and deck, clear alpha margins all around. Aim at least 2000 px wide native landscape file. A single asset, no atlas."
-    }
-  }
+  ]
 }

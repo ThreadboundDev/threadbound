@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 25 black-outlined Blue bridge foreground
+
+The [revised wood kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Wood_And_Bridge/README.md)
+has black contours on its three timber supports and six bridge pieces.
+The two cedar fills fit inside freehand outlines. Krita has all 11 presets
+active under four Woven Blue tags. Each deck and front pair shares the
+same dimensions, and the 744 px repeat passed pixel-equality seam checks.
+The layered example puts the character between the deck and the near rope
+and posts. A temporary Blue trial verified that layering in a live frame
+and walked the player across three repeats while grounded.
+
 ## November 25 Woven Blue wood and rope bridge
 
 The [wood kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Wood_And_Bridge/README.md)
