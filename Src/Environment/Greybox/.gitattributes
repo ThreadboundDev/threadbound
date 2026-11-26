@@ -1,1 +1,2 @@
 Blue_Blockout.png filter=lfs diff=lfs merge=lfs -text
+Blue_Blockout_BridgeFront.png filter=lfs diff=lfs merge=lfs -text

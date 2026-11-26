@@ -1,5 +1,20 @@
 # Threadbound current TODO list
 
+## November 25 painted Blue blockout playtest
+
+The current [Blue blockout](../Src/Environment/BlueBiome/blue_blockout.tscn)
+uses Chase's latest saved Krita terrain and bridge at native scale. Guides
+and tile art are hidden. The painted rope and posts draw in front of the
+player. The existing blockout supplies collision outside the main bridge,
+whose one-way collider follows the painted deck. The cliffs and village
+keep horizontal parallax with the baked water cropped out. The reflective,
+swimmable lake starts at the marked world Y = 0.
+
+The player landed at the cave spawn, ran across the deck, and swam upward
+in the lake in a Godot movement test. R returns to the cave. The remaining
+platform and shoreline collision still follows the blockout where paint
+and geometry differ.
+
 ## November 25 black-outlined Blue bridge foreground
 
 The [revised wood kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Wood_And_Bridge/README.md)
