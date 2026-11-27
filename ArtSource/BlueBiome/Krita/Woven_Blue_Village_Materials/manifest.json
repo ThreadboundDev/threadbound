@@ -1,0 +1,150 @@
+{
+  "image_generation": "Built-in ImageGen",
+  "bundle": "Threadbound_Woven_Blue_Village_Materials.bundle",
+  "stamps": {
+    "cave_slate_fill": {
+      "file": "stamps/cave_slate_fill.png",
+      "preset": "Woven Blue - Cave Slate Fill",
+      "tag": "Woven Blue - Material Fills",
+      "role": "fill",
+      "companion": "cave_slate_top",
+      "size_px": [
+        1858,
+        853
+      ],
+      "generated_size_px": [
+        1859,
+        846
+      ],
+      "default_brush_px": 1050,
+      "sha256": "39a69b008074f1d6a6dd6891ac50ebedd5912021d7c50b5b98e4c8052c2bb9f9",
+      "prompt": "Use case: illustration-story. Create ONE high-resolution material fill swatch for a 2D side-view painted platformer level in Krita. Image 1 is the author's Blue Blockout, style and palette reference only. Ignore its outlines, objects, scene and layouts. Cool blue-violet and indigo slate with broad diagonal stratified facets, restrained amber and silvery light through the cuts. A deep shaded grotto material where the visible facets have hand-painted grain and clean large value shapes. Use a mostly even blue-violet field with a few mineral glints and fine dark crevices. Treat the camera as looking squarely at a diffuse material face. Even diffuse light with textured faceted painted surfaces, vibrant in the highlights and clean shadows, suitable for a user's own thick external contour. Pattern and detail must continue across the full broad shape. Make an approximately 2.2:1 wide and deep all-over flat patch, entirely opaque through the inner 75 percent. Use uneven, lightly feathered alpha around all four edges over a short distance so overlapping several stamps inside a freehand outline blends. Only genuine transparent RGBA outside with empty margins. No platform silhouette, no bevel or lip, no front-facing drop edge, no floating island, grass or moss, no shadows cast outside, no black outline, frame, background, perspective scene, checkerboard, text, border, or chart. The result must be prepared as an individual fill texture, not a sheet."
+    },
+    "cave_slate_top": {
+      "file": "stamps/cave_slate_top.png",
+      "preset": "Woven Blue - Cave Slate Moss Top",
+      "tag": "Woven Blue - Grassy Material Tops",
+      "role": "top",
+      "companion": "cave_slate_fill",
+      "size_px": [
+        1508,
+        236
+      ],
+      "generated_size_px": [
+        1536,
+        1024
+      ],
+      "default_brush_px": 1050,
+      "sha256": "a8ea27a084527e3c0b35691424379752ea3a55b5f9e1c284560dacbe62d34203",
+      "prompt": "Design ONE wide, isolated, transparent PNG edge stamp for the top of a hand-painted 2D side-view platforming level. The supplied image is its companion fill, showing the same material we must match, with slight woven diagonal grain, luminous stylized colors and angular low-poly facets. Reproduce the same material scale, color and lighting in a rock/earth strip, and add clusters of vivid fern green and golden-green creeping moss with a few thin upright or leaning grass blades, following the slate's blue-violet low-poly diagonal layers and scattered muted copper facets. This is ONLY a thin, shallow lip of material growing along a mostly level, slightly undulating continuous upper edge. The exposed strip beneath the growth has a soft broken irregular descending edge to blend into the companion fill below it. Looking from front slightly above, matching the source game perspective. Think of a decorative overlay brush, a horizontal low silhouette with isolated thin strands breaking above the line, no standalone island, no floating ledge with a heavy underside or any extra objects. Hand-painted organic variation, roughly 85-90% canvas width, dominant about 4:1 shape, use 3:2 landscape framing with generous transparent padding. Weight texture and rock grains identical to reference underneath, greens rich but avoid neon. Leave fully transparent background and edges, no visible ground under it. The transparency should fade using the asset's own local colors, never a white, bright or gray mist, no shadow or glow. No black stroke, no border, no background, no labels, no sheet, one distinct high-detail brush image."
+    },
+    "village_cobble_fill": {
+      "file": "stamps/village_cobble_fill.png",
+      "preset": "Woven Blue - Village Cobble Fill",
+      "tag": "Woven Blue - Material Fills",
+      "role": "fill",
+      "companion": "village_cobble_top",
+      "size_px": [
+        1880,
+        866
+      ],
+      "generated_size_px": [
+        1860,
+        846
+      ],
+      "default_brush_px": 1000,
+      "sha256": "5e921645363468775eda56252909a263b719a47f22c94200aaca5202b2a613a1",
+      "prompt": "Use case: illustration-story. Create ONE high-resolution material fill swatch for a 2D side-view painted platformer level in Krita. Image 1 is the author's Blue Blockout, style and palette reference only. Ignore its outlines, objects, scene and layouts. Village cobblestone pavement with rounded, irregular small cobbles in muted blue-gray, lilac, and cool brown with occasional sun-warmed beige stone. Slightly curving joints and small dark gray earth mortar. Small near-square cobbles across many rows, with well-defined faces, soft gray joints, and scattered chips. Avoid a repeating grid or a floor plane receding to a vanishing point. Treat the camera as looking squarely at a diffuse material face. Even diffuse light with textured faceted painted surfaces, vibrant in the highlights and clean shadows, suitable for a user's own thick external contour. Pattern and detail must continue across the full broad shape. Make an approximately 2.2:1 wide and deep all-over flat patch, entirely opaque through the inner 75 percent. Use uneven, lightly feathered alpha around all four edges over a short distance so overlapping several stamps inside a freehand outline blends. Only genuine transparent RGBA outside with empty margins. No platform silhouette, no bevel or lip, no front-facing drop edge, no floating island, grass or moss, no shadows cast outside, no black outline, frame, background, perspective scene, checkerboard, text, border, or chart. The result must be prepared as an individual fill texture, not a sheet."
+    },
+    "village_cobble_top": {
+      "file": "stamps/village_cobble_top.png",
+      "preset": "Woven Blue - Village Cobble Grass Top",
+      "tag": "Woven Blue - Grassy Material Tops",
+      "role": "top",
+      "companion": "village_cobble_fill",
+      "size_px": [
+        1526,
+        230
+      ],
+      "generated_size_px": [
+        1536,
+        1024
+      ],
+      "default_brush_px": 1000,
+      "sha256": "6883cda2d4e5abc92e72386523e6c2163011852d196970b9f3a927fdeedf9b1c",
+      "prompt": "Design ONE wide, isolated, transparent PNG edge stamp for the top of a hand-painted 2D side-view platforming level. The supplied image is its companion fill, showing the same material we must match, with slight woven diagonal grain, luminous stylized colors and angular low-poly facets. Reproduce the same material scale, color and lighting in a rock/earth strip, and add short olive-to-fresh-green tufts, a little scattered moss between topmost stones; exactly the same small rounded hand-set blue gray, muted violet, brown and occasional honey cobbles as the source, and matching scale and dark natural mortar, just one to two rows. This is ONLY a thin, shallow lip of material growing along a mostly level, slightly undulating continuous upper edge. The exposed strip beneath the growth has a soft broken irregular descending edge to blend into the companion fill below it. Looking from front slightly above, matching the source game perspective. Think of a decorative overlay brush, a horizontal low silhouette with isolated thin strands breaking above the line, no standalone island, no floating ledge with a heavy underside or any extra objects. Hand-painted organic variation, roughly 85-90% canvas width, dominant about 4:1 shape, use 3:2 landscape framing with generous transparent padding. Weight texture and rock grains identical to reference underneath, greens rich but avoid neon. Leave fully transparent background and edges, no visible ground under it. The transparency should fade using the asset's own local colors, never a white, bright or gray mist, no shadow or glow. No black stroke, no border, no background, no labels, no sheet, one distinct high-detail brush image."
+    },
+    "honey_limestone_fill": {
+      "file": "stamps/honey_limestone_fill.png",
+      "preset": "Woven Blue - Honey Limestone Fill",
+      "tag": "Woven Blue - Material Fills",
+      "role": "fill",
+      "companion": "honey_limestone_top",
+      "size_px": [
+        1878,
+        866
+      ],
+      "generated_size_px": [
+        1858,
+        846
+      ],
+      "default_brush_px": 1050,
+      "sha256": "95d0c1ae9cb7f3e22d5b3964573706c787e4f39b23fd65dbd5b18f018eb0d8d6",
+      "prompt": "Use case: illustration-story. Create ONE high-resolution material fill swatch for a 2D side-view painted platformer level in Krita. Image 1 is the author's Blue Blockout, style and palette reference only. Ignore its outlines, objects, scene and layouts. Golden limestone with warm pale honey, sandstone cream and soft dusty peach, chiseled irregular limestone strata and a few very fine calcite seams. Broad warm stone planes that read clearly at gameplay distance, with localized grain, little pores, and quiet warm shadows. Distinct from cool slate and rounded cobble. Avoid bricklike repetition or paper-white values. Treat the camera as looking squarely at a diffuse material face. Even diffuse light with textured faceted painted surfaces, vibrant in the highlights and clean shadows, suitable for a user's own thick external contour. Pattern and detail must continue across the full broad shape. Make an approximately 2.2:1 wide and deep all-over flat patch, entirely opaque through the inner 75 percent. Use uneven, lightly feathered alpha around all four edges over a short distance so overlapping several stamps inside a freehand outline blends. Only genuine transparent RGBA outside with empty margins. No platform silhouette, no bevel or lip, no front-facing drop edge, no floating island, grass or moss, no shadows cast outside, no black outline, frame, background, perspective scene, checkerboard, text, border, or chart. The result must be prepared as an individual fill texture, not a sheet."
+    },
+    "honey_limestone_top": {
+      "file": "stamps/honey_limestone_top.png",
+      "preset": "Woven Blue - Honey Limestone Moss Top",
+      "tag": "Woven Blue - Grassy Material Tops",
+      "role": "top",
+      "companion": "honey_limestone_fill",
+      "size_px": [
+        1518,
+        233
+      ],
+      "generated_size_px": [
+        1536,
+        1024
+      ],
+      "default_brush_px": 1050,
+      "sha256": "06f70a05b3cde538e7477e6fbada4104e21ccb5f68cda129c2f2eb30d2f0ed83",
+      "prompt": "Design ONE wide, isolated, transparent PNG edge stamp for the top of a hand-painted 2D side-view platforming level. The supplied image is its companion fill, showing the same material we must match, with slight woven diagonal grain, luminous stylized colors and angular low-poly facets. Reproduce the same material scale, color and lighting in a rock/earth strip, and add irregular pads of golden-green moss and a few fine short blades following the warm honey, sandy tan, peach and cream limestone facets in the material reference. This is ONLY a thin, shallow lip of material growing along a mostly level, slightly undulating continuous upper edge. The exposed strip beneath the growth has a soft broken irregular descending edge to blend into the companion fill below it. Looking from front slightly above, matching the source game perspective. Think of a decorative overlay brush, a horizontal low silhouette with isolated thin strands breaking above the line, no standalone island, no floating ledge with a heavy underside or any extra objects. Hand-painted organic variation, roughly 85-90% canvas width, dominant about 4:1 shape, use 3:2 landscape framing with generous transparent padding. Weight texture and rock grains identical to reference underneath, greens rich but avoid neon. Leave fully transparent background and edges, no visible ground under it. The transparency should fade using the asset's own local colors, never a white, bright or gray mist, no shadow or glow. No black stroke, no border, no background, no labels, no sheet, one distinct high-detail brush image."
+    },
+    "packed_path_fill": {
+      "file": "stamps/packed_path_fill.png",
+      "preset": "Woven Blue - Packed Path Fill",
+      "tag": "Woven Blue - Material Fills",
+      "role": "fill",
+      "companion": "packed_path_top",
+      "size_px": [
+        1878,
+        866
+      ],
+      "generated_size_px": [
+        1858,
+        846
+      ],
+      "default_brush_px": 1050,
+      "sha256": "afa9f50d077b5cb8d97dab50bc74a23496e515cbcd27c5258b004e35f7025778",
+      "prompt": "Use case: illustration-story. Create ONE high-resolution material fill swatch for a 2D side-view painted platformer level in Krita. Image 1 is the author's Blue Blockout, style and palette reference only. Ignore its outlines, objects, scene and layouts. Compacted terracotta dry earth with patches of fine pale tan gravel and a few small irregular flint chips sunk into the ground. Warm ochre and clay with restrained gold and umber, useful for village paths, steps and banks. A fine dust and pebble-scale fill texture, balanced dense pebble accents with open clay. Avoid a block or paver pattern. Treat the camera as looking squarely at a diffuse material face. Even diffuse light with textured faceted painted surfaces, vibrant in the highlights and clean shadows, suitable for a user's own thick external contour. Pattern and detail must continue across the full broad shape. Make an approximately 2.2:1 wide and deep all-over flat patch, entirely opaque through the inner 75 percent. Use uneven, lightly feathered alpha around all four edges over a short distance so overlapping several stamps inside a freehand outline blends. Only genuine transparent RGBA outside with empty margins. No platform silhouette, no bevel or lip, no front-facing drop edge, no floating island, grass or moss, no shadows cast outside, no black outline, frame, background, perspective scene, checkerboard, text, border, or chart. The result must be prepared as an individual fill texture, not a sheet."
+    },
+    "packed_path_top": {
+      "file": "stamps/packed_path_top.png",
+      "preset": "Woven Blue - Packed Path Grass Top",
+      "tag": "Woven Blue - Grassy Material Tops",
+      "role": "top",
+      "companion": "packed_path_fill",
+      "size_px": [
+        1517,
+        248
+      ],
+      "generated_size_px": [
+        1536,
+        1024
+      ],
+      "default_brush_px": 1050,
+      "sha256": "b710429e05271805136523a029b047c5170f12ea8d7a819a9f0415fe0e5b7b5b",
+      "prompt": "Design ONE wide, isolated, transparent PNG edge stamp for the top of a hand-painted 2D side-view platforming level. The supplied image is its companion fill, showing the same material we must match, with slight woven diagonal grain, luminous stylized colors and angular low-poly facets. Reproduce the same material scale, color and lighting in a rock/earth strip, and add several groups of fine fresh green grass strands tucked into the crumbly rust and ochre soil, fine pale gravel at the lip, the same warm compacted earthen material and tiny grit as the reference. This is ONLY a thin, shallow lip of material growing along a mostly level, slightly undulating continuous upper edge. The exposed strip beneath the growth has a soft broken irregular descending edge to blend into the companion fill below it. Looking from front slightly above, matching the source game perspective. Think of a decorative overlay brush, a horizontal low silhouette with isolated thin strands breaking above the line, no standalone island, no floating ledge with a heavy underside or any extra objects. Hand-painted organic variation, roughly 85-90% canvas width, dominant about 4:1 shape, use 3:2 landscape framing with generous transparent padding. Weight texture and rock grains identical to reference underneath, greens rich but avoid neon. Leave fully transparent background and edges, no visible ground under it. The transparency should fade using the asset's own local colors, never a white, bright or gray mist, no shadow or glow. No black stroke, no border, no background, no labels, no sheet, one distinct high-detail brush image."
+    }
+  }
+}

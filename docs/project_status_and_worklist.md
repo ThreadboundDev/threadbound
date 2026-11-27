@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 26 Woven Blue village material trial
+
+The [Krita village material kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Village_Materials/README.md)
+adds blue-violet cave slate, village cobble, honey limestone, and packed
+earth for paths and banks. Each has a separate moss or grass top that
+overlaps the corresponding fill. The experiment uses the painted ink
+edge with material stamped from the bottom up and growth on the exposed lip.
+
+The bundle contains eight individually checked full-color brush tips,
+split between the Material Fills and Grassy Material Tops tags. The
+catalog shows the pairs and the layering trial. In-level art review is open.
+
 ## November 26 foliage painter cursor and brush controls
 
 The [Foliage Painter](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md)
