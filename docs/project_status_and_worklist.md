@@ -1,5 +1,18 @@
 # Threadbound current TODO list
 
+## November 26 Blue one-pass paintover
+
+The [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses
+Chase's one-pass Krita materials, ink, and fixed background supports.
+Solid collision follows the painted stone, including seven unsupported
+sandstone platforms. The one-way guide lines are represented by plank
+crossings. The east terrace house has a climbable balcony and roof. A
+small lookout occupies the high west recess and the slate cave entry
+frames the spawn.
+
+[Layered source and art prompts](../ArtSource/BlueBiome/Krita/Blue_One_Pass_Art.md).
+The playtest is ready for Chase's review.
+
 ## November 26 Woven Blue village material trial
 
 The [Krita village material kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Village_Materials/README.md)
