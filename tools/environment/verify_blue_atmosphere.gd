@@ -38,7 +38,6 @@ func run() -> void:
 	var disabled := solid(geometry, Vector2(1200, -300), Vector2(200, 60))
 	disabled.disabled = true
 	var atmosphere := ATMOSPHERE.instantiate()
-	atmosphere.review_controls = false
 	atmosphere.ambience_enabled = false
 	atmosphere.waterline_y = 500.0
 	room.add_child(atmosphere)
@@ -82,6 +81,7 @@ func run() -> void:
 	atmosphere.weather_index = 3
 	atmosphere.advance(1.0)
 	check(atmosphere.rain_amount > 0.0 and atmosphere.rain_amount < 0.1, "Rain builds gradually instead of switching instantly")
+	verify_review_cycles(atmosphere)
 	room.queue_free()
 	await process_frame
 	if DisplayServer.get_name() != "headless":
@@ -94,6 +94,34 @@ func run() -> void:
 	file.close()
 	print("BLUE_ATMOSPHERE_RESULT " + JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)
+
+func verify_review_cycles(atmosphere: Node) -> void:
+	var panel := atmosphere.get_node("Review/AtmosphereReview")
+	var next_weather := panel.find_child("NextWeather", true, false) as Button
+	var next_time := panel.find_child("NextTime", true, false) as Button
+	var apply_weather := panel.find_child("ApplyWeather", true, false) as Button
+	check(next_weather != null and next_time != null and apply_weather != null, "Review panel offers both cycle buttons and immediate weather")
+	if next_weather == null or next_time == null or apply_weather == null:
+		return
+	atmosphere.set_preview(10.0, 3)
+	atmosphere.automatic_weather = true
+	for state in [4, 5, 0, 1, 2, 3]:
+		next_weather.pressed.emit()
+		check(atmosphere.weather_index == state and not atmosphere.automatic_weather,
+			"Weather button previews the next state and wraps")
+		check(atmosphere.hour == 10.0 and atmosphere.rain_amount == atmosphere.RAIN_AMOUNT[state]
+			and atmosphere.cloud_cover == atmosphere.CLOUD_COVER[state], "Weather button applies immediately at the same hour")
+	atmosphere.time_scale = 0.0
+	atmosphere._weather_picker.item_selected.emit(0)
+	check(atmosphere.automatic_weather, "Weather dropdown can resume automatic changes after cycling")
+	for time in [12.0, 18.0, 0.0, 6.0, 12.0]:
+		next_time.pressed.emit()
+		check(atmosphere.hour == time and atmosphere.weather_index == 3 and atmosphere.automatic_weather
+			and atmosphere.time_scale == 0.0, "Time button advances through presets and preserves weather and clock speed")
+	atmosphere._weather_picker.item_selected.emit(1)
+	apply_weather.pressed.emit()
+	check(atmosphere.weather_index == 0 and atmosphere.rain_amount == 0.0 and atmosphere.hour == 12.0,
+		"Apply Weather Now updates the dropdown selection even with the clock paused")
 
 func inspect_light_pixels() -> void:
 	var view := SubViewport.new()
@@ -126,6 +154,13 @@ func inspect_light_pixels() -> void:
 	var sheltered := day.get_pixel(128, 200).get_luminance()
 	var exposed := day.get_pixel(380, 200).get_luminance()
 	check(exposed > sheltered + 0.06, "Rendered light reaches player layer through a one-way roof while full roof casts shadow")
+	atmosphere.set_preview(12.0, 4)
+	for index in 5:
+		await process_frame
+	await RenderingServer.frame_post_draw
+	var storm := view.get_texture().get_image()
+	check(storm.get_pixel(380, 200).get_luminance() < exposed - 0.12, "Noon storm dims the rendered exposed surface")
+	check(storm.get_pixel(128, 200).get_luminance() < sheltered - 0.09, "Noon storm also dims indirect light under cover")
 	atmosphere.set_preview(0.0, 0)
 	for index in 5:
 		await process_frame
@@ -168,6 +203,8 @@ func inspect_blue() -> void:
 	player.reset_physics_interpolation()
 	camera.reset_smoothing()
 	atmosphere.set_preview(12.0, 0)
+	var backdrop := blue.get_node("Backgrounds/FarSkyCliffs") as CanvasItem
+	var clear_backdrop := backdrop.modulate.get_luminance()
 	if DisplayServer.get_name() != "headless":
 		await capture("blue_day")
 	atmosphere.set_preview(18.3, 0)
@@ -177,6 +214,7 @@ func inspect_blue() -> void:
 	if DisplayServer.get_name() != "headless":
 		await capture("blue_night")
 	atmosphere.set_preview(12.0, 4)
+	check(backdrop.modulate.get_luminance() < clear_backdrop - 0.20, "Storm grading reaches the unshaded painted backdrop")
 	if DisplayServer.get_name() != "headless":
 		await capture("blue_storm")
 	player.position = Vector2(-969, -1520)

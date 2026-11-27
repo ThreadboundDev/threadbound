@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 27 Blue lighting and atmosphere controls
+
+[Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses
+softer daytime lighting. Dense cloud cover dims the ambient fill, sky,
+distant scenery, and lake together. The review panel adds **Next Weather**
+for instant weather comparisons and **Next Time** for dawn, noon, dusk,
+and midnight.
+
+Godot passed 200 headless and 205 Forward+ checks, including the review
+buttons and rendered storm darkness under cover and in the open.
+[Atmosphere review guide](art/blue_atmosphere_trial.md).
+
 ## November 27 Blue foliage outline
 
 [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses the

@@ -156,7 +156,7 @@ func advance(delta: float) -> void:
 	if weather_index == 4 and rain_amount > 0.7 and time_scale > 0.0:
 		_storm_remaining -= step
 		if _storm_remaining <= 0.0:
-			_flash = _rng.randf_range(0.45, 0.9)
+			_flash = _rng.randf_range(0.32, 0.72)
 			_thunder_delay = _rng.randf_range(1.0, 3.5)
 			_storm_remaining = _rng.randf_range(18.0, 45.0)
 	if _thunder_delay >= 0.0:
@@ -169,10 +169,33 @@ func advance(delta: float) -> void:
 func set_preview(new_hour: float, new_weather: int) -> void:
 	## Immediate comparison; regular weather changes always blend.
 	hour = fposmod(new_hour, 24.0)
-	weather_index = clampi(new_weather, 0, 5)
+	weather_index = clampi(new_weather, 0, WEATHER.size() - 1)
 	automatic_weather = false
+	_apply_weather_now()
+
+
+func _cycle_weather() -> void:
+	set_preview(hour, (weather_index + 1) % WEATHER.size())
+
+
+func _cycle_time() -> void:
+	# Step through midnight, dawn, noon and dusk independently of the weather.
+	hour = fposmod((floorf(hour / 6.0) + 1.0) * 6.0, 24.0)
+	_refresh_preview()
+
+
+func _apply_weather_now() -> void:
 	cloud_cover = CLOUD_COVER[weather_index]
 	rain_amount = RAIN_AMOUNT[weather_index]
+	_flash = 0.0
+	_thunder_delay = -1.0
+	_storm_remaining = 18.0
+	if _thunder_audio:
+		_thunder_audio.stop()
+	_refresh_preview()
+
+
+func _refresh_preview() -> void:
 	_mask_timer = 0.0
 	_apply_lighting()
 	_update_view()
@@ -186,38 +209,46 @@ func _apply_lighting() -> void:
 	var altitude := sin(arc * PI)
 	daylight = smoothstep(4.5, 6.5, hour) * (1.0 - smoothstep(17.5, 19.5, hour))
 	var dusk := maxf(exp(-pow((hour - 5.8) / 1.1, 2.0)), exp(-pow((hour - 18.3) / 1.1, 2.0)))
-	var ambient := Color(0.53, 0.60, 0.74).lerp(Color(0.80, 0.84, 0.89), daylight)
-	ambient = ambient.lerp(Color(0.69, 0.73, 0.80), cloud_cover * daylight * 0.30)
+	var overcast := smoothstep(0.27, 0.96, cloud_cover)
+	var ambient := Color(0.53, 0.60, 0.74).lerp(Color(0.74, 0.78, 0.84), daylight)
+	var overcast_ambient := Color(0.44, 0.50, 0.64).lerp(Color(0.57, 0.63, 0.72), daylight)
+	ambient = ambient.lerp(overcast_ambient, overcast)
 	$Ambient.color = ambient
 	var light_color := Color(0.57, 0.73, 1.0).lerp(Color(1.0, 0.96, 0.85), daylight)
 	light_color = light_color.lerp(Color(1.0, 0.68, 0.42), dusk * (1.0 - cloud_cover) * 0.48)
 	$SkyLight.color = light_color
-	$SkyLight.energy = lerpf(0.22, 0.48, daylight) * lerpf(1.0, 0.34, cloud_cover)
+	$SkyLight.energy = lerpf(0.22, 0.36, daylight) * lerpf(1.0, 0.22, cloud_cover)
 	sun_slope = cos(arc * PI) * 0.55
 	$SkyLight.rotation = -atan(sun_slope)
-	var sky_color := Color(0.035, 0.07, 0.17).lerp(Color(0.42, 0.78, 0.96), daylight)
+	var sky_color := Color(0.035, 0.07, 0.17).lerp(Color(0.37, 0.70, 0.88), daylight)
 	sky_color = sky_color.lerp(Color(0.61, 0.38, 0.48), dusk * 0.48)
-	sky_color = sky_color.lerp(Color(0.24, 0.32, 0.43), cloud_cover * 0.62)
+	var overcast_sky := Color(0.025, 0.045, 0.095).lerp(Color(0.18, 0.26, 0.35), daylight)
+	sky_color = sky_color.lerp(overcast_sky, overcast * 0.80)
 	var sky := _room.get_node_or_null("Backgrounds/Sky") as Polygon2D
 	if sky:
 		sky.color = sky_color
+	var backdrop_grade := Color.WHITE.lerp(Color(0.64, 0.70, 0.78), overcast * lerpf(0.52, 0.88, daylight))
+	var backdrop_color := Color(0.36, 0.40, 0.53).lerp(Color(0.93, 0.95, 0.97), daylight)
+	backdrop_color = backdrop_color.lerp(Color(0.85, 0.65, 0.65), dusk * 0.28)
 	for path in ["Backgrounds/FarSkyCliffs", "Backgrounds/LakeVillage"]:
 		var background := _room.get_node_or_null(path) as CanvasItem
 		if background:
-			background.modulate = Color(0.36, 0.40, 0.53).lerp(Color.WHITE, daylight)
-			background.modulate = background.modulate.lerp(Color(0.85, 0.65, 0.65), dusk * 0.28)
+			background.modulate = backdrop_color * backdrop_grade
 	var old_clouds := _room.get_node_or_null("Backgrounds/Clouds") as CanvasItem
 	if old_clouds:
-		old_clouds.modulate = Color(0.46, 0.55, 0.72).lerp(Color.WHITE, daylight)
+		old_clouds.modulate = Color(0.46, 0.55, 0.72).lerp(Color.WHITE, daylight) * backdrop_grade
 		old_clouds.modulate.a = 1.0 - cloud_cover * 0.65
 	_cloud_material.set_shader_parameter("coverage", cloud_cover)
 	_cloud_material.set_shader_parameter("clock", _elapsed)
 	_cloud_material.set_shader_parameter("flash", _flash)
-	_cloud_material.set_shader_parameter("cloud_color", Color(0.09, 0.13, 0.23).lerp(Color(0.73, 0.79, 0.83), daylight).lerp(Color(0.23, 0.29, 0.39), cloud_cover * 0.72))
+	var cloud_color := Color(0.09, 0.13, 0.23).lerp(Color(0.73, 0.79, 0.83), daylight)
+	var overcast_clouds := Color(0.085, 0.12, 0.21).lerp(Color(0.21, 0.27, 0.36), daylight)
+	_cloud_material.set_shader_parameter("cloud_color", cloud_color.lerp(overcast_clouds, overcast * 0.84))
 	_rain_material.set_shader_parameter("clock", _elapsed)
 	_rain_material.set_shader_parameter("amount", rain_amount)
+	_rain_material.set_shader_parameter("rain_color", Color(0.36, 0.51, 0.67).lerp(Color(0.62, 0.74, 0.84), daylight))
 	_shaft_material.set_shader_parameter("clock", _elapsed)
-	_shaft_material.set_shader_parameter("strength", lerpf(0.28, 1.0, daylight) * altitude * (1.0 - cloud_cover))
+	_shaft_material.set_shader_parameter("strength", lerpf(0.28, 0.66, daylight) * altitude * (1.0 - cloud_cover))
 	_shaft_material.set_shader_parameter("shaft_color", light_color)
 	if _mask_timer <= 0.0 and absf(sun_slope - _last_slope) > 0.008:
 		_light_heights = _shelter_heights(sun_slope, false)
@@ -228,7 +259,9 @@ func _apply_lighting() -> void:
 		_mask_timer = 0.2
 	for lamp in _lamps:
 		lamp.energy = float(lamp.get_meta("base_energy")) * lerpf(1.0, 0.24, daylight) * (0.97 + sin(_elapsed * 2.3 + lamp.position.x) * 0.03)
-	var lake_tint := Color(0.24, 0.36, 0.58).lerp(Color.WHITE, daylight).lerp(Color(0.65, 0.74, 0.83), cloud_cover * 0.35)
+	var lake_tint := Color(0.24, 0.36, 0.58).lerp(Color(0.95, 0.97, 1.0), daylight)
+	var lake_weather_grade := Color.WHITE.lerp(Color(0.62, 0.71, 0.83), overcast * lerpf(0.40, 0.75, daylight))
+	lake_tint *= lake_weather_grade
 	for lake_material in _lake_materials:
 		lake_material.set_shader_parameter("atmosphere_tint", lake_tint)
 	if _rain_audio:
@@ -268,8 +301,8 @@ func _update_view() -> void:
 	$Moon.position = celestial
 	$Sun.visible = is_day
 	$Moon.visible = not is_day
-	$Sun.modulate = Color(2.4, 1.95, 1.35, 1.0 - cloud_cover * 0.88)
-	$Moon.modulate = Color(1.45, 1.8, 2.5, 1.0 - cloud_cover * 0.88)
+	$Sun.modulate = Color(1.95, 1.65, 1.23, 1.0 - cloud_cover * 0.94)
+	$Moon.modulate = Color(1.45, 1.8, 2.5, 1.0 - cloud_cover * 0.94)
 	$Sun.scale = Vector2.ONE * 1.25
 	$Moon.scale = Vector2.ONE * 0.90
 
@@ -413,7 +446,7 @@ func _build_controls() -> void:
 	panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	panel.offset_left = 18
 	panel.offset_right = 790
-	panel.offset_top = -116
+	panel.offset_top = -145
 	panel.offset_bottom = -18
 	var rows := VBoxContainer.new()
 	panel.add_child(rows)
@@ -445,17 +478,24 @@ func _build_controls() -> void:
 		_speed_picker.add_item(speed_name)
 	_speed_picker.item_selected.connect(func(index: int): time_scale = [1.0, 60.0, 0.0][index])
 	row.add_child(_speed_picker)
+	var actions := HBoxContainer.new()
+	rows.add_child(actions)
+	for entry in [
+		["NextWeather", "Next Weather", _cycle_weather, "Cycle weather immediately at the current time."],
+		["NextTime", "Next Time", _cycle_time, "Cycle dawn, noon, dusk and midnight with the current weather."],
+		["ApplyWeather", "Apply Weather Now", _apply_weather_now, "Skip the transition to the selected weather."],
+	]:
+		var button := Button.new()
+		button.name = entry[0]
+		button.text = entry[1]
+		button.tooltip_text = entry[3]
+		button.focus_mode = Control.FOCUS_NONE
+		button.pressed.connect(entry[2])
+		actions.add_child(button)
 	var hint := Label.new()
-	hint.text = "40-minute day · weather blends gradually; Apply previews immediately"
+	hint.text = "40-minute day · time presets 06:00, 12:00, 18:00, 00:00"
 	hint.add_theme_font_size_override("font_size", 14)
 	rows.add_child(hint)
-	var immediate := Button.new()
-	immediate.text = "Apply selected weather now"
-	immediate.pressed.connect(func():
-		cloud_cover = CLOUD_COVER[weather_index]
-		rain_amount = RAIN_AMOUNT[weather_index]
-	)
-	row.add_child(immediate)
 
 
 func _build_audio() -> void:

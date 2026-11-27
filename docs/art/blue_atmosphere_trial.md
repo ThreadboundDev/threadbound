@@ -9,11 +9,17 @@ Hermit water-state rules remain authoritative.
 
 Open `Src/Environment/BlueBiome/blue_blockout.tscn` in Godot and play that scene
 (F6). The lower-left atmosphere panel provides a time slider, weather choice,
-and normal / 60x / paused clock. Weather choices normally blend over roughly
-45 seconds; **Apply selected weather now** makes an immediate comparison.
-Pausing this clock leaves rain and cloud animation running. R still returns
-to the existing spawn without resetting the atmosphere. Existing function-key
-debug actions are preserved.
+and normal / 60x / paused clock.
+
+- **Next Weather** steps through the six weather states immediately at the
+  current hour. Select **Weather: automatic** to resume automatic changes.
+- **Next Time** steps through dawn, noon, dusk, and midnight at the current
+  weather and clock speed.
+- The weather dropdown blends changes over roughly 45 seconds at 1x.
+  **Apply Weather Now** jumps to the selected weather.
+
+Pause the clock for side-by-side comparisons. Rain and cloud animation keep
+running. Press **R** to return to the cave spawn.
 
 The default starts clear at 10:00. A full day takes 2,400 seconds; sunrise is
 around 05:00 and sunset around 19:00. Time pauses with the game. Reloading the
@@ -39,12 +45,12 @@ vertical response to exploration. Their time-driven arcs supply the direction
 for native scene light and decorative shafts. Both discs are deliberately
 simple, softly edged, and glowing. Moon phases and eclipses are deferred.
 
-The distant background receives time-of-day color grading separately from
-nearby collision shadows. The cloud veil draws over the far wall and painted
-village, behind playable art. The player uses its existing 2D composite light
-response, including lighting layer 2. Local composite exposure is tuned for
-this scene. The lake's two unshaded material instances are duplicated and
-given a local final tint; shared water shaders and simulation are unchanged.
+The lower daytime ambient and directional light give cloud cover more room
+to read. Dense clouds also dim the distant cliff and village art, sky, and
+lake. Warm pools and clear-night fill keep nearby forms readable. The cloud
+veil draws behind playable art. The player uses its existing 2D composite
+light response, including lighting layer 2. Blue grades its two lake
+presentation materials locally after the reflections are calculated.
 
 Enabled full `CollisionPolygon2D` shapes and rectangle/convex/segment shapes
 under static bodies in `Geometry` generate shadow occluders. One-way shapes
@@ -68,15 +74,14 @@ changes, lunar mechanics, or global weather singleton.
 
 ## Validation and acceptance
 
-Godot 4.7.2: 179 headless checks and 182 Forward+ checks passed. The checks cover
-clock duration/wrap/pause, 80 allowed weather transitions and duration bounds,
-gradual rain, full/one-way/disabled/transformed collision shelter, waterline
-termination, player lighting configuration, and both lake material passes.
-GPU pixel checks verify actual player-layer light passes one-way roofs, full
-roofs cast shadows, moonlight differs from daylight, and sheltered nighttime
-shapes retain indirect light. The scene ran without script or shader errors.
+Godot 4.7.2 passed 200 headless and 205 Forward+ checks for the revised
+lighting and review controls. The tests cover the two cycle buttons, clock
+duration and pause, 80 automatic weather transitions, gradual rain, collision
+shelter, and both lake material passes. Rendered samples verify that noon
+storms dim both open and sheltered surfaces, full roofs cast shadows, and
+sheltered night scenes retain indirect light.
 
-Reports and eight rendered views are in
+The initial reports and eight rendered views are in
 [`work/blue-atmosphere-trial`](../../work/blue-atmosphere-trial/):
 [day overview](../../work/blue-atmosphere-trial/blue_overview_day.png),
 [night overview](../../work/blue-atmosphere-trial/blue_overview_night.png), and
