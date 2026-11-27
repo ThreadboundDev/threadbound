@@ -30,10 +30,15 @@ bottom panel. It is part of the Room Greybox plugin.
 1. Pick **Mixed Grass** or a single stamp. **Broadleaf Accent** is the
    more detailed option for occasional use.
 2. Choose **Front of Player** or **Behind Player**, then turn on **Paint**.
-   Click for one stamp or drag to paint a row. The preview marks the root.
-3. Adjust **Size**, **Spacing**, or **Variation**. **Random Flip** mirrors
-   the texture and **Vary Tint** mixes four foliage greens.
-4. Right-click to erase in the chosen layer. Godot's Undo reverses one
+   Click for one stamp or drag to paint a row. The preview shows the next
+   stamp at the cursor, with the cursor dot marking its root.
+3. Adjust **Size**, **Rotation**, and **Flip X** in the panel or use **[**
+   and **]** to resize, **Q** and **E** to rotate, and **F** to flip while
+   pointing at the viewport. **Spacing**, **Variation**, and **Random Flip**
+   control how a drag stroke varies.
+4. Open the **Tint** swatch to mix a color or use the native eyedropper.
+   **Slight Tint Variation** makes small changes around the chosen color.
+5. Right-click to erase in the chosen layer. Godot's Undo reverses one
    stroke at a time. Turn **Paint** off to select and move stamps in the
    viewport. **Send Selection to Layer** shifts selected stamps to the
    chosen layer and preserves their positions.
@@ -44,8 +49,9 @@ Terrain Ink, front foliage, player, and back foliage. The ink covers the
 roots and boot soles. Grass tips bend in wind and respond to passing feet.
 
 The three strand textures are derived from the CC0 brush masks
-`grass.gih` and `grass_patch.gih` in Krita's default 4.x bundle. The bundle
-credits Deevad and the contributing Krita brush artists.
+`grass.gih` and `grass_patch.gih` in Krita's default 4.x bundle. The tall
+strands and soft patch layer several tips for the denser Krita look. The
+bundle credits Deevad and the contributing Krita brush artists.
 
 - [Brush bundle](Threadbound_Woven_Blue_Cave_Foliage.bundle)
 - [Preset catalog](catalog.jpg)

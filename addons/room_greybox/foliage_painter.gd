@@ -6,22 +6,25 @@ const STAMP_SCRIPT := preload("res://Src/Environment/BlueBiome/ArtPlaceables/Fol
 const ART_PATH := "res://Assets/BlueBiome/Art/CaveMouthFoliage/"
 const CATALOG := [
 	["Fine Strands", "fine_strands.png", Vector2(93, 51)],
-	["Tall Strands", "tall_strands.png", Vector2(81, 64)],
-	["Soft Grass Patch", "soft_strands.png", Vector2(138, 52)],
+	["Tall Strands", "tall_strands.png", Vector2(81, 76)],
+	["Soft Grass Patch", "soft_strands.png", Vector2(138, 62)],
 	["Broadleaf Accent", "fan_tuft.png", Vector2(104, 42)],
 ]
-const GREENS := [Color("73a858"), Color("86ad61"), Color("609655"), Color("78a46d")]
-const DEFAULT_HELP := "Click or drag to stamp. Right-click to erase. Turn Paint off to move stamps with Godot's tools."
+const GRASS_BRUSH_COUNT := 3
+const DEFAULT_HELP := "Click or drag to stamp. [ / ] resize, Q / E rotate, F flips. Right-click erases."
 
 var _plugin: EditorPlugin
 var _paint: CheckButton
 var _palette: OptionButton
 var _layer: OptionButton
 var _size: SpinBox
+var _rotation: SpinBox
 var _spacing: SpinBox
 var _variation: SpinBox
 var _flip: CheckButton
+var _random_flip: CheckButton
 var _tint: CheckButton
+var _color: ColorPickerButton
 var _status: Label
 var _rng := RandomNumberGenerator.new()
 var _textures: Dictionary[String, Texture2D] = {}
@@ -30,6 +33,10 @@ var _stroke_parent: Node2D
 var _stroke: Array[Node2D] = []
 var _last_cursor := Vector2.ZERO
 var _distance_to_stamp := 0.0
+var _grass_roll := 0
+var _scale_roll := 0.0
+var _flip_roll := false
+var _tint_roll := Vector3.ZERO
 
 
 func setup(plugin: EditorPlugin) -> void:
@@ -51,6 +58,7 @@ func _ready() -> void:
 	for brush in CATALOG:
 		_palette.add_item(brush[0])
 	_palette.tooltip_text = "Mixed Grass varies the three strand masks. Broadleaf is an accent."
+	_palette.item_selected.connect(_refresh_overlay)
 	choices.add_child(_palette)
 	_layer = OptionButton.new()
 	_layer.add_item("Front of Player")
@@ -63,15 +71,35 @@ func _ready() -> void:
 	var settings := HBoxContainer.new()
 	rows.add_child(settings)
 	_size = _number(settings, "Size", 25, 300, 100, "%")
+	_rotation = _number(settings, "Rotation", -180, 180, 0, "°")
+	_flip = _toggle(settings, "Flip X", false)
 	_spacing = _number(settings, "Spacing", 8, 512, 48, "px")
 	_variation = _number(settings, "Variation", 0, 75, 26, "%")
-	_flip = _toggle(settings, "Random Flip", true)
-	_tint = _toggle(settings, "Vary Tint", true)
+	_random_flip = _toggle(settings, "Random Flip", true)
+	var color_settings := HBoxContainer.new()
+	rows.add_child(color_settings)
+	var color_label := Label.new()
+	color_label.text = "Tint"
+	color_settings.add_child(color_label)
+	_color = ColorPickerButton.new()
+	_color.color = Color("73a858")
+	_color.edit_alpha = false
+	_color.custom_minimum_size.x = 54
+	_color.tooltip_text = "Pick a tint or use the eyedropper in the color popup to sample from the screen."
+	color_settings.add_child(_color)
+	_color.get_picker().sampler_visible = true
+	_tint = _toggle(color_settings, "Slight Tint Variation", true)
+	for knob in [_size, _rotation, _variation]:
+		knob.value_changed.connect(_refresh_overlay)
+	for toggle in [_flip, _random_flip, _tint]:
+		toggle.toggled.connect(_refresh_overlay)
+	_color.color_changed.connect(_refresh_overlay)
 	_status = Label.new()
 	_status.text = DEFAULT_HELP
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	rows.add_child(_status)
 	visibility_changed.connect(_visibility_changed)
+	_roll_next_stamp()
 
 
 func _process(_delta: float) -> void:
@@ -116,15 +144,12 @@ func _target(layers: Node2D) -> Node2D:
 func forward_canvas_input(event: InputEvent) -> bool:
 	if not _active():
 		return false
-	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
-		cancel_stroke()
-		_paint.button_pressed = false
-		return true
+	if event is InputEventKey:
+		return _handle_brush_key(event)
 	var mouse := event as InputEventMouse
 	if mouse == null or Input.is_key_pressed(KEY_SPACE) or mouse.ctrl_pressed or mouse.alt_pressed:
 		return false
-	var viewport := EditorInterface.get_editor_viewport_2d()
-	var point := viewport.get_canvas_transform().affine_inverse() * mouse.position
+	var point := _world_to_canvas().affine_inverse() * mouse.position
 	_plugin.update_overlays()
 	if event is InputEventMouseMotion and not _stroke.is_empty():
 		_extend_stroke(point)
@@ -149,6 +174,34 @@ func forward_canvas_input(event: InputEvent) -> bool:
 	return true
 
 
+func _handle_brush_key(event: InputEventKey) -> bool:
+	if not event.pressed or event.ctrl_pressed or event.alt_pressed or event.meta_pressed:
+		return false
+	match event.keycode:
+		KEY_ESCAPE:
+			cancel_stroke()
+			_paint.button_pressed = false
+		KEY_BRACKETLEFT:
+			_size.value -= 10.0
+		KEY_BRACKETRIGHT:
+			_size.value += 10.0
+		KEY_Q:
+			_rotation.value = wrapf(_rotation.value - 15.0, -180.0, 180.0)
+		KEY_E:
+			_rotation.value = wrapf(_rotation.value + 15.0, -180.0, 180.0)
+		KEY_F:
+			if not event.echo:
+				_flip.button_pressed = not _flip.button_pressed
+		_:
+			return false
+	return true
+
+
+func _world_to_canvas() -> Transform2D:
+	# The editor stores viewport pan and zoom in the global canvas transform.
+	return EditorInterface.get_editor_viewport_2d().global_canvas_transform
+
+
 func draw_canvas_overlay(overlay: Control) -> void:
 	if not _active() or Input.is_key_pressed(KEY_SPACE):
 		return
@@ -158,20 +211,53 @@ func draw_canvas_overlay(overlay: Control) -> void:
 	var cursor := overlay.get_local_mouse_position()
 	if not Rect2(Vector2.ZERO, overlay.size).has_point(cursor):
 		return
-	var index := get_catalog_index_for_preview()
+	var index := _brush_index()
 	var brush_texture := _brush_texture(index)
 	if brush_texture == null:
 		return
-	var zoom := EditorInterface.get_editor_viewport_2d().get_canvas_transform().get_scale().abs()
-	var brush_size := Vector2(CATALOG[index][2]) * zoom * _size.value / 100.0
-	var bounds := Rect2(cursor - Vector2(brush_size.x * 0.5, brush_size.y), brush_size)
-	var tint := Color(1, 1, 1, .55) if index == 3 else Color(GREENS[0], .63)
+	var view := _world_to_canvas()
+	var transform := view * _brush_transform(view.affine_inverse() * cursor)
+	if _brush_flipped():
+		transform.x = -transform.x
+	var brush_size: Vector2 = CATALOG[index][2]
+	var bounds := Rect2(Vector2(-brush_size.x * 0.5, -brush_size.y), brush_size)
+	var tint := Color(_brush_tint(index), 0.66)
+	overlay.draw_set_transform_matrix(transform)
 	overlay.draw_texture_rect(brush_texture, bounds, false, tint)
+	overlay.draw_set_transform_matrix(Transform2D.IDENTITY)
 	overlay.draw_circle(cursor, 3.0, Color("ddeced"))
 
 
-func get_catalog_index_for_preview() -> int:
-	return maxi(0, _palette.selected - 1)
+func _roll_next_stamp() -> void:
+	_grass_roll = _rng.randi_range(0, GRASS_BRUSH_COUNT - 1)
+	_scale_roll = _rng.randf_range(-1.0, 1.0)
+	_flip_roll = _rng.randf() < 0.5
+	_tint_roll = Vector3(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
+
+
+func _brush_index() -> int:
+	return _grass_roll if _palette.selected == 0 else _palette.selected - 1
+
+
+func _brush_transform(point: Vector2) -> Transform2D:
+	var scale := Vector2.ONE * (_size.value / 100.0) * (1.0 + _scale_roll * _variation.value / 100.0)
+	return Transform2D(deg_to_rad(_rotation.value), scale, 0.0, point)
+
+
+func _brush_flipped() -> bool:
+	return _flip.button_pressed != (_random_flip.button_pressed and _flip_roll)
+
+
+func _brush_tint(index: int) -> Color:
+	var tint := _color.color
+	if _tint.button_pressed:
+		tint = Color.from_hsv(wrapf(tint.h + _tint_roll.x * 0.008, 0.0, 1.0),
+			clampf(tint.s + _tint_roll.y * 0.025, 0.0, 1.0), clampf(tint.v * (1.0 + _tint_roll.z * 0.04), 0.0, 1.0))
+	return Color.WHITE.lerp(tint, 0.27) if index >= GRASS_BRUSH_COUNT else tint
+
+
+func _refresh_overlay(_value: Variant = null) -> void:
+	_plugin.update_overlays()
 
 
 func _brush_texture(index: int) -> Texture2D:
@@ -206,7 +292,7 @@ func _extend_stroke(point: Vector2) -> void:
 
 
 func _place_stamp(point: Vector2) -> void:
-	var index := _rng.randi_range(0, 2) if _palette.selected == 0 else _palette.selected - 1
+	var index := _brush_index()
 	var brush_texture := _brush_texture(index)
 	if brush_texture == null:
 		return
@@ -216,14 +302,12 @@ func _place_stamp(point: Vector2) -> void:
 	stamp.name = str(brush[0]).replace(" ", "")
 	stamp.texture = brush_texture
 	stamp.set("stamp_size", brush[2])
-	stamp.set("flip_horizontal", _flip.button_pressed and _rng.randf() < 0.5)
-	var jitter := _variation.value / 100.0
-	stamp.scale = Vector2.ONE * (_size.value / 100.0) * _rng.randf_range(1.0 - jitter, 1.0 + jitter)
-	if index < 3:
-		stamp.modulate = GREENS[_rng.randi_range(0, GREENS.size() - 1)] if _tint.button_pressed else GREENS[0]
-	stamp.position = _stroke_parent.to_local(point)
+	stamp.set("flip_horizontal", _brush_flipped())
+	stamp.modulate = _brush_tint(index)
+	stamp.transform = _stroke_parent.global_transform.affine_inverse() * _brush_transform(point)
 	_stroke_parent.add_child(stamp, true)
 	_stroke.append(stamp)
+	_roll_next_stamp()
 
 
 func _finish_stroke() -> void:

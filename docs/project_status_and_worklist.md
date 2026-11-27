@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 26 foliage painter cursor and brush controls
+
+The [Foliage Painter](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md)
+uses the 2D editor's pan and zoom transform for placement. The preview
+matches the next stamp's transform, texture, and tint. Size, rotation,
+and flip can be changed in the panel or with viewport shortcuts. The
+Tint swatch opens Godot's native sampler. Small tint variation stays
+around the selected color. The tall strands and soft patch are denser
+and use taller placement presets.
+
+The editor fixture verified the cursor anchor under a panned 63 percent
+view, the transform shortcuts, preview-to-placement agreement, and
+undo, layer moves, and scene packing.
+
 ## November 26 Godot foliage painter and ink order
 
 [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) now draws
