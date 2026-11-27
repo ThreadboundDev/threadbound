@@ -1,0 +1,15 @@
+{
+	"captures": [
+		"res://work/blue-atmosphere-trial/blue_day.png",
+		"res://work/blue-atmosphere-trial/blue_dusk.png",
+		"res://work/blue-atmosphere-trial/blue_night.png",
+		"res://work/blue-atmosphere-trial/blue_storm.png",
+		"res://work/blue-atmosphere-trial/blue_sheltered_night.png",
+		"res://work/blue-atmosphere-trial/blue_overview_day.png",
+		"res://work/blue-atmosphere-trial/blue_overview_night.png",
+		"res://work/blue-atmosphere-trial/blue_overview_storm.png"
+	],
+	"checks": 182,
+	"failures": [],
+	"renderer": "forward_plus"
+}

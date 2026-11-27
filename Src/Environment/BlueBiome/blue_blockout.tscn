@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/upper_house.png" id="16_upper_house"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/lookout.png" id="17_lookout"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/entrance.png" id="18_entrance"]
+[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Atmosphere/blue_atmosphere.tscn" id="19_atmosphere"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
@@ -596,7 +597,7 @@ debug_blue_water_power_unlocked = true
 process_priority = 100
 model_scene = ExtResource("7_doll")
 object_outline_width = 0.0
-receive_level_lighting = false
+receive_level_lighting = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1969136443]
 position = Vector2(0, -160)
@@ -668,5 +669,7 @@ position = Vector2(-736.44446, 89.111115)
 position = Vector2(1924.0103, -1471.0001)
 scale = Vector2(8.204087, -5.685563)
 shape = SubResource("RectangleShape2D_m3ycw")
+
+[node name="Atmosphere" parent="." instance=ExtResource("19_atmosphere")]
 
 [editable path="Player"]

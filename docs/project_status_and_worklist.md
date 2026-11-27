@@ -1,5 +1,23 @@
 # Threadbound current TODO list
 
+## November 27 Blue atmosphere trial
+
+Chase authorized a scene-local 40-minute day/night and weather trial in
+[Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn). Soft sun and
+moon bloom, time-colored scenery and lake, native player/world lighting,
+local warm pools, drifting cloud cover, rain, and occasional cloud flashes
+with delayed thunder support comparison in the lower-left review panel.
+Weather follows weighted sequences with 6–15 minute holds. Enabled full
+collision blocks rain, shafts and direct light; one-way collision passes them.
+Rain stops at the lake surface. Existing art and collision are preserved.
+
+[Review guide and limits](art/blue_atmosphere_trial.md). Godot 4.7.2 passed
+179 headless and 182 Forward+ checks, including rendered player-layer light
+occlusion and nighttime readability samples. Eight scene captures and reports
+are in `work/blue-atmosphere-trial/`. Artistic acceptance, interior/window art,
+and any global clock/persistence integration remain open. Checkpoint subject:
+`feature: add Blue day-night and weather trial`.
+
 ## November 26 Blue one-pass paintover
 
 The [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses
