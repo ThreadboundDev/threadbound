@@ -1,5 +1,17 @@
 # Threadbound current TODO list
 
+## November 27 Blue foliage outline
+
+[Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses the
+painted Terrain Ink alpha to clip foreground foliage. The line stays
+clear, the player draws over the ink, and the blades can overlap the
+player above the edge. Stamps inherit the mask from the front layer
+when placed or moved there. The mask follows the terrain sprite.
+
+Forward+ passed 62 checks, including a rendered crop of the cave-start
+foliage, grass and player overlap samples, and moving stamps between
+layers. See the [foliage guide](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md).
+
 ## November 27 Blue bridge and rounded ledge contact
 
 In [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn), the

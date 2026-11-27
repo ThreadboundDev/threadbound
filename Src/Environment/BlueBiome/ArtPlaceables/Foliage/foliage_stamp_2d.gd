@@ -27,11 +27,16 @@ var _feet: CollisionShape2D
 var _bend := 0.0
 
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	if _wind_material == null:
 		_wind_material = ShaderMaterial.new()
 		_wind_material.shader = WIND_SHADER
-	material = _wind_material
+	var layer := get_parent() as CanvasItem
+	var layer_material := layer.material as ShaderMaterial if layer else null
+	material = layer_material if layer_material and layer_material.shader == WIND_SHADER else _wind_material
+
+
+func _ready() -> void:
 	_update_mesh()
 	set_instance_shader_parameter(&"flip_horizontal", flip_horizontal)
 	set_physics_process(not Engine.is_editor_hint())

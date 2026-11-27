@@ -44,9 +44,10 @@ bottom panel. It is part of the Room Greybox plugin.
    chosen layer and preserves their positions.
 
 Each placement is an editable mesh node under `Geometry/FoliageStamps`.
-Brush strokes save with the room. The draw order from top to bottom is
-Terrain Ink, front foliage, player, and back foliage. The ink covers the
-roots and boot soles. Grass tips bend in wind and respond to passing feet.
+Brush strokes save with the room. Front grass overlaps the player above
+the terrain edge. Terrain Ink clips the grass roots to keep the black
+outline clear. The player draws over the ink, and backing grass draws
+under it. Grass tips bend in wind and respond to passing feet.
 
 The three strand textures are derived from the CC0 brush masks
 `grass.gih` and `grass_patch.gih` in Krita's default 4.x bundle. The tall

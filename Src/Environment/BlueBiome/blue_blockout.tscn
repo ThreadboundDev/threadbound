@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/lookout.png" id="17_lookout"]
 [ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/entrance.png" id="18_entrance"]
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Atmosphere/blue_atmosphere.tscn" id="19_atmosphere"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/foliage_ink_layer_2d.gd" id="20_foliage_ink"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
@@ -247,7 +248,7 @@ texture = ExtResource("10_bridge_supports")
 centered = false
 
 [node name="TerrainInk" type="Sprite2D" parent="Geometry"]
-editor_description = "The original one-pass terrain ink behind the player and foreground foliage."
+editor_description = "Painted terrain ink behind the player. Its alpha clips the foreground foliage."
 z_index = 9
 position = Vector2(-1336, -2816)
 texture = ExtResource("14_terrain_ink")
@@ -362,8 +363,10 @@ script = ExtResource("12_stamp")
 stamp_size = Vector2(138, 52)
 flip_horizontal = true
 
-[node name="FrontFoliage" type="Node2D" parent="Geometry/FoliageStamps"]
+[node name="FrontFoliage" type="Node2D" parent="Geometry/FoliageStamps" node_paths=PackedStringArray("terrain_ink")]
 z_index = 11
+script = ExtResource("20_foliage_ink")
+terrain_ink = NodePath("../../TerrainInk")
 
 [node name="FineStrands01" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
 modulate = Color(0.526, 0.678, 0.38, 0.88)
