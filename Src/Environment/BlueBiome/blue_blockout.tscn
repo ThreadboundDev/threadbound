@@ -11,7 +11,11 @@
 [ext_resource type="Texture2D" path="res://Src/Environment/Greybox/Blue_Blockout.png" id="9_krita_preview"]
 [ext_resource type="Texture2D" path="res://Src/Environment/Greybox/Blue_Blockout_BridgeFront.png" id="10_bridge_front"]
 [ext_resource type="PackedScene" path="res://Src/Environment/Greybox/greybox_polygon_water.tscn" id="11_lake"]
-[ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/blue_cave_mouth_foliage.tscn" id="12_foliage"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/foliage_stamp_2d.gd" id="12_stamp"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/fine_strands.png" id="13_grass_Fine"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/tall_strands.png" id="13_grass_Tall"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/soft_strands.png" id="13_grass_Soft"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/CaveMouthFoliage/blue_terrain_ink.png" id="14_terrain_ink"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
@@ -138,7 +142,188 @@ position = Vector2(-1, -1734)
 texture = ExtResource("10_bridge_front")
 centered = false
 
-[node name="CaveMouthFoliage" parent="Geometry" instance=ExtResource("12_foliage")]
+[node name="TerrainInk" type="Sprite2D" parent="Geometry"]
+editor_description = "Visible Krita outline above the player and both foliage passes."
+z_index = 16
+position = Vector2(-1536, -2816)
+texture = ExtResource("14_terrain_ink")
+centered = false
+
+[node name="FoliageStamps" type="Node2D" parent="Geometry"]
+editor_description = "Paint individual stamps with the Foliage Painter dock."
+
+[node name="BackFoliage" type="Node2D" parent="Geometry/FoliageStamps"]
+z_index = 4
+
+[node name="SoftStrands01" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.73)
+position = Vector2(-1193, -1404)
+scale = Vector2(0.709, 0.709)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="FineStrands02" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.526, 0.678, 0.38, 0.73)
+position = Vector2(-1003, -1403)
+scale = Vector2(1.018, 1.018)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+
+[node name="SoftStrands03" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.526, 0.678, 0.38, 0.73)
+position = Vector2(-835, -1387)
+scale = Vector2(0.842, 0.842)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="TallStrands04" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.73)
+position = Vector2(-749, -1398)
+scale = Vector2(1.063, 1.063)
+texture = ExtResource("13_grass_Tall")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(81, 64)
+
+[node name="SoftStrands05" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.73)
+position = Vector2(-594, -1405)
+scale = Vector2(0.975, 0.975)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="FineStrands06" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.73)
+position = Vector2(-478, -1409)
+scale = Vector2(1.017, 1.017)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+flip_horizontal = true
+
+[node name="SoftStrands07" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.47, 0.644, 0.427, 0.73)
+position = Vector2(-335, -1410)
+scale = Vector2(0.805, 0.805)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="FineStrands08" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.73)
+position = Vector2(-180, -1409)
+scale = Vector2(0.773, 0.773)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+flip_horizontal = true
+
+[node name="SoftStrands09" type="MeshInstance2D" parent="Geometry/FoliageStamps/BackFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.73)
+position = Vector2(-70, -1406)
+scale = Vector2(1.015, 1.015)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+flip_horizontal = true
+
+[node name="FrontFoliage" type="Node2D" parent="Geometry/FoliageStamps"]
+z_index = 11
+
+[node name="FineStrands01" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.526, 0.678, 0.38, 0.88)
+position = Vector2(-1137, -1400)
+scale = Vector2(0.913, 0.913)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+
+[node name="SoftStrands02" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-1082, -1405)
+scale = Vector2(0.982, 0.982)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+flip_horizontal = true
+
+[node name="TallStrands03" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-929, -1397)
+scale = Vector2(0.876, 0.876)
+texture = ExtResource("13_grass_Tall")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(81, 64)
+flip_horizontal = true
+
+[node name="FineStrands04" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.47, 0.644, 0.427, 0.88)
+position = Vector2(-845, -1390)
+scale = Vector2(0.988, 0.988)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+
+[node name="SoftStrands05" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-695, -1397)
+scale = Vector2(0.891, 0.891)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+flip_horizontal = true
+
+[node name="FineStrands06" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-617, -1403)
+scale = Vector2(1.075, 1.075)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+
+[node name="SoftStrands07" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.88)
+position = Vector2(-499, -1405)
+scale = Vector2(0.948, 0.948)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="TallStrands08" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.376, 0.588, 0.333, 0.88)
+position = Vector2(-357, -1410)
+scale = Vector2(0.903, 0.903)
+texture = ExtResource("13_grass_Tall")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(81, 64)
+
+[node name="FineStrands09" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-286, -1410)
+scale = Vector2(0.779, 0.779)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
+flip_horizontal = true
+
+[node name="SoftStrands10" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.47, 0.644, 0.427, 0.88)
+position = Vector2(-206, -1409)
+scale = Vector2(0.954, 0.954)
+texture = ExtResource("13_grass_Soft")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(138, 52)
+
+[node name="FineStrands11" type="MeshInstance2D" parent="Geometry/FoliageStamps/FrontFoliage"]
+modulate = Color(0.451, 0.66, 0.345, 0.88)
+position = Vector2(-88, -1406)
+scale = Vector2(1.084, 1.084)
+texture = ExtResource("13_grass_Fine")
+script = ExtResource("12_stamp")
+stamp_size = Vector2(93, 51)
 
 [node name="PaintedBridge" type="StaticBody2D" parent="Geometry"]
 editor_description = "The one-way deck follows the planks with short slopes at the two rock joins."

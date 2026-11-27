@@ -1,5 +1,21 @@
 # Threadbound current TODO list
 
+## November 26 Godot foliage painter and ink order
+
+[Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) now draws
+the visible Krita ink over foreground foliage, the player, and backing
+foliage. The cave sample uses thin strand masks from Krita's Stamp Grass
+and Stamp Grass Patch. The detailed blossom and broadleaf shapes remain
+accents.
+
+The Room Greybox plugin exposes **Foliage Painter** in the bottom panel.
+It places independently editable subdivided stamps by click or drag,
+with size, flip, and tint variation. The chosen layer controls drawing
+depth. Undo, redo, erase, layer moves, and scene packing passed the
+editor fixture. A separate Vulkan playtest verified the new art and
+localized bending at the cave start. See the
+[tool guide](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md).
+
 ## November 26 cave-mouth foliage trial
 
 The [cave foliage kit](../ArtSource/BlueBiome/Krita/Woven_Blue_Cave_Foliage/README.md)

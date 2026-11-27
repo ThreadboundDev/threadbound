@@ -3,20 +3,48 @@ extends EditorPlugin
 
 const DOCK_SCENE := preload("res://addons/room_greybox/room_greybox_dock.tscn")
 const TILE_LAYER_SCENE := preload("res://Src/Environment/Greybox/greybox_tile_layer.tscn")
+const FOLIAGE_PAINTER := preload("res://addons/room_greybox/foliage_painter.gd")
 
 var dock: Control
+var _foliage_painter: FOLIAGE_PAINTER
 
 
 func _enter_tree() -> void:
 	dock = DOCK_SCENE.instantiate()
 	dock.call("setup", self)
 	add_control_to_bottom_panel(dock, "Room Greybox")
+	_foliage_painter = FOLIAGE_PAINTER.new()
+	_foliage_painter.setup(self)
+	add_control_to_bottom_panel(_foliage_painter, "Foliage Painter")
+	scene_changed.connect(_foliage_scene_changed)
 
 
 func _exit_tree() -> void:
+	if is_instance_valid(_foliage_painter):
+		_foliage_painter.cancel_stroke()
+		remove_control_from_bottom_panel(_foliage_painter)
+		_foliage_painter.queue_free()
 	if is_instance_valid(dock):
 		remove_control_from_bottom_panel(dock)
 		dock.queue_free()
+
+
+func _forward_canvas_gui_input(event: InputEvent) -> bool:
+	return is_instance_valid(_foliage_painter) and _foliage_painter.forward_canvas_input(event)
+
+
+func _handles(object: Object) -> bool:
+	return object is Node2D
+
+
+func _forward_canvas_draw_over_viewport(overlay: Control) -> void:
+	if is_instance_valid(_foliage_painter):
+		_foliage_painter.draw_canvas_overlay(overlay)
+
+
+func _foliage_scene_changed(_root: Node) -> void:
+	if is_instance_valid(_foliage_painter):
+		_foliage_painter.cancel_stroke()
 
 
 func add_greybox_scene(scene_path: String, base_name: String, snap_to_grid: bool) -> void:

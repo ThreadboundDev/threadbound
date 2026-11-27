@@ -30,7 +30,7 @@ func _rebuild() -> void:
 	instances.transform_format = MultiMesh.TRANSFORM_2D
 	instances.use_custom_data = true
 	instances.use_colors = true
-	instances.mesh = _make_mesh()
+	instances.mesh = make_mesh()
 	instances.instance_count = placements.size()
 	_phases.resize(placements.size())
 	_bends.resize(placements.size())
@@ -74,14 +74,14 @@ func _physics_process(delta: float) -> void:
 			multimesh.set_instance_custom_data(index, Color(_phases[index], 0.5 + bend * 0.5, 0.0, 1.0))
 
 
-func _make_mesh() -> ArrayMesh:
+static func make_mesh(size := Vector2.ONE) -> ArrayMesh:
 	var vertices := PackedVector2Array()
 	var uvs := PackedVector2Array()
 	var indices := PackedInt32Array()
 	for row in range(ROWS + 1):
 		for column in range(COLUMNS + 1):
 			var uv := Vector2(float(column) / COLUMNS, float(row) / ROWS)
-			vertices.append(uv - Vector2(0.5, 1.0))
+			vertices.append((uv - Vector2(0.5, 1.0)) * size)
 			uvs.append(uv)
 	for row in ROWS:
 		for column in COLUMNS:
