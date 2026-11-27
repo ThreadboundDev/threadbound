@@ -32,6 +32,22 @@ rain. Rain ramps in and out. Storms have restrained cloud illumination and
 delayed procedural thunder, with procedural rain ambience quieter under cover.
 Audio is a placeholder for evaluating the atmosphere, not a finished sound kit.
 
+## Paint lights in Godot
+
+Open the room in the 2D editor and choose **Lighting Painter** in the
+bottom panel beside **Foliage Painter**. Choose a warm lamp, cool fill,
+or neutral glow, then set the radius, energy, color, and shadows. The color
+swatch includes the native eyedropper.
+
+Turn on **Paint** and click to place the light at the cursor. **[** and
+**]** change the radius. Right-click near the center of a painted light
+to erase it. Undo and redo work for both actions. Press **Esc** to leave
+paint mode, then select the light to edit it in the Inspector.
+
+Each light saves as a native `PointLight2D` in the room and lights the Blue
+world and player layers. Blue builds the rock occluders when you run the
+scene with **F6**, which lets you review the cast shadows in context.
+
 ## Presentation and shelter
 
 The added `Atmosphere` child owns the clock, ambient/directional lighting,
@@ -73,12 +89,13 @@ changes, lunar mechanics, or global weather singleton.
 
 ## Validation and acceptance
 
-Godot 4.7.2 passed 200 headless and 205 Forward+ checks for the revised
-lighting and review controls. The tests cover the two cycle buttons, clock
-duration and pause, 80 automatic weather transitions, gradual rain, collision
-shelter, and both lake material passes. Rendered samples verify that noon
-storms dim both open and sheltered surfaces, full roofs cast shadows, and
-sheltered night scenes retain indirect light.
+Godot 4.7.2 passed 202 headless and 207 Forward+ atmosphere checks. They
+cover the two cycle buttons, clock duration and pause, 80 automatic weather
+transitions, gradual rain, radial shelter, and both lake material passes.
+Rendered samples verify that noon storms dim both open and sheltered
+surfaces, full roofs cast shadows, and sheltered night scenes retain
+indirect light. The editor fixture passed 19 Lighting Painter checks,
+including panned cursor placement, undo, erase, and scene packing.
 
 The initial reports and eight rendered views are in
 [`work/blue-atmosphere-trial`](../../work/blue-atmosphere-trial/):

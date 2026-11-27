@@ -1,5 +1,15 @@
 # Threadbound current TODO list
 
+## November 27 Godot Lighting Painter
+
+The Room Greybox plugin adds a **Lighting Painter** tab. Click to place
+a native 2D light and right-click its center to erase it. The radius
+preview follows the editor cursor. Lights retain their color, energy,
+radius, and shadow settings when the room is saved. The editor fixture
+passed 19 checks, including panned placement, undo, and scene packing.
+
+[Lighting Painter guide](art/blue_atmosphere_trial.md#paint-lights-in-godot).
+
 ## November 27 Blue sun and moon rays
 
 The shafts in [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn)
