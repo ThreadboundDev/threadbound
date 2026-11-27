@@ -1,5 +1,12 @@
 # Threadbound current TODO list
 
+## November 27 Blue sun and moon rays
+
+The shafts in [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn)
+fan outward from the visible sun or moon. Full solids stop each radial
+shaft and one-way platforms let it through. Rain keeps its own slanted
+projection. Godot passed 202 headless and 207 Forward+ checks.
+
 ## November 27 Blue lighting and atmosphere controls
 
 [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) uses

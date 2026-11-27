@@ -52,13 +52,12 @@ veil draws behind playable art. The player uses its existing 2D composite
 light response, including lighting layer 2. Blue grades its two lake
 presentation materials locally after the reflections are calculated.
 
-Enabled full `CollisionPolygon2D` shapes and rectangle/convex/segment shapes
-under static bodies in `Geometry` generate shadow occluders. One-way shapes
-and disabled shapes are excluded. Rain and shaft masks use the same full
-solids, sampled along their respective sky directions, including roofs above
-the camera. The one-row mask has 2,048 samples across this test region, about
-11 world pixels per sample. Rain stops at world Y=0 instead of continuing
-underwater. Collision shapes, flags, and layers are never edited by the effect.
+Enabled full `CollisionPolygon2D` shapes and rectangle, convex, and segment
+shapes under static bodies in `Geometry` generate shadow occluders. The sun
+and moon shafts fan out from the active sky disc. A 2,048-sample angular mask
+stops each ray at the nearest full solid, including roofs above the camera.
+Rain uses the same solids with a separate slanted mask and stops at the lake
+surface. One-way and disabled collision let the rays and rain pass through.
 
 The current house roof and balcony are one-way, so they pass rain and shafts
 under Chase's requested rule. Decorative artwork alone does not create shelter.

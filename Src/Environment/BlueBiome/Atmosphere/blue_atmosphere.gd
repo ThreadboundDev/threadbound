@@ -8,6 +8,7 @@ const MASK_SIZE := 2048
 const MASK_LEFT := -9000.0
 const MASK_WIDTH := 23000.0
 const MASK_DEPTH := 8000.0
+const SHAFT_RANGE := 14000.0
 const RAIN_SLOPE := 0.10
 const WEATHER := ["Clear", "Gathering", "Overcast", "Rain", "Storm", "Clearing"]
 const NEXT_WEATHER := [[1], [0, 2, 2], [1, 3, 3], [2, 4, 5, 5], [3], [0, 0, 1]]
@@ -30,18 +31,18 @@ var cloud_cover := 0.05
 var rain_amount := 0.0
 var weather_remaining := 480.0
 var weather_transition_seconds := 45.0
-var sun_slope := 0.0
 var daylight := 1.0
 var _elapsed := 0.0
 var _flash := 0.0
 var _thunder_delay := -1.0
 var _storm_remaining := 18.0
 var _mask_timer := 0.0
-var _last_slope := 100.0
+var _shaft_origin := Vector2.INF
 var _previous_hdr := false
 var _polygons: Array[PackedVector2Array] = []
 var _rain_heights := PackedFloat32Array()
-var _light_heights := PackedFloat32Array()
+var _shaft_distances := PackedFloat32Array()
+var _shaft_directions := PackedVector2Array()
 var _rng := RandomNumberGenerator.new()
 var _rain_material: ShaderMaterial
 var _shaft_material: ShaderMaterial
@@ -218,8 +219,7 @@ func _apply_lighting() -> void:
 	light_color = light_color.lerp(Color(1.0, 0.68, 0.42), dusk * (1.0 - cloud_cover) * 0.48)
 	$SkyLight.color = light_color
 	$SkyLight.energy = lerpf(0.22, 0.36, daylight) * lerpf(1.0, 0.22, cloud_cover)
-	sun_slope = cos(arc * PI) * 0.55
-	$SkyLight.rotation = -atan(sun_slope)
+	$SkyLight.rotation = -atan(cos(arc * PI) * 0.55)
 	var sky_color := Color(0.035, 0.07, 0.17).lerp(Color(0.37, 0.70, 0.88), daylight)
 	sky_color = sky_color.lerp(Color(0.61, 0.38, 0.48), dusk * 0.48)
 	var overcast_sky := Color(0.025, 0.045, 0.095).lerp(Color(0.18, 0.26, 0.35), daylight)
@@ -250,13 +250,6 @@ func _apply_lighting() -> void:
 	_shaft_material.set_shader_parameter("clock", _elapsed)
 	_shaft_material.set_shader_parameter("strength", lerpf(0.28, 0.66, daylight) * altitude * (1.0 - cloud_cover))
 	_shaft_material.set_shader_parameter("shaft_color", light_color)
-	if _mask_timer <= 0.0 and absf(sun_slope - _last_slope) > 0.008:
-		_light_heights = _shelter_heights(sun_slope, false)
-		_light_texture = _upload_mask(_light_heights, _light_texture)
-		_shaft_material.set_shader_parameter("shelter", _light_texture)
-		_shaft_material.set_shader_parameter("slope", sun_slope)
-		_last_slope = sun_slope
-		_mask_timer = 0.2
 	for lamp in _lamps:
 		lamp.energy = float(lamp.get_meta("base_energy")) * lerpf(1.0, 0.24, daylight) * (0.97 + sin(_elapsed * 2.3 + lamp.position.x) * 0.03)
 	var lake_tint := Color(0.24, 0.36, 0.58).lerp(Color(0.95, 0.97, 1.0), daylight)
@@ -286,7 +279,8 @@ func _update_view() -> void:
 	var inverse := get_viewport().get_canvas_transform().affine_inverse()
 	var size := get_viewport_rect().size
 	var bounds := Rect2(inverse * Vector2.ZERO, Vector2.ZERO).expand(inverse * size).grow(100.0)
-	var corners := PackedVector2Array([bounds.position, Vector2(bounds.end.x, bounds.position.y), bounds.end, Vector2(bounds.position.x, bounds.end.y)])
+	var corners := PackedVector2Array([to_local(bounds.position), to_local(Vector2(bounds.end.x, bounds.position.y)),
+		to_local(bounds.end), to_local(Vector2(bounds.position.x, bounds.end.y))])
 	$CloudVeil.polygon = corners
 	$Rain.polygon = corners
 	$Shafts.polygon = corners
@@ -297,14 +291,22 @@ func _update_view() -> void:
 	var is_day := hour >= 5.0 and hour <= 19.0
 	var arc := (hour - 5.0) / 14.0 if is_day else fposmod(hour - 19.0, 24.0) / 10.0
 	var celestial := Vector2(center.x - cos(arc * PI) * bounds.size.x * 0.43, horizon - sin(arc * PI) * 1260.0)
-	$Sun.position = celestial
-	$Moon.position = celestial
+	$Sun.global_position = celestial
+	$Moon.global_position = celestial
 	$Sun.visible = is_day
 	$Moon.visible = not is_day
 	$Sun.modulate = Color(1.95, 1.65, 1.23, 1.0 - cloud_cover * 0.94)
 	$Moon.modulate = Color(1.45, 1.8, 2.5, 1.0 - cloud_cover * 0.94)
 	$Sun.scale = Vector2.ONE * 1.25
 	$Moon.scale = Vector2.ONE * 0.90
+	_shaft_material.set_shader_parameter("source_position", celestial)
+	var movement := _shaft_origin.distance_squared_to(celestial)
+	if movement > 144.0 or (_mask_timer <= 0.0 and movement > 1.0):
+		_shaft_origin = celestial
+		_shaft_distances = _radial_shelter(celestial)
+		_light_texture = _upload_mask(_shaft_distances, _light_texture, 0.0, SHAFT_RANGE)
+		_shaft_material.set_shader_parameter("shelter", _light_texture)
+		_mask_timer = 0.08
 
 
 func rebuild_shelter() -> void:
@@ -321,16 +323,16 @@ func rebuild_shelter() -> void:
 		occluder.occluder.cull_mode = OccluderPolygon2D.CULL_DISABLED
 		occluder.occluder_light_mask = 3
 		$SolidLightOccluders.add_child(occluder)
-	_rain_heights = _shelter_heights(RAIN_SLOPE, true)
-	_rain_texture = _upload_mask(_rain_heights, _rain_texture)
-	for mat in [_rain_material, _shaft_material]:
-		mat.set_shader_parameter("mask_left", MASK_LEFT)
-		mat.set_shader_parameter("mask_width", MASK_WIDTH)
-		mat.set_shader_parameter("sky_y", sky_y)
-		mat.set_shader_parameter("mask_depth", MASK_DEPTH)
+	_rain_heights = _rain_shelter_heights()
+	_rain_texture = _upload_mask(_rain_heights, _rain_texture, sky_y, MASK_DEPTH)
+	_rain_material.set_shader_parameter("mask_left", MASK_LEFT)
+	_rain_material.set_shader_parameter("mask_width", MASK_WIDTH)
+	_rain_material.set_shader_parameter("sky_y", sky_y)
+	_rain_material.set_shader_parameter("mask_depth", MASK_DEPTH)
 	_rain_material.set_shader_parameter("shelter", _rain_texture)
 	_rain_material.set_shader_parameter("slope", RAIN_SLOPE)
-	_last_slope = 100.0
+	_shaft_material.set_shader_parameter("ray_range", SHAFT_RANGE)
+	_shaft_origin = Vector2.INF
 	_mask_timer = 0.0
 
 
@@ -356,20 +358,20 @@ func _collect_solids(node: Node) -> void:
 		_collect_solids(child)
 
 
-func _shelter_heights(slope: float, stop_at_water: bool) -> PackedFloat32Array:
+func _rain_shelter_heights() -> PackedFloat32Array:
 	# Rasterize projected collision edges into a one-row float texture. Each
 	# texel is the first solid hit by a parallel sky ray. Work depends on edge
 	# span, not rain particle count; roofs above the camera still shelter it.
 	var heights := PackedFloat32Array()
 	heights.resize(MASK_SIZE)
-	heights.fill(waterline_y if stop_at_water else sky_y + MASK_DEPTH)
+	heights.fill(waterline_y)
 	var pitch := MASK_WIDTH / MASK_SIZE
 	for polygon in _polygons:
 		for index in polygon.size():
 			var a := polygon[index]
 			var b := polygon[(index + 1) % polygon.size()]
-			var ax := a.x - slope * (a.y - sky_y)
-			var bx := b.x - slope * (b.y - sky_y)
+			var ax := a.x - RAIN_SLOPE * (a.y - sky_y)
+			var bx := b.x - RAIN_SLOPE * (b.y - sky_y)
 			if absf(bx - ax) < 0.001:
 				continue
 			var first := maxi(0, ceili((minf(ax, bx) - MASK_LEFT) / pitch - 0.5))
@@ -382,10 +384,47 @@ func _shelter_heights(slope: float, stop_at_water: bool) -> PackedFloat32Array:
 	return heights
 
 
-func _upload_mask(heights: PackedFloat32Array, texture: ImageTexture) -> ImageTexture:
+func _radial_shelter(origin: Vector2) -> PackedFloat32Array:
+	var distances := PackedFloat32Array()
+	distances.resize(MASK_SIZE)
+	distances.fill(SHAFT_RANGE)
+	if _shaft_directions.is_empty():
+		for index in MASK_SIZE:
+			var angle := ((index + 0.5) / MASK_SIZE - 0.5) * PI
+			_shaft_directions.append(Vector2(sin(angle), cos(angle)))
+	for polygon in _polygons:
+		if polygon.size() > 2 and Geometry2D.is_point_in_polygon(origin, polygon):
+			distances.fill(0.0)
+			return distances
+		for edge_index in polygon.size():
+			var a := polygon[edge_index] - origin
+			var b := polygon[(edge_index + 1) % polygon.size()] - origin
+			if a.y <= 0.0 and b.y <= 0.0:
+				continue
+			# Clip edges at the emitter plane before projecting their angular span.
+			if a.y < 0.0:
+				a = a.lerp(b, -a.y / (b.y - a.y))
+			if b.y < 0.0:
+				b = b.lerp(a, -b.y / (a.y - b.y))
+			var start := (atan2(a.x, maxf(a.y, 0.001)) / PI + 0.5) * MASK_SIZE - 0.5
+			var end := (atan2(b.x, maxf(b.y, 0.001)) / PI + 0.5) * MASK_SIZE - 0.5
+			var first := maxi(0, ceili(minf(start, end)))
+			var last := mini(MASK_SIZE - 1, floori(maxf(start, end)))
+			var edge := b - a
+			var line := a.cross(edge)
+			for sample_index in range(first, last + 1):
+				var denominator := _shaft_directions[sample_index].cross(edge)
+				if absf(denominator) > 0.0001:
+					var distance := line / denominator
+					if distance >= 0.0:
+						distances[sample_index] = minf(distances[sample_index], distance)
+	return distances
+
+
+func _upload_mask(values: PackedFloat32Array, texture: ImageTexture, start: float, depth: float) -> ImageTexture:
 	var normalized := PackedFloat32Array()
-	for height in heights:
-		normalized.append(clampf((height - sky_y) / MASK_DEPTH, 0.0, 1.0))
+	for value in values:
+		normalized.append(clampf((value - start) / depth, 0.0, 1.0))
 	var image := Image.create_from_data(MASK_SIZE, 1, false, Image.FORMAT_RF, normalized.to_byte_array())
 	if texture:
 		texture.update(image)
@@ -394,13 +433,15 @@ func _upload_mask(heights: PackedFloat32Array, texture: ImageTexture) -> ImageTe
 
 
 func is_exposed(point: Vector2, rain: bool = false) -> bool:
-	var slope := RAIN_SLOPE if rain else sun_slope
-	var heights := _rain_heights if rain else _light_heights
-	if heights.is_empty():
+	if rain:
+		var ray_x := point.x - RAIN_SLOPE * (point.y - sky_y)
+		var index := clampi(int((ray_x - MASK_LEFT) / MASK_WIDTH * MASK_SIZE), 0, MASK_SIZE - 1)
+		return _rain_heights.is_empty() or point.y < _rain_heights[index] - 3.0
+	var offset := point - _shaft_origin
+	if not _shaft_origin.is_finite() or offset.y <= 0.0 or _shaft_distances.is_empty():
 		return true
-	var ray_x := point.x - slope * (point.y - sky_y)
-	var index := clampi(int((ray_x - MASK_LEFT) / MASK_WIDTH * MASK_SIZE), 0, MASK_SIZE - 1)
-	return point.y < heights[index] - 3.0
+	var index := clampi(int((atan2(offset.x, offset.y) / PI + 0.5) * MASK_SIZE), 0, MASK_SIZE - 1)
+	return offset.length() < _shaft_distances[index] - 3.0
 
 
 func _body_texture(moon: bool) -> ImageTexture:

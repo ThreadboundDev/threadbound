@@ -55,14 +55,19 @@ func run() -> void:
 	atmosphere.set_preview(12.0, 0)
 	check(atmosphere.is_exposed(Vector2(0, -400), true), "Rain reaches air above a full roof")
 	check(not atmosphere.is_exposed(Vector2(0, -100), true), "Full collision shelters the space below")
-	check(not atmosphere.is_exposed(Vector2(0, -100)), "Full collision also blocks shafts")
+	var sun: Vector2 = atmosphere.get_node("Sun").global_position
+	check(atmosphere._shaft_material.get_shader_parameter("source_position") == sun, "Rendered shafts use the visible sun as their origin")
+	check(not atmosphere.is_exposed(sun.lerp(roof.global_position, 1.16)), "Full collision blocks the ray continuing away from the sun")
 	check(atmosphere.is_exposed(Vector2(650, -100), true), "Rain passes through one-way platforms")
-	check(atmosphere.is_exposed(Vector2(650, -100)), "Light shafts pass through one-way platforms")
+	check(atmosphere.is_exposed(sun.lerp(bridge.global_position, 1.16)), "Radial shafts pass through one-way platforms")
 	check(atmosphere.is_exposed(Vector2(1200, -100), true), "Disabled collision does not become a roof")
 	check(not atmosphere.is_exposed(Vector2(650, 550), true), "Rain stops at the lake instead of falling underwater")
 	check(atmosphere.get_node("SolidLightOccluders").get_child_count() == 1, "Only enabled full solids cast scene-light shadows")
 	check(atmosphere.get_node("SkyLight").range_item_cull_mask == 3, "Sky light includes the player composite lighting layer")
 	check(roof.one_way_collision == false and bridge.one_way_collision, "Atmosphere leaves authored collision flags intact")
+	atmosphere.set_preview(7.0, 0)
+	var morning_sun: Vector2 = atmosphere.get_node("Sun").global_position
+	check(morning_sun.x < sun.x and atmosphere._shaft_origin == morning_sun, "The ray fan and shelter follow the morning sun")
 	# A roof far above the visible camera still shelters the same world point.
 	roof.get_parent().position.x = 1000.0
 	atmosphere.rebuild_shelter()
