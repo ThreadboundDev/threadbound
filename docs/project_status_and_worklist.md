@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 27 Blue bridge and rounded ledge contact
+
+In [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn), the
+player draws over the stone ink and the front grass still draws over the
+player. The seven plank crossings lower their one-way contacts by 8 px.
+The tall middle-east support meets the underside of its deck.
+
+Ledge grabs look for the turn from a side to a rounded lip at hand height.
+The climb lifts the capsule clear, checks its path, and uses the real
+floor height for the landing. The Godot fixture passed 67 capsule and ledge
+checks, with 38 more checks for Blue's deck contact, support registration,
+draw order, and both sides of an authored sandstone platform. Live feel
+review is open.
+
 ## November 27 Blue atmosphere trial
 
 Chase authorized a scene-local 40-minute day/night and weather trial in

@@ -503,6 +503,7 @@ var is_ledge_hanging := false
 var is_ledge_climbing := false
 var _ledge_direction := 0
 var _ledge_top := Vector2.ZERO
+var _ledge_wall_x := INF
 var _grapple_ledge_assist_timer := 0.0
 var _grapple_ledge_assist_direction := 0
 var _ledge_climb_elapsed := 0.0
@@ -1377,34 +1378,14 @@ func _try_grab_ledge() -> bool:
 	var forward_reach := ledge_forward_reach
 	if grapple_assist_active:
 		forward_reach += grapple_ledge_assist_forward_bonus
-	var space := get_world_2d().direct_space_state
 	var hand_y := global_position.y - ledge_hand_height
-	var wall_y := hand_y + ledge_hand_tolerance
-	var wall_query := PhysicsRayQueryParameters2D.create(
-		Vector2(global_position.x, wall_y),
-		Vector2(global_position.x + direction * forward_reach, wall_y),
-		collision_mask, [get_rid()]
-	)
-	var wall_hit := space.intersect_ray(wall_query)
-	if not _is_valid_ledge_wall_hit(wall_hit):
-		return false
-	var clearance_y := minf(global_position.y - ledge_head_height, hand_y - ledge_hand_tolerance - 2.0)
-	var clearance_query := PhysicsRayQueryParameters2D.create(Vector2(global_position.x, clearance_y), Vector2(global_position.x + direction * forward_reach, clearance_y), collision_mask, [get_rid()])
-	if not space.intersect_ray(clearance_query).is_empty():
-		return false
-	# Sample just beyond the wall face. Using the full reach places the vertical
-	# ray deep inside wide platforms, where a ray that starts inside collision
-	# reports no surface and makes ledge grab impossible.
-	var top_x: float = (wall_hit.position as Vector2).x + direction * 2.0
-	var top_query := PhysicsRayQueryParameters2D.create(Vector2(top_x, clearance_y), Vector2(top_x, wall_y), collision_mask, [get_rid()])
-	var top_hit := space.intersect_ray(top_query)
-	if not _is_valid_ledge_top_hit(top_hit) or absf((top_hit.position as Vector2).y - hand_y) > ledge_hand_tolerance:
-		return false
-	if top_hit.get("collider") != wall_hit.get("collider"):
+	var contact := _find_ledge_contact(direction, forward_reach, hand_y)
+	if contact.is_empty():
 		return false
 	var grabbed_from_water := is_in_prototype_water()
 	_ledge_direction = direction
-	_ledge_top = top_hit.position
+	_ledge_top = contact.top
+	_ledge_wall_x = contact.wall_x
 	is_ledge_hanging = true
 	is_wall_clinging = false
 	_grapple_ledge_assist_timer = 0.0
@@ -1413,6 +1394,66 @@ func _try_grab_ledge() -> bool:
 	player_animation.flip_h = direction < 0
 	play_character_anim("Water_Ledge_Grab" if grabbed_from_water else "Wall_Cling")
 	_sync_ledge_hang_position()
+	return true
+
+
+func _find_ledge_contact(direction: int, reach: float, hand_y: float) -> Dictionary:
+	var space := get_world_2d().direct_space_state
+	var top_limit := hand_y - ledge_hand_tolerance
+	var bottom_limit := hand_y + ledge_hand_tolerance
+	var reach_vector := Vector2(direction * reach, 0.0)
+	var hand_side_start := Vector2(global_position.x, bottom_limit)
+	var query := PhysicsRayQueryParameters2D.create(
+		hand_side_start, hand_side_start + reach_vector, collision_mask, [get_rid()]
+	)
+	var hand_side := space.intersect_ray(query)
+	var clearance_y := minf(global_position.y - ledge_head_height, top_limit - 2.0)
+	var walkable_incline := -cos(maxf(0.0, floor_max_angle - deg_to_rad(2.0)))
+	# Reach below a rounded shoulder for the steeper face before trying the lip itself.
+	for lower_y: float in [bottom_limit + ledge_hand_tolerance * 2.5, bottom_limit, bottom_limit + ledge_hand_tolerance]:
+		query.hit_from_inside = false
+		query.from = Vector2(global_position.x, lower_y)
+		query.to = query.from + reach_vector
+		var wall := space.intersect_ray(query)
+		if wall.is_empty():
+			continue
+		var wall_normal: Vector2 = wall.normal
+		if wall_normal.x * direction > -0.6:
+			continue
+		var wall_x: float = wall.position.x
+
+		# A rounded lip can recede from the side contact before it becomes walkable.
+		query.hit_from_inside = true
+		for distance: float in [2.0, 6.0, 10.0, 14.0, 18.0, 22.0, 26.0, 30.0, 34.0]:
+			var x := wall_x + direction * distance
+			if absf(x - global_position.x) > reach + 16.0:
+				break
+			query.from = Vector2(x, clearance_y)
+			query.to = Vector2(x, bottom_limit + 0.1)
+			var top := space.intersect_ray(query)
+			if top.is_empty():
+				continue
+			if top.normal == Vector2.ZERO or not _hits_same_ledge_shape(wall, top):
+				break
+			var normal: Vector2 = top.normal
+			if normal.y > -0.66 or wall_normal.dot(normal) >= 0.978:
+				continue
+			# A shoulder is an edge transition. An easy incline continuing under
+			# the reaching hand should stay walkable even if the rock is steep lower down.
+			if normal.y <= walkable_incline and not hand_side.is_empty() \
+					and _hits_same_ledge_shape(hand_side, top) and normal.dot(hand_side.normal) >= 0.978:
+				continue
+			if absf(top.position.y - hand_y) <= ledge_hand_tolerance:
+				return {"top": top.position, "wall_x": wall_x}
+	return {}
+
+
+func _hits_same_ledge_shape(side: Dictionary, top: Dictionary) -> bool:
+	var body: Object = side.collider
+	if body != top.collider:
+		return false
+	if body is CollisionObject2D:
+		return body.shape_find_owner(side.shape) == body.shape_find_owner(top.shape)
 	return true
 
 
@@ -1427,7 +1468,19 @@ func _sync_ledge_hang_position() -> void:
 				_ledge_direction * maxf(absf(projected_hand.x), _body_collision_standing_size.x * 0.5 + 2.0),
 				minf(projected_hand.y, -ledge_hand_height + ledge_hand_tolerance)
 			)
-	global_position = _ledge_top - grip
+	var hang_position := _ledge_top - grip
+	var outside_wall := _ledge_wall_x - _ledge_direction * (_body_collision_standing_size.x * 0.5 + 2.0)
+	if is_finite(outside_wall):
+		if (hang_position.x - outside_wall) * _ledge_direction > 0.0:
+			hang_position.x = outside_wall
+		# The curve can bulge beyond the side ray lower down the capsule.
+		for step in range(ceili(ledge_forward_reach / 4.0) + 1):
+			if not _has_solid_overlap(hang_position):
+				if step > 0:
+					hang_position.x -= _ledge_direction * 2.0
+				break
+			hang_position.x -= _ledge_direction * 4.0
+	global_position = hang_position
 
 
 func _is_valid_ledge_wall_hit(hit: Dictionary) -> bool:
@@ -1457,6 +1510,7 @@ func _process_ledge_hang() -> bool:
 	_sync_ledge_hang_position()
 	if Input.is_action_just_pressed("move_down"):
 		is_ledge_hanging = false
+		_ledge_wall_x = INF
 	elif Input.is_action_just_pressed("Jump"):
 		_start_ledge_climb(true)
 	elif Input.is_action_just_pressed("move_up"):
@@ -1464,20 +1518,54 @@ func _process_ledge_hang() -> bool:
 	return is_ledge_hanging
 
 func _start_ledge_climb(jump_after: bool) -> void:
+	var clearance := _ledge_climb_clearance()
+	var landing := _ledge_top + Vector2(_ledge_direction * ledge_climb_horizontal_offset, -clearance)
+	if is_finite(_ledge_wall_x):
+		landing = _find_ledge_landing(clearance)
+		if not landing.is_finite():
+			return
 	_ledge_climb_start = global_position
-	var surface_clearance := maxf(
-		ledge_climb_vertical_offset,
-		_get_player_collision_bottom_offset() + 2.0
-	)
-	_ledge_climb_target = _ledge_top + Vector2(
-		_ledge_direction * ledge_climb_horizontal_offset,
-		-surface_clearance
-	)
+	_ledge_climb_target = landing
 	_ledge_climb_elapsed = 0.0
 	_ledge_climb_jump_after = jump_after
 	is_ledge_hanging = false
 	is_ledge_climbing = true
 	velocity = Vector2.ZERO
+
+
+func _ledge_climb_clearance() -> float:
+	return maxf(ledge_climb_vertical_offset, _get_player_collision_bottom_offset() + 2.0)
+
+
+func _find_ledge_landing(clearance: float) -> Vector2:
+	var space := get_world_2d().direct_space_state
+	var query := PhysicsRayQueryParameters2D.create(Vector2.ZERO, Vector2.ZERO, collision_mask, [get_rid()])
+	query.hit_from_inside = true
+	var max_height_change := maxf(ledge_hand_tolerance, ledge_climb_horizontal_offset)
+	var closer := maxf(_body_collision_standing_size.x * 0.5 + 3.0, ledge_climb_horizontal_offset * 0.6)
+	for distance: float in [ledge_climb_horizontal_offset, closer]:
+		var x := _ledge_top.x + _ledge_direction * distance
+		query.from = Vector2(x, _ledge_top.y - max_height_change - 2.0)
+		query.to = Vector2(x, _ledge_top.y + max_height_change)
+		var floor := space.intersect_ray(query)
+		if not _is_valid_ledge_top_hit(floor):
+			continue
+		var landing := Vector2(x, floor.position.y - clearance)
+		if _has_solid_overlap(landing):
+			continue
+		var path := global_transform
+		var clear := true
+		for step in range(1, 9):
+			var next := _sample_ledge_climb_arc(
+				global_position, landing, _ledge_direction, float(step) / 8.0, _ledge_top.y - clearance
+			)
+			if test_move(path, next - path.origin, null, 0.04):
+				clear = false
+				break
+			path.origin = next
+		if clear:
+			return landing
+	return Vector2.INF
 
 
 func _get_player_collision_bottom_offset() -> float:
@@ -1503,18 +1591,26 @@ func _process_ledge_climb(delta: float) -> bool:
 	_ledge_climb_elapsed = minf(_ledge_climb_elapsed + delta, ledge_climb_duration)
 	var progress := clampf(_ledge_climb_elapsed / maxf(ledge_climb_duration, 0.001), 0.0, 1.0)
 	var eased_progress := smoothstep(0.0, 1.0, progress)
-	global_position = _sample_ledge_climb_arc(
+	var next := _sample_ledge_climb_arc(
 		_ledge_climb_start,
 		_ledge_climb_target,
 		_ledge_direction,
-		eased_progress
+		eased_progress,
+		_ledge_top.y - _ledge_climb_clearance()
 	)
+	if is_finite(_ledge_wall_x) and _has_solid_overlap(next):
+		is_ledge_climbing = false
+		_ledge_climb_jump_after = false
+		_ledge_wall_x = INF
+		return true
+	global_position = next
 
 	if progress < 1.0:
 		return true
 
 	global_position = _ledge_climb_target
 	is_ledge_climbing = false
+	_ledge_wall_x = INF
 	velocity = Vector2(
 		_ledge_direction * 120.0,
 		-ledge_jump_force if _ledge_climb_jump_after else 0.0
@@ -1528,16 +1624,21 @@ func _process_ledge_climb(delta: float) -> bool:
 func _sample_ledge_climb_arc(
 	start: Vector2,
 	target: Vector2,
-	direction: int,
-	progress: float
+	_direction: int,
+	progress: float,
+	clearance_y: float = INF
 ) -> Vector2:
 	var t := clampf(progress, 0.0, 1.0)
-	var control := Vector2(
-		start.x + float(direction) * 8.0,
-		target.y - ledge_climb_arc_height
+	var apex_y := minf(target.y, clearance_y) - ledge_climb_arc_height
+	var rise := smoothstep(0.0, 0.55, t)
+	var advance := smoothstep(0.38, 1.0, t)
+	var settle := smoothstep(0.65, 1.0, t)
+	# Lift the capsule before carrying it over the lip, then settle onto the floor.
+	return Vector2(
+		lerpf(start.x, target.x, advance),
+		lerpf(lerpf(start.y, apex_y, rise), target.y, settle)
 	)
-	var inverse := 1.0 - t
-	return inverse * inverse * start + 2.0 * inverse * t * control + t * t * target
+
 
 func _process_meditation(delta: float) -> void:
 	var was_meditating := is_meditating

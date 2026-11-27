@@ -40,60 +40,60 @@ void fragment() {
 shader = SubResource("Shader_BridgeBackground")
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_WestApproach"]
-a = Vector2(-78, -1412)
-b = Vector2(156, -1530)
+a = Vector2(-78, -1404)
+b = Vector2(156, -1522)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_DeckCollision"]
-a = Vector2(156, -1530)
-b = Vector2(3724, -1530)
+a = Vector2(156, -1522)
+b = Vector2(3724, -1522)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_EastApproach"]
-a = Vector2(3724, -1530)
-b = Vector2(4000, -1552)
+a = Vector2(3724, -1522)
+b = Vector2(4000, -1544)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_MiddleWest01"]
-a = Vector2(-81, -767)
-b = Vector2(1084, -767)
+a = Vector2(-81, -759)
+b = Vector2(1084, -759)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_MiddleWest02"]
-a = Vector2(1084, -767)
-b = Vector2(1172, -805)
+a = Vector2(1084, -759)
+b = Vector2(1172, -797)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_MiddleEast01"]
-a = Vector2(1934, -782)
-b = Vector2(2052, -766)
+a = Vector2(1934, -774)
+b = Vector2(2052, -758)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_MiddleEast02"]
-a = Vector2(2052, -766)
-b = Vector2(3464, -766)
+a = Vector2(2052, -758)
+b = Vector2(3464, -758)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_MiddleEast03"]
-a = Vector2(3464, -766)
-b = Vector2(3612, -806)
+a = Vector2(3464, -758)
+b = Vector2(3612, -798)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_WestShortDeck01"]
-a = Vector2(-138, -266)
-b = Vector2(-92, -250)
+a = Vector2(-138, -258)
+b = Vector2(-92, -242)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_WestShortDeck02"]
-a = Vector2(-92, -250)
-b = Vector2(109, -250)
+a = Vector2(-92, -242)
+b = Vector2(109, -242)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_WestShortDeck03"]
-a = Vector2(109, -250)
-b = Vector2(158, -266)
+a = Vector2(109, -242)
+b = Vector2(158, -258)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_LowWest"]
-a = Vector2(-640, -18)
-b = Vector2(-221, -18)
+a = Vector2(-640, -10)
+b = Vector2(-221, -10)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_LowArch"]
-a = Vector2(1288, -18)
-b = Vector2(1969, -18)
+a = Vector2(1288, -10)
+b = Vector2(1969, -10)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_LowEast"]
-a = Vector2(2892, -18)
-b = Vector2(4629, -18)
+a = Vector2(2892, -10)
+b = Vector2(4629, -10)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseBalcony"]
 a = Vector2(4074, -1763)
@@ -247,8 +247,8 @@ texture = ExtResource("10_bridge_supports")
 centered = false
 
 [node name="TerrainInk" type="Sprite2D" parent="Geometry"]
-editor_description = "The original one-pass terrain ink above the player and foliage."
-z_index = 16
+editor_description = "The original one-pass terrain ink behind the player and foreground foliage."
+z_index = 9
 position = Vector2(-1336, -2816)
 texture = ExtResource("14_terrain_ink")
 centered = false

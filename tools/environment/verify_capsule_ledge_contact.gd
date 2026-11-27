@@ -65,6 +65,7 @@ func verify() -> void:
 	await verify_stance()
 	await verify_one_way()
 	await verify_grabs()
+	await verify_rounded_ledges()
 	await verify_wall_contacts()
 	await verify_visual_grip(1)
 	await verify_visual_grip(-1)
@@ -160,6 +161,70 @@ func verify_grabs() -> void:
 		await frames(2)
 		check(p._try_grab_ledge() == (top<0),"Grapple assistance must retain the hand-height requirement")
 	results["ledge_candidates"] = accepted
+
+func rounded_ledge(points: PackedVector2Array, direction: int) -> void:
+	var object := StaticBody2D.new()
+	var collider := CollisionPolygon2D.new()
+	for index in points.size():
+		points[index].x *= direction
+	collider.polygon = points
+	object.add_child(collider)
+	rig.add_child(object)
+
+
+func verify_rounded_ledges() -> void:
+	var round_lip := PackedVector2Array([
+		Vector2(24,-47), Vector2(27,-58), Vector2(38,-70), Vector2(51,-76),
+		Vector2(72,-80), Vector2(153,-111), Vector2(204,-105),
+		Vector2(204,160), Vector2(24,160),
+	])
+	for direction: int in [1,-1]:
+		await fixture()
+		rounded_ledge(round_lip.duplicate(), direction)
+		var p = player()
+		p.last_direction = direction
+		await frames(2)
+		var grabbed: bool = p._try_grab_ledge()
+		check(grabbed,"A rounded lip that recedes beyond a single top ray must grab: "+str(direction))
+		if grabbed:
+			check(not p._has_solid_overlap(p.global_position),"Rounded hang must leave room for the capsule: "+str(direction))
+			p._start_ledge_climb(false)
+			check(p.is_ledge_climbing,"Rounded lip must start a climb with a clear run-out: "+str(direction))
+			var cleared := true
+			for _step in 12:
+				p._process_ledge_climb(p.ledge_climb_duration / 11.0)
+				cleared = cleared and not p._has_solid_overlap(p.global_position)
+			check(cleared and not p.is_ledge_climbing,"Climb arc must stay clear of the solid slope: "+str(direction))
+			var x: float = absf(p.global_position.x)
+			var floor_y := lerpf(-80.0,-111.0,(x-72.0)/(153.0-72.0))
+			var feet_y: float = p.global_position.y + p._get_player_collision_bottom_offset()
+			check(x > 72.0 and absf(feet_y - (floor_y - 2.0)) < 1.0,
+				"Climb must land on the actual rising floor, not at the handhold height: "+str(direction))
+			for _step in 6:
+				await physics_frame
+				p.velocity.y += p.gravity / 60.0
+				p.move_and_slide()
+			check(p.is_on_floor(),"Rounded pull-over must finish on the floor after movement resumes: "+str(direction))
+
+		await fixture()
+		rounded_ledge(round_lip.duplicate(),direction)
+		body(Rect2(53 if direction > 0 else -213,-229,160,92))
+		p = player()
+		p.last_direction = direction
+		await frames(2)
+		check(p._try_grab_ledge(),"The lip is reachable under a low ceiling: "+str(direction))
+		p._start_ledge_climb(false)
+		check(p.is_ledge_hanging and not p.is_ledge_climbing,"A blocked landing must keep the player on the lip: "+str(direction))
+
+		await fixture()
+		rounded_ledge(PackedVector2Array([
+			Vector2(16,-56), Vector2(102,-133), Vector2(200,-133), Vector2(200,160), Vector2(16,160),
+		]), direction)
+		p = player()
+		p.last_direction = direction
+		await frames(2)
+		check(not p._try_grab_ledge(),"A continuous walkable incline must not trigger a hang: "+str(direction))
+
 
 func verify_wall_contacts() -> void:
 	for tall_wall in [false,true]:
