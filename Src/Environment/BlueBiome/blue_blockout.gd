@@ -67,6 +67,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func has_wet_footing(point: Vector2) -> bool:
+	return $Atmosphere.rain_amount > 0.18 and $Atmosphere.is_exposed(point, true)
+
+
 func return_to_spawn() -> void:
 	east_house.reset_entry()
 	player.global_position = spawn.global_position

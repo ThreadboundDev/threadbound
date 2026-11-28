@@ -1,5 +1,15 @@
 # Threadbound current TODO list
 
+## November 28 Blue rain and wet footsteps
+
+Rain in Blue Blockout continues through open terrain and platforms to the
+lake surface. Only the occupied terrace interior masks that rain pass.
+The existing dry footsteps still play. Exposed damp footing adds a quiet
+layer from the staged CC0 NOX Essentials Footsteps_Mud_Walk_01 through 03.
+The 12-check Forward+ fixture verified the shelter and actual sample
+playback outdoors, indoors, and when dry. All 210 atmosphere regression
+checks passed headless. Hands-on mix review is open.
+
 ## November 28 Blue swimmer foreground contact
 
 The painted rock and ink cover any part of the swimming pose that overlaps

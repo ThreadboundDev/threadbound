@@ -4379,6 +4379,9 @@ func _process_movement_audio(_delta: float, was_on_floor: bool) -> void:
 
 	if on_floor and not is_dead and not is_hurt and absf(velocity.x) >= footstep_min_speed and _footstep_timer <= 0.0:
 		AudioManager.play_sfx(&"player_footstep")
+		var room := get_tree().current_scene
+		if room and room.has_method("has_wet_footing") and room.has_wet_footing(global_position):
+			AudioManager.play_sfx(&"player_wet_footstep")
 		_footstep_timer = footstep_interval
 
 func _process_movement_momentum(delta: float) -> void:

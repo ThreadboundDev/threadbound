@@ -25,6 +25,7 @@ const RAIN_AMOUNT := [0.0, 0.0, 0.0, 0.68, 1.0, 0.0]
 @export_range(0, 5) var start_weather := 0
 @export var sky_y := -4600.0
 @export var waterline_y := 0.0
+@export var rain_through_terrain := false
 @export var review_controls := true
 @export var ambience_enabled := true
 
@@ -46,6 +47,8 @@ var _shaft_origin := Vector2.INF
 var _previous_hdr := false
 var _polygons: Array[PackedVector2Array] = []
 var _rain_heights := PackedFloat32Array()
+var _rain_house: Node2D
+var _dry_rain_bounds := Rect2()
 var _shaft_distances := PackedFloat32Array()
 var _shaft_directions := PackedVector2Array()
 var _rng := RandomNumberGenerator.new()
@@ -69,6 +72,8 @@ var _player_display: Sprite2D
 
 func _ready() -> void:
 	_room = get_parent() as Node2D
+	if rain_through_terrain:
+		_rain_house = _room.get_node_or_null("Geometry/EastTerraceHouse") as Node2D
 	_rng.randomize()
 	hour = start_hour
 	weather_index = start_weather
@@ -252,6 +257,7 @@ func _apply_lighting() -> void:
 	_rain_material.set_shader_parameter("clock", _elapsed)
 	_rain_material.set_shader_parameter("amount", rain_amount)
 	_rain_material.set_shader_parameter("rain_color", Color(0.36, 0.51, 0.67).lerp(Color(0.62, 0.74, 0.84), daylight))
+	_update_rain_house_shelter()
 	_shaft_material.set_shader_parameter("clock", _elapsed)
 	_shaft_material.set_shader_parameter("strength", lerpf(0.28, 0.66, daylight) * altitude * (1.0 - cloud_cover))
 	_shaft_material.set_shader_parameter("shaft_color", light_color)
@@ -343,6 +349,9 @@ func rebuild_shelter() -> void:
 
 
 func _collect_solids(node: Node) -> void:
+	# The private indoor collision layer should not cast shadows outside.
+	if node is StaticBody2D and node.collision_layer == (1 << 31):
+		return
 	var points := PackedVector2Array()
 	if node is CollisionPolygon2D and not node.disabled and not node.one_way_collision and node.get_parent() is StaticBody2D:
 		for point in node.polygon:
@@ -371,6 +380,8 @@ func _rain_shelter_heights() -> PackedFloat32Array:
 	var heights := PackedFloat32Array()
 	heights.resize(MASK_SIZE)
 	heights.fill(waterline_y)
+	if rain_through_terrain:
+		return heights
 	var pitch := MASK_WIDTH / MASK_SIZE
 	for polygon in _polygons:
 		for index in polygon.size():
@@ -388,6 +399,16 @@ func _rain_shelter_heights() -> PackedFloat32Array:
 				if y >= sky_y:
 					heights[sample_index] = minf(heights[sample_index], y)
 	return heights
+
+
+func _update_rain_house_shelter() -> void:
+	var bounds := Rect2()
+	if is_instance_valid(_rain_house) and is_instance_valid(_rain_house.inside_player):
+		bounds = _rain_house.global_transform * _rain_house.entry_rect
+	if bounds != _dry_rain_bounds:
+		_dry_rain_bounds = bounds
+		_rain_material.set_shader_parameter("dry_room_bounds", Vector4(bounds.position.x, bounds.position.y,
+			bounds.end.x, bounds.end.y))
 
 
 func _radial_shelter(origin: Vector2) -> PackedFloat32Array:
@@ -447,6 +468,8 @@ func _upload_mask(values: PackedFloat32Array, texture: ImageTexture, start: floa
 
 func is_exposed(point: Vector2, rain: bool = false) -> bool:
 	if rain:
+		if rain_through_terrain:
+			return point.y < waterline_y - 3.0 and not _dry_rain_bounds.has_point(point)
 		var ray_x := point.x - RAIN_SLOPE * (point.y - sky_y)
 		var index := clampi(int((ray_x - MASK_LEFT) / MASK_WIDTH * MASK_SIZE), 0, MASK_SIZE - 1)
 		return _rain_heights.is_empty() or point.y < _rain_heights[index] - 3.0

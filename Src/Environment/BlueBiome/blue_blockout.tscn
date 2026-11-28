@@ -829,5 +829,6 @@ scale = Vector2(8.204087, -5.685563)
 shape = SubResource("RectangleShape2D_m3ycw")
 
 [node name="Atmosphere" parent="." instance=ExtResource("19_atmosphere")]
+rain_through_terrain = true
 
 [editable path="Player"]

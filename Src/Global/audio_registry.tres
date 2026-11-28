@@ -6,6 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://727u0ld6545t" path="res://Assets/Audio/SFX/Threadborne Sounds/step_1.wav" id="4_step_1"]
 [ext_resource type="AudioStream" uid="uid://bt7iiriyubmhh" path="res://Assets/Audio/SFX/Threadborne Sounds/step_2.wav" id="5_step_2"]
 [ext_resource type="AudioStream" uid="uid://dbo3syvxhkbyr" path="res://Assets/Audio/SFX/Threadborne Sounds/step_3.wav" id="6_step_3"]
+[ext_resource type="AudioStream" path="res://Assets/Audio/SFX/Threadborne Sounds/wet_step_1.wav" id="wet_step_1"]
+[ext_resource type="AudioStream" path="res://Assets/Audio/SFX/Threadborne Sounds/wet_step_2.wav" id="wet_step_2"]
+[ext_resource type="AudioStream" path="res://Assets/Audio/SFX/Threadborne Sounds/wet_step_3.wav" id="wet_step_3"]
 [ext_resource type="AudioStream" uid="uid://yc13bkc3y0vs" path="res://Assets/Audio/SFX/Threadborne Sounds/jump_1.wav" id="7_jump_1"]
 [ext_resource type="AudioStream" uid="uid://qbn77g6hrjw6" path="res://Assets/Audio/SFX/Threadborne Sounds/jump_2.wav" id="8_jump_2"]
 [ext_resource type="AudioStream" uid="uid://benc4ma1x4u28" path="res://Assets/Audio/SFX/Threadborne Sounds/jump_3.wav" id="9_jump_3"]
@@ -196,6 +199,12 @@ stream_variants = Array[AudioStream]([ExtResource("4_step_1"), ExtResource("5_st
 volume_db = -8.0
 pitch_variation = 0.03
 
+[sub_resource type="Resource" id="AudioSound_player_wet_footstep"]
+script = ExtResource("2_sound")
+stream_variants = Array[AudioStream]([ExtResource("wet_step_1"), ExtResource("wet_step_2"), ExtResource("wet_step_3")])
+volume_db = -16.0
+pitch_variation = 0.04
+
 [sub_resource type="Resource" id="AudioSound_player_jump"]
 script = ExtResource("2_sound")
 stream_variants = Array[AudioStream]([ExtResource("7_jump_1"), ExtResource("8_jump_2"), ExtResource("9_jump_3")])
@@ -259,6 +268,7 @@ sounds = {
 &"player_dash": SubResource("AudioSound_player_dash"),
 &"player_dash_evade": SubResource("AudioSound_player_dash_evade"),
 &"player_footstep": SubResource("AudioSound_player_footstep"),
+&"player_wet_footstep": SubResource("AudioSound_player_wet_footstep"),
 &"player_jump": SubResource("AudioSound_player_jump"),
 &"player_land": SubResource("AudioSound_player_land"),
 &"player_smash_impact": SubResource("AudioSound_player_smash_impact"),
