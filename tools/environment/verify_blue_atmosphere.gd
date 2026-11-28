@@ -74,6 +74,7 @@ func run() -> void:
 	atmosphere.set_preview(12.0, 0)
 	check(atmosphere.is_exposed(Vector2(0, -100), true), "Moving a full roof releases the old shelter")
 	check(not atmosphere.is_exposed(Vector2(1000, -100), true), "Shelter respects transformed collision")
+	verify_sky_path(atmosphere, geometry)
 	atmosphere._rng.seed = 7149
 	atmosphere.automatic_weather = true
 	var previous: int = atmosphere.weather_index
@@ -99,6 +100,41 @@ func run() -> void:
 	file.close()
 	print("BLUE_ATMOSPHERE_RESULT " + JSON.stringify(report))
 	quit(0 if failures.is_empty() else 1)
+
+func verify_sky_path(atmosphere: Node, geometry: Node) -> void:
+	var original_canvas := root.canvas_transform
+	var sky_disc := atmosphere.get_node("Sun") as Sprite2D
+	var shaft_material := atmosphere.get_node("Shafts").material as ShaderMaterial
+	var noon := sky_disc.global_position
+	root.canvas_transform = original_canvas.translated(Vector2(-300, 0))
+	atmosphere.set_preview(12.0, 0)
+	var pan := sky_disc.global_position - noon
+	check(pan.x > 0.0 and pan.x < 200.0 and is_zero_approx(pan.y), "A 300 px horizontal pan moves the sky source less than 200 px")
+	atmosphere.set_preview(10.0, 0)
+	check(absf(noon.x + pan.x - sky_disc.global_position.x) > pan.x, "The clock moves the sun farther than the camera pan")
+	root.canvas_transform = original_canvas
+	atmosphere.set_preview(5.0, 0)
+	var sunrise_y := sky_disc.global_position.y
+	atmosphere.set_preview(12.0, 0)
+	check(sunrise_y - sky_disc.global_position.y > 1400.0, "Noon reaches the higher sky arc")
+	var blocker := solid(geometry, noon + Vector2(0, 110), Vector2(128, 40))
+	atmosphere.rebuild_shelter()
+	atmosphere.set_preview(12.0, 0)
+	var near_visibility: float = shaft_material.get_shader_parameter("source_visibility")
+	check(near_visibility > 0.0 and near_visibility < 1.0, "Nearby rock softens the fan while the source is still out in the open")
+	blocker.position = noon + Vector2(0, 26)
+	atmosphere.rebuild_shelter()
+	atmosphere.set_preview(12.0, 0)
+	var edge_visibility: float = shaft_material.get_shader_parameter("source_visibility")
+	check(edge_visibility > 0.0 and edge_visibility < near_visibility * 0.1, "The fan is almost gone before the disc center reaches the edge")
+	blocker.position = noon
+	atmosphere.rebuild_shelter()
+	atmosphere.set_preview(12.0, 0)
+	check(shaft_material.get_shader_parameter("source_visibility") == 0.0, "A source inside a solid is fully sheltered")
+	blocker.get_parent().free()
+	atmosphere.rebuild_shelter()
+	atmosphere.set_preview(12.0, 0)
+	check(shaft_material.get_shader_parameter("source_visibility") == 1.0, "An open sky restores the full ray fan")
 
 func verify_review_cycles(atmosphere: Node) -> void:
 	var panel := atmosphere.get_node("Review/AtmosphereReview")
@@ -203,6 +239,17 @@ func inspect_blue() -> void:
 	player.set_physics_process(false)
 	var camera := blue.get_node("Player/Camera2D") as Camera2D
 	camera.position_smoothing_enabled = false
+	var shaft_material := atmosphere.get_node("Shafts").material as ShaderMaterial
+	var route_min_visibility := 1.0
+	for x in range(970, 1367, 36):
+		player.position = Vector2(x, -1591.3)
+		player.reset_physics_interpolation()
+		camera.force_update_scroll()
+		atmosphere.set_preview(11.67, 0)
+		route_min_visibility = minf(route_min_visibility, shaft_material.get_shader_parameter("source_visibility"))
+	check(route_min_visibility > 0.9, "The ray fan stays clear for the reported bridge route at 11:40: " + str(route_min_visibility))
+	if DisplayServer.get_name() != "headless":
+		await capture("blue_ray_report_bridge")
 	player.position = Vector2(2200, -1560)
 	player.velocity = Vector2.ZERO
 	player.reset_physics_interpolation()

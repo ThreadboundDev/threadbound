@@ -9,6 +9,11 @@ const MASK_LEFT := -9000.0
 const MASK_WIDTH := 23000.0
 const MASK_DEPTH := 8000.0
 const SHAFT_RANGE := 14000.0
+const SHAFT_SOURCE_FADE := 160.0
+const CELESTIAL_ANCHOR_X := 1550.0
+const CELESTIAL_CAMERA_FOLLOW := 0.55
+const CELESTIAL_ARC_WIDTH := 1100.0
+const CELESTIAL_ARC_HEIGHT := 1490.0
 const RAIN_SLOPE := 0.10
 const WEATHER := ["Clear", "Gathering", "Overcast", "Rain", "Storm", "Clearing"]
 const NEXT_WEATHER := [[1], [0, 2, 2], [1, 3, 3], [2, 4, 5, 5], [3], [0, 0, 1]]
@@ -284,13 +289,14 @@ func _update_view() -> void:
 	$CloudVeil.polygon = corners
 	$Rain.polygon = corners
 	$Shafts.polygon = corners
-	# A stable horizon responds gently to vertical exploration. It does not
-	# follow individual jumps, and celestial bodies have no horizontal parallax.
+	# The sky follows only part of the camera motion. The clock drives the arc.
 	var center := bounds.get_center()
 	var horizon := -650.0 + (center.y + 1500.0) * 0.10
 	var is_day := hour >= 5.0 and hour <= 19.0
 	var arc := (hour - 5.0) / 14.0 if is_day else fposmod(hour - 19.0, 24.0) / 10.0
-	var celestial := Vector2(center.x - cos(arc * PI) * bounds.size.x * 0.43, horizon - sin(arc * PI) * 1260.0)
+	var sky_x := lerpf(CELESTIAL_ANCHOR_X, center.x, CELESTIAL_CAMERA_FOLLOW)
+	var celestial := Vector2(sky_x - cos(arc * PI) * CELESTIAL_ARC_WIDTH,
+		horizon - sin(arc * PI) * CELESTIAL_ARC_HEIGHT)
 	$Sun.global_position = celestial
 	$Moon.global_position = celestial
 	$Sun.visible = is_day
@@ -388,6 +394,7 @@ func _radial_shelter(origin: Vector2) -> PackedFloat32Array:
 	var distances := PackedFloat32Array()
 	distances.resize(MASK_SIZE)
 	distances.fill(SHAFT_RANGE)
+	var clearance_squared := SHAFT_SOURCE_FADE * SHAFT_SOURCE_FADE
 	if _shaft_directions.is_empty():
 		for index in MASK_SIZE:
 			var angle := ((index + 0.5) / MASK_SIZE - 0.5) * PI
@@ -395,10 +402,13 @@ func _radial_shelter(origin: Vector2) -> PackedFloat32Array:
 	for polygon in _polygons:
 		if polygon.size() > 2 and Geometry2D.is_point_in_polygon(origin, polygon):
 			distances.fill(0.0)
+			_shaft_material.set_shader_parameter("source_visibility", 0.0)
 			return distances
 		for edge_index in polygon.size():
 			var a := polygon[edge_index] - origin
 			var b := polygon[(edge_index + 1) % polygon.size()] - origin
+			var nearest := Geometry2D.get_closest_point_to_segment(Vector2.ZERO, a, b)
+			clearance_squared = minf(clearance_squared, nearest.length_squared())
 			if a.y <= 0.0 and b.y <= 0.0:
 				continue
 			# Clip edges at the emitter plane before projecting their angular span.
@@ -418,6 +428,9 @@ func _radial_shelter(origin: Vector2) -> PackedFloat32Array:
 					var distance := line / denominator
 					if distance >= 0.0:
 						distances[sample_index] = minf(distances[sample_index], distance)
+	# Fade the entire fan before the emitter reaches a solid. Otherwise the
+	# mask goes from a partially lit sky to fully blocked in a single update.
+	_shaft_material.set_shader_parameter("source_visibility", smoothstep(0.0, SHAFT_SOURCE_FADE, sqrt(clearance_squared)))
 	return distances
 
 

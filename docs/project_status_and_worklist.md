@@ -1,5 +1,16 @@
 # Threadbound current TODO list
 
+## November 27 Blue sun position and ray transitions
+
+The sky arc sits higher and follows 55 percent of horizontal camera travel.
+The rays soften as their source approaches rock and fade just before each
+solid stop. The reported 11:40 bridge route and the shelter transitions
+passed 210 headless and 215 Forward+ checks.
+
+Layered rain awaits approval. The proposed far layer falls over the village
+and distant lake. The gameplay layer passes open platforms and keeps
+authored enclosed interiors dry.
+
 ## November 27 Blue boot and outline contact
 
 The painted ink covers the soles of grounded boots at the cave approach.

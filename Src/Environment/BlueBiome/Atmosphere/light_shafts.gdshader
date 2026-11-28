@@ -5,6 +5,7 @@ uniform sampler2D shelter : repeat_disable, filter_nearest;
 uniform vec2 source_position;
 uniform float ray_range = 14000.0;
 uniform float strength = 0.0;
+uniform float source_visibility = 1.0;
 uniform float clock = 0.0;
 uniform vec4 shaft_color : source_color = vec4(1.0, 0.91, 0.73, 1.0);
 varying vec2 world;
@@ -15,7 +16,7 @@ void fragment() {
 	float distance_to_light = length(from_source);
 	float u = angle / PI + 0.5;
 	float stop_distance = texture(shelter, vec2(u, 0.5)).r * ray_range;
-	float visibility = (1.0 - smoothstep(stop_distance - 7.0, stop_distance, distance_to_light));
+	float visibility = source_visibility * (1.0 - smoothstep(stop_distance - 30.0, stop_distance, distance_to_light));
 	float fade = smoothstep(30.0, 145.0, distance_to_light) * smoothstep(0.0, 0.17, cos(angle));
 	float bands = pow(max(0.0, sin(angle * 27.0 + sin(angle * 9.0 + clock * 0.025))), 8.0);
 	float fine = pow(max(0.0, sin(angle * 62.0 + 1.7)), 12.0);

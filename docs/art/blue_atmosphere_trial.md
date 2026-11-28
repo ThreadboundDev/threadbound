@@ -56,10 +56,10 @@ generated shadow occluders, three warm local light pools, and review controls.
 It moves no existing scene nodes. The source is under
 `Src/Environment/BlueBiome/Atmosphere/`.
 
-Sky bodies have camera-independent horizontal sky positions and a gentle
-vertical response to exploration. Their time-driven arcs supply the direction
-for native scene light and decorative shafts. Both discs are deliberately
-simple, softly edged, and glowing. Moon phases and eclipses are deferred.
+Sky bodies follow 55 percent of horizontal camera travel and respond gently to
+vertical exploration. Their higher time-driven arc supplies the source for
+the decorative shafts and the angle for native scene light. Both discs are
+softly edged and glowing. Moon phases and eclipses are deferred.
 
 The lower daytime ambient and directional light give cloud cover more room
 to read. Dense clouds also dim the distant cliff and village art, sky, and
@@ -72,6 +72,8 @@ Enabled full `CollisionPolygon2D` shapes and rectangle, convex, and segment
 shapes under static bodies in `Geometry` generate shadow occluders. The sun
 and moon shafts fan out from the active sky disc. A 2,048-sample angular mask
 stops each ray at the nearest full solid, including roofs above the camera.
+Rays fade just before the solid, and the whole fan fades as the disc center
+approaches terrain. This keeps the fan from suddenly cutting out at a cliff.
 Rain uses the same solids with a separate slanted mask and stops at the lake
 surface. One-way and disabled collision let the rays and rain pass through.
 
@@ -89,9 +91,10 @@ changes, lunar mechanics, or global weather singleton.
 
 ## Validation and acceptance
 
-Godot 4.7.2 passed 202 headless and 207 Forward+ atmosphere checks. They
+Godot 4.7.2 passed 210 headless and 215 Forward+ atmosphere checks. They
 cover the two cycle buttons, clock duration and pause, 80 automatic weather
-transitions, gradual rain, radial shelter, and both lake material passes.
+transitions, gradual rain, radial shelter, the 11:40 bridge route from the
+god-ray report, and both lake material passes.
 Rendered samples verify that noon storms dim both open and sheltered
 surfaces, full roofs cast shadows, and sheltered night scenes retain
 indirect light. The editor fixture passed 19 Lighting Painter checks,
