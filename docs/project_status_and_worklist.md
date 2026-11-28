@@ -1,5 +1,12 @@
 # Threadbound current TODO list
 
+## November 28 Blue swimmer foreground contact
+
+The painted rock and ink cover any part of the swimming pose that overlaps
+them. The rest of the swimmer stays visible in open water. A Forward+
+comparison at the reported world position confirmed the occlusion, and
+the 10-check grounded boot and outline fixture still passes.
+
 ## November 28 Blue distant backdrop seams
 
 The same distant cliff image caused both reported horizontal lines. Its

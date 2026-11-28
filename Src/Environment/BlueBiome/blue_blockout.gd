@@ -5,41 +5,55 @@ extends Node2D
 @onready var spawn: Marker2D = $Spawn
 @onready var follow_camera: Camera2D = $Player/Camera2D
 @onready var terrain_ink: Sprite2D = $Geometry/TerrainInk
+@onready var terrain_fill: Sprite2D = $Geometry/PaintedMaterials
 @onready var east_house: Sprite2D = $Geometry/EastTerraceHouse
 
-var _foot_ink_material: ShaderMaterial
-var _foot_ink_enabled := false
+var _terrain_mask_material: ShaderMaterial
+var _terrain_mask_state := Vector3i.ZERO
 
 
 func _ready() -> void:
 	$HUD.visible = true
 	return_to_spawn()
 	# The live player queues its composite as a deferred child.
-	_configure_foot_ink.call_deferred()
+	_configure_terrain_masks.call_deferred()
 
 
-func _configure_foot_ink() -> void:
+func _configure_terrain_masks() -> void:
 	var composite := player.get_node_or_null("Live3DComposite") as Sprite2D
-	if composite == null or terrain_ink.texture == null:
+	if composite == null:
 		return
-	_foot_ink_material = composite.material as ShaderMaterial
-	if _foot_ink_material == null:
+	_terrain_mask_material = composite.material as ShaderMaterial
+	if _terrain_mask_material == null:
 		return
-	var bounds := terrain_ink.get_rect()
-	var inverse := terrain_ink.global_transform.affine_inverse()
-	_foot_ink_material.set_shader_parameter(&"terrain_ink", terrain_ink.texture)
-	_foot_ink_material.set_shader_parameter(&"ink_uv_x", inverse.x / bounds.size)
-	_foot_ink_material.set_shader_parameter(&"ink_uv_y", inverse.y / bounds.size)
-	_foot_ink_material.set_shader_parameter(&"ink_uv_origin", (inverse.origin - bounds.position) / bounds.size)
+	_bind_terrain_mask(terrain_ink, &"terrain_ink", "ink_uv_")
+	_bind_terrain_mask(terrain_fill, &"terrain_fill", "fill_uv_")
+
+
+func _bind_terrain_mask(sprite: Sprite2D, sampler: StringName, uv_prefix: String) -> void:
+	if sprite.texture == null:
+		return
+	var bounds := sprite.get_rect()
+	var inverse := sprite.global_transform.affine_inverse()
+	_terrain_mask_material.set_shader_parameter(sampler, sprite.texture)
+	_terrain_mask_material.set_shader_parameter(uv_prefix + "x", inverse.x / bounds.size)
+	_terrain_mask_material.set_shader_parameter(uv_prefix + "y", inverse.y / bounds.size)
+	_terrain_mask_material.set_shader_parameter(uv_prefix + "origin", (inverse.origin - bounds.position) / bounds.size)
 
 
 func _process(_delta: float) -> void:
-	if _foot_ink_material == null:
+	if _terrain_mask_material == null:
 		return
-	var enabled: bool = player.is_on_floor() and not player.is_in_prototype_water() and terrain_ink.is_visible_in_tree()
-	if enabled != _foot_ink_enabled:
-		_foot_ink_enabled = enabled
-		_foot_ink_material.set_shader_parameter(&"clip_ground_ink", enabled)
+	var swimming: bool = player.is_in_prototype_water()
+	var has_ink := terrain_ink.texture != null and terrain_ink.is_visible_in_tree()
+	var has_fill := terrain_fill.texture != null and terrain_fill.is_visible_in_tree()
+	var state := Vector3i(int(not swimming and has_ink and player.is_on_floor()),
+		int(swimming and has_ink), int(swimming and has_fill))
+	if state != _terrain_mask_state:
+		_terrain_mask_state = state
+		_terrain_mask_material.set_shader_parameter(&"clip_ground_ink", state.x != 0)
+		_terrain_mask_material.set_shader_parameter(&"clip_swim_ink", state.y != 0)
+		_terrain_mask_material.set_shader_parameter(&"clip_swim_terrain", state.z != 0)
 
 
 func _physics_process(_delta: float) -> void:
