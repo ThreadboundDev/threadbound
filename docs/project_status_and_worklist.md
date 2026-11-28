@@ -1,5 +1,20 @@
 # Threadbound current TODO list
 
+## November 28 Base boot cuff edge feedback
+
+The screenshot showed small brown wedges at the upper boot rims. With the
+outline off at the recorded position and zoom, tinting Base_Boot_L and
+Base_Boot_R recolored the wedges. This locates the problem in the loaded
+Base boot cuff mesh beside Outfit A shins. The captured session logged zero
+errors or warnings.
+
+Awaiting asset approval. Smooth the two cuff rims and check their overlap
+with the shins in idle, run, and crouch using the current working Blender
+source, LocalOnly/Equipment/BaseArmorReview/Threadbound_Base_Armor_Fit.blend.
+Re-export only the fitted Base boots at
+Assets/Threadborne/Player/LocalDoll/Equipment/FittedSets/base_boots_b.glb.
+Preserve the leather texture, skinning, foot volume, and gear behavior.
+
 ## November 28 Blue rain and wet footsteps
 
 Rain in Blue Blockout continues through open terrain and platforms to the
