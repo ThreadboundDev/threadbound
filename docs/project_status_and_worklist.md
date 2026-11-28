@@ -1,5 +1,13 @@
 # Threadbound current TODO list
 
+## November 28 Blue distant backdrop seams
+
+The same distant cliff image caused both reported horizontal lines. Its
+upper edge entered the camera from the high western shelf, and its lower
+edge showed through the lake. The existing image now extends from world
+Y -3200 to the gameplay waterline at Y 0. Forward+ verified both captured
+views. The local horizontal parallax offset was preserved.
+
 ## November 28 Blue player outline
 
 Blue Blockout restores the one-world-pixel material-colored outline from

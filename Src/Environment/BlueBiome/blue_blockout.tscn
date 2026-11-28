@@ -209,8 +209,8 @@ z_index = -95
 scroll_scale = Vector2(0.15, 1)
 
 [node name="Art" type="Sprite2D" parent="Backgrounds/FarSkyCliffs" unique_id=1745161929]
-position = Vector2(2365, -1440)
-scale = Vector2(4.5, 4.5)
+position = Vector2(2365, -1600)
+scale = Vector2(4.5, 5.0)
 texture = ExtResource("2_far")
 region_enabled = true
 region_rect = Rect2(0, 0, 2172, 640)
