@@ -1,5 +1,18 @@
 # Threadbound current TODO list
 
+## November 28 East Terrace House entry feedback
+
+Walking along the terrace deck currently flips the facade to its cutaway
+at world X approximately 4361. The capture shows the switch without door
+input, and the session logged zero errors or warnings.
+
+**Awaiting scene-change approval.** Adapt the Lakeside door interaction and
+walk-in animation to the painted East Terrace House. Mark the existing door
+with a soft glow. Offer Interact and allow Up at that threshold. Fade the
+facade, frame both floors, and blur outside the occupied interior. Exiting
+through the door should restore exterior art and camera settings. Keep the
+existing art, resident, roof route, and cave lookout.
+
 ## November 27 Blue sun position and ray transitions
 
 The sky arc sits higher and follows 55 percent of horizontal camera travel.
