@@ -8,18 +8,20 @@ cloth, wood, leather and metal colors. The base player retains its
 original outline profile. The terrace-deck comparison passed 5 headless
 and 8 Forward+ checks.
 
-## November 28 East Terrace House entry feedback
+## November 28 East Terrace House entry
 
-Walking along the terrace deck currently flips the facade to its cutaway
-at world X approximately 4361. The capture shows the switch without door
-input, and the session logged zero errors or warnings.
+Chase approved deliberate entry after a recording showed the facade
+switching as the player crossed the deck. The existing painted doorway
+now has a soft glow and takes Up or the bound Interact action. The player
+turns and walks in. The facade crossfades into the cutaway, and the camera
+frames both floors with blur outside the house. Interact at the same door
+to leave. The terrace keeps the current art, resident, roof route and
+cave lookout. The workbench is solid while the house is occupied.
 
-**Awaiting scene-change approval.** Adapt the Lakeside door interaction and
-walk-in animation to the painted East Terrace House. Mark the existing door
-with a soft glow. Offer Interact and allow Up at that threshold. Fade the
-facade, frame both floors, and blur outside the occupied interior. Exiting
-through the door should restore exterior art and camera settings. Keep the
-existing art, resident, roof route, and cave lookout.
+Verified 14 headless checks each on the working and checkpoint scenes,
+and 15 Forward+ checks on the working scene. The fixture covers input,
+a partial fade, exact camera and actor restoration, respawn, and rendered
+exterior blur. Live playtest review is open.
 
 ## November 27 Blue sun position and ray transitions
 

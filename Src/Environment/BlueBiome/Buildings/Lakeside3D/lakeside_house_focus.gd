@@ -1,6 +1,9 @@
 extends Node
 ## One occupied house frames its interior; cleanly restores the user's camera.
 const SHADER := preload("res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_focus.gdshader")
+@export var fit_entire_room := false
+@export var outside_brightness := 0.34
+@export_range(0.0, 5.0, 0.1) var outside_blur_lod := 0.0
 var house: Node2D
 var player: CharacterBody2D
 var camera: Camera2D
@@ -27,6 +30,7 @@ func _ready() -> void:
 	effect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var material := ShaderMaterial.new()
 	material.shader = SHADER
+	material.set_shader_parameter("outside_blur_lod", outside_blur_lod)
 	effect.material = material
 	overlay.add_child(effect)
 	overlay.visible = false
@@ -64,7 +68,7 @@ func _process(delta: float) -> void:
 	# Fit the entire room with a modest zoom. Small rooms hold a fixed center;
 	# the exterior outside their bounds is visually de-emphasized by the mask.
 	var zoom := minf(screen.x/(bounds.size.x+80),screen.y/(bounds.size.y+80))
-	zoom = clampf(zoom,saved.zoom.x,saved.zoom.x*1.65)
+	zoom = clampf(zoom, 0.1, 1.65) if fit_entire_room else clampf(zoom, saved.zoom.x, saved.zoom.x * 1.65)
 	var center := bounds.get_center()
 	if follow_vertical:
 		zoom = clampf(screen.x/(bounds.size.x+160),saved.zoom.x*1.15,saved.zoom.x*1.65)
@@ -88,7 +92,7 @@ func _process(delta: float) -> void:
 	effect.material.set_shader_parameter("room_screen_rect",Vector4(a.x/screen.x,a.y/screen.y,b.x/screen.x,b.y/screen.y))
 	effect.material.set_shader_parameter("logical_size",screen)
 	effect.material.set_shader_parameter("focus_strength",blend)
-	effect.material.set_shader_parameter("outside_brightness",.08 if follow_vertical else .34)
+	effect.material.set_shader_parameter("outside_brightness", 0.08 if follow_vertical else outside_brightness)
 	if not occupied and weight == 0.0:
 		_restore()
 

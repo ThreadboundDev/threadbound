@@ -29,6 +29,34 @@
 [ext_resource type="PackedScene" path="res://Src/Enemies/EaveRunner/eave_runner.tscn" id="blue_eave"]
 [ext_resource type="PackedScene" path="res://Src/Enemies/Reedhook/reedhook.tscn" id="blue_reedhook"]
 
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/blue_terrace_house.gd" id="terrace_house"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_door.gd" id="terrace_door"]
+[ext_resource type="Script" path="res://Src/Environment/BlueBiome/Buildings/Lakeside3D/lakeside_house_focus.gd" id="terrace_focus"]
+
+[sub_resource type="Gradient" id="Gradient_TerraceGlow"]
+offsets = PackedFloat32Array(0, 0.52, 1)
+colors = PackedColorArray(1, 0.66, 0.28, 0.41, 1, 0.48, 0.13, 0.16, 1, 0.45, 0.12, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_TerraceGlow"]
+gradient = SubResource("Gradient_TerraceGlow")
+width = 164
+height = 220
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_TerraceLeftWall"]
+a = Vector2(390, 442)
+b = Vector2(390, 105)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_TerraceRightWall"]
+a = Vector2(1091, 105)
+b = Vector2(1091, 442)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_TerraceCeiling"]
+a = Vector2(390, 105)
+b = Vector2(1091, 105)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
 
@@ -313,13 +341,15 @@ scale = Vector2(0.0629, 0.0607)
 texture = ExtResource("watcher")
 centered = false
 
-[node name="EastTerraceHouse" type="Sprite2D" parent="Geometry"]
-editor_description = "Two-story terrace house. Walk inside for the cutaway and use the workbench to reach the balcony."
+[node name="EastTerraceHouse" type="Sprite2D" parent="Geometry" node_paths=PackedStringArray("workbench")]
+editor_description = "Enter at the glowing door to reveal both floors. The workbench leads up to the balcony."
 z_index = 10
 position = Vector2(3879, -2464)
 scale = Vector2(1.2434483, 2.032751)
 texture = ExtResource("16_upper_house")
 centered = false
+script = ExtResource("terrace_house")
+workbench = NodePath("../PaintedBridge/HouseTableStep")
 
 [node name="Interior" type="Node2D" parent="Geometry/EastTerraceHouse"]
 visible = false
@@ -336,6 +366,37 @@ position = Vector2(312, 246.2728)
 scale = Vector2(0.1765, 0.1080)
 texture = ExtResource("resident")
 centered = false
+
+[node name="Door" type="Area2D" parent="Geometry/EastTerraceHouse"]
+position = Vector2(780, 431)
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("terrace_door")
+
+[node name="Glow" type="Sprite2D" parent="Geometry/EastTerraceHouse/Door"]
+position = Vector2(0, -108)
+texture = SubResource("GradientTexture2D_TerraceGlow")
+
+[node name="InteriorFocus" type="Node" parent="Geometry/EastTerraceHouse"]
+script = ExtResource("terrace_focus")
+fit_entire_room = true
+outside_brightness = 0.67
+outside_blur_lod = 3.0
+
+[node name="IndoorBounds" type="StaticBody2D" parent="Geometry/EastTerraceHouse"]
+collision_layer = 2147483648
+collision_mask = 0
+
+[node name="LeftWall" type="CollisionShape2D" parent="Geometry/EastTerraceHouse/IndoorBounds"]
+shape = SubResource("SegmentShape2D_TerraceLeftWall")
+
+[node name="RightWall" type="CollisionShape2D" parent="Geometry/EastTerraceHouse/IndoorBounds"]
+shape = SubResource("SegmentShape2D_TerraceRightWall")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Geometry/EastTerraceHouse/IndoorBounds"]
+shape = SubResource("SegmentShape2D_TerraceCeiling")
 
 [node name="FoliageStamps" type="Node2D" parent="Geometry"]
 editor_description = "Paint individual stamps with the Foliage Painter dock."
@@ -656,6 +717,7 @@ one_way_collision_margin = 12.0
 
 [node name="HouseTableStep" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
 shape = SubResource("SegmentShape2D_HouseTableStep")
+disabled = true
 one_way_collision = true
 one_way_collision_margin = 12.0
 

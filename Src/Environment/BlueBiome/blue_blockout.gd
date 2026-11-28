@@ -1,14 +1,11 @@
 extends Node2D
 ## Blue playtest room.
 
-const EAST_HOUSE_BOUNDS := Rect2(388, 104, 704, 337)
-
 @onready var player: CharacterBody2D = $Player
 @onready var spawn: Marker2D = $Spawn
 @onready var follow_camera: Camera2D = $Player/Camera2D
 @onready var terrain_ink: Sprite2D = $Geometry/TerrainInk
 @onready var east_house: Sprite2D = $Geometry/EastTerraceHouse
-@onready var east_house_interior: Node2D = $Geometry/EastTerraceHouse/Interior
 
 var _foot_ink_material: ShaderMaterial
 var _foot_ink_enabled := false
@@ -48,7 +45,6 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	if player.global_position.y > spawn.global_position.y + 3200.0:
 		return_to_spawn()
-	east_house_interior.visible = EAST_HOUSE_BOUNDS.has_point(east_house.to_local(player.global_position))
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -58,6 +54,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func return_to_spawn() -> void:
+	east_house.reset_entry()
 	player.global_position = spawn.global_position
 	player.velocity = Vector2.ZERO
 	follow_camera.reset_smoothing()
