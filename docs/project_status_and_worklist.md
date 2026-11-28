@@ -1,5 +1,13 @@
 # Threadbound current TODO list
 
+## November 28 Blue player outline
+
+Blue Blockout restores the one-world-pixel material-colored outline from
+the Woven World trial. The existing per-object shells use the trial's
+cloth, wood, leather and metal colors. The base player retains its
+original outline profile. The terrace-deck comparison passed 5 headless
+and 8 Forward+ checks.
+
 ## November 28 East Terrace House entry feedback
 
 Walking along the terrace deck currently flips the facade to its cutaway

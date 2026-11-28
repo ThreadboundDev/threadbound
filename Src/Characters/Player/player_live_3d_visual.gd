@@ -51,6 +51,7 @@ const LOWER_BODY_BONES: Array[StringName] = [
 @export var display_scale := Vector2(0.25, 0.25)
 @export var camera_size := 2.8
 @export var object_outline_width := 2.0
+@export var material_colored_outline := false
 @export_range(0.0, 2.0, 0.01) var character_light_scale := 1.0
 @export var receive_level_lighting := true
 @export var idle_variation_delay := 6.0
@@ -1076,7 +1077,21 @@ func _install_object_outline(source: MeshInstance3D, pixels: float) -> void:
 		pixels *= .35
 	shell.set_shader_parameter("outline_source_pixels", pixels)
 	shell.set_shader_parameter("fine_hat_detail", String(source.name).begins_with("blue_HeadChest"))
+	if material_colored_outline:
+		shell.set_shader_parameter("outline_color", _material_outline_color(source.name))
 	outline.material_override = shell
+
+
+func _material_outline_color(mesh_name: String) -> Color:
+	# Match the cloth, wood, leather and metal inks from the Woven World trial.
+	var part := mesh_name.to_lower()
+	if "sword" in part or "grapple" in part or "metal" in part:
+		return Color("394650")
+	if "doll" in part or "hand" in part or "wood" in part:
+		return Color("4b3928")
+	if "boot" in part or "glove" in part or "shield" in part or "leather" in part:
+		return Color("483727")
+	return Color("303c49")
 
 
 static func _outline_mesh(source: Mesh) -> ArrayMesh:

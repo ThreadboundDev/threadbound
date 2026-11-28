@@ -684,7 +684,8 @@ debug_blue_water_power_unlocked = true
 [node name="Live3DVisual" parent="Player" index="0"]
 process_priority = 100
 model_scene = ExtResource("7_doll")
-object_outline_width = 0.0
+object_outline_width = 1.0
+material_colored_outline = true
 receive_level_lighting = true
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1969136443]
