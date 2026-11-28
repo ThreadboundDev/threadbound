@@ -1,5 +1,19 @@
 # Threadbound current TODO list
 
+## November 27 Blue house collision and shelf encounters
+
+[Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) now
+uses Chase's resized house placements. The cave lookout has a one-way
+floor at its bottom timber. The terrace house has fitted roof, balcony,
+ground-floor, and workbench surfaces. Walking inside reveals the
+two-story cutaway. Each building has a painted resident.
+
+The two submerged east trestles meet the plank deck. The existing Eave
+Runner and Reedhook patrol separate stone shelves. The room fixture
+verifies the two-step climb from the house floor to the loft, lookout
+drop-through and landing, trestle overlap, and both enemy spawns.
+[Art notes and prompts](../ArtSource/BlueBiome/Krita/Blue_One_Pass_Art.md).
+
 ## November 27 Godot Lighting Painter
 
 The Room Greybox plugin adds a **Lighting Painter** tab. Click to place

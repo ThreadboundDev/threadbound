@@ -23,6 +23,12 @@
 [ext_resource type="PackedScene" path="res://Src/Environment/BlueBiome/Atmosphere/blue_atmosphere.tscn" id="19_atmosphere"]
 [ext_resource type="Script" path="res://Src/Environment/BlueBiome/ArtPlaceables/Foliage/foliage_ink_layer_2d.gd" id="20_foliage_ink"]
 
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/east_house_interior.png" id="interior"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/east_house_resident.png" id="resident"]
+[ext_resource type="Texture2D" path="res://Assets/BlueBiome/Art/OnePass/lookout_resident.png" id="watcher"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/EaveRunner/eave_runner.tscn" id="blue_eave"]
+[ext_resource type="PackedScene" path="res://Src/Enemies/Reedhook/reedhook.tscn" id="blue_reedhook"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3ycw"]
 size = Vector2(5.055941, 17.7435)
 
@@ -97,40 +103,64 @@ a = Vector2(2892, -10)
 b = Vector2(4629, -10)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseBalcony"]
-a = Vector2(4074, -1763)
-b = Vector2(5164, -1763)
+a = Vector2(3890.1910, -1961.9105)
+b = Vector2(5257.9842, -1961.9105)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof01"]
-a = Vector2(4296, -1930)
-b = Vector2(4324, -1943)
+a = Vector2(4152.5586, -2299.3472)
+b = Vector2(4188.6186, -2323.7402)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof02"]
-a = Vector2(4324, -1943)
-b = Vector2(4358, -1973)
+a = Vector2(4188.6186, -2323.7402)
+b = Vector2(4230.8959, -2376.5917)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof03"]
-a = Vector2(4358, -1973)
-b = Vector2(4390, -1996)
+a = Vector2(4230.8959, -2376.5917)
+b = Vector2(4261.9821, -2437.5742)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof04"]
-a = Vector2(4390, -1996)
-b = Vector2(4594, -1993)
+a = Vector2(4261.9821, -2437.5742)
+b = Vector2(4298.0421, -2445.7052)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof05"]
-a = Vector2(4594, -1993)
-b = Vector2(5144, -1998)
+a = Vector2(4298.0421, -2445.7052)
+b = Vector2(4519.3759, -2427.4105)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof06"]
-a = Vector2(5144, -1998)
-b = Vector2(5181, -1973)
+a = Vector2(4519.3759, -2427.4105)
+b = Vector2(4994.3731, -2427.4105)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof07"]
-a = Vector2(5181, -1973)
-b = Vector2(5225, -1937)
+a = Vector2(4994.3731, -2427.4105)
+b = Vector2(5172.1862, -2443.6725)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof08"]
-a = Vector2(5225, -1937)
-b = Vector2(5241, -1929)
+a = Vector2(5172.1862, -2443.6725)
+b = Vector2(5230.6283, -2449.7707)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof09"]
+a = Vector2(5230.6283, -2449.7707)
+b = Vector2(5261.7145, -2441.6397)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof10"]
+a = Vector2(5261.7145, -2441.6397)
+b = Vector2(5294.0442, -2333.9039)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseRoof11"]
+a = Vector2(5294.0442, -2333.9039)
+b = Vector2(5333.8345, -2297.3144)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseFloor"]
+a = Vector2(3961.0676, -1587.8843)
+b = Vector2(5235.6021, -1587.8843)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_HouseTableStep"]
+a = Vector2(4457.2035, -1722.0459)
+b = Vector2(4613.8779, -1722.0459)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_LookoutFloor"]
+a = Vector2(-1275.2773, -530.2749)
+b = Vector2(-269.3170, -530.2749)
 
 [node name="BlueBlockout" type="Node2D" unique_id=950755712]
 editor_description = "Fresh Blue blockout. Select Geometry/GreyboxTerrain and use Room Greybox > Terrain Tiles. Move Spawn to change the test start. F6 plays this scene; R returns to Spawn."
@@ -269,17 +299,42 @@ texture = ExtResource("18_entrance")
 centered = false
 
 [node name="CaveLookout" type="Sprite2D" parent="Geometry"]
-editor_description = "Small timber shelter inside the high west recess."
+editor_description = "Lookout tucked behind the stone. The floor follows the bottom timber beam."
 z_index = -4
-position = Vector2(-1277, -2279)
+position = Vector2(-1452.0001, -1267)
+scale = Vector2(3.3985147, 3.5250003)
 texture = ExtResource("17_lookout")
 centered = false
 
+[node name="LookoutResident" type="Sprite2D" parent="Geometry/CaveLookout"]
+z_index = -1
+position = Vector2(222, 166.3121)
+scale = Vector2(0.0629, 0.0607)
+texture = ExtResource("watcher")
+centered = false
+
 [node name="EastTerraceHouse" type="Sprite2D" parent="Geometry"]
-editor_description = "Two-story timber house. Jump onto the balcony and then the roof."
-z_index = -4
-position = Vector2(4065, -2012)
+editor_description = "Two-story terrace house. Walk inside for the cutaway and use the workbench to reach the balcony."
+z_index = 10
+position = Vector2(3879, -2464)
+scale = Vector2(1.2434483, 2.032751)
 texture = ExtResource("16_upper_house")
+centered = false
+
+[node name="Interior" type="Node2D" parent="Geometry/EastTerraceHouse"]
+visible = false
+position = Vector2(390, 105)
+
+[node name="CutawayArt" type="Sprite2D" parent="Geometry/EastTerraceHouse/Interior"]
+scale = Vector2(0.3464, 0.4343)
+texture = ExtResource("interior")
+centered = false
+
+[node name="Resident" type="Sprite2D" parent="Geometry/EastTerraceHouse/Interior"]
+z_index = 0
+position = Vector2(312, 246.2728)
+scale = Vector2(0.1765, 0.1080)
+texture = ExtResource("resident")
 centered = false
 
 [node name="FoliageStamps" type="Node2D" parent="Geometry"]
@@ -579,6 +634,36 @@ shape = SubResource("SegmentShape2D_HouseRoof08")
 one_way_collision = true
 one_way_collision_margin = 12.0
 
+[node name="HouseRoof09" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_HouseRoof09")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="HouseRoof10" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_HouseRoof10")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="HouseRoof11" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_HouseRoof11")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="HouseFloor" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_HouseFloor")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="HouseTableStep" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_HouseTableStep")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
+[node name="LookoutFloor" type="CollisionShape2D" parent="Geometry/PaintedBridge"]
+shape = SubResource("SegmentShape2D_LookoutFloor")
+one_way_collision = true
+one_way_collision_margin = 12.0
+
 [node name="Lake" parent="." instance=ExtResource("11_lake")]
 editor_description = "Swimmable lake at the Krita waterline, world Y = 0."
 lake_presentation = true
@@ -611,6 +696,13 @@ limit_right = 5248
 limit_bottom = 1280
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+
+[node name="ShelfEaveRunner" parent="." instance=ExtResource("blue_eave")]
+position = Vector2(620, -281)
+
+[node name="EastShoreReedhook" parent="." instance=ExtResource("blue_reedhook")]
+position = Vector2(4330, -789)
+start_facing = -1
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1213874892]
 layer = 20
