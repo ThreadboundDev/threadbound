@@ -1,5 +1,13 @@
 # Threadbound current TODO list
 
+## November 27 Blue boot and outline contact
+
+The painted ink covers the soles of grounded boots at the cave approach.
+Foreground grass can still overlap the player above the ink. The player
+stays visible beside walls and during jumps. The reported contact passed
+8 headless and 10 Forward+ checks, including a rendered comparison of
+the same idle pose with the mask off and on.
+
 ## November 27 Blue house collision and shelf encounters
 
 [Blue Blockout](../Src/Environment/BlueBiome/blue_blockout.tscn) now
